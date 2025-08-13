@@ -9,14 +9,23 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.VoiceLive
 {
-    public partial class ServerEventConversationItemInputAudioTranscriptionFailed : IUtf8JsonSerializable, IJsonModel<ServerEventConversationItemInputAudioTranscriptionFailed>
+    /// <summary>
+    /// Returned when input audio transcription is configured, and a transcription
+    /// request for a user message failed. These events are separate from other
+    /// `error` events so that the client can identify the related Item.
+    /// </summary>
+    public partial class ServerEventConversationItemInputAudioTranscriptionFailed : IJsonModel<ServerEventConversationItemInputAudioTranscriptionFailed>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerEventConversationItemInputAudioTranscriptionFailed>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ServerEventConversationItemInputAudioTranscriptionFailed"/> for deserialization. </summary>
+        internal ServerEventConversationItemInputAudioTranscriptionFailed()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServerEventConversationItemInputAudioTranscriptionFailed>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +37,11 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServerEventConversationItemInputAudioTranscriptionFailed>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServerEventConversationItemInputAudioTranscriptionFailed>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServerEventConversationItemInputAudioTranscriptionFailed)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("item_id"u8);
             writer.WriteStringValue(ItemId);
@@ -43,79 +51,85 @@ namespace Azure.AI.VoiceLive
             writer.WriteObjectValue(Error, options);
         }
 
-        ServerEventConversationItemInputAudioTranscriptionFailed IJsonModel<ServerEventConversationItemInputAudioTranscriptionFailed>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServerEventConversationItemInputAudioTranscriptionFailed IJsonModel<ServerEventConversationItemInputAudioTranscriptionFailed>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ServerEventConversationItemInputAudioTranscriptionFailed)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ServerEvent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServerEventConversationItemInputAudioTranscriptionFailed>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServerEventConversationItemInputAudioTranscriptionFailed>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServerEventConversationItemInputAudioTranscriptionFailed)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeServerEventConversationItemInputAudioTranscriptionFailed(document.RootElement, options);
         }
 
-        internal static ServerEventConversationItemInputAudioTranscriptionFailed DeserializeServerEventConversationItemInputAudioTranscriptionFailed(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ServerEventConversationItemInputAudioTranscriptionFailed DeserializeServerEventConversationItemInputAudioTranscriptionFailed(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            ServerEventType @type = default;
+            string eventId = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string itemId = default;
             int contentIndex = default;
             VoiceLiveErrorDetails error = default;
-            ServerEventType type = default;
-            string eventId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("item_id"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    itemId = property.Value.GetString();
+                    @type = new ServerEventType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("content_index"u8))
+                if (prop.NameEquals("event_id"u8))
                 {
-                    contentIndex = property.Value.GetInt32();
+                    eventId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("error"u8))
+                if (prop.NameEquals("item_id"u8))
                 {
-                    error = VoiceLiveErrorDetails.DeserializeVoiceLiveErrorDetails(property.Value, options);
+                    itemId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("content_index"u8))
                 {
-                    type = new ServerEventType(property.Value.GetString());
+                    contentIndex = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("event_id"u8))
+                if (prop.NameEquals("error"u8))
                 {
-                    eventId = property.Value.GetString();
+                    error = VoiceLiveErrorDetails.DeserializeVoiceLiveErrorDetails(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ServerEventConversationItemInputAudioTranscriptionFailed(
-                type,
+                @type,
                 eventId,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 itemId,
                 contentIndex,
                 error);
         }
 
-        BinaryData IPersistableModel<ServerEventConversationItemInputAudioTranscriptionFailed>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServerEventConversationItemInputAudioTranscriptionFailed>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ServerEventConversationItemInputAudioTranscriptionFailed>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServerEventConversationItemInputAudioTranscriptionFailed>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -125,15 +139,20 @@ namespace Azure.AI.VoiceLive
             }
         }
 
-        ServerEventConversationItemInputAudioTranscriptionFailed IPersistableModel<ServerEventConversationItemInputAudioTranscriptionFailed>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServerEventConversationItemInputAudioTranscriptionFailed>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServerEventConversationItemInputAudioTranscriptionFailed IPersistableModel<ServerEventConversationItemInputAudioTranscriptionFailed>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServerEventConversationItemInputAudioTranscriptionFailed)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ServerEvent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServerEventConversationItemInputAudioTranscriptionFailed>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeServerEventConversationItemInputAudioTranscriptionFailed(document.RootElement, options);
                     }
                 default:
@@ -141,22 +160,7 @@ namespace Azure.AI.VoiceLive
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ServerEventConversationItemInputAudioTranscriptionFailed>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new ServerEventConversationItemInputAudioTranscriptionFailed FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeServerEventConversationItemInputAudioTranscriptionFailed(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

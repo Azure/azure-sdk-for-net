@@ -16,7 +16,7 @@ namespace Azure.AI.VoiceLive
     /// except for `voice`. However, note that once a session has been
     /// initialized with a particular `model`, it can’t be changed to
     /// another model using `session.update`.
-    ///
+    /// 
     /// When the server receives a `session.update`, it will respond
     /// with a `session.updated` event showing the full, effective configuration.
     /// Only the fields that are present are updated. To clear a field like
@@ -27,30 +27,24 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ClientEventSessionUpdate"/>. </summary>
         /// <param name="session"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="session"/> is null. </exception>
-        public ClientEventSessionUpdate(RequestSession session)
+        public ClientEventSessionUpdate(RequestSession session) : base("session.update")
         {
             Argument.AssertNotNull(session, nameof(session));
 
-            Type = "session.update";
             Session = session;
         }
 
         /// <summary> Initializes a new instance of <see cref="ClientEventSessionUpdate"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="session"></param>
-        internal ClientEventSessionUpdate(string type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, RequestSession session) : base(type, eventId, serializedAdditionalRawData)
+        internal ClientEventSessionUpdate(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, RequestSession session) : base(@type, eventId, additionalBinaryDataProperties)
         {
             Session = session;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClientEventSessionUpdate"/> for deserialization. </summary>
-        internal ClientEventSessionUpdate()
-        {
-        }
-
-        /// <summary> Gets the session. </summary>
+        /// <summary> Gets the Session. </summary>
         public RequestSession Session { get; }
     }
 }

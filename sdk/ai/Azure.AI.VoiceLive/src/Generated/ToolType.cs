@@ -17,35 +17,51 @@ namespace Azure.AI.VoiceLive
     internal readonly partial struct ToolType : IEquatable<ToolType>
     {
         private readonly string _value;
+        private const string FunctionValue = "function";
 
         /// <summary> Initializes a new instance of <see cref="ToolType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ToolType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string FunctionValue = "function";
-
-        /// <summary> function. </summary>
+        /// <summary> Gets the Function. </summary>
         public static ToolType Function { get; } = new ToolType(FunctionValue);
+
         /// <summary> Determines if two <see cref="ToolType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ToolType left, ToolType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ToolType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ToolType left, ToolType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ToolType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ToolType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ToolType(string value) => new ToolType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ToolType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ToolType?(string value) => value == null ? null : new ToolType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ToolType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ToolType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

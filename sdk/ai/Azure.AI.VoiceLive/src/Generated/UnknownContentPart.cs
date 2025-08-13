@@ -10,18 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> Unknown version of ContentPart. </summary>
     internal partial class UnknownContentPart : ContentPart
     {
         /// <summary> Initializes a new instance of <see cref="UnknownContentPart"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownContentPart(ContentPartType type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownContentPart"/> for deserialization. </summary>
-        internal UnknownContentPart()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownContentPart(ContentPartType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", additionalBinaryDataProperties)
         {
         }
     }

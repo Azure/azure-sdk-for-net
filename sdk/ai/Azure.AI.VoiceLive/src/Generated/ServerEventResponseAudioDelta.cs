@@ -19,14 +19,8 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputIndex"> The index of the output item in the response. </param>
         /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
         /// <param name="delta"> Base64-encoded audio data delta. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="responseId"/>, <paramref name="itemId"/> or <paramref name="delta"/> is null. </exception>
-        internal ServerEventResponseAudioDelta(string responseId, string itemId, int outputIndex, int contentIndex, BinaryData delta)
+        internal ServerEventResponseAudioDelta(string responseId, string itemId, int outputIndex, int contentIndex, BinaryData delta) : base(ServerEventType.ResponseAudioDelta)
         {
-            Argument.AssertNotNull(responseId, nameof(responseId));
-            Argument.AssertNotNull(itemId, nameof(itemId));
-            Argument.AssertNotNull(delta, nameof(delta));
-
-            Type = ServerEventType.ResponseAudioDelta;
             ResponseId = responseId;
             ItemId = itemId;
             OutputIndex = outputIndex;
@@ -36,14 +30,14 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseAudioDelta"/>. </summary>
         /// <param name="type"> The type of event. </param>
-        /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="responseId"> The ID of the response. </param>
         /// <param name="itemId"> The ID of the item. </param>
         /// <param name="outputIndex"> The index of the output item in the response. </param>
         /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
         /// <param name="delta"> Base64-encoded audio data delta. </param>
-        internal ServerEventResponseAudioDelta(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string responseId, string itemId, int outputIndex, int contentIndex, BinaryData delta) : base(type, eventId, serializedAdditionalRawData)
+        /// <param name="eventId"></param>
+        internal ServerEventResponseAudioDelta(ServerEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, BinaryData delta, string eventId) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             ItemId = itemId;
@@ -52,19 +46,18 @@ namespace Azure.AI.VoiceLive
             Delta = delta;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServerEventResponseAudioDelta"/> for deserialization. </summary>
-        internal ServerEventResponseAudioDelta()
-        {
-        }
-
         /// <summary> The ID of the response. </summary>
         public string ResponseId { get; }
+
         /// <summary> The ID of the item. </summary>
         public string ItemId { get; }
+
         /// <summary> The index of the output item in the response. </summary>
         public int OutputIndex { get; }
+
         /// <summary> The index of the content part in the item's content array. </summary>
         public int ContentIndex { get; }
+
         /// <summary>
         /// Base64-encoded audio data delta.
         /// <para>
@@ -75,12 +68,15 @@ namespace Azure.AI.VoiceLive
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromBytes(new byte[] { 1, 2, 3 })</term>
-        /// <description>Creates a payload of "AQID".</description>
+        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
+        /// <description> Creates a payload of "AQID". </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
         public BinaryData Delta { get; }
+
+        /// <summary> Gets the EventId. </summary>
+        public override string EventId { get; }
     }
 }

@@ -7,16 +7,16 @@
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The ResponseStatusDetailsType. </summary>
+    /// <summary></summary>
     public enum ResponseStatusDetailsType
     {
-        /// <summary> completed. </summary>
+        /// <summary> Completed. </summary>
         Completed,
-        /// <summary> cancelled. </summary>
+        /// <summary> Cancelled. </summary>
         Cancelled,
-        /// <summary> failed. </summary>
+        /// <summary> Failed. </summary>
         Failed,
-        /// <summary> incomplete. </summary>
+        /// <summary> Incomplete. </summary>
         Incomplete
     }
 }

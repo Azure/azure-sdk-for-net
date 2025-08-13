@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
@@ -16,62 +17,54 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="FunctionTool"/>. </summary>
         /// <param name="name"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public FunctionTool(string name)
+        public FunctionTool(string name) : base(ToolType.Function)
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            Type = ToolType.Function;
             Name = name;
         }
 
         /// <summary> Initializes a new instance of <see cref="FunctionTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"></param>
         /// <param name="description"></param>
         /// <param name="parameters"></param>
-        internal FunctionTool(ToolType type, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, string description, BinaryData parameters) : base(type, serializedAdditionalRawData)
+        internal FunctionTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, BinaryData parameters) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
             Parameters = parameters;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FunctionTool"/> for deserialization. </summary>
-        internal FunctionTool()
-        {
-        }
-
-        /// <summary> Gets or sets the name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public string Name { get; set; }
-        /// <summary> Gets or sets the description. </summary>
+
+        /// <summary> Gets or sets the Description. </summary>
         public string Description { get; set; }
+
         /// <summary>
-        /// Gets or sets the parameters
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// Gets or sets the Parameters.
+        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>

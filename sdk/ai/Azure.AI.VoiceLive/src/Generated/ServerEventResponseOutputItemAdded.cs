@@ -16,12 +16,8 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseOutputItemAdded"/>. </summary>
         /// <param name="responseId"> The ID of the Response to which the item belongs. </param>
         /// <param name="outputIndex"> The index of the output item in the Response. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="responseId"/> is null. </exception>
-        internal ServerEventResponseOutputItemAdded(string responseId, int outputIndex)
+        internal ServerEventResponseOutputItemAdded(string responseId, int outputIndex) : base(ServerEventType.ResponseOutputItemAdded)
         {
-            Argument.AssertNotNull(responseId, nameof(responseId));
-
-            Type = ServerEventType.ResponseOutputItemAdded;
             ResponseId = responseId;
             OutputIndex = outputIndex;
         }
@@ -29,27 +25,24 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseOutputItemAdded"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="responseId"> The ID of the Response to which the item belongs. </param>
         /// <param name="outputIndex"> The index of the output item in the Response. </param>
         /// <param name="item"></param>
-        internal ServerEventResponseOutputItemAdded(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string responseId, int outputIndex, ConversationItemWithReference item) : base(type, eventId, serializedAdditionalRawData)
+        internal ServerEventResponseOutputItemAdded(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, int outputIndex, ConversationItemWithReference item) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             OutputIndex = outputIndex;
             Item = item;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServerEventResponseOutputItemAdded"/> for deserialization. </summary>
-        internal ServerEventResponseOutputItemAdded()
-        {
-        }
-
         /// <summary> The ID of the Response to which the item belongs. </summary>
         public string ResponseId { get; }
+
         /// <summary> The index of the output item in the Response. </summary>
         public int OutputIndex { get; }
-        /// <summary> Gets the item. </summary>
+
+        /// <summary> Gets the Item. </summary>
         public ConversationItemWithReference Item { get; }
     }
 }

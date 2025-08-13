@@ -28,33 +28,24 @@ namespace Azure.AI.VoiceLive
         /// The ID of the preceding item in the Conversation context, allows the
         /// client to understand the order of the conversation.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="previousItemId"/> is null. </exception>
-        internal ServerEventConversationItemCreated(string previousItemId)
+        internal ServerEventConversationItemCreated(string previousItemId) : base(ServerEventType.ConversationItemCreated)
         {
-            Argument.AssertNotNull(previousItemId, nameof(previousItemId));
-
-            Type = ServerEventType.ConversationItemCreated;
             PreviousItemId = previousItemId;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServerEventConversationItemCreated"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="previousItemId">
         /// The ID of the preceding item in the Conversation context, allows the
         /// client to understand the order of the conversation.
         /// </param>
         /// <param name="item"></param>
-        internal ServerEventConversationItemCreated(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string previousItemId, ConversationItemWithReference item) : base(type, eventId, serializedAdditionalRawData)
+        internal ServerEventConversationItemCreated(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string previousItemId, ConversationItemWithReference item) : base(@type, eventId, additionalBinaryDataProperties)
         {
             PreviousItemId = previousItemId;
             Item = item;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ServerEventConversationItemCreated"/> for deserialization. </summary>
-        internal ServerEventConversationItemCreated()
-        {
         }
 
         /// <summary>
@@ -62,7 +53,8 @@ namespace Azure.AI.VoiceLive
         /// client to understand the order of the conversation.
         /// </summary>
         public string PreviousItemId { get; }
-        /// <summary> Gets the item. </summary>
+
+        /// <summary> Gets the Item. </summary>
         public ConversationItemWithReference Item { get; }
     }
 }

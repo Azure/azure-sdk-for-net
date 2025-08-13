@@ -11,6 +11,7 @@ namespace Azure.AI.VoiceLive
 {
     internal static partial class TurnDetectionTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this TurnDetectionType value) => value switch
         {
             TurnDetectionType.None => "none",
@@ -19,11 +20,21 @@ namespace Azure.AI.VoiceLive
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TurnDetectionType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static TurnDetectionType ToTurnDetectionType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "none")) return TurnDetectionType.None;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "server_vad")) return TurnDetectionType.ServerVad;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "azure_semantic_vad")) return TurnDetectionType.AzureSemanticVad;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "none"))
+            {
+                return TurnDetectionType.None;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "server_vad"))
+            {
+                return TurnDetectionType.ServerVad;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "azure_semantic_vad"))
+            {
+                return TurnDetectionType.AzureSemanticVad;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TurnDetectionType value.");
         }
     }

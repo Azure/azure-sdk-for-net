@@ -8,15 +8,23 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.VoiceLive
 {
+    /// <summary>
+    /// A voicelive client event.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ClientEventSessionUpdate"/>, <see cref="ClientEventInputAudioBufferAppend"/>, <see cref="ClientEventInputAudioBufferCommit"/>, <see cref="ClientEventInputAudioBufferClear"/>, <see cref="ClientEventInputAudioTurnStart"/>, <see cref="ClientEventInputAudioTurnAppend"/>, <see cref="ClientEventInputAudioTurnEnd"/>, <see cref="ClientEventInputAudioTurnCancel"/>, <see cref="ClientEventInputAudioClear"/>, <see cref="ClientEventConversationItemCreate"/>, <see cref="ClientEventConversationItemRetrieve"/>, <see cref="ClientEventConversationItemTruncate"/>, <see cref="ClientEventConversationItemDelete"/>, <see cref="ClientEventResponseCreate"/>, <see cref="ClientEventResponseCancel"/>, and <see cref="ClientEventSessionAvatarConnect"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownClientEvent))]
-    public partial class ClientEvent : IUtf8JsonSerializable, IJsonModel<ClientEvent>
+    public abstract partial class ClientEvent : IJsonModel<ClientEvent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClientEvent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ClientEvent"/> for deserialization. </summary>
+        internal ClientEvent()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ClientEvent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +36,11 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClientEvent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClientEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ClientEvent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(EventId))
@@ -41,15 +48,15 @@ namespace Azure.AI.VoiceLive
                 writer.WritePropertyName("event_id"u8);
                 writer.WriteStringValue(EventId);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -58,55 +65,79 @@ namespace Azure.AI.VoiceLive
             }
         }
 
-        ClientEvent IJsonModel<ClientEvent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ClientEvent IJsonModel<ClientEvent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ClientEvent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClientEvent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClientEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ClientEvent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeClientEvent(document.RootElement, options);
         }
 
-        internal static ClientEvent DeserializeClientEvent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ClientEvent DeserializeClientEvent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("type", out JsonElement discriminator))
+            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "conversation.item.create": return ClientEventConversationItemCreate.DeserializeClientEventConversationItemCreate(element, options);
-                    case "conversation.item.delete": return ClientEventConversationItemDelete.DeserializeClientEventConversationItemDelete(element, options);
-                    case "conversation.item.retrieve": return ClientEventConversationItemRetrieve.DeserializeClientEventConversationItemRetrieve(element, options);
-                    case "conversation.item.truncate": return ClientEventConversationItemTruncate.DeserializeClientEventConversationItemTruncate(element, options);
-                    case "input_audio_buffer.append": return ClientEventInputAudioBufferAppend.DeserializeClientEventInputAudioBufferAppend(element, options);
-                    case "input_audio_buffer.clear": return ClientEventInputAudioBufferClear.DeserializeClientEventInputAudioBufferClear(element, options);
-                    case "input_audio_buffer.commit": return ClientEventInputAudioBufferCommit.DeserializeClientEventInputAudioBufferCommit(element, options);
-                    case "input_audio.clear": return ClientEventInputAudioClear.DeserializeClientEventInputAudioClear(element, options);
-                    case "input_audio.turn.append": return ClientEventInputAudioTurnAppend.DeserializeClientEventInputAudioTurnAppend(element, options);
-                    case "input_audio.turn.cancel": return ClientEventInputAudioTurnCancel.DeserializeClientEventInputAudioTurnCancel(element, options);
-                    case "input_audio.turn.end": return ClientEventInputAudioTurnEnd.DeserializeClientEventInputAudioTurnEnd(element, options);
-                    case "input_audio.turn.start": return ClientEventInputAudioTurnStart.DeserializeClientEventInputAudioTurnStart(element, options);
-                    case "response.cancel": return ClientEventResponseCancel.DeserializeClientEventResponseCancel(element, options);
-                    case "response.create": return ClientEventResponseCreate.DeserializeClientEventResponseCreate(element, options);
-                    case "session.avatar.connect": return ClientEventSessionAvatarConnect.DeserializeClientEventSessionAvatarConnect(element, options);
-                    case "session.update": return ClientEventSessionUpdate.DeserializeClientEventSessionUpdate(element, options);
+                    case "session.update":
+                        return ClientEventSessionUpdate.DeserializeClientEventSessionUpdate(element, options);
+                    case "input_audio_buffer.append":
+                        return ClientEventInputAudioBufferAppend.DeserializeClientEventInputAudioBufferAppend(element, options);
+                    case "input_audio_buffer.commit":
+                        return ClientEventInputAudioBufferCommit.DeserializeClientEventInputAudioBufferCommit(element, options);
+                    case "input_audio_buffer.clear":
+                        return ClientEventInputAudioBufferClear.DeserializeClientEventInputAudioBufferClear(element, options);
+                    case "input_audio.turn.start":
+                        return ClientEventInputAudioTurnStart.DeserializeClientEventInputAudioTurnStart(element, options);
+                    case "input_audio.turn.append":
+                        return ClientEventInputAudioTurnAppend.DeserializeClientEventInputAudioTurnAppend(element, options);
+                    case "input_audio.turn.end":
+                        return ClientEventInputAudioTurnEnd.DeserializeClientEventInputAudioTurnEnd(element, options);
+                    case "input_audio.turn.cancel":
+                        return ClientEventInputAudioTurnCancel.DeserializeClientEventInputAudioTurnCancel(element, options);
+                    case "input_audio.clear":
+                        return ClientEventInputAudioClear.DeserializeClientEventInputAudioClear(element, options);
+                    case "conversation.item.create":
+                        return ClientEventConversationItemCreate.DeserializeClientEventConversationItemCreate(element, options);
+                    case "conversation.item.retrieve":
+                        return ClientEventConversationItemRetrieve.DeserializeClientEventConversationItemRetrieve(element, options);
+                    case "conversation.item.truncate":
+                        return ClientEventConversationItemTruncate.DeserializeClientEventConversationItemTruncate(element, options);
+                    case "conversation.item.delete":
+                        return ClientEventConversationItemDelete.DeserializeClientEventConversationItemDelete(element, options);
+                    case "response.create":
+                        return ClientEventResponseCreate.DeserializeClientEventResponseCreate(element, options);
+                    case "response.cancel":
+                        return ClientEventResponseCancel.DeserializeClientEventResponseCancel(element, options);
+                    case "session.avatar.connect":
+                        return ClientEventSessionAvatarConnect.DeserializeClientEventSessionAvatarConnect(element, options);
                 }
             }
             return UnknownClientEvent.DeserializeUnknownClientEvent(element, options);
         }
 
-        BinaryData IPersistableModel<ClientEvent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ClientEvent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ClientEvent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ClientEvent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -116,15 +147,20 @@ namespace Azure.AI.VoiceLive
             }
         }
 
-        ClientEvent IPersistableModel<ClientEvent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ClientEvent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ClientEvent IPersistableModel<ClientEvent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ClientEvent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ClientEvent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeClientEvent(document.RootElement, options);
                     }
                 default:
@@ -132,22 +168,7 @@ namespace Azure.AI.VoiceLive
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ClientEvent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ClientEvent FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeClientEvent(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

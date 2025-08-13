@@ -19,15 +19,8 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputIndex"> The index of the output item in the response. </param>
         /// <param name="callId"> The ID of the function call. </param>
         /// <param name="delta"> The arguments delta as a JSON string. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="responseId"/>, <paramref name="itemId"/>, <paramref name="callId"/> or <paramref name="delta"/> is null. </exception>
-        internal ServerEventResponseFunctionCallArgumentsDelta(string responseId, string itemId, int outputIndex, string callId, string delta)
+        internal ServerEventResponseFunctionCallArgumentsDelta(string responseId, string itemId, int outputIndex, string callId, string delta) : base(ServerEventType.ResponseFunctionCallArgumentsDelta)
         {
-            Argument.AssertNotNull(responseId, nameof(responseId));
-            Argument.AssertNotNull(itemId, nameof(itemId));
-            Argument.AssertNotNull(callId, nameof(callId));
-            Argument.AssertNotNull(delta, nameof(delta));
-
-            Type = ServerEventType.ResponseFunctionCallArgumentsDelta;
             ResponseId = responseId;
             ItemId = itemId;
             OutputIndex = outputIndex;
@@ -38,13 +31,13 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseFunctionCallArgumentsDelta"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="responseId"> The ID of the response. </param>
         /// <param name="itemId"> The ID of the function call item. </param>
         /// <param name="outputIndex"> The index of the output item in the response. </param>
         /// <param name="callId"> The ID of the function call. </param>
         /// <param name="delta"> The arguments delta as a JSON string. </param>
-        internal ServerEventResponseFunctionCallArgumentsDelta(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string responseId, string itemId, int outputIndex, string callId, string delta) : base(type, eventId, serializedAdditionalRawData)
+        internal ServerEventResponseFunctionCallArgumentsDelta(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, string callId, string delta) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             ItemId = itemId;
@@ -53,19 +46,18 @@ namespace Azure.AI.VoiceLive
             Delta = delta;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServerEventResponseFunctionCallArgumentsDelta"/> for deserialization. </summary>
-        internal ServerEventResponseFunctionCallArgumentsDelta()
-        {
-        }
-
         /// <summary> The ID of the response. </summary>
         public string ResponseId { get; }
+
         /// <summary> The ID of the function call item. </summary>
         public string ItemId { get; }
+
         /// <summary> The index of the output item in the response. </summary>
         public int OutputIndex { get; }
+
         /// <summary> The ID of the function call. </summary>
         public string CallId { get; }
+
         /// <summary> The arguments delta as a JSON string. </summary>
         public string Delta { get; }
     }

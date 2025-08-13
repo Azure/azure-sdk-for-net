@@ -12,62 +12,35 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// A voicelive server event.
-    /// Please note <see cref="ServerEvent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ServerEventConversationItemCreated"/>, <see cref="ServerEventConversationItemDeleted"/>, <see cref="ServerEventConversationItemInputAudioTranscriptionCompleted"/>, <see cref="ServerEventConversationItemInputAudioTranscriptionDelta"/>, <see cref="ServerEventConversationItemInputAudioTranscriptionFailed"/>, <see cref="ServerEventConversationItemRetrieved"/>, <see cref="ServerEventConversationItemTruncated"/>, <see cref="ServerEventError"/>, <see cref="ServerEventInputAudioBufferCleared"/>, <see cref="ServerEventInputAudioBufferCommitted"/>, <see cref="ServerEventInputAudioBufferSpeechStarted"/>, <see cref="ServerEventInputAudioBufferSpeechStopped"/>, <see cref="ResponseAnimationBlendshapeDeltaEvent"/>, <see cref="ResponseAnimationBlendshapeDoneEvent"/>, <see cref="ResponseAnimationVisemeDeltaEvent"/>, <see cref="ResponseAnimationVisemeDoneEvent"/>, <see cref="ResponseAudioTimestampDeltaEvent"/>, <see cref="ResponseAudioTimestampDoneEvent"/>, <see cref="ServerEventResponseAudioTranscriptDelta"/>, <see cref="ServerEventResponseAudioTranscriptDone"/>, <see cref="ServerEventResponseAudioDelta"/>, <see cref="ServerEventResponseAudioDone"/>, <see cref="ServerEventResponseContentPartAdded"/>, <see cref="ServerEventResponseContentPartDone"/>, <see cref="ServerEventResponseCreated"/>, <see cref="ServerEventResponseDone"/>, <see cref="ResponseEmotionHypothesis"/>, <see cref="ServerEventResponseFunctionCallArgumentsDelta"/>, <see cref="ServerEventResponseFunctionCallArgumentsDone"/>, <see cref="ServerEventResponseOutputItemAdded"/>, <see cref="ServerEventResponseOutputItemDone"/>, <see cref="ServerEventResponseTextDelta"/>, <see cref="ServerEventResponseTextDone"/>, <see cref="ServerEventSessionAvatarConnecting"/>, <see cref="ServerEventSessionCreated"/> and <see cref="ServerEventSessionUpdated"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ServerEventSessionAvatarConnecting"/>, <see cref="ServerEventSessionCreated"/>, <see cref="ServerEventSessionUpdated"/>, <see cref="ServerEventError"/>, <see cref="ServerEventResponseTextDelta"/>, <see cref="ServerEventResponseAudioDelta"/>, <see cref="ServerEventConversationItemCreated"/>, <see cref="ServerEventConversationItemDeleted"/>, <see cref="ServerEventConversationItemRetrieved"/>, <see cref="ServerEventConversationItemTruncated"/>, <see cref="ServerEventConversationItemInputAudioTranscriptionCompleted"/>, <see cref="ServerEventConversationItemInputAudioTranscriptionDelta"/>, <see cref="ServerEventConversationItemInputAudioTranscriptionFailed"/>, <see cref="ServerEventInputAudioBufferCommitted"/>, <see cref="ServerEventInputAudioBufferCleared"/>, <see cref="ServerEventInputAudioBufferSpeechStarted"/>, <see cref="ServerEventInputAudioBufferSpeechStopped"/>, <see cref="ServerEventResponseCreated"/>, <see cref="ServerEventResponseDone"/>, <see cref="ServerEventResponseOutputItemAdded"/>, <see cref="ServerEventResponseOutputItemDone"/>, <see cref="ServerEventResponseContentPartAdded"/>, <see cref="ServerEventResponseContentPartDone"/>, <see cref="ServerEventResponseTextDone"/>, <see cref="ServerEventResponseAudioTranscriptDelta"/>, <see cref="ServerEventResponseAudioTranscriptDone"/>, <see cref="ServerEventResponseAudioDone"/>, <see cref="ServerEventResponseFunctionCallArgumentsDelta"/>, <see cref="ServerEventResponseFunctionCallArgumentsDone"/>, <see cref="ResponseAnimationBlendshapeDeltaEvent"/>, <see cref="ResponseAnimationBlendshapeDoneEvent"/>, <see cref="ResponseEmotionHypothesis"/>, <see cref="ResponseAudioTimestampDeltaEvent"/>, <see cref="ResponseAudioTimestampDoneEvent"/>, <see cref="ResponseAnimationVisemeDeltaEvent"/>, and <see cref="ResponseAnimationVisemeDoneEvent"/>.
     /// </summary>
     public abstract partial class ServerEvent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServerEvent"/>. </summary>
-        protected ServerEvent()
+        /// <param name="type"> The type of event. </param>
+        private protected ServerEvent(ServerEventType @type)
         {
+            Type = @type;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServerEvent"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServerEvent(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServerEvent(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = type;
+            Type = @type;
             EventId = eventId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of event. </summary>
         internal ServerEventType Type { get; set; }
-        /// <summary> Gets the event id. </summary>
-        public string EventId { get; }
+
+        /// <summary> Gets the EventId. </summary>
+        public virtual string EventId { get; }
     }
 }

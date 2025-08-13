@@ -7,16 +7,16 @@
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The ResponseStatusDetailsReason. </summary>
+    /// <summary></summary>
     public enum ResponseStatusDetailsReason
     {
-        /// <summary> turn_detected. </summary>
+        /// <summary> TurnDetected. </summary>
         TurnDetected,
-        /// <summary> client_cancelled. </summary>
+        /// <summary> ClientCancelled. </summary>
         ClientCancelled,
-        /// <summary> max_output_tokens. </summary>
+        /// <summary> MaxOutputTokens. </summary>
         MaxOutputTokens,
-        /// <summary> content_filter. </summary>
+        /// <summary> ContentFilter. </summary>
         ContentFilter
     }
 }

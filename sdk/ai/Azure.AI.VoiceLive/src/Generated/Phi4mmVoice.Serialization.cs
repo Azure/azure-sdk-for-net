@@ -11,15 +11,20 @@ namespace Azure.AI.VoiceLive
 {
     internal static partial class Phi4mmVoiceExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this Phi4mmVoice value) => value switch
         {
             Phi4mmVoice.Cosyvoice => "cosyvoice",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown Phi4mmVoice value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static Phi4mmVoice ToPhi4mmVoice(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "cosyvoice")) return Phi4mmVoice.Cosyvoice;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "cosyvoice"))
+            {
+                return Phi4mmVoice.Cosyvoice;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown Phi4mmVoice value.");
         }
     }

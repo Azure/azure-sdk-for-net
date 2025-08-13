@@ -24,12 +24,8 @@ namespace Azure.AI.VoiceLive
         /// `min_silence_duration_ms` configured in the Session.
         /// </param>
         /// <param name="itemId"> The ID of the user message item that will be created. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="itemId"/> is null. </exception>
-        internal ServerEventInputAudioBufferSpeechStopped(int audioEndMs, string itemId)
+        internal ServerEventInputAudioBufferSpeechStopped(int audioEndMs, string itemId) : base(ServerEventType.InputAudioBufferSpeechStopped)
         {
-            Argument.AssertNotNull(itemId, nameof(itemId));
-
-            Type = ServerEventType.InputAudioBufferSpeechStopped;
             AudioEndMs = audioEndMs;
             ItemId = itemId;
         }
@@ -37,22 +33,17 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ServerEventInputAudioBufferSpeechStopped"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="audioEndMs">
         /// Milliseconds since the session started when speech stopped. This will
         /// correspond to the end of audio sent to the model, and thus includes the
         /// `min_silence_duration_ms` configured in the Session.
         /// </param>
         /// <param name="itemId"> The ID of the user message item that will be created. </param>
-        internal ServerEventInputAudioBufferSpeechStopped(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, int audioEndMs, string itemId) : base(type, eventId, serializedAdditionalRawData)
+        internal ServerEventInputAudioBufferSpeechStopped(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, int audioEndMs, string itemId) : base(@type, eventId, additionalBinaryDataProperties)
         {
             AudioEndMs = audioEndMs;
             ItemId = itemId;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ServerEventInputAudioBufferSpeechStopped"/> for deserialization. </summary>
-        internal ServerEventInputAudioBufferSpeechStopped()
-        {
         }
 
         /// <summary>
@@ -61,6 +52,7 @@ namespace Azure.AI.VoiceLive
         /// `min_silence_duration_ms` configured in the Session.
         /// </summary>
         public int AudioEndMs { get; }
+
         /// <summary> The ID of the user message item that will be created. </summary>
         public string ItemId { get; }
     }

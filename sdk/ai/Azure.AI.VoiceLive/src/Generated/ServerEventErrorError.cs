@@ -13,48 +13,15 @@ namespace Azure.AI.VoiceLive
     /// <summary> The ServerEventErrorError. </summary>
     public partial class ServerEventErrorError
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServerEventErrorError"/>. </summary>
         /// <param name="type"> The type of error (e.g., "invalid_request_error", "server_error"). </param>
         /// <param name="message"> A human-readable error message. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="type"/> or <paramref name="message"/> is null. </exception>
-        internal ServerEventErrorError(string type, string message)
+        internal ServerEventErrorError(string @type, string message)
         {
-            Argument.AssertNotNull(type, nameof(type));
-            Argument.AssertNotNull(message, nameof(message));
-
-            Type = type;
+            Type = @type;
             Message = message;
         }
 
@@ -64,30 +31,29 @@ namespace Azure.AI.VoiceLive
         /// <param name="message"> A human-readable error message. </param>
         /// <param name="param"> Parameter related to the error, if any. </param>
         /// <param name="eventId"> The event_id of the client event that caused the error, if applicable. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServerEventErrorError(string type, string code, string message, string param, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServerEventErrorError(string @type, string code, string message, string @param, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = type;
+            Type = @type;
             Code = code;
             Message = message;
-            Param = param;
+            Param = @param;
             EventId = eventId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ServerEventErrorError"/> for deserialization. </summary>
-        internal ServerEventErrorError()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of error (e.g., "invalid_request_error", "server_error"). </summary>
         public string Type { get; }
+
         /// <summary> Error code, if any. </summary>
         public string Code { get; }
+
         /// <summary> A human-readable error message. </summary>
         public string Message { get; }
+
         /// <summary> Parameter related to the error, if any. </summary>
         public string Param { get; }
+
         /// <summary> The event_id of the client event that caused the error, if applicable. </summary>
         public string EventId { get; }
     }

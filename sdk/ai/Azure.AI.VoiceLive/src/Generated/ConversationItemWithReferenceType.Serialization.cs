@@ -11,6 +11,7 @@ namespace Azure.AI.VoiceLive
 {
     internal static partial class ConversationItemWithReferenceTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ConversationItemWithReferenceType value) => value switch
         {
             ConversationItemWithReferenceType.Message => "message",
@@ -19,11 +20,21 @@ namespace Azure.AI.VoiceLive
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ConversationItemWithReferenceType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ConversationItemWithReferenceType ToConversationItemWithReferenceType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "message")) return ConversationItemWithReferenceType.Message;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "function_call")) return ConversationItemWithReferenceType.FunctionCall;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "function_call_output")) return ConversationItemWithReferenceType.FunctionCallOutput;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "message"))
+            {
+                return ConversationItemWithReferenceType.Message;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "function_call"))
+            {
+                return ConversationItemWithReferenceType.FunctionCall;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "function_call_output"))
+            {
+                return ConversationItemWithReferenceType.FunctionCallOutput;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ConversationItemWithReferenceType value.");
         }
     }

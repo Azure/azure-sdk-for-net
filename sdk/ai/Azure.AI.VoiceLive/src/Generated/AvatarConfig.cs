@@ -13,37 +13,8 @@ namespace Azure.AI.VoiceLive
     /// <summary> Configuration for avatar streaming and behavior during the session. </summary>
     public partial class AvatarConfig
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AvatarConfig"/>. </summary>
         /// <param name="character"> The character name or ID used for the avatar. </param>
@@ -64,30 +35,29 @@ namespace Azure.AI.VoiceLive
         /// <param name="style"> Optional avatar style, such as emotional tone or speaking style. </param>
         /// <param name="customized"> Indicates whether the avatar is customized or not. </param>
         /// <param name="video"> Optional video configuration including resolution, bitrate, and codec. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvatarConfig(IList<IceServer> iceServers, string character, string style, bool customized, VideoParams video, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AvatarConfig(IList<IceServer> iceServers, string character, string style, bool customized, VideoParams video, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IceServers = iceServers;
             Character = character;
             Style = style;
             Customized = customized;
             Video = video;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AvatarConfig"/> for deserialization. </summary>
-        internal AvatarConfig()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Optional list of ICE servers to use for WebRTC connection establishment. </summary>
         public IList<IceServer> IceServers { get; }
+
         /// <summary> The character name or ID used for the avatar. </summary>
         public string Character { get; set; }
+
         /// <summary> Optional avatar style, such as emotional tone or speaking style. </summary>
         public string Style { get; set; }
+
         /// <summary> Indicates whether the avatar is customized or not. </summary>
         public bool Customized { get; set; }
+
         /// <summary> Optional video configuration including resolution, bitrate, and codec. </summary>
         public VideoParams Video { get; set; }
     }

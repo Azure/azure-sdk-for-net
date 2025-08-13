@@ -14,6 +14,5 @@ namespace Azure.AI.VoiceLive
     /// </summary>
     public abstract class VoiceBase
     {
-        internal abstract BinaryData ToBinaryData();
     }
 }

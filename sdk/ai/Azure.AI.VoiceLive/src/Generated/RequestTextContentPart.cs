@@ -14,21 +14,20 @@ namespace Azure.AI.VoiceLive
     public partial class RequestTextContentPart : ContentPart
     {
         /// <summary> Initializes a new instance of <see cref="RequestTextContentPart"/>. </summary>
-        public RequestTextContentPart()
+        public RequestTextContentPart() : base(ContentPartType.InputText)
         {
-            Type = ContentPartType.InputText;
         }
 
         /// <summary> Initializes a new instance of <see cref="RequestTextContentPart"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="text"></param>
-        internal RequestTextContentPart(ContentPartType type, IDictionary<string, BinaryData> serializedAdditionalRawData, string text) : base(type, serializedAdditionalRawData)
+        internal RequestTextContentPart(ContentPartType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string text) : base(@type, additionalBinaryDataProperties)
         {
             Text = text;
         }
 
-        /// <summary> Gets or sets the text. </summary>
+        /// <summary> Gets or sets the Text. </summary>
         public string Text { get; set; }
     }
 }

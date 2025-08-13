@@ -23,16 +23,8 @@ namespace Azure.AI.VoiceLive
         /// <param name="callId"> The ID of the function call. </param>
         /// <param name="arguments"> The final arguments as a JSON string. </param>
         /// <param name="name"> The name of the function call. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="responseId"/>, <paramref name="itemId"/>, <paramref name="callId"/>, <paramref name="arguments"/> or <paramref name="name"/> is null. </exception>
-        internal ServerEventResponseFunctionCallArgumentsDone(string responseId, string itemId, int outputIndex, string callId, string arguments, string name)
+        internal ServerEventResponseFunctionCallArgumentsDone(string responseId, string itemId, int outputIndex, string callId, string arguments, string name) : base(ServerEventType.ResponseFunctionCallArgumentsDone)
         {
-            Argument.AssertNotNull(responseId, nameof(responseId));
-            Argument.AssertNotNull(itemId, nameof(itemId));
-            Argument.AssertNotNull(callId, nameof(callId));
-            Argument.AssertNotNull(arguments, nameof(arguments));
-            Argument.AssertNotNull(name, nameof(name));
-
-            Type = ServerEventType.ResponseFunctionCallArgumentsDone;
             ResponseId = responseId;
             ItemId = itemId;
             OutputIndex = outputIndex;
@@ -44,14 +36,14 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseFunctionCallArgumentsDone"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="responseId"> The ID of the response. </param>
         /// <param name="itemId"> The ID of the function call item. </param>
         /// <param name="outputIndex"> The index of the output item in the response. </param>
         /// <param name="callId"> The ID of the function call. </param>
         /// <param name="arguments"> The final arguments as a JSON string. </param>
         /// <param name="name"> The name of the function call. </param>
-        internal ServerEventResponseFunctionCallArgumentsDone(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string responseId, string itemId, int outputIndex, string callId, string arguments, string name) : base(type, eventId, serializedAdditionalRawData)
+        internal ServerEventResponseFunctionCallArgumentsDone(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, string callId, string arguments, string name) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             ItemId = itemId;
@@ -61,21 +53,21 @@ namespace Azure.AI.VoiceLive
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServerEventResponseFunctionCallArgumentsDone"/> for deserialization. </summary>
-        internal ServerEventResponseFunctionCallArgumentsDone()
-        {
-        }
-
         /// <summary> The ID of the response. </summary>
         public string ResponseId { get; }
+
         /// <summary> The ID of the function call item. </summary>
         public string ItemId { get; }
+
         /// <summary> The index of the output item in the response. </summary>
         public int OutputIndex { get; }
+
         /// <summary> The ID of the function call. </summary>
         public string CallId { get; }
+
         /// <summary> The final arguments as a JSON string. </summary>
         public string Arguments { get; }
+
         /// <summary> The name of the function call. </summary>
         public string Name { get; }
     }

@@ -10,19 +10,18 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary>  Appends audio data to an ongoing input turn. </summary>
+    /// <summary>   Appends audio data to an ongoing input turn. </summary>
     public partial class ClientEventInputAudioTurnAppend : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioTurnAppend"/>. </summary>
         /// <param name="turnId"> The ID of the turn this audio is part of. </param>
         /// <param name="audio"> Base64-encoded audio chunk. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="turnId"/> or <paramref name="audio"/> is null. </exception>
-        public ClientEventInputAudioTurnAppend(string turnId, string audio)
+        public ClientEventInputAudioTurnAppend(string turnId, string audio) : base("input_audio.turn.append")
         {
             Argument.AssertNotNull(turnId, nameof(turnId));
             Argument.AssertNotNull(audio, nameof(audio));
 
-            Type = "input_audio.turn.append";
             TurnId = turnId;
             Audio = audio;
         }
@@ -30,22 +29,18 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioTurnAppend"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="turnId"> The ID of the turn this audio is part of. </param>
         /// <param name="audio"> Base64-encoded audio chunk. </param>
-        internal ClientEventInputAudioTurnAppend(string type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string turnId, string audio) : base(type, eventId, serializedAdditionalRawData)
+        internal ClientEventInputAudioTurnAppend(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string turnId, string audio) : base(@type, eventId, additionalBinaryDataProperties)
         {
             TurnId = turnId;
             Audio = audio;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioTurnAppend"/> for deserialization. </summary>
-        internal ClientEventInputAudioTurnAppend()
-        {
-        }
-
         /// <summary> The ID of the turn this audio is part of. </summary>
         public string TurnId { get; }
+
         /// <summary> Base64-encoded audio chunk. </summary>
         public string Audio { get; }
     }

@@ -9,14 +9,22 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.VoiceLive
 {
-    public partial class ClientEventConversationItemCreate : IUtf8JsonSerializable, IJsonModel<ClientEventConversationItemCreate>
+    /// <summary>
+    /// Add a new Item to the Conversation's context, including messages, function
+    /// calls, and function call responses. This event can be used both to populate a
+    /// "history" of the conversation and to add new items mid-stream, but has the
+    /// current limitation that it cannot populate assistant audio messages.
+    /// 
+    /// If successful, the server will respond with a `conversation.item.created`
+    /// event, otherwise an `error` event will be sent.
+    /// </summary>
+    public partial class ClientEventConversationItemCreate : IJsonModel<ClientEventConversationItemCreate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClientEventConversationItemCreate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ClientEventConversationItemCreate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,13 +36,17 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClientEventConversationItemCreate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClientEventConversationItemCreate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ClientEventConversationItemCreate)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(EventId))
+            {
+                writer.WritePropertyName("event_id"u8);
+                writer.WriteStringValue(EventId);
+            }
             if (Optional.IsDefined(PreviousItemId))
             {
                 writer.WritePropertyName("previous_item_id"u8);
@@ -47,71 +59,77 @@ namespace Azure.AI.VoiceLive
             }
         }
 
-        ClientEventConversationItemCreate IJsonModel<ClientEventConversationItemCreate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ClientEventConversationItemCreate IJsonModel<ClientEventConversationItemCreate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ClientEventConversationItemCreate)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ClientEvent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClientEventConversationItemCreate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClientEventConversationItemCreate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ClientEventConversationItemCreate)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeClientEventConversationItemCreate(document.RootElement, options);
         }
 
-        internal static ClientEventConversationItemCreate DeserializeClientEventConversationItemCreate(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ClientEventConversationItemCreate DeserializeClientEventConversationItemCreate(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string @type = "conversation.item.create";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string eventId = default;
             string previousItemId = default;
             ConversationItemWithReference item = default;
-            string type = default;
-            string eventId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("previous_item_id"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    previousItemId = property.Value.GetString();
+                    @type = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("item"u8))
+                if (prop.NameEquals("event_id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    eventId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("previous_item_id"u8))
+                {
+                    previousItemId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("item"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    item = ConversationItemWithReference.DeserializeConversationItemWithReference(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("event_id"u8))
-                {
-                    eventId = property.Value.GetString();
+                    item = ConversationItemWithReference.DeserializeConversationItemWithReference(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ClientEventConversationItemCreate(type, eventId, serializedAdditionalRawData, previousItemId, item);
+            return new ClientEventConversationItemCreate(@type, additionalBinaryDataProperties, eventId, previousItemId, item);
         }
 
-        BinaryData IPersistableModel<ClientEventConversationItemCreate>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ClientEventConversationItemCreate>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ClientEventConversationItemCreate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ClientEventConversationItemCreate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -121,15 +139,20 @@ namespace Azure.AI.VoiceLive
             }
         }
 
-        ClientEventConversationItemCreate IPersistableModel<ClientEventConversationItemCreate>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ClientEventConversationItemCreate>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ClientEventConversationItemCreate IPersistableModel<ClientEventConversationItemCreate>.Create(BinaryData data, ModelReaderWriterOptions options) => (ClientEventConversationItemCreate)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ClientEvent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ClientEventConversationItemCreate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeClientEventConversationItemCreate(document.RootElement, options);
                     }
                 default:
@@ -137,22 +160,7 @@ namespace Azure.AI.VoiceLive
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ClientEventConversationItemCreate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new ClientEventConversationItemCreate FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeClientEventConversationItemCreate(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

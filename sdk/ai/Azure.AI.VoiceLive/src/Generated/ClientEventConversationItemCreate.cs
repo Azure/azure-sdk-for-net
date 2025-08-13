@@ -15,22 +15,21 @@ namespace Azure.AI.VoiceLive
     /// calls, and function call responses. This event can be used both to populate a
     /// "history" of the conversation and to add new items mid-stream, but has the
     /// current limitation that it cannot populate assistant audio messages.
-    ///
+    /// 
     /// If successful, the server will respond with a `conversation.item.created`
     /// event, otherwise an `error` event will be sent.
     /// </summary>
     public partial class ClientEventConversationItemCreate : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventConversationItemCreate"/>. </summary>
-        public ClientEventConversationItemCreate()
+        public ClientEventConversationItemCreate() : base("conversation.item.create")
         {
-            Type = "conversation.item.create";
         }
 
         /// <summary> Initializes a new instance of <see cref="ClientEventConversationItemCreate"/>. </summary>
         /// <param name="type"> The type of event. </param>
-        /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="eventId"> Optional client-generated ID used to identify this event. </param>
         /// <param name="previousItemId">
         /// The ID of the preceding item after which the new item will be inserted.
         /// If not set, the new item will be appended to the end of the conversation.
@@ -39,11 +38,14 @@ namespace Azure.AI.VoiceLive
         /// ID cannot be found, an error will be returned and the item will not be added.
         /// </param>
         /// <param name="item"></param>
-        internal ClientEventConversationItemCreate(string type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string previousItemId, ConversationItemWithReference item) : base(type, eventId, serializedAdditionalRawData)
+        internal ClientEventConversationItemCreate(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string eventId, string previousItemId, ConversationItemWithReference item) : base(@type, eventId, additionalBinaryDataProperties)
         {
             PreviousItemId = previousItemId;
             Item = item;
         }
+
+        /// <summary> Optional client-generated ID used to identify this event. </summary>
+        public override string EventId { get; set; }
 
         /// <summary>
         /// The ID of the preceding item after which the new item will be inserted.
@@ -53,7 +55,8 @@ namespace Azure.AI.VoiceLive
         /// ID cannot be found, an error will be returned and the item will not be added.
         /// </summary>
         public string PreviousItemId { get; set; }
-        /// <summary> Gets or sets the item. </summary>
+
+        /// <summary> Gets or sets the Item. </summary>
         public ConversationItemWithReference Item { get; set; }
     }
 }

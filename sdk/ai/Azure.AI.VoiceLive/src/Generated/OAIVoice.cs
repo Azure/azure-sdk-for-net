@@ -10,21 +10,21 @@ namespace Azure.AI.VoiceLive
     /// <summary> Voice identifier for OpenAI-provided voices. </summary>
     public enum OAIVoice
     {
-        /// <summary> alloy. </summary>
+        /// <summary> Alloy. </summary>
         Alloy,
-        /// <summary> ash. </summary>
+        /// <summary> Ash. </summary>
         Ash,
-        /// <summary> ballad. </summary>
+        /// <summary> Ballad. </summary>
         Ballad,
-        /// <summary> coral. </summary>
+        /// <summary> Coral. </summary>
         Coral,
-        /// <summary> echo. </summary>
+        /// <summary> Echo. </summary>
         Echo,
-        /// <summary> sage. </summary>
+        /// <summary> Sage. </summary>
         Sage,
-        /// <summary> shimmer. </summary>
+        /// <summary> Shimmer. </summary>
         Shimmer,
-        /// <summary> verse. </summary>
+        /// <summary> Verse. </summary>
         Verse
     }
 }

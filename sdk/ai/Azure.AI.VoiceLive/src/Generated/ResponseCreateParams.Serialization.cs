@@ -9,14 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.VoiceLive
 {
-    public partial class ResponseCreateParams : IUtf8JsonSerializable, IJsonModel<ResponseCreateParams>
+    /// <summary> Create a new VoiceLive response with these parameters. </summary>
+    public partial class ResponseCreateParams : IJsonModel<ResponseCreateParams>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResponseCreateParams>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResponseCreateParams>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +28,11 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResponseCreateParams>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResponseCreateParams>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResponseCreateParams)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Commit))
             {
                 writer.WritePropertyName("commit"u8);
@@ -48,7 +47,7 @@ namespace Azure.AI.VoiceLive
             {
                 writer.WritePropertyName("append_input_items"u8);
                 writer.WriteStartArray();
-                foreach (var item in AppendInputItems)
+                foreach (ConversationRequestItem item in AppendInputItems)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -58,7 +57,7 @@ namespace Azure.AI.VoiceLive
             {
                 writer.WritePropertyName("input_items"u8);
                 writer.WriteStartArray();
-                foreach (var item in InputItems)
+                foreach (ConversationRequestItem item in InputItems)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -68,7 +67,7 @@ namespace Azure.AI.VoiceLive
             {
                 writer.WritePropertyName("modalities"u8);
                 writer.WriteStartArray();
-                foreach (var item in Modalities)
+                foreach (InputModality item in Modalities)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -83,9 +82,9 @@ namespace Azure.AI.VoiceLive
             {
                 writer.WritePropertyName("voice"u8);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(Voice);
+                writer.WriteRawValue(Voice);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Voice, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(Voice))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -100,7 +99,7 @@ namespace Azure.AI.VoiceLive
             {
                 writer.WritePropertyName("tools"u8);
                 writer.WriteStartArray();
-                foreach (var item in Tools)
+                foreach (ToolCall item in Tools)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -120,23 +119,23 @@ namespace Azure.AI.VoiceLive
             {
                 writer.WritePropertyName("max_output_tokens"u8);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(MaxOutputTokens);
+                writer.WriteRawValue(MaxOutputTokens);
 #else
-                using (JsonDocument document = JsonDocument.Parse(MaxOutputTokens, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(MaxOutputTokens))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -145,22 +144,27 @@ namespace Azure.AI.VoiceLive
             }
         }
 
-        ResponseCreateParams IJsonModel<ResponseCreateParams>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResponseCreateParams IJsonModel<ResponseCreateParams>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResponseCreateParams JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResponseCreateParams>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResponseCreateParams>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResponseCreateParams)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeResponseCreateParams(document.RootElement, options);
         }
 
-        internal static ResponseCreateParams DeserializeResponseCreateParams(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ResponseCreateParams DeserializeResponseCreateParams(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -177,136 +181,134 @@ namespace Azure.AI.VoiceLive
             string toolChoice = default;
             float? temperature = default;
             BinaryData maxOutputTokens = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("commit"u8))
+                if (prop.NameEquals("commit"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    commit = property.Value.GetBoolean();
+                    commit = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("cancel_previous"u8))
+                if (prop.NameEquals("cancel_previous"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cancelPrevious = property.Value.GetBoolean();
+                    cancelPrevious = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("append_input_items"u8))
+                if (prop.NameEquals("append_input_items"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ConversationRequestItem> array = new List<ConversationRequestItem>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ConversationRequestItem.DeserializeConversationRequestItem(item, options));
                     }
                     appendInputItems = array;
                     continue;
                 }
-                if (property.NameEquals("input_items"u8))
+                if (prop.NameEquals("input_items"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ConversationRequestItem> array = new List<ConversationRequestItem>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ConversationRequestItem.DeserializeConversationRequestItem(item, options));
                     }
                     inputItems = array;
                     continue;
                 }
-                if (property.NameEquals("modalities"u8))
+                if (prop.NameEquals("modalities"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<InputModality> array = new List<InputModality>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new InputModality(item.GetString()));
                     }
                     modalities = array;
                     continue;
                 }
-                if (property.NameEquals("instructions"u8))
+                if (prop.NameEquals("instructions"u8))
                 {
-                    instructions = property.Value.GetString();
+                    instructions = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("voice"u8))
+                if (prop.NameEquals("voice"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    voice = BinaryData.FromString(property.Value.GetRawText());
+                    voice = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("output_audio_format"u8))
+                if (prop.NameEquals("output_audio_format"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    outputAudioFormat = new AudioFormat(property.Value.GetString());
+                    outputAudioFormat = new AudioFormat(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tools"u8))
+                if (prop.NameEquals("tools"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ToolCall> array = new List<ToolCall>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ToolCall.DeserializeToolCall(item, options));
                     }
                     tools = array;
                     continue;
                 }
-                if (property.NameEquals("tool_choice"u8))
+                if (prop.NameEquals("tool_choice"u8))
                 {
-                    toolChoice = property.Value.GetString();
+                    toolChoice = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("temperature"u8))
+                if (prop.NameEquals("temperature"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    temperature = property.Value.GetSingle();
+                    temperature = prop.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("max_output_tokens"u8))
+                if (prop.NameEquals("max_output_tokens"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxOutputTokens = BinaryData.FromString(property.Value.GetRawText());
+                    maxOutputTokens = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ResponseCreateParams(
                 commit,
                 cancelPrevious,
@@ -320,13 +322,16 @@ namespace Azure.AI.VoiceLive
                 toolChoice,
                 temperature,
                 maxOutputTokens,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ResponseCreateParams>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ResponseCreateParams>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ResponseCreateParams>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResponseCreateParams>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -336,15 +341,20 @@ namespace Azure.AI.VoiceLive
             }
         }
 
-        ResponseCreateParams IPersistableModel<ResponseCreateParams>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ResponseCreateParams>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResponseCreateParams IPersistableModel<ResponseCreateParams>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResponseCreateParams PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResponseCreateParams>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeResponseCreateParams(document.RootElement, options);
                     }
                 default:
@@ -352,22 +362,7 @@ namespace Azure.AI.VoiceLive
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ResponseCreateParams>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ResponseCreateParams FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeResponseCreateParams(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

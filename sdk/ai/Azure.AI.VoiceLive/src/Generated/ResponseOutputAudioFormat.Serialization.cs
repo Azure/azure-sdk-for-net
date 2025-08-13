@@ -11,6 +11,7 @@ namespace Azure.AI.VoiceLive
 {
     internal static partial class ResponseOutputAudioFormatExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ResponseOutputAudioFormat value) => value switch
         {
             ResponseOutputAudioFormat.Pcm16 => "pcm16",
@@ -19,11 +20,21 @@ namespace Azure.AI.VoiceLive
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponseOutputAudioFormat value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ResponseOutputAudioFormat ToResponseOutputAudioFormat(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "pcm16")) return ResponseOutputAudioFormat.Pcm16;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "g711_ulaw")) return ResponseOutputAudioFormat.G711Ulaw;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "g711_alaw")) return ResponseOutputAudioFormat.G711Alaw;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "pcm16"))
+            {
+                return ResponseOutputAudioFormat.Pcm16;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "g711_ulaw"))
+            {
+                return ResponseOutputAudioFormat.G711Ulaw;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "g711_alaw"))
+            {
+                return ResponseOutputAudioFormat.G711Alaw;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponseOutputAudioFormat value.");
         }
     }

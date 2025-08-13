@@ -9,14 +9,30 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.VoiceLive
 {
-    public partial class ClientEventInputAudioBufferAppend : IUtf8JsonSerializable, IJsonModel<ClientEventInputAudioBufferAppend>
+    /// <summary>
+    /// Send this event to append audio bytes to the input audio buffer. The audio
+    /// buffer is temporary storage you can write to and later commit. In Server VAD
+    /// mode, the audio buffer is used to detect speech and the server will decide
+    /// when to commit. When Server VAD is disabled, you must commit the audio buffer
+    /// manually.
+    /// 
+    /// The client may choose how much audio to place in each event up to a maximum
+    /// of 15 MiB, for example streaming smaller chunks from the client may allow the
+    /// VAD to be more responsive. Unlike made other client events, the server will
+    /// not send a confirmation response to this event.
+    /// </summary>
+    public partial class ClientEventInputAudioBufferAppend : IJsonModel<ClientEventInputAudioBufferAppend>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClientEventInputAudioBufferAppend>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioBufferAppend"/> for deserialization. </summary>
+        internal ClientEventInputAudioBufferAppend()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ClientEventInputAudioBufferAppend>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,72 +44,77 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClientEventInputAudioBufferAppend>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClientEventInputAudioBufferAppend>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ClientEventInputAudioBufferAppend)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("audio"u8);
             writer.WriteStringValue(Audio);
         }
 
-        ClientEventInputAudioBufferAppend IJsonModel<ClientEventInputAudioBufferAppend>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ClientEventInputAudioBufferAppend IJsonModel<ClientEventInputAudioBufferAppend>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ClientEventInputAudioBufferAppend)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ClientEvent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClientEventInputAudioBufferAppend>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClientEventInputAudioBufferAppend>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ClientEventInputAudioBufferAppend)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeClientEventInputAudioBufferAppend(document.RootElement, options);
         }
 
-        internal static ClientEventInputAudioBufferAppend DeserializeClientEventInputAudioBufferAppend(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ClientEventInputAudioBufferAppend DeserializeClientEventInputAudioBufferAppend(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string audio = default;
-            string type = default;
+            string @type = "input_audio_buffer.append";
             string eventId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string audio = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("audio"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    audio = property.Value.GetString();
+                    @type = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("event_id"u8))
                 {
-                    type = property.Value.GetString();
+                    eventId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("event_id"u8))
+                if (prop.NameEquals("audio"u8))
                 {
-                    eventId = property.Value.GetString();
+                    audio = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ClientEventInputAudioBufferAppend(type, eventId, serializedAdditionalRawData, audio);
+            return new ClientEventInputAudioBufferAppend(@type, eventId, additionalBinaryDataProperties, audio);
         }
 
-        BinaryData IPersistableModel<ClientEventInputAudioBufferAppend>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ClientEventInputAudioBufferAppend>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ClientEventInputAudioBufferAppend>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ClientEventInputAudioBufferAppend>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -103,15 +124,20 @@ namespace Azure.AI.VoiceLive
             }
         }
 
-        ClientEventInputAudioBufferAppend IPersistableModel<ClientEventInputAudioBufferAppend>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ClientEventInputAudioBufferAppend>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ClientEventInputAudioBufferAppend IPersistableModel<ClientEventInputAudioBufferAppend>.Create(BinaryData data, ModelReaderWriterOptions options) => (ClientEventInputAudioBufferAppend)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ClientEvent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ClientEventInputAudioBufferAppend>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeClientEventInputAudioBufferAppend(document.RootElement, options);
                     }
                 default:
@@ -119,22 +145,7 @@ namespace Azure.AI.VoiceLive
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ClientEventInputAudioBufferAppend>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new ClientEventInputAudioBufferAppend FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeClientEventInputAudioBufferAppend(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

@@ -7,16 +7,16 @@
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The ConversationItemWithReferenceContentType. </summary>
+    /// <summary></summary>
     public enum ConversationItemWithReferenceContentType
     {
-        /// <summary> input_audio. </summary>
+        /// <summary> InputAudio. </summary>
         InputAudio,
-        /// <summary> input_text. </summary>
+        /// <summary> InputText. </summary>
         InputText,
-        /// <summary> item_reference. </summary>
+        /// <summary> ItemReference. </summary>
         ItemReference,
-        /// <summary> text. </summary>
+        /// <summary> Text. </summary>
         Text
     }
 }

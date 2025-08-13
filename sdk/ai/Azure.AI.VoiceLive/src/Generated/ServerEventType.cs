@@ -14,14 +14,6 @@ namespace Azure.AI.VoiceLive
     internal readonly partial struct ServerEventType : IEquatable<ServerEventType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ServerEventType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ServerEventType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ErrorValue = "error";
         private const string SessionAvatarConnectingValue = "session.avatar.connecting";
         private const string SessionCreatedValue = "session.created";
@@ -59,95 +51,154 @@ namespace Azure.AI.VoiceLive
         private const string ResponseFunctionCallArgumentsDeltaValue = "response.function_call_arguments.delta";
         private const string ResponseFunctionCallArgumentsDoneValue = "response.function_call_arguments.done";
 
-        /// <summary> error. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEventType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ServerEventType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Error. </summary>
         public static ServerEventType Error { get; } = new ServerEventType(ErrorValue);
-        /// <summary> session.avatar.connecting. </summary>
+
+        /// <summary> Gets the SessionAvatarConnecting. </summary>
         public static ServerEventType SessionAvatarConnecting { get; } = new ServerEventType(SessionAvatarConnectingValue);
-        /// <summary> session.created. </summary>
+
+        /// <summary> Gets the SessionCreated. </summary>
         public static ServerEventType SessionCreated { get; } = new ServerEventType(SessionCreatedValue);
-        /// <summary> session.updated. </summary>
+
+        /// <summary> Gets the SessionUpdated. </summary>
         public static ServerEventType SessionUpdated { get; } = new ServerEventType(SessionUpdatedValue);
-        /// <summary> conversation.item.input_audio_transcription.completed. </summary>
+
+        /// <summary> Gets the ConversationItemInputAudioTranscriptionCompleted. </summary>
         public static ServerEventType ConversationItemInputAudioTranscriptionCompleted { get; } = new ServerEventType(ConversationItemInputAudioTranscriptionCompletedValue);
-        /// <summary> conversation.item.input_audio_transcription.delta. </summary>
+
+        /// <summary> Gets the ConversationItemInputAudioTranscriptionDelta. </summary>
         public static ServerEventType ConversationItemInputAudioTranscriptionDelta { get; } = new ServerEventType(ConversationItemInputAudioTranscriptionDeltaValue);
-        /// <summary> conversation.item.input_audio_transcription.failed. </summary>
+
+        /// <summary> Gets the ConversationItemInputAudioTranscriptionFailed. </summary>
         public static ServerEventType ConversationItemInputAudioTranscriptionFailed { get; } = new ServerEventType(ConversationItemInputAudioTranscriptionFailedValue);
-        /// <summary> conversation.item.created. </summary>
+
+        /// <summary> Gets the ConversationItemCreated. </summary>
         public static ServerEventType ConversationItemCreated { get; } = new ServerEventType(ConversationItemCreatedValue);
-        /// <summary> conversation.item.retrieved. </summary>
+
+        /// <summary> Gets the ConversationItemRetrieved. </summary>
         public static ServerEventType ConversationItemRetrieved { get; } = new ServerEventType(ConversationItemRetrievedValue);
-        /// <summary> conversation.item.truncated. </summary>
+
+        /// <summary> Gets the ConversationItemTruncated. </summary>
         public static ServerEventType ConversationItemTruncated { get; } = new ServerEventType(ConversationItemTruncatedValue);
-        /// <summary> conversation.item.deleted. </summary>
+
+        /// <summary> Gets the ConversationItemDeleted. </summary>
         public static ServerEventType ConversationItemDeleted { get; } = new ServerEventType(ConversationItemDeletedValue);
-        /// <summary> input_audio_buffer.committed. </summary>
+
+        /// <summary> Gets the InputAudioBufferCommitted. </summary>
         public static ServerEventType InputAudioBufferCommitted { get; } = new ServerEventType(InputAudioBufferCommittedValue);
-        /// <summary> input_audio_buffer.cleared. </summary>
+
+        /// <summary> Gets the InputAudioBufferCleared. </summary>
         public static ServerEventType InputAudioBufferCleared { get; } = new ServerEventType(InputAudioBufferClearedValue);
-        /// <summary> input_audio_buffer.speech_started. </summary>
+
+        /// <summary> Gets the InputAudioBufferSpeechStarted. </summary>
         public static ServerEventType InputAudioBufferSpeechStarted { get; } = new ServerEventType(InputAudioBufferSpeechStartedValue);
-        /// <summary> input_audio_buffer.speech_stopped. </summary>
+
+        /// <summary> Gets the InputAudioBufferSpeechStopped. </summary>
         public static ServerEventType InputAudioBufferSpeechStopped { get; } = new ServerEventType(InputAudioBufferSpeechStoppedValue);
-        /// <summary> response.created. </summary>
+
+        /// <summary> Gets the ResponseCreated. </summary>
         public static ServerEventType ResponseCreated { get; } = new ServerEventType(ResponseCreatedValue);
-        /// <summary> response.done. </summary>
+
+        /// <summary> Gets the ResponseDone. </summary>
         public static ServerEventType ResponseDone { get; } = new ServerEventType(ResponseDoneValue);
-        /// <summary> response.output_item.added. </summary>
+
+        /// <summary> Gets the ResponseOutputItemAdded. </summary>
         public static ServerEventType ResponseOutputItemAdded { get; } = new ServerEventType(ResponseOutputItemAddedValue);
-        /// <summary> response.output_item.done. </summary>
+
+        /// <summary> Gets the ResponseOutputItemDone. </summary>
         public static ServerEventType ResponseOutputItemDone { get; } = new ServerEventType(ResponseOutputItemDoneValue);
-        /// <summary> response.content_part.added. </summary>
+
+        /// <summary> Gets the ResponseContentPartAdded. </summary>
         public static ServerEventType ResponseContentPartAdded { get; } = new ServerEventType(ResponseContentPartAddedValue);
-        /// <summary> response.content_part.done. </summary>
+
+        /// <summary> Gets the ResponseContentPartDone. </summary>
         public static ServerEventType ResponseContentPartDone { get; } = new ServerEventType(ResponseContentPartDoneValue);
-        /// <summary> response.text.delta. </summary>
+
+        /// <summary> Gets the ResponseTextDelta. </summary>
         public static ServerEventType ResponseTextDelta { get; } = new ServerEventType(ResponseTextDeltaValue);
-        /// <summary> response.text.done. </summary>
+
+        /// <summary> Gets the ResponseTextDone. </summary>
         public static ServerEventType ResponseTextDone { get; } = new ServerEventType(ResponseTextDoneValue);
-        /// <summary> response.audio_transcript.delta. </summary>
+
+        /// <summary> Gets the ResponseAudioTranscriptDelta. </summary>
         public static ServerEventType ResponseAudioTranscriptDelta { get; } = new ServerEventType(ResponseAudioTranscriptDeltaValue);
-        /// <summary> response.audio_transcript.done. </summary>
+
+        /// <summary> Gets the ResponseAudioTranscriptDone. </summary>
         public static ServerEventType ResponseAudioTranscriptDone { get; } = new ServerEventType(ResponseAudioTranscriptDoneValue);
-        /// <summary> response.audio.delta. </summary>
+
+        /// <summary> Gets the ResponseAudioDelta. </summary>
         public static ServerEventType ResponseAudioDelta { get; } = new ServerEventType(ResponseAudioDeltaValue);
-        /// <summary> response.audio.done. </summary>
+
+        /// <summary> Gets the ResponseAudioDone. </summary>
         public static ServerEventType ResponseAudioDone { get; } = new ServerEventType(ResponseAudioDoneValue);
-        /// <summary> response.animation_blendshapes.delta. </summary>
+
+        /// <summary> Gets the ResponseAnimationBlendshapesDelta. </summary>
         public static ServerEventType ResponseAnimationBlendshapesDelta { get; } = new ServerEventType(ResponseAnimationBlendshapesDeltaValue);
-        /// <summary> response.animation_blendshapes.done. </summary>
+
+        /// <summary> Gets the ResponseAnimationBlendshapesDone. </summary>
         public static ServerEventType ResponseAnimationBlendshapesDone { get; } = new ServerEventType(ResponseAnimationBlendshapesDoneValue);
-        /// <summary> response.emotion_hypothesis. </summary>
+
+        /// <summary> Gets the ResponseEmotionHypothesis. </summary>
         public static ServerEventType ResponseEmotionHypothesis { get; } = new ServerEventType(ResponseEmotionHypothesisValue);
-        /// <summary> response.audio_timestamp.delta. </summary>
+
+        /// <summary> Gets the ResponseAudioTimestampDelta. </summary>
         public static ServerEventType ResponseAudioTimestampDelta { get; } = new ServerEventType(ResponseAudioTimestampDeltaValue);
-        /// <summary> response.audio_timestamp.done. </summary>
+
+        /// <summary> Gets the ResponseAudioTimestampDone. </summary>
         public static ServerEventType ResponseAudioTimestampDone { get; } = new ServerEventType(ResponseAudioTimestampDoneValue);
-        /// <summary> response.animation_viseme.delta. </summary>
+
+        /// <summary> Gets the ResponseAnimationVisemeDelta. </summary>
         public static ServerEventType ResponseAnimationVisemeDelta { get; } = new ServerEventType(ResponseAnimationVisemeDeltaValue);
-        /// <summary> response.animation_viseme.done. </summary>
+
+        /// <summary> Gets the ResponseAnimationVisemeDone. </summary>
         public static ServerEventType ResponseAnimationVisemeDone { get; } = new ServerEventType(ResponseAnimationVisemeDoneValue);
-        /// <summary> response.function_call_arguments.delta. </summary>
+
+        /// <summary> Gets the ResponseFunctionCallArgumentsDelta. </summary>
         public static ServerEventType ResponseFunctionCallArgumentsDelta { get; } = new ServerEventType(ResponseFunctionCallArgumentsDeltaValue);
-        /// <summary> response.function_call_arguments.done. </summary>
+
+        /// <summary> Gets the ResponseFunctionCallArgumentsDone. </summary>
         public static ServerEventType ResponseFunctionCallArgumentsDone { get; } = new ServerEventType(ResponseFunctionCallArgumentsDoneValue);
+
         /// <summary> Determines if two <see cref="ServerEventType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServerEventType left, ServerEventType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServerEventType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServerEventType left, ServerEventType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServerEventType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServerEventType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServerEventType(string value) => new ServerEventType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServerEventType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServerEventType?(string value) => value == null ? null : new ServerEventType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServerEventType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServerEventType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

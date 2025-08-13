@@ -14,20 +14,19 @@ namespace Azure.AI.VoiceLive
     public partial class AzureSemanticVad : TurnDetection
     {
         /// <summary> Initializes a new instance of <see cref="AzureSemanticVad"/>. </summary>
-        public AzureSemanticVad()
+        public AzureSemanticVad() : base(TurnDetectionType.AzureSemanticVad)
         {
-            Type = TurnDetectionType.AzureSemanticVad;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureSemanticVad"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="negThreshold"></param>
         /// <param name="windowSize"></param>
         /// <param name="distinctCiPhones"></param>
         /// <param name="requireVowel"></param>
         /// <param name="removeFillerWords"></param>
-        internal AzureSemanticVad(TurnDetectionType type, IDictionary<string, BinaryData> serializedAdditionalRawData, float? negThreshold, int? windowSize, int? distinctCiPhones, bool? requireVowel, bool? removeFillerWords) : base(type, serializedAdditionalRawData)
+        internal AzureSemanticVad(TurnDetectionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? negThreshold, int? windowSize, int? distinctCiPhones, bool? requireVowel, bool? removeFillerWords) : base(@type, additionalBinaryDataProperties)
         {
             NegThreshold = negThreshold;
             WindowSize = windowSize;
@@ -36,15 +35,19 @@ namespace Azure.AI.VoiceLive
             RemoveFillerWords = removeFillerWords;
         }
 
-        /// <summary> Gets or sets the neg threshold. </summary>
+        /// <summary> Gets or sets the NegThreshold. </summary>
         public float? NegThreshold { get; set; }
-        /// <summary> Gets or sets the window size. </summary>
+
+        /// <summary> Gets or sets the WindowSize. </summary>
         public int? WindowSize { get; set; }
-        /// <summary> Gets or sets the distinct ci phones. </summary>
+
+        /// <summary> Gets or sets the DistinctCiPhones. </summary>
         public int? DistinctCiPhones { get; set; }
-        /// <summary> Gets or sets the require vowel. </summary>
+
+        /// <summary> Gets or sets the RequireVowel. </summary>
         public bool? RequireVowel { get; set; }
-        /// <summary> Gets or sets the remove filler words. </summary>
+
+        /// <summary> Gets or sets the RemoveFillerWords. </summary>
         public bool? RemoveFillerWords { get; set; }
     }
 }

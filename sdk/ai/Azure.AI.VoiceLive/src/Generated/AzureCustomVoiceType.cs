@@ -7,12 +7,12 @@
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The AzureCustomVoiceType. </summary>
+    /// <summary></summary>
     public enum AzureCustomVoiceType
     {
-        /// <summary> azure-custom. </summary>
+        /// <summary> AzureCustom. </summary>
         AzureCustom,
-        /// <summary> custom. </summary>
+        /// <summary> Custom. </summary>
         Custom
     }
 }

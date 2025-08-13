@@ -20,34 +20,26 @@ namespace Azure.AI.VoiceLive
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventInputAudioBufferCommitted"/>. </summary>
         /// <param name="itemId"> The ID of the user message item that will be created. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="itemId"/> is null. </exception>
-        internal ServerEventInputAudioBufferCommitted(string itemId)
+        internal ServerEventInputAudioBufferCommitted(string itemId) : base(ServerEventType.InputAudioBufferCommitted)
         {
-            Argument.AssertNotNull(itemId, nameof(itemId));
-
-            Type = ServerEventType.InputAudioBufferCommitted;
             ItemId = itemId;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServerEventInputAudioBufferCommitted"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="previousItemId"> The ID of the preceding item after which the new item will be inserted. </param>
         /// <param name="itemId"> The ID of the user message item that will be created. </param>
-        internal ServerEventInputAudioBufferCommitted(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string previousItemId, string itemId) : base(type, eventId, serializedAdditionalRawData)
+        internal ServerEventInputAudioBufferCommitted(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string previousItemId, string itemId) : base(@type, eventId, additionalBinaryDataProperties)
         {
             PreviousItemId = previousItemId;
             ItemId = itemId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServerEventInputAudioBufferCommitted"/> for deserialization. </summary>
-        internal ServerEventInputAudioBufferCommitted()
-        {
-        }
-
         /// <summary> The ID of the preceding item after which the new item will be inserted. </summary>
         public string PreviousItemId { get; }
+
         /// <summary> The ID of the user message item that will be created. </summary>
         public string ItemId { get; }
     }

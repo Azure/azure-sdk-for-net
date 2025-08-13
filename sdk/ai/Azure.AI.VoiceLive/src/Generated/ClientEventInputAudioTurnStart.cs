@@ -10,33 +10,27 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary>  Indicates the start of a new audio input turn. </summary>
+    /// <summary>   Indicates the start of a new audio input turn. </summary>
     public partial class ClientEventInputAudioTurnStart : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioTurnStart"/>. </summary>
         /// <param name="turnId"> Unique identifier for the input audio turn. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="turnId"/> is null. </exception>
-        public ClientEventInputAudioTurnStart(string turnId)
+        public ClientEventInputAudioTurnStart(string turnId) : base("input_audio.turn.start")
         {
             Argument.AssertNotNull(turnId, nameof(turnId));
 
-            Type = "input_audio.turn.start";
             TurnId = turnId;
         }
 
         /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioTurnStart"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="turnId"> Unique identifier for the input audio turn. </param>
-        internal ClientEventInputAudioTurnStart(string type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string turnId) : base(type, eventId, serializedAdditionalRawData)
+        internal ClientEventInputAudioTurnStart(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string turnId) : base(@type, eventId, additionalBinaryDataProperties)
         {
             TurnId = turnId;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioTurnStart"/> for deserialization. </summary>
-        internal ClientEventInputAudioTurnStart()
-        {
         }
 
         /// <summary> Unique identifier for the input audio turn. </summary>

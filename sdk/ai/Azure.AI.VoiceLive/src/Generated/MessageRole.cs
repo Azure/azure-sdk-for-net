@@ -10,45 +10,63 @@ using System.ComponentModel;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The MessageRole. </summary>
+    /// <summary></summary>
     public readonly partial struct MessageRole : IEquatable<MessageRole>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MessageRole"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MessageRole(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string SystemValue = "system";
         private const string UserValue = "user";
         private const string AssistantValue = "assistant";
 
-        /// <summary> system. </summary>
+        /// <summary> Initializes a new instance of <see cref="MessageRole"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MessageRole(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the System. </summary>
         public static MessageRole System { get; } = new MessageRole(SystemValue);
-        /// <summary> user. </summary>
+
+        /// <summary> Gets the User. </summary>
         public static MessageRole User { get; } = new MessageRole(UserValue);
-        /// <summary> assistant. </summary>
+
+        /// <summary> Gets the Assistant. </summary>
         public static MessageRole Assistant { get; } = new MessageRole(AssistantValue);
+
         /// <summary> Determines if two <see cref="MessageRole"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MessageRole left, MessageRole right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MessageRole"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MessageRole left, MessageRole right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MessageRole"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MessageRole"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MessageRole(string value) => new MessageRole(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MessageRole"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MessageRole?(string value) => value == null ? null : new MessageRole(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MessageRole other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MessageRole other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -10,11 +10,11 @@ namespace Azure.AI.VoiceLive
     /// <summary> Specifies the types of animation data to output. </summary>
     public enum AnimationOutputType
     {
-        /// <summary> blendshapes. </summary>
+        /// <summary> Blendshapes. </summary>
         Blendshapes,
-        /// <summary> viseme_id. </summary>
+        /// <summary> VisemeId. </summary>
         VisemeId,
-        /// <summary> emotion. </summary>
+        /// <summary> Emotion. </summary>
         Emotion
     }
 }

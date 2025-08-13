@@ -14,7 +14,7 @@ namespace Azure.AI.VoiceLive
     /// Returned when an earlier assistant audio message item is truncated by the
     /// client with a `conversation.item.truncate` event. This event is used to
     /// synchronize the server's understanding of the audio with the client's playback.
-    ///
+    /// 
     /// This action will truncate the audio and remove the server-side text transcript
     /// to ensure there is no text in the context that hasn't been heard by the user.
     /// </summary>
@@ -24,12 +24,8 @@ namespace Azure.AI.VoiceLive
         /// <param name="itemId"> The ID of the assistant message item that was truncated. </param>
         /// <param name="contentIndex"> The index of the content part that was truncated. </param>
         /// <param name="audioEndMs"> The duration up to which the audio was truncated, in milliseconds. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="itemId"/> is null. </exception>
-        internal ServerEventConversationItemTruncated(string itemId, int contentIndex, int audioEndMs)
+        internal ServerEventConversationItemTruncated(string itemId, int contentIndex, int audioEndMs) : base(ServerEventType.ConversationItemTruncated)
         {
-            Argument.AssertNotNull(itemId, nameof(itemId));
-
-            Type = ServerEventType.ConversationItemTruncated;
             ItemId = itemId;
             ContentIndex = contentIndex;
             AudioEndMs = audioEndMs;
@@ -37,28 +33,28 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Initializes a new instance of <see cref="ServerEventConversationItemTruncated"/>. </summary>
         /// <param name="type"> The type of event. </param>
-        /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemId"> The ID of the assistant message item that was truncated. </param>
         /// <param name="contentIndex"> The index of the content part that was truncated. </param>
         /// <param name="audioEndMs"> The duration up to which the audio was truncated, in milliseconds. </param>
-        internal ServerEventConversationItemTruncated(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemId, int contentIndex, int audioEndMs) : base(type, eventId, serializedAdditionalRawData)
+        /// <param name="eventId"></param>
+        internal ServerEventConversationItemTruncated(ServerEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, int contentIndex, int audioEndMs, string eventId) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ItemId = itemId;
             ContentIndex = contentIndex;
             AudioEndMs = audioEndMs;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServerEventConversationItemTruncated"/> for deserialization. </summary>
-        internal ServerEventConversationItemTruncated()
-        {
-        }
-
         /// <summary> The ID of the assistant message item that was truncated. </summary>
         public string ItemId { get; }
+
         /// <summary> The index of the content part that was truncated. </summary>
         public int ContentIndex { get; }
+
         /// <summary> The duration up to which the audio was truncated, in milliseconds. </summary>
         public int AudioEndMs { get; }
+
+        /// <summary> Gets the EventId. </summary>
+        public override string EventId { get; }
     }
 }

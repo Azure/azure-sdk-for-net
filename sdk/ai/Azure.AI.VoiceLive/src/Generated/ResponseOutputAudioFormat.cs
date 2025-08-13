@@ -7,14 +7,14 @@
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The ResponseOutputAudioFormat. </summary>
+    /// <summary></summary>
     public enum ResponseOutputAudioFormat
     {
-        /// <summary> pcm16. </summary>
+        /// <summary> Pcm16. </summary>
         Pcm16,
-        /// <summary> g711_ulaw. </summary>
+        /// <summary> G711Ulaw. </summary>
         G711Ulaw,
-        /// <summary> g711_alaw. </summary>
+        /// <summary> G711Alaw. </summary>
         G711Alaw
     }
 }

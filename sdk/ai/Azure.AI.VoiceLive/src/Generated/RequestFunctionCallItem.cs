@@ -18,13 +18,12 @@ namespace Azure.AI.VoiceLive
         /// <param name="callId"></param>
         /// <param name="arguments"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="callId"/> or <paramref name="arguments"/> is null. </exception>
-        public RequestFunctionCallItem(string name, string callId, string arguments)
+        public RequestFunctionCallItem(string name, string callId, string arguments) : base("function_call")
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(callId, nameof(callId));
             Argument.AssertNotNull(arguments, nameof(arguments));
 
-            Type = "function_call";
             Name = name;
             CallId = callId;
             Arguments = arguments;
@@ -33,12 +32,12 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="RequestFunctionCallItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"></param>
         /// <param name="callId"></param>
         /// <param name="arguments"></param>
         /// <param name="status"></param>
-        internal RequestFunctionCallItem(string type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, string callId, string arguments, ItemStatus? status) : base(type, id, serializedAdditionalRawData)
+        internal RequestFunctionCallItem(string @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string callId, string arguments, ItemStatus? status) : base(@type, id, additionalBinaryDataProperties)
         {
             Name = name;
             CallId = callId;
@@ -46,18 +45,16 @@ namespace Azure.AI.VoiceLive
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RequestFunctionCallItem"/> for deserialization. </summary>
-        internal RequestFunctionCallItem()
-        {
-        }
-
-        /// <summary> Gets the name. </summary>
+        /// <summary> Gets the Name. </summary>
         public string Name { get; }
-        /// <summary> Gets the call id. </summary>
+
+        /// <summary> Gets the CallId. </summary>
         public string CallId { get; }
-        /// <summary> Gets the arguments. </summary>
+
+        /// <summary> Gets the Arguments. </summary>
         public string Arguments { get; }
-        /// <summary> Gets or sets the status. </summary>
+
+        /// <summary> Gets or sets the Status. </summary>
         public ItemStatus? Status { get; set; }
     }
 }

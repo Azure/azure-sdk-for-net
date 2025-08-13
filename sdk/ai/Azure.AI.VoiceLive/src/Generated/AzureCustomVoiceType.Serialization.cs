@@ -11,6 +11,7 @@ namespace Azure.AI.VoiceLive
 {
     internal static partial class AzureCustomVoiceTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AzureCustomVoiceType value) => value switch
         {
             AzureCustomVoiceType.AzureCustom => "azure-custom",
@@ -18,10 +19,17 @@ namespace Azure.AI.VoiceLive
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AzureCustomVoiceType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static AzureCustomVoiceType ToAzureCustomVoiceType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "azure-custom")) return AzureCustomVoiceType.AzureCustom;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "custom")) return AzureCustomVoiceType.Custom;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "azure-custom"))
+            {
+                return AzureCustomVoiceType.AzureCustom;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "custom"))
+            {
+                return AzureCustomVoiceType.Custom;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AzureCustomVoiceType value.");
         }
     }

@@ -11,6 +11,7 @@ namespace Azure.AI.VoiceLive
 {
     internal static partial class ResponseStatusDetailsReasonExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ResponseStatusDetailsReason value) => value switch
         {
             ResponseStatusDetailsReason.TurnDetected => "turn_detected",
@@ -20,12 +21,25 @@ namespace Azure.AI.VoiceLive
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponseStatusDetailsReason value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ResponseStatusDetailsReason ToResponseStatusDetailsReason(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "turn_detected")) return ResponseStatusDetailsReason.TurnDetected;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "client_cancelled")) return ResponseStatusDetailsReason.ClientCancelled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "max_output_tokens")) return ResponseStatusDetailsReason.MaxOutputTokens;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "content_filter")) return ResponseStatusDetailsReason.ContentFilter;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "turn_detected"))
+            {
+                return ResponseStatusDetailsReason.TurnDetected;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "client_cancelled"))
+            {
+                return ResponseStatusDetailsReason.ClientCancelled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "max_output_tokens"))
+            {
+                return ResponseStatusDetailsReason.MaxOutputTokens;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "content_filter"))
+            {
+                return ResponseStatusDetailsReason.ContentFilter;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponseStatusDetailsReason value.");
         }
     }

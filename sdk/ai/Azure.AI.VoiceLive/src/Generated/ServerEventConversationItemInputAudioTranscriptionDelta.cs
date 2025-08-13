@@ -15,12 +15,8 @@ namespace Azure.AI.VoiceLive
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventConversationItemInputAudioTranscriptionDelta"/>. </summary>
         /// <param name="itemId"> The ID of the item. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="itemId"/> is null. </exception>
-        internal ServerEventConversationItemInputAudioTranscriptionDelta(string itemId)
+        internal ServerEventConversationItemInputAudioTranscriptionDelta(string itemId) : base(ServerEventType.ConversationItemInputAudioTranscriptionDelta)
         {
-            Argument.AssertNotNull(itemId, nameof(itemId));
-
-            Type = ServerEventType.ConversationItemInputAudioTranscriptionDelta;
             ItemId = itemId;
             Logprobs = new ChangeTrackingList<LogProbProperties>();
         }
@@ -28,12 +24,12 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ServerEventConversationItemInputAudioTranscriptionDelta"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemId"> The ID of the item. </param>
         /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
         /// <param name="delta"> The text delta. </param>
         /// <param name="logprobs"> The log probabilities of the transcription. </param>
-        internal ServerEventConversationItemInputAudioTranscriptionDelta(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemId, int? contentIndex, string delta, IReadOnlyList<LogProbProperties> logprobs) : base(type, eventId, serializedAdditionalRawData)
+        internal ServerEventConversationItemInputAudioTranscriptionDelta(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, int? contentIndex, string delta, IList<LogProbProperties> logprobs) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ItemId = itemId;
             ContentIndex = contentIndex;
@@ -41,18 +37,16 @@ namespace Azure.AI.VoiceLive
             Logprobs = logprobs;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServerEventConversationItemInputAudioTranscriptionDelta"/> for deserialization. </summary>
-        internal ServerEventConversationItemInputAudioTranscriptionDelta()
-        {
-        }
-
         /// <summary> The ID of the item. </summary>
         public string ItemId { get; }
+
         /// <summary> The index of the content part in the item's content array. </summary>
         public int? ContentIndex { get; }
+
         /// <summary> The text delta. </summary>
         public string Delta { get; }
+
         /// <summary> The log probabilities of the transcription. </summary>
-        public IReadOnlyList<LogProbProperties> Logprobs { get; }
+        public IList<LogProbProperties> Logprobs { get; }
     }
 }

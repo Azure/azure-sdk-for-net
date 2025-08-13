@@ -21,27 +21,21 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ClientEventConversationItemRetrieve"/>. </summary>
         /// <param name="itemId"> The ID of the item to retrieve. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="itemId"/> is null. </exception>
-        public ClientEventConversationItemRetrieve(string itemId)
+        public ClientEventConversationItemRetrieve(string itemId) : base("conversation.item.retrieve")
         {
             Argument.AssertNotNull(itemId, nameof(itemId));
 
-            Type = "conversation.item.retrieve";
             ItemId = itemId;
         }
 
         /// <summary> Initializes a new instance of <see cref="ClientEventConversationItemRetrieve"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemId"> The ID of the item to retrieve. </param>
-        internal ClientEventConversationItemRetrieve(string type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemId) : base(type, eventId, serializedAdditionalRawData)
+        internal ClientEventConversationItemRetrieve(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ItemId = itemId;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ClientEventConversationItemRetrieve"/> for deserialization. </summary>
-        internal ClientEventConversationItemRetrieve()
-        {
         }
 
         /// <summary> The ID of the item to retrieve. </summary>

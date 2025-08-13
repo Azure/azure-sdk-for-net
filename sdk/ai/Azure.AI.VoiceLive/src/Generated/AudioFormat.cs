@@ -10,45 +10,63 @@ using System.ComponentModel;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The AudioFormat. </summary>
+    /// <summary></summary>
     public readonly partial struct AudioFormat : IEquatable<AudioFormat>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="AudioFormat"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AudioFormat(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string Pcm16Value = "pcm16";
         private const string G711UlawValue = "g711_ulaw";
         private const string G711AlawValue = "g711_alaw";
 
-        /// <summary> pcm16. </summary>
+        /// <summary> Initializes a new instance of <see cref="AudioFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AudioFormat(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Pcm16. </summary>
         public static AudioFormat Pcm16 { get; } = new AudioFormat(Pcm16Value);
-        /// <summary> g711_ulaw. </summary>
+
+        /// <summary> Gets the G711Ulaw. </summary>
         public static AudioFormat G711Ulaw { get; } = new AudioFormat(G711UlawValue);
-        /// <summary> g711_alaw. </summary>
+
+        /// <summary> Gets the G711Alaw. </summary>
         public static AudioFormat G711Alaw { get; } = new AudioFormat(G711AlawValue);
+
         /// <summary> Determines if two <see cref="AudioFormat"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AudioFormat left, AudioFormat right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AudioFormat"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AudioFormat left, AudioFormat right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AudioFormat"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AudioFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AudioFormat(string value) => new AudioFormat(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AudioFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AudioFormat?(string value) => value == null ? null : new AudioFormat(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AudioFormat other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AudioFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

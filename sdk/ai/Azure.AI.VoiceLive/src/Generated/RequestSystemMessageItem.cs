@@ -17,32 +17,26 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="RequestSystemMessageItem"/>. </summary>
         /// <param name="content"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public RequestSystemMessageItem(IEnumerable<RequestTextContentPart> content)
+        public RequestSystemMessageItem(IEnumerable<RequestTextContentPart> content) : base("system")
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            Role = MessageRole.System;
             Content = content.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="RequestSystemMessageItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="role"></param>
         /// <param name="status"></param>
         /// <param name="content"></param>
-        internal RequestSystemMessageItem(string type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData, MessageRole role, ItemStatus? status, IList<RequestTextContentPart> content) : base(type, id, serializedAdditionalRawData, role, status)
+        internal RequestSystemMessageItem(string @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string role, ItemStatus? status, IList<RequestTextContentPart> content) : base(@type, id, additionalBinaryDataProperties, role, status)
         {
             Content = content;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RequestSystemMessageItem"/> for deserialization. </summary>
-        internal RequestSystemMessageItem()
-        {
-        }
-
-        /// <summary> Gets the content. </summary>
+        /// <summary> Gets the Content. </summary>
         public IList<RequestTextContentPart> Content { get; }
     }
 }

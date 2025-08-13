@@ -7,14 +7,14 @@
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The AudioInputTranscriptionSettingsModel. </summary>
+    /// <summary></summary>
     public enum AudioInputTranscriptionSettingsModel
     {
-        /// <summary> whisper-1. </summary>
+        /// <summary> Whisper1. </summary>
         Whisper1,
-        /// <summary> azure-fast-transcription. </summary>
+        /// <summary> AzureFastTranscription. </summary>
         AzureFastTranscription,
-        /// <summary> s2s-ingraph. </summary>
+        /// <summary> S2sIngraph. </summary>
         S2sIngraph
     }
 }

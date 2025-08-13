@@ -10,48 +10,67 @@ using System.ComponentModel;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The InputModality. </summary>
+    /// <summary></summary>
     public readonly partial struct InputModality : IEquatable<InputModality>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="InputModality"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public InputModality(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string TextValue = "text";
         private const string AudioValue = "audio";
         private const string AnimationValue = "animation";
         private const string AvatarValue = "avatar";
 
-        /// <summary> text. </summary>
+        /// <summary> Initializes a new instance of <see cref="InputModality"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public InputModality(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Text. </summary>
         public static InputModality Text { get; } = new InputModality(TextValue);
-        /// <summary> audio. </summary>
+
+        /// <summary> Gets the Audio. </summary>
         public static InputModality Audio { get; } = new InputModality(AudioValue);
-        /// <summary> animation. </summary>
+
+        /// <summary> Gets the Animation. </summary>
         public static InputModality Animation { get; } = new InputModality(AnimationValue);
-        /// <summary> avatar. </summary>
+
+        /// <summary> Gets the Avatar. </summary>
         public static InputModality Avatar { get; } = new InputModality(AvatarValue);
+
         /// <summary> Determines if two <see cref="InputModality"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InputModality left, InputModality right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="InputModality"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InputModality left, InputModality right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="InputModality"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="InputModality"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator InputModality(string value) => new InputModality(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="InputModality"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator InputModality?(string value) => value == null ? null : new InputModality(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is InputModality other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(InputModality other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

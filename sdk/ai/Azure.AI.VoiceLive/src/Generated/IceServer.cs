@@ -14,37 +14,8 @@ namespace Azure.AI.VoiceLive
     /// <summary> ICE server configuration for WebRTC connection negotiation. </summary>
     public partial class IceServer
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IceServer"/>. </summary>
         /// <param name="uris"> List of ICE server URLs (e.g., TURN or STUN endpoints). </param>
@@ -60,24 +31,21 @@ namespace Azure.AI.VoiceLive
         /// <param name="uris"> List of ICE server URLs (e.g., TURN or STUN endpoints). </param>
         /// <param name="username"> Optional username used for authentication with the ICE server. </param>
         /// <param name="credential"> Optional credential (e.g., password or token) used for authentication. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IceServer(IList<Uri> uris, string username, string credential, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IceServer(IList<Uri> uris, string username, string credential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uris = uris;
             Username = username;
             Credential = credential;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="IceServer"/> for deserialization. </summary>
-        internal IceServer()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of ICE server URLs (e.g., TURN or STUN endpoints). </summary>
         public IList<Uri> Uris { get; }
+
         /// <summary> Optional username used for authentication with the ICE server. </summary>
         public string Username { get; set; }
+
         /// <summary> Optional credential (e.g., password or token) used for authentication. </summary>
         public string Credential { get; set; }
     }

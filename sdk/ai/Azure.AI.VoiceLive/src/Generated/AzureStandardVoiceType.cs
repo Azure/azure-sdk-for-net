@@ -7,12 +7,12 @@
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The AzureStandardVoiceType. </summary>
+    /// <summary></summary>
     public enum AzureStandardVoiceType
     {
-        /// <summary> azure-standard. </summary>
+        /// <summary> AzureStandard. </summary>
         AzureStandard,
-        /// <summary> azure-platform. </summary>
+        /// <summary> AzurePlatform. </summary>
         AzurePlatform
     }
 }

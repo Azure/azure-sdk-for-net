@@ -18,31 +18,22 @@ namespace Azure.AI.VoiceLive
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventSessionUpdated"/>. </summary>
         /// <param name="session"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="session"/> is null. </exception>
-        internal ServerEventSessionUpdated(ResponseSession session)
+        internal ServerEventSessionUpdated(ResponseSession session) : base(ServerEventType.SessionUpdated)
         {
-            Argument.AssertNotNull(session, nameof(session));
-
-            Type = ServerEventType.SessionUpdated;
             Session = session;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServerEventSessionUpdated"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="session"></param>
-        internal ServerEventSessionUpdated(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, ResponseSession session) : base(type, eventId, serializedAdditionalRawData)
+        internal ServerEventSessionUpdated(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponseSession session) : base(@type, eventId, additionalBinaryDataProperties)
         {
             Session = session;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServerEventSessionUpdated"/> for deserialization. </summary>
-        internal ServerEventSessionUpdated()
-        {
-        }
-
-        /// <summary> Gets the session. </summary>
+        /// <summary> Gets the Session. </summary>
         public ResponseSession Session { get; }
     }
 }

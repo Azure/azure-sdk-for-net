@@ -21,19 +21,9 @@ namespace Azure.AI.VoiceLive
         /// <param name="itemId"> The ID of the item. </param>
         /// <param name="outputIndex"> The index of the output item in the response. </param>
         /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
-        /// <param name="part">
-        /// The content part that is done.
-        /// Please note <see cref="ContentPart"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ResponseAudioContentPart"/>, <see cref="RequestAudioContentPart"/>, <see cref="RequestTextContentPart"/> and <see cref="ResponseTextContentPart"/>.
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="responseId"/>, <paramref name="itemId"/> or <paramref name="part"/> is null. </exception>
-        internal ServerEventResponseContentPartDone(string responseId, string itemId, int outputIndex, int contentIndex, ContentPart part)
+        /// <param name="part"> The content part that is done. </param>
+        internal ServerEventResponseContentPartDone(string responseId, string itemId, int outputIndex, int contentIndex, ContentPart part) : base(ServerEventType.ResponseContentPartDone)
         {
-            Argument.AssertNotNull(responseId, nameof(responseId));
-            Argument.AssertNotNull(itemId, nameof(itemId));
-            Argument.AssertNotNull(part, nameof(part));
-
-            Type = ServerEventType.ResponseContentPartDone;
             ResponseId = responseId;
             ItemId = itemId;
             OutputIndex = outputIndex;
@@ -44,17 +34,13 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseContentPartDone"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="responseId"> The ID of the response. </param>
         /// <param name="itemId"> The ID of the item. </param>
         /// <param name="outputIndex"> The index of the output item in the response. </param>
         /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
-        /// <param name="part">
-        /// The content part that is done.
-        /// Please note <see cref="ContentPart"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ResponseAudioContentPart"/>, <see cref="RequestAudioContentPart"/>, <see cref="RequestTextContentPart"/> and <see cref="ResponseTextContentPart"/>.
-        /// </param>
-        internal ServerEventResponseContentPartDone(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string responseId, string itemId, int outputIndex, int contentIndex, ContentPart part) : base(type, eventId, serializedAdditionalRawData)
+        /// <param name="part"> The content part that is done. </param>
+        internal ServerEventResponseContentPartDone(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, ContentPart part) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             ItemId = itemId;
@@ -63,24 +49,19 @@ namespace Azure.AI.VoiceLive
             Part = part;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServerEventResponseContentPartDone"/> for deserialization. </summary>
-        internal ServerEventResponseContentPartDone()
-        {
-        }
-
         /// <summary> The ID of the response. </summary>
         public string ResponseId { get; }
+
         /// <summary> The ID of the item. </summary>
         public string ItemId { get; }
+
         /// <summary> The index of the output item in the response. </summary>
         public int OutputIndex { get; }
+
         /// <summary> The index of the content part in the item's content array. </summary>
         public int ContentIndex { get; }
-        /// <summary>
-        /// The content part that is done.
-        /// Please note <see cref="ContentPart"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ResponseAudioContentPart"/>, <see cref="RequestAudioContentPart"/>, <see cref="RequestTextContentPart"/> and <see cref="ResponseTextContentPart"/>.
-        /// </summary>
+
+        /// <summary> The content part that is done. </summary>
         public ContentPart Part { get; }
     }
 }

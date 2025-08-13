@@ -16,10 +16,10 @@ namespace Azure.AI.VoiceLive
     /// interrupts to truncate audio that has already been sent to the client but not
     /// yet played. This will synchronize the server's understanding of the audio with
     /// the client's playback.
-    ///
+    /// 
     /// Truncating audio will delete the server-side text transcript to ensure there
     /// is not text in the context that hasn't been heard by the user.
-    ///
+    /// 
     /// If successful, the server will respond with a `conversation.item.truncated`
     /// event.
     /// </summary>
@@ -37,11 +37,10 @@ namespace Azure.AI.VoiceLive
         /// will respond with an error.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="itemId"/> is null. </exception>
-        public ClientEventConversationItemTruncate(string itemId, int contentIndex, int audioEndMs)
+        public ClientEventConversationItemTruncate(string itemId, int contentIndex, int audioEndMs) : base("conversation.item.truncate")
         {
             Argument.AssertNotNull(itemId, nameof(itemId));
 
-            Type = "conversation.item.truncate";
             ItemId = itemId;
             ContentIndex = contentIndex;
             AudioEndMs = audioEndMs;
@@ -50,7 +49,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ClientEventConversationItemTruncate"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemId">
         /// The ID of the assistant message item to truncate. Only assistant message
         /// items can be truncated.
@@ -61,16 +60,11 @@ namespace Azure.AI.VoiceLive
         /// the audio_end_ms is greater than the actual audio duration, the server
         /// will respond with an error.
         /// </param>
-        internal ClientEventConversationItemTruncate(string type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemId, int contentIndex, int audioEndMs) : base(type, eventId, serializedAdditionalRawData)
+        internal ClientEventConversationItemTruncate(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, int contentIndex, int audioEndMs) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ItemId = itemId;
             ContentIndex = contentIndex;
             AudioEndMs = audioEndMs;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ClientEventConversationItemTruncate"/> for deserialization. </summary>
-        internal ClientEventConversationItemTruncate()
-        {
         }
 
         /// <summary>
@@ -78,8 +72,10 @@ namespace Azure.AI.VoiceLive
         /// items can be truncated.
         /// </summary>
         public string ItemId { get; }
+
         /// <summary> The index of the content part to truncate. Set this to 0. </summary>
         public int ContentIndex { get; }
+
         /// <summary>
         /// Inclusive duration up to which audio is truncated, in milliseconds. If
         /// the audio_end_ms is greater than the actual audio duration, the server

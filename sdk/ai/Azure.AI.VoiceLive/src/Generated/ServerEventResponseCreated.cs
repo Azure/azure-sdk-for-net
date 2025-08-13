@@ -18,31 +18,22 @@ namespace Azure.AI.VoiceLive
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseCreated"/>. </summary>
         /// <param name="response"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="response"/> is null. </exception>
-        internal ServerEventResponseCreated(VoiceLiveResponse response)
+        internal ServerEventResponseCreated(VoiceLiveResponse response) : base(ServerEventType.ResponseCreated)
         {
-            Argument.AssertNotNull(response, nameof(response));
-
-            Type = ServerEventType.ResponseCreated;
             Response = response;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseCreated"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="response"></param>
-        internal ServerEventResponseCreated(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, VoiceLiveResponse response) : base(type, eventId, serializedAdditionalRawData)
+        internal ServerEventResponseCreated(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceLiveResponse response) : base(@type, eventId, additionalBinaryDataProperties)
         {
             Response = response;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServerEventResponseCreated"/> for deserialization. </summary>
-        internal ServerEventResponseCreated()
-        {
-        }
-
-        /// <summary> Gets the response. </summary>
+        /// <summary> Gets the Response. </summary>
         public VoiceLiveResponse Response { get; }
     }
 }

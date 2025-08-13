@@ -19,28 +19,19 @@ namespace Azure.AI.VoiceLive
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventError"/>. </summary>
         /// <param name="error"> Details of the error. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
-        internal ServerEventError(ServerEventErrorError error)
+        internal ServerEventError(ServerEventErrorError error) : base(ServerEventType.Error)
         {
-            Argument.AssertNotNull(error, nameof(error));
-
-            Type = ServerEventType.Error;
             Error = error;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServerEventError"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="error"> Details of the error. </param>
-        internal ServerEventError(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, ServerEventErrorError error) : base(type, eventId, serializedAdditionalRawData)
+        internal ServerEventError(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServerEventErrorError error) : base(@type, eventId, additionalBinaryDataProperties)
         {
             Error = error;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ServerEventError"/> for deserialization. </summary>
-        internal ServerEventError()
-        {
         }
 
         /// <summary> Details of the error. </summary>

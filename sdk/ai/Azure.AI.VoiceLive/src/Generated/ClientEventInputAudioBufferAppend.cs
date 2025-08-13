@@ -16,7 +16,7 @@ namespace Azure.AI.VoiceLive
     /// mode, the audio buffer is used to detect speech and the server will decide
     /// when to commit. When Server VAD is disabled, you must commit the audio buffer
     /// manually.
-    ///
+    /// 
     /// The client may choose how much audio to place in each event up to a maximum
     /// of 15 MiB, for example streaming smaller chunks from the client may allow the
     /// VAD to be more responsive. Unlike made other client events, the server will
@@ -30,30 +30,24 @@ namespace Azure.AI.VoiceLive
         /// `input_audio_format` field in the session configuration.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="audio"/> is null. </exception>
-        public ClientEventInputAudioBufferAppend(string audio)
+        public ClientEventInputAudioBufferAppend(string audio) : base("input_audio_buffer.append")
         {
             Argument.AssertNotNull(audio, nameof(audio));
 
-            Type = "input_audio_buffer.append";
             Audio = audio;
         }
 
         /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioBufferAppend"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="audio">
         /// Base64-encoded audio. This must be in the format specified by the
         /// `input_audio_format` field in the session configuration.
         /// </param>
-        internal ClientEventInputAudioBufferAppend(string type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string audio) : base(type, eventId, serializedAdditionalRawData)
+        internal ClientEventInputAudioBufferAppend(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string audio) : base(@type, eventId, additionalBinaryDataProperties)
         {
             Audio = audio;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioBufferAppend"/> for deserialization. </summary>
-        internal ClientEventInputAudioBufferAppend()
-        {
         }
 
         /// <summary>

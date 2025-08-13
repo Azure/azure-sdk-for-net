@@ -12,62 +12,35 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// A voicelive client event.
-    /// Please note <see cref="ClientEvent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ClientEventConversationItemCreate"/>, <see cref="ClientEventConversationItemDelete"/>, <see cref="ClientEventConversationItemRetrieve"/>, <see cref="ClientEventConversationItemTruncate"/>, <see cref="ClientEventInputAudioBufferAppend"/>, <see cref="ClientEventInputAudioBufferClear"/>, <see cref="ClientEventInputAudioBufferCommit"/>, <see cref="ClientEventInputAudioClear"/>, <see cref="ClientEventInputAudioTurnAppend"/>, <see cref="ClientEventInputAudioTurnCancel"/>, <see cref="ClientEventInputAudioTurnEnd"/>, <see cref="ClientEventInputAudioTurnStart"/>, <see cref="ClientEventResponseCancel"/>, <see cref="ClientEventResponseCreate"/>, <see cref="ClientEventSessionAvatarConnect"/> and <see cref="ClientEventSessionUpdate"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ClientEventSessionUpdate"/>, <see cref="ClientEventInputAudioBufferAppend"/>, <see cref="ClientEventInputAudioBufferCommit"/>, <see cref="ClientEventInputAudioBufferClear"/>, <see cref="ClientEventInputAudioTurnStart"/>, <see cref="ClientEventInputAudioTurnAppend"/>, <see cref="ClientEventInputAudioTurnEnd"/>, <see cref="ClientEventInputAudioTurnCancel"/>, <see cref="ClientEventInputAudioClear"/>, <see cref="ClientEventConversationItemCreate"/>, <see cref="ClientEventConversationItemRetrieve"/>, <see cref="ClientEventConversationItemTruncate"/>, <see cref="ClientEventConversationItemDelete"/>, <see cref="ClientEventResponseCreate"/>, <see cref="ClientEventResponseCancel"/>, and <see cref="ClientEventSessionAvatarConnect"/>.
     /// </summary>
     public abstract partial class ClientEvent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ClientEvent"/>. </summary>
-        protected ClientEvent()
+        /// <param name="type"> The type of event. </param>
+        private protected ClientEvent(string @type)
         {
+            Type = @type;
         }
 
         /// <summary> Initializes a new instance of <see cref="ClientEvent"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClientEvent(string type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ClientEvent(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = type;
+            Type = @type;
             EventId = eventId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of event. </summary>
         internal string Type { get; set; }
-        /// <summary> Gets or sets the event id. </summary>
-        public string EventId { get; set; }
+
+        /// <summary> Gets or sets the EventId. </summary>
+        public virtual string EventId { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.AI.VoiceLive
     /// committed by the client or server (in `server_vad` mode). Transcription runs
     /// asynchronously with Response creation, so this event may come before or after
     /// the Response events.
-    ///
+    /// 
     /// VoiceLive API models accept audio natively, and thus input transcription is a
     /// separate process run on a separate ASR (Automatic Speech Recognition) model.
     /// The transcript may diverge somewhat from the model's interpretation, and
@@ -28,13 +28,8 @@ namespace Azure.AI.VoiceLive
         /// <param name="itemId"> The ID of the user message item containing the audio. </param>
         /// <param name="contentIndex"> The index of the content part containing the audio. </param>
         /// <param name="transcript"> The transcribed text. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="itemId"/> or <paramref name="transcript"/> is null. </exception>
-        internal ServerEventConversationItemInputAudioTranscriptionCompleted(string itemId, int contentIndex, string transcript)
+        internal ServerEventConversationItemInputAudioTranscriptionCompleted(string itemId, int contentIndex, string transcript) : base(ServerEventType.ConversationItemInputAudioTranscriptionCompleted)
         {
-            Argument.AssertNotNull(itemId, nameof(itemId));
-            Argument.AssertNotNull(transcript, nameof(transcript));
-
-            Type = ServerEventType.ConversationItemInputAudioTranscriptionCompleted;
             ItemId = itemId;
             ContentIndex = contentIndex;
             Transcript = transcript;
@@ -43,26 +38,23 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ServerEventConversationItemInputAudioTranscriptionCompleted"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemId"> The ID of the user message item containing the audio. </param>
         /// <param name="contentIndex"> The index of the content part containing the audio. </param>
         /// <param name="transcript"> The transcribed text. </param>
-        internal ServerEventConversationItemInputAudioTranscriptionCompleted(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemId, int contentIndex, string transcript) : base(type, eventId, serializedAdditionalRawData)
+        internal ServerEventConversationItemInputAudioTranscriptionCompleted(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, int contentIndex, string transcript) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ItemId = itemId;
             ContentIndex = contentIndex;
             Transcript = transcript;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServerEventConversationItemInputAudioTranscriptionCompleted"/> for deserialization. </summary>
-        internal ServerEventConversationItemInputAudioTranscriptionCompleted()
-        {
-        }
-
         /// <summary> The ID of the user message item containing the audio. </summary>
         public string ItemId { get; }
+
         /// <summary> The index of the content part containing the audio. </summary>
         public int ContentIndex { get; }
+
         /// <summary> The transcribed text. </summary>
         public string Transcript { get; }
     }

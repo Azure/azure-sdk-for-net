@@ -11,6 +11,7 @@ namespace Azure.AI.VoiceLive
 {
     internal static partial class ResponseStatusDetailsTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ResponseStatusDetailsType value) => value switch
         {
             ResponseStatusDetailsType.Completed => "completed",
@@ -20,12 +21,25 @@ namespace Azure.AI.VoiceLive
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponseStatusDetailsType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ResponseStatusDetailsType ToResponseStatusDetailsType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "completed")) return ResponseStatusDetailsType.Completed;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "cancelled")) return ResponseStatusDetailsType.Cancelled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "failed")) return ResponseStatusDetailsType.Failed;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete")) return ResponseStatusDetailsType.Incomplete;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
+            {
+                return ResponseStatusDetailsType.Completed;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "cancelled"))
+            {
+                return ResponseStatusDetailsType.Cancelled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "failed"))
+            {
+                return ResponseStatusDetailsType.Failed;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
+            {
+                return ResponseStatusDetailsType.Incomplete;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponseStatusDetailsType value.");
         }
     }

@@ -19,31 +19,25 @@ namespace Azure.AI.VoiceLive
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventConversationItemDeleted"/>. </summary>
         /// <param name="itemId"> The ID of the item that was deleted. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="itemId"/> is null. </exception>
-        internal ServerEventConversationItemDeleted(string itemId)
+        internal ServerEventConversationItemDeleted(string itemId) : base(ServerEventType.ConversationItemDeleted)
         {
-            Argument.AssertNotNull(itemId, nameof(itemId));
-
-            Type = ServerEventType.ConversationItemDeleted;
             ItemId = itemId;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServerEventConversationItemDeleted"/>. </summary>
         /// <param name="type"> The type of event. </param>
-        /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemId"> The ID of the item that was deleted. </param>
-        internal ServerEventConversationItemDeleted(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemId) : base(type, eventId, serializedAdditionalRawData)
+        /// <param name="eventId"></param>
+        internal ServerEventConversationItemDeleted(ServerEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, string eventId) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ItemId = itemId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServerEventConversationItemDeleted"/> for deserialization. </summary>
-        internal ServerEventConversationItemDeleted()
-        {
-        }
-
         /// <summary> The ID of the item that was deleted. </summary>
         public string ItemId { get; }
+
+        /// <summary> Gets the EventId. </summary>
+        public override string EventId { get; }
     }
 }

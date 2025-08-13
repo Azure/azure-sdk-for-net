@@ -21,14 +21,8 @@ namespace Azure.AI.VoiceLive
         /// <param name="audioOffsetMs"></param>
         /// <param name="audioDurationMs"></param>
         /// <param name="text"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="responseId"/>, <paramref name="itemId"/> or <paramref name="text"/> is null. </exception>
-        internal ResponseAudioTimestampDeltaEvent(string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int audioDurationMs, string text)
+        internal ResponseAudioTimestampDeltaEvent(string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int audioDurationMs, string text) : base(ServerEventType.ResponseAudioTimestampDelta)
         {
-            Argument.AssertNotNull(responseId, nameof(responseId));
-            Argument.AssertNotNull(itemId, nameof(itemId));
-            Argument.AssertNotNull(text, nameof(text));
-
-            Type = ServerEventType.ResponseAudioTimestampDelta;
             ResponseId = responseId;
             ItemId = itemId;
             OutputIndex = outputIndex;
@@ -41,7 +35,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ResponseAudioTimestampDeltaEvent"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="responseId"></param>
         /// <param name="itemId"></param>
         /// <param name="outputIndex"></param>
@@ -50,7 +44,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="audioDurationMs"></param>
         /// <param name="text"></param>
         /// <param name="timestampType"></param>
-        internal ResponseAudioTimestampDeltaEvent(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int audioDurationMs, string text, ResponseAudioTimestampDeltaEventTimestampType timestampType) : base(type, eventId, serializedAdditionalRawData)
+        internal ResponseAudioTimestampDeltaEvent(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int audioDurationMs, string text, string timestampType) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             ItemId = itemId;
@@ -62,26 +56,28 @@ namespace Azure.AI.VoiceLive
             TimestampType = timestampType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponseAudioTimestampDeltaEvent"/> for deserialization. </summary>
-        internal ResponseAudioTimestampDeltaEvent()
-        {
-        }
-
-        /// <summary> Gets the response id. </summary>
+        /// <summary> Gets the ResponseId. </summary>
         public string ResponseId { get; }
-        /// <summary> Gets the item id. </summary>
+
+        /// <summary> Gets the ItemId. </summary>
         public string ItemId { get; }
-        /// <summary> Gets the output index. </summary>
+
+        /// <summary> Gets the OutputIndex. </summary>
         public int OutputIndex { get; }
-        /// <summary> Gets the content index. </summary>
+
+        /// <summary> Gets the ContentIndex. </summary>
         public int ContentIndex { get; }
-        /// <summary> Gets the audio offset ms. </summary>
+
+        /// <summary> Gets the AudioOffsetMs. </summary>
         public int AudioOffsetMs { get; }
-        /// <summary> Gets the audio duration ms. </summary>
+
+        /// <summary> Gets the AudioDurationMs. </summary>
         public int AudioDurationMs { get; }
-        /// <summary> Gets the text. </summary>
+
+        /// <summary> Gets the Text. </summary>
         public string Text { get; }
-        /// <summary> Gets the timestamp type. </summary>
-        public ResponseAudioTimestampDeltaEventTimestampType TimestampType { get; } = ResponseAudioTimestampDeltaEventTimestampType.Word;
+
+        /// <summary> Gets the TimestampType. </summary>
+        public string TimestampType { get; } = "word";
     }
 }

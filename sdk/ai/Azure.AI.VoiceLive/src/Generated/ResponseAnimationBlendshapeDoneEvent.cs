@@ -17,13 +17,8 @@ namespace Azure.AI.VoiceLive
         /// <param name="responseId"></param>
         /// <param name="itemId"></param>
         /// <param name="outputIndex"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="responseId"/> or <paramref name="itemId"/> is null. </exception>
-        internal ResponseAnimationBlendshapeDoneEvent(string responseId, string itemId, int outputIndex)
+        internal ResponseAnimationBlendshapeDoneEvent(string responseId, string itemId, int outputIndex) : base(ServerEventType.ResponseAnimationBlendshapesDone)
         {
-            Argument.AssertNotNull(responseId, nameof(responseId));
-            Argument.AssertNotNull(itemId, nameof(itemId));
-
-            Type = ServerEventType.ResponseAnimationBlendshapesDone;
             ResponseId = responseId;
             ItemId = itemId;
             OutputIndex = outputIndex;
@@ -32,27 +27,24 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ResponseAnimationBlendshapeDoneEvent"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="responseId"></param>
         /// <param name="itemId"></param>
         /// <param name="outputIndex"></param>
-        internal ResponseAnimationBlendshapeDoneEvent(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string responseId, string itemId, int outputIndex) : base(type, eventId, serializedAdditionalRawData)
+        internal ResponseAnimationBlendshapeDoneEvent(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             ItemId = itemId;
             OutputIndex = outputIndex;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponseAnimationBlendshapeDoneEvent"/> for deserialization. </summary>
-        internal ResponseAnimationBlendshapeDoneEvent()
-        {
-        }
-
-        /// <summary> Gets the response id. </summary>
+        /// <summary> Gets the ResponseId. </summary>
         public string ResponseId { get; }
-        /// <summary> Gets the item id. </summary>
+
+        /// <summary> Gets the ItemId. </summary>
         public string ItemId { get; }
-        /// <summary> Gets the output index. </summary>
+
+        /// <summary> Gets the OutputIndex. </summary>
         public int OutputIndex { get; }
     }
 }

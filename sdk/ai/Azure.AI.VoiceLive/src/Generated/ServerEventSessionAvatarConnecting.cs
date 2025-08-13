@@ -15,28 +15,19 @@ namespace Azure.AI.VoiceLive
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventSessionAvatarConnecting"/>. </summary>
         /// <param name="serverSdp"> The server's SDP answer for the avatar connection. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serverSdp"/> is null. </exception>
-        internal ServerEventSessionAvatarConnecting(string serverSdp)
+        internal ServerEventSessionAvatarConnecting(string serverSdp) : base(ServerEventType.SessionAvatarConnecting)
         {
-            Argument.AssertNotNull(serverSdp, nameof(serverSdp));
-
-            Type = ServerEventType.SessionAvatarConnecting;
             ServerSdp = serverSdp;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServerEventSessionAvatarConnecting"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serverSdp"> The server's SDP answer for the avatar connection. </param>
-        internal ServerEventSessionAvatarConnecting(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string serverSdp) : base(type, eventId, serializedAdditionalRawData)
+        internal ServerEventSessionAvatarConnecting(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverSdp) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ServerSdp = serverSdp;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ServerEventSessionAvatarConnecting"/> for deserialization. </summary>
-        internal ServerEventSessionAvatarConnecting()
-        {
         }
 
         /// <summary> The server's SDP answer for the avatar connection. </summary>

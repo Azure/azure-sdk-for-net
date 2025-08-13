@@ -8,15 +8,23 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.VoiceLive
 {
+    /// <summary>
+    /// A voicelive server event.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ServerEventSessionAvatarConnecting"/>, <see cref="ServerEventSessionCreated"/>, <see cref="ServerEventSessionUpdated"/>, <see cref="ServerEventError"/>, <see cref="ServerEventResponseTextDelta"/>, <see cref="ServerEventResponseAudioDelta"/>, <see cref="ServerEventConversationItemCreated"/>, <see cref="ServerEventConversationItemDeleted"/>, <see cref="ServerEventConversationItemRetrieved"/>, <see cref="ServerEventConversationItemTruncated"/>, <see cref="ServerEventConversationItemInputAudioTranscriptionCompleted"/>, <see cref="ServerEventConversationItemInputAudioTranscriptionDelta"/>, <see cref="ServerEventConversationItemInputAudioTranscriptionFailed"/>, <see cref="ServerEventInputAudioBufferCommitted"/>, <see cref="ServerEventInputAudioBufferCleared"/>, <see cref="ServerEventInputAudioBufferSpeechStarted"/>, <see cref="ServerEventInputAudioBufferSpeechStopped"/>, <see cref="ServerEventResponseCreated"/>, <see cref="ServerEventResponseDone"/>, <see cref="ServerEventResponseOutputItemAdded"/>, <see cref="ServerEventResponseOutputItemDone"/>, <see cref="ServerEventResponseContentPartAdded"/>, <see cref="ServerEventResponseContentPartDone"/>, <see cref="ServerEventResponseTextDone"/>, <see cref="ServerEventResponseAudioTranscriptDelta"/>, <see cref="ServerEventResponseAudioTranscriptDone"/>, <see cref="ServerEventResponseAudioDone"/>, <see cref="ServerEventResponseFunctionCallArgumentsDelta"/>, <see cref="ServerEventResponseFunctionCallArgumentsDone"/>, <see cref="ResponseAnimationBlendshapeDeltaEvent"/>, <see cref="ResponseAnimationBlendshapeDoneEvent"/>, <see cref="ResponseEmotionHypothesis"/>, <see cref="ResponseAudioTimestampDeltaEvent"/>, <see cref="ResponseAudioTimestampDoneEvent"/>, <see cref="ResponseAnimationVisemeDeltaEvent"/>, and <see cref="ResponseAnimationVisemeDoneEvent"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownServerEvent))]
-    public partial class ServerEvent : IUtf8JsonSerializable, IJsonModel<ServerEvent>
+    public abstract partial class ServerEvent : IJsonModel<ServerEvent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerEvent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ServerEvent"/> for deserialization. </summary>
+        internal ServerEvent()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServerEvent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +36,11 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServerEvent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServerEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServerEvent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             if (Optional.IsDefined(EventId))
@@ -41,15 +48,15 @@ namespace Azure.AI.VoiceLive
                 writer.WritePropertyName("event_id"u8);
                 writer.WriteStringValue(EventId);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -58,75 +65,119 @@ namespace Azure.AI.VoiceLive
             }
         }
 
-        ServerEvent IJsonModel<ServerEvent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServerEvent IJsonModel<ServerEvent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ServerEvent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServerEvent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServerEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServerEvent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeServerEvent(document.RootElement, options);
         }
 
-        internal static ServerEvent DeserializeServerEvent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ServerEvent DeserializeServerEvent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("type", out JsonElement discriminator))
+            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "conversation.item.created": return ServerEventConversationItemCreated.DeserializeServerEventConversationItemCreated(element, options);
-                    case "conversation.item.deleted": return ServerEventConversationItemDeleted.DeserializeServerEventConversationItemDeleted(element, options);
-                    case "conversation.item.input_audio_transcription.completed": return ServerEventConversationItemInputAudioTranscriptionCompleted.DeserializeServerEventConversationItemInputAudioTranscriptionCompleted(element, options);
-                    case "conversation.item.input_audio_transcription.delta": return ServerEventConversationItemInputAudioTranscriptionDelta.DeserializeServerEventConversationItemInputAudioTranscriptionDelta(element, options);
-                    case "conversation.item.input_audio_transcription.failed": return ServerEventConversationItemInputAudioTranscriptionFailed.DeserializeServerEventConversationItemInputAudioTranscriptionFailed(element, options);
-                    case "conversation.item.retrieved": return ServerEventConversationItemRetrieved.DeserializeServerEventConversationItemRetrieved(element, options);
-                    case "conversation.item.truncated": return ServerEventConversationItemTruncated.DeserializeServerEventConversationItemTruncated(element, options);
-                    case "error": return ServerEventError.DeserializeServerEventError(element, options);
-                    case "input_audio_buffer.cleared": return ServerEventInputAudioBufferCleared.DeserializeServerEventInputAudioBufferCleared(element, options);
-                    case "input_audio_buffer.committed": return ServerEventInputAudioBufferCommitted.DeserializeServerEventInputAudioBufferCommitted(element, options);
-                    case "input_audio_buffer.speech_started": return ServerEventInputAudioBufferSpeechStarted.DeserializeServerEventInputAudioBufferSpeechStarted(element, options);
-                    case "input_audio_buffer.speech_stopped": return ServerEventInputAudioBufferSpeechStopped.DeserializeServerEventInputAudioBufferSpeechStopped(element, options);
-                    case "response.animation_blendshapes.delta": return ResponseAnimationBlendshapeDeltaEvent.DeserializeResponseAnimationBlendshapeDeltaEvent(element, options);
-                    case "response.animation_blendshapes.done": return ResponseAnimationBlendshapeDoneEvent.DeserializeResponseAnimationBlendshapeDoneEvent(element, options);
-                    case "response.animation_viseme.delta": return ResponseAnimationVisemeDeltaEvent.DeserializeResponseAnimationVisemeDeltaEvent(element, options);
-                    case "response.animation_viseme.done": return ResponseAnimationVisemeDoneEvent.DeserializeResponseAnimationVisemeDoneEvent(element, options);
-                    case "response.audio_timestamp.delta": return ResponseAudioTimestampDeltaEvent.DeserializeResponseAudioTimestampDeltaEvent(element, options);
-                    case "response.audio_timestamp.done": return ResponseAudioTimestampDoneEvent.DeserializeResponseAudioTimestampDoneEvent(element, options);
-                    case "response.audio_transcript.delta": return ServerEventResponseAudioTranscriptDelta.DeserializeServerEventResponseAudioTranscriptDelta(element, options);
-                    case "response.audio_transcript.done": return ServerEventResponseAudioTranscriptDone.DeserializeServerEventResponseAudioTranscriptDone(element, options);
-                    case "response.audio.delta": return ServerEventResponseAudioDelta.DeserializeServerEventResponseAudioDelta(element, options);
-                    case "response.audio.done": return ServerEventResponseAudioDone.DeserializeServerEventResponseAudioDone(element, options);
-                    case "response.content_part.added": return ServerEventResponseContentPartAdded.DeserializeServerEventResponseContentPartAdded(element, options);
-                    case "response.content_part.done": return ServerEventResponseContentPartDone.DeserializeServerEventResponseContentPartDone(element, options);
-                    case "response.created": return ServerEventResponseCreated.DeserializeServerEventResponseCreated(element, options);
-                    case "response.done": return ServerEventResponseDone.DeserializeServerEventResponseDone(element, options);
-                    case "response.emotion_hypothesis": return ResponseEmotionHypothesis.DeserializeResponseEmotionHypothesis(element, options);
-                    case "response.function_call_arguments.delta": return ServerEventResponseFunctionCallArgumentsDelta.DeserializeServerEventResponseFunctionCallArgumentsDelta(element, options);
-                    case "response.function_call_arguments.done": return ServerEventResponseFunctionCallArgumentsDone.DeserializeServerEventResponseFunctionCallArgumentsDone(element, options);
-                    case "response.output_item.added": return ServerEventResponseOutputItemAdded.DeserializeServerEventResponseOutputItemAdded(element, options);
-                    case "response.output_item.done": return ServerEventResponseOutputItemDone.DeserializeServerEventResponseOutputItemDone(element, options);
-                    case "response.text.delta": return ServerEventResponseTextDelta.DeserializeServerEventResponseTextDelta(element, options);
-                    case "response.text.done": return ServerEventResponseTextDone.DeserializeServerEventResponseTextDone(element, options);
-                    case "session.avatar.connecting": return ServerEventSessionAvatarConnecting.DeserializeServerEventSessionAvatarConnecting(element, options);
-                    case "session.created": return ServerEventSessionCreated.DeserializeServerEventSessionCreated(element, options);
-                    case "session.updated": return ServerEventSessionUpdated.DeserializeServerEventSessionUpdated(element, options);
+                    case "session.avatar.connecting":
+                        return ServerEventSessionAvatarConnecting.DeserializeServerEventSessionAvatarConnecting(element, options);
+                    case "session.created":
+                        return ServerEventSessionCreated.DeserializeServerEventSessionCreated(element, options);
+                    case "session.updated":
+                        return ServerEventSessionUpdated.DeserializeServerEventSessionUpdated(element, options);
+                    case "error":
+                        return ServerEventError.DeserializeServerEventError(element, options);
+                    case "response.text.delta":
+                        return ServerEventResponseTextDelta.DeserializeServerEventResponseTextDelta(element, options);
+                    case "response.audio.delta":
+                        return ServerEventResponseAudioDelta.DeserializeServerEventResponseAudioDelta(element, options);
+                    case "conversation.item.created":
+                        return ServerEventConversationItemCreated.DeserializeServerEventConversationItemCreated(element, options);
+                    case "conversation.item.deleted":
+                        return ServerEventConversationItemDeleted.DeserializeServerEventConversationItemDeleted(element, options);
+                    case "conversation.item.retrieved":
+                        return ServerEventConversationItemRetrieved.DeserializeServerEventConversationItemRetrieved(element, options);
+                    case "conversation.item.truncated":
+                        return ServerEventConversationItemTruncated.DeserializeServerEventConversationItemTruncated(element, options);
+                    case "conversation.item.input_audio_transcription.completed":
+                        return ServerEventConversationItemInputAudioTranscriptionCompleted.DeserializeServerEventConversationItemInputAudioTranscriptionCompleted(element, options);
+                    case "conversation.item.input_audio_transcription.delta":
+                        return ServerEventConversationItemInputAudioTranscriptionDelta.DeserializeServerEventConversationItemInputAudioTranscriptionDelta(element, options);
+                    case "conversation.item.input_audio_transcription.failed":
+                        return ServerEventConversationItemInputAudioTranscriptionFailed.DeserializeServerEventConversationItemInputAudioTranscriptionFailed(element, options);
+                    case "input_audio_buffer.committed":
+                        return ServerEventInputAudioBufferCommitted.DeserializeServerEventInputAudioBufferCommitted(element, options);
+                    case "input_audio_buffer.cleared":
+                        return ServerEventInputAudioBufferCleared.DeserializeServerEventInputAudioBufferCleared(element, options);
+                    case "input_audio_buffer.speech_started":
+                        return ServerEventInputAudioBufferSpeechStarted.DeserializeServerEventInputAudioBufferSpeechStarted(element, options);
+                    case "input_audio_buffer.speech_stopped":
+                        return ServerEventInputAudioBufferSpeechStopped.DeserializeServerEventInputAudioBufferSpeechStopped(element, options);
+                    case "response.created":
+                        return ServerEventResponseCreated.DeserializeServerEventResponseCreated(element, options);
+                    case "response.done":
+                        return ServerEventResponseDone.DeserializeServerEventResponseDone(element, options);
+                    case "response.output_item.added":
+                        return ServerEventResponseOutputItemAdded.DeserializeServerEventResponseOutputItemAdded(element, options);
+                    case "response.output_item.done":
+                        return ServerEventResponseOutputItemDone.DeserializeServerEventResponseOutputItemDone(element, options);
+                    case "response.content_part.added":
+                        return ServerEventResponseContentPartAdded.DeserializeServerEventResponseContentPartAdded(element, options);
+                    case "response.content_part.done":
+                        return ServerEventResponseContentPartDone.DeserializeServerEventResponseContentPartDone(element, options);
+                    case "response.text.done":
+                        return ServerEventResponseTextDone.DeserializeServerEventResponseTextDone(element, options);
+                    case "response.audio_transcript.delta":
+                        return ServerEventResponseAudioTranscriptDelta.DeserializeServerEventResponseAudioTranscriptDelta(element, options);
+                    case "response.audio_transcript.done":
+                        return ServerEventResponseAudioTranscriptDone.DeserializeServerEventResponseAudioTranscriptDone(element, options);
+                    case "response.audio.done":
+                        return ServerEventResponseAudioDone.DeserializeServerEventResponseAudioDone(element, options);
+                    case "response.function_call_arguments.delta":
+                        return ServerEventResponseFunctionCallArgumentsDelta.DeserializeServerEventResponseFunctionCallArgumentsDelta(element, options);
+                    case "response.function_call_arguments.done":
+                        return ServerEventResponseFunctionCallArgumentsDone.DeserializeServerEventResponseFunctionCallArgumentsDone(element, options);
+                    case "response.animation_blendshapes.delta":
+                        return ResponseAnimationBlendshapeDeltaEvent.DeserializeResponseAnimationBlendshapeDeltaEvent(element, options);
+                    case "response.animation_blendshapes.done":
+                        return ResponseAnimationBlendshapeDoneEvent.DeserializeResponseAnimationBlendshapeDoneEvent(element, options);
+                    case "response.emotion_hypothesis":
+                        return ResponseEmotionHypothesis.DeserializeResponseEmotionHypothesis(element, options);
+                    case "response.audio_timestamp.delta":
+                        return ResponseAudioTimestampDeltaEvent.DeserializeResponseAudioTimestampDeltaEvent(element, options);
+                    case "response.audio_timestamp.done":
+                        return ResponseAudioTimestampDoneEvent.DeserializeResponseAudioTimestampDoneEvent(element, options);
+                    case "response.animation_viseme.delta":
+                        return ResponseAnimationVisemeDeltaEvent.DeserializeResponseAnimationVisemeDeltaEvent(element, options);
+                    case "response.animation_viseme.done":
+                        return ResponseAnimationVisemeDoneEvent.DeserializeResponseAnimationVisemeDoneEvent(element, options);
                 }
             }
             return UnknownServerEvent.DeserializeUnknownServerEvent(element, options);
         }
 
-        BinaryData IPersistableModel<ServerEvent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServerEvent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ServerEvent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServerEvent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -136,15 +187,20 @@ namespace Azure.AI.VoiceLive
             }
         }
 
-        ServerEvent IPersistableModel<ServerEvent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServerEvent>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServerEvent IPersistableModel<ServerEvent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ServerEvent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServerEvent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeServerEvent(document.RootElement, options);
                     }
                 default:
@@ -152,22 +208,7 @@ namespace Azure.AI.VoiceLive
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ServerEvent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ServerEvent FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeServerEvent(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

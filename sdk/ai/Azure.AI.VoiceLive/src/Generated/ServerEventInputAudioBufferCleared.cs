@@ -17,16 +17,15 @@ namespace Azure.AI.VoiceLive
     public partial class ServerEventInputAudioBufferCleared : ServerEvent
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventInputAudioBufferCleared"/>. </summary>
-        internal ServerEventInputAudioBufferCleared()
+        internal ServerEventInputAudioBufferCleared() : base(ServerEventType.InputAudioBufferCleared)
         {
-            Type = ServerEventType.InputAudioBufferCleared;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServerEventInputAudioBufferCleared"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServerEventInputAudioBufferCleared(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, eventId, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServerEventInputAudioBufferCleared(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, eventId, additionalBinaryDataProperties)
         {
         }
     }

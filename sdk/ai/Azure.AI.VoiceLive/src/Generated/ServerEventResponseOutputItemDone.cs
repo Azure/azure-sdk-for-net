@@ -19,12 +19,8 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseOutputItemDone"/>. </summary>
         /// <param name="responseId"> The ID of the Response to which the item belongs. </param>
         /// <param name="outputIndex"> The index of the output item in the Response. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="responseId"/> is null. </exception>
-        internal ServerEventResponseOutputItemDone(string responseId, int outputIndex)
+        internal ServerEventResponseOutputItemDone(string responseId, int outputIndex) : base(ServerEventType.ResponseOutputItemDone)
         {
-            Argument.AssertNotNull(responseId, nameof(responseId));
-
-            Type = ServerEventType.ResponseOutputItemDone;
             ResponseId = responseId;
             OutputIndex = outputIndex;
         }
@@ -32,34 +28,24 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseOutputItemDone"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="responseId"> The ID of the Response to which the item belongs. </param>
         /// <param name="outputIndex"> The index of the output item in the Response. </param>
-        /// <param name="item">
-        /// Please note <see cref="ConversationResponseItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ResponseFunctionCallItem"/>, <see cref="ResponseFunctionCallOutputItem"/> and <see cref="ResponseMessageItem"/>.
-        /// </param>
-        internal ServerEventResponseOutputItemDone(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string responseId, int outputIndex, ConversationResponseItem item) : base(type, eventId, serializedAdditionalRawData)
+        /// <param name="item"></param>
+        internal ServerEventResponseOutputItemDone(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, int outputIndex, ConversationResponseItem item) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             OutputIndex = outputIndex;
             Item = item;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServerEventResponseOutputItemDone"/> for deserialization. </summary>
-        internal ServerEventResponseOutputItemDone()
-        {
-        }
-
         /// <summary> The ID of the Response to which the item belongs. </summary>
         public string ResponseId { get; }
+
         /// <summary> The index of the output item in the Response. </summary>
         public int OutputIndex { get; }
-        /// <summary>
-        /// Gets the item
-        /// Please note <see cref="ConversationResponseItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ResponseFunctionCallItem"/>, <see cref="ResponseFunctionCallOutputItem"/> and <see cref="ResponseMessageItem"/>.
-        /// </summary>
+
+        /// <summary> Gets the Item. </summary>
         public ConversationResponseItem Item { get; }
     }
 }

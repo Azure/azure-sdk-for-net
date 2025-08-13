@@ -14,15 +14,15 @@ namespace Azure.AI.VoiceLive
     /// This event instructs the server to create a Response, which means triggering
     /// model inference. When in Server VAD mode, the server will create Responses
     /// automatically.
-    ///
+    /// 
     /// A Response will include at least one Item, and may have two, in which case
     /// the second will be a function call. These Items will be appended to the
     /// conversation history.
-    ///
+    /// 
     /// The server will respond with a `response.created` event, events for Items
     /// and content created, and finally a `response.done` event to indicate the
     /// Response is complete.
-    ///
+    /// 
     /// The `response.create` event includes inference configuration like
     /// `instructions`, and `temperature`. These fields will override the Session's
     /// configuration for this Response only.
@@ -30,25 +30,25 @@ namespace Azure.AI.VoiceLive
     public partial class ClientEventResponseCreate : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventResponseCreate"/>. </summary>
-        public ClientEventResponseCreate()
+        public ClientEventResponseCreate() : base("response.create")
         {
-            Type = "response.create";
         }
 
         /// <summary> Initializes a new instance of <see cref="ClientEventResponseCreate"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="response"></param>
         /// <param name="additionalInstructions"> additional instructions (system prompt) appended to the default instructions of the session. Only affects this response only. </param>
-        internal ClientEventResponseCreate(string type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, ResponseCreateParams response, string additionalInstructions) : base(type, eventId, serializedAdditionalRawData)
+        internal ClientEventResponseCreate(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponseCreateParams response, string additionalInstructions) : base(@type, eventId, additionalBinaryDataProperties)
         {
             Response = response;
             AdditionalInstructions = additionalInstructions;
         }
 
-        /// <summary> Gets or sets the response. </summary>
+        /// <summary> Gets or sets the Response. </summary>
         public ResponseCreateParams Response { get; set; }
+
         /// <summary> additional instructions (system prompt) appended to the default instructions of the session. Only affects this response only. </summary>
         public string AdditionalInstructions { get; set; }
     }

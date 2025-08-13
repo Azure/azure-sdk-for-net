@@ -9,14 +9,31 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.VoiceLive
 {
-    public partial class ClientEventConversationItemTruncate : IUtf8JsonSerializable, IJsonModel<ClientEventConversationItemTruncate>
+    /// <summary>
+    /// Send this event to truncate a previous assistant message’s audio. The server
+    /// will produce audio faster than voicelive, so this event is useful when the user
+    /// interrupts to truncate audio that has already been sent to the client but not
+    /// yet played. This will synchronize the server's understanding of the audio with
+    /// the client's playback.
+    /// 
+    /// Truncating audio will delete the server-side text transcript to ensure there
+    /// is not text in the context that hasn't been heard by the user.
+    /// 
+    /// If successful, the server will respond with a `conversation.item.truncated`
+    /// event.
+    /// </summary>
+    public partial class ClientEventConversationItemTruncate : IJsonModel<ClientEventConversationItemTruncate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClientEventConversationItemTruncate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ClientEventConversationItemTruncate"/> for deserialization. </summary>
+        internal ClientEventConversationItemTruncate()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ClientEventConversationItemTruncate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +45,11 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClientEventConversationItemTruncate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClientEventConversationItemTruncate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ClientEventConversationItemTruncate)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("item_id"u8);
             writer.WriteStringValue(ItemId);
@@ -43,79 +59,85 @@ namespace Azure.AI.VoiceLive
             writer.WriteNumberValue(AudioEndMs);
         }
 
-        ClientEventConversationItemTruncate IJsonModel<ClientEventConversationItemTruncate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ClientEventConversationItemTruncate IJsonModel<ClientEventConversationItemTruncate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ClientEventConversationItemTruncate)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ClientEvent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClientEventConversationItemTruncate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClientEventConversationItemTruncate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ClientEventConversationItemTruncate)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeClientEventConversationItemTruncate(document.RootElement, options);
         }
 
-        internal static ClientEventConversationItemTruncate DeserializeClientEventConversationItemTruncate(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ClientEventConversationItemTruncate DeserializeClientEventConversationItemTruncate(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string @type = "conversation.item.truncate";
+            string eventId = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string itemId = default;
             int contentIndex = default;
             int audioEndMs = default;
-            string type = default;
-            string eventId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("item_id"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    itemId = property.Value.GetString();
+                    @type = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("content_index"u8))
+                if (prop.NameEquals("event_id"u8))
                 {
-                    contentIndex = property.Value.GetInt32();
+                    eventId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("audio_end_ms"u8))
+                if (prop.NameEquals("item_id"u8))
                 {
-                    audioEndMs = property.Value.GetInt32();
+                    itemId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("content_index"u8))
                 {
-                    type = property.Value.GetString();
+                    contentIndex = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("event_id"u8))
+                if (prop.NameEquals("audio_end_ms"u8))
                 {
-                    eventId = property.Value.GetString();
+                    audioEndMs = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ClientEventConversationItemTruncate(
-                type,
+                @type,
                 eventId,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 itemId,
                 contentIndex,
                 audioEndMs);
         }
 
-        BinaryData IPersistableModel<ClientEventConversationItemTruncate>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ClientEventConversationItemTruncate>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ClientEventConversationItemTruncate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ClientEventConversationItemTruncate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -125,15 +147,20 @@ namespace Azure.AI.VoiceLive
             }
         }
 
-        ClientEventConversationItemTruncate IPersistableModel<ClientEventConversationItemTruncate>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ClientEventConversationItemTruncate>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ClientEventConversationItemTruncate IPersistableModel<ClientEventConversationItemTruncate>.Create(BinaryData data, ModelReaderWriterOptions options) => (ClientEventConversationItemTruncate)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ClientEvent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ClientEventConversationItemTruncate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeClientEventConversationItemTruncate(document.RootElement, options);
                     }
                 default:
@@ -141,22 +168,7 @@ namespace Azure.AI.VoiceLive
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ClientEventConversationItemTruncate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new ClientEventConversationItemTruncate FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeClientEventConversationItemTruncate(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

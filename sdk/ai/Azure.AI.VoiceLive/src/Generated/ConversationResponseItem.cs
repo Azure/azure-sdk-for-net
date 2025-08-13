@@ -12,45 +12,15 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// The ConversationResponseItem.
-    /// Please note <see cref="ConversationResponseItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ResponseFunctionCallItem"/>, <see cref="ResponseFunctionCallOutputItem"/> and <see cref="ResponseMessageItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponseMessageItem"/>, <see cref="ResponseFunctionCallItem"/>, and <see cref="ResponseFunctionCallOutputItem"/>.
     /// </summary>
     public abstract partial class ConversationResponseItem
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConversationResponseItem"/>. </summary>
-        protected ConversationResponseItem()
+        private protected ConversationResponseItem()
         {
         }
 
@@ -58,20 +28,22 @@ namespace Azure.AI.VoiceLive
         /// <param name="object"></param>
         /// <param name="type"></param>
         /// <param name="id"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationResponseItem(ConversationResponseItemObject? @object, string type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConversationResponseItem(string @object, string @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Object = @object;
-            Type = type;
+            Type = @type;
             Id = id;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the object. </summary>
-        public ConversationResponseItemObject? Object { get; }
-        /// <summary> Gets or sets the type. </summary>
+        /// <summary> Gets the Object. </summary>
+        public string Object { get; }
+
+        /// <summary> Gets or sets the Type. </summary>
         internal string Type { get; set; }
-        /// <summary> Gets the id. </summary>
+
+        /// <summary> Gets the Id. </summary>
         public string Id { get; }
     }
 }

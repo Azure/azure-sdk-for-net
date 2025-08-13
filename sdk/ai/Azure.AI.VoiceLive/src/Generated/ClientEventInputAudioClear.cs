@@ -10,20 +10,19 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary>  Clears all input audio currently being streamed. </summary>
+    /// <summary>   Clears all input audio currently being streamed. </summary>
     public partial class ClientEventInputAudioClear : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioClear"/>. </summary>
-        public ClientEventInputAudioClear()
+        public ClientEventInputAudioClear() : base("input_audio.clear")
         {
-            Type = "input_audio.clear";
         }
 
         /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioClear"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClientEventInputAudioClear(string type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, eventId, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ClientEventInputAudioClear(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, eventId, additionalBinaryDataProperties)
         {
         }
     }

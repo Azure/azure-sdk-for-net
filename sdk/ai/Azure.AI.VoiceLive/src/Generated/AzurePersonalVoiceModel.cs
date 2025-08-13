@@ -7,7 +7,7 @@
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The AzurePersonalVoiceModel. </summary>
+    /// <summary></summary>
     public enum AzurePersonalVoiceModel
     {
         /// <summary> DragonLatestNeural. </summary>

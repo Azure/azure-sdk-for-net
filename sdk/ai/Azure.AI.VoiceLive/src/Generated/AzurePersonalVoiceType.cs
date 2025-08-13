@@ -7,12 +7,12 @@
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The AzurePersonalVoiceType. </summary>
+    /// <summary></summary>
     public enum AzurePersonalVoiceType
     {
-        /// <summary> azure-personal. </summary>
+        /// <summary> AzurePersonal. </summary>
         AzurePersonal,
-        /// <summary> personal. </summary>
+        /// <summary> Personal. </summary>
         Personal
     }
 }

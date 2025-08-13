@@ -7,12 +7,12 @@
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The ResponseModality. </summary>
+    /// <summary></summary>
     public enum ResponseModality
     {
-        /// <summary> text. </summary>
+        /// <summary> Text. </summary>
         Text,
-        /// <summary> audio. </summary>
+        /// <summary> Audio. </summary>
         Audio
     }
 }

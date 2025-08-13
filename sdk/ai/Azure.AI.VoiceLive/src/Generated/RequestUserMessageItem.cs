@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
@@ -17,68 +18,60 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="RequestUserMessageItem"/>. </summary>
         /// <param name="content"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public RequestUserMessageItem(IEnumerable<BinaryData> content)
+        public RequestUserMessageItem(IEnumerable<BinaryData> content) : base("user")
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            Role = MessageRole.User;
             Content = content.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="RequestUserMessageItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="role"></param>
         /// <param name="status"></param>
         /// <param name="content"></param>
-        internal RequestUserMessageItem(string type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData, MessageRole role, ItemStatus? status, IList<BinaryData> content) : base(type, id, serializedAdditionalRawData, role, status)
+        internal RequestUserMessageItem(string @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string role, ItemStatus? status, IList<BinaryData> content) : base(@type, id, additionalBinaryDataProperties, role, status)
         {
             Content = content;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RequestUserMessageItem"/> for deserialization. </summary>
-        internal RequestUserMessageItem()
-        {
-        }
-
         /// <summary>
-        /// Gets the content
-        /// <para>
-        /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// Gets the Content.
+        /// <para> To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// <remarks>
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description><see cref="RequestTextContentPart"/></description>
+        /// <description> <see cref="RequestTextContentPart"/>. </description>
         /// </item>
         /// <item>
-        /// <description><see cref="RequestAudioContentPart"/></description>
+        /// <description> <see cref="RequestAudioContentPart"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>
+        /// </para>
+        /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>

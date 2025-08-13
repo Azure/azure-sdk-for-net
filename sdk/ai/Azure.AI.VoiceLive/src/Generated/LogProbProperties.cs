@@ -14,48 +14,15 @@ namespace Azure.AI.VoiceLive
     /// <summary> A single log probability entry for a token. </summary>
     public partial class LogProbProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LogProbProperties"/>. </summary>
         /// <param name="token"> The token that was used to generate the log probability. </param>
         /// <param name="logprob"> The log probability of the token. </param>
         /// <param name="bytes"> The bytes that were used to generate the log probability. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="token"/> or <paramref name="bytes"/> is null. </exception>
         internal LogProbProperties(string token, float logprob, IEnumerable<int> bytes)
         {
-            Argument.AssertNotNull(token, nameof(token));
-            Argument.AssertNotNull(bytes, nameof(bytes));
-
             Token = token;
             Logprob = logprob;
             Bytes = bytes.ToList();
@@ -65,25 +32,22 @@ namespace Azure.AI.VoiceLive
         /// <param name="token"> The token that was used to generate the log probability. </param>
         /// <param name="logprob"> The log probability of the token. </param>
         /// <param name="bytes"> The bytes that were used to generate the log probability. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LogProbProperties(string token, float logprob, IReadOnlyList<int> bytes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LogProbProperties(string token, float logprob, IList<int> bytes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Token = token;
             Logprob = logprob;
             Bytes = bytes;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="LogProbProperties"/> for deserialization. </summary>
-        internal LogProbProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The token that was used to generate the log probability. </summary>
         public string Token { get; }
+
         /// <summary> The log probability of the token. </summary>
         public float Logprob { get; }
+
         /// <summary> The bytes that were used to generate the log probability. </summary>
-        public IReadOnlyList<int> Bytes { get; }
+        public IList<int> Bytes { get; }
     }
 }

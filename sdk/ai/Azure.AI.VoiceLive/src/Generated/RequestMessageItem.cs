@@ -10,34 +10,35 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary>
-    /// The RequestMessageItem.
-    /// Please note <see cref="RequestMessageItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="RequestAssistantMessageItem"/>, <see cref="RequestSystemMessageItem"/> and <see cref="RequestUserMessageItem"/>.
-    /// </summary>
+    /// <summary> The RequestMessageItem. </summary>
     public partial class RequestMessageItem : ConversationRequestItem
     {
         /// <summary> Initializes a new instance of <see cref="RequestMessageItem"/>. </summary>
-        public RequestMessageItem()
+        /// <param name="role"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="role"/> is null. </exception>
+        public RequestMessageItem(string role) : base("message")
         {
-            Role = new MessageRole("message");
+            Argument.AssertNotNull(role, nameof(role));
+
+            Role = role;
         }
 
         /// <summary> Initializes a new instance of <see cref="RequestMessageItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="role"></param>
         /// <param name="status"></param>
-        internal RequestMessageItem(string type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData, MessageRole role, ItemStatus? status) : base(type, id, serializedAdditionalRawData)
+        internal RequestMessageItem(string @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string role, ItemStatus? status) : base(@type, id, additionalBinaryDataProperties)
         {
             Role = role;
             Status = status;
         }
 
-        /// <summary> Gets or sets the role. </summary>
-        internal MessageRole Role { get; set; }
-        /// <summary> Gets or sets the status. </summary>
+        /// <summary> Gets or sets the Role. </summary>
+        internal string Role { get; set; }
+
+        /// <summary> Gets or sets the Status. </summary>
         public ItemStatus? Status { get; set; }
     }
 }

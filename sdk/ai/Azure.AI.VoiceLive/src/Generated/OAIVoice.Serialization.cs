@@ -11,6 +11,7 @@ namespace Azure.AI.VoiceLive
 {
     internal static partial class OAIVoiceExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this OAIVoice value) => value switch
         {
             OAIVoice.Alloy => "alloy",
@@ -24,16 +25,41 @@ namespace Azure.AI.VoiceLive
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown OAIVoice value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static OAIVoice ToOAIVoice(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "alloy")) return OAIVoice.Alloy;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ash")) return OAIVoice.Ash;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ballad")) return OAIVoice.Ballad;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "coral")) return OAIVoice.Coral;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "echo")) return OAIVoice.Echo;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "sage")) return OAIVoice.Sage;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "shimmer")) return OAIVoice.Shimmer;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "verse")) return OAIVoice.Verse;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "alloy"))
+            {
+                return OAIVoice.Alloy;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ash"))
+            {
+                return OAIVoice.Ash;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ballad"))
+            {
+                return OAIVoice.Ballad;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "coral"))
+            {
+                return OAIVoice.Coral;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "echo"))
+            {
+                return OAIVoice.Echo;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "sage"))
+            {
+                return OAIVoice.Sage;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "shimmer"))
+            {
+                return OAIVoice.Shimmer;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "verse"))
+            {
+                return OAIVoice.Verse;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown OAIVoice value.");
         }
     }

@@ -85,7 +85,7 @@ namespace Azure.AI.VoiceLive
 
             if (Voice != null)
             {
-                session.Voice = Voice.ToBinaryData();
+                session.Voice = null;
             }
 
             if (!string.IsNullOrEmpty(Model))

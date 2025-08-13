@@ -16,7 +16,7 @@ namespace Azure.AI.VoiceLive
     /// if the input audio buffer is empty. When in Server VAD mode, the client does
     /// not need to send this event, the server will commit the audio buffer
     /// automatically.
-    ///
+    /// 
     /// Committing the input audio buffer will trigger input audio transcription
     /// (if enabled in session configuration), but it will not create a response
     /// from the model. The server will respond with an `input_audio_buffer.committed`
@@ -25,16 +25,15 @@ namespace Azure.AI.VoiceLive
     public partial class ClientEventInputAudioBufferCommit : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioBufferCommit"/>. </summary>
-        public ClientEventInputAudioBufferCommit()
+        public ClientEventInputAudioBufferCommit() : base("input_audio_buffer.commit")
         {
-            Type = "input_audio_buffer.commit";
         }
 
         /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioBufferCommit"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClientEventInputAudioBufferCommit(string type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, eventId, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ClientEventInputAudioBufferCommit(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, eventId, additionalBinaryDataProperties)
         {
         }
     }

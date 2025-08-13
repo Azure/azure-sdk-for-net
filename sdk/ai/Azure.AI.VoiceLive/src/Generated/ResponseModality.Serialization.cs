@@ -11,6 +11,7 @@ namespace Azure.AI.VoiceLive
 {
     internal static partial class ResponseModalityExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ResponseModality value) => value switch
         {
             ResponseModality.Text => "text",
@@ -18,10 +19,17 @@ namespace Azure.AI.VoiceLive
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponseModality value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ResponseModality ToResponseModality(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "text")) return ResponseModality.Text;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "audio")) return ResponseModality.Audio;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "text"))
+            {
+                return ResponseModality.Text;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "audio"))
+            {
+                return ResponseModality.Audio;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponseModality value.");
         }
     }

@@ -10,7 +10,7 @@ namespace Azure.AI.VoiceLive
     /// <summary> Voice identifier for Phi4mm voices. </summary>
     public enum Phi4mmVoice
     {
-        /// <summary> cosyvoice. </summary>
+        /// <summary> Cosyvoice. </summary>
         Cosyvoice
     }
 }

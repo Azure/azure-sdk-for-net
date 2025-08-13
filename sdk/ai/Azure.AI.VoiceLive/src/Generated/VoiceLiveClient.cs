@@ -6,30 +6,24 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.AI.VoiceLive
 {
-    // Data plane generated client.
-    /// <summary> The VoiceLive service client. </summary>
+    /// <summary> The VoiceLiveClient. </summary>
     public partial class VoiceLiveClient
     {
-        private const string AuthorizationHeader = "api-key";
-        private readonly AzureKeyCredential _keyCredential;
-        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
-        private readonly TokenCredential _tokenCredential;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
+        /// <summary> A credential used to authenticate to the service. </summary>
+        private readonly AzureKeyCredential _keyCredential;
+        private const string AuthorizationHeader = "api-key";
+        /// <summary> A credential used to authenticate to the service. </summary>
+        private readonly TokenCredential _tokenCredential;
+        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
 
         /// <summary> Initializes a new instance of VoiceLiveClient for mocking. </summary>
         protected VoiceLiveClient()
@@ -37,159 +31,84 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> Initializes a new instance of VoiceLiveClient. </summary>
-        /// <param name="endpoint"> Azure AI VoiceLive endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public VoiceLiveClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new VoiceLiveClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of VoiceLiveClient. </summary>
-        /// <param name="endpoint"> Azure AI VoiceLive endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public VoiceLiveClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new VoiceLiveClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of VoiceLiveClient. </summary>
-        /// <param name="endpoint"> Azure AI VoiceLive endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public VoiceLiveClient(Uri endpoint, AzureKeyCredential credential, VoiceLiveClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
+
             options ??= new VoiceLiveClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _keyCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
             _endpoint = endpoint;
+            _keyCredential = credential;
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) });
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
         /// <summary> Initializes a new instance of VoiceLiveClient. </summary>
-        /// <param name="endpoint"> Azure AI VoiceLive endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public VoiceLiveClient(Uri endpoint, TokenCredential credential, VoiceLiveClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
+
             options ??= new VoiceLiveClientOptions();
 
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
+            _tokenCredential = credential;
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
-        /// <summary> Force models. </summary>
-        /// <param name="accept"> The <see cref="string"/> to use. </param>
-        /// <param name="event"></param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accept"/> or <paramref name="event"/> is null. </exception>
-        internal virtual async Task<Response<ServerEventResponseFunctionCallArgumentsDone>> ForceModelsAsync(string accept, BinaryData @event, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(accept, nameof(accept));
-            Argument.AssertNotNull(@event, nameof(@event));
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-            ForceModelsRequest forceModelsRequest = new ForceModelsRequest(@event, null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await ForceModelsAsync(accept, forceModelsRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(ServerEventResponseFunctionCallArgumentsDone.FromResponse(response), response);
-        }
-
-        /// <summary> Force models. </summary>
-        /// <param name="accept"> The <see cref="string"/> to use. </param>
-        /// <param name="event"></param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accept"/> or <paramref name="event"/> is null. </exception>
-        internal virtual Response<ServerEventResponseFunctionCallArgumentsDone> ForceModels(string accept, BinaryData @event, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(accept, nameof(accept));
-            Argument.AssertNotNull(@event, nameof(@event));
-
-            ForceModelsRequest forceModelsRequest = new ForceModelsRequest(@event, null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = ForceModels(accept, forceModelsRequest.ToRequestContent(), context);
-            return Response.FromValue(ServerEventResponseFunctionCallArgumentsDone.FromResponse(response), response);
-        }
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
-        /// [Protocol Method] Force models.
+        /// [Protocol Method] ForceModels
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="ForceModelsAsync(string,BinaryData,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="accept"> The <see cref="string"/> to use. </param>
+        /// <param name="accept"></param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accept"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> ForceModelsAsync(string accept, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(accept, nameof(accept));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("VoiceLiveClient.ForceModels");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateForceModelsRequest(accept, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Force models.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="ForceModels(string,BinaryData,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="accept"> The <see cref="string"/> to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accept"/> or <paramref name="content"/> is null. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         internal virtual Response ForceModels(string accept, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(accept, nameof(accept));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("VoiceLiveClient.ForceModels");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("VoiceLiveClient.ForceModels");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateForceModelsRequest(accept, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -198,34 +117,57 @@ namespace Azure.AI.VoiceLive
             }
         }
 
-        internal HttpMessage CreateForceModelsRequest(string accept, RequestContent content, RequestContext context)
+        /// <summary>
+        /// [Protocol Method] ForceModels
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="accept"></param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> ForceModelsAsync(string accept, RequestContent content, RequestContext context = null)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/voice-agent/realtime", false);
-            uri.AppendPath("/", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", accept);
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        private static RequestContext DefaultRequestContext = new RequestContext();
-        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
-        {
-            if (!cancellationToken.CanBeCanceled)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("VoiceLiveClient.ForceModels");
+            scope.Start();
+            try
             {
-                return DefaultRequestContext;
+                using HttpMessage message = CreateForceModelsRequest(accept, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-
-            return new RequestContext() { CancellationToken = cancellationToken };
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        private static ResponseClassifier _responseClassifier200;
-        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        /// <summary> ForceModels. </summary>
+        /// <param name="accept"></param>
+        /// <param name="event"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<ResponseAnimationVisemeDoneEvent> ForceModels(string accept, BinaryData @event, CancellationToken cancellationToken = default)
+        {
+            ForceModelsRequest spreadModel = new ForceModelsRequest(@event, null);
+            Response result = ForceModels(accept, spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Response.FromValue((ResponseAnimationVisemeDoneEvent)result, result);
+        }
+
+        /// <summary> ForceModels. </summary>
+        /// <param name="accept"></param>
+        /// <param name="event"></param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response<ResponseAnimationVisemeDoneEvent>> ForceModelsAsync(string accept, BinaryData @event, CancellationToken cancellationToken = default)
+        {
+            ForceModelsRequest spreadModel = new ForceModelsRequest(@event, null);
+            Response result = await ForceModelsAsync(accept, spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Response.FromValue((ResponseAnimationVisemeDoneEvent)result, result);
+        }
     }
 }

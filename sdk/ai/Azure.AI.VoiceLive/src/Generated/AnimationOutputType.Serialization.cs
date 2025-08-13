@@ -11,6 +11,7 @@ namespace Azure.AI.VoiceLive
 {
     internal static partial class AnimationOutputTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AnimationOutputType value) => value switch
         {
             AnimationOutputType.Blendshapes => "blendshapes",
@@ -19,11 +20,21 @@ namespace Azure.AI.VoiceLive
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AnimationOutputType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static AnimationOutputType ToAnimationOutputType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "blendshapes")) return AnimationOutputType.Blendshapes;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "viseme_id")) return AnimationOutputType.VisemeId;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "emotion")) return AnimationOutputType.Emotion;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "blendshapes"))
+            {
+                return AnimationOutputType.Blendshapes;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "viseme_id"))
+            {
+                return AnimationOutputType.VisemeId;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "emotion"))
+            {
+                return AnimationOutputType.Emotion;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AnimationOutputType value.");
         }
     }

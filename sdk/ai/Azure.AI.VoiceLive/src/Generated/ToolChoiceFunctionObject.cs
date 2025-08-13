@@ -16,29 +16,23 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ToolChoiceFunctionObject"/>. </summary>
         /// <param name="function"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="function"/> is null. </exception>
-        public ToolChoiceFunctionObject(ToolChoiceFunctionObjectFunction function)
+        public ToolChoiceFunctionObject(ToolChoiceFunctionObjectFunction function) : base(ToolType.Function)
         {
             Argument.AssertNotNull(function, nameof(function));
 
-            Type = ToolType.Function;
             Function = function;
         }
 
         /// <summary> Initializes a new instance of <see cref="ToolChoiceFunctionObject"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="function"></param>
-        internal ToolChoiceFunctionObject(ToolType type, IDictionary<string, BinaryData> serializedAdditionalRawData, ToolChoiceFunctionObjectFunction function) : base(type, serializedAdditionalRawData)
+        internal ToolChoiceFunctionObject(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ToolChoiceFunctionObjectFunction function) : base(@type, additionalBinaryDataProperties)
         {
             Function = function;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ToolChoiceFunctionObject"/> for deserialization. </summary>
-        internal ToolChoiceFunctionObject()
-        {
-        }
-
-        /// <summary> Gets or sets the function. </summary>
+        /// <summary> Gets or sets the Function. </summary>
         public ToolChoiceFunctionObjectFunction Function { get; set; }
     }
 }

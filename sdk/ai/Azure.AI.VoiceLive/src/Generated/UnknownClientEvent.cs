@@ -10,19 +10,13 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> Unknown version of ClientEvent. </summary>
     internal partial class UnknownClientEvent : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownClientEvent"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownClientEvent(string type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, eventId, serializedAdditionalRawData)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownClientEvent"/> for deserialization. </summary>
-        internal UnknownClientEvent()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownClientEvent(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type ?? "unknown", eventId, additionalBinaryDataProperties)
         {
         }
     }

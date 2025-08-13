@@ -21,13 +21,8 @@ namespace Azure.AI.VoiceLive
         /// <param name="itemId"> The ID of the user message item. </param>
         /// <param name="contentIndex"> The index of the content part containing the audio. </param>
         /// <param name="error"> Details of the transcription error. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="itemId"/> or <paramref name="error"/> is null. </exception>
-        internal ServerEventConversationItemInputAudioTranscriptionFailed(string itemId, int contentIndex, VoiceLiveErrorDetails error)
+        internal ServerEventConversationItemInputAudioTranscriptionFailed(string itemId, int contentIndex, VoiceLiveErrorDetails error) : base(ServerEventType.ConversationItemInputAudioTranscriptionFailed)
         {
-            Argument.AssertNotNull(itemId, nameof(itemId));
-            Argument.AssertNotNull(error, nameof(error));
-
-            Type = ServerEventType.ConversationItemInputAudioTranscriptionFailed;
             ItemId = itemId;
             ContentIndex = contentIndex;
             Error = error;
@@ -36,26 +31,23 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ServerEventConversationItemInputAudioTranscriptionFailed"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemId"> The ID of the user message item. </param>
         /// <param name="contentIndex"> The index of the content part containing the audio. </param>
         /// <param name="error"> Details of the transcription error. </param>
-        internal ServerEventConversationItemInputAudioTranscriptionFailed(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemId, int contentIndex, VoiceLiveErrorDetails error) : base(type, eventId, serializedAdditionalRawData)
+        internal ServerEventConversationItemInputAudioTranscriptionFailed(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, int contentIndex, VoiceLiveErrorDetails error) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ItemId = itemId;
             ContentIndex = contentIndex;
             Error = error;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServerEventConversationItemInputAudioTranscriptionFailed"/> for deserialization. </summary>
-        internal ServerEventConversationItemInputAudioTranscriptionFailed()
-        {
-        }
-
         /// <summary> The ID of the user message item. </summary>
         public string ItemId { get; }
+
         /// <summary> The index of the content part containing the audio. </summary>
         public int ContentIndex { get; }
+
         /// <summary> Details of the transcription error. </summary>
         public VoiceLiveErrorDetails Error { get; }
     }

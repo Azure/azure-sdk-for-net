@@ -18,20 +18,19 @@ namespace Azure.AI.VoiceLive
     public partial class ClientEventResponseCancel : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventResponseCancel"/>. </summary>
-        public ClientEventResponseCancel()
+        public ClientEventResponseCancel() : base("response.cancel")
         {
-            Type = "response.cancel";
         }
 
         /// <summary> Initializes a new instance of <see cref="ClientEventResponseCancel"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="responseId">
         /// A specific response ID to cancel - if not provided, will cancel an
         /// in-progress response in the default conversation.
         /// </param>
-        internal ClientEventResponseCancel(string type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string responseId) : base(type, eventId, serializedAdditionalRawData)
+        internal ClientEventResponseCancel(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
         }

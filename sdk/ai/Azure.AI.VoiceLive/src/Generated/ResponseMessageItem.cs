@@ -16,17 +16,10 @@ namespace Azure.AI.VoiceLive
     {
         /// <summary> Initializes a new instance of <see cref="ResponseMessageItem"/>. </summary>
         /// <param name="role"></param>
-        /// <param name="content">
-        /// Please note <see cref="ContentPart"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ResponseAudioContentPart"/>, <see cref="RequestAudioContentPart"/>, <see cref="RequestTextContentPart"/> and <see cref="ResponseTextContentPart"/>.
-        /// </param>
+        /// <param name="content"></param>
         /// <param name="status"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         internal ResponseMessageItem(MessageRole role, IEnumerable<ContentPart> content, ItemStatus status)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            Type = "message";
             Role = role;
             Content = content.ToList();
             Status = status;
@@ -36,34 +29,24 @@ namespace Azure.AI.VoiceLive
         /// <param name="object"></param>
         /// <param name="type"></param>
         /// <param name="id"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="role"></param>
-        /// <param name="content">
-        /// Please note <see cref="ContentPart"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ResponseAudioContentPart"/>, <see cref="RequestAudioContentPart"/>, <see cref="RequestTextContentPart"/> and <see cref="ResponseTextContentPart"/>.
-        /// </param>
+        /// <param name="content"></param>
         /// <param name="status"></param>
-        internal ResponseMessageItem(ConversationResponseItemObject? @object, string type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData, MessageRole role, IReadOnlyList<ContentPart> content, ItemStatus status) : base(@object, type, id, serializedAdditionalRawData)
+        internal ResponseMessageItem(string @object, string @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, MessageRole role, IList<ContentPart> content, ItemStatus status) : base(@object, @type, id, additionalBinaryDataProperties)
         {
             Role = role;
             Content = content;
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponseMessageItem"/> for deserialization. </summary>
-        internal ResponseMessageItem()
-        {
-        }
-
-        /// <summary> Gets the role. </summary>
+        /// <summary> Gets the Role. </summary>
         public MessageRole Role { get; }
-        /// <summary>
-        /// Gets the content
-        /// Please note <see cref="ContentPart"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ResponseAudioContentPart"/>, <see cref="RequestAudioContentPart"/>, <see cref="RequestTextContentPart"/> and <see cref="ResponseTextContentPart"/>.
-        /// </summary>
-        public IReadOnlyList<ContentPart> Content { get; }
-        /// <summary> Gets the status. </summary>
+
+        /// <summary> Gets the Content. </summary>
+        public IList<ContentPart> Content { get; }
+
+        /// <summary> Gets the Status. </summary>
         public ItemStatus Status { get; }
     }
 }

@@ -11,6 +11,7 @@ namespace Azure.AI.VoiceLive
 {
     internal static partial class ConversationItemWithReferenceContentTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ConversationItemWithReferenceContentType value) => value switch
         {
             ConversationItemWithReferenceContentType.InputAudio => "input_audio",
@@ -20,12 +21,25 @@ namespace Azure.AI.VoiceLive
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ConversationItemWithReferenceContentType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ConversationItemWithReferenceContentType ToConversationItemWithReferenceContentType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "input_audio")) return ConversationItemWithReferenceContentType.InputAudio;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "input_text")) return ConversationItemWithReferenceContentType.InputText;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "item_reference")) return ConversationItemWithReferenceContentType.ItemReference;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "text")) return ConversationItemWithReferenceContentType.Text;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "input_audio"))
+            {
+                return ConversationItemWithReferenceContentType.InputAudio;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "input_text"))
+            {
+                return ConversationItemWithReferenceContentType.InputText;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "item_reference"))
+            {
+                return ConversationItemWithReferenceContentType.ItemReference;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "text"))
+            {
+                return ConversationItemWithReferenceContentType.Text;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ConversationItemWithReferenceContentType value.");
         }
     }

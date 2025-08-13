@@ -10,20 +10,14 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> Unknown version of ConversationResponseItem. </summary>
     internal partial class UnknownConversationResponseItem : ConversationResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="UnknownConversationResponseItem"/>. </summary>
         /// <param name="object"></param>
         /// <param name="type"></param>
         /// <param name="id"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownConversationResponseItem(ConversationResponseItemObject? @object, string type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(@object, type, id, serializedAdditionalRawData)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownConversationResponseItem"/> for deserialization. </summary>
-        internal UnknownConversationResponseItem()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownConversationResponseItem(string @object, string @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@object, @type ?? "unknown", id, additionalBinaryDataProperties)
         {
         }
     }

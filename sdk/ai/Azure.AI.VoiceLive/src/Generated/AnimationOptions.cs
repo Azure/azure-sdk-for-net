@@ -13,37 +13,8 @@ namespace Azure.AI.VoiceLive
     /// <summary> Configuration for animation outputs including blendshapes, visemes, and emotion metadata. </summary>
     public partial class AnimationOptions
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AnimationOptions"/>. </summary>
         public AnimationOptions()
@@ -55,19 +26,21 @@ namespace Azure.AI.VoiceLive
         /// <param name="modelName"> The name of the animation model to use. </param>
         /// <param name="outputs"> Set of output data types requested from the animation system. </param>
         /// <param name="emotionDetectionIntervalMs"> Interval for emotion detection in milliseconds. If not set, emotion detection is disabled. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AnimationOptions(string modelName, IList<AnimationOutputType> outputs, int? emotionDetectionIntervalMs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AnimationOptions(string modelName, IList<AnimationOutputType> outputs, int? emotionDetectionIntervalMs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ModelName = modelName;
             Outputs = outputs;
             EmotionDetectionIntervalMs = emotionDetectionIntervalMs;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the animation model to use. </summary>
         public string ModelName { get; set; }
+
         /// <summary> Set of output data types requested from the animation system. </summary>
         public IList<AnimationOutputType> Outputs { get; }
+
         /// <summary> Interval for emotion detection in milliseconds. If not set, emotion detection is disabled. </summary>
         public int? EmotionDetectionIntervalMs { get; set; }
     }

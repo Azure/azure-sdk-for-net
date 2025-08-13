@@ -10,18 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> Unknown version of TurnDetection. </summary>
     internal partial class UnknownTurnDetection : TurnDetection
     {
         /// <summary> Initializes a new instance of <see cref="UnknownTurnDetection"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownTurnDetection(TurnDetectionType type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownTurnDetection"/> for deserialization. </summary>
-        internal UnknownTurnDetection()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownTurnDetection(TurnDetectionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
         {
         }
     }

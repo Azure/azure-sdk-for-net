@@ -14,22 +14,24 @@ namespace Azure.AI.VoiceLive
     public partial class ServerEventConversationItemRetrieved : ServerEvent
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventConversationItemRetrieved"/>. </summary>
-        internal ServerEventConversationItemRetrieved()
+        internal ServerEventConversationItemRetrieved() : base(ServerEventType.ConversationItemRetrieved)
         {
-            Type = ServerEventType.ConversationItemRetrieved;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServerEventConversationItemRetrieved"/>. </summary>
         /// <param name="type"> The type of event. </param>
-        /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="itemId"></param>
-        internal ServerEventConversationItemRetrieved(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string itemId) : base(type, eventId, serializedAdditionalRawData)
+        /// <param name="eventId"></param>
+        internal ServerEventConversationItemRetrieved(ServerEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, string eventId) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ItemId = itemId;
         }
 
-        /// <summary> Gets the item id. </summary>
+        /// <summary> Gets the ItemId. </summary>
         public string ItemId { get; }
+
+        /// <summary> Gets the EventId. </summary>
+        public override string EventId { get; }
     }
 }

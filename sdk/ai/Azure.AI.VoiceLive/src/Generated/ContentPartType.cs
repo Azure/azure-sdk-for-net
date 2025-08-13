@@ -10,48 +10,67 @@ using System.ComponentModel;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The ContentPartType. </summary>
+    /// <summary></summary>
     internal readonly partial struct ContentPartType : IEquatable<ContentPartType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ContentPartType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ContentPartType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InputTextValue = "input_text";
         private const string InputAudioValue = "input_audio";
         private const string TextValue = "text";
         private const string AudioValue = "audio";
 
-        /// <summary> input_text. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentPartType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ContentPartType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the InputText. </summary>
         public static ContentPartType InputText { get; } = new ContentPartType(InputTextValue);
-        /// <summary> input_audio. </summary>
+
+        /// <summary> Gets the InputAudio. </summary>
         public static ContentPartType InputAudio { get; } = new ContentPartType(InputAudioValue);
-        /// <summary> text. </summary>
+
+        /// <summary> Gets the Text. </summary>
         public static ContentPartType Text { get; } = new ContentPartType(TextValue);
-        /// <summary> audio. </summary>
+
+        /// <summary> Gets the Audio. </summary>
         public static ContentPartType Audio { get; } = new ContentPartType(AudioValue);
+
         /// <summary> Determines if two <see cref="ContentPartType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContentPartType left, ContentPartType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContentPartType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContentPartType left, ContentPartType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContentPartType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContentPartType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContentPartType(string value) => new ContentPartType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContentPartType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContentPartType?(string value) => value == null ? null : new ContentPartType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContentPartType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContentPartType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

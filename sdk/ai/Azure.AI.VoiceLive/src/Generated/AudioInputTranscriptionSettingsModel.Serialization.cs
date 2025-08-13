@@ -11,6 +11,7 @@ namespace Azure.AI.VoiceLive
 {
     internal static partial class AudioInputTranscriptionSettingsModelExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AudioInputTranscriptionSettingsModel value) => value switch
         {
             AudioInputTranscriptionSettingsModel.Whisper1 => "whisper-1",
@@ -19,11 +20,21 @@ namespace Azure.AI.VoiceLive
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AudioInputTranscriptionSettingsModel value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static AudioInputTranscriptionSettingsModel ToAudioInputTranscriptionSettingsModel(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "whisper-1")) return AudioInputTranscriptionSettingsModel.Whisper1;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "azure-fast-transcription")) return AudioInputTranscriptionSettingsModel.AzureFastTranscription;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "s2s-ingraph")) return AudioInputTranscriptionSettingsModel.S2sIngraph;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "whisper-1"))
+            {
+                return AudioInputTranscriptionSettingsModel.Whisper1;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "azure-fast-transcription"))
+            {
+                return AudioInputTranscriptionSettingsModel.AzureFastTranscription;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "s2s-ingraph"))
+            {
+                return AudioInputTranscriptionSettingsModel.S2sIngraph;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AudioInputTranscriptionSettingsModel value.");
         }
     }

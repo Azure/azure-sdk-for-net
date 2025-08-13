@@ -17,12 +17,11 @@ namespace Azure.AI.VoiceLive
         /// <param name="callId"></param>
         /// <param name="output"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="callId"/> or <paramref name="output"/> is null. </exception>
-        public RequestFunctionCallOutputItem(string callId, string output)
+        public RequestFunctionCallOutputItem(string callId, string output) : base("function_call_output")
         {
             Argument.AssertNotNull(callId, nameof(callId));
             Argument.AssertNotNull(output, nameof(output));
 
-            Type = "function_call_output";
             CallId = callId;
             Output = output;
         }
@@ -30,23 +29,19 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="RequestFunctionCallOutputItem"/>. </summary>
         /// <param name="type"></param>
         /// <param name="id"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="callId"></param>
         /// <param name="output"></param>
-        internal RequestFunctionCallOutputItem(string type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData, string callId, string output) : base(type, id, serializedAdditionalRawData)
+        internal RequestFunctionCallOutputItem(string @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, string output) : base(@type, id, additionalBinaryDataProperties)
         {
             CallId = callId;
             Output = output;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RequestFunctionCallOutputItem"/> for deserialization. </summary>
-        internal RequestFunctionCallOutputItem()
-        {
-        }
-
-        /// <summary> Gets the call id. </summary>
+        /// <summary> Gets the CallId. </summary>
         public string CallId { get; }
-        /// <summary> Gets the output. </summary>
+
+        /// <summary> Gets the Output. </summary>
         public string Output { get; }
     }
 }

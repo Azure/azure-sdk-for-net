@@ -11,6 +11,7 @@ namespace Azure.AI.VoiceLive
 {
     internal static partial class ConversationItemWithReferenceStatusExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ConversationItemWithReferenceStatus value) => value switch
         {
             ConversationItemWithReferenceStatus.Completed => "completed",
@@ -18,10 +19,17 @@ namespace Azure.AI.VoiceLive
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ConversationItemWithReferenceStatus value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ConversationItemWithReferenceStatus ToConversationItemWithReferenceStatus(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "completed")) return ConversationItemWithReferenceStatus.Completed;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete")) return ConversationItemWithReferenceStatus.Incomplete;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "completed"))
+            {
+                return ConversationItemWithReferenceStatus.Completed;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "incomplete"))
+            {
+                return ConversationItemWithReferenceStatus.Incomplete;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ConversationItemWithReferenceStatus value.");
         }
     }

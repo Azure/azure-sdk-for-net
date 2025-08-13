@@ -11,6 +11,7 @@ namespace Azure.AI.VoiceLive
 {
     internal static partial class AzurePersonalVoiceModelExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AzurePersonalVoiceModel value) => value switch
         {
             AzurePersonalVoiceModel.DragonLatestNeural => "DragonLatestNeural",
@@ -19,11 +20,21 @@ namespace Azure.AI.VoiceLive
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AzurePersonalVoiceModel value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static AzurePersonalVoiceModel ToAzurePersonalVoiceModel(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DragonLatestNeural")) return AzurePersonalVoiceModel.DragonLatestNeural;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PhoenixLatestNeural")) return AzurePersonalVoiceModel.PhoenixLatestNeural;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PhoenixV2Neural")) return AzurePersonalVoiceModel.PhoenixV2Neural;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DragonLatestNeural"))
+            {
+                return AzurePersonalVoiceModel.DragonLatestNeural;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PhoenixLatestNeural"))
+            {
+                return AzurePersonalVoiceModel.PhoenixLatestNeural;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PhoenixV2Neural"))
+            {
+                return AzurePersonalVoiceModel.PhoenixV2Neural;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AzurePersonalVoiceModel value.");
         }
     }

@@ -20,14 +20,8 @@ namespace Azure.AI.VoiceLive
         /// <param name="audioOffsetMs"></param>
         /// <param name="audioDurationMs"></param>
         /// <param name="itemId"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="emotion"/>, <paramref name="candidates"/> or <paramref name="itemId"/> is null. </exception>
-        internal ResponseEmotionHypothesis(string emotion, IEnumerable<EmotionCandidate> candidates, int audioOffsetMs, int audioDurationMs, string itemId)
+        internal ResponseEmotionHypothesis(string emotion, IEnumerable<EmotionCandidate> candidates, int audioOffsetMs, int audioDurationMs, string itemId) : base(ServerEventType.ResponseEmotionHypothesis)
         {
-            Argument.AssertNotNull(emotion, nameof(emotion));
-            Argument.AssertNotNull(candidates, nameof(candidates));
-            Argument.AssertNotNull(itemId, nameof(itemId));
-
-            Type = ServerEventType.ResponseEmotionHypothesis;
             Emotion = emotion;
             Candidates = candidates.ToList();
             AudioOffsetMs = audioOffsetMs;
@@ -38,14 +32,14 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ResponseEmotionHypothesis"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="emotion"></param>
         /// <param name="candidates"></param>
         /// <param name="audioOffsetMs"></param>
         /// <param name="audioDurationMs"></param>
         /// <param name="responseId"></param>
         /// <param name="itemId"></param>
-        internal ResponseEmotionHypothesis(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string emotion, IReadOnlyList<EmotionCandidate> candidates, int audioOffsetMs, int audioDurationMs, string responseId, string itemId) : base(type, eventId, serializedAdditionalRawData)
+        internal ResponseEmotionHypothesis(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string emotion, IList<EmotionCandidate> candidates, int audioOffsetMs, int audioDurationMs, string responseId, string itemId) : base(@type, eventId, additionalBinaryDataProperties)
         {
             Emotion = emotion;
             Candidates = candidates;
@@ -55,22 +49,22 @@ namespace Azure.AI.VoiceLive
             ItemId = itemId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponseEmotionHypothesis"/> for deserialization. </summary>
-        internal ResponseEmotionHypothesis()
-        {
-        }
-
-        /// <summary> Gets the emotion. </summary>
+        /// <summary> Gets the Emotion. </summary>
         public string Emotion { get; }
-        /// <summary> Gets the candidates. </summary>
-        public IReadOnlyList<EmotionCandidate> Candidates { get; }
-        /// <summary> Gets the audio offset ms. </summary>
+
+        /// <summary> Gets the Candidates. </summary>
+        public IList<EmotionCandidate> Candidates { get; }
+
+        /// <summary> Gets the AudioOffsetMs. </summary>
         public int AudioOffsetMs { get; }
-        /// <summary> Gets the audio duration ms. </summary>
+
+        /// <summary> Gets the AudioDurationMs. </summary>
         public int AudioDurationMs { get; }
-        /// <summary> Gets the response id. </summary>
+
+        /// <summary> Gets the ResponseId. </summary>
         public string ResponseId { get; }
-        /// <summary> Gets the item id. </summary>
+
+        /// <summary> Gets the ItemId. </summary>
         public string ItemId { get; }
     }
 }

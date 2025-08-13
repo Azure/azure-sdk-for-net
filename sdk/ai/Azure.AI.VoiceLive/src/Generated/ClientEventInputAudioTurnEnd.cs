@@ -10,33 +10,27 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary>  Marks the end of an audio input turn. </summary>
+    /// <summary>   Marks the end of an audio input turn. </summary>
     public partial class ClientEventInputAudioTurnEnd : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioTurnEnd"/>. </summary>
         /// <param name="turnId"> The ID of the audio turn being ended. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="turnId"/> is null. </exception>
-        public ClientEventInputAudioTurnEnd(string turnId)
+        public ClientEventInputAudioTurnEnd(string turnId) : base("input_audio.turn.end")
         {
             Argument.AssertNotNull(turnId, nameof(turnId));
 
-            Type = "input_audio.turn.end";
             TurnId = turnId;
         }
 
         /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioTurnEnd"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="turnId"> The ID of the audio turn being ended. </param>
-        internal ClientEventInputAudioTurnEnd(string type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string turnId) : base(type, eventId, serializedAdditionalRawData)
+        internal ClientEventInputAudioTurnEnd(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string turnId) : base(@type, eventId, additionalBinaryDataProperties)
         {
             TurnId = turnId;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioTurnEnd"/> for deserialization. </summary>
-        internal ClientEventInputAudioTurnEnd()
-        {
         }
 
         /// <summary> The ID of the audio turn being ended. </summary>

@@ -19,31 +19,22 @@ namespace Azure.AI.VoiceLive
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseDone"/>. </summary>
         /// <param name="response"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="response"/> is null. </exception>
-        internal ServerEventResponseDone(VoiceLiveResponse response)
+        internal ServerEventResponseDone(VoiceLiveResponse response) : base(ServerEventType.ResponseDone)
         {
-            Argument.AssertNotNull(response, nameof(response));
-
-            Type = ServerEventType.ResponseDone;
             Response = response;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseDone"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="response"></param>
-        internal ServerEventResponseDone(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, VoiceLiveResponse response) : base(type, eventId, serializedAdditionalRawData)
+        internal ServerEventResponseDone(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceLiveResponse response) : base(@type, eventId, additionalBinaryDataProperties)
         {
             Response = response;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServerEventResponseDone"/> for deserialization. </summary>
-        internal ServerEventResponseDone()
-        {
-        }
-
-        /// <summary> Gets the response. </summary>
+        /// <summary> Gets the Response. </summary>
         public VoiceLiveResponse Response { get; }
     }
 }

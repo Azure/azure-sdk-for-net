@@ -20,13 +20,8 @@ namespace Azure.AI.VoiceLive
         /// <param name="contentIndex"></param>
         /// <param name="audioOffsetMs"></param>
         /// <param name="visemeId"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="responseId"/> or <paramref name="itemId"/> is null. </exception>
-        internal ResponseAnimationVisemeDeltaEvent(string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int visemeId)
+        internal ResponseAnimationVisemeDeltaEvent(string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int visemeId) : base(ServerEventType.ResponseAnimationVisemeDelta)
         {
-            Argument.AssertNotNull(responseId, nameof(responseId));
-            Argument.AssertNotNull(itemId, nameof(itemId));
-
-            Type = ServerEventType.ResponseAnimationVisemeDelta;
             ResponseId = responseId;
             ItemId = itemId;
             OutputIndex = outputIndex;
@@ -38,14 +33,14 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ResponseAnimationVisemeDeltaEvent"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="responseId"></param>
         /// <param name="itemId"></param>
         /// <param name="outputIndex"></param>
         /// <param name="contentIndex"></param>
         /// <param name="audioOffsetMs"></param>
         /// <param name="visemeId"></param>
-        internal ResponseAnimationVisemeDeltaEvent(ServerEventType type, string eventId, IDictionary<string, BinaryData> serializedAdditionalRawData, string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int visemeId) : base(type, eventId, serializedAdditionalRawData)
+        internal ResponseAnimationVisemeDeltaEvent(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int visemeId) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             ItemId = itemId;
@@ -55,22 +50,22 @@ namespace Azure.AI.VoiceLive
             VisemeId = visemeId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponseAnimationVisemeDeltaEvent"/> for deserialization. </summary>
-        internal ResponseAnimationVisemeDeltaEvent()
-        {
-        }
-
-        /// <summary> Gets the response id. </summary>
+        /// <summary> Gets the ResponseId. </summary>
         public string ResponseId { get; }
-        /// <summary> Gets the item id. </summary>
+
+        /// <summary> Gets the ItemId. </summary>
         public string ItemId { get; }
-        /// <summary> Gets the output index. </summary>
+
+        /// <summary> Gets the OutputIndex. </summary>
         public int OutputIndex { get; }
-        /// <summary> Gets the content index. </summary>
+
+        /// <summary> Gets the ContentIndex. </summary>
         public int ContentIndex { get; }
-        /// <summary> Gets the audio offset ms. </summary>
+
+        /// <summary> Gets the AudioOffsetMs. </summary>
         public int AudioOffsetMs { get; }
-        /// <summary> Gets the viseme id. </summary>
+
+        /// <summary> Gets the VisemeId. </summary>
         public int VisemeId { get; }
     }
 }

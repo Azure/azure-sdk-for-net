@@ -14,15 +14,14 @@ namespace Azure.AI.VoiceLive
     public partial class NoTurnDetection : TurnDetection
     {
         /// <summary> Initializes a new instance of <see cref="NoTurnDetection"/>. </summary>
-        public NoTurnDetection()
+        public NoTurnDetection() : base(TurnDetectionType.None)
         {
-            Type = TurnDetectionType.None;
         }
 
         /// <summary> Initializes a new instance of <see cref="NoTurnDetection"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NoTurnDetection(TurnDetectionType type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NoTurnDetection(TurnDetectionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
         {
         }
     }

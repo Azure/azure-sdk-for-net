@@ -7,14 +7,14 @@
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The TurnDetectionType. </summary>
+    /// <summary></summary>
     internal enum TurnDetectionType
     {
-        /// <summary> none. </summary>
+        /// <summary> None. </summary>
         None,
-        /// <summary> server_vad. </summary>
+        /// <summary> ServerVad. </summary>
         ServerVad,
-        /// <summary> azure_semantic_vad. </summary>
+        /// <summary> AzureSemanticVad. </summary>
         AzureSemanticVad
     }
 }

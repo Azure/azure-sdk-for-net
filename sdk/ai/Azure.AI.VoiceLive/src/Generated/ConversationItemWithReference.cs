@@ -13,37 +13,8 @@ namespace Azure.AI.VoiceLive
     /// <summary> The item to add to the conversation. </summary>
     public partial class ConversationItemWithReference
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConversationItemWithReference"/>. </summary>
         public ConversationItemWithReference()
@@ -56,7 +27,7 @@ namespace Azure.AI.VoiceLive
         /// For an item of type (`message` | `function_call` | `function_call_output`)
         /// this field allows the client to assign the unique ID of the item. It is
         /// not required because the server will generate one if not provided.
-        ///
+        /// 
         /// For an item of type `item_reference`, this field is required and is a
         /// reference to any item that has previously existed in the conversation.
         /// </param>
@@ -87,11 +58,11 @@ namespace Azure.AI.VoiceLive
         /// <param name="name"> The name of the function being called (for `function_call` items). </param>
         /// <param name="arguments"> The arguments of the function call (for `function_call` items). </param>
         /// <param name="output"> The output of the function call (for `function_call_output` items). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationItemWithReference(string id, ConversationItemWithReferenceType? type, ConversationItemWithReferenceObject? @object, ConversationItemWithReferenceStatus? status, MessageRole? role, IList<ConversationItemWithReferenceContent> content, string callId, string name, string arguments, string output, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConversationItemWithReference(string id, ConversationItemWithReferenceType? @type, string @object, ConversationItemWithReferenceStatus? status, MessageRole? role, IList<ConversationItemWithReferenceContent> content, string callId, string name, string arguments, string output, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            Type = type;
+            Type = @type;
             Object = @object;
             Status = status;
             Role = role;
@@ -100,33 +71,38 @@ namespace Azure.AI.VoiceLive
             Name = name;
             Arguments = arguments;
             Output = output;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
         /// For an item of type (`message` | `function_call` | `function_call_output`)
         /// this field allows the client to assign the unique ID of the item. It is
         /// not required because the server will generate one if not provided.
-        ///
+        /// 
         /// For an item of type `item_reference`, this field is required and is a
         /// reference to any item that has previously existed in the conversation.
         /// </summary>
         public string Id { get; set; }
+
         /// <summary> The type of the item (`message`, `function_call`, `function_call_output`, `item_reference`). </summary>
         public ConversationItemWithReferenceType? Type { get; set; }
+
         /// <summary> Identifier for the API object being returned - always `realtime.item`. </summary>
-        public ConversationItemWithReferenceObject? Object { get; set; }
+        public string Object { get; set; }
+
         /// <summary>
         /// The status of the item (`completed`, `incomplete`). These have no effect
         /// on the conversation, but are accepted for consistency with the
         /// `conversation.item.created` event.
         /// </summary>
         public ConversationItemWithReferenceStatus? Status { get; set; }
+
         /// <summary>
         /// The role of the message sender (`user`, `assistant`, `system`), only
         /// applicable for `message` items.
         /// </summary>
         public MessageRole? Role { get; set; }
+
         /// <summary>
         /// The content of the message, applicable for `message` items.
         /// - Message items of role `system` support only `input_text` content
@@ -135,6 +111,7 @@ namespace Azure.AI.VoiceLive
         /// - Message items of role `assistant` support `text` content.
         /// </summary>
         public IList<ConversationItemWithReferenceContent> Content { get; }
+
         /// <summary>
         /// The ID of the function call (for `function_call` and
         /// `function_call_output` items). If passed on a `function_call_output`
@@ -142,10 +119,13 @@ namespace Azure.AI.VoiceLive
         /// ID exists in the conversation history.
         /// </summary>
         public string CallId { get; set; }
+
         /// <summary> The name of the function being called (for `function_call` items). </summary>
         public string Name { get; set; }
+
         /// <summary> The arguments of the function call (for `function_call` items). </summary>
         public string Arguments { get; set; }
+
         /// <summary> The output of the function call (for `function_call_output` items). </summary>
         public string Output { get; set; }
     }
