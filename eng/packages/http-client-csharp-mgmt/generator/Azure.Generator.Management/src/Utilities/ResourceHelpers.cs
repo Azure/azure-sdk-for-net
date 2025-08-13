@@ -63,7 +63,7 @@ namespace Azure.Generator.Management.Utilities
 
         public static string GetDiagnosticScope(TypeProvider enclosingType, string methodName, bool isAsync)
         {
-            var rawMethodName = isAsync ? methodName.Substring(0, methodName.Length - 5) : methodName; // trim "Async" if the method is async method
+            var rawMethodName = isAsync && methodName.EndsWith("Async") ? methodName[..^5] : methodName; // trim "Async" if the method is async method
             return $"{enclosingType.Type.Name}.{rawMethodName}";
         }
 
