@@ -15,19 +15,75 @@ namespace System.ClientModel.Tests.Internal.Perf
         private byte[] _path3 = "$.properties.virtualMachines[0].id"u8.ToArray();
 
         [Benchmark]
+        public void Normalize_Comparer()
+        {
+            Span<byte> buffer = stackalloc byte[_path1a.Length];
+            JsonPathComparer.Default.Normalize(_path1a, ref buffer, out int bytesWritten);
+        }
+
+        [Benchmark]
+        public void Normalize_AlternateForm_Comparer()
+        {
+            Span<byte> buffer = stackalloc byte[_path1aPrime.Length];
+            JsonPathComparer.Default.Normalize(_path1aPrime, ref buffer, out int bytesWritten);
+        }
+
+        [Benchmark]
+        public int Normalize_GetHashCode_Comparer()
+        {
+            return JsonPathComparer.Default.GetNormalizedHashCode(_path1a);
+        }
+
+        [Benchmark]
+        public int Normalize_GetHashCode_AlternateForm_Comparer()
+        {
+            return JsonPathComparer.Default.GetNormalizedHashCode(_path1aPrime);
+        }
+
+        [Benchmark]
+        public bool Normalize_Equals_Comparer()
+        {
+            return JsonPathComparer.Default.NormalizedEquals(_path1a, _path1b);
+        }
+
+        [Benchmark]
+        public bool Normalize_Equals_AlternateForm_Comparer()
+        {
+            return JsonPathComparer.Default.NormalizedEquals(_path1a, _path1aPrime);
+        }
+
+        [Benchmark]
+        public bool Normalize_EarlyNotEqual_Comparer()
+        {
+            return JsonPathComparer.Default.NormalizedEquals(_path1a, _path2);
+        }
+
+        [Benchmark]
+        public bool Normalize_LateNotEqual_Comparer()
+        {
+            return JsonPathComparer.Default.NormalizedEquals(_path1a, _path3);
+        }
+
+        [Benchmark]
         public int GetHashCode_Comparer()
         {
             return JsonPathComparer.Default.GetHashCode(_path1a);
         }
 
         [Benchmark]
-        public bool AreEqual_Comparer()
+        public int GetHashCode_AlternateForm_Comparer()
+        {
+            return JsonPathComparer.Default.GetHashCode(_path1aPrime);
+        }
+
+        [Benchmark]
+        public bool Equal_Comparer()
         {
             return JsonPathComparer.Default.Equals(_path1a, _path1b);
         }
 
         [Benchmark]
-        public bool AreEqual_Comparer_AlternateForm()
+        public bool Equal_AlternateForm_Comparer()
         {
             return JsonPathComparer.Default.Equals(_path1a, _path1aPrime);
         }
@@ -45,7 +101,27 @@ namespace System.ClientModel.Tests.Internal.Perf
         }
 
         [Benchmark]
-        public bool AreEqual_Span()
+        public int GetHashCode_Span()
+        {
+#if NET8_0_OR_GREATER
+            var hash = new HashCode();
+            hash.AddBytes(_path1a);
+            return hash.ToHashCode();
+#else
+        unchecked
+        {
+            int hash = 17;
+            for (int i = 0; i < _path1a.Length; i++)
+            {
+                hash = hash * 31 + _path1a[i];
+            }
+            return hash;
+        }
+#endif
+        }
+
+        [Benchmark]
+        public bool Equal_Span()
         {
             return _path1a.AsSpan().SequenceEqual(_path1b.AsSpan());
         }

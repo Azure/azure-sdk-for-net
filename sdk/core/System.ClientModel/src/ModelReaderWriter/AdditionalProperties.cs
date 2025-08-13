@@ -316,19 +316,22 @@ public partial struct AdditionalProperties
         if (_properties == null)
             return;
 
+        Span<byte> normalizedPrefix = stackalloc byte[prefix.Length];
+        JsonPathComparer.Default.Normalize(prefix, ref normalizedPrefix, out int bytesWritten);
+        normalizedPrefix = normalizedPrefix.Slice(0, bytesWritten);
+
         foreach (var kvp in _properties)
         {
             if (kvp.Value.Kind == ValueKind.Removed || kvp.Value.Kind.HasFlag(ValueKind.Written))
                 continue;
 
-            JsonPathReader reader = new(kvp.Key);
-            if (!reader.Advance(prefix))
+            ReadOnlySpan<byte> keySpan = kvp.Key;
+            if (!keySpan.StartsWith(normalizedPrefix))
                 continue;
 
-            if (reader.Current.TokenType == JsonPathTokenType.PropertySeparator)
-                reader.Read();
+            keySpan = keySpan.Slice(normalizedPrefix.Length);
 
-            WriteEncodedValueAsJson(writer, reader.Current.ValueSpan, kvp.Value);
+            WriteEncodedValueAsJson(writer, keySpan.GetPropertyNameFromSlice(), kvp.Value);
         }
     }
 
@@ -468,30 +471,27 @@ public partial struct AdditionalProperties
     /// <summary>
     /// .
     /// </summary>
-    /// <param name="jsonPath"></param>
+    /// <param name="prefix"></param>
     /// <param name="property"></param>
     /// <returns></returns>
-    public bool ContainsChildOf(ReadOnlySpan<byte> jsonPath, ReadOnlySpan<byte> property)
+    public bool ContainsChildOf(ReadOnlySpan<byte> prefix, ReadOnlySpan<byte> property)
     {
         if (_properties == null)
             return false;
 
+        Span<byte> normalizedPrefix = stackalloc byte[prefix.Length];
+        JsonPathComparer.Default.Normalize(prefix, ref normalizedPrefix, out int bytesWritten);
+        normalizedPrefix = normalizedPrefix.Slice(0, bytesWritten);
+
         foreach (var kvp in _properties)
         {
-            if (kvp.Key.Length <= jsonPath.Length)
+            ReadOnlySpan<byte> keySpan = kvp.Key;
+
+            if (!keySpan.StartsWith(normalizedPrefix))
                 continue;
 
-            JsonPathReader reader = new(kvp.Key);
-            if (!reader.Advance(jsonPath))
-                continue;
-
-            if (reader.Current.TokenType == JsonPathTokenType.PropertySeparator)
-                reader.Read();
-
-            if (reader.Current.ValueSpan.SequenceEqual(property))
-            {
+            if (property.SequenceEqual(keySpan.Slice(normalizedPrefix.Length).GetPropertyNameFromSlice()))
                 return true;
-            }
         }
 
         return false;

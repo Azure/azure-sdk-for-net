@@ -10,28 +10,38 @@ internal static class ByteArrayDictionaryExtensions
 {
     public static bool TryGetValue(this Dictionary<byte[], AdditionalProperties.EncodedValue> dictionary, ReadOnlySpan<byte> key, out AdditionalProperties.EncodedValue value)
     {
+        //TODO: consider the loop hole if anyone uses a byte[] as a key it won't get normalized
+        Span<byte> normalizedKey = stackalloc byte[key.Length];
+        JsonPathComparer.Default.Normalize(key, ref normalizedKey, out int bytesWritten);
+        normalizedKey = normalizedKey.Slice(0, bytesWritten);
 #if NET9_0_OR_GREATER
-        return dictionary.GetAlternateLookup<ReadOnlySpan<byte>>().TryGetValue(key, out value);
+        return dictionary.GetAlternateLookup<ReadOnlySpan<byte>>().TryGetValue(normalizedKey, out value);
 #else
-        return dictionary.TryGetValue(key.ToArray(), out value);
+        return dictionary.TryGetValue(normalizedKey.ToArray(), out value);
 #endif
     }
 
     public static bool ContainsKey(this Dictionary<byte[], AdditionalProperties.EncodedValue> dictionary, ReadOnlySpan<byte> key)
     {
+        Span<byte> normalizedKey = stackalloc byte[key.Length];
+        JsonPathComparer.Default.Normalize(key, ref normalizedKey, out int bytesWritten);
+        normalizedKey = normalizedKey.Slice(0, bytesWritten);
 #if NET9_0_OR_GREATER
-        return dictionary.GetAlternateLookup<ReadOnlySpan<byte>>().ContainsKey(key);
+        return dictionary.GetAlternateLookup<ReadOnlySpan<byte>>().ContainsKey(normalizedKey);
 #else
-        return dictionary.ContainsKey(key.ToArray());
+        return dictionary.ContainsKey(normalizedKey.ToArray());
 #endif
     }
 
     public static void Set(this Dictionary<byte[], AdditionalProperties.EncodedValue> dictionary, ReadOnlySpan<byte> key, AdditionalProperties.EncodedValue value)
     {
+        Span<byte> normalizedKey = stackalloc byte[key.Length];
+        JsonPathComparer.Default.Normalize(key, ref normalizedKey, out int bytesWritten);
+        normalizedKey = normalizedKey.Slice(0, bytesWritten);
 #if NET9_0_OR_GREATER
-        dictionary.GetAlternateLookup<ReadOnlySpan<byte>>()[key] = value;
+        dictionary.GetAlternateLookup<ReadOnlySpan<byte>>()[normalizedKey] = value;
 #else
-        dictionary[key.ToArray()] = value;
+        dictionary[normalizedKey.ToArray()] = value;
 #endif
     }
 }

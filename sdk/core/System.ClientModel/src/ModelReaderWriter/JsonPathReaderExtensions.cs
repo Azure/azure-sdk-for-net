@@ -77,6 +77,38 @@ internal static class JsonPathReaderExtensions
     public static ReadOnlySpan<byte> GetFirstProperty(this ReadOnlySpan<byte> jsonPath)
         => new JsonPathReader(jsonPath).GetFirstProperty();
 
+    public static ReadOnlySpan<byte> GetPropertyNameFromSlice(this ReadOnlySpan<byte> slice)
+    {
+        if (slice.IsEmpty)
+            return slice;
+
+        // in case someone does pass in a full path
+        if (slice[0] == (byte)'$')
+            slice = slice.Slice(1);
+
+        bool indexSyntax = slice[0] == (byte)'[';
+        int start = indexSyntax ? 2 : 1;
+        // we assume the slice starts at the property name
+        for (int i = start; i < slice.Length; i++)
+        {
+            byte c = slice[i];
+            if (c == (byte)'.')
+            {
+                return slice.Slice(start, i);
+            }
+            if (c == (byte)']' && indexSyntax && slice[1] == slice[i - 1])
+            {
+                return slice.Slice(start, i - 1);
+            }
+            if (c == (byte)'[' && !indexSyntax)
+            {
+                return slice.Slice(start, i - 1);
+            }
+        }
+
+        return slice.Slice(start);
+    }
+
     public static ReadOnlySpan<byte> GetPropertyName(this ReadOnlySpan<byte> jsonPath)
     {
         if (jsonPath.IsEmpty || jsonPath[0] != (byte)'$')

@@ -34,7 +34,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             var a = Encoding.UTF8.GetBytes(left);
             var b = Encoding.UTF8.GetBytes(right);
-            Assert.AreEqual(expected, JsonPathComparer.Default.Equals(a, b));
+            Assert.AreEqual(expected, JsonPathComparer.Default.NormalizedEquals(a, b));
         }
 
         [TestCase("$.x.y", "$['x'].y", true)]
@@ -63,7 +63,29 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             var a = Encoding.UTF8.GetBytes(left);
             var b = Encoding.UTF8.GetBytes(right);
-            Assert.AreEqual(expected, JsonPathComparer.Default.Equals(a.AsSpan(), b));
+            Assert.AreEqual(expected, JsonPathComparer.Default.NormalizedEquals(a.AsSpan(), b));
+        }
+
+        [TestCase("$['x'].y", "$.x.y")]
+        [TestCase("$[\"x\"].y", "$.x.y")]
+        [TestCase("$['x']['y']", "$.x.y")]
+        [TestCase("$['foo']['bar']", "$.foo.bar")]
+        [TestCase("$['foo\'']['bar']", "$.foo'.bar")]
+        [TestCase("$['fo\'o']['bar']", "$.fo'o.bar")]
+        [TestCase("$[\"foo\"].bar", "$.foo.bar")]
+        [TestCase("$[\"\"foo\"].bar", "$.\"foo.bar")]
+        [TestCase("$[\"f\"oo\"].bar", "$.f\"oo.bar")]
+        [TestCase("$['a'].b[0]['c']", "$.a.b[0].c")]
+        [TestCase("$[\"a\"].b[0].c", "$.a.b[0].c")]
+        [TestCase("$['foo']['bar'][2]['baz']", "$.foo.bar[2].baz")]
+        [TestCase("$['a'].b[0]['c'].d[1][\"e\"].f", "$.a.b[0].c.d[1].e.f")]
+        [TestCase("$['a'].b[0][\"c\"].d[1].e.f", "$.a.b[0].c.d[1].e.f")]
+        public void Normalize(string input, string expected)
+        {
+            var a = Encoding.UTF8.GetBytes(input);
+            Span<byte> buffer = stackalloc byte[a.Length];
+            JsonPathComparer.Default.Normalize(a.AsSpan(), ref buffer, out int bytesWritten);
+            Assert.AreEqual(expected, Encoding.UTF8.GetString(buffer.Slice(0, bytesWritten).ToArray()));
         }
     }
 }
