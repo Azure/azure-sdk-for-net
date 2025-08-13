@@ -32,4 +32,10 @@
     <ProjectReference Include="Common\Azure.Generator.Management.Tests.Common.csproj" />
   </ItemGroup>
 
+	<!-- temporarily. remove once Azure.Generator version update is done -->
+	<ItemGroup>
+		<PackageReference Update="Microsoft.TypeSpec.Generator.ClientModel" VersionOverride="1.0.0-alpha.20250811.4" />
+		<PackageReference Update="Microsoft.TypeSpec.Generator.Input" VersionOverride="1.0.0-alpha.20250811.4" />
+	</ItemGroup>
+
 </Project>
