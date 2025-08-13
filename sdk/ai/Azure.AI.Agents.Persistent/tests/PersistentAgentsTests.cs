@@ -103,7 +103,9 @@ namespace Azure.AI.Agents.Persistent.Tests
             OpenAPI,
             DeepResearch,
             AzureAISearch,
-            ConnectedAgent
+            ConnectedAgent,
+            FileSearch,
+            AzureFunction
         }
 
         public Dictionary<ToolTypes, Type> ExpectedDeltas = new()
@@ -112,7 +114,18 @@ namespace Azure.AI.Agents.Persistent.Tests
             {ToolTypes.OpenAPI, typeof(RunStepDeltaOpenAPIToolCall)},
             {ToolTypes.DeepResearch, typeof(RunStepDeltaDeepResearchToolCall)},
             {ToolTypes.AzureAISearch, typeof(RunStepDeltaAzureAISearchToolCall)},
-            {ToolTypes.ConnectedAgent, typeof(RunStepDeltaConnectedAgentToolCall)}
+            {ToolTypes.ConnectedAgent, typeof(RunStepDeltaConnectedAgentToolCall)},
+            {ToolTypes.FileSearch, typeof(RunStepDeltaFileSearchToolCall)}
+        };
+
+        public Dictionary<ToolTypes, Type> ExpectedToolCalls = new()
+        {
+            {ToolTypes.BingGrounding, typeof(RunStepBingGroundingToolCall) },
+            {ToolTypes.OpenAPI, typeof(RunStepOpenAPIToolCall)},
+            {ToolTypes.DeepResearch, typeof(RunStepDeepResearchToolCall)},
+            {ToolTypes.AzureAISearch, typeof(RunStepAzureAISearchToolCall)},
+            {ToolTypes.ConnectedAgent, typeof(RunStepConnectedAgentToolCall)},
+            {ToolTypes.FileSearch, typeof(RunStepFileSearchToolCall)}
         };
 
         public Dictionary<ToolTypes, string> ToolPrompts = new()
@@ -124,15 +137,30 @@ namespace Azure.AI.Agents.Persistent.Tests
                 "communication systems and problem-solving reflected in recent publications in top their scientific " +
                 "journals like Science, Nature and PNAS."},
             {ToolTypes.AzureAISearch, "What is the temperature rating of the cozynights sleeping bag?"},
-            {ToolTypes.ConnectedAgent, "What is the Microsoft stock price?"}
+            {ToolTypes.ConnectedAgent, "What is the Microsoft stock price?"},
+            {ToolTypes.FileSearch,  "What feature does Smart Eyewear offer?"},
+            {ToolTypes.AzureFunction, "What is the most prevalent element in the universe? What would foo say?"}
+        };
+
+        public Dictionary<ToolTypes, string> ToolInstructions = new()
+        {
+            {ToolTypes.BingGrounding, "You are helpful agent." },
+            {ToolTypes.OpenAPI, "You are helpful agent."},
+            {ToolTypes.DeepResearch, "You are a helpful agent that assists in researching scientific topics."},
+            {ToolTypes.AzureAISearch, "You are a helpful agent that can search for information using Azure AI Search."},
+            {ToolTypes.ConnectedAgent, "You are a helpful assistant, and use the connected agents to get stock prices."},
+            {ToolTypes.FileSearch,  "You are helpful agent."}
+        };
+
+        public Dictionary<ToolTypes, string> RequiredTextInResponse = new()
+        {
+            { ToolTypes.AzureFunction, "bar" }
         };
         #endregion
 
         [RecordedTest]
-        //Failing in CI due to no playback found
-        //https://dev.azure.com/azure-sdk/public/_build/results?buildId=4622315&view=logs&j=91fc166b-5adf-5829-8c48-947d370143f5&t=b0549744-0856-5f62-f0ed-ab5057788140&l=1029
-        //[TestCase(ArgumentType.Metadata)]
-        //[TestCase(ArgumentType.Bytes)]
+        [TestCase(ArgumentType.Metadata)]
+        [TestCase(ArgumentType.Bytes)]
         [TestCase(ArgumentType.Stream)]
         public async Task TestCreatePersistentAgent(ArgumentType argType)
         {
@@ -1523,87 +1551,6 @@ namespace Azure.AI.Agents.Persistent.Tests
         }
 
         [RecordedTest]
-        public async Task TestAzureFunctionCall()
-        {
-            using var _ = SetTestSwitch();
-            // Note: This test was recorded in westus region as for now
-            // 2025-02-05 it is not supported in test region (East US 2)
-            AzureFunctionToolDefinition azureFnTool = new(
-                name: "foo",
-                description: "Get answers from the foo bot.",
-                inputBinding: new AzureFunctionBinding(
-                    new AzureFunctionStorageQueue(
-                        queueName: "azure-function-foo-input",
-                        storageServiceEndpoint: TestEnvironment.STORAGE_QUEUE_URI
-                    )
-                ),
-                outputBinding: new AzureFunctionBinding(
-                    new AzureFunctionStorageQueue(
-                        queueName: "azure-function-tool-output",
-                        storageServiceEndpoint: TestEnvironment.STORAGE_QUEUE_URI
-                    )
-                ),
-                parameters: BinaryData.FromObjectAsJson(
-                        new
-                        {
-                            Type = "object",
-                            Properties = new
-                            {
-                                query = new
-                                {
-                                    Type = "string",
-                                    Description = "The question to ask.",
-                                },
-                                outputqueueuri = new
-                                {
-                                    Type = "string",
-                                    Description = "The full output queue uri."
-                                }
-                            },
-                        },
-                    new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }
-                )
-            );
-            PersistentAgentsClient client = GetClient();
-            PersistentAgent agent = await client.Administration.CreateAgentAsync(
-                model: "gpt-4",
-                name: AGENT_NAME,
-                instructions: "You are a helpful support agent. Use the provided function any "
-                + "time the prompt contains the string 'What would foo say?'. When you invoke "
-                + "the function, ALWAYS specify the output queue uri parameter as "
-                + $"'{TestEnvironment.STORAGE_QUEUE_URI}/azure-function-tool-output'. Always responds with "
-                + "\"Foo says\" and then the response from the tool.",
-                tools: new List<ToolDefinition> { azureFnTool }
-            );
-            PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
-            PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
-                thread.Id,
-                MessageRole.User,
-                "What is the most prevalent element in the universe? What would foo say?");
-            ThreadRun run = await client.Runs.CreateRunAsync(thread, agent);
-            await WaitForRun(client, run);
-            List<PersistentThreadMessage> afterRunMessages = await client.Messages.GetMessagesAsync(thread.Id).ToListAsync();
-
-            Assert.Greater(afterRunMessages.Count(), 1);
-            bool foundResponse = false;
-            foreach (PersistentThreadMessage msg in afterRunMessages)
-            {
-                foreach (MessageContent contentItem in msg.ContentItems)
-                {
-                    if (contentItem is MessageTextContent textItem)
-                    {
-                        if (textItem.Text.ToLower().Contains("bar"))
-                        {
-                            foundResponse = true;
-                            break;
-                        }
-                    }
-                }
-            }
-            Assert.True(foundResponse);
-        }
-
-        [RecordedTest]
         public async Task TestClientWithPersistentThreadMessages()
         {
             using var _ = SetTestSwitch();
@@ -1795,7 +1742,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                 thread.Id,
                 MessageRole.User,
                 ToolPrompts[ToolTypes.AzureAISearch]);
-            await ValidateStream(client: client, agentId: agent.Id, threadId: thread.Id, runStepDeltaType: ExpectedDeltas[ToolTypes.AzureAISearch]);
+            await ValidateStream(client: client, agentId: agent.Id, threadId: thread.Id, runStepDeltaType: ExpectedDeltas[ToolTypes.AzureAISearch], uriAnnotation: new(42, new MessageDeltaTextUriCitationDetails("www.microsoft.com", "product_info_7.md", null)));
         }
 
         [RecordedTest]
@@ -1930,15 +1877,40 @@ namespace Azure.AI.Agents.Persistent.Tests
         }
 
         [RecordedTest]
-        public async Task TestDeepResearchTool()
+        [TestCase(ToolTypes.BingGrounding)]
+        [TestCase(ToolTypes.OpenAPI)]
+        [TestCase(ToolTypes.DeepResearch)]
+        [TestCase(ToolTypes.ConnectedAgent)]
+        [TestCase(ToolTypes.FileSearch)]
+        [TestCase(ToolTypes.AzureAISearch)]
+        [TestCase(ToolTypes.AzureFunction)]
+        public async Task TestToolCall(ToolTypes toolToTest)
         {
             PersistentAgentsClient client = GetClient();
-            string instruction = "You are a helpful Agent that assists in researching scientific topics.";
-            PersistentAgent agent = await GetAgent(client: client, instruction:instruction, model: "gpt-4o", tools: [await GetToolDefinition(ToolTypes.DeepResearch)]);
+            string instruction = default;
+            if (toolToTest == ToolTypes.AzureFunction)
+            {
+                instruction = "You are a helpful support agent. Use the provided function any " +
+                    "time the prompt contains the string 'What would foo say?'. When " +
+                    "you invoke the function, ALWAYS specify the output queue uri parameter as " +
+                    $"'{TestEnvironment.STORAGE_QUEUE_URI}/azure-function-tool-output'" +
+                    ". Always responds with \"Foo says\" and then the response from the tool.";
+            }
+            else
+            {
+                instruction = ToolInstructions[toolToTest];
+            }
+            PersistentAgent agent = await GetAgent(
+                client: client,
+                instruction: instruction,
+                model: "gpt-4o",
+                tools: [await GetToolDefinition(toolToTest)],
+                toolResources: await GetToolResources(toolToTest)
+            );
             PersistentAgentThreadCreationOptions threadOp = new();
             threadOp.Messages.Add(new ThreadMessageOptions(
                 role: MessageRole.User,
-                content: ToolPrompts[ToolTypes.DeepResearch]
+                content: ToolPrompts[toolToTest]
             ));
             ThreadAndRunOptions opts = new()
             {
@@ -1948,11 +1920,31 @@ namespace Azure.AI.Agents.Persistent.Tests
                 assistantId: agent.Id,
                 options: opts
             );
+            MessageTextUriCitationAnnotation expectedUriAnnotation = null;
+            MessageTextFileCitationAnnotation expectedFileAnnotation = null;
+            if (toolToTest == ToolTypes.BingGrounding || toolToTest == ToolTypes.DeepResearch)
+            {
+                expectedUriAnnotation = new("test", new MessageTextUriCitationDetails("*", "*", null));
+            }
+            else if (toolToTest == ToolTypes.AzureAISearch)
+            {
+                expectedUriAnnotation = new("test", new MessageTextUriCitationDetails("www.microsoft.com", "product_info_7.md", null));
+            }
+            else if (toolToTest == ToolTypes.FileSearch)
+            {
+                expectedFileAnnotation = new(
+                    text: "test",
+                    internalDetails: new InternalMessageTextFileCitationDetails(fileId: await GetFileId(agent.ToolResources.FileSearch), quote: "foo")
+                );
+            }
             run = await WaitForRun(client, run);
-            Assert.AreEqual(RunStatus.Completed, run.Status);
+            Assert.AreEqual(RunStatus.Completed, run.Status, run.LastError?.Message);
             List<PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(run.ThreadId, run.Id).ToListAsync();
             Assert.GreaterOrEqual(messages.Count, 1);
-            bool annotationFound = false;
+            string expectedResponse = null;
+            RequiredTextInResponse.TryGetValue(toolToTest, out expectedResponse);
+            bool annotationFound = expectedUriAnnotation is null && expectedFileAnnotation is null;
+            bool responseFound = string.IsNullOrEmpty(expectedResponse);
             foreach (PersistentThreadMessage msg in messages)
             {
                 if (msg.Role != MessageRole.Agent)
@@ -1968,10 +1960,19 @@ namespace Azure.AI.Agents.Persistent.Tests
                             {
                                 if (annotation is MessageTextUriCitationAnnotation uriAnnotation)
                                 {
-                                    annotationFound = true;
-                                    break;
+                                    annotationFound = ((string.Equals(expectedUriAnnotation.UriCitation.Uri, "*") && !string.IsNullOrEmpty(uriAnnotation.UriCitation.Uri)) || string.Equals(expectedUriAnnotation.UriCitation.Uri, uriAnnotation.UriCitation.Uri)) && ((string.Equals(expectedUriAnnotation.UriCitation.Title, "*") && !string.IsNullOrEmpty(uriAnnotation.UriCitation.Title)) || string.Equals(expectedUriAnnotation.UriCitation.Title, uriAnnotation.UriCitation.Title));
                                 }
+                                else if (annotation is MessageTextFileCitationAnnotation fileAnnotation)
+                                {
+                                    annotationFound = string.Equals(expectedFileAnnotation.FileId, fileAnnotation.FileId);
+                                }
+                                if (annotationFound)
+                                    break;
                             }
+                        }
+                        if (!responseFound)
+                        {
+                            responseFound = textItem.Text.ToLower().Contains(expectedResponse.ToLower());
                         }
                     }
                     if (annotationFound)
@@ -1982,6 +1983,28 @@ namespace Azure.AI.Agents.Persistent.Tests
             }
             // Note sometimes this assumption fails because agent asks additional question.
             Assert.That(annotationFound, "Annotations were not found, the data are not grounded.");
+            Assert.That(responseFound, $"The response {expectedResponse} is not present in the Agent messages.");
+            // Check for Run steps to be present
+            if (ExpectedToolCalls.TryGetValue(toolToTest, out Type runStepType))
+            {
+                bool runStepFound = false;
+                AsyncPageable<RunStep> steps = client.Runs.GetRunStepsAsync(run, order: ListSortOrder.Ascending);
+                await foreach (RunStep step in steps)
+                {
+                    if (step.StepDetails is RunStepToolCallDetails toolCallDetails)
+                    {
+                        foreach (RunStepToolCall toolCall in toolCallDetails.ToolCalls)
+                        {
+                            runStepFound = toolCall.GetType() == runStepType;
+                            if (runStepFound)
+                                break;
+                        }
+                    }
+                    if (runStepFound)
+                        break;
+                }
+                Assert.True(runStepFound, $"The run step of type {runStepType} was not found.");
+            }
         }
 
         [RecordedTest]
@@ -2133,6 +2156,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [TestCase(ToolTypes.OpenAPI)]
         [TestCase(ToolTypes.DeepResearch)]
         [TestCase(ToolTypes.ConnectedAgent)]
+        [TestCase(ToolTypes.FileSearch)]
         // AzureAISearch is tested separately in TestAzureAiSearchStreaming.
         public async Task TestStreamDelta(ToolTypes toolToTest)
         {
@@ -2141,7 +2165,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             // The error says that the thread already contains the active run.
             if (toolToTest == ToolTypes.DeepResearch && Mode != RecordedTestMode.Live)
                 Assert.Inconclusive("DeepResearch is not fully supported by TestFramework");
-            ToolResources toolRes = GetToolResources(toolToTest);
+            ToolResources toolRes = await GetToolResources(toolToTest);
             ToolDefinition toolDef = await GetToolDefinition(toolToTest);
             PersistentAgentsClient client = GetClient();
             PersistentAgent agent = await GetAgent(
@@ -2153,22 +2177,48 @@ namespace Azure.AI.Agents.Persistent.Tests
             // Create thread for communication
             PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
 
+            MessageDeltaTextUriCitationAnnotation uriAnnotation = null;
+            MessageDeltaTextFileCitationAnnotation fileAnnotation = null;
+            if (toolToTest == ToolTypes.BingGrounding)
+            {
+                uriAnnotation = new(42, new MessageDeltaTextUriCitationDetails("*", "*", null));
+            }
+            else if (toolToTest == ToolTypes.FileSearch)
+            {
+                fileAnnotation = new MessageDeltaTextFileCitationAnnotation(
+                    index: 42,
+                    type: "file_citation",
+                    serializedAdditionalRawData: null,
+                    fileCitation: new MessageDeltaTextFileCitationAnnotationObject(fileId: await GetFileId(toolRes.FileSearch), quote: "foo", serializedAdditionalRawData: null),
+                    text: "test",
+                    startIndex: 0,
+                    endIndex: 1);
+            }
+
             // Create message to thread
             await client.Messages.CreateMessageAsync(
                 threadId: thread.Id,
                 role: MessageRole.User,
                 content: ToolPrompts[toolToTest]);
-            await ValidateStream(client: client, agentId: agent.Id, threadId: thread.Id, runStepDeltaType: ExpectedDeltas[toolToTest]);
+            await ValidateStream(client: client, agentId: agent.Id, threadId: thread.Id, runStepDeltaType: ExpectedDeltas[toolToTest], uriAnnotation: uriAnnotation, fileAnnotation: fileAnnotation);
         }
 
         #region Helpers
-
-        private static async Task ValidateStream(PersistentAgentsClient client, string agentId, string threadId, Type runStepDeltaType)
+        private static async Task ValidateStream(
+            PersistentAgentsClient client,
+            string agentId,
+            string threadId,
+            Type runStepDeltaType,
+            MessageDeltaTextUriCitationAnnotation uriAnnotation = null,
+            MessageDeltaTextFileCitationAnnotation fileAnnotation = null
+        )
         {
             bool isStarted = false;
             bool receivedMessage = false;
             bool gotExpectedDelta = false;
             bool isCompleted = false;
+            bool fileAnnotationFound = fileAnnotation is null;
+            bool urlAnnotationFound = uriAnnotation is null;
             await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(threadId, agentId))
             {
                 if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
@@ -2179,6 +2229,14 @@ namespace Azure.AI.Agents.Persistent.Tests
                 {
                     Console.WriteLine(msg.Text);
                     receivedMessage = true;
+                    if (!fileAnnotationFound && msg.TextAnnotation is not null && !string.IsNullOrEmpty(msg.TextAnnotation.InputFileId))
+                    {
+                        fileAnnotationFound = string.Equals(fileAnnotation.FileCitation.FileId, msg.TextAnnotation.InputFileId);
+                    }
+                    if (!urlAnnotationFound && msg.TextAnnotation is not null && (!string.IsNullOrEmpty(msg.TextAnnotation.Url) || !string.IsNullOrEmpty(msg.TextAnnotation.Title)))
+                    {
+                        urlAnnotationFound = ((string.Equals(uriAnnotation.UriCitation.Uri, "*") && !string.IsNullOrEmpty(msg.TextAnnotation.Url)) || string.Equals(uriAnnotation.UriCitation.Uri, msg.TextAnnotation.Url)) && ((string.Equals(uriAnnotation.UriCitation.Title, "*") && !string.IsNullOrEmpty(msg.TextAnnotation.Title)) || string.Equals(uriAnnotation.UriCitation.Title, msg.TextAnnotation.Title));
+                    }
                 }
                 else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunFailed && streamingUpdate is RunUpdate errorStep)
                 {
@@ -2201,7 +2259,10 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.True(receivedMessage, "The message was never received.");
             Assert.True(gotExpectedDelta, $"The delta tool call of type {runStepDeltaType} was not found.");
             Assert.True(isCompleted, "The stream was not completed.");
+            Assert.True(urlAnnotationFound, "The Uri annotation was not found.");
+            Assert.True(fileAnnotationFound, "The file annotation was not found.");
         }
+
         private static string CreateTempDirMayBe()
         {
             string tempDir = Path.Combine(Path.GetTempPath(), TEMP_DIR);
@@ -2337,13 +2398,47 @@ namespace Azure.AI.Agents.Persistent.Tests
             return count;
         }
 
-        private ToolResources GetToolResources(ToolTypes toolType)
+        private async Task<string> GetFileId(FileSearchToolResource fileSearch)
+        {
+            PersistentAgentsClient client = GetClient();
+            AsyncPageable<VectorStoreFile> storeFiles = client.VectorStores.GetVectorStoreFilesAsync(
+                vectorStoreId: fileSearch.VectorStoreIds[0]
+            );
+            await foreach (VectorStoreFile fle in storeFiles)
+            {
+                return fle.Id;
+            }
+            Assert.Fail("No files were found in the vector store.");
+            return null;
+        }
+
+        private async Task<ToolResources> GetFileSearchToolResource()
+        {
+            PersistentAgentsClient client = GetClient();
+            var ds = new VectorStoreDataSource(
+                assetIdentifier: TestEnvironment.AZURE_BLOB_URI,
+                assetType: VectorStoreDataSourceAssetType.UriAsset
+            );
+            PersistentAgentsVectorStore vectorStore = await client.VectorStores.CreateVectorStoreAsync(
+                name: VCT_STORE_NAME,
+                storeConfiguration: new VectorStoreConfiguration(
+                    dataSources: [ds]
+                )
+            );
+            return new ToolResources()
+            {
+                FileSearch = new FileSearchToolResource(vectorStoreIds: [vectorStore.Id], vectorStores: null)
+            };
+        }
+
+        private async Task<ToolResources> GetToolResources(ToolTypes toolType)
             => toolType switch
             {
                 ToolTypes.AzureAISearch => GetAISearchToolResource(
                     queryType: AzureAISearchQueryTypeEnum.Simple,
                     filter: "category eq 'sleeping bag'"
                 ),
+                ToolTypes.FileSearch => await GetFileSearchToolResource(),
                 _ => null
             };
 
@@ -2379,6 +2474,43 @@ namespace Azure.AI.Agents.Persistent.Tests
                             id: (await GetSubAgent()).Id,
                             name: "stock_price_bot",
                             description: "Gets the stock price of a company"
+                        )
+                    ),
+                    ToolTypes.FileSearch => new FileSearchToolDefinition(),
+                    ToolTypes.AzureFunction =>  new AzureFunctionToolDefinition(
+                        name: "foo",
+                        description: "Get answers from the foo bot.",
+                        inputBinding: new AzureFunctionBinding(
+                            new AzureFunctionStorageQueue(
+                                queueName: "azure-function-foo-input",
+                                storageServiceEndpoint: TestEnvironment.STORAGE_QUEUE_URI
+                            )
+                        ),
+                        outputBinding: new AzureFunctionBinding(
+                            new AzureFunctionStorageQueue(
+                                queueName: "azure-function-tool-output",
+                                storageServiceEndpoint: TestEnvironment.STORAGE_QUEUE_URI
+                            )
+                        ),
+                        parameters: BinaryData.FromObjectAsJson(
+                                new
+                                {
+                                    Type = "object",
+                                    Properties = new
+                                    {
+                                        query = new
+                                        {
+                                            Type = "string",
+                                            Description = "The question to ask.",
+                                        },
+                                        outputqueueuri = new
+                                        {
+                                            Type = "string",
+                                            Description = "The full output queue uri."
+                                        }
+                                    },
+                                },
+                            new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }
                         )
                     ),
                     _ => null
@@ -2439,7 +2571,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             }
 
             // Remove all vector stores
-            Pageable<PersistentAgentsVectorStore> stores = client.VectorStores.GetVectorStores();
+            List<PersistentAgentsVectorStore> stores = [..client.VectorStores.GetVectorStores()];
             foreach (PersistentAgentsVectorStore store in stores)
             {
                 if (store.Name == null || store.Name.Equals(VCT_STORE_NAME))
@@ -2447,7 +2579,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             }
 
             // Remove all agents
-            Pageable<PersistentAgent> agents = client.Administration.GetAgents();
+            List<PersistentAgent> agents =[..client.Administration.GetAgents()];
             foreach (PersistentAgent agent in agents)
             {
                if (agent.Name != null && (agent.Name.StartsWith(AGENT_NAME) || string.Equals(agent.Name, "stock-price-bot") || string.Equals(agent.Name, "weather-bot")))
