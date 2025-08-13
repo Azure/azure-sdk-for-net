@@ -13,51 +13,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.MachineLearningServices.RunCompleted event. </summary>
     public partial class MachineLearningServicesRunCompletedEventData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningServicesRunCompletedEventData"/>. </summary>
         /// <param name="experimentId"> The ID of the experiment that the run belongs to. </param>
         /// <param name="experimentName"> The name of the experiment that the run belongs to. </param>
         /// <param name="runId"> The ID of the Run that was completed. </param>
         /// <param name="runType"> The Run Type of the completed Run. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="experimentId"/>, <paramref name="experimentName"/>, <paramref name="runId"/> or <paramref name="runType"/> is null. </exception>
         internal MachineLearningServicesRunCompletedEventData(string experimentId, string experimentName, string runId, string runType)
         {
-            Argument.AssertNotNull(experimentId, nameof(experimentId));
-            Argument.AssertNotNull(experimentName, nameof(experimentName));
-            Argument.AssertNotNull(runId, nameof(runId));
-            Argument.AssertNotNull(runType, nameof(runType));
-
             ExperimentId = experimentId;
             ExperimentName = experimentName;
             RunId = runId;
@@ -71,8 +36,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="runType"> The Run Type of the completed Run. </param>
         /// <param name="runTags"> The tags of the completed Run. </param>
         /// <param name="runProperties"> The properties of the completed Run. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningServicesRunCompletedEventData(string experimentId, string experimentName, string runId, string runType, object runTags, object runProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningServicesRunCompletedEventData(string experimentId, string experimentName, string runId, string runType, object runTags, object runProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExperimentId = experimentId;
             ExperimentName = experimentName;
@@ -80,20 +45,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             RunType = runType;
             RunTags = runTags;
             RunProperties = runProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningServicesRunCompletedEventData"/> for deserialization. </summary>
-        internal MachineLearningServicesRunCompletedEventData()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ID of the experiment that the run belongs to. </summary>
         public string ExperimentId { get; }
+
         /// <summary> The name of the experiment that the run belongs to. </summary>
         public string ExperimentName { get; }
+
         /// <summary> The ID of the Run that was completed. </summary>
         public string RunId { get; }
+
         /// <summary> The Run Type of the completed Run. </summary>
         public string RunType { get; }
     }

@@ -14,47 +14,72 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public readonly partial struct AcsCommunicationIdentifierKind : IEquatable<AcsCommunicationIdentifierKind>
     {
         private readonly string _value;
+        /// <summary> Unknown. </summary>
+        private const string UnknownValue = "unknown";
+        /// <summary> Communication User. </summary>
+        private const string CommunicationUserValue = "communicationUser";
+        /// <summary> Phone Number. </summary>
+        private const string PhoneNumberValue = "phoneNumber";
+        /// <summary> Microsoft Teams User. </summary>
+        private const string MicrosoftTeamsUserValue = "microsoftTeamsUser";
+        /// <summary> Microsoft Teams App. </summary>
+        private const string MicrosoftTeamsAppValue = "microsoftTeamsApp";
 
         /// <summary> Initializes a new instance of <see cref="AcsCommunicationIdentifierKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AcsCommunicationIdentifierKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "unknown";
-        private const string CommunicationUserValue = "communicationUser";
-        private const string PhoneNumberValue = "phoneNumber";
-        private const string MicrosoftTeamsUserValue = "microsoftTeamsUser";
-        private const string MicrosoftTeamsAppValue = "microsoftTeamsApp";
+            _value = value;
+        }
 
         /// <summary> Unknown. </summary>
         public static AcsCommunicationIdentifierKind Unknown { get; } = new AcsCommunicationIdentifierKind(UnknownValue);
+
         /// <summary> Communication User. </summary>
         public static AcsCommunicationIdentifierKind CommunicationUser { get; } = new AcsCommunicationIdentifierKind(CommunicationUserValue);
+
         /// <summary> Phone Number. </summary>
         public static AcsCommunicationIdentifierKind PhoneNumber { get; } = new AcsCommunicationIdentifierKind(PhoneNumberValue);
+
         /// <summary> Microsoft Teams User. </summary>
         public static AcsCommunicationIdentifierKind MicrosoftTeamsUser { get; } = new AcsCommunicationIdentifierKind(MicrosoftTeamsUserValue);
+
         /// <summary> Microsoft Teams App. </summary>
         public static AcsCommunicationIdentifierKind MicrosoftTeamsApp { get; } = new AcsCommunicationIdentifierKind(MicrosoftTeamsAppValue);
+
         /// <summary> Determines if two <see cref="AcsCommunicationIdentifierKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AcsCommunicationIdentifierKind left, AcsCommunicationIdentifierKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AcsCommunicationIdentifierKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AcsCommunicationIdentifierKind left, AcsCommunicationIdentifierKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AcsCommunicationIdentifierKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AcsCommunicationIdentifierKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AcsCommunicationIdentifierKind(string value) => new AcsCommunicationIdentifierKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AcsCommunicationIdentifierKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AcsCommunicationIdentifierKind?(string value) => value == null ? null : new AcsCommunicationIdentifierKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AcsCommunicationIdentifierKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AcsCommunicationIdentifierKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

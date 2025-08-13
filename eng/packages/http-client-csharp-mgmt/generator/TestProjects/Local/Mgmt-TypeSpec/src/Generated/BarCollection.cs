@@ -19,7 +19,11 @@ using Azure.ResourceManager.Resources;
 
 namespace MgmtTypeSpec
 {
-    /// <summary> A class representing a collection of <see cref="BarResource"/> and their operations. Each <see cref="BarResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information). To get a <see cref="BarCollection"/> instance call the GetBars method from an instance of the parent resource. </summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="BarResource"/> and their operations.
+    /// Each <see cref="BarResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="BarCollection"/> instance call the GetBars method from an instance of the parent resource.
+    /// </summary>
     public partial class BarCollection : ArmCollection, IEnumerable<BarResource>, IAsyncEnumerable<BarResource>
     {
         private readonly ClientDiagnostics _barsClientDiagnostics;

@@ -13,37 +13,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Execution statistics of a specific policy action in a Blob Management cycle. </summary>
     public partial class StorageLifecyclePolicyActionSummaryDetail
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageLifecyclePolicyActionSummaryDetail"/>. </summary>
         internal StorageLifecyclePolicyActionSummaryDetail()
@@ -54,19 +25,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="totalObjectsCount"> Total number of objects to be acted on by this action. </param>
         /// <param name="successCount"> Number of success operations of this action. </param>
         /// <param name="errorList"> Error messages of this action if any. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageLifecyclePolicyActionSummaryDetail(long? totalObjectsCount, long? successCount, string errorList, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StorageLifecyclePolicyActionSummaryDetail(long? totalObjectsCount, long? successCount, string errorList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TotalObjectsCount = totalObjectsCount;
             SuccessCount = successCount;
             ErrorList = errorList;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Total number of objects to be acted on by this action. </summary>
         public long? TotalObjectsCount { get; }
+
         /// <summary> Number of success operations of this action. </summary>
         public long? SuccessCount { get; }
+
         /// <summary> Error messages of this action if any. </summary>
         public string ErrorList { get; }
     }
