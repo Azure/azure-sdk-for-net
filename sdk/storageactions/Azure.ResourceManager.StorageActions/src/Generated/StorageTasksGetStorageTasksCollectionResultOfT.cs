@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.StorageActions
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetStorageTasksRequest(nextLink, _subscriptionId, _context) : _client.CreateGetStorageTasksRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("StorageTasks.GetStorageTasks");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableStorageActionsSubscriptionResource.GetStorageTasks");
             scope.Start();
             try
             {

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.StorageActions
         private async ValueTask<Response> GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetStorageTaskAssignmentsRequest(nextLink, _subscriptionId, _resourceGroupName, _storageTaskName, _maxpagesize, _context) : _client.CreateGetStorageTaskAssignmentsRequest(_subscriptionId, _resourceGroupName, _storageTaskName, _maxpagesize, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("StorageTaskAssignment.GetStorageTaskAssignments");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("StorageTaskResource.GetStorageTaskAssignments");
             scope.Start();
             try
             {
