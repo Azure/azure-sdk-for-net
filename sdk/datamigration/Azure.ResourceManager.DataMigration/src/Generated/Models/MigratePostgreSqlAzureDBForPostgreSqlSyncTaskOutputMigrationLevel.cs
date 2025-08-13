@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetServerType"> Target server type. </param>
         /// <param name="state"> Migration status. </param>
         /// <param name="databaseCount"> Number of databases to include. </param>
-        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string sourceServerVersion, string sourceServer, string targetServerVersion, string targetServer, ScenarioSource? sourceServerType, ScenarioTarget? targetServerType, ReplicateMigrationState? state, float? databaseCount) : base(id, resultType, serializedAdditionalRawData)
+        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string sourceServerVersion, string sourceServer, string targetServerVersion, string targetServer, DataMigrationScenarioSource? sourceServerType, DataMigrationScenarioTarget? targetServerType, ReplicateMigrationState? state, float? databaseCount) : base(id, resultType, serializedAdditionalRawData)
         {
             StartedOn = startedOn;
             EndedOn = endedOn;
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Target server name. </summary>
         public string TargetServer { get; }
         /// <summary> Source server type. </summary>
-        public ScenarioSource? SourceServerType { get; }
+        public DataMigrationScenarioSource? SourceServerType { get; }
         /// <summary> Target server type. </summary>
-        public ScenarioTarget? TargetServerType { get; }
+        public DataMigrationScenarioTarget? TargetServerType { get; }
         /// <summary> Migration status. </summary>
         public ReplicateMigrationState? State { get; }
         /// <summary> Number of databases to include. </summary>

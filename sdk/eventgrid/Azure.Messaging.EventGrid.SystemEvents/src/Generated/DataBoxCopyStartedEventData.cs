@@ -13,45 +13,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.DataBox.CopyStarted event. </summary>
     public partial class DataBoxCopyStartedEventData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataBoxCopyStartedEventData"/>. </summary>
         /// <param name="serialNumber"> Serial Number of the device associated with the event. The list is comma separated if more than one serial number is associated. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serialNumber"/> is null. </exception>
         internal DataBoxCopyStartedEventData(string serialNumber)
         {
-            Argument.AssertNotNull(serialNumber, nameof(serialNumber));
-
             SerialNumber = serialNumber;
         }
 
@@ -59,24 +27,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="serialNumber"> Serial Number of the device associated with the event. The list is comma separated if more than one serial number is associated. </param>
         /// <param name="stageName"> Name of the current Stage. </param>
         /// <param name="stageTime"> The time at which the stage happened. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxCopyStartedEventData(string serialNumber, DataBoxStageName? stageName, DateTimeOffset? stageTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxCopyStartedEventData(string serialNumber, DataBoxStageName? stageName, DateTimeOffset? stageTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SerialNumber = serialNumber;
             StageName = stageName;
             StageTime = stageTime;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataBoxCopyStartedEventData"/> for deserialization. </summary>
-        internal DataBoxCopyStartedEventData()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Serial Number of the device associated with the event. The list is comma separated if more than one serial number is associated. </summary>
         public string SerialNumber { get; }
+
         /// <summary> Name of the current Stage. </summary>
         public DataBoxStageName? StageName { get; }
+
         /// <summary> The time at which the stage happened. </summary>
         public DateTimeOffset? StageTime { get; }
     }

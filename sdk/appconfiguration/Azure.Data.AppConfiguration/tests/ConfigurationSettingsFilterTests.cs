@@ -9,13 +9,13 @@ namespace Azure.Data.AppConfiguration.Tests
 {
     public class ConfigurationSettingsFilterTests
     {
-        [TestCaseSource(nameof(DeserializeKeyValueFilterTestCases))]
-        public void DeserializeKeyValueFilter(string json, bool hasTags)
+        [TestCaseSource(nameof(DeserializeConfigurationSettingsFilterTestCases))]
+        public void DeserializeConfigurationSettingsFilter(string json, bool hasTags)
         {
             var element = JsonDocument.Parse(json).RootElement;
 
             // Act
-            var filter = ConfigurationSettingsFilter.DeserializeKeyValueFilter(element);
+            var filter = ConfigurationSettingsFilter.DeserializeConfigurationSettingsFilter(element, ModelSerializationExtensions.WireOptions);
 
             // Assert
             Assert.AreEqual("testKey", filter.Key);
@@ -27,11 +27,11 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             else
             {
-                Assert.IsNull(filter.Tags);
+                Assert.AreEqual(0, filter.Tags.Count);
             }
         }
 
-        public static IEnumerable<TestCaseData> DeserializeKeyValueFilterTestCases
+        public static IEnumerable<TestCaseData> DeserializeConfigurationSettingsFilterTestCases
         {
             get
             {

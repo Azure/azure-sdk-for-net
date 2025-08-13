@@ -55,6 +55,10 @@ namespace MgmtTypeSpec.Models
         /// <param name="value"> The value. </param>
         public static implicit operator ResourceProvisioningState(string value) => new ResourceProvisioningState(value);
 
+        /// <summary> Converts a string to a <see cref="ResourceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResourceProvisioningState?(string value) => value == null ? null : new ResourceProvisioningState(value);
+
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResourceProvisioningState other && Equals(other);

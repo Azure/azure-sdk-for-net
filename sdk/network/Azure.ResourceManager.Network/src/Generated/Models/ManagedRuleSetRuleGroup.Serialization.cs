@@ -96,16 +96,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("rules"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    rules = array;
+                    DeserializeNumberValue(property, ref rules);
                     continue;
                 }
                 if (options.Format != "W")

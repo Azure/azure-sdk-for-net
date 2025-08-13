@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="sourceDatabaseObjectCount"> Count of source database objects. </param>
         /// <param name="targetDatabaseObjectCount"> Count of target database objects. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SchemaComparisonValidationResult(SchemaComparisonValidationResultType schemaDifferences, ValidationError validationErrors, IReadOnlyDictionary<string, long> sourceDatabaseObjectCount, IReadOnlyDictionary<string, long> targetDatabaseObjectCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SchemaComparisonValidationResult(SchemaComparisonValidationResultType schemaDifferences, MigrationValidationError validationErrors, IReadOnlyDictionary<string, long> sourceDatabaseObjectCount, IReadOnlyDictionary<string, long> targetDatabaseObjectCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SchemaDifferences = schemaDifferences;
             ValidationErrors = validationErrors;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> List of schema differences between the source and target databases. </summary>
         public SchemaComparisonValidationResultType SchemaDifferences { get; }
         /// <summary> List of errors that happened while performing schema compare validation. </summary>
-        public ValidationError ValidationErrors { get; }
+        public MigrationValidationError ValidationErrors { get; }
         /// <summary> Count of source database objects. </summary>
         public IReadOnlyDictionary<string, long> SourceDatabaseObjectCount { get; }
         /// <summary> Count of target database objects. </summary>

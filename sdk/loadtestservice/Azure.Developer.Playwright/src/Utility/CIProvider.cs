@@ -39,19 +39,13 @@ internal class CIProvider
             // Logic to get GitHub Actions CIInfo
             return new CIInfo
             {
-                Provider = CIConstants.s_gITHUB_ACTIONS,
-                Repo = _environment.GetEnvironmentVariable("GITHUB_REPOSITORY_ID"),
-                Branch = GetGHBranchName(),
-                Author = _environment.GetEnvironmentVariable("GITHUB_ACTOR"),
-                CommitId = _environment.GetEnvironmentVariable("GITHUB_SHA"),
-                RevisionUrl = _environment.GetEnvironmentVariable("GITHUB_SERVER_URL") != null
+                providerName = CIConstants.s_gITHUB_ACTIONS,
+                branch = GetGHBranchName(),
+                author = _environment.GetEnvironmentVariable("GITHUB_ACTOR"),
+                commitId = _environment.GetEnvironmentVariable("GITHUB_SHA"),
+                revisionUrl = _environment.GetEnvironmentVariable("GITHUB_SERVER_URL") != null
                     ? $"{_environment.GetEnvironmentVariable("GITHUB_SERVER_URL")}/{_environment.GetEnvironmentVariable("GITHUB_REPOSITORY")}/commit/{_environment.GetEnvironmentVariable("GITHUB_SHA")}"
                     : null,
-                RunId = _environment.GetEnvironmentVariable("GITHUB_RUN_ID"),
-                RunAttempt = _environment.GetEnvironmentVariable("GITHUB_RUN_ATTEMPT") != null
-                    ? int.Parse(_environment.GetEnvironmentVariable("GITHUB_RUN_ATTEMPT")!)
-                    : null,
-                JobId = _environment.GetEnvironmentVariable("GITHUB_JOB")
             };
         }
         else if (ciProvider == CIConstants.s_aZURE_DEVOPS)
@@ -59,19 +53,13 @@ internal class CIProvider
             // Logic to get Azure DevOps CIInfo
             return new CIInfo
             {
-                Provider = CIConstants.s_aZURE_DEVOPS,
-                Repo = _environment.GetEnvironmentVariable("BUILD_REPOSITORY_ID"),
-                Branch = _environment.GetEnvironmentVariable("BUILD_SOURCEBRANCH"),
-                Author = _environment.GetEnvironmentVariable("BUILD_REQUESTEDFOR"),
-                CommitId = _environment.GetEnvironmentVariable("BUILD_SOURCEVERSION"),
-                RevisionUrl = _environment.GetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI") != null
+                providerName = CIConstants.s_aZURE_DEVOPS,
+                branch = _environment.GetEnvironmentVariable("BUILD_SOURCEBRANCH"),
+                author = _environment.GetEnvironmentVariable("BUILD_REQUESTEDFOR"),
+                commitId = _environment.GetEnvironmentVariable("BUILD_SOURCEVERSION"),
+                revisionUrl = _environment.GetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI") != null
                     ? $"{_environment.GetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI")}{_environment.GetEnvironmentVariable("SYSTEM_TEAMPROJECT")}/_git/{_environment.GetEnvironmentVariable("BUILD_REPOSITORY_NAME")}/commit/{_environment.GetEnvironmentVariable("BUILD_SOURCEVERSION")}"
                     : null,
-                RunId = GetADORunId(),
-                RunAttempt = _environment.GetEnvironmentVariable("RELEASE_ATTEMPTNUMBER") != null
-                    ? int.Parse(_environment.GetEnvironmentVariable("RELEASE_ATTEMPTNUMBER")!)
-                    : int.Parse(_environment.GetEnvironmentVariable("SYSTEM_JOBATTEMPT")!),
-                JobId = _environment.GetEnvironmentVariable("RELEASE_DEPLOYMENTID") ?? _environment.GetEnvironmentVariable("SYSTEM_JOBID")
             };
         }
         else
@@ -79,17 +67,11 @@ internal class CIProvider
             // Handle unsupported CI provider
             return new CIInfo
             {
-                Provider = CIConstants.s_dEFAULT,
-                Repo = _environment.GetEnvironmentVariable("REPO"),
-                Branch = _environment.GetEnvironmentVariable("BRANCH"),
-                Author = _environment.GetEnvironmentVariable("AUTHOR"),
-                CommitId = _environment.GetEnvironmentVariable("COMMIT_ID"),
-                RevisionUrl = _environment.GetEnvironmentVariable("REVISION_URL"),
-                RunId = _environment.GetEnvironmentVariable("RUN_ID"),
-                RunAttempt = _environment.GetEnvironmentVariable("RUN_ATTEMPT") != null
-                    ? int.Parse(_environment.GetEnvironmentVariable("RUN_ATTEMPT")!)
-                    : null,
-                JobId = _environment.GetEnvironmentVariable("JOB_ID")
+                providerName = CIConstants.s_dEFAULT,
+                branch = _environment.GetEnvironmentVariable("BRANCH"),
+                author = _environment.GetEnvironmentVariable("AUTHOR"),
+                commitId = _environment.GetEnvironmentVariable("COMMIT_ID"),
+                revisionUrl = _environment.GetEnvironmentVariable("REVISION_URL"),
             };
         }
     }

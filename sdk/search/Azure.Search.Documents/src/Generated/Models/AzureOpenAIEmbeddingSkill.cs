@@ -32,6 +32,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="dimensions"> The number of dimensions the resulting output embeddings should have. Only supported in text-embedding-3 and later models. </param>
         /// <param name="resourceUri"> The resource URI of the Azure OpenAI resource. </param>
         /// <param name="deploymentName"> ID of the Azure OpenAI model deployment on the designated resource. </param>
@@ -42,7 +43,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
         /// </param>
         /// <param name="modelName"> The name of the embedding model that is deployed at the provided deploymentId path. </param>
-        internal AzureOpenAIEmbeddingSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, int? dimensions, Uri resourceUri, string deploymentName, string apiKey, SearchIndexerDataIdentity authenticationIdentity, AzureOpenAIModelName? modelName) : base(oDataType, name, description, context, inputs, outputs)
+        internal AzureOpenAIEmbeddingSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> serializedAdditionalRawData, int? dimensions, Uri resourceUri, string deploymentName, string apiKey, SearchIndexerDataIdentity authenticationIdentity, AzureOpenAIModelName? modelName) : base(oDataType, name, description, context, inputs, outputs, serializedAdditionalRawData)
         {
             Dimensions = dimensions;
             ResourceUri = resourceUri;
@@ -51,6 +52,11 @@ namespace Azure.Search.Documents.Indexes.Models
             AuthenticationIdentity = authenticationIdentity;
             ModelName = modelName;
             ODataType = oDataType ?? "#Microsoft.Skills.Text.AzureOpenAIEmbeddingSkill";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureOpenAIEmbeddingSkill"/> for deserialization. </summary>
+        internal AzureOpenAIEmbeddingSkill()
+        {
         }
 
         /// <summary> The number of dimensions the resulting output embeddings should have. Only supported in text-embedding-3 and later models. </summary>

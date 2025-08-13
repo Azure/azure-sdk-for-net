@@ -1,4 +1,4 @@
-# Azure.Provisioning.ApplicationInsights client library for .NET
+# Azure Provisioning ApplicationInsights client library for .NET
 
 Azure.Provisioning.ApplicationInsights simplifies declarative resource provisioning in .NET.
 
@@ -21,6 +21,28 @@ dotnet add package Azure.Provisioning.ApplicationInsights
 ## Key concepts
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
+
+## Examples
+
+### Create a Basic Application Insights Component
+
+This example demonstrates how to create an Application Insights component for application performance monitoring, based on the [Azure quickstart template](https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.web/function-app-create-dynamic/main.bicep).
+
+```C# Snippet:ApplicationInsightsBasic
+Infrastructure infra = new();
+
+ApplicationInsightsComponent appInsights =
+    new(nameof(appInsights))
+    {
+        Kind = "web",
+        ApplicationType = ApplicationInsightsApplicationType.Web,
+        RequestSource = ComponentRequestSource.Rest
+    };
+infra.Add(appInsights);
+
+infra.Add(new ProvisioningOutput("appInsightsName", typeof(string)) { Value = appInsights.Name });
+infra.Add(new ProvisioningOutput("appInsightsKey", typeof(string)) { Value = appInsights.InstrumentationKey });
+```
 
 ## Troubleshooting
 

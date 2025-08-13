@@ -13,49 +13,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for an Microsoft.Communication.IncomingCall event. </summary>
     public partial class AcsIncomingCallEventData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AcsIncomingCallEventData"/>. </summary>
         /// <param name="toCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="fromCommunicationIdentifier"> The communication identifier of the user who initiated the call. </param>
         /// <param name="customContext"> Custom Context of Incoming Call. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="toCommunicationIdentifier"/>, <paramref name="fromCommunicationIdentifier"/> or <paramref name="customContext"/> is null. </exception>
         internal AcsIncomingCallEventData(CommunicationIdentifierModel toCommunicationIdentifier, CommunicationIdentifierModel fromCommunicationIdentifier, AcsIncomingCallCustomContext customContext)
         {
-            Argument.AssertNotNull(toCommunicationIdentifier, nameof(toCommunicationIdentifier));
-            Argument.AssertNotNull(fromCommunicationIdentifier, nameof(fromCommunicationIdentifier));
-            Argument.AssertNotNull(customContext, nameof(customContext));
-
             ToCommunicationIdentifier = toCommunicationIdentifier;
             FromCommunicationIdentifier = fromCommunicationIdentifier;
             CustomContext = customContext;
@@ -70,8 +36,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="incomingCallContext"> Signed incoming call context. </param>
         /// <param name="onBehalfOfCallee"> The communication identifier of the user on behalf of whom the call is made. </param>
         /// <param name="correlationId"> CorrelationId (CallId). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AcsIncomingCallEventData(CommunicationIdentifierModel toCommunicationIdentifier, CommunicationIdentifierModel fromCommunicationIdentifier, string serverCallId, string callerDisplayName, AcsIncomingCallCustomContext customContext, string incomingCallContext, CommunicationIdentifierModel onBehalfOfCallee, string correlationId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AcsIncomingCallEventData(CommunicationIdentifierModel toCommunicationIdentifier, CommunicationIdentifierModel fromCommunicationIdentifier, string serverCallId, string callerDisplayName, AcsIncomingCallCustomContext customContext, string incomingCallContext, CommunicationIdentifierModel onBehalfOfCallee, string correlationId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ToCommunicationIdentifier = toCommunicationIdentifier;
             FromCommunicationIdentifier = fromCommunicationIdentifier;
@@ -81,28 +47,30 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             IncomingCallContext = incomingCallContext;
             OnBehalfOfCallee = onBehalfOfCallee;
             CorrelationId = correlationId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AcsIncomingCallEventData"/> for deserialization. </summary>
-        internal AcsIncomingCallEventData()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The communication identifier of the target user. </summary>
         public CommunicationIdentifierModel ToCommunicationIdentifier { get; }
+
         /// <summary> The communication identifier of the user who initiated the call. </summary>
         public CommunicationIdentifierModel FromCommunicationIdentifier { get; }
+
         /// <summary> The Id of the server call. </summary>
         public string ServerCallId { get; }
+
         /// <summary> Display name of caller. </summary>
         public string CallerDisplayName { get; }
+
         /// <summary> Custom Context of Incoming Call. </summary>
         public AcsIncomingCallCustomContext CustomContext { get; }
+
         /// <summary> Signed incoming call context. </summary>
         public string IncomingCallContext { get; }
+
         /// <summary> The communication identifier of the user on behalf of whom the call is made. </summary>
         public CommunicationIdentifierModel OnBehalfOfCallee { get; }
+
         /// <summary> CorrelationId (CallId). </summary>
         public string CorrelationId { get; }
     }

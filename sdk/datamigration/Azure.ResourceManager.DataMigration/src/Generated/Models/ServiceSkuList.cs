@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="ServiceSkuList"/>. </summary>
         internal ServiceSkuList()
         {
-            Value = new ChangeTrackingList<AvailableServiceSku>();
+            Value = new ChangeTrackingList<DataMigrationAvailableServiceSku>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceSkuList"/>. </summary>
         /// <param name="value"> List of service SKUs. </param>
         /// <param name="nextLink"> URL to load the next page of service SKUs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceSkuList(IReadOnlyList<AvailableServiceSku> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceSkuList(IReadOnlyList<DataMigrationAvailableServiceSku> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> List of service SKUs. </summary>
-        public IReadOnlyList<AvailableServiceSku> Value { get; }
+        public IReadOnlyList<DataMigrationAvailableServiceSku> Value { get; }
         /// <summary> URL to load the next page of service SKUs. </summary>
         public string NextLink { get; }
     }

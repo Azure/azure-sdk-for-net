@@ -13,37 +13,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Edge.SolutionVersionPublished event. </summary>
     public partial class EdgeSolutionVersionPublishedEventData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EdgeSolutionVersionPublishedEventData"/>. </summary>
         /// <param name="externalValidationId"> A GUID to uniquely track External Solution Validation. </param>
@@ -53,17 +24,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="solutionVersionId"> ARM ID of the Solution Version resource. </param>
         /// <param name="apiVersion"> API Version supported for the resources. </param>
         /// <param name="callbackUrl"> Direct URL to callback for updating validation status. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="externalValidationId"/>, <paramref name="targetId"/>, <paramref name="solutionTemplateId"/>, <paramref name="solutionTemplateVersionId"/>, <paramref name="solutionVersionId"/>, <paramref name="apiVersion"/> or <paramref name="callbackUrl"/> is null. </exception>
         internal EdgeSolutionVersionPublishedEventData(string externalValidationId, string targetId, string solutionTemplateId, string solutionTemplateVersionId, string solutionVersionId, string apiVersion, Uri callbackUrl)
         {
-            Argument.AssertNotNull(externalValidationId, nameof(externalValidationId));
-            Argument.AssertNotNull(targetId, nameof(targetId));
-            Argument.AssertNotNull(solutionTemplateId, nameof(solutionTemplateId));
-            Argument.AssertNotNull(solutionTemplateVersionId, nameof(solutionTemplateVersionId));
-            Argument.AssertNotNull(solutionVersionId, nameof(solutionVersionId));
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-            Argument.AssertNotNull(callbackUrl, nameof(callbackUrl));
-
             ExternalValidationId = externalValidationId;
             TargetId = targetId;
             SolutionTemplateId = solutionTemplateId;
@@ -81,8 +43,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="solutionVersionId"> ARM ID of the Solution Version resource. </param>
         /// <param name="apiVersion"> API Version supported for the resources. </param>
         /// <param name="callbackUrl"> Direct URL to callback for updating validation status. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeSolutionVersionPublishedEventData(string externalValidationId, string targetId, string solutionTemplateId, string solutionTemplateVersionId, string solutionVersionId, string apiVersion, Uri callbackUrl, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeSolutionVersionPublishedEventData(string externalValidationId, string targetId, string solutionTemplateId, string solutionTemplateVersionId, string solutionVersionId, string apiVersion, Uri callbackUrl, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExternalValidationId = externalValidationId;
             TargetId = targetId;
@@ -91,26 +53,27 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             SolutionVersionId = solutionVersionId;
             ApiVersion = apiVersion;
             CallbackUrl = callbackUrl;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="EdgeSolutionVersionPublishedEventData"/> for deserialization. </summary>
-        internal EdgeSolutionVersionPublishedEventData()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A GUID to uniquely track External Solution Validation. </summary>
         public string ExternalValidationId { get; }
+
         /// <summary> ARM ID of the Target resource. </summary>
         public string TargetId { get; }
+
         /// <summary> ARM ID of the Solution Template resource. </summary>
         public string SolutionTemplateId { get; }
+
         /// <summary> ARM ID of the Solution Template Version resource. </summary>
         public string SolutionTemplateVersionId { get; }
+
         /// <summary> ARM ID of the Solution Version resource. </summary>
         public string SolutionVersionId { get; }
+
         /// <summary> API Version supported for the resources. </summary>
         public string ApiVersion { get; }
+
         /// <summary> Direct URL to callback for updating validation status. </summary>
         public Uri CallbackUrl { get; }
     }

@@ -353,6 +353,7 @@ namespace Azure.Data.Tables.Models
     {
         public static Azure.Data.Tables.Models.TableGeoReplicationInfo TableGeoReplicationInfo(Azure.Data.Tables.Models.TableGeoReplicationStatus status = default(Azure.Data.Tables.Models.TableGeoReplicationStatus), System.DateTimeOffset lastSyncedOn = default(System.DateTimeOffset)) { throw null; }
         public static Azure.Data.Tables.Models.TableItem TableItem(string name = null, string odataType = null, string odataId = null, string odataEditLink = null) { throw null; }
+        public static Azure.Data.Tables.Models.TableServiceProperties TableServiceProperties(Azure.Data.Tables.Models.TableAnalyticsLoggingSettings logging = null, Azure.Data.Tables.Models.TableMetrics hourMetrics = null, Azure.Data.Tables.Models.TableMetrics minuteMetrics = null, System.Collections.Generic.IList<Azure.Data.Tables.Models.TableCorsRule> cors = null) { throw null; }
         public static Azure.Data.Tables.Models.TableServiceStatistics TableServiceStatistics(Azure.Data.Tables.Models.TableGeoReplicationInfo geoReplication = null) { throw null; }
     }
     public partial class TableServiceProperties

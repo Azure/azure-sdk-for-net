@@ -19,6 +19,7 @@ public class RunStepDetailsUpdate : StreamingUpdate
     private readonly RunStepDeltaCodeInterpreterToolCall _asCodeCall;
     private readonly RunStepDeltaFileSearchToolCall _asFileSearchCall;
     private readonly RunStepDeltaFunctionToolCall _asFunctionCall;
+    private readonly RunStepDeltaMcpToolCall _asMcpCall;
 
     /// <inheritdoc cref="RunStepDeltaChunk.Id"/>
     public string StepId => _delta?.Id;
@@ -31,6 +32,7 @@ public class RunStepDetailsUpdate : StreamingUpdate
         => _asCodeCall?.Id
         ?? _asFileSearchCall?.Id
         ?? _asFunctionCall?.Id
+        ?? _asMcpCall?.Id
         ?? (_toolCall?.SerializedAdditionalRawData?.TryGetValue("id", out BinaryData idData) == true
             ? idData.ToString()
             : null);
@@ -46,13 +48,15 @@ public class RunStepDetailsUpdate : StreamingUpdate
         => _asCodeCall?.CodeInterpreter?.Outputs;
 
     /// <inheritdoc cref="RunStepDeltaFunction.Name"/>
-    public string FunctionName => _asFunctionCall.Function?.Name;
+    public string FunctionName => _asFunctionCall?.Function?.Name;
 
     /// <inheritdoc cref="RunStepDeltaFunction.Arguments"/>
-    public string FunctionArguments => _asFunctionCall?.Function?.Arguments;
+    public string FunctionArguments => _asFunctionCall?.Function?.Arguments ?? _asMcpCall?.Arguments;
 
     /// <inheritdoc cref="RunStepDeltaFunction.Output"/>
     public string FunctionOutput => _asFunctionCall?.Function?.Output;
+
+    public RunStepDeltaToolCall GetDeltaToolCall => _toolCall;
 
     internal RunStepDetailsUpdate(
         RunStepDeltaChunk stepDelta,
@@ -63,6 +67,7 @@ public class RunStepDetailsUpdate : StreamingUpdate
         _asCodeCall = toolCall as RunStepDeltaCodeInterpreterToolCall;
         _asFileSearchCall = toolCall as RunStepDeltaFileSearchToolCall;
         _asFunctionCall = toolCall as RunStepDeltaFunctionToolCall;
+        _asMcpCall = toolCall as RunStepDeltaMcpToolCall;
         _delta = stepDelta;
         _toolCall = toolCall;
     }

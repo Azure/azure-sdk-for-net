@@ -1,4 +1,4 @@
-# Azure Provisioning client library for .NET
+# Azure Provisioning Deployment client library for .NET
 
 Azure.Provisioning.Deployment makes it easy to declaratively specify Azure infrastructure natively in .NET.
 

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            MigrationState? state = default;
+            DataMigrationState? state = default;
             DateTimeOffset? startedOn = default;
             DateTimeOffset? endedOn = default;
             string sourceServerVersion = default;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    state = new MigrationState(property.Value.GetString());
+                    state = new DataMigrationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("startedOn"u8))

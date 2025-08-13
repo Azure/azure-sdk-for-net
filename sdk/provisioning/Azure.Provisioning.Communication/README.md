@@ -1,4 +1,4 @@
-# Azure.Provisioning.Communication client library for .NET
+# Azure Provisioning Communication client library for .NET
 
 Azure.Provisioning.Communication simplifies declarative resource provisioning in .NET.
 
@@ -21,6 +21,31 @@ dotnet add package Azure.Provisioning.Communication --prerelease
 ## Key concepts
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
+
+## Examples
+
+### Create a Basic Communication Service
+
+This example demonstrates how to create an Azure Communication Services resource for adding communication capabilities to applications.
+
+```C# Snippet:CommunicationBasic
+Infrastructure infra = new();
+
+ProvisioningParameter location =
+    new(nameof(location), typeof(string))
+    {
+        Value = "global"
+    };
+infra.Add(location);
+
+CommunicationService comm =
+    new(nameof(comm), "2023-03-31")
+    {
+        Location = location,
+        DataLocation = "unitedstates"
+    };
+infra.Add(comm);
+```
 
 ## Troubleshooting
 

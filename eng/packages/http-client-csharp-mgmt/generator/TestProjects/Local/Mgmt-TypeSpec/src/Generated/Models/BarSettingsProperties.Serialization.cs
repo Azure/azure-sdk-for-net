@@ -34,7 +34,7 @@ namespace MgmtTypeSpec.Models
             {
                 throw new FormatException($"The model {nameof(BarSettingsProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (options.Format != "W" && Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);

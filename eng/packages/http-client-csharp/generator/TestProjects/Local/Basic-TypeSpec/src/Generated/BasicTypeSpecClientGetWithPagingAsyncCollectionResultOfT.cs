@@ -34,15 +34,14 @@ namespace BasicTypeSpec
         /// <returns> The pages of BasicTypeSpecClientGetWithPagingAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<ThingModel>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Response response = await GetNextResponse(pageSizeHint, null).ConfigureAwait(false);
-            PageThingModel responseWithType = (PageThingModel)response;
-            yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)responseWithType.Items, null, response);
+            Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
+            yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)((PageThingModel)response).Items, null, response);
         }
 
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
-        private async ValueTask<Response> GetNextResponse(int? pageSizeHint, string continuationToken)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, string continuationToken)
         {
             HttpMessage message = _client.CreateGetWithPagingRequest(_context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithPaging");

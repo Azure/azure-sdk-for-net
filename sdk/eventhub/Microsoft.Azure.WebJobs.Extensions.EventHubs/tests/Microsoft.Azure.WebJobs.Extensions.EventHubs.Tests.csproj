@@ -7,14 +7,15 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.ResourceManager.EventHubs" />
-    <PackageReference Include="Microsoft.Azure.WebJobs.Logging.ApplicationInsights" VersionOverride="3.0.27" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions" />
+    <PackageReference Include="Microsoft.Azure.WebJobs.Host.Storage" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
+    <PackageReference Include="Microsoft.Extensions.Logging" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
-    <PackageReference Include="Microsoft.Azure.WebJobs.Host.Storage" />
   </ItemGroup>
 
   <ItemGroup>

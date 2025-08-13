@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ElasticSan
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _elasticSanSnapshotVolumeSnapshotsClientDiagnostics;
-        private readonly VolumeSnapshotsRestOperations _elasticSanSnapshotVolumeSnapshotsRestClient;
+        private readonly ClientDiagnostics _elasticSanSnapshotSnapshotsClientDiagnostics;
+        private readonly SnapshotsRestOperations _elasticSanSnapshotSnapshotsRestClient;
         private readonly ElasticSanSnapshotData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ElasticSanSnapshotResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _elasticSanSnapshotVolumeSnapshotsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ElasticSan", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string elasticSanSnapshotVolumeSnapshotsApiVersion);
-            _elasticSanSnapshotVolumeSnapshotsRestClient = new VolumeSnapshotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, elasticSanSnapshotVolumeSnapshotsApiVersion);
+            _elasticSanSnapshotSnapshotsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ElasticSan", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string elasticSanSnapshotSnapshotsApiVersion);
+            _elasticSanSnapshotSnapshotsRestClient = new SnapshotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, elasticSanSnapshotSnapshotsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeSnapshots_Get</description>
+        /// <description>Snapshot_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -113,11 +113,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ElasticSanSnapshotResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _elasticSanSnapshotVolumeSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotResource.Get");
+            using var scope = _elasticSanSnapshotSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotResource.Get");
             scope.Start();
             try
             {
-                var response = await _elasticSanSnapshotVolumeSnapshotsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _elasticSanSnapshotSnapshotsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ElasticSanSnapshotResource(Client, response.Value), response.GetRawResponse());
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeSnapshots_Get</description>
+        /// <description>Snapshot_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -153,11 +153,11 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ElasticSanSnapshotResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _elasticSanSnapshotVolumeSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotResource.Get");
+            using var scope = _elasticSanSnapshotSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotResource.Get");
             scope.Start();
             try
             {
-                var response = _elasticSanSnapshotVolumeSnapshotsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _elasticSanSnapshotSnapshotsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ElasticSanSnapshotResource(Client, response.Value), response.GetRawResponse());
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeSnapshots_Delete</description>
+        /// <description>Snapshot_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -194,12 +194,12 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _elasticSanSnapshotVolumeSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotResource.Delete");
+            using var scope = _elasticSanSnapshotSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotResource.Delete");
             scope.Start();
             try
             {
-                var response = await _elasticSanSnapshotVolumeSnapshotsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticSanArmOperation(_elasticSanSnapshotVolumeSnapshotsClientDiagnostics, Pipeline, _elasticSanSnapshotVolumeSnapshotsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _elasticSanSnapshotSnapshotsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ElasticSanArmOperation(_elasticSanSnapshotSnapshotsClientDiagnostics, Pipeline, _elasticSanSnapshotSnapshotsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeSnapshots_Delete</description>
+        /// <description>Snapshot_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -236,12 +236,12 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _elasticSanSnapshotVolumeSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotResource.Delete");
+            using var scope = _elasticSanSnapshotSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotResource.Delete");
             scope.Start();
             try
             {
-                var response = _elasticSanSnapshotVolumeSnapshotsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ElasticSanArmOperation(_elasticSanSnapshotVolumeSnapshotsClientDiagnostics, Pipeline, _elasticSanSnapshotVolumeSnapshotsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _elasticSanSnapshotSnapshotsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new ElasticSanArmOperation(_elasticSanSnapshotSnapshotsClientDiagnostics, Pipeline, _elasticSanSnapshotSnapshotsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeSnapshots_Create</description>
+        /// <description>Snapshot_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -282,12 +282,12 @@ namespace Azure.ResourceManager.ElasticSan
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _elasticSanSnapshotVolumeSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotResource.Update");
+            using var scope = _elasticSanSnapshotSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotResource.Update");
             scope.Start();
             try
             {
-                var response = await _elasticSanSnapshotVolumeSnapshotsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticSanArmOperation<ElasticSanSnapshotResource>(new ElasticSanSnapshotOperationSource(Client), _elasticSanSnapshotVolumeSnapshotsClientDiagnostics, Pipeline, _elasticSanSnapshotVolumeSnapshotsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _elasticSanSnapshotSnapshotsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ElasticSanArmOperation<ElasticSanSnapshotResource>(new ElasticSanSnapshotOperationSource(Client), _elasticSanSnapshotSnapshotsClientDiagnostics, Pipeline, _elasticSanSnapshotSnapshotsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VolumeSnapshots_Create</description>
+        /// <description>Snapshot_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -328,12 +328,12 @@ namespace Azure.ResourceManager.ElasticSan
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _elasticSanSnapshotVolumeSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotResource.Update");
+            using var scope = _elasticSanSnapshotSnapshotsClientDiagnostics.CreateScope("ElasticSanSnapshotResource.Update");
             scope.Start();
             try
             {
-                var response = _elasticSanSnapshotVolumeSnapshotsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new ElasticSanArmOperation<ElasticSanSnapshotResource>(new ElasticSanSnapshotOperationSource(Client), _elasticSanSnapshotVolumeSnapshotsClientDiagnostics, Pipeline, _elasticSanSnapshotVolumeSnapshotsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = _elasticSanSnapshotSnapshotsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new ElasticSanArmOperation<ElasticSanSnapshotResource>(new ElasticSanSnapshotOperationSource(Client), _elasticSanSnapshotSnapshotsClientDiagnostics, Pipeline, _elasticSanSnapshotSnapshotsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

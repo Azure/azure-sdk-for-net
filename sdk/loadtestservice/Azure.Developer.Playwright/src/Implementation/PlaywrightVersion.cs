@@ -30,7 +30,7 @@ namespace Azure.Developer.Playwright.Implementation
                 throw new Exception(Constants.s_playwright_Version_not_supported_error_message);
             }
         }
-        internal  string GetPlaywrightVersion()
+        public string GetPlaywrightVersion()
         {
             string assemblyName = "Microsoft.Playwright";
 

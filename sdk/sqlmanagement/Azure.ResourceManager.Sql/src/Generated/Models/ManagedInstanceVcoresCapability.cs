@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Initializes a new instance of <see cref="ManagedInstanceVcoresCapability"/>. </summary>
         /// <param name="name"> The virtual cores identifier. </param>
         /// <param name="value"> The virtual cores value. </param>
-        /// <param name="supportedMemoryLimitsMB"> Memory limit MB ranges. </param>
+        /// <param name="supportedMemorySizesInGB"> Supported memory sizes in GB. </param>
         /// <param name="includedMaxSize"> Included size. </param>
         /// <param name="supportedStorageSizes"> Storage size ranges. </param>
         /// <param name="includedStorageIOps"> Included storage IOps. </param>
@@ -72,11 +72,11 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstanceVcoresCapability(string name, int? value, MaxLimitRangeCapability supportedMemoryLimitsMB, MaxSizeCapability includedMaxSize, IReadOnlyList<MaxSizeRangeCapability> supportedStorageSizes, long? includedStorageIOps, MaxLimitRangeCapability supportedStorageIOps, double? iopsMinValueOverrideFactorPerSelectedStorageGB, double? iopsIncludedValueOverrideFactorPerSelectedStorageGB, long? includedStorageThroughputMBps, MaxLimitRangeCapability supportedStorageThroughputMBps, double? throughputMBpsMinValueOverrideFactorPerSelectedStorageGB, double? throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB, bool? isInstancePoolSupported, bool? isStandaloneSupported, IReadOnlyList<ManagedInstanceMaintenanceConfigurationCapability> supportedMaintenanceConfigurations, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedInstanceVcoresCapability(string name, int? value, MaxLimitRangeCapability supportedMemorySizesInGB, MaxSizeCapability includedMaxSize, IReadOnlyList<MaxSizeRangeCapability> supportedStorageSizes, long? includedStorageIOps, MaxLimitRangeCapability supportedStorageIOps, double? iopsMinValueOverrideFactorPerSelectedStorageGB, double? iopsIncludedValueOverrideFactorPerSelectedStorageGB, long? includedStorageThroughputMBps, MaxLimitRangeCapability supportedStorageThroughputMBps, double? throughputMBpsMinValueOverrideFactorPerSelectedStorageGB, double? throughputMBpsIncludedValueOverrideFactorPerSelectedStorageGB, bool? isInstancePoolSupported, bool? isStandaloneSupported, IReadOnlyList<ManagedInstanceMaintenanceConfigurationCapability> supportedMaintenanceConfigurations, SqlCapabilityStatus? status, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;
-            SupportedMemoryLimitsMB = supportedMemoryLimitsMB;
+            SupportedMemorySizesInGB = supportedMemorySizesInGB;
             IncludedMaxSize = includedMaxSize;
             SupportedStorageSizes = supportedStorageSizes;
             IncludedStorageIOps = includedStorageIOps;
@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The virtual cores value. </summary>
         [WirePath("value")]
         public int? Value { get; }
-        /// <summary> Memory limit MB ranges. </summary>
-        [WirePath("supportedMemoryLimitsMB")]
-        public MaxLimitRangeCapability SupportedMemoryLimitsMB { get; }
+        /// <summary> Supported memory sizes in GB. </summary>
+        [WirePath("supportedMemorySizesInGB")]
+        public MaxLimitRangeCapability SupportedMemorySizesInGB { get; }
         /// <summary> Included size. </summary>
         [WirePath("includedMaxSize")]
         public MaxSizeCapability IncludedMaxSize { get; }

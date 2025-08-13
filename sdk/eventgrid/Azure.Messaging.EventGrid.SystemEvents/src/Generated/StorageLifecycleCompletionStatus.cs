@@ -14,41 +14,62 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public readonly partial struct StorageLifecycleCompletionStatus : IEquatable<StorageLifecycleCompletionStatus>
     {
         private readonly string _value;
+        /// <summary> Completed. </summary>
+        private const string CompletedValue = "Completed";
+        /// <summary> CompletedWithError. </summary>
+        private const string CompletedWithErrorValue = "CompletedWithError";
+        /// <summary> Incomplete. </summary>
+        private const string IncompleteValue = "Incomplete";
 
         /// <summary> Initializes a new instance of <see cref="StorageLifecycleCompletionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StorageLifecycleCompletionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CompletedValue = "Completed";
-        private const string CompletedWithErrorValue = "CompletedWithError";
-        private const string IncompleteValue = "Incomplete";
+            _value = value;
+        }
 
         /// <summary> Completed. </summary>
         public static StorageLifecycleCompletionStatus Completed { get; } = new StorageLifecycleCompletionStatus(CompletedValue);
+
         /// <summary> CompletedWithError. </summary>
         public static StorageLifecycleCompletionStatus CompletedWithError { get; } = new StorageLifecycleCompletionStatus(CompletedWithErrorValue);
+
         /// <summary> Incomplete. </summary>
         public static StorageLifecycleCompletionStatus Incomplete { get; } = new StorageLifecycleCompletionStatus(IncompleteValue);
+
         /// <summary> Determines if two <see cref="StorageLifecycleCompletionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageLifecycleCompletionStatus left, StorageLifecycleCompletionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageLifecycleCompletionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageLifecycleCompletionStatus left, StorageLifecycleCompletionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageLifecycleCompletionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageLifecycleCompletionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageLifecycleCompletionStatus(string value) => new StorageLifecycleCompletionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageLifecycleCompletionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageLifecycleCompletionStatus?(string value) => value == null ? null : new StorageLifecycleCompletionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageLifecycleCompletionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageLifecycleCompletionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

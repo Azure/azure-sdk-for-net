@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             string id = default;
             string migrationId = default;
             IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult> summaryResults = default;
-            ValidationStatus? status = default;
+            MigrationValidationStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    status = new ValidationStatus(property.Value.GetString());
+                    status = new MigrationValidationStatus(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

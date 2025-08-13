@@ -15,21 +15,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         /// <summary> Initializes a new instance of <see cref="ContainerServiceClusterSupportEndingEventData"/>. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version of the ManagedCluster resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="kubernetesVersion"/> is null. </exception>
         internal ContainerServiceClusterSupportEndingEventData(string kubernetesVersion) : base(kubernetesVersion)
         {
-            Argument.AssertNotNull(kubernetesVersion, nameof(kubernetesVersion));
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceClusterSupportEndingEventData"/>. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version of the ManagedCluster resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceClusterSupportEndingEventData(string kubernetesVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kubernetesVersion, serializedAdditionalRawData)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceClusterSupportEndingEventData"/> for deserialization. </summary>
-        internal ContainerServiceClusterSupportEndingEventData()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceClusterSupportEndingEventData(string kubernetesVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kubernetesVersion, additionalBinaryDataProperties)
         {
         }
     }

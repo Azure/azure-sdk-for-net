@@ -29,6 +29,18 @@ Run `dotnet build /t:GenerateCode`, and the code will be generated under `sdk\<s
 dotnet build /t:GenerateCode
 ```
 
+#### Run with tracing enabled
+```dotnetcli
+dotnet build /t:GenerateCode /p:Trace=true -v d
+```
+
+#### Run with additional emitter options
+Any of the [emitter options](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/packages/http-client-csharp/README.md#emitter-options) can be passed through to the build target
+as shown below:
+```dotnetcli
+dotnet build /t:GenerateCode /p:TypespecAdditionalOptions="debug=true;new-project=true"
+```
+
 Now that you have generated your SDK, you can release it by following the following steps:
 
 1. Create a [release plan](https://aka.ms/azsdkdocs/release-plans). It will provide you with a workflow of tasks that you

@@ -32,13 +32,19 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="defaultCountryHint"> A country code to use as a hint to the language detection model if it cannot disambiguate the language. </param>
         /// <param name="modelVersion"> The version of the model to use when calling the Text Analytics service. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </param>
-        internal LanguageDetectionSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string defaultCountryHint, string modelVersion) : base(oDataType, name, description, context, inputs, outputs)
+        internal LanguageDetectionSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> serializedAdditionalRawData, string defaultCountryHint, string modelVersion) : base(oDataType, name, description, context, inputs, outputs, serializedAdditionalRawData)
         {
             DefaultCountryHint = defaultCountryHint;
             ModelVersion = modelVersion;
             ODataType = oDataType ?? "#Microsoft.Skills.Text.LanguageDetectionSkill";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LanguageDetectionSkill"/> for deserialization. </summary>
+        internal LanguageDetectionSkill()
+        {
         }
 
         /// <summary> A country code to use as a hint to the language detection model if it cannot disambiguate the language. </summary>

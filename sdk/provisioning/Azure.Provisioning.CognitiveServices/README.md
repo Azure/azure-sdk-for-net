@@ -1,4 +1,4 @@
-# Azure.Provisioning.CognitiveServices client library for .NET
+# Azure Provisioning CognitiveServices client library for .NET
 
 Azure.Provisioning.CognitiveServices simplifies declarative resource provisioning in .NET.
 
@@ -21,6 +21,34 @@ dotnet add package Azure.Provisioning.CognitiveServices
 ## Key concepts
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
+
+## Examples
+
+### Create a Basic Cognitive Services Account
+
+This example demonstrates how to create a Cognitive Services account for AI and machine learning capabilities, based on the [Azure quickstart template](https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.cognitiveservices/cognitive-services-translate/main.bicep).
+
+```C# Snippet:CognitiveServicesBasic
+Infrastructure infra = new();
+
+CognitiveServicesAccount account =
+    new(nameof(account))
+    {
+        Identity = new ManagedServiceIdentity { ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned },
+        Kind = "TextTranslation",
+        Sku = new CognitiveServicesSku { Name = "S1" },
+        Properties = new CognitiveServicesAccountProperties
+        {
+            PublicNetworkAccess = ServiceAccountPublicNetworkAccess.Disabled,
+            NetworkAcls = new CognitiveServicesNetworkRuleSet
+            {
+                DefaultAction = CognitiveServicesNetworkRuleAction.Deny
+            },
+            DisableLocalAuth = true
+        }
+    };
+infra.Add(account);
+```
 
 ## Troubleshooting
 

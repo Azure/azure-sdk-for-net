@@ -18,14 +18,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="addedByCommunicationIdentifier"> The communication identifier of the user who added the user. </param>
         /// <param name="participantAdded"> The details of the user who was added. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recipientCommunicationIdentifier"/>, <paramref name="threadId"/>, <paramref name="addedByCommunicationIdentifier"/> or <paramref name="participantAdded"/> is null. </exception>
         internal AcsChatParticipantAddedToThreadWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string threadId, CommunicationIdentifierModel addedByCommunicationIdentifier, AcsChatThreadParticipantProperties participantAdded) : base(recipientCommunicationIdentifier, threadId)
         {
-            Argument.AssertNotNull(recipientCommunicationIdentifier, nameof(recipientCommunicationIdentifier));
-            Argument.AssertNotNull(threadId, nameof(threadId));
-            Argument.AssertNotNull(addedByCommunicationIdentifier, nameof(addedByCommunicationIdentifier));
-            Argument.AssertNotNull(participantAdded, nameof(participantAdded));
-
             AddedByCommunicationIdentifier = addedByCommunicationIdentifier;
             ParticipantAdded = participantAdded;
         }
@@ -34,28 +28,25 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="createTime"> The original creation time of the thread. </param>
         /// <param name="version"> The version of the thread. </param>
         /// <param name="time"> The time at which the user was added to the thread. </param>
         /// <param name="addedByCommunicationIdentifier"> The communication identifier of the user who added the user. </param>
         /// <param name="participantAdded"> The details of the user who was added. </param>
-        internal AcsChatParticipantAddedToThreadWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? createTime, long? version, DateTimeOffset? time, CommunicationIdentifierModel addedByCommunicationIdentifier, AcsChatThreadParticipantProperties participantAdded) : base(recipientCommunicationIdentifier, transactionId, threadId, serializedAdditionalRawData, createTime, version)
+        internal AcsChatParticipantAddedToThreadWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? createTime, long? version, DateTimeOffset? time, CommunicationIdentifierModel addedByCommunicationIdentifier, AcsChatThreadParticipantProperties participantAdded) : base(recipientCommunicationIdentifier, transactionId, threadId, additionalBinaryDataProperties, createTime, version)
         {
             Time = time;
             AddedByCommunicationIdentifier = addedByCommunicationIdentifier;
             ParticipantAdded = participantAdded;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsChatParticipantAddedToThreadWithUserEventData"/> for deserialization. </summary>
-        internal AcsChatParticipantAddedToThreadWithUserEventData()
-        {
-        }
-
         /// <summary> The time at which the user was added to the thread. </summary>
         public DateTimeOffset? Time { get; }
+
         /// <summary> The communication identifier of the user who added the user. </summary>
         public CommunicationIdentifierModel AddedByCommunicationIdentifier { get; }
+
         /// <summary> The details of the user who was added. </summary>
         public AcsChatThreadParticipantProperties ParticipantAdded { get; }
     }

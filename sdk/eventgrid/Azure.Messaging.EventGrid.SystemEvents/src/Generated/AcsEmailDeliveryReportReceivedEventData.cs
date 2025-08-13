@@ -13,51 +13,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.EmailDeliveryReportReceived event. </summary>
     public partial class AcsEmailDeliveryReportReceivedEventData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AcsEmailDeliveryReportReceivedEventData"/>. </summary>
         /// <param name="sender"> The Sender Email Address. </param>
         /// <param name="recipient"> The recipient Email Address. </param>
         /// <param name="internetMessageId"> The Internet Message Id of the email that has been sent. </param>
         /// <param name="deliveryStatusDetails"> Detailed information about the status if any. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sender"/>, <paramref name="recipient"/>, <paramref name="internetMessageId"/> or <paramref name="deliveryStatusDetails"/> is null. </exception>
         internal AcsEmailDeliveryReportReceivedEventData(string sender, string recipient, string internetMessageId, AcsEmailDeliveryReportStatusDetails deliveryStatusDetails)
         {
-            Argument.AssertNotNull(sender, nameof(sender));
-            Argument.AssertNotNull(recipient, nameof(recipient));
-            Argument.AssertNotNull(internetMessageId, nameof(internetMessageId));
-            Argument.AssertNotNull(deliveryStatusDetails, nameof(deliveryStatusDetails));
-
             Sender = sender;
             Recipient = recipient;
             InternetMessageId = internetMessageId;
@@ -72,8 +37,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="status"> The status of the email. Any value other than Delivered is considered failed. </param>
         /// <param name="deliveryStatusDetails"> Detailed information about the status if any. </param>
         /// <param name="deliveryAttemptTimestamp"> The time at which the email delivery report received timestamp. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AcsEmailDeliveryReportReceivedEventData(string sender, string recipient, string internetMessageId, string messageId, AcsEmailDeliveryReportStatus? status, AcsEmailDeliveryReportStatusDetails deliveryStatusDetails, DateTimeOffset? deliveryAttemptTimestamp, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AcsEmailDeliveryReportReceivedEventData(string sender, string recipient, string internetMessageId, string messageId, AcsEmailDeliveryReportStatus? status, AcsEmailDeliveryReportStatusDetails deliveryStatusDetails, DateTimeOffset? deliveryAttemptTimestamp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sender = sender;
             Recipient = recipient;
@@ -82,26 +47,27 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Status = status;
             DeliveryStatusDetails = deliveryStatusDetails;
             DeliveryAttemptTimestamp = deliveryAttemptTimestamp;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AcsEmailDeliveryReportReceivedEventData"/> for deserialization. </summary>
-        internal AcsEmailDeliveryReportReceivedEventData()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Sender Email Address. </summary>
         public string Sender { get; }
+
         /// <summary> The recipient Email Address. </summary>
         public string Recipient { get; }
+
         /// <summary> The Internet Message Id of the email that has been sent. </summary>
         public string InternetMessageId { get; }
+
         /// <summary> The Id of the email that has been sent. </summary>
         public string MessageId { get; }
+
         /// <summary> The status of the email. Any value other than Delivered is considered failed. </summary>
         public AcsEmailDeliveryReportStatus? Status { get; }
+
         /// <summary> Detailed information about the status if any. </summary>
         public AcsEmailDeliveryReportStatusDetails DeliveryStatusDetails { get; }
+
         /// <summary> The time at which the email delivery report received timestamp. </summary>
         public DateTimeOffset? DeliveryAttemptTimestamp { get; }
     }

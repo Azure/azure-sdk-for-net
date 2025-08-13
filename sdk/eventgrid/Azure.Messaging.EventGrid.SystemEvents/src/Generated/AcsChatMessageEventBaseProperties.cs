@@ -19,56 +19,49 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="messageId"> The chat message id. </param>
         /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
         /// <param name="type"> The type of the message. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recipientCommunicationIdentifier"/>, <paramref name="threadId"/>, <paramref name="messageId"/>, <paramref name="senderCommunicationIdentifier"/> or <paramref name="type"/> is null. </exception>
-        internal AcsChatMessageEventBaseProperties(CommunicationIdentifierModel recipientCommunicationIdentifier, string threadId, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string type) : base(recipientCommunicationIdentifier, threadId)
+        internal AcsChatMessageEventBaseProperties(CommunicationIdentifierModel recipientCommunicationIdentifier, string threadId, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string @type) : base(recipientCommunicationIdentifier, threadId)
         {
-            Argument.AssertNotNull(recipientCommunicationIdentifier, nameof(recipientCommunicationIdentifier));
-            Argument.AssertNotNull(threadId, nameof(threadId));
-            Argument.AssertNotNull(messageId, nameof(messageId));
-            Argument.AssertNotNull(senderCommunicationIdentifier, nameof(senderCommunicationIdentifier));
-            Argument.AssertNotNull(type, nameof(type));
-
             MessageId = messageId;
             SenderCommunicationIdentifier = senderCommunicationIdentifier;
-            Type = type;
+            Type = @type;
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsChatMessageEventBaseProperties"/>. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="messageId"> The chat message id. </param>
         /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
         /// <param name="senderDisplayName"> The display name of the sender. </param>
         /// <param name="composeTime"> The original compose time of the message. </param>
         /// <param name="type"> The type of the message. </param>
         /// <param name="version"> The version of the message. </param>
-        internal AcsChatMessageEventBaseProperties(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, IDictionary<string, BinaryData> serializedAdditionalRawData, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string type, long? version) : base(recipientCommunicationIdentifier, transactionId, threadId, serializedAdditionalRawData)
+        internal AcsChatMessageEventBaseProperties(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string @type, long? version) : base(recipientCommunicationIdentifier, transactionId, threadId, additionalBinaryDataProperties)
         {
             MessageId = messageId;
             SenderCommunicationIdentifier = senderCommunicationIdentifier;
             SenderDisplayName = senderDisplayName;
             ComposeTime = composeTime;
-            Type = type;
+            Type = @type;
             Version = version;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AcsChatMessageEventBaseProperties"/> for deserialization. </summary>
-        internal AcsChatMessageEventBaseProperties()
-        {
         }
 
         /// <summary> The chat message id. </summary>
         public string MessageId { get; }
+
         /// <summary> The communication identifier of the sender. </summary>
         public CommunicationIdentifierModel SenderCommunicationIdentifier { get; }
+
         /// <summary> The display name of the sender. </summary>
         public string SenderDisplayName { get; }
+
         /// <summary> The original compose time of the message. </summary>
         public DateTimeOffset? ComposeTime { get; }
+
         /// <summary> The type of the message. </summary>
         public string Type { get; }
+
         /// <summary> The version of the message. </summary>
         public long? Version { get; }
     }

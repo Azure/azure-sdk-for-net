@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.ElasticSan.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SnapshotList"/>. </summary>
-        internal SnapshotList()
+        /// <param name="value"> The Snapshot items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal SnapshotList(IEnumerable<ElasticSanSnapshotData> value)
         {
-            Value = new ChangeTrackingList<ElasticSanSnapshotData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="SnapshotList"/>. </summary>
-        /// <param name="value"> An array of Snapshot objects. </param>
-        /// <param name="nextLink"> URI to fetch the next section of the paginated response. </param>
+        /// <param name="value"> The Snapshot items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SnapshotList(IReadOnlyList<ElasticSanSnapshotData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SnapshotList(IReadOnlyList<ElasticSanSnapshotData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> An array of Snapshot objects. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotList"/> for deserialization. </summary>
+        internal SnapshotList()
+        {
+        }
+
+        /// <summary> The Snapshot items on this page. </summary>
         public IReadOnlyList<ElasticSanSnapshotData> Value { get; }
-        /// <summary> URI to fetch the next section of the paginated response. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

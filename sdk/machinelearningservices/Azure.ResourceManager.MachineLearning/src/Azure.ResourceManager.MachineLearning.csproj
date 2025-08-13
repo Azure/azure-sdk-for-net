@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Version>1.3.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.2.2</ApiCompatVersion>
+    <ApiCompatVersion>1.2.3</ApiCompatVersion>
     <Description>Microsoft Azure management client SDK for Azure resource provider Microsoft.MachineLearningServices.</Description>
     <PackageId>Azure.ResourceManager.MachineLearning</PackageId>
     <PackageTags>azure;management;machinelearning;machinelearningservices;aml;ml</PackageTags>

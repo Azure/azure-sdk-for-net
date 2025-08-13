@@ -114,13 +114,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             DateTimeOffset? startedOn = default;
             DateTimeOffset? endedOn = default;
-            MigrationStatus? status = default;
+            DataMigrationStatus? status = default;
             string message = default;
             string sourceServerVersion = default;
             string sourceServerBrandVersion = default;
             string targetServerVersion = default;
             string targetServerBrandVersion = default;
-            IReadOnlyList<ReportableException> exceptionsAndWarnings = default;
+            IReadOnlyList<DataMigrationReportableException> exceptionsAndWarnings = default;
             SsisMigrationStage? stage = default;
             string id = default;
             string resultType = default;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    status = new MigrationStatus(property.Value.GetString());
+                    status = new DataMigrationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("message"u8))
@@ -186,10 +186,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<ReportableException> array = new List<ReportableException>();
+                    List<DataMigrationReportableException> array = new List<DataMigrationReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item, options));
+                        array.Add(DataMigrationReportableException.DeserializeDataMigrationReportableException(item, options));
                     }
                     exceptionsAndWarnings = array;
                     continue;
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 sourceServerBrandVersion,
                 targetServerVersion,
                 targetServerBrandVersion,
-                exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>(),
+                exceptionsAndWarnings ?? new ChangeTrackingList<DataMigrationReportableException>(),
                 stage);
         }
 

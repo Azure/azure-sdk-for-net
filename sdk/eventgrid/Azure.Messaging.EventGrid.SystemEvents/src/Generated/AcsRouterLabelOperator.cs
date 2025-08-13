@@ -14,50 +14,77 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public readonly partial struct AcsRouterLabelOperator : IEquatable<AcsRouterLabelOperator>
     {
         private readonly string _value;
+        /// <summary> Router Label Operator Equal. </summary>
+        private const string EqualValue = "Equal";
+        /// <summary> Router Label Operator Not Equal. </summary>
+        private const string NotEqualValue = "NotEqual";
+        /// <summary> Router Label Operator Greater. </summary>
+        private const string GreaterValue = "Greater";
+        /// <summary> Router Label Operator Less. </summary>
+        private const string LessValue = "Less";
+        /// <summary> Router Label Operator Greater than or equal. </summary>
+        private const string GreaterThanOrEqualValue = "GreaterThanOrEqual";
+        /// <summary> Router Label Operator Less than or equal. </summary>
+        private const string LessThanOrEqualValue = "LessThanOrEqual";
 
         /// <summary> Initializes a new instance of <see cref="AcsRouterLabelOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AcsRouterLabelOperator(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EqualValue = "Equal";
-        private const string NotEqualValue = "NotEqual";
-        private const string GreaterValue = "Greater";
-        private const string LessValue = "Less";
-        private const string GreaterThanOrEqualValue = "GreaterThanOrEqual";
-        private const string LessThanOrEqualValue = "LessThanOrEqual";
+            _value = value;
+        }
 
         /// <summary> Router Label Operator Equal. </summary>
         public static AcsRouterLabelOperator Equal { get; } = new AcsRouterLabelOperator(EqualValue);
+
         /// <summary> Router Label Operator Not Equal. </summary>
         public static AcsRouterLabelOperator NotEqual { get; } = new AcsRouterLabelOperator(NotEqualValue);
+
         /// <summary> Router Label Operator Greater. </summary>
         public static AcsRouterLabelOperator Greater { get; } = new AcsRouterLabelOperator(GreaterValue);
+
         /// <summary> Router Label Operator Less. </summary>
         public static AcsRouterLabelOperator Less { get; } = new AcsRouterLabelOperator(LessValue);
+
         /// <summary> Router Label Operator Greater than or equal. </summary>
         public static AcsRouterLabelOperator GreaterThanOrEqual { get; } = new AcsRouterLabelOperator(GreaterThanOrEqualValue);
+
         /// <summary> Router Label Operator Less than or equal. </summary>
         public static AcsRouterLabelOperator LessThanOrEqual { get; } = new AcsRouterLabelOperator(LessThanOrEqualValue);
+
         /// <summary> Determines if two <see cref="AcsRouterLabelOperator"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AcsRouterLabelOperator left, AcsRouterLabelOperator right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AcsRouterLabelOperator"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AcsRouterLabelOperator left, AcsRouterLabelOperator right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AcsRouterLabelOperator"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AcsRouterLabelOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AcsRouterLabelOperator(string value) => new AcsRouterLabelOperator(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AcsRouterLabelOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AcsRouterLabelOperator?(string value) => value == null ? null : new AcsRouterLabelOperator(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AcsRouterLabelOperator other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AcsRouterLabelOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -23,6 +23,7 @@ public class BasicEventGridTests(bool async)
         await test.Define(
             ctx =>
             {
+                #region Snippet:EventGridBasic
                 Infrastructure infra = new();
 
                 ProvisioningParameter webhookUri = new(nameof(webhookUri), typeof(string));
@@ -63,6 +64,7 @@ public class BasicEventGridTests(bool async)
                         }
                     };
                 infra.Add(subscription);
+                #endregion
 
                 return infra;
             })

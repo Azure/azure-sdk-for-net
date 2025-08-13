@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             string name = default;
-            LoginType? loginType = default;
+            DataMigrationLoginType? loginType = default;
             string defaultDatabase = default;
             bool? isEnabled = default;
             MigrationEligibilityInfo migrationEligibility = default;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    loginType = new LoginType(property.Value.GetString());
+                    loginType = new DataMigrationLoginType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("defaultDatabase"u8))

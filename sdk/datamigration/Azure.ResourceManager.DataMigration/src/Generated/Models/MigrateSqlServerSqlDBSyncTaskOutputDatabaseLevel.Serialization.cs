@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("fullLoadErroredTables"u8);
                 writer.WriteNumberValue(FullLoadErroredTables.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(InitializationCompleted))
+            if (options.Format != "W" && Optional.IsDefined(IsInitializationCompleted))
             {
                 writer.WritePropertyName("initializationCompleted"u8);
-                writer.WriteBooleanValue(InitializationCompleted.Value);
+                writer.WriteBooleanValue(IsInitializationCompleted.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Latency))
             {

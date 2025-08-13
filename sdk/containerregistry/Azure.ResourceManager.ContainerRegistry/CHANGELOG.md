@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.3.1 (2025-08-11)
+
+### Features Added
+
+- Make `Azure.ResourceManager.ContainerRegistry` AOT-compatible
+
 ## 1.3.0 (2025-04-22)
 
 ### Features Added

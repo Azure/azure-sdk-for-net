@@ -20,6 +20,15 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <NoWarn>
+      $(NoWarn);
+      AZC0034; <!-- Type name conflict; irrelevant here due to prior approval -->
+      AZC0035; <!-- Missing model factory methods.  #51227-->
+    </NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />

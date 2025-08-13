@@ -11,7 +11,7 @@ using MgmtTypeSpec;
 
 namespace MgmtTypeSpec.Mocking
 {
-    /// <summary></summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableMgmtTypeSpecArmClient : ArmResource
     {
         /// <summary> Initializes a new instance of MockableMgmtTypeSpecArmClient for mocking. </summary>

@@ -21,3 +21,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.ResourceGraph
       safeName: AzureResourceManagerResourceGraph
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.ResourceGraph
+      ExpectedWarningsFilepath: None

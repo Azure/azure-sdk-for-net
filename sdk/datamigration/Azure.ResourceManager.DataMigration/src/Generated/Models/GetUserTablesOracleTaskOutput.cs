@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="GetUserTablesOracleTaskOutput"/>. </summary>
         internal GetUserTablesOracleTaskOutput()
         {
-            Tables = new ChangeTrackingList<DatabaseTable>();
-            ValidationErrors = new ChangeTrackingList<ReportableException>();
+            Tables = new ChangeTrackingList<DataMigrationDatabaseTable>();
+            ValidationErrors = new ChangeTrackingList<DataMigrationReportableException>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GetUserTablesOracleTaskOutput"/>. </summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="tables"> List of valid tables found for this schema. </param>
         /// <param name="validationErrors"> Validation errors associated with the task. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GetUserTablesOracleTaskOutput(string schemaName, IReadOnlyList<DatabaseTable> tables, IReadOnlyList<ReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GetUserTablesOracleTaskOutput(string schemaName, IReadOnlyList<DataMigrationDatabaseTable> tables, IReadOnlyList<DataMigrationReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SchemaName = schemaName;
             Tables = tables;
@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> The schema this result is for. </summary>
         public string SchemaName { get; }
         /// <summary> List of valid tables found for this schema. </summary>
-        public IReadOnlyList<DatabaseTable> Tables { get; }
+        public IReadOnlyList<DataMigrationDatabaseTable> Tables { get; }
         /// <summary> Validation errors associated with the task. </summary>
-        public IReadOnlyList<ReportableException> ValidationErrors { get; }
+        public IReadOnlyList<DataMigrationReportableException> ValidationErrors { get; }
     }
 }

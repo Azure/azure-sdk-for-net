@@ -14,41 +14,62 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public readonly partial struct AcsInteractiveReplyKind : IEquatable<AcsInteractiveReplyKind>
     {
         private readonly string _value;
+        /// <summary> Messaged interactive reply type is ButtonReply. </summary>
+        private const string ButtonReplyValue = "buttonReply";
+        /// <summary> Messaged interactive reply type is ListReply. </summary>
+        private const string ListReplyValue = "listReply";
+        /// <summary> Messaged interactive reply type is Unknown. </summary>
+        private const string UnknownValue = "unknown";
 
         /// <summary> Initializes a new instance of <see cref="AcsInteractiveReplyKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AcsInteractiveReplyKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ButtonReplyValue = "buttonReply";
-        private const string ListReplyValue = "listReply";
-        private const string UnknownValue = "unknown";
+            _value = value;
+        }
 
         /// <summary> Messaged interactive reply type is ButtonReply. </summary>
         public static AcsInteractiveReplyKind ButtonReply { get; } = new AcsInteractiveReplyKind(ButtonReplyValue);
+
         /// <summary> Messaged interactive reply type is ListReply. </summary>
         public static AcsInteractiveReplyKind ListReply { get; } = new AcsInteractiveReplyKind(ListReplyValue);
+
         /// <summary> Messaged interactive reply type is Unknown. </summary>
         public static AcsInteractiveReplyKind Unknown { get; } = new AcsInteractiveReplyKind(UnknownValue);
+
         /// <summary> Determines if two <see cref="AcsInteractiveReplyKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AcsInteractiveReplyKind left, AcsInteractiveReplyKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AcsInteractiveReplyKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AcsInteractiveReplyKind left, AcsInteractiveReplyKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AcsInteractiveReplyKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AcsInteractiveReplyKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AcsInteractiveReplyKind(string value) => new AcsInteractiveReplyKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AcsInteractiveReplyKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AcsInteractiveReplyKind?(string value) => value == null ? null : new AcsInteractiveReplyKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AcsInteractiveReplyKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AcsInteractiveReplyKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -126,13 +126,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             DatabaseMigrationState? migrationState = default;
             DateTimeOffset? startedOn = default;
             DateTimeOffset? endedOn = default;
-            BackupSetInfo fullBackupSetInfo = default;
-            BackupSetInfo lastRestoredBackupSetInfo = default;
-            IReadOnlyList<BackupSetInfo> activeBackupSets = default;
+            DataMigrationBackupSetInfo fullBackupSetInfo = default;
+            DataMigrationBackupSetInfo lastRestoredBackupSetInfo = default;
+            IReadOnlyList<DataMigrationBackupSetInfo> activeBackupSets = default;
             string containerName = default;
             string errorPrefix = default;
             bool? isFullBackupRestored = default;
-            IReadOnlyList<ReportableException> exceptionsAndWarnings = default;
+            IReadOnlyList<DataMigrationReportableException> exceptionsAndWarnings = default;
             string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    fullBackupSetInfo = BackupSetInfo.DeserializeBackupSetInfo(property.Value, options);
+                    fullBackupSetInfo = DataMigrationBackupSetInfo.DeserializeDataMigrationBackupSetInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastRestoredBackupSetInfo"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    lastRestoredBackupSetInfo = BackupSetInfo.DeserializeBackupSetInfo(property.Value, options);
+                    lastRestoredBackupSetInfo = DataMigrationBackupSetInfo.DeserializeDataMigrationBackupSetInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("activeBackupSets"u8))
@@ -195,10 +195,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<BackupSetInfo> array = new List<BackupSetInfo>();
+                    List<DataMigrationBackupSetInfo> array = new List<DataMigrationBackupSetInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupSetInfo.DeserializeBackupSetInfo(item, options));
+                        array.Add(DataMigrationBackupSetInfo.DeserializeDataMigrationBackupSetInfo(item, options));
                     }
                     activeBackupSets = array;
                     continue;
@@ -228,10 +228,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<ReportableException> array = new List<ReportableException>();
+                    List<DataMigrationReportableException> array = new List<DataMigrationReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item, options));
+                        array.Add(DataMigrationReportableException.DeserializeDataMigrationReportableException(item, options));
                     }
                     exceptionsAndWarnings = array;
                     continue;
@@ -262,11 +262,11 @@ namespace Azure.ResourceManager.DataMigration.Models
                 endedOn,
                 fullBackupSetInfo,
                 lastRestoredBackupSetInfo,
-                activeBackupSets ?? new ChangeTrackingList<BackupSetInfo>(),
+                activeBackupSets ?? new ChangeTrackingList<DataMigrationBackupSetInfo>(),
                 containerName,
                 errorPrefix,
                 isFullBackupRestored,
-                exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>());
+                exceptionsAndWarnings ?? new ChangeTrackingList<DataMigrationReportableException>());
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel>.Write(ModelReaderWriterOptions options)

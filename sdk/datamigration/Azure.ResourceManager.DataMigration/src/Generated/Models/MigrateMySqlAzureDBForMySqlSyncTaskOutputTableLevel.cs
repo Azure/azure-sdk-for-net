@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="cdcInsertCounter"> Number of applied inserts. </param>
         /// <param name="cdcUpdateCounter"> Number of applied updates. </param>
         /// <param name="cdcDeleteCounter"> Number of applied deletes. </param>
-        /// <param name="fullLoadEstFinishOn"> Estimate to finish full load. </param>
+        /// <param name="fullLoadEstFinishedOn"> Estimate to finish full load. </param>
         /// <param name="fullLoadStartedOn"> Full load start time. </param>
         /// <param name="fullLoadEndedOn"> Full load end time. </param>
         /// <param name="fullLoadTotalRows"> Number of rows applied in full load. </param>
@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="totalChangesApplied"> Total number of applied changes. </param>
         /// <param name="dataErrorsCounter"> Number of data errors occurred. </param>
         /// <param name="lastModifiedOn"> Last modified time on target. </param>
-        internal MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string tableName, string databaseName, string cdcInsertCounter, string cdcUpdateCounter, string cdcDeleteCounter, DateTimeOffset? fullLoadEstFinishOn, DateTimeOffset? fullLoadStartedOn, DateTimeOffset? fullLoadEndedOn, long? fullLoadTotalRows, SyncTableMigrationState? state, long? totalChangesApplied, long? dataErrorsCounter, DateTimeOffset? lastModifiedOn) : base(id, resultType, serializedAdditionalRawData)
+        internal MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string tableName, string databaseName, string cdcInsertCounter, string cdcUpdateCounter, string cdcDeleteCounter, DateTimeOffset? fullLoadEstFinishedOn, DateTimeOffset? fullLoadStartedOn, DateTimeOffset? fullLoadEndedOn, long? fullLoadTotalRows, SyncTableMigrationState? state, long? totalChangesApplied, long? dataErrorsCounter, DateTimeOffset? lastModifiedOn) : base(id, resultType, serializedAdditionalRawData)
         {
             TableName = tableName;
             DatabaseName = databaseName;
             CdcInsertCounter = cdcInsertCounter;
             CdcUpdateCounter = cdcUpdateCounter;
             CdcDeleteCounter = cdcDeleteCounter;
-            FullLoadEstFinishOn = fullLoadEstFinishOn;
+            FullLoadEstFinishedOn = fullLoadEstFinishedOn;
             FullLoadStartedOn = fullLoadStartedOn;
             FullLoadEndedOn = fullLoadEndedOn;
             FullLoadTotalRows = fullLoadTotalRows;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Number of applied deletes. </summary>
         public string CdcDeleteCounter { get; }
         /// <summary> Estimate to finish full load. </summary>
-        public DateTimeOffset? FullLoadEstFinishOn { get; }
+        public DateTimeOffset? FullLoadEstFinishedOn { get; }
         /// <summary> Full load start time. </summary>
         public DateTimeOffset? FullLoadStartedOn { get; }
         /// <summary> Full load end time. </summary>

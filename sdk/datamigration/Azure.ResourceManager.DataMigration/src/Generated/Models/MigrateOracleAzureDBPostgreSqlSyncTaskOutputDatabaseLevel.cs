@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="fullLoadLoadingTables"> Number of tables loading in full load. </param>
         /// <param name="fullLoadQueuedTables"> Number of tables queued in full load. </param>
         /// <param name="fullLoadErroredTables"> Number of tables errored in full load. </param>
-        /// <param name="initializationCompleted"> Indicates if initial load (full load) has been completed. </param>
+        /// <param name="isInitializationCompleted"> Indicates if initial load (full load) has been completed. </param>
         /// <param name="latency"> CDC apply latency. </param>
-        internal MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string databaseName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, SyncDatabaseMigrationReportingState? migrationState, long? incomingChanges, long? appliedChanges, long? cdcInsertCounter, long? cdcDeleteCounter, long? cdcUpdateCounter, long? fullLoadCompletedTables, long? fullLoadLoadingTables, long? fullLoadQueuedTables, long? fullLoadErroredTables, bool? initializationCompleted, long? latency) : base(id, resultType, serializedAdditionalRawData)
+        internal MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string databaseName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, SyncDatabaseMigrationReportingState? migrationState, long? incomingChanges, long? appliedChanges, long? cdcInsertCounter, long? cdcDeleteCounter, long? cdcUpdateCounter, long? fullLoadCompletedTables, long? fullLoadLoadingTables, long? fullLoadQueuedTables, long? fullLoadErroredTables, bool? isInitializationCompleted, long? latency) : base(id, resultType, serializedAdditionalRawData)
         {
             DatabaseName = databaseName;
             StartedOn = startedOn;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             FullLoadLoadingTables = fullLoadLoadingTables;
             FullLoadQueuedTables = fullLoadQueuedTables;
             FullLoadErroredTables = fullLoadErroredTables;
-            InitializationCompleted = initializationCompleted;
+            IsInitializationCompleted = isInitializationCompleted;
             Latency = latency;
             ResultType = resultType ?? "DatabaseLevelOutput";
         }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Number of tables errored in full load. </summary>
         public long? FullLoadErroredTables { get; }
         /// <summary> Indicates if initial load (full load) has been completed. </summary>
-        public bool? InitializationCompleted { get; }
+        public bool? IsInitializationCompleted { get; }
         /// <summary> CDC apply latency. </summary>
         public long? Latency { get; }
     }

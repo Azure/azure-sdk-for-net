@@ -73,14 +73,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            PostgreSqlConnectionInfo sourceConnectionInfo = default;
+            DataMigrationPostgreSqlConnectionInfo sourceConnectionInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = PostgreSqlConnectionInfo.DeserializePostgreSqlConnectionInfo(property.Value, options);
+                    sourceConnectionInfo = DataMigrationPostgreSqlConnectionInfo.DeserializeDataMigrationPostgreSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -6,9 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Text.Json;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
@@ -437,7 +438,7 @@ namespace Azure.ResourceManager.StorageActions
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageTaskAssignmentRestClient.CreateGetStorageTaskAssignmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageTaskAssignmentRestClient.CreateGetStorageTaskAssignmentsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => JsonSerializer.Deserialize<SubResource>(e.GetRawText()), _storageTaskAssignmentClientDiagnostics, Pipeline, "StorageTaskResource.GetStorageTaskAssignments", "value", "nextLink", maxpagesize, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(e.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageActionsContext.Default), _storageTaskAssignmentClientDiagnostics, Pipeline, "StorageTaskResource.GetStorageTaskAssignments", "value", "nextLink", maxpagesize, cancellationToken);
         }
 
         /// <summary>
@@ -464,7 +465,7 @@ namespace Azure.ResourceManager.StorageActions
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageTaskAssignmentRestClient.CreateGetStorageTaskAssignmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageTaskAssignmentRestClient.CreateGetStorageTaskAssignmentsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => JsonSerializer.Deserialize<SubResource>(e.GetRawText()), _storageTaskAssignmentClientDiagnostics, Pipeline, "StorageTaskResource.GetStorageTaskAssignments", "value", "nextLink", maxpagesize, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(e.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageActionsContext.Default), _storageTaskAssignmentClientDiagnostics, Pipeline, "StorageTaskResource.GetStorageTaskAssignments", "value", "nextLink", maxpagesize, cancellationToken);
         }
 
         /// <summary>

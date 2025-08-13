@@ -13,6 +13,7 @@ input-file:
 generation1-convenience-client: true
 modelerfour:
     lenient-model-deduplication: true
+use-model-reader-writer: true
 ```
 
 ### Remove metadata operations

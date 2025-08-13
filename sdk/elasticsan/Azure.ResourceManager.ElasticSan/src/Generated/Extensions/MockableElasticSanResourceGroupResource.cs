@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ElasticSans_Get</description>
+        /// <description>ElasticSan_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ElasticSans_Get</description>
+        /// <description>ElasticSan_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdOn"u8);
-                writer.WriteStringValue(CreatedOn);
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
         }
 
@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             IReadOnlyList<MigrateSqlServerSqlDBTaskOutput> output = default;
             string taskId = default;
             bool? isCloneable = default;
-            string createdOn = default;
-            TaskType taskType = default;
-            IReadOnlyList<ODataError> errors = default;
-            TaskState? state = default;
-            IReadOnlyList<CommandProperties> commands = default;
+            DateTimeOffset? createdOn = default;
+            DataMigrationTaskType taskType = default;
+            IReadOnlyList<DataMigrationODataError> errors = default;
+            DataMigrationTaskState? state = default;
+            IReadOnlyList<DataMigrationCommandProperties> commands = default;
             IDictionary<string, string> clientData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -140,12 +140,16 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (property.NameEquals("createdOn"u8))
                 {
-                    createdOn = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("taskType"u8))
                 {
-                    taskType = new TaskType(property.Value.GetString());
+                    taskType = new DataMigrationTaskType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errors"u8))
@@ -154,10 +158,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<ODataError> array = new List<ODataError>();
+                    List<DataMigrationODataError> array = new List<DataMigrationODataError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ODataError.DeserializeODataError(item, options));
+                        array.Add(DataMigrationODataError.DeserializeDataMigrationODataError(item, options));
                     }
                     errors = array;
                     continue;
@@ -168,7 +172,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    state = new TaskState(property.Value.GetString());
+                    state = new DataMigrationTaskState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("commands"u8))
@@ -177,10 +181,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<CommandProperties> array = new List<CommandProperties>();
+                    List<DataMigrationCommandProperties> array = new List<DataMigrationCommandProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommandProperties.DeserializeCommandProperties(item, options));
+                        array.Add(DataMigrationCommandProperties.DeserializeDataMigrationCommandProperties(item, options));
                     }
                     commands = array;
                     continue;
@@ -207,9 +211,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new MigrateSqlServerSqlDBTaskProperties(
                 taskType,
-                errors ?? new ChangeTrackingList<ODataError>(),
+                errors ?? new ChangeTrackingList<DataMigrationODataError>(),
                 state,
-                commands ?? new ChangeTrackingList<CommandProperties>(),
+                commands ?? new ChangeTrackingList<DataMigrationCommandProperties>(),
                 clientData ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
                 input,

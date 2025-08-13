@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,11 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0 (2025-08-05)
+
+### Other Changes
+- Added new overloads for `UploadAsync` and `Upload`, enabling callers to upload logs in `BinaryData` form.  This allows for callers to use an AOT-compliant serializer for logs, ensuring the Ingestion package can be trimmed.
 
 ## 1.1.2 (2024-04-03)
 

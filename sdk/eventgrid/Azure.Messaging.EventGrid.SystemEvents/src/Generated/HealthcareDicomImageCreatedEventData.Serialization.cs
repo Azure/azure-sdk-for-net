@@ -10,15 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.HealthcareApis.DicomImageCreated event. </summary>
     [JsonConverter(typeof(HealthcareDicomImageCreatedEventDataConverter))]
-    public partial class HealthcareDicomImageCreatedEventData : IUtf8JsonSerializable, IJsonModel<HealthcareDicomImageCreatedEventData>
+    public partial class HealthcareDicomImageCreatedEventData : IJsonModel<HealthcareDicomImageCreatedEventData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareDicomImageCreatedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="HealthcareDicomImageCreatedEventData"/> for deserialization. </summary>
+        internal HealthcareDicomImageCreatedEventData()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HealthcareDicomImageCreatedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +35,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareDicomImageCreatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HealthcareDicomImageCreatedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HealthcareDicomImageCreatedEventData)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("partitionName"u8);
             writer.WriteStringValue(PartitionName);
             writer.WritePropertyName("imageStudyInstanceUid"u8);
@@ -51,15 +55,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("sequenceNumber"u8);
                 writer.WriteNumberValue(SequenceNumber.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -68,22 +72,27 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        HealthcareDicomImageCreatedEventData IJsonModel<HealthcareDicomImageCreatedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HealthcareDicomImageCreatedEventData IJsonModel<HealthcareDicomImageCreatedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HealthcareDicomImageCreatedEventData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareDicomImageCreatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HealthcareDicomImageCreatedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HealthcareDicomImageCreatedEventData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHealthcareDicomImageCreatedEventData(document.RootElement, options);
         }
 
-        internal static HealthcareDicomImageCreatedEventData DeserializeHealthcareDicomImageCreatedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HealthcareDicomImageCreatedEventData DeserializeHealthcareDicomImageCreatedEventData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -94,50 +103,48 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string imageSopInstanceUid = default;
             string serviceHostName = default;
             long? sequenceNumber = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("partitionName"u8))
+                if (prop.NameEquals("partitionName"u8))
                 {
-                    partitionName = property.Value.GetString();
+                    partitionName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("imageStudyInstanceUid"u8))
+                if (prop.NameEquals("imageStudyInstanceUid"u8))
                 {
-                    imageStudyInstanceUid = property.Value.GetString();
+                    imageStudyInstanceUid = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("imageSeriesInstanceUid"u8))
+                if (prop.NameEquals("imageSeriesInstanceUid"u8))
                 {
-                    imageSeriesInstanceUid = property.Value.GetString();
+                    imageSeriesInstanceUid = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("imageSopInstanceUid"u8))
+                if (prop.NameEquals("imageSopInstanceUid"u8))
                 {
-                    imageSopInstanceUid = property.Value.GetString();
+                    imageSopInstanceUid = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceHostName"u8))
+                if (prop.NameEquals("serviceHostName"u8))
                 {
-                    serviceHostName = property.Value.GetString();
+                    serviceHostName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sequenceNumber"u8))
+                if (prop.NameEquals("sequenceNumber"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sequenceNumber = property.Value.GetInt64();
+                    sequenceNumber = prop.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new HealthcareDicomImageCreatedEventData(
                 partitionName,
                 imageStudyInstanceUid,
@@ -145,13 +152,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 imageSopInstanceUid,
                 serviceHostName,
                 sequenceNumber,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<HealthcareDicomImageCreatedEventData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareDicomImageCreatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HealthcareDicomImageCreatedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HealthcareDicomImageCreatedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -161,15 +171,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        HealthcareDicomImageCreatedEventData IPersistableModel<HealthcareDicomImageCreatedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HealthcareDicomImageCreatedEventData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HealthcareDicomImageCreatedEventData IPersistableModel<HealthcareDicomImageCreatedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HealthcareDicomImageCreatedEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HealthcareDicomImageCreatedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHealthcareDicomImageCreatedEventData(document.RootElement, options);
                     }
                 default:
@@ -177,35 +192,28 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HealthcareDicomImageCreatedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static HealthcareDicomImageCreatedEventData FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeHealthcareDicomImageCreatedEventData(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
 
         internal partial class HealthcareDicomImageCreatedEventDataConverter : JsonConverter<HealthcareDicomImageCreatedEventData>
         {
+            /// <summary> Writes the JSON representation of the model. </summary>
+            /// <param name="writer"> The writer. </param>
+            /// <param name="model"> The model to write. </param>
+            /// <param name="options"> The serialization options. </param>
             public override void Write(Utf8JsonWriter writer, HealthcareDicomImageCreatedEventData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+                writer.WriteObjectValue<IJsonModel<HealthcareDicomImageCreatedEventData>>(model, ModelSerializationExtensions.WireOptions);
             }
 
+            /// <summary> Reads the JSON representation and converts into the model. </summary>
+            /// <param name="reader"> The reader. </param>
+            /// <param name="typeToConvert"> The type to convert. </param>
+            /// <param name="options"> The serialization options. </param>
             public override HealthcareDicomImageCreatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeHealthcareDicomImageCreatedEventData(document.RootElement);
+                using JsonDocument document = JsonDocument.ParseValue(ref reader);
+                return DeserializeHealthcareDicomImageCreatedEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
             }
         }
     }

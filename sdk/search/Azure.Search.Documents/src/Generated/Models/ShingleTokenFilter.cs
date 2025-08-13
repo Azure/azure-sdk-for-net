@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -25,13 +26,14 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="ShingleTokenFilter"/>. </summary>
         /// <param name="oDataType"> A URI fragment specifying the type of token filter. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="maxShingleSize"> The maximum shingle size. Default and minimum value is 2. </param>
         /// <param name="minShingleSize"> The minimum shingle size. Default and minimum value is 2. Must be less than the value of maxShingleSize. </param>
         /// <param name="outputUnigrams"> A value indicating whether the output stream will contain the input tokens (unigrams) as well as shingles. Default is true. </param>
         /// <param name="outputUnigramsIfNoShingles"> A value indicating whether to output unigrams for those times when no shingles are available. This property takes precedence when outputUnigrams is set to false. Default is false. </param>
         /// <param name="tokenSeparator"> The string to use when joining adjacent tokens to form a shingle. Default is a single space (" "). </param>
         /// <param name="filterToken"> The string to insert for each position at which there is no token. Default is an underscore ("_"). </param>
-        internal ShingleTokenFilter(string oDataType, string name, int? maxShingleSize, int? minShingleSize, bool? outputUnigrams, bool? outputUnigramsIfNoShingles, string tokenSeparator, string filterToken) : base(oDataType, name)
+        internal ShingleTokenFilter(string oDataType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, int? maxShingleSize, int? minShingleSize, bool? outputUnigrams, bool? outputUnigramsIfNoShingles, string tokenSeparator, string filterToken) : base(oDataType, name, serializedAdditionalRawData)
         {
             MaxShingleSize = maxShingleSize;
             MinShingleSize = minShingleSize;
@@ -40,6 +42,11 @@ namespace Azure.Search.Documents.Indexes.Models
             TokenSeparator = tokenSeparator;
             FilterToken = filterToken;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.ShingleTokenFilter";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ShingleTokenFilter"/> for deserialization. </summary>
+        internal ShingleTokenFilter()
+        {
         }
 
         /// <summary> The maximum shingle size. Default and minimum value is 2. </summary>

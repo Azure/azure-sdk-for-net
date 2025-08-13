@@ -165,7 +165,8 @@
             "json": {
               "name": "name"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "20",
@@ -189,7 +190,8 @@
             "json": {
               "name": "description"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "22",
@@ -238,7 +240,8 @@
                     "json": {
                       "name": "name"
                     }
-                  }
+                  },
+                  "isHttpMetadata": false
                 },
                 {
                   "$id": "28",
@@ -262,7 +265,8 @@
                     "json": {
                       "name": "description"
                     }
-                  }
+                  },
+                  "isHttpMetadata": false
                 }
               ]
             },
@@ -278,7 +282,8 @@
             "json": {
               "name": "map"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "30",
@@ -305,7 +310,8 @@
             "json": {
               "name": "array"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "32",
@@ -329,7 +335,8 @@
             "json": {
               "name": "intValue"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "34",
@@ -353,7 +360,8 @@
             "json": {
               "name": "floatValue"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "36",
@@ -373,7 +381,8 @@
             "json": {
               "name": "innerModel"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "37",
@@ -404,7 +413,8 @@
             "json": {
               "name": "intArray"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -443,7 +453,8 @@
             "json": {
               "name": "description"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "43",
@@ -463,7 +474,8 @@
             "json": {
               "name": "map"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "44",
@@ -483,7 +495,8 @@
             "json": {
               "name": "array"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "45",
@@ -507,7 +520,8 @@
             "json": {
               "name": "intValue"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "47",
@@ -531,7 +545,8 @@
             "json": {
               "name": "floatValue"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "49",
@@ -551,7 +566,8 @@
             "json": {
               "name": "innerModel"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "50",
@@ -571,7 +587,8 @@
             "json": {
               "name": "intArray"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     }
@@ -699,14 +716,14 @@
             {
               "$id": "58",
               "name": "contentType",
-              "nameInRequest": "contentType",
+              "nameInRequest": "Content-Type",
               "doc": "Body parameter's content type. Known values are application/json",
               "type": {
                 "$ref": "1"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
+              "isContentType": true,
               "isEndpoint": false,
               "explode": false,
               "isRequired": true,
@@ -717,7 +734,7 @@
             {
               "$id": "59",
               "name": "accept",
-              "nameInRequest": "accept",
+              "nameInRequest": "Accept",
               "type": {
                 "$ref": "3"
               },
@@ -839,13 +856,13 @@
             {
               "$id": "65",
               "name": "contentType",
-              "nameInRequest": "content-type",
+              "nameInRequest": "Content-Type",
               "type": {
                 "$ref": "9"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
+              "isContentType": true,
               "isEndpoint": false,
               "explode": false,
               "isRequired": true,
@@ -873,7 +890,7 @@
             {
               "$id": "67",
               "name": "accept",
-              "nameInRequest": "accept",
+              "nameInRequest": "Accept",
               "type": {
                 "$ref": "7"
               },
@@ -995,13 +1012,13 @@
             {
               "$id": "73",
               "name": "contentType",
-              "nameInRequest": "content-type",
+              "nameInRequest": "Content-Type",
               "type": {
                 "$ref": "15"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
+              "isContentType": true,
               "isEndpoint": false,
               "explode": false,
               "isRequired": true,
@@ -1029,7 +1046,7 @@
             {
               "$id": "75",
               "name": "accept",
-              "nameInRequest": "accept",
+              "nameInRequest": "Accept",
               "type": {
                 "$ref": "13"
               },

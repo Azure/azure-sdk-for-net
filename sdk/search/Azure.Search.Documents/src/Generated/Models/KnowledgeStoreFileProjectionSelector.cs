@@ -27,8 +27,14 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="source"> Source data to project. </param>
         /// <param name="sourceContext"> Source context for complex projections. </param>
         /// <param name="inputs"> Nested inputs for complex projections. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="storageContainer"> Blob container to store projections in. </param>
-        internal KnowledgeStoreFileProjectionSelector(string referenceKeyName, string generatedKeyName, string source, string sourceContext, IList<InputFieldMappingEntry> inputs, string storageContainer) : base(referenceKeyName, generatedKeyName, source, sourceContext, inputs, storageContainer)
+        internal KnowledgeStoreFileProjectionSelector(string referenceKeyName, string generatedKeyName, string source, string sourceContext, IList<InputFieldMappingEntry> inputs, IDictionary<string, BinaryData> serializedAdditionalRawData, string storageContainer) : base(referenceKeyName, generatedKeyName, source, sourceContext, inputs, serializedAdditionalRawData, storageContainer)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KnowledgeStoreFileProjectionSelector"/> for deserialization. </summary>
+        internal KnowledgeStoreFileProjectionSelector()
         {
         }
     }

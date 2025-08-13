@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="ConnectToTargetSqlMISyncTaskOutput"/>. </summary>
         internal ConnectToTargetSqlMISyncTaskOutput()
         {
-            ValidationErrors = new ChangeTrackingList<ReportableException>();
+            ValidationErrors = new ChangeTrackingList<DataMigrationReportableException>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectToTargetSqlMISyncTaskOutput"/>. </summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetServerBrandVersion"> Target server brand version. </param>
         /// <param name="validationErrors"> Validation errors. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectToTargetSqlMISyncTaskOutput(string targetServerVersion, string targetServerBrandVersion, IReadOnlyList<ReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectToTargetSqlMISyncTaskOutput(string targetServerVersion, string targetServerBrandVersion, IReadOnlyList<DataMigrationReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetServerVersion = targetServerVersion;
             TargetServerBrandVersion = targetServerBrandVersion;
@@ -69,6 +69,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Target server brand version. </summary>
         public string TargetServerBrandVersion { get; }
         /// <summary> Validation errors. </summary>
-        public IReadOnlyList<ReportableException> ValidationErrors { get; }
+        public IReadOnlyList<DataMigrationReportableException> ValidationErrors { get; }
     }
 }

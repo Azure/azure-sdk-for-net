@@ -20,6 +20,7 @@ public class BasicApplicationInsightsTests(bool async)
         await test.Define(
             ctx =>
             {
+                #region Snippet:ApplicationInsightsBasic
                 Infrastructure infra = new();
 
                 ApplicationInsightsComponent appInsights =
@@ -33,6 +34,7 @@ public class BasicApplicationInsightsTests(bool async)
 
                 infra.Add(new ProvisioningOutput("appInsightsName", typeof(string)) { Value = appInsights.Name });
                 infra.Add(new ProvisioningOutput("appInsightsKey", typeof(string)) { Value = appInsights.InstrumentationKey });
+                #endregion
 
                 return infra;
             })

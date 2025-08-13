@@ -37,18 +37,23 @@ namespace BasicTypeSpec
         public override IEnumerable<Page<ThingModel>> AsPages(string continuationToken, int? pageSizeHint)
         {
             string nextPage = continuationToken ?? _token;
-            do
+            while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
                 }
-                ListWithContinuationTokenHeaderResponseResponse responseWithType = (ListWithContinuationTokenHeaderResponseResponse)response;
-                nextPage = response.Headers.TryGetValue("next-token", out string value) ? value : null;
-                yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)responseWithType.Things, nextPage, response);
+                yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)((ListWithContinuationTokenHeaderResponseResponse)response).Things, nextPage, response);
+                if (response.Headers.TryGetValue("next-token", out string value))
+                {
+                    nextPage = value;
+                }
+                else
+                {
+                    yield break;
+                }
             }
-            while (!string.IsNullOrEmpty(nextPage));
         }
 
         /// <summary> Get next page. </summary>

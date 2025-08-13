@@ -21,9 +21,23 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
+        /// Parameters for the Start Recording operation.
+        /// </summary>
+        /// <param name="callConnectionId"> . </param>
+        public StartRecordingOptions(string callConnectionId)
+        {
+            CallConnectionId = callConnectionId;
+        }
+
+        /// <summary>
         /// The callLocator.
         /// </summary>
         internal CallLocator CallLocator { get; }
+
+        /// <summary>
+        /// The call connection id.
+        /// </summary>
+        internal string CallConnectionId { get; }
 
         /// <summary>
         /// The callLocator.

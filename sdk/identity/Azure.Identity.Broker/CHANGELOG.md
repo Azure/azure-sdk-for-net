@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Deprecated `SharedTokenCacheCredentialBrokerOptions`. The supporting credential (`SharedTokenCacheCredential`) was a legacy mechanism for authenticating clients using credentials provided to Visual Studio. For brokered authentication, consider using `InteractiveBrowserCredential` instead.
+
 ### Bugs Fixed
 
 ### Other Changes

@@ -13,47 +13,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> The target of the event. </summary>
     public partial class ContainerRegistryArtifactEventTarget
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryArtifactEventTarget"/>. </summary>
         /// <param name="mediaType"> The MIME type of the artifact. </param>
         /// <param name="repository"> The repository name of the artifact. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="mediaType"/> or <paramref name="repository"/> is null. </exception>
         internal ContainerRegistryArtifactEventTarget(string mediaType, string repository)
         {
-            Argument.AssertNotNull(mediaType, nameof(mediaType));
-            Argument.AssertNotNull(repository, nameof(repository));
-
             MediaType = mediaType;
             Repository = repository;
         }
@@ -66,8 +33,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="tag"> The tag of the artifact. </param>
         /// <param name="name"> The name of the artifact. </param>
         /// <param name="version"> The version of the artifact. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryArtifactEventTarget(string mediaType, long? size, string digest, string repository, string tag, string name, string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryArtifactEventTarget(string mediaType, long? size, string digest, string repository, string tag, string name, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MediaType = mediaType;
             Size = size;
@@ -76,26 +43,27 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Tag = tag;
             Name = name;
             Version = version;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistryArtifactEventTarget"/> for deserialization. </summary>
-        internal ContainerRegistryArtifactEventTarget()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The MIME type of the artifact. </summary>
         public string MediaType { get; }
+
         /// <summary> The size in bytes of the artifact. </summary>
         public long? Size { get; }
+
         /// <summary> The digest of the artifact. </summary>
         public string Digest { get; }
+
         /// <summary> The repository name of the artifact. </summary>
         public string Repository { get; }
+
         /// <summary> The tag of the artifact. </summary>
         public string Tag { get; }
+
         /// <summary> The name of the artifact. </summary>
         public string Name { get; }
+
         /// <summary> The version of the artifact. </summary>
         public string Version { get; }
     }

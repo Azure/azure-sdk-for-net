@@ -248,11 +248,7 @@ extends:
         jobs:
         - job: Initialize
           steps:
-          - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-            parameters:
-              Paths:
-              - "/*"
-              - "!SessionRecords"
+          - checkout: self
           
           - task: UseNode@1
             displayName: 'Install Node.js'
@@ -325,15 +321,12 @@ extends:
             matrixArtifactsPath: $(Pipeline.Workspace)/matrix_artifacts
             AzureSdkRepoName: $[format('azure-sdk/{0}', split(variables['Build.Repository.Name'], '/')[1])]
           steps:
-          - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-            parameters:
-              Paths:
-              - "/*"
-              - "!SessionRecords"
-              Repositories:
-              - Name: $(AzureSdkRepoName)
-                Commitish: $(branchName)
-                WorkingDirectory: $(System.DefaultWorkingDirectory)  
+          - checkout: self
+          - pwsh: |
+              git remote add azure-sdk https://github.com/$(AzureSdkRepoName).git
+              git fetch azure-sdk $(branchName)
+              git switch $(branchName)
+            displayName: 'Checkout PR branch $(branchName)'  
 
           - task: UseNode@1
             displayName: 'Install Node.js'

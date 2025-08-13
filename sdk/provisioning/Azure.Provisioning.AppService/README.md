@@ -1,4 +1,4 @@
-# Azure.Provisioning.AppService client library for .NET
+# Azure Provisioning AppService client library for .NET
 
 Azure.Provisioning.AppService simplifies declarative resource provisioning in .NET.
 
@@ -21,6 +21,109 @@ dotnet add package Azure.Provisioning.AppService
 ## Key concepts
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
+
+## Examples
+
+### Create a Basic Function App
+
+This example demonstrates how to create a Function App with required dependencies including storage account and application insights, based on the [Azure quickstart template](https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.web/function-app-create-dynamic/main.bicep).
+
+```C# Snippet:AppServiceBasic
+Infrastructure infra = new();
+
+StorageAccount storage =
+    new(nameof(storage))
+    {
+        Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
+        Kind = StorageKind.Storage,
+        EnableHttpsTrafficOnly = true,
+        IsDefaultToOAuthAuthentication = true
+    };
+infra.Add(storage);
+
+AppServicePlan hostingPlan =
+    new(nameof(hostingPlan), "2021-03-01")
+    {
+        Sku =
+            new AppServiceSkuDescription
+            {
+                Tier = "Dynamic",
+                Name = "Y1"
+            }
+    };
+infra.Add(hostingPlan);
+
+ApplicationInsightsComponent appInsights =
+    new(nameof(appInsights))
+    {
+        Kind = "web",
+        ApplicationType = ApplicationInsightsApplicationType.Web,
+        RequestSource = ComponentRequestSource.Rest
+    };
+infra.Add(appInsights);
+
+ProvisioningVariable funcAppName =
+    new(nameof(funcAppName), typeof(string))
+    {
+        Value = BicepFunction.Concat("functionApp-", BicepFunction.GetUniqueString(BicepFunction.GetResourceGroup().Id))
+    };
+infra.Add(funcAppName);
+
+WebSite functionApp =
+    new(nameof(functionApp), WebSite.ResourceVersions.V2023_12_01)
+    {
+        Name = funcAppName,
+        Kind = "functionapp",
+        Identity = new ManagedServiceIdentity { ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned },
+        AppServicePlanId = hostingPlan.Id,
+        IsHttpsOnly = true,
+        SiteConfig =
+            new SiteConfigProperties
+            {
+                FtpsState = AppServiceFtpsState.FtpsOnly,
+                MinTlsVersion = AppServiceSupportedTlsVersion.Tls1_2,
+                AppSettings =
+                {
+                    new AppServiceNameValuePair
+                    {
+                        Name = "AzureWebJobsStorage",
+                        Value = BicepFunction.Interpolate($"DefaultEndpointsProtocol=https;AccountName={storage.Name};EndpointSuffix=core.windows.net;AccountKey={storage.GetKeys()[0].Unwrap().Value}")
+                    },
+                    new AppServiceNameValuePair
+                    {
+                        Name = "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
+                        Value = BicepFunction.Interpolate($"DefaultEndpointsProtocol=https;AccountName={storage.Name};EndpointSuffix=core.windows.net;AccountKey={storage.GetKeys()[0].Unwrap().Value}")
+                    },
+                    new AppServiceNameValuePair
+                    {
+                        Name = "WEBSITE_CONTENTSHARE",
+                        Value = BicepFunction.ToLower(funcAppName)
+                    },
+                    new AppServiceNameValuePair
+                    {
+                        Name = "FUNCTIONS_EXTENSION_VERSION",
+                        Value = "~4"
+                    },
+                    new AppServiceNameValuePair
+                    {
+                        Name = "WEBSITE_NODE_DEFAULT_VERSION",
+                        Value = "~14"
+                    },
+                    new AppServiceNameValuePair
+                    {
+                        Name = "FUNCTIONS_WORKER_RUNTIME",
+                        Value = "dotnet"
+                    },
+                    new AppServiceNameValuePair
+                    {
+                        Name = "APPINSIGHTS_INSTRUMENTATIONKEY",
+                        Value = appInsights.InstrumentationKey
+                    }
+                }
+            }
+    };
+infra.Add(functionApp);
+```
 
 ## Troubleshooting
 

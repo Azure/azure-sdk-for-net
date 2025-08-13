@@ -12,6 +12,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The client's IP address is blocked by IP filter or Private links configuration. </summary>
         [CodeGenMember("IpForbidden")]
         public static EventGridMqttClientDisconnectionReason IPForbidden { get; } =
-            new EventGridMqttClientDisconnectionReason(IPForbiddenValue);
+            new EventGridMqttClientDisconnectionReason(IpForbiddenValue);
     }
 }

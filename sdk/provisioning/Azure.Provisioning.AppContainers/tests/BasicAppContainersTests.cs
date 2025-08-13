@@ -21,6 +21,7 @@ public class BasicAppContainersTests(bool async)
         await test.Define(
             ctx =>
             {
+                #region Snippet:AppContainerBasic
                 Infrastructure infra = new();
 
                 ProvisioningParameter containerImage =
@@ -99,6 +100,7 @@ public class BasicAppContainersTests(bool async)
                             }
                     };
                 infra.Add(app);
+                #endregion
 
                 return infra;
             })

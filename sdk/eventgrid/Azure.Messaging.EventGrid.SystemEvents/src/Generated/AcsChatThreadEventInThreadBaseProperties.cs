@@ -15,31 +15,25 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadEventInThreadBaseProperties"/>. </summary>
         /// <param name="threadId"> The chat thread id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
         internal AcsChatThreadEventInThreadBaseProperties(string threadId) : base(threadId)
         {
-            Argument.AssertNotNull(threadId, nameof(threadId));
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadEventInThreadBaseProperties"/>. </summary>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="createTime"> The original creation time of the thread. </param>
         /// <param name="version"> The version of the thread. </param>
-        internal AcsChatThreadEventInThreadBaseProperties(string transactionId, string threadId, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? createTime, long? version) : base(transactionId, threadId, serializedAdditionalRawData)
+        internal AcsChatThreadEventInThreadBaseProperties(string transactionId, string threadId, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? createTime, long? version) : base(transactionId, threadId, additionalBinaryDataProperties)
         {
             CreateTime = createTime;
             Version = version;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsChatThreadEventInThreadBaseProperties"/> for deserialization. </summary>
-        internal AcsChatThreadEventInThreadBaseProperties()
-        {
-        }
-
         /// <summary> The original creation time of the thread. </summary>
         public DateTimeOffset? CreateTime { get; }
+
         /// <summary> The version of the thread. </summary>
         public long? Version { get; }
     }

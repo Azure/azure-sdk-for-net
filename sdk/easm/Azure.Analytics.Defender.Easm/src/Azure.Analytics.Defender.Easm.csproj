@@ -6,6 +6,7 @@
     <PackageTags>Azure Easm; Microsoft Defender EASM; EASM API; External Attack Surface Management; REST HTTPclient;</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <NoWarn>$(NoWarn);AZC0034</NoWarn>
   </PropertyGroup>
 
   <!-- Shared source from Azure.Core -->

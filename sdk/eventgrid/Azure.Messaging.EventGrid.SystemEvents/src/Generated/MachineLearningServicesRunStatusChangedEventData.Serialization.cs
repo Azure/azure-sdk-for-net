@@ -10,15 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.MachineLearningServices.RunStatusChanged event. </summary>
     [JsonConverter(typeof(MachineLearningServicesRunStatusChangedEventDataConverter))]
-    public partial class MachineLearningServicesRunStatusChangedEventData : IUtf8JsonSerializable, IJsonModel<MachineLearningServicesRunStatusChangedEventData>
+    public partial class MachineLearningServicesRunStatusChangedEventData : IJsonModel<MachineLearningServicesRunStatusChangedEventData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningServicesRunStatusChangedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="MachineLearningServicesRunStatusChangedEventData"/> for deserialization. </summary>
+        internal MachineLearningServicesRunStatusChangedEventData()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MachineLearningServicesRunStatusChangedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +35,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServicesRunStatusChangedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningServicesRunStatusChangedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningServicesRunStatusChangedEventData)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("experimentId"u8);
             writer.WriteStringValue(ExperimentId);
             writer.WritePropertyName("experimentName"u8);
@@ -56,15 +60,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             writer.WritePropertyName("runStatus"u8);
             writer.WriteStringValue(RunStatus);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -73,22 +77,27 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        MachineLearningServicesRunStatusChangedEventData IJsonModel<MachineLearningServicesRunStatusChangedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningServicesRunStatusChangedEventData IJsonModel<MachineLearningServicesRunStatusChangedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MachineLearningServicesRunStatusChangedEventData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServicesRunStatusChangedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningServicesRunStatusChangedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningServicesRunStatusChangedEventData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMachineLearningServicesRunStatusChangedEventData(document.RootElement, options);
         }
 
-        internal static MachineLearningServicesRunStatusChangedEventData DeserializeMachineLearningServicesRunStatusChangedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MachineLearningServicesRunStatusChangedEventData DeserializeMachineLearningServicesRunStatusChangedEventData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -100,59 +109,57 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             object runTags = default;
             object runProperties = default;
             string runStatus = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("experimentId"u8))
+                if (prop.NameEquals("experimentId"u8))
                 {
-                    experimentId = property.Value.GetString();
+                    experimentId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("experimentName"u8))
+                if (prop.NameEquals("experimentName"u8))
                 {
-                    experimentName = property.Value.GetString();
+                    experimentName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runId"u8))
+                if (prop.NameEquals("runId"u8))
                 {
-                    runId = property.Value.GetString();
+                    runId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runType"u8))
+                if (prop.NameEquals("runType"u8))
                 {
-                    runType = property.Value.GetString();
+                    runType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("runTags"u8))
+                if (prop.NameEquals("runTags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    runTags = property.Value.GetObject();
+                    runTags = prop.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("runProperties"u8))
+                if (prop.NameEquals("runProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    runProperties = property.Value.GetObject();
+                    runProperties = prop.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("runStatus"u8))
+                if (prop.NameEquals("runStatus"u8))
                 {
-                    runStatus = property.Value.GetString();
+                    runStatus = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningServicesRunStatusChangedEventData(
                 experimentId,
                 experimentName,
@@ -161,13 +168,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 runTags,
                 runProperties,
                 runStatus,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<MachineLearningServicesRunStatusChangedEventData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServicesRunStatusChangedEventData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MachineLearningServicesRunStatusChangedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningServicesRunStatusChangedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -177,15 +187,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        MachineLearningServicesRunStatusChangedEventData IPersistableModel<MachineLearningServicesRunStatusChangedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningServicesRunStatusChangedEventData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningServicesRunStatusChangedEventData IPersistableModel<MachineLearningServicesRunStatusChangedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MachineLearningServicesRunStatusChangedEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningServicesRunStatusChangedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMachineLearningServicesRunStatusChangedEventData(document.RootElement, options);
                     }
                 default:
@@ -193,35 +208,28 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MachineLearningServicesRunStatusChangedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static MachineLearningServicesRunStatusChangedEventData FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeMachineLearningServicesRunStatusChangedEventData(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
 
         internal partial class MachineLearningServicesRunStatusChangedEventDataConverter : JsonConverter<MachineLearningServicesRunStatusChangedEventData>
         {
+            /// <summary> Writes the JSON representation of the model. </summary>
+            /// <param name="writer"> The writer. </param>
+            /// <param name="model"> The model to write. </param>
+            /// <param name="options"> The serialization options. </param>
             public override void Write(Utf8JsonWriter writer, MachineLearningServicesRunStatusChangedEventData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+                writer.WriteObjectValue<IJsonModel<MachineLearningServicesRunStatusChangedEventData>>(model, ModelSerializationExtensions.WireOptions);
             }
 
+            /// <summary> Reads the JSON representation and converts into the model. </summary>
+            /// <param name="reader"> The reader. </param>
+            /// <param name="typeToConvert"> The type to convert. </param>
+            /// <param name="options"> The serialization options. </param>
             public override MachineLearningServicesRunStatusChangedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeMachineLearningServicesRunStatusChangedEventData(document.RootElement);
+                using JsonDocument document = JsonDocument.ParseValue(ref reader);
+                return DeserializeMachineLearningServicesRunStatusChangedEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
             }
         }
     }

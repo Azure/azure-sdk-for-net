@@ -27,6 +27,7 @@ public class PlaywrightServiceNUnitSetup : PlaywrightServiceBrowserNUnit
             OS = OSPlatform.Linux,
             ExposeNetwork = "<loopback>",
             RunId = Guid.NewGuid().ToString(),
+            RunName = "Playwright Service Test Run",
         }
     )
     {

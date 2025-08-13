@@ -54,16 +54,16 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlDBDatabaseInput"/>. </summary>
         /// <param name="name"> Name of the database. </param>
         /// <param name="targetDatabaseName"> Name of target database. Note: Target database will be truncated before starting migration. </param>
-        /// <param name="makeSourceDBReadOnly"> Whether to set database read only before migration. </param>
+        /// <param name="shouldMakeSourceDBReadOnly"> Whether to set database read only before migration. </param>
         /// <param name="tableMap"> Mapping of source to target tables. </param>
         /// <param name="schemaSetting"> Settings selected for DB schema migration. </param>
         /// <param name="id"> id of the database. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MigrateSqlServerSqlDBDatabaseInput(string name, string targetDatabaseName, bool? makeSourceDBReadOnly, IDictionary<string, string> tableMap, BinaryData schemaSetting, string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MigrateSqlServerSqlDBDatabaseInput(string name, string targetDatabaseName, bool? shouldMakeSourceDBReadOnly, IDictionary<string, string> tableMap, BinaryData schemaSetting, string id, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             TargetDatabaseName = targetDatabaseName;
-            MakeSourceDBReadOnly = makeSourceDBReadOnly;
+            ShouldMakeSourceDBReadOnly = shouldMakeSourceDBReadOnly;
             TableMap = tableMap;
             SchemaSetting = schemaSetting;
             Id = id;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Name of target database. Note: Target database will be truncated before starting migration. </summary>
         public string TargetDatabaseName { get; set; }
         /// <summary> Whether to set database read only before migration. </summary>
-        public bool? MakeSourceDBReadOnly { get; set; }
+        public bool? ShouldMakeSourceDBReadOnly { get; set; }
         /// <summary> Mapping of source to target tables. </summary>
         public IDictionary<string, string> TableMap { get; }
         /// <summary>

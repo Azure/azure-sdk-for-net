@@ -34,20 +34,20 @@ namespace Azure.ResourceManager.DataMigration.Models
                 throw new FormatException($"The model {nameof(MigrationValidationOptions)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(EnableSchemaValidation))
+            if (Optional.IsDefined(IsSchemaValidationEnabled))
             {
                 writer.WritePropertyName("enableSchemaValidation"u8);
-                writer.WriteBooleanValue(EnableSchemaValidation.Value);
+                writer.WriteBooleanValue(IsSchemaValidationEnabled.Value);
             }
-            if (Optional.IsDefined(EnableDataIntegrityValidation))
+            if (Optional.IsDefined(IsDataIntegrityValidationEnabled))
             {
                 writer.WritePropertyName("enableDataIntegrityValidation"u8);
-                writer.WriteBooleanValue(EnableDataIntegrityValidation.Value);
+                writer.WriteBooleanValue(IsDataIntegrityValidationEnabled.Value);
             }
-            if (Optional.IsDefined(EnableQueryAnalysisValidation))
+            if (Optional.IsDefined(IsQueryAnalysisValidationEnabled))
             {
                 writer.WritePropertyName("enableQueryAnalysisValidation"u8);
-                writer.WriteBooleanValue(EnableQueryAnalysisValidation.Value);
+                writer.WriteBooleanValue(IsQueryAnalysisValidationEnabled.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

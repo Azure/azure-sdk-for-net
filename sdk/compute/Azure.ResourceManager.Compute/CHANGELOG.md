@@ -1,9 +1,20 @@
 # Release History
 
-## 1.11.0 (2025-07-25)
+## 1.12.0-beta.1 (Unreleased)
 
 ### Features Added
 
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.11.0 (2025-08-12)
+
+### Features Added
+
+- Make `Azure.ResourceManager.Compute` AOT-compatible
 - Upgraded api-version tag from 'package-2025-02-01' to 'package-2025-03-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/0f03ae6d4107a964b20a48aa87fa520052750bb9/specification/compute/resource-manager/readme.md.
   - Added new classes: `SupportedSecurityOption`, `AvailabilityPolicyDiskDelay`, `SnapshotAccessState`, `AvailabilityPolicy`.
   - Added `SecurityMetadataUri` and `InstantAccessDurationMinutes` properties to `DiskCreationData` class.

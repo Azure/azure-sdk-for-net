@@ -14,41 +14,62 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public readonly partial struct AsyncStatus : IEquatable<AsyncStatus>
     {
         private readonly string _value;
+        /// <summary> Async operation has started. </summary>
+        private const string StartedValue = "Started";
+        /// <summary> Async operation has completed. </summary>
+        private const string CompletedValue = "Completed";
+        /// <summary> Async operation failed to complete. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="AsyncStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AsyncStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StartedValue = "Started";
-        private const string CompletedValue = "Completed";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> Async operation has started. </summary>
         public static AsyncStatus Started { get; } = new AsyncStatus(StartedValue);
+
         /// <summary> Async operation has completed. </summary>
         public static AsyncStatus Completed { get; } = new AsyncStatus(CompletedValue);
+
         /// <summary> Async operation failed to complete. </summary>
         public static AsyncStatus Failed { get; } = new AsyncStatus(FailedValue);
+
         /// <summary> Determines if two <see cref="AsyncStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AsyncStatus left, AsyncStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AsyncStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AsyncStatus left, AsyncStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AsyncStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AsyncStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AsyncStatus(string value) => new AsyncStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AsyncStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AsyncStatus?(string value) => value == null ? null : new AsyncStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AsyncStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AsyncStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

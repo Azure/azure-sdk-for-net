@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, new ModelReaderWriterOptions("W|v3"));
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), new ModelReaderWriterOptions("W|v3"), AzureResourceManagerLambdaTestHyperExecuteContext.Default);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerLambdaTestHyperExecuteContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

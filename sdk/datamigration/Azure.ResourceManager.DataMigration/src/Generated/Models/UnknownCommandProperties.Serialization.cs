@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    internal partial class UnknownCommandProperties : IUtf8JsonSerializable, IJsonModel<CommandProperties>
+    internal partial class UnknownCommandProperties : IUtf8JsonSerializable, IJsonModel<DataMigrationCommandProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommandProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataMigrationCommandProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CommandProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DataMigrationCommandProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,25 +28,25 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CommandProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationCommandProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommandProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DataMigrationCommandProperties)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
         }
 
-        CommandProperties IJsonModel<CommandProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DataMigrationCommandProperties IJsonModel<DataMigrationCommandProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CommandProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationCommandProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommandProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DataMigrationCommandProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCommandProperties(document.RootElement, options);
+            return DeserializeDataMigrationCommandProperties(document.RootElement, options);
         }
 
         internal static UnknownCommandProperties DeserializeUnknownCommandProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -57,16 +57,16 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            CommandType commandType = "Unknown";
-            IReadOnlyList<ODataError> errors = default;
-            CommandState? state = default;
+            DataMigrationCommandType commandType = "Unknown";
+            IReadOnlyList<DataMigrationODataError> errors = default;
+            DataMigrationCommandState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("commandType"u8))
                 {
-                    commandType = new CommandType(property.Value.GetString());
+                    commandType = new DataMigrationCommandType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errors"u8))
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<ODataError> array = new List<ODataError>();
+                    List<DataMigrationODataError> array = new List<DataMigrationODataError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ODataError.DeserializeODataError(item, options));
+                        array.Add(DataMigrationODataError.DeserializeDataMigrationODataError(item, options));
                     }
                     errors = array;
                     continue;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    state = new CommandState(property.Value.GetString());
+                    state = new DataMigrationCommandState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -98,38 +98,38 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownCommandProperties(commandType, errors ?? new ChangeTrackingList<ODataError>(), state, serializedAdditionalRawData);
+            return new UnknownCommandProperties(commandType, errors ?? new ChangeTrackingList<DataMigrationODataError>(), state, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CommandProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DataMigrationCommandProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CommandProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationCommandProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CommandProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataMigrationCommandProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CommandProperties IPersistableModel<CommandProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DataMigrationCommandProperties IPersistableModel<DataMigrationCommandProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CommandProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationCommandProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCommandProperties(document.RootElement, options);
+                        return DeserializeDataMigrationCommandProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CommandProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataMigrationCommandProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CommandProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DataMigrationCommandProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

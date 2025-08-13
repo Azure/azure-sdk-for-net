@@ -13,37 +13,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.PolicyInsights.PolicyStateChanged event. </summary>
     public partial class PolicyInsightsPolicyStateChangedEventData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PolicyInsightsPolicyStateChangedEventData"/>. </summary>
         /// <param name="policyAssignmentId"> The resource ID of the policy assignment. </param>
@@ -52,16 +23,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="complianceState"> The compliance state of the resource with respect to the policy assignment. </param>
         /// <param name="subscriptionId"> The subscription ID of the resource. </param>
         /// <param name="complianceReasonCode"> The compliance reason code. May be empty. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentId"/>, <paramref name="policyDefinitionId"/>, <paramref name="policyDefinitionReferenceId"/>, <paramref name="complianceState"/>, <paramref name="subscriptionId"/> or <paramref name="complianceReasonCode"/> is null. </exception>
         internal PolicyInsightsPolicyStateChangedEventData(string policyAssignmentId, string policyDefinitionId, string policyDefinitionReferenceId, string complianceState, string subscriptionId, string complianceReasonCode)
         {
-            Argument.AssertNotNull(policyAssignmentId, nameof(policyAssignmentId));
-            Argument.AssertNotNull(policyDefinitionId, nameof(policyDefinitionId));
-            Argument.AssertNotNull(policyDefinitionReferenceId, nameof(policyDefinitionReferenceId));
-            Argument.AssertNotNull(complianceState, nameof(complianceState));
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(complianceReasonCode, nameof(complianceReasonCode));
-
             PolicyAssignmentId = policyAssignmentId;
             PolicyDefinitionId = policyDefinitionId;
             PolicyDefinitionReferenceId = policyDefinitionReferenceId;
@@ -78,8 +41,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="complianceState"> The compliance state of the resource with respect to the policy assignment. </param>
         /// <param name="subscriptionId"> The subscription ID of the resource. </param>
         /// <param name="complianceReasonCode"> The compliance reason code. May be empty. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyInsightsPolicyStateChangedEventData(DateTimeOffset? timestamp, string policyAssignmentId, string policyDefinitionId, string policyDefinitionReferenceId, string complianceState, string subscriptionId, string complianceReasonCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PolicyInsightsPolicyStateChangedEventData(DateTimeOffset? timestamp, string policyAssignmentId, string policyDefinitionId, string policyDefinitionReferenceId, string complianceState, string subscriptionId, string complianceReasonCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Timestamp = timestamp;
             PolicyAssignmentId = policyAssignmentId;
@@ -88,26 +51,27 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             ComplianceState = complianceState;
             SubscriptionId = subscriptionId;
             ComplianceReasonCode = complianceReasonCode;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PolicyInsightsPolicyStateChangedEventData"/> for deserialization. </summary>
-        internal PolicyInsightsPolicyStateChangedEventData()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The time that the resource was scanned by Azure Policy in the Universal ISO 8601 DateTime format yyyy-MM-ddTHH:mm:ss.fffffffZ. </summary>
         public DateTimeOffset? Timestamp { get; }
+
         /// <summary> The resource ID of the policy assignment. </summary>
         public string PolicyAssignmentId { get; }
+
         /// <summary> The resource ID of the policy definition. </summary>
         public string PolicyDefinitionId { get; }
+
         /// <summary> The reference ID for the policy definition inside the initiative definition, if the policy assignment is for an initiative. May be empty. </summary>
         public string PolicyDefinitionReferenceId { get; }
+
         /// <summary> The compliance state of the resource with respect to the policy assignment. </summary>
         public string ComplianceState { get; }
+
         /// <summary> The subscription ID of the resource. </summary>
         public string SubscriptionId { get; }
+
         /// <summary> The compliance reason code. May be empty. </summary>
         public string ComplianceReasonCode { get; }
     }

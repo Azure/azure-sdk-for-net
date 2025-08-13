@@ -19,7 +19,11 @@ using Azure.ResourceManager.Resources;
 
 namespace MgmtTypeSpec
 {
-    /// <summary></summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="ZooResource"/> and their operations.
+    /// Each <see cref="ZooResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="ZooCollection"/> instance call the GetZoos method from an instance of the parent resource.
+    /// </summary>
     public partial class ZooCollection : ArmCollection, IEnumerable<ZooResource>, IAsyncEnumerable<ZooResource>
     {
         private readonly ClientDiagnostics _zoosClientDiagnostics;
@@ -37,12 +41,11 @@ namespace MgmtTypeSpec
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ZooCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _zoosClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ZooResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ZooResource.ResourceType, out string zooApiVersion);
-            _zoosRestClient = new Zoos(_zoosClientDiagnostics, Pipeline, Endpoint, zooApiVersion);
+            _zoosClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ZooResource.ResourceType.Namespace, Diagnostics);
+            _zoosRestClient = new Zoos(_zoosClientDiagnostics, Pipeline, Endpoint, zooApiVersion ?? "2024-05-01");
             _zooRecommendationClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ZooResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ZooResource.ResourceType, out string zooApiVersion0);
-            _zooRecommendationRestClient = new ZooRecommendation(_zooRecommendationClientDiagnostics, Pipeline, Endpoint, zooApiVersion0);
+            _zooRecommendationRestClient = new ZooRecommendation(_zooRecommendationClientDiagnostics, Pipeline, Endpoint, zooApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -68,16 +71,15 @@ namespace MgmtTypeSpec
             Argument.AssertNotNullOrEmpty(zooName, nameof(zooName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooCollection.CreateOrUpdateAsync");
+            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooCollection.CreateOrUpdate");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
-                HttpMessage message = _zoosRestClient.CreateCreateZooRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, zooName, ZooData.ToRequestContent(data), context);
+                };
+                HttpMessage message = _zoosRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, zooName, ZooData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MgmtTypeSpecArmOperation<ZooResource> operation = new MgmtTypeSpecArmOperation<ZooResource>(
                     new ZooOperationSource(Client),
@@ -118,9 +120,8 @@ namespace MgmtTypeSpec
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
-                HttpMessage message = _zoosRestClient.CreateCreateZooRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, zooName, ZooData.ToRequestContent(data), context);
+                };
+                HttpMessage message = _zoosRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, zooName, ZooData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MgmtTypeSpecArmOperation<ZooResource> operation = new MgmtTypeSpecArmOperation<ZooResource>(
                     new ZooOperationSource(Client),
@@ -151,15 +152,14 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNullOrEmpty(zooName, nameof(zooName));
 
-            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooCollection.GetAsync");
+            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooCollection.Get");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _zoosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, zooName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ZooData> response = Response.FromValue(ZooData.FromResponse(result), result);
@@ -192,8 +192,7 @@ namespace MgmtTypeSpec
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _zoosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, zooName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ZooData> response = Response.FromValue(ZooData.FromResponse(result), result);
@@ -217,8 +216,7 @@ namespace MgmtTypeSpec
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
-            }
-            ;
+            };
             return new AsyncPageableWrapper<ZooData, ZooResource>(new ZoosGetAsyncCollectionResultOfT(_zoosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ZooResource(Client, data));
         }
 
@@ -229,8 +227,7 @@ namespace MgmtTypeSpec
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
-            }
-            ;
+            };
             return new PageableWrapper<ZooData, ZooResource>(new ZoosGetCollectionResultOfT(_zoosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ZooResource(Client, data));
         }
 
@@ -243,15 +240,14 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNullOrEmpty(zooName, nameof(zooName));
 
-            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooCollection.ExistsAsync");
+            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooCollection.Exists");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _zoosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, zooName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ZooData> response = Response.FromValue(ZooData.FromResponse(result), result);
@@ -280,8 +276,7 @@ namespace MgmtTypeSpec
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _zoosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, zooName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ZooData> response = Response.FromValue(ZooData.FromResponse(result), result);
@@ -303,15 +298,14 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNullOrEmpty(zooName, nameof(zooName));
 
-            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooCollection.GetIfExistsAsync");
+            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooCollection.GetIfExists");
             scope.Start();
             try
             {
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _zoosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, zooName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ZooData> response = Response.FromValue(ZooData.FromResponse(result), result);
@@ -344,8 +338,7 @@ namespace MgmtTypeSpec
                 RequestContext context = new RequestContext
                 {
                     CancellationToken = cancellationToken
-                }
-                ;
+                };
                 HttpMessage message = _zoosRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, zooName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ZooData> response = Response.FromValue(ZooData.FromResponse(result), result);

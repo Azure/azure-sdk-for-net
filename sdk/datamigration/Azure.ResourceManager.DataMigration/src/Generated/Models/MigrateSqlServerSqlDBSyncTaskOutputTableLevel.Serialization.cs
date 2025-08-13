@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("cdcDeleteCounter"u8);
                 writer.WriteNumberValue(CdcDeleteCounter.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(FullLoadEstFinishOn))
+            if (options.Format != "W" && Optional.IsDefined(FullLoadEstFinishedOn))
             {
                 writer.WritePropertyName("fullLoadEstFinishTime"u8);
-                writer.WriteStringValue(FullLoadEstFinishOn.Value, "O");
+                writer.WriteStringValue(FullLoadEstFinishedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(FullLoadStartedOn))
             {

@@ -12,6 +12,7 @@
     <PackageTags>Microsoft Azure Communication Identity Service;Microsoft;Azure;Azure Communication Service;Azure Communication Identity Service;Identity;Communication;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <NoWarn>$(NoWarn);AZC0035</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,7 +27,7 @@
   <ItemGroup>
     <Compile Include="..\..\Shared\src\ClientOptionsExtensions.cs" LinkBase="Shared\Communication" />
     <Compile Include="..\..\Shared\src\HMACAuthenticationPolicy.cs" LinkBase="Shared\Communication" />
-    <Compile Include="..\..\Shared\Properties\CommunicationAssembyInfo.cs" LinkBase="Shared\Communication" />    
+    <Compile Include="..\..\Shared\Properties\CommunicationAssembyInfo.cs" LinkBase="Shared\Communication" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />

@@ -14,35 +14,52 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public readonly partial struct AcsMessageChannelKind : IEquatable<AcsMessageChannelKind>
     {
         private readonly string _value;
+        /// <summary> Updated message channel type is WhatsApp. </summary>
+        private const string WhatsappValue = "whatsapp";
 
         /// <summary> Initializes a new instance of <see cref="AcsMessageChannelKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AcsMessageChannelKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string WhatsappValue = "whatsapp";
+            _value = value;
+        }
 
         /// <summary> Updated message channel type is WhatsApp. </summary>
         public static AcsMessageChannelKind Whatsapp { get; } = new AcsMessageChannelKind(WhatsappValue);
+
         /// <summary> Determines if two <see cref="AcsMessageChannelKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AcsMessageChannelKind left, AcsMessageChannelKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AcsMessageChannelKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AcsMessageChannelKind left, AcsMessageChannelKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AcsMessageChannelKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AcsMessageChannelKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AcsMessageChannelKind(string value) => new AcsMessageChannelKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AcsMessageChannelKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AcsMessageChannelKind?(string value) => value == null ? null : new AcsMessageChannelKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AcsMessageChannelKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AcsMessageChannelKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

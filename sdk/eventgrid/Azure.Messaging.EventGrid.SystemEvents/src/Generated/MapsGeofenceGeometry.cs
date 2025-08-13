@@ -13,47 +13,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> The geofence geometry. </summary>
     public partial class MapsGeofenceGeometry
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MapsGeofenceGeometry"/>. </summary>
         /// <param name="deviceId"> ID of the device. </param>
         /// <param name="geometryId"> The unique ID for the geofence geometry. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/> or <paramref name="geometryId"/> is null. </exception>
         internal MapsGeofenceGeometry(string deviceId, string geometryId)
         {
-            Argument.AssertNotNull(deviceId, nameof(deviceId));
-            Argument.AssertNotNull(geometryId, nameof(geometryId));
-
             DeviceId = deviceId;
             GeometryId = geometryId;
         }
@@ -65,8 +32,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="nearestLat"> Latitude of the nearest point of the geometry. </param>
         /// <param name="nearestLon"> Longitude of the nearest point of the geometry. </param>
         /// <param name="udId"> The unique id returned from user upload service when uploading a geofence. Will not be included in geofencing post API. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MapsGeofenceGeometry(string deviceId, float? distance, string geometryId, float? nearestLat, float? nearestLon, string udId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MapsGeofenceGeometry(string deviceId, float? distance, string geometryId, float? nearestLat, float? nearestLon, string udId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DeviceId = deviceId;
             Distance = distance;
@@ -74,24 +41,24 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             NearestLat = nearestLat;
             NearestLon = nearestLon;
             UdId = udId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MapsGeofenceGeometry"/> for deserialization. </summary>
-        internal MapsGeofenceGeometry()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> ID of the device. </summary>
         public string DeviceId { get; }
+
         /// <summary> Distance from the coordinate to the closest border of the geofence. Positive means the coordinate is outside of the geofence. If the coordinate is outside of the geofence, but more than the value of searchBuffer away from the closest geofence border, then the value is 999. Negative means the coordinate is inside of the geofence. If the coordinate is inside the polygon, but more than the value of searchBuffer away from the closest geofencing border,then the value is -999. A value of 999 means that there is great confidence the coordinate is well outside the geofence. A value of -999 means that there is great confidence the coordinate is well within the geofence. </summary>
         public float? Distance { get; }
+
         /// <summary> The unique ID for the geofence geometry. </summary>
         public string GeometryId { get; }
+
         /// <summary> Latitude of the nearest point of the geometry. </summary>
         public float? NearestLat { get; }
+
         /// <summary> Longitude of the nearest point of the geometry. </summary>
         public float? NearestLon { get; }
+
         /// <summary> The unique id returned from user upload service when uploading a geofence. Will not be included in geofencing post API. </summary>
         public string UdId { get; }
     }

@@ -36,6 +36,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
         /// <param name="outputs"> The output of a skill is either a field in a search index, or a value that can be consumed as an input by another skill. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="uri"> The url for the Web API. </param>
         /// <param name="httpHeaders"> The headers required to make the http request. </param>
         /// <param name="httpMethod"> The method for the http request. </param>
@@ -53,7 +54,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="extraParameters"> Open-type dictionary for model-specific parameters that should be appended to the chat completions call. Follows Azure AI Foundry’s extensibility pattern. </param>
         /// <param name="extraParametersBehavior"> How extra parameters are handled by Azure AI Foundry. Default is 'error'. </param>
         /// <param name="responseFormat"> Determines how the LLM should format its response. Defaults to 'text' response type. </param>
-        internal ChatCompletionSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string uri, IDictionary<string, string> httpHeaders, string httpMethod, TimeSpan? timeout, int? batchSize, int? degreeOfParallelism, ResourceIdentifier authResourceId, SearchIndexerDataIdentity authIdentity, string apiKey, CommonModelParameters commonModelParameters, IDictionary<string, object> extraParameters, ChatCompletionExtraParametersBehavior? extraParametersBehavior, ChatCompletionResponseFormat responseFormat) : base(oDataType, name, description, context, inputs, outputs, uri, httpHeaders, httpMethod, timeout, batchSize, degreeOfParallelism, authResourceId, authIdentity)
+        internal ChatCompletionSkill(string oDataType, string name, string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, IDictionary<string, BinaryData> serializedAdditionalRawData, string uri, IDictionary<string, string> httpHeaders, string httpMethod, TimeSpan? timeout, int? batchSize, int? degreeOfParallelism, ResourceIdentifier authResourceId, SearchIndexerDataIdentity authIdentity, string apiKey, CommonModelParameters commonModelParameters, IDictionary<string, object> extraParameters, ChatCompletionExtraParametersBehavior? extraParametersBehavior, ChatCompletionResponseFormat responseFormat) : base(oDataType, name, description, context, inputs, outputs, serializedAdditionalRawData, uri, httpHeaders, httpMethod, timeout, batchSize, degreeOfParallelism, authResourceId, authIdentity)
         {
             ApiKey = apiKey;
             CommonModelParameters = commonModelParameters;
@@ -61,6 +62,11 @@ namespace Azure.Search.Documents.Indexes.Models
             ExtraParametersBehavior = extraParametersBehavior;
             ResponseFormat = responseFormat;
             ODataType = oDataType ?? "#Microsoft.Skills.Custom.ChatCompletionSkill";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ChatCompletionSkill"/> for deserialization. </summary>
+        internal ChatCompletionSkill()
+        {
         }
 
         /// <summary> API key for authenticating to the model. Both apiKey and authIdentity cannot be specified at the same time. </summary>

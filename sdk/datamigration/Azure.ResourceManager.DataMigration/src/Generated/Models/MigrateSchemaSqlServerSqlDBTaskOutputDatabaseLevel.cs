@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="numberOfSuccessfulOperations"> Number of successful operations for this database. </param>
         /// <param name="numberOfFailedOperations"> Number of failed operations for this database. </param>
         /// <param name="fileId"> Identifier for the file resource containing the schema of this database. </param>
-        internal MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string databaseName, MigrationState? state, SchemaMigrationStage? stage, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string databaseErrorResultPrefix, string schemaErrorResultPrefix, long? numberOfSuccessfulOperations, long? numberOfFailedOperations, string fileId) : base(id, resultType, serializedAdditionalRawData)
+        internal MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string databaseName, DataMigrationState? state, SchemaMigrationStage? stage, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string databaseErrorResultPrefix, string schemaErrorResultPrefix, long? numberOfSuccessfulOperations, long? numberOfFailedOperations, string fileId) : base(id, resultType, serializedAdditionalRawData)
         {
             DatabaseName = databaseName;
             State = state;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> The name of the database. </summary>
         public string DatabaseName { get; }
         /// <summary> State of the schema migration for this database. </summary>
-        public MigrationState? State { get; }
+        public DataMigrationState? State { get; }
         /// <summary> Schema migration stage for this database. </summary>
         public SchemaMigrationStage? Stage { get; }
         /// <summary> Migration start time. </summary>

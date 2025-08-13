@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="schemaValidationResult"> Provides schema comparison result between source and target database. </param>
         /// <param name="queryAnalysisValidationResult"> Results of some of the query execution result between source and target database. </param>
         /// <param name="status"> Current status of validation at the database level. </param>
-        internal MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string migrationId, string sourceDatabaseName, string targetDatabaseName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, DataIntegrityValidationResult dataIntegrityValidationResult, SchemaComparisonValidationResult schemaValidationResult, QueryAnalysisValidationResult queryAnalysisValidationResult, ValidationStatus? status) : base(id, resultType, serializedAdditionalRawData)
+        internal MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string migrationId, string sourceDatabaseName, string targetDatabaseName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, DataIntegrityValidationResult dataIntegrityValidationResult, SchemaComparisonValidationResult schemaValidationResult, QueryAnalysisValidationResult queryAnalysisValidationResult, MigrationValidationStatus? status) : base(id, resultType, serializedAdditionalRawData)
         {
             MigrationId = migrationId;
             SourceDatabaseName = sourceDatabaseName;
@@ -63,6 +63,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Results of some of the query execution result between source and target database. </summary>
         public QueryAnalysisValidationResult QueryAnalysisValidationResult { get; }
         /// <summary> Current status of validation at the database level. </summary>
-        public ValidationStatus? Status { get; }
+        public MigrationValidationStatus? Status { get; }
     }
 }

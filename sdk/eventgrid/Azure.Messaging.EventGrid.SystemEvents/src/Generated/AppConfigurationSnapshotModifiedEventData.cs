@@ -17,25 +17,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="name"> The name of the snapshot. </param>
         /// <param name="eTag"> The etag representing the new state of the snapshot. </param>
         /// <param name="syncToken"> The sync token representing the server state after the event. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="eTag"/> or <paramref name="syncToken"/> is null. </exception>
         internal AppConfigurationSnapshotModifiedEventData(string name, string eTag, string syncToken) : base(name, eTag, syncToken)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(eTag, nameof(eTag));
-            Argument.AssertNotNull(syncToken, nameof(syncToken));
         }
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationSnapshotModifiedEventData"/>. </summary>
         /// <param name="name"> The name of the snapshot. </param>
         /// <param name="eTag"> The etag representing the new state of the snapshot. </param>
         /// <param name="syncToken"> The sync token representing the server state after the event. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppConfigurationSnapshotModifiedEventData(string name, string eTag, string syncToken, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(name, eTag, syncToken, serializedAdditionalRawData)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AppConfigurationSnapshotModifiedEventData"/> for deserialization. </summary>
-        internal AppConfigurationSnapshotModifiedEventData()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AppConfigurationSnapshotModifiedEventData(string name, string eTag, string syncToken, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name, eTag, syncToken, additionalBinaryDataProperties)
         {
         }
     }

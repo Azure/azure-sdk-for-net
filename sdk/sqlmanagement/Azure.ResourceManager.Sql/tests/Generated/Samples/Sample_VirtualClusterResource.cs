@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsAVirtualCluster()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/VirtualClusterGet.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/VirtualClusterGet.json
             // this example is just showing the usage of "VirtualClusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this VirtualClusterResource created on azure
             // for more information of creating VirtualClusterResource, please refer to the document of VirtualClusterResource
-            string subscriptionId = "20d7082a-0fc7-4468-82bd-542694d5042b";
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "testrg";
             string virtualClusterName = "vc-f769ed71-b3ad-491a-a9d5-26eeceaa6be2";
             ResourceIdentifier virtualClusterResourceId = VirtualClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualClusterName);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteVirtualCluster()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/VirtualClusterDelete.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/VirtualClusterDelete.json
             // this example is just showing the usage of "VirtualClusters_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this VirtualClusterResource created on azure
             // for more information of creating VirtualClusterResource, please refer to the document of VirtualClusterResource
-            string subscriptionId = "20d7082a-0fc7-4468-82bd-542694d5042b";
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "testrg";
             string virtualClusterName = "vc-subnet1-f769ed71-b3ad-491a-a9d5-26eeceaa6be2";
             ResourceIdentifier virtualClusterResourceId = VirtualClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualClusterName);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateVirtualClusterWithTags()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/VirtualClusterUpdate.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/VirtualClusterUpdate.json
             // this example is just showing the usage of "VirtualClusters_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Sql.Samples
 
             // this example assumes you already have this VirtualClusterResource created on azure
             // for more information of creating VirtualClusterResource, please refer to the document of VirtualClusterResource
-            string subscriptionId = "20d7082a-0fc7-4468-82bd-542694d5042b";
+            string subscriptionId = "00000000-1111-2222-3333-444444444444b";
             string resourceGroupName = "testrg";
             string virtualClusterName = "vc-subnet1-f769ed71-b3ad-491a-a9d5-26eeceaa6be2";
             ResourceIdentifier virtualClusterResourceId = VirtualClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualClusterName);
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Sql.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task UpdateDnsServers_PerformsUpdateOfDnsServersOnManagedInstance()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-05-01-preview/examples/UpdateVirtualClusterDnsServers.json
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2024-11-01-preview/examples/UpdateVirtualClusterDnsServers.json
             // this example is just showing the usage of "VirtualClusters_UpdateDnsServers" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

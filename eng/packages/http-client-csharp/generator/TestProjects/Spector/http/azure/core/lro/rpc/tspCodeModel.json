@@ -231,7 +231,8 @@
             "json": {
               "name": "prompt"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -268,7 +269,8 @@
             "json": {
               "name": "id"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "25",
@@ -289,7 +291,8 @@
             "json": {
               "name": "status"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "26",
@@ -330,7 +333,8 @@
                   "json": {
                     "name": "code"
                   }
-                }
+                },
+                "isHttpMetadata": false
               },
               {
                 "$id": "30",
@@ -355,7 +359,8 @@
                   "json": {
                     "name": "message"
                   }
-                }
+                },
+                "isHttpMetadata": false
               },
               {
                 "$id": "32",
@@ -380,7 +385,8 @@
                   "json": {
                     "name": "target"
                   }
-                }
+                },
+                "isHttpMetadata": false
               },
               {
                 "$id": "34",
@@ -408,7 +414,8 @@
                   "json": {
                     "name": "details"
                   }
-                }
+                },
+                "isHttpMetadata": false
               },
               {
                 "$id": "36",
@@ -423,7 +430,7 @@
                   "namespace": "Azure.Core.Foundations",
                   "crossLanguageDefinitionId": "Azure.Core.Foundations.InnerError",
                   "usage": "Json,Exception,LroInitial,LroPolling,LroFinalEnvelope",
-                  "doc": "An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#handling-errors.",
+                  "doc": "An object containing more specific information about the error. As per Azure REST API guidelines - https://aka.ms/AzureRestApiGuidelines#handling-errors.",
                   "decorators": [],
                   "properties": [
                     {
@@ -449,7 +456,8 @@
                         "json": {
                           "name": "code"
                         }
-                      }
+                      },
+                      "isHttpMetadata": false
                     },
                     {
                       "$id": "40",
@@ -470,7 +478,8 @@
                         "json": {
                           "name": "innererror"
                         }
-                      }
+                      },
+                      "isHttpMetadata": false
                     }
                   ]
                 },
@@ -484,7 +493,8 @@
                   "json": {
                     "name": "innererror"
                   }
-                }
+                },
+                "isHttpMetadata": false
               }
             ]
           },
@@ -498,7 +508,8 @@
             "json": {
               "name": "error"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "41",
@@ -539,7 +550,8 @@
                   "json": {
                     "name": "data"
                   }
-                }
+                },
+                "isHttpMetadata": false
               }
             ]
           },
@@ -553,7 +565,8 @@
             "json": {
               "name": "result"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -595,13 +608,14 @@
             "json": {
               "name": "error"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "47",
-          "kind": "header",
+          "kind": "property",
           "name": "errorCode",
-          "serializedName": "x-ms-error-code",
+          "serializedName": "errorCode",
           "doc": "String error code indicating what went wrong.",
           "type": {
             "$id": "48",
@@ -612,9 +626,16 @@
           },
           "optional": true,
           "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
           "decorators": [],
           "crossLanguageDefinitionId": "Azure.Core.Foundations.ErrorResponse.errorCode",
-          "correspondingMethodParams": []
+          "serializationOptions": {
+            "json": {
+              "name": "errorCode"
+            }
+          },
+          "isHttpMetadata": true
         }
       ]
     },
@@ -651,7 +672,8 @@
             "json": {
               "name": "id"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "52",
@@ -672,7 +694,8 @@
             "json": {
               "name": "status"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "53",
@@ -693,7 +716,8 @@
             "json": {
               "name": "error"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "54",
@@ -714,7 +738,8 @@
             "json": {
               "name": "result"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     }
@@ -899,14 +924,14 @@
             {
               "$id": "67",
               "name": "contentType",
-              "nameInRequest": "contentType",
+              "nameInRequest": "Content-Type",
               "doc": "Body parameter's content type. Known values are application/json",
               "type": {
                 "$ref": "15"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
+              "isContentType": true,
               "isEndpoint": false,
               "explode": false,
               "isRequired": true,
@@ -917,7 +942,7 @@
             {
               "$id": "68",
               "name": "accept",
-              "nameInRequest": "accept",
+              "nameInRequest": "Accept",
               "type": {
                 "$ref": "17"
               },

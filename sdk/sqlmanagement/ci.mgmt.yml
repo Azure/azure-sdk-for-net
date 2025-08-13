@@ -23,3 +23,7 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Sql
       safeName: AzureResourceManagerSql
+    CheckAOTCompat: true
+    AOTTestInputs:
+    - ArtifactName: Azure.ResourceManager.Sql
+      ExpectedWarningsFilepath: None

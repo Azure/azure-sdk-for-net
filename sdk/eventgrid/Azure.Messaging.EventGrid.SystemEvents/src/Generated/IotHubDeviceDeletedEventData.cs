@@ -17,25 +17,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="deviceId"> The unique identifier of the device. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = `@` ; $ '. </param>
         /// <param name="hubName"> Name of the IoT Hub where the device was created or deleted. </param>
         /// <param name="twin"> Information about the device twin, which is the cloud representation of application device metadata. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deviceId"/>, <paramref name="hubName"/> or <paramref name="twin"/> is null. </exception>
         internal IotHubDeviceDeletedEventData(string deviceId, string hubName, DeviceTwinInfo twin) : base(deviceId, hubName, twin)
         {
-            Argument.AssertNotNull(deviceId, nameof(deviceId));
-            Argument.AssertNotNull(hubName, nameof(hubName));
-            Argument.AssertNotNull(twin, nameof(twin));
         }
 
         /// <summary> Initializes a new instance of <see cref="IotHubDeviceDeletedEventData"/>. </summary>
         /// <param name="deviceId"> The unique identifier of the device. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = `@` ; $ '. </param>
         /// <param name="hubName"> Name of the IoT Hub where the device was created or deleted. </param>
         /// <param name="twin"> Information about the device twin, which is the cloud representation of application device metadata. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IotHubDeviceDeletedEventData(string deviceId, string hubName, DeviceTwinInfo twin, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(deviceId, hubName, twin, serializedAdditionalRawData)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="IotHubDeviceDeletedEventData"/> for deserialization. </summary>
-        internal IotHubDeviceDeletedEventData()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubDeviceDeletedEventData(string deviceId, string hubName, DeviceTwinInfo twin, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(deviceId, hubName, twin, additionalBinaryDataProperties)
         {
         }
     }

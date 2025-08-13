@@ -138,12 +138,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             string id = default;
             string name = default;
-            IReadOnlyList<ReportableException> restoreDatabaseNameErrors = default;
-            IReadOnlyList<ReportableException> backupFolderErrors = default;
-            IReadOnlyList<ReportableException> backupShareCredentialsErrors = default;
-            IReadOnlyList<ReportableException> backupStorageAccountErrors = default;
-            IReadOnlyList<ReportableException> existingBackupErrors = default;
-            DatabaseBackupInfo databaseBackupInfo = default;
+            IReadOnlyList<DataMigrationReportableException> restoreDatabaseNameErrors = default;
+            IReadOnlyList<DataMigrationReportableException> backupFolderErrors = default;
+            IReadOnlyList<DataMigrationReportableException> backupShareCredentialsErrors = default;
+            IReadOnlyList<DataMigrationReportableException> backupStorageAccountErrors = default;
+            IReadOnlyList<DataMigrationReportableException> existingBackupErrors = default;
+            DataMigrationDatabaseBackupInfo databaseBackupInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,10 +164,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<ReportableException> array = new List<ReportableException>();
+                    List<DataMigrationReportableException> array = new List<DataMigrationReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item, options));
+                        array.Add(DataMigrationReportableException.DeserializeDataMigrationReportableException(item, options));
                     }
                     restoreDatabaseNameErrors = array;
                     continue;
@@ -178,10 +178,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<ReportableException> array = new List<ReportableException>();
+                    List<DataMigrationReportableException> array = new List<DataMigrationReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item, options));
+                        array.Add(DataMigrationReportableException.DeserializeDataMigrationReportableException(item, options));
                     }
                     backupFolderErrors = array;
                     continue;
@@ -192,10 +192,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<ReportableException> array = new List<ReportableException>();
+                    List<DataMigrationReportableException> array = new List<DataMigrationReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item, options));
+                        array.Add(DataMigrationReportableException.DeserializeDataMigrationReportableException(item, options));
                     }
                     backupShareCredentialsErrors = array;
                     continue;
@@ -206,10 +206,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<ReportableException> array = new List<ReportableException>();
+                    List<DataMigrationReportableException> array = new List<DataMigrationReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item, options));
+                        array.Add(DataMigrationReportableException.DeserializeDataMigrationReportableException(item, options));
                     }
                     backupStorageAccountErrors = array;
                     continue;
@@ -220,10 +220,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<ReportableException> array = new List<ReportableException>();
+                    List<DataMigrationReportableException> array = new List<DataMigrationReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item, options));
+                        array.Add(DataMigrationReportableException.DeserializeDataMigrationReportableException(item, options));
                     }
                     existingBackupErrors = array;
                     continue;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    databaseBackupInfo = DatabaseBackupInfo.DeserializeDatabaseBackupInfo(property.Value, options);
+                    databaseBackupInfo = DataMigrationDatabaseBackupInfo.DeserializeDataMigrationDatabaseBackupInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -246,11 +246,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ValidateMigrationInputSqlServerSqlMITaskOutput(
                 id,
                 name,
-                restoreDatabaseNameErrors ?? new ChangeTrackingList<ReportableException>(),
-                backupFolderErrors ?? new ChangeTrackingList<ReportableException>(),
-                backupShareCredentialsErrors ?? new ChangeTrackingList<ReportableException>(),
-                backupStorageAccountErrors ?? new ChangeTrackingList<ReportableException>(),
-                existingBackupErrors ?? new ChangeTrackingList<ReportableException>(),
+                restoreDatabaseNameErrors ?? new ChangeTrackingList<DataMigrationReportableException>(),
+                backupFolderErrors ?? new ChangeTrackingList<DataMigrationReportableException>(),
+                backupShareCredentialsErrors ?? new ChangeTrackingList<DataMigrationReportableException>(),
+                backupStorageAccountErrors ?? new ChangeTrackingList<DataMigrationReportableException>(),
+                existingBackupErrors ?? new ChangeTrackingList<DataMigrationReportableException>(),
                 databaseBackupInfo,
                 serializedAdditionalRawData);
         }

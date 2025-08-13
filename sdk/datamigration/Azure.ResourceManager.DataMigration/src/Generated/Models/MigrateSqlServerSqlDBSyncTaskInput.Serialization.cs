@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             IList<MigrateSqlServerSqlDBSyncDatabaseInput> selectedDatabases = default;
             MigrationValidationOptions validationOptions = default;
-            SqlConnectionInfo sourceConnectionInfo = default;
-            SqlConnectionInfo targetConnectionInfo = default;
+            DataMigrationSqlConnectionInfo sourceConnectionInfo = default;
+            DataMigrationSqlConnectionInfo targetConnectionInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,12 +98,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
+                    sourceConnectionInfo = DataMigrationSqlConnectionInfo.DeserializeDataMigrationSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
+                    targetConnectionInfo = DataMigrationSqlConnectionInfo.DeserializeDataMigrationSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

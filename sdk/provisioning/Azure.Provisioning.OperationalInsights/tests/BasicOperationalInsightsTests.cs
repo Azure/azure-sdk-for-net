@@ -20,6 +20,7 @@ public class BasicOperationalInsightsTests(bool async)
         await test.Define(
             ctx =>
             {
+                #region Snippet:OperationalInsightsWorkspaceBasic
                 Infrastructure infra = new();
 
                 OperationalInsightsWorkspace workspace =
@@ -32,6 +33,7 @@ public class BasicOperationalInsightsTests(bool async)
                         Identity = new ManagedServiceIdentity { ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned },
                     };
                 infra.Add(workspace);
+                #endregion
 
                 return infra;
             })

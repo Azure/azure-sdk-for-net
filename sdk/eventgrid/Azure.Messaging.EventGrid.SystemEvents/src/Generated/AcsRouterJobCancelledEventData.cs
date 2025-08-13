@@ -14,38 +14,29 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsRouterJobCancelledEventData : AcsRouterJobEventData
     {
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobCancelledEventData"/>. </summary>
-        /// <param name="labels"> Router Job events Labels. </param>
-        /// <param name="tags"> Router Jobs events Tags. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labels"/> or <paramref name="tags"/> is null. </exception>
-        internal AcsRouterJobCancelledEventData(IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags) : base(labels, tags)
+        internal AcsRouterJobCancelledEventData()
         {
-            Argument.AssertNotNull(labels, nameof(labels));
-            Argument.AssertNotNull(tags, nameof(tags));
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobCancelledEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="queueId"> Router Job events Queue Id. </param>
         /// <param name="labels"> Router Job events Labels. </param>
         /// <param name="tags"> Router Jobs events Tags. </param>
         /// <param name="note"> Router Job Note. </param>
         /// <param name="dispositionCode"> Router Job Disposition Code. </param>
-        internal AcsRouterJobCancelledEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> serializedAdditionalRawData, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, string note, string dispositionCode) : base(jobId, channelReference, channelId, serializedAdditionalRawData, queueId, labels, tags)
+        internal AcsRouterJobCancelledEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, string note, string dispositionCode) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, queueId, labels, tags)
         {
             Note = note;
             DispositionCode = dispositionCode;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsRouterJobCancelledEventData"/> for deserialization. </summary>
-        internal AcsRouterJobCancelledEventData()
-        {
-        }
-
         /// <summary> Router Job Note. </summary>
         public string Note { get; }
+
         /// <summary> Router Job Disposition Code. </summary>
         public string DispositionCode { get; }
     }

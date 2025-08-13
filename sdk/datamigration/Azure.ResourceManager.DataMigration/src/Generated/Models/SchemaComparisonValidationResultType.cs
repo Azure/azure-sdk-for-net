@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="objectType"> Type of the object that has the difference. e.g (Table/View/StoredProcedure). </param>
         /// <param name="updateAction"> Update action type with respect to target. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SchemaComparisonValidationResultType(string objectName, ObjectType? objectType, UpdateActionType? updateAction, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SchemaComparisonValidationResultType(string objectName, DataMigrationDatabaseObjectType? objectType, MigrationValidatioUpdateActionType? updateAction, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ObjectName = objectName;
             ObjectType = objectType;
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Name of the object that has the difference. </summary>
         public string ObjectName { get; }
         /// <summary> Type of the object that has the difference. e.g (Table/View/StoredProcedure). </summary>
-        public ObjectType? ObjectType { get; }
+        public DataMigrationDatabaseObjectType? ObjectType { get; }
         /// <summary> Update action type with respect to target. </summary>
-        public UpdateActionType? UpdateAction { get; }
+        public MigrationValidatioUpdateActionType? UpdateAction { get; }
     }
 }

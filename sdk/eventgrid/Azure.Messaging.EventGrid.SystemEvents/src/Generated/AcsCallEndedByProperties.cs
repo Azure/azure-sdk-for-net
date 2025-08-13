@@ -13,47 +13,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of calling event ended by properties. </summary>
     public partial class AcsCallEndedByProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AcsCallEndedByProperties"/>. </summary>
         /// <param name="communicationIdentifier"> The communication identifier of the call ended by. </param>
         /// <param name="name"> The name of the call ended by. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="communicationIdentifier"/> or <paramref name="name"/> is null. </exception>
         internal AcsCallEndedByProperties(CommunicationIdentifierModel communicationIdentifier, string name)
         {
-            Argument.AssertNotNull(communicationIdentifier, nameof(communicationIdentifier));
-            Argument.AssertNotNull(name, nameof(name));
-
             CommunicationIdentifier = communicationIdentifier;
             Name = name;
         }
@@ -62,24 +29,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="communicationIdentifier"> The communication identifier of the call ended by. </param>
         /// <param name="kind"> The type of call ended by. </param>
         /// <param name="name"> The name of the call ended by. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AcsCallEndedByProperties(CommunicationIdentifierModel communicationIdentifier, AcsCallEndedByKind? kind, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AcsCallEndedByProperties(CommunicationIdentifierModel communicationIdentifier, AcsCallEndedByKind? kind, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CommunicationIdentifier = communicationIdentifier;
             Kind = kind;
             Name = name;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AcsCallEndedByProperties"/> for deserialization. </summary>
-        internal AcsCallEndedByProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The communication identifier of the call ended by. </summary>
         public CommunicationIdentifierModel CommunicationIdentifier { get; }
+
         /// <summary> The type of call ended by. </summary>
         public AcsCallEndedByKind? Kind { get; }
+
         /// <summary> The name of the call ended by. </summary>
         public string Name { get; }
     }

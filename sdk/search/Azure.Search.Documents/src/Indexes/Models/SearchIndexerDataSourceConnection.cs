@@ -53,7 +53,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             get
             {
-                return new DataSourceCredentials(ConnectionString ?? DataSourceCredentials.UnchangedValue);
+                return new DataSourceCredentials(ConnectionString ?? DataSourceCredentials.UnchangedValue, serializedAdditionalRawData: null);
             }
 
             set

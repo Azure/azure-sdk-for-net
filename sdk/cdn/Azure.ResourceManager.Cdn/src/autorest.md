@@ -7,7 +7,7 @@ azure-arm: true
 library-name: Cdn
 namespace: Azure.ResourceManager.Cdn
 title: CdnManagementClient
-require: https://github.com/Azure/azure-rest-api-specs/blob/0cdef1ef00cf9020967dc099a67366d5a2c51d29/specification/cdn/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/9b87e611b5016ed5c8d0eea2ee4578be782e7feb/specification/cdn/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:

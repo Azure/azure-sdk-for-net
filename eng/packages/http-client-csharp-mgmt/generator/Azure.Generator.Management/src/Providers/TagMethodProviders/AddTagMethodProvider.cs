@@ -16,10 +16,11 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
     {
         public AddTagMethodProvider(
             ResourceClientProvider resource,
+            RequestPathPattern contextualPath,
             MethodProvider updateMethodProvider,
             RestClientInfo restClientInfo,
             bool isAsync)
-            : base(resource, updateMethodProvider, restClientInfo, isAsync,
+            : base(resource, contextualPath, updateMethodProvider, restClientInfo, isAsync,
                    isAsync ? "AddTagAsync" : "AddTag",
                    "Add a tag to the current resource.")
         {

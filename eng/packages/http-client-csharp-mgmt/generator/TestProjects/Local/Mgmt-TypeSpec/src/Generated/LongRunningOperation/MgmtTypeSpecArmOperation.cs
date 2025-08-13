@@ -41,7 +41,7 @@ namespace MgmtTypeSpec
         /// <param name="clientDiagnostics"> The instance of <see cref="ClientDiagnostics"/>. </param>
         /// <param name="pipeline"> The instance of <see cref="HttpPipeline"/>. </param>
         /// <param name="request"> The operation request. </param>
-        /// <param name="response"> The opertion response. </param>
+        /// <param name="response"> The operation response. </param>
         /// <param name="finalStateVia"> The finalStateVia of the operation. </param>
         /// <param name="skipApiVersionOverride"> If should skip Api version override. </param>
         /// <param name="apiVersionOverrideValue"> The Api version override value. </param>

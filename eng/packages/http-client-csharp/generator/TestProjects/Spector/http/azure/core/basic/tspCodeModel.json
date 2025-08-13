@@ -156,7 +156,7 @@
     {
       "$id": "18",
       "kind": "constant",
-      "name": "deleteContentType",
+      "name": "exportContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -172,7 +172,7 @@
     {
       "$id": "20",
       "kind": "constant",
-      "name": "exportContentType",
+      "name": "exportAllUsersContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -184,27 +184,11 @@
       },
       "value": "application/json",
       "decorators": []
-    },
-    {
-      "$id": "22",
-      "kind": "constant",
-      "name": "exportAllUsersContentType",
-      "namespace": "",
-      "usage": "None",
-      "valueType": {
-        "$id": "23",
-        "kind": "string",
-        "name": "string",
-        "crossLanguageDefinitionId": "TypeSpec.string",
-        "decorators": []
-      },
-      "value": "application/json",
-      "decorators": []
     }
   ],
   "models": [
     {
-      "$id": "24",
+      "$id": "22",
       "kind": "model",
       "name": "User",
       "namespace": "_Specs_.Azure.Core.Basic",
@@ -214,13 +198,13 @@
       "decorators": [],
       "properties": [
         {
-          "$id": "25",
+          "$id": "23",
           "kind": "property",
           "name": "id",
           "serializedName": "id",
           "doc": "The user's id.",
           "type": {
-            "$id": "26",
+            "$id": "24",
             "kind": "int32",
             "name": "int32",
             "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -236,16 +220,17 @@
             "json": {
               "name": "id"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
-          "$id": "27",
+          "$id": "25",
           "kind": "property",
           "name": "name",
           "serializedName": "name",
           "doc": "The user's name.",
           "type": {
-            "$id": "28",
+            "$id": "26",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -261,20 +246,21 @@
             "json": {
               "name": "name"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
-          "$id": "29",
+          "$id": "27",
           "kind": "property",
           "name": "orders",
           "serializedName": "orders",
           "doc": "The user's order list",
           "type": {
-            "$id": "30",
+            "$id": "28",
             "kind": "array",
             "name": "ArrayUserOrder",
             "valueType": {
-              "$id": "31",
+              "$id": "29",
               "kind": "model",
               "name": "UserOrder",
               "namespace": "_Specs_.Azure.Core.Basic",
@@ -284,13 +270,13 @@
               "decorators": [],
               "properties": [
                 {
-                  "$id": "32",
+                  "$id": "30",
                   "kind": "property",
                   "name": "id",
                   "serializedName": "id",
                   "doc": "The user's id.",
                   "type": {
-                    "$id": "33",
+                    "$id": "31",
                     "kind": "int32",
                     "name": "int32",
                     "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -306,16 +292,17 @@
                     "json": {
                       "name": "id"
                     }
-                  }
+                  },
+                  "isHttpMetadata": false
                 },
                 {
-                  "$id": "34",
+                  "$id": "32",
                   "kind": "property",
                   "name": "userId",
                   "serializedName": "userId",
                   "doc": "The user's id.",
                   "type": {
-                    "$id": "35",
+                    "$id": "33",
                     "kind": "int32",
                     "name": "int32",
                     "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -331,16 +318,17 @@
                     "json": {
                       "name": "userId"
                     }
-                  }
+                  },
+                  "isHttpMetadata": false
                 },
                 {
-                  "$id": "36",
+                  "$id": "34",
                   "kind": "property",
                   "name": "detail",
                   "serializedName": "detail",
                   "doc": "The user's order detail",
                   "type": {
-                    "$id": "37",
+                    "$id": "35",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -356,7 +344,8 @@
                     "json": {
                       "name": "detail"
                     }
-                  }
+                  },
+                  "isHttpMetadata": false
                 }
               ]
             },
@@ -373,21 +362,22 @@
             "json": {
               "name": "orders"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
-          "$id": "38",
+          "$id": "36",
           "kind": "property",
           "name": "etag",
           "serializedName": "etag",
           "doc": "The entity tag for this resource.",
           "type": {
-            "$id": "39",
+            "$id": "37",
             "kind": "string",
             "name": "eTag",
             "crossLanguageDefinitionId": "Azure.Core.eTag",
             "baseType": {
-              "$id": "40",
+              "$id": "38",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string",
@@ -405,15 +395,16 @@
             "json": {
               "name": "etag"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
     {
-      "$ref": "31"
+      "$ref": "29"
     },
     {
-      "$id": "41",
+      "$id": "39",
       "kind": "model",
       "name": "ErrorResponse",
       "namespace": "Azure.Core.Foundations",
@@ -423,13 +414,13 @@
       "decorators": [],
       "properties": [
         {
-          "$id": "42",
+          "$id": "40",
           "kind": "property",
           "name": "error",
           "serializedName": "error",
           "doc": "The error object.",
           "type": {
-            "$id": "43",
+            "$id": "41",
             "kind": "model",
             "name": "Error",
             "namespace": "Azure.Core.Foundations",
@@ -439,13 +430,13 @@
             "decorators": [],
             "properties": [
               {
-                "$id": "44",
+                "$id": "42",
                 "kind": "property",
                 "name": "code",
                 "serializedName": "code",
                 "doc": "One of a server-defined set of error codes.",
                 "type": {
-                  "$id": "45",
+                  "$id": "43",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -461,16 +452,17 @@
                   "json": {
                     "name": "code"
                   }
-                }
+                },
+                "isHttpMetadata": false
               },
               {
-                "$id": "46",
+                "$id": "44",
                 "kind": "property",
                 "name": "message",
                 "serializedName": "message",
                 "doc": "A human-readable representation of the error.",
                 "type": {
-                  "$id": "47",
+                  "$id": "45",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -486,16 +478,17 @@
                   "json": {
                     "name": "message"
                   }
-                }
+                },
+                "isHttpMetadata": false
               },
               {
-                "$id": "48",
+                "$id": "46",
                 "kind": "property",
                 "name": "target",
                 "serializedName": "target",
                 "doc": "The target of the error.",
                 "type": {
-                  "$id": "49",
+                  "$id": "47",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -511,20 +504,21 @@
                   "json": {
                     "name": "target"
                   }
-                }
+                },
+                "isHttpMetadata": false
               },
               {
-                "$id": "50",
+                "$id": "48",
                 "kind": "property",
                 "name": "details",
                 "serializedName": "details",
                 "doc": "An array of details about specific errors that led to this reported error.",
                 "type": {
-                  "$id": "51",
+                  "$id": "49",
                   "kind": "array",
                   "name": "ArrayError",
                   "valueType": {
-                    "$ref": "43"
+                    "$ref": "41"
                   },
                   "crossLanguageDefinitionId": "TypeSpec.Array",
                   "decorators": []
@@ -539,32 +533,33 @@
                   "json": {
                     "name": "details"
                   }
-                }
+                },
+                "isHttpMetadata": false
               },
               {
-                "$id": "52",
+                "$id": "50",
                 "kind": "property",
                 "name": "innererror",
                 "serializedName": "innererror",
                 "doc": "An object containing more specific information than the current object about the error.",
                 "type": {
-                  "$id": "53",
+                  "$id": "51",
                   "kind": "model",
                   "name": "InnerError",
                   "namespace": "Azure.Core.Foundations",
                   "crossLanguageDefinitionId": "Azure.Core.Foundations.InnerError",
                   "usage": "Json,Exception",
-                  "doc": "An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#handling-errors.",
+                  "doc": "An object containing more specific information about the error. As per Azure REST API guidelines - https://aka.ms/AzureRestApiGuidelines#handling-errors.",
                   "decorators": [],
                   "properties": [
                     {
-                      "$id": "54",
+                      "$id": "52",
                       "kind": "property",
                       "name": "code",
                       "serializedName": "code",
                       "doc": "One of a server-defined set of error codes.",
                       "type": {
-                        "$id": "55",
+                        "$id": "53",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -580,16 +575,17 @@
                         "json": {
                           "name": "code"
                         }
-                      }
+                      },
+                      "isHttpMetadata": false
                     },
                     {
-                      "$id": "56",
+                      "$id": "54",
                       "kind": "property",
                       "name": "innererror",
                       "serializedName": "innererror",
                       "doc": "Inner error.",
                       "type": {
-                        "$ref": "53"
+                        "$ref": "51"
                       },
                       "optional": true,
                       "readOnly": false,
@@ -601,7 +597,8 @@
                         "json": {
                           "name": "innererror"
                         }
-                      }
+                      },
+                      "isHttpMetadata": false
                     }
                   ]
                 },
@@ -615,7 +612,8 @@
                   "json": {
                     "name": "innererror"
                   }
-                }
+                },
+                "isHttpMetadata": false
               }
             ]
           },
@@ -629,16 +627,17 @@
             "json": {
               "name": "error"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
-          "$id": "57",
-          "kind": "header",
+          "$id": "55",
+          "kind": "property",
           "name": "errorCode",
-          "serializedName": "x-ms-error-code",
+          "serializedName": "errorCode",
           "doc": "String error code indicating what went wrong.",
           "type": {
-            "$id": "58",
+            "$id": "56",
             "kind": "string",
             "name": "string",
             "crossLanguageDefinitionId": "TypeSpec.string",
@@ -646,20 +645,27 @@
           },
           "optional": true,
           "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
           "decorators": [],
           "crossLanguageDefinitionId": "Azure.Core.Foundations.ErrorResponse.errorCode",
-          "correspondingMethodParams": []
+          "serializationOptions": {
+            "json": {
+              "name": "errorCode"
+            }
+          },
+          "isHttpMetadata": true
         }
       ]
     },
     {
-      "$ref": "43"
+      "$ref": "41"
     },
     {
-      "$ref": "53"
+      "$ref": "51"
     },
     {
-      "$id": "59",
+      "$id": "57",
       "kind": "model",
       "name": "PagedUser",
       "namespace": "Azure.Core.Foundations",
@@ -669,17 +675,17 @@
       "decorators": [],
       "properties": [
         {
-          "$id": "60",
+          "$id": "58",
           "kind": "property",
           "name": "value",
           "serializedName": "value",
           "doc": "The User items on this page",
           "type": {
-            "$id": "61",
+            "$id": "59",
             "kind": "array",
             "name": "ArrayUser",
             "valueType": {
-              "$ref": "24"
+              "$ref": "22"
             },
             "crossLanguageDefinitionId": "TypeSpec.Array",
             "decorators": []
@@ -694,21 +700,22 @@
             "json": {
               "name": "value"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
-          "$id": "62",
+          "$id": "60",
           "kind": "property",
           "name": "nextLink",
           "serializedName": "nextLink",
           "doc": "The link to the next page of items",
           "type": {
-            "$id": "63",
+            "$id": "61",
             "kind": "url",
             "name": "ResourceLocation",
             "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
             "baseType": {
-              "$id": "64",
+              "$id": "62",
               "kind": "url",
               "name": "url",
               "crossLanguageDefinitionId": "TypeSpec.url",
@@ -726,12 +733,13 @@
             "json": {
               "name": "nextLink"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
     {
-      "$id": "65",
+      "$id": "63",
       "kind": "model",
       "name": "UserList",
       "namespace": "_Specs_.Azure.Core.Basic",
@@ -740,12 +748,12 @@
       "decorators": [],
       "properties": [
         {
-          "$id": "66",
+          "$id": "64",
           "kind": "property",
           "name": "users",
           "serializedName": "users",
           "type": {
-            "$ref": "61"
+            "$ref": "59"
           },
           "optional": false,
           "readOnly": false,
@@ -757,21 +765,22 @@
             "json": {
               "name": "users"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     }
   ],
   "clients": [
     {
-      "$id": "67",
+      "$id": "65",
       "kind": "client",
       "name": "BasicClient",
       "namespace": "_Specs_.Azure.Core.Basic",
       "doc": "Illustrates bodies templated with Azure Core",
       "methods": [
         {
-          "$id": "68",
+          "$id": "66",
           "kind": "basic",
           "name": "createOrUpdate",
           "accessibility": "public",
@@ -781,7 +790,7 @@
           "doc": "Creates or updates a User",
           "summary": "Adds a user or updates a user's fields.",
           "operation": {
-            "$id": "69",
+            "$id": "67",
             "name": "createOrUpdate",
             "resourceName": "User",
             "summary": "Adds a user or updates a user's fields.",
@@ -789,12 +798,12 @@
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "70",
+                "$id": "68",
                 "name": "apiVersion",
                 "nameInRequest": "api-version",
                 "doc": "The API version to use for this operation.",
                 "type": {
-                  "$id": "71",
+                  "$id": "69",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -809,7 +818,7 @@
                 "kind": "Client",
                 "defaultValue": {
                   "type": {
-                    "$id": "72",
+                    "$id": "70",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string"
@@ -820,12 +829,12 @@
                 "skipUrlEncoding": false
               },
               {
-                "$id": "73",
+                "$id": "71",
                 "name": "id",
                 "nameInRequest": "id",
                 "doc": "The user's id.",
                 "type": {
-                  "$id": "74",
+                  "$id": "72",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -842,7 +851,7 @@
                 "skipUrlEncoding": false
               },
               {
-                "$id": "75",
+                "$id": "73",
                 "name": "contentType",
                 "nameInRequest": "Content-Type",
                 "doc": "This request has a JSON Merge Patch body.",
@@ -860,7 +869,7 @@
                 "skipUrlEncoding": false
               },
               {
-                "$id": "76",
+                "$id": "74",
                 "name": "accept",
                 "nameInRequest": "Accept",
                 "type": {
@@ -877,12 +886,12 @@
                 "skipUrlEncoding": false
               },
               {
-                "$id": "77",
+                "$id": "75",
                 "name": "resource",
                 "nameInRequest": "resource",
                 "doc": "The resource instance.",
                 "type": {
-                  "$ref": "24"
+                  "$ref": "22"
                 },
                 "location": "Body",
                 "isApiVersion": false,
@@ -901,7 +910,7 @@
                   201
                 ],
                 "bodyType": {
-                  "$ref": "24"
+                  "$ref": "22"
                 },
                 "headers": [],
                 "isErrorResponse": false,
@@ -914,7 +923,7 @@
                   200
                 ],
                 "bodyType": {
-                  "$ref": "24"
+                  "$ref": "22"
                 },
                 "headers": [],
                 "isErrorResponse": false,
@@ -937,12 +946,12 @@
           },
           "parameters": [
             {
-              "$id": "78",
+              "$id": "76",
               "name": "id",
               "nameInRequest": "id",
               "doc": "The user's id.",
               "type": {
-                "$id": "79",
+                "$id": "77",
                 "kind": "int32",
                 "name": "int32",
                 "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -959,7 +968,7 @@
               "skipUrlEncoding": false
             },
             {
-              "$id": "80",
+              "$id": "78",
               "name": "contentType",
               "nameInRequest": "Content-Type",
               "doc": "This request has a JSON Merge Patch body.",
@@ -968,7 +977,7 @@
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
+              "isContentType": true,
               "isEndpoint": false,
               "explode": false,
               "isRequired": true,
@@ -977,12 +986,12 @@
               "skipUrlEncoding": false
             },
             {
-              "$id": "81",
+              "$id": "79",
               "name": "resource",
               "nameInRequest": "resource",
               "doc": "The resource instance.",
               "type": {
-                "$ref": "24"
+                "$ref": "22"
               },
               "location": "Body",
               "isApiVersion": false,
@@ -995,9 +1004,9 @@
               "skipUrlEncoding": false
             },
             {
-              "$id": "82",
+              "$id": "80",
               "name": "accept",
-              "nameInRequest": "accept",
+              "nameInRequest": "Accept",
               "type": {
                 "$ref": "6"
               },
@@ -1014,7 +1023,7 @@
           ],
           "response": {
             "type": {
-              "$ref": "24"
+              "$ref": "22"
             }
           },
           "isOverride": false,
@@ -1023,7 +1032,7 @@
           "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrUpdate"
         },
         {
-          "$id": "83",
+          "$id": "81",
           "kind": "basic",
           "name": "createOrReplace",
           "accessibility": "public",
@@ -1033,7 +1042,7 @@
           "doc": "Creates or replaces a User",
           "summary": "Adds a user or replaces a user's fields.",
           "operation": {
-            "$id": "84",
+            "$id": "82",
             "name": "createOrReplace",
             "resourceName": "User",
             "summary": "Adds a user or replaces a user's fields.",
@@ -1041,12 +1050,12 @@
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "85",
+                "$id": "83",
                 "name": "apiVersion",
                 "nameInRequest": "api-version",
                 "doc": "The API version to use for this operation.",
                 "type": {
-                  "$id": "86",
+                  "$id": "84",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1061,7 +1070,7 @@
                 "kind": "Client",
                 "defaultValue": {
                   "type": {
-                    "$id": "87",
+                    "$id": "85",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1072,12 +1081,12 @@
                 "skipUrlEncoding": false
               },
               {
-                "$id": "88",
+                "$id": "86",
                 "name": "id",
                 "nameInRequest": "id",
                 "doc": "The user's id.",
                 "type": {
-                  "$id": "89",
+                  "$id": "87",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -1094,7 +1103,7 @@
                 "skipUrlEncoding": false
               },
               {
-                "$id": "90",
+                "$id": "88",
                 "name": "contentType",
                 "nameInRequest": "Content-Type",
                 "doc": "Body parameter's content type. Known values are application/json",
@@ -1112,7 +1121,7 @@
                 "skipUrlEncoding": false
               },
               {
-                "$id": "91",
+                "$id": "89",
                 "name": "accept",
                 "nameInRequest": "Accept",
                 "type": {
@@ -1129,12 +1138,12 @@
                 "skipUrlEncoding": false
               },
               {
-                "$id": "92",
+                "$id": "90",
                 "name": "resource",
                 "nameInRequest": "resource",
                 "doc": "The resource instance.",
                 "type": {
-                  "$ref": "24"
+                  "$ref": "22"
                 },
                 "location": "Body",
                 "isApiVersion": false,
@@ -1153,7 +1162,7 @@
                   201
                 ],
                 "bodyType": {
-                  "$ref": "24"
+                  "$ref": "22"
                 },
                 "headers": [],
                 "isErrorResponse": false,
@@ -1166,7 +1175,7 @@
                   200
                 ],
                 "bodyType": {
-                  "$ref": "24"
+                  "$ref": "22"
                 },
                 "headers": [],
                 "isErrorResponse": false,
@@ -1189,12 +1198,12 @@
           },
           "parameters": [
             {
-              "$id": "93",
+              "$id": "91",
               "name": "id",
               "nameInRequest": "id",
               "doc": "The user's id.",
               "type": {
-                "$id": "94",
+                "$id": "92",
                 "kind": "int32",
                 "name": "int32",
                 "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -1211,12 +1220,12 @@
               "skipUrlEncoding": false
             },
             {
-              "$id": "95",
+              "$id": "93",
               "name": "resource",
               "nameInRequest": "resource",
               "doc": "The resource instance.",
               "type": {
-                "$ref": "24"
+                "$ref": "22"
               },
               "location": "Body",
               "isApiVersion": false,
@@ -1229,16 +1238,16 @@
               "skipUrlEncoding": false
             },
             {
-              "$id": "96",
+              "$id": "94",
               "name": "contentType",
-              "nameInRequest": "contentType",
+              "nameInRequest": "Content-Type",
               "doc": "Body parameter's content type. Known values are application/json",
               "type": {
                 "$ref": "10"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
+              "isContentType": true,
               "isEndpoint": false,
               "explode": false,
               "isRequired": true,
@@ -1247,9 +1256,9 @@
               "skipUrlEncoding": false
             },
             {
-              "$id": "97",
+              "$id": "95",
               "name": "accept",
-              "nameInRequest": "accept",
+              "nameInRequest": "Accept",
               "type": {
                 "$ref": "12"
               },
@@ -1266,7 +1275,7 @@
           ],
           "response": {
             "type": {
-              "$ref": "24"
+              "$ref": "22"
             }
           },
           "isOverride": false,
@@ -1275,7 +1284,7 @@
           "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.createOrReplace"
         },
         {
-          "$id": "98",
+          "$id": "96",
           "kind": "basic",
           "name": "get",
           "accessibility": "public",
@@ -1285,7 +1294,7 @@
           "doc": "Gets a User",
           "summary": "Gets a user.",
           "operation": {
-            "$id": "99",
+            "$id": "97",
             "name": "get",
             "resourceName": "User",
             "summary": "Gets a user.",
@@ -1293,12 +1302,12 @@
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "100",
+                "$id": "98",
                 "name": "apiVersion",
                 "nameInRequest": "api-version",
                 "doc": "The API version to use for this operation.",
                 "type": {
-                  "$id": "101",
+                  "$id": "99",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1313,7 +1322,7 @@
                 "kind": "Client",
                 "defaultValue": {
                   "type": {
-                    "$id": "102",
+                    "$id": "100",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1324,12 +1333,12 @@
                 "skipUrlEncoding": false
               },
               {
-                "$id": "103",
+                "$id": "101",
                 "name": "id",
                 "nameInRequest": "id",
                 "doc": "The user's id.",
                 "type": {
-                  "$id": "104",
+                  "$id": "102",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -1346,7 +1355,7 @@
                 "skipUrlEncoding": false
               },
               {
-                "$id": "105",
+                "$id": "103",
                 "name": "accept",
                 "nameInRequest": "Accept",
                 "type": {
@@ -1369,7 +1378,7 @@
                   200
                 ],
                 "bodyType": {
-                  "$ref": "24"
+                  "$ref": "22"
                 },
                 "headers": [],
                 "isErrorResponse": false,
@@ -1389,12 +1398,12 @@
           },
           "parameters": [
             {
-              "$id": "106",
+              "$id": "104",
               "name": "id",
               "nameInRequest": "id",
               "doc": "The user's id.",
               "type": {
-                "$id": "107",
+                "$id": "105",
                 "kind": "int32",
                 "name": "int32",
                 "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -1411,9 +1420,9 @@
               "skipUrlEncoding": false
             },
             {
-              "$id": "108",
+              "$id": "106",
               "name": "accept",
-              "nameInRequest": "accept",
+              "nameInRequest": "Accept",
               "type": {
                 "$ref": "14"
               },
@@ -1430,7 +1439,7 @@
           ],
           "response": {
             "type": {
-              "$ref": "24"
+              "$ref": "22"
             }
           },
           "isOverride": false,
@@ -1439,7 +1448,7 @@
           "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.get"
         },
         {
-          "$id": "109",
+          "$id": "107",
           "kind": "paging",
           "name": "list",
           "accessibility": "public",
@@ -1449,7 +1458,7 @@
           "doc": "Lists all Users",
           "summary": "Lists all users.",
           "operation": {
-            "$id": "110",
+            "$id": "108",
             "name": "list",
             "resourceName": "User",
             "summary": "Lists all users.",
@@ -1457,12 +1466,12 @@
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "111",
+                "$id": "109",
                 "name": "apiVersion",
                 "nameInRequest": "api-version",
                 "doc": "The API version to use for this operation.",
                 "type": {
-                  "$id": "112",
+                  "$id": "110",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1477,7 +1486,7 @@
                 "kind": "Client",
                 "defaultValue": {
                   "type": {
-                    "$id": "113",
+                    "$id": "111",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1488,10 +1497,32 @@
                 "skipUrlEncoding": false
               },
               {
-                "$id": "114",
+                "$id": "112",
                 "name": "top",
                 "nameInRequest": "top",
                 "doc": "The number of result items to return.",
+                "type": {
+                  "$id": "113",
+                  "kind": "int32",
+                  "name": "int32",
+                  "crossLanguageDefinitionId": "TypeSpec.int32",
+                  "decorators": []
+                },
+                "location": "Query",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": false,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "114",
+                "name": "skip",
+                "nameInRequest": "skip",
+                "doc": "The number of result items to skip.",
                 "type": {
                   "$id": "115",
                   "kind": "int32",
@@ -1511,9 +1542,9 @@
               },
               {
                 "$id": "116",
-                "name": "skip",
-                "nameInRequest": "skip",
-                "doc": "The number of result items to skip.",
+                "name": "maxpagesize",
+                "nameInRequest": "maxpagesize",
+                "doc": "The maximum number of result items per page.",
                 "type": {
                   "$id": "117",
                   "kind": "int32",
@@ -1533,37 +1564,15 @@
               },
               {
                 "$id": "118",
-                "name": "maxpagesize",
-                "nameInRequest": "maxpagesize",
-                "doc": "The maximum number of result items per page.",
-                "type": {
-                  "$id": "119",
-                  "kind": "int32",
-                  "name": "int32",
-                  "crossLanguageDefinitionId": "TypeSpec.int32",
-                  "decorators": []
-                },
-                "location": "Query",
-                "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": false,
-                "kind": "Method",
-                "decorators": [],
-                "skipUrlEncoding": false
-              },
-              {
-                "$id": "120",
                 "name": "orderby",
                 "nameInRequest": "orderby",
                 "doc": "Expressions that specify the order of returned results.",
                 "type": {
-                  "$id": "121",
+                  "$id": "119",
                   "kind": "array",
                   "name": "Array",
                   "valueType": {
-                    "$id": "122",
+                    "$id": "120",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1583,12 +1592,12 @@
                 "skipUrlEncoding": false
               },
               {
-                "$id": "123",
+                "$id": "121",
                 "name": "filter",
                 "nameInRequest": "filter",
                 "doc": "Filter the result list using the given expression.",
                 "type": {
-                  "$id": "124",
+                  "$id": "122",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1605,12 +1614,12 @@
                 "skipUrlEncoding": false
               },
               {
-                "$id": "125",
+                "$id": "123",
                 "name": "select",
                 "nameInRequest": "select",
                 "doc": "Select the specified fields to be included in the response.",
                 "type": {
-                  "$ref": "121"
+                  "$ref": "119"
                 },
                 "location": "Query",
                 "isApiVersion": false,
@@ -1623,12 +1632,12 @@
                 "skipUrlEncoding": false
               },
               {
-                "$id": "126",
+                "$id": "124",
                 "name": "expand",
                 "nameInRequest": "expand",
                 "doc": "Expand the indicated resources into the response.",
                 "type": {
-                  "$ref": "121"
+                  "$ref": "119"
                 },
                 "location": "Query",
                 "isApiVersion": false,
@@ -1641,7 +1650,7 @@
                 "skipUrlEncoding": false
               },
               {
-                "$id": "127",
+                "$id": "125",
                 "name": "accept",
                 "nameInRequest": "Accept",
                 "type": {
@@ -1664,7 +1673,7 @@
                   200
                 ],
                 "bodyType": {
-                  "$ref": "59"
+                  "$ref": "57"
                 },
                 "headers": [],
                 "isErrorResponse": false,
@@ -1684,10 +1693,32 @@
           },
           "parameters": [
             {
-              "$id": "128",
+              "$id": "126",
               "name": "top",
               "nameInRequest": "top",
               "doc": "The number of result items to return.",
+              "type": {
+                "$id": "127",
+                "kind": "int32",
+                "name": "int32",
+                "crossLanguageDefinitionId": "TypeSpec.int32",
+                "decorators": []
+              },
+              "location": "Query",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": false,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "128",
+              "name": "skip",
+              "nameInRequest": "skip",
+              "doc": "The number of result items to skip.",
               "type": {
                 "$id": "129",
                 "kind": "int32",
@@ -1707,9 +1738,9 @@
             },
             {
               "$id": "130",
-              "name": "skip",
-              "nameInRequest": "skip",
-              "doc": "The number of result items to skip.",
+              "name": "maxpagesize",
+              "nameInRequest": "maxpagesize",
+              "doc": "The maximum number of result items per page.",
               "type": {
                 "$id": "131",
                 "kind": "int32",
@@ -1729,51 +1760,29 @@
             },
             {
               "$id": "132",
-              "name": "maxpagesize",
-              "nameInRequest": "maxpagesize",
-              "doc": "The maximum number of result items per page.",
-              "type": {
-                "$id": "133",
-                "kind": "int32",
-                "name": "int32",
-                "crossLanguageDefinitionId": "TypeSpec.int32",
-                "decorators": []
-              },
-              "location": "Query",
-              "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": false,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
-            },
-            {
-              "$id": "134",
               "name": "orderby",
               "nameInRequest": "orderby",
               "doc": "Expressions that specify the order of returned results.",
               "type": {
-                "$ref": "121"
+                "$ref": "119"
               },
               "location": "Query",
               "isApiVersion": false,
               "isContentType": false,
               "isEndpoint": false,
-              "explode": false,
+              "explode": true,
               "isRequired": false,
               "kind": "Method",
               "decorators": [],
               "skipUrlEncoding": false
             },
             {
-              "$id": "135",
+              "$id": "133",
               "name": "filter",
               "nameInRequest": "filter",
               "doc": "Filter the result list using the given expression.",
               "type": {
-                "$id": "136",
+                "$id": "134",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1790,45 +1799,45 @@
               "skipUrlEncoding": false
             },
             {
-              "$id": "137",
+              "$id": "135",
               "name": "select",
               "nameInRequest": "select",
               "doc": "Select the specified fields to be included in the response.",
               "type": {
-                "$ref": "121"
+                "$ref": "119"
               },
               "location": "Query",
               "isApiVersion": false,
               "isContentType": false,
               "isEndpoint": false,
-              "explode": false,
+              "explode": true,
               "isRequired": false,
               "kind": "Method",
               "decorators": [],
               "skipUrlEncoding": false
             },
             {
-              "$id": "138",
+              "$id": "136",
               "name": "expand",
               "nameInRequest": "expand",
               "doc": "Expand the indicated resources into the response.",
               "type": {
-                "$ref": "121"
+                "$ref": "119"
               },
               "location": "Query",
               "isApiVersion": false,
               "isContentType": false,
               "isEndpoint": false,
-              "explode": false,
+              "explode": true,
               "isRequired": false,
               "kind": "Method",
               "decorators": [],
               "skipUrlEncoding": false
             },
             {
-              "$id": "139",
+              "$id": "137",
               "name": "accept",
-              "nameInRequest": "accept",
+              "nameInRequest": "Accept",
               "type": {
                 "$ref": "16"
               },
@@ -1845,7 +1854,7 @@
           ],
           "response": {
             "type": {
-              "$ref": "61"
+              "$ref": "59"
             },
             "resultSegments": [
               "value"
@@ -1868,7 +1877,7 @@
           }
         },
         {
-          "$id": "140",
+          "$id": "138",
           "kind": "basic",
           "name": "delete",
           "accessibility": "public",
@@ -1878,7 +1887,7 @@
           "doc": "Deletes a User",
           "summary": "Deletes a user.",
           "operation": {
-            "$id": "141",
+            "$id": "139",
             "name": "delete",
             "resourceName": "User",
             "summary": "Deletes a user.",
@@ -1886,12 +1895,12 @@
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "142",
+                "$id": "140",
                 "name": "apiVersion",
                 "nameInRequest": "api-version",
                 "doc": "The API version to use for this operation.",
                 "type": {
-                  "$id": "143",
+                  "$id": "141",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -1906,7 +1915,7 @@
                 "kind": "Client",
                 "defaultValue": {
                   "type": {
-                    "$id": "144",
+                    "$id": "142",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1917,12 +1926,12 @@
                 "skipUrlEncoding": false
               },
               {
-                "$id": "145",
+                "$id": "143",
                 "name": "id",
                 "nameInRequest": "id",
                 "doc": "The user's id.",
                 "type": {
-                  "$id": "146",
+                  "$id": "144",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -1935,23 +1944,6 @@
                 "explode": false,
                 "isRequired": true,
                 "kind": "Method",
-                "decorators": [],
-                "skipUrlEncoding": false
-              },
-              {
-                "$id": "147",
-                "name": "accept",
-                "nameInRequest": "Accept",
-                "type": {
-                  "$ref": "18"
-                },
-                "location": "Header",
-                "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Constant",
                 "decorators": [],
                 "skipUrlEncoding": false
               }
@@ -1976,12 +1968,12 @@
           },
           "parameters": [
             {
-              "$id": "148",
+              "$id": "145",
               "name": "id",
               "nameInRequest": "id",
               "doc": "The user's id.",
               "type": {
-                "$id": "149",
+                "$id": "146",
                 "kind": "int32",
                 "name": "int32",
                 "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -1996,23 +1988,6 @@
               "kind": "Method",
               "decorators": [],
               "skipUrlEncoding": false
-            },
-            {
-              "$id": "150",
-              "name": "accept",
-              "nameInRequest": "accept",
-              "type": {
-                "$ref": "18"
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Constant",
-              "decorators": [],
-              "skipUrlEncoding": false
             }
           ],
           "response": {},
@@ -2022,7 +1997,7 @@
           "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.delete"
         },
         {
-          "$id": "151",
+          "$id": "147",
           "kind": "basic",
           "name": "export",
           "accessibility": "public",
@@ -2032,7 +2007,7 @@
           "doc": "Exports a User",
           "summary": "Exports a user.",
           "operation": {
-            "$id": "152",
+            "$id": "148",
             "name": "export",
             "resourceName": "Basic",
             "summary": "Exports a user.",
@@ -2040,12 +2015,12 @@
             "accessibility": "public",
             "parameters": [
               {
-                "$id": "153",
+                "$id": "149",
                 "name": "apiVersion",
                 "nameInRequest": "api-version",
                 "doc": "The API version to use for this operation.",
                 "type": {
-                  "$id": "154",
+                  "$id": "150",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2060,7 +2035,7 @@
                 "kind": "Client",
                 "defaultValue": {
                   "type": {
-                    "$id": "155",
+                    "$id": "151",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string"
@@ -2071,12 +2046,12 @@
                 "skipUrlEncoding": false
               },
               {
-                "$id": "156",
+                "$id": "152",
                 "name": "id",
                 "nameInRequest": "id",
                 "doc": "The user's id.",
                 "type": {
-                  "$id": "157",
+                  "$id": "153",
                   "kind": "int32",
                   "name": "int32",
                   "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -2093,12 +2068,12 @@
                 "skipUrlEncoding": false
               },
               {
-                "$id": "158",
+                "$id": "154",
                 "name": "format",
                 "nameInRequest": "format",
                 "doc": "The format of the data.",
                 "type": {
-                  "$id": "159",
+                  "$id": "155",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2115,7 +2090,193 @@
                 "skipUrlEncoding": false
               },
               {
+                "$id": "156",
+                "name": "accept",
+                "nameInRequest": "Accept",
+                "type": {
+                  "$ref": "18"
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Constant",
+                "decorators": [],
+                "skipUrlEncoding": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "22"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ]
+              }
+            ],
+            "httpMethod": "POST",
+            "uri": "{endpoint}",
+            "path": "/azure/core/basic/users/{id}:export",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.export",
+            "decorators": []
+          },
+          "parameters": [
+            {
+              "$id": "157",
+              "name": "id",
+              "nameInRequest": "id",
+              "doc": "The user's id.",
+              "type": {
+                "$id": "158",
+                "kind": "int32",
+                "name": "int32",
+                "crossLanguageDefinitionId": "TypeSpec.int32",
+                "decorators": []
+              },
+              "location": "Path",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "159",
+              "name": "format",
+              "nameInRequest": "format",
+              "doc": "The format of the data.",
+              "type": {
                 "$id": "160",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Query",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "161",
+              "name": "accept",
+              "nameInRequest": "Accept",
+              "type": {
+                "$ref": "18"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Constant",
+              "decorators": [],
+              "skipUrlEncoding": false
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "22"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.export"
+        },
+        {
+          "$id": "162",
+          "kind": "basic",
+          "name": "exportAllUsers",
+          "accessibility": "public",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
+          "doc": "Exports all users",
+          "summary": "Exports all users.",
+          "operation": {
+            "$id": "163",
+            "name": "exportAllUsers",
+            "resourceName": "Basic",
+            "summary": "Exports all users.",
+            "doc": "Exports all users",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "164",
+                "name": "apiVersion",
+                "nameInRequest": "api-version",
+                "doc": "The API version to use for this operation.",
+                "type": {
+                  "$id": "165",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Query",
+                "isApiVersion": true,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Client",
+                "defaultValue": {
+                  "type": {
+                    "$id": "166",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string"
+                  },
+                  "value": "2022-12-01-preview"
+                },
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "167",
+                "name": "format",
+                "nameInRequest": "format",
+                "doc": "The format of the data.",
+                "type": {
+                  "$id": "168",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Query",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "169",
                 "name": "accept",
                 "nameInRequest": "Accept",
                 "type": {
@@ -2138,193 +2299,7 @@
                   200
                 ],
                 "bodyType": {
-                  "$ref": "24"
-                },
-                "headers": [],
-                "isErrorResponse": false,
-                "contentTypes": [
-                  "application/json"
-                ]
-              }
-            ],
-            "httpMethod": "POST",
-            "uri": "{endpoint}",
-            "path": "/azure/core/basic/users/{id}:export",
-            "bufferResponse": true,
-            "generateProtocolMethod": true,
-            "generateConvenienceMethod": true,
-            "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.export",
-            "decorators": []
-          },
-          "parameters": [
-            {
-              "$id": "161",
-              "name": "id",
-              "nameInRequest": "id",
-              "doc": "The user's id.",
-              "type": {
-                "$id": "162",
-                "kind": "int32",
-                "name": "int32",
-                "crossLanguageDefinitionId": "TypeSpec.int32",
-                "decorators": []
-              },
-              "location": "Path",
-              "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
-            },
-            {
-              "$id": "163",
-              "name": "format",
-              "nameInRequest": "format",
-              "doc": "The format of the data.",
-              "type": {
-                "$id": "164",
-                "kind": "string",
-                "name": "string",
-                "crossLanguageDefinitionId": "TypeSpec.string",
-                "decorators": []
-              },
-              "location": "Query",
-              "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
-            },
-            {
-              "$id": "165",
-              "name": "accept",
-              "nameInRequest": "accept",
-              "type": {
-                "$ref": "20"
-              },
-              "location": "Header",
-              "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Constant",
-              "decorators": [],
-              "skipUrlEncoding": false
-            }
-          ],
-          "response": {
-            "type": {
-              "$ref": "24"
-            }
-          },
-          "isOverride": false,
-          "generateConvenient": true,
-          "generateProtocol": true,
-          "crossLanguageDefinitionId": "_Specs_.Azure.Core.Basic.export"
-        },
-        {
-          "$id": "166",
-          "kind": "basic",
-          "name": "exportAllUsers",
-          "accessibility": "public",
-          "apiVersions": [
-            "2022-12-01-preview"
-          ],
-          "doc": "Exports all users",
-          "summary": "Exports all users.",
-          "operation": {
-            "$id": "167",
-            "name": "exportAllUsers",
-            "resourceName": "Basic",
-            "summary": "Exports all users.",
-            "doc": "Exports all users",
-            "accessibility": "public",
-            "parameters": [
-              {
-                "$id": "168",
-                "name": "apiVersion",
-                "nameInRequest": "api-version",
-                "doc": "The API version to use for this operation.",
-                "type": {
-                  "$id": "169",
-                  "kind": "string",
-                  "name": "string",
-                  "crossLanguageDefinitionId": "TypeSpec.string",
-                  "decorators": []
-                },
-                "location": "Query",
-                "isApiVersion": true,
-                "isContentType": false,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Client",
-                "defaultValue": {
-                  "type": {
-                    "$id": "170",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string"
-                  },
-                  "value": "2022-12-01-preview"
-                },
-                "decorators": [],
-                "skipUrlEncoding": false
-              },
-              {
-                "$id": "171",
-                "name": "format",
-                "nameInRequest": "format",
-                "doc": "The format of the data.",
-                "type": {
-                  "$id": "172",
-                  "kind": "string",
-                  "name": "string",
-                  "crossLanguageDefinitionId": "TypeSpec.string",
-                  "decorators": []
-                },
-                "location": "Query",
-                "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Method",
-                "decorators": [],
-                "skipUrlEncoding": false
-              },
-              {
-                "$id": "173",
-                "name": "accept",
-                "nameInRequest": "Accept",
-                "type": {
-                  "$ref": "22"
-                },
-                "location": "Header",
-                "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Constant",
-                "decorators": [],
-                "skipUrlEncoding": false
-              }
-            ],
-            "responses": [
-              {
-                "statusCodes": [
-                  200
-                ],
-                "bodyType": {
-                  "$ref": "65"
+                  "$ref": "63"
                 },
                 "headers": [],
                 "isErrorResponse": false,
@@ -2344,12 +2319,12 @@
           },
           "parameters": [
             {
-              "$id": "174",
+              "$id": "170",
               "name": "format",
               "nameInRequest": "format",
               "doc": "The format of the data.",
               "type": {
-                "$id": "175",
+                "$id": "171",
                 "kind": "string",
                 "name": "string",
                 "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2366,11 +2341,11 @@
               "skipUrlEncoding": false
             },
             {
-              "$id": "176",
+              "$id": "172",
               "name": "accept",
-              "nameInRequest": "accept",
+              "nameInRequest": "Accept",
               "type": {
-                "$ref": "22"
+                "$ref": "20"
               },
               "location": "Header",
               "isApiVersion": false,
@@ -2385,7 +2360,7 @@
           ],
           "response": {
             "type": {
-              "$ref": "65"
+              "$ref": "63"
             }
           },
           "isOverride": false,
@@ -2396,12 +2371,12 @@
       ],
       "parameters": [
         {
-          "$id": "177",
+          "$id": "173",
           "name": "endpoint",
           "nameInRequest": "endpoint",
           "doc": "Service host",
           "type": {
-            "$id": "178",
+            "$id": "174",
             "kind": "url",
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
@@ -2416,7 +2391,7 @@
           "kind": "Client",
           "defaultValue": {
             "type": {
-              "$id": "179",
+              "$id": "175",
               "kind": "string",
               "name": "string",
               "crossLanguageDefinitionId": "TypeSpec.string"

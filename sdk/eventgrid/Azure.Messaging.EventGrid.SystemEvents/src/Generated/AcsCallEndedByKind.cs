@@ -14,38 +14,57 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public readonly partial struct AcsCallEndedByKind : IEquatable<AcsCallEndedByKind>
     {
         private readonly string _value;
+        /// <summary> Participant. </summary>
+        private const string ParticipantValue = "Participant";
+        /// <summary> MicrosoftInternal. </summary>
+        private const string MicrosoftInternalValue = "MicrosoftInternal";
 
         /// <summary> Initializes a new instance of <see cref="AcsCallEndedByKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AcsCallEndedByKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ParticipantValue = "Participant";
-        private const string MicrosoftInternalValue = "MicrosoftInternal";
+            _value = value;
+        }
 
         /// <summary> Participant. </summary>
         public static AcsCallEndedByKind Participant { get; } = new AcsCallEndedByKind(ParticipantValue);
+
         /// <summary> MicrosoftInternal. </summary>
         public static AcsCallEndedByKind MicrosoftInternal { get; } = new AcsCallEndedByKind(MicrosoftInternalValue);
+
         /// <summary> Determines if two <see cref="AcsCallEndedByKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AcsCallEndedByKind left, AcsCallEndedByKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AcsCallEndedByKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AcsCallEndedByKind left, AcsCallEndedByKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AcsCallEndedByKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AcsCallEndedByKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AcsCallEndedByKind(string value) => new AcsCallEndedByKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AcsCallEndedByKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AcsCallEndedByKind?(string value) => value == null ? null : new AcsCallEndedByKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AcsCallEndedByKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AcsCallEndedByKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
