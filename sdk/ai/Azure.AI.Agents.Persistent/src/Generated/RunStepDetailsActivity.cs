@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Agents.Persistent
 {
-    /// <summary> Represents the list of activities, associated with the given step.*. </summary>
+    /// <summary> Represents the list of activities, associated with the given step. </summary>
     public partial class RunStepDetailsActivity
     {
         /// <summary>
