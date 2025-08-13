@@ -12,7 +12,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ApiVersion.P
         [SpectorTest]
         public Task Azure_ClientGenerator_Core_ApiVersion_Path() => Test(async (host) =>
         {
-            var response = await new PathClient(host, "2025-01-01", null).PathApiVersionAsync();
+            var response = await new PathClient(host, null).PathApiVersionAsync();
             Assert.AreEqual(200, response.Status);
         });
     }
