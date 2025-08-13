@@ -949,7 +949,7 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNull(options.TargetParticipants, nameof(options.TargetParticipants));
             Argument.AssertNotNull(options.FromCall, nameof(options.FromCall));
             MoveParticipantsRequestInternal request = new MoveParticipantsRequestInternal(
-                options.TargetParticipants.Select(p => CommunicationIdentifierSerializer.Serialize(p)),
+                options.TargetParticipants.Select(p => CommunicationIdentifierSerializer_2025_06_30.Serialize(p)),
                 options.FromCall)
             {
                 OperationContext = options.OperationContext ?? Guid.NewGuid().ToString(),

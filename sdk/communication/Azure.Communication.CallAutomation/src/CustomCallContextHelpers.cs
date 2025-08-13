@@ -50,7 +50,7 @@ namespace Azure.Communication.CallAutomation
             }
 
             return new TeamsPhoneCallerDetailsInternal(
-                CommunicationIdentifierSerializer.Serialize(teamsPhoneCallerDetails.Caller),
+                CommunicationIdentifierSerializer_2025_06_30.Serialize(teamsPhoneCallerDetails.Caller),
                 teamsPhoneCallerDetails.Name,
                 teamsPhoneCallerDetails.PhoneNumber,
                 teamsPhoneCallerDetails.RecordId,
@@ -74,12 +74,12 @@ namespace Azure.Communication.CallAutomation
             }
 
             return new TeamsPhoneSourceDetailsInternal(
-                CommunicationIdentifierSerializer.Serialize(teamsPhoneSourceDetails.Source),
+                CommunicationIdentifierSerializer_2025_06_30.Serialize(teamsPhoneSourceDetails.Source),
                 teamsPhoneSourceDetails.Language,
                 teamsPhoneSourceDetails.Status,
                 teamsPhoneSourceDetails.IntendedTargets?.ToDictionary(
                     pair => pair.Key,
-                    pair => CommunicationIdentifierSerializer.Serialize(pair.Value))
+                    pair => CommunicationIdentifierSerializer_2025_06_30.Serialize(pair.Value))
                 );
         }
 
@@ -107,7 +107,7 @@ namespace Azure.Communication.CallAutomation
                 return null;
             }
             return new TeamsPhoneCallerDetails(
-                CommunicationIdentifierSerializer.Deserialize(internalTeamsPhoneCallerDetails.Caller),
+                CommunicationIdentifierSerializer_2025_06_30.Deserialize(internalTeamsPhoneCallerDetails.Caller),
                 internalTeamsPhoneCallerDetails.Name,
                 internalTeamsPhoneCallerDetails.PhoneNumber,
                 internalTeamsPhoneCallerDetails.RecordId,
@@ -123,12 +123,12 @@ namespace Azure.Communication.CallAutomation
                 return null;
             }
             return new TeamsPhoneSourceDetails(
-                CommunicationIdentifierSerializer.Deserialize(internalTeamsPhoneSourceDetails.Source),
+                CommunicationIdentifierSerializer_2025_06_30.Deserialize(internalTeamsPhoneSourceDetails.Source),
                 internalTeamsPhoneSourceDetails.Language,
                 internalTeamsPhoneSourceDetails.Status,
                 internalTeamsPhoneSourceDetails.IntendedTargets?.ToDictionary(
                     pair => pair.Key,
-                    pair => CommunicationIdentifierSerializer.Deserialize(pair.Value))
+                    pair => CommunicationIdentifierSerializer_2025_06_30.Deserialize(pair.Value))
                 );
         }
     }
