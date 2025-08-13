@@ -37,16 +37,17 @@ internal class PaginationVisitor : ScmLibraryVisitor
     }
 
     private static bool IsAsPagesMethod(MethodProvider method) => method.Signature.Name.Equals("AsPages");
-    private static bool IsGetNextResponseMethod(MethodProvider method) => method.Signature.Name.Equals("GetNextResponse");
+    private static bool IsGetNextResponseMethod(MethodProvider method)
+        => method.Signature.Name.Equals("GetNextResponseAsync") || method.Signature.Name.Equals("GetNextResponse");
 
     private void DoVisitAsPagesMethodStatements(MethodBodyStatements statements, MethodProvider method)
     {
-        var doWhileStatement = statements.OfType<DoWhileStatement>().FirstOrDefault();
-        if (doWhileStatement is not null)
+        var whileStatement = statements.OfType<WhileStatement>().FirstOrDefault();
+        if (whileStatement is not null)
         {
             // we manually go over the body statements because currently the framework does not do this.
             // TODO -- we do not have to do this once https://github.com/microsoft/typespec/issues/8177 is fixed.
-            foreach (var statement in doWhileStatement.Body)
+            foreach (var statement in whileStatement.Body)
             {
                 if (statement is ExpressionStatement { Expression: AssignmentExpression assignment } expressionStatement)
                 {
