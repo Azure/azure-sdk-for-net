@@ -63,7 +63,7 @@ public class RecordedVariableOptionsTests
         var originalValue = "secret-value";
         var result = options.Apply(originalValue);
         Assert.That(result, Is.Not.EqualTo(originalValue));
-        Assert.That(result, Is.EqualTo("Sanitized")); // Assuming RecordedTestBase.SanitizeValue is "Sanitized"
+        Assert.That(result, Is.EqualTo(SanitizedValue.Default)); // Use the actual default sanitized value
     }
 
     [Test]
@@ -134,7 +134,7 @@ public class RecordedVariableOptionsTests
         var options = new RecordedVariableOptions();
         options.IsSecret(SanitizedValue.Default);
         var result = options.Apply("original");
-        Assert.That(result, Is.EqualTo("Sanitized")); // Assuming this is the default sanitized value
+        Assert.That(result, Is.EqualTo(SanitizedValue.Default)); // Use the actual default sanitized value constant
     }
 
     #endregion
