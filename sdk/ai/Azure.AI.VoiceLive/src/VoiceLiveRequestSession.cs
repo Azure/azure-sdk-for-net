@@ -14,6 +14,6 @@ namespace Azure.AI.VoiceLive
         /// <summary>
         /// Serialized additional properties for the request session
         /// </summary>
-        internal IDictionary<string, BinaryData> AdditionalProperties => this._serializedAdditionalRawData;
+        internal IDictionary<string, BinaryData> AdditionalProperties => this._additionalBinaryDataProperties;
     }
 }

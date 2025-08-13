@@ -3,6 +3,7 @@
 
 using System;
 using System.Buffers;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.WebSockets;
@@ -183,7 +184,7 @@ namespace Azure.AI.VoiceLive
             Argument.AssertNotNull(command, nameof(command));
             ThrowIfDisposed();
 
-            BinaryData data = command.ToBinaryData();
+            var data = ((IPersistableModel<ClientEvent>)command).Write(default);
             await SendCommandAsync(data, cancellationToken).ConfigureAwait(false);
         }
 
