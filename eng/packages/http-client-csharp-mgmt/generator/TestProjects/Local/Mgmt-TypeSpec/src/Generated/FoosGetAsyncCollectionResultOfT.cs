@@ -66,7 +66,7 @@ namespace MgmtTypeSpec
         private async ValueTask<Response> GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetRequest(nextLink, _subscriptionId, _resourceGroupName, _context) : _client.CreateGetRequest(_subscriptionId, _resourceGroupName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("Foos.Get");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("FooCollection.GetAll");
             scope.Start();
             try
             {

@@ -29,43 +29,65 @@ internal class PaginationVisitor : ScmLibraryVisitor
 
     protected override MethodBodyStatement? VisitStatements(MethodBodyStatements statements, MethodProvider method)
     {
-        if (_isCollectionResultType && method.Signature.Name.Equals("AsPages"))
+        if (_isCollectionResultType && IsAsPagesMethod(method))
         {
-            var doWhileStatement = statements.OfType<DoWhileStatement>().FirstOrDefault();
-            if (doWhileStatement is not null)
-            {
-                var body = doWhileStatement.Body;
-
-                // we manually go over the body statements because currently the framework does not do this.
-                // TODO -- we do not have to do this once https://github.com/microsoft/typespec/issues/8177 is fixed.
-                foreach (var statement in doWhileStatement.Body)
-                {
-                    if (statement is ExpressionStatement { Expression: AssignmentExpression assignment } expressionStatement)
-                    {
-                        var updatedExpression = DoVisitAssignmentExpression(assignment, method);
-                        if (updatedExpression is not null)
-                        {
-                            // update the expression in the statement.
-                            expressionStatement.Update(updatedExpression);
-                        }
-                    }
-                }
-            }
+            DoVisitAsPagesMethodStatements(statements, method);
         }
         return base.VisitStatements(statements, method);
     }
 
-    // TODO -- restore this once https://github.com/microsoft/typespec/issues/8177 is fixed.
-    //protected override ValueExpression? VisitAssignmentExpression(AssignmentExpression expression, MethodProvider method)
-    //{
-    //    if (!_isCollectionResultType)
-    //    {
-    //        return base.VisitAssignmentExpression(expression, method);
-    //    }
-    //    return DoVisitAssignmentExpression(expression, method) ?? base.VisitAssignmentExpression(expression, method);
-    //}
+    private static bool IsAsPagesMethod(MethodProvider method) => method.Signature.Name.Equals("AsPages");
+    private static bool IsGetNextResponseMethod(MethodProvider method) => method.Signature.Name.Equals("GetNextResponse");
 
-    private ValueExpression? DoVisitAssignmentExpression(AssignmentExpression expression, MethodProvider method)
+    private void DoVisitAsPagesMethodStatements(MethodBodyStatements statements, MethodProvider method)
+    {
+        var doWhileStatement = statements.OfType<DoWhileStatement>().FirstOrDefault();
+        if (doWhileStatement is not null)
+        {
+            var body = doWhileStatement.Body;
+
+            // we manually go over the body statements because currently the framework does not do this.
+            // TODO -- we do not have to do this once https://github.com/microsoft/typespec/issues/8177 is fixed.
+            foreach (var statement in doWhileStatement.Body)
+            {
+                if (statement is ExpressionStatement { Expression: AssignmentExpression assignment } expressionStatement)
+                {
+                    var updatedExpression = DoVisitAssignmentExpressionForAsPagesMethod(assignment, method);
+                    if (updatedExpression is not null)
+                    {
+                        // update the expression in the statement.
+                        expressionStatement.Update(updatedExpression);
+                    }
+                }
+            }
+        }
+    }
+
+    protected override ValueExpression? VisitAssignmentExpression(AssignmentExpression expression, MethodProvider method)
+    {
+        if (_isCollectionResultType && IsAsPagesMethod(method))
+        {
+            var newExpression = DoVisitAssignmentExpressionForAsPagesMethod(expression, method);
+            if (newExpression is not null)
+            {
+                // we have updated the expression, so we return it.
+                return newExpression;
+            }
+        }
+
+        if (_isCollectionResultType && IsGetNextResponseMethod(method))
+        {
+            var newExpression = DoVisitAssignmentExpressionForGetNextResponseMethod(expression, method);
+            if (newExpression is not null)
+            {
+                // we have updated the expression, so we return it.
+                return newExpression;
+            }
+        }
+        return base.VisitAssignmentExpression(expression, method);
+    }
+
+    private ValueExpression? DoVisitAssignmentExpressionForAsPagesMethod(AssignmentExpression expression, MethodProvider method)
     {
         if (expression.Value is CastExpression castExpression && IsResponseToModelCastExpression(castExpression))
         {
@@ -75,16 +97,40 @@ internal class PaginationVisitor : ScmLibraryVisitor
         }
         // do nothing if nothing is changed.
         return null;
+
+        static bool IsResponseToModelCastExpression(CastExpression castExpression)
+        {
+            if (castExpression.Inner is VariableExpression variableExpression &&
+                variableExpression.Type is { IsFrameworkType: true, FrameworkType: { } frameworkType } &&
+                frameworkType == typeof(Response))
+            {
+                return true;
+            }
+            return false;
+        }
     }
 
-    private static bool IsResponseToModelCastExpression(CastExpression castExpression)
+    private ValueExpression? DoVisitAssignmentExpressionForGetNextResponseMethod(AssignmentExpression expression, MethodProvider method)
     {
-        if (castExpression.Inner is VariableExpression variableExpression &&
-            variableExpression.Type is { IsFrameworkType: true, FrameworkType: { } frameworkType } &&
-            frameworkType == typeof(Response))
+        if (expression is
+            {
+                Variable: DeclarationExpression { Variable: { } variable, IsUsing: true } declaration,
+                Value: InvokeMethodExpression invokeMethodExpression
+            }
+            && variable.Declaration.RequestedName == "scope")
         {
-            return true;
+            // first we fetch the diagnostics scope from outputlibrary
+            if (ManagementClientGenerator.Instance.OutputLibrary.PageableMethodScopes.TryGetValue(method.EnclosingType, out var diagnosticsScopeValue))
+            {
+                // change its first argument to be the new diagnostics scope value.
+                invokeMethodExpression.Update(
+                    arguments: [Literal(diagnosticsScopeValue)]);
+
+                return expression;
+            }
+            return null;
         }
-        return false;
+        // do nothing if nothing is changed.
+        return null;
     }
 }
