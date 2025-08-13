@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the Microsoft.ClientModel.TestFramework client library for developing .NET applications with rich experience.</Description>
+    <Description>Test framework for clients built on System.ClientModel</Description>
     <AssemblyTitle>SDK Code Generation Microsoft.ClientModel.TestFramework</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Microsoft.ClientModel.TestFramework</PackageTags>
@@ -10,6 +10,7 @@
     <NoWarn>AZC0015;AZC0007</NoWarn>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<IsTestProject>false</IsTestProject>
+    <IsTestSupportProject>true</IsTestSupportProject>
   </PropertyGroup>
 
   <ItemGroup>

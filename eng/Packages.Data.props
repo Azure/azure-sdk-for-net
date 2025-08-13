@@ -96,7 +96,6 @@
     <PackageReference Update="System.Reflection.TypeExtensions" Version="4.7.0" />
     <PackageReference Update="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
     <PackageReference Update="System.Security.Cryptography.Cose" Version="8.0.1" />
-    <PackageReference Update="System.Security.Cryptography.ProtectedData" Version="8.0.0" />
     <PackageReference Update="System.Threading.Channels" Version="8.0.0" />
     <PackageReference Update="System.Threading.Tasks.Extensions" Version="4.5.4" />
     <PackageReference Update="System.Text.Json" Version="8.0.6" />
@@ -249,9 +248,6 @@
     <PackageReference Update="Microsoft.Azure.WebJobs.Host.Storage" Version="5.0.1" />
     <PackageReference Update="Microsoft.Spatial" Version="7.5.3" />
     <PackageReference Update="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Update="NUnit" Version="3.13.2" />
-    <PackageReference Update="NUnit3TestAdapter" Version="4.4.2" />
-    <PackageReference Update="Castle.Core" Version="5.2.1" />
   </ItemGroup>
 
   <!-- Packages intended for Extensions libraries only -->
