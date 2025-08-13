@@ -16,23 +16,22 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="TranscriptionStarted"/>. </summary>
-        /// <param name="transcriptionUpdate"> Defines the result for TranscriptionUpdate with the current status and the details about the status. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <param name="transcriptionUpdateResult"> Defines the result for TranscriptionUpdate with the current status and the details about the status. </param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
-        internal TranscriptionStarted(TranscriptionUpdate transcriptionUpdate, string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation)
+        internal TranscriptionStarted(string operationContext, ResultInformation resultInformation, TranscriptionUpdate transcriptionUpdateResult, string callConnectionId, string serverCallId, string correlationId)
         {
-            TranscriptionUpdate = transcriptionUpdate;
+            OperationContext = operationContext;
+            ResultInformation = resultInformation;
+            TranscriptionUpdateResult = transcriptionUpdateResult;
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
-            OperationContext = operationContext;
-            ResultInformation = resultInformation;
         }
-
         /// <summary> Defines the result for TranscriptionUpdate with the current status and the details about the status. </summary>
-        public TranscriptionUpdate TranscriptionUpdate { get; }
+        public TranscriptionUpdate TranscriptionUpdateResult { get; }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.Communication.CallAutomation
         public CallConnected SuccessResult { get; }
 
         /// <summary>
-        /// <see cref="AnswerFailed"/> event will be returned once the call is established with AnswerCall.
+        /// <see cref="AnswerFailed"/> event will be returned when the call was not answered.
         /// </summary>
         /// <value></value>
         public AnswerFailed FailureResult { get; }

@@ -29,15 +29,20 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("callIntelligenceOptions"u8);
                 writer.WriteObjectValue(CallIntelligenceOptions);
             }
-            if (Optional.IsDefined(MediaStreamingOptions))
+            if (Optional.IsDefined(MediaStreamingConfiguration))
             {
-                writer.WritePropertyName("mediaStreamingOptions"u8);
-                writer.WriteObjectValue(MediaStreamingOptions);
+                writer.WritePropertyName("mediaStreamingConfiguration"u8);
+                writer.WriteObjectValue(MediaStreamingConfiguration);
             }
-            if (Optional.IsDefined(TranscriptionOptions))
+            if (Optional.IsDefined(TranscriptionConfiguration))
             {
-                writer.WritePropertyName("transcriptionOptions"u8);
-                writer.WriteObjectValue(TranscriptionOptions);
+                writer.WritePropertyName("transcriptionConfiguration"u8);
+                writer.WriteObjectValue(TranscriptionConfiguration);
+            }
+            if (Optional.IsDefined(EnableLoopbackAudio))
+            {
+                writer.WritePropertyName("enableLoopbackAudio"u8);
+                writer.WriteBooleanValue(EnableLoopbackAudio.Value);
             }
             writer.WriteEndObject();
         }

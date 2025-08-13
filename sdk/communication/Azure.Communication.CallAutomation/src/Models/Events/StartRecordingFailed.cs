@@ -14,6 +14,11 @@ namespace Azure.Communication.CallAutomation
     public partial class StartRecordingFailed : CallAutomationEventBase
     {
         /// <summary>
+        /// Reason code.
+        /// </summary>
+        public MediaEventReasonCode ReasonCode { get; internal set; }
+
+        /// <summary>
         /// Deserialize <see cref="StartRecordingFailed"/> event.
         /// </summary>
         /// <param name="content">The json content.</param>

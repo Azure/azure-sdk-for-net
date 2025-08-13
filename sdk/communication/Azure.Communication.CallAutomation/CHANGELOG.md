@@ -1,95 +1,44 @@
 # Release History
 
-## 1.5.0-beta.2 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
-
-- Added support for Teams multipersona users in create call, add participant, transfer, and redirect scenarios in OPS calls
-- Added TeamsAppSource for use when creating outbound OPS calls
-- Recording with the call connection ID is now supported. OPS calls can be recorded using the call connection ID.
-- Added StartRecordingFailed event to indicate when the start recording API is unable to initiate the recording.
-- Adds support for SIP headers prefixed with 'X-' and 'X-MS-Custom-' within the CustomCallingContext.
-
-## 1.4.0 (2025-06-04)
-
-### Features Added
-
-- Real-time transcription support
-- Audio and DTMF streaming capabilities
-- Integration of ConnectAPI for seamless streaming and transcription
-- Improved media streaming with bidirectional functionality, allowing audio formats in both directions, currently supporting sample rates of 24kHz and 16kHz
-- Support for custom speech models has been integrated into transcription
-- A confidence level for recognized speech has been introduced, ranging from 0.0 to 1.0 when available
-
-## 1.5.0-beta.1 (2025-05-16)
-
-### Features Added
-
+- The StartRecording function now accepts the PauseOnStart parameter.
+- Added support for CreateCallFailed and AnswerCallFailed events.
+- Enabled audio streaming support for various APIs such as CreateCall, AnswerCall, CreateGroupCall, and ConnectCall.
+  - Receive events for audio streaming, including MediaStreamStarted, MediaStreamStopped, and MediaStreamFailed.
+- Enhanced media streaming with bidirectional capabilities, supporting audio formats in both directions. Currently, it supports sample rates of 24kHz and 16kHz.
+- Added support to manage rooms, server calls, and group calls using the ConnectAPI.
+  - Receive events for CallConnected and ConnectFailed.
+- Added support for ConnectAPI to enable streaming and real-time transcription.
+- Added the ability to hold and unhold participants.
+  - Ability to hold participants with a play source.
+- The new InterruptAudioAnnounce API now allows for the interruption of hold audio
+- With the InterruptHoldAudio option in PlayOptions, it is now possible to interrupt the hold audio.
+- Events now include ResultInformation, which provides more details on the success or failure of the events.
 - Added support for Teams multipersona users in add participant, transfer, and redirect scenarios in OPS calls
+- Added ability to send custom calling context when answering calls
 - Added TeamsAppSource for use when creating outbound OPS calls
-- Added Incomingcall event to support incoming call notification for Teams multipersona users
 - Recording with the call connection ID is now supported. OPS calls can be recorded using the call connection ID.
+- Added a backup identifier of the Cognitive Service resource for the call
+- Added Incomingcall event to support incoming call notification for Teams multipersona users
 - Added StartRecordingFailed event to indicate when the start recording API is unable to initiate the recording.
+- DTMF broadcast functionality is now supported in the Create Call, Answer Call, and Create Group Call APIs.
 
-## 1.4.0-beta.1 (2024-11-22)
+### Breaking Changes
 
-### Features Added
-
-- Added support for ConnectAPI to enable streaming and real-time transcription
-- Enhanced media streaming with bidirectional capabilities, enabling support for audio formats in both directions. Currently, it supports sample rates of 24kHz and 16kHz
-
-### Other Changes
-
-- Introduced audio streaming and transcription data parsing capabilities.
-
-## 1.3.0 (2024-11-22)
-
-### Features Added
-
-- Support multiple play sources for Play and Recognize
-- Support for PlayStarted event in Play/Recognize
-- Hold and Unhold the participant
-- CallDisconnected now includes more information on why the call has ended
-- Support to manage the rooms/servercall/group call using connect API
-- Expose original PSTN number target from incoming call event in call connection properties
-- Support for VoIP to PSTN transfer scenario
+### Bugs Fixed
+- Media streaming with AudioFormat default Pcm24kMono is removed and changed to null if AudioFormat is not passed.
 
 ### Other Changes
+- Introduced audio streaming data parsing capabilities.
+- Note: The ordering of the events input parameters has been changed. This modification won't affect existing code, but if you have used unit tests for the events, you may need to update the parameter order accordingly.
 
-- Added CreateCallFailed event to signify when create call API fails to establish a call
-- Added AnswerFailed event to signify when answer call API fails to answer a call
+### Breaking Changes
 
-## 1.3.0-beta.2 (2024-10-28)
-
-### Features Added
-
-- Added CreateCallFailed event to signify when create call API fails to establish a call
-
-## 1.3.0-beta.1 (2024-08-02)
-
-### Features Added
-
-- Support multiple play sources for Play and Recognize
-- Support for PlayStarted event in Play/Recognize
-- Support for the real time transcription
-- Monetization for real-time transcription and audio streaming
-- Hold and Unhold the participant
-- Support to manage the rooms/servercall/group call using connect API
-- Support for the audio streaming
-- Expose original PSTN number target from incoming call event in call connection properties
-- Support for VoIP to PSTN transfer scenario
-
-## 1.2.0 (2024-04-15)
-
-### Features Added
-
-- Support for Bring Your Own Storage recording option
-- Support for PauseOnStart recording option 
-- Support for Recording state change with new recording kind's
+### Bugs Fixed
 
 ### Other Changes
-
-- Support for MicrosoftTeamsAppIdentifier CommunicationIdentifier
 
 ## 1.1.0 (2023-11-23)
 
@@ -125,7 +74,7 @@
 - CallSource has been flattened out.
 - CallInvite model replaces previous models for handling outbound calls.
 
-## 1.0.0-beta.1 (2022-11-07)  **Deprecated** - This version is no longer supported and won't receive updates.
+## 1.0.0-beta.1 (2022-11-07)
 This is a refresh of Azure Communication Service's Calling-Server library. It is now called Call Automation. Call Automation enables developers to build call workflows. Personalise customer interactions by listening to call events and take actions based on your business logic. For more information, please see the [README][read_me].
 
 This is a Public Preview version, so breaking changes are possible in subsequent releases as we improve the product. To provide feedback, please submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).

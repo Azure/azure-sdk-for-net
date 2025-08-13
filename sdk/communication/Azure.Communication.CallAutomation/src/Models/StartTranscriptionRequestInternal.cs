@@ -3,13 +3,10 @@
 
 using Azure.Core;
 
-#nullable enable
-
 namespace Azure.Communication.CallAutomation
 {
     [CodeGenModel("StartTranscriptionRequest")]
     internal partial class StartTranscriptionRequestInternal
     {
-        public string? SpeechRecognitionModelEndpointId { get; set; }
     }
 }

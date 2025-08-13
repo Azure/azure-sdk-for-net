@@ -31,15 +31,13 @@ namespace Azure.Communication.CallAutomation
         /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </param>
         /// <param name="customCallingContext"> Used by customer to send custom calling context to targets. </param>
-        /// <param name="sourceCallerIdNumber"> The source caller Id, a phone number, that will be used as the transferor's caller Id when transferring a call to a Pstn target. </param>
-        internal TransferToParticipantRequestInternal(CommunicationIdentifierModel targetParticipant, string operationContext, CommunicationIdentifierModel transferee, string operationCallbackUri, CustomCallingContextInternal customCallingContext, PhoneNumberIdentifierModel sourceCallerIdNumber)
+        internal TransferToParticipantRequestInternal(CommunicationIdentifierModel targetParticipant, string operationContext, CommunicationIdentifierModel transferee, string operationCallbackUri, CustomCallingContextInternal customCallingContext)
         {
             TargetParticipant = targetParticipant;
             OperationContext = operationContext;
             Transferee = transferee;
             OperationCallbackUri = operationCallbackUri;
             CustomCallingContext = customCallingContext;
-            SourceCallerIdNumber = sourceCallerIdNumber;
         }
 
         /// <summary> The identity of the target where call should be transferred to. </summary>
@@ -55,7 +53,5 @@ namespace Azure.Communication.CallAutomation
         public string OperationCallbackUri { get; set; }
         /// <summary> Used by customer to send custom calling context to targets. </summary>
         public CustomCallingContextInternal CustomCallingContext { get; set; }
-        /// <summary> The source caller Id, a phone number, that will be used as the transferor's caller Id when transferring a call to a Pstn target. </summary>
-        public PhoneNumberIdentifierModel SourceCallerIdNumber { get; set; }
     }
 }

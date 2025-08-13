@@ -20,6 +20,7 @@ namespace Azure.Communication.CallAutomation
         {
             IncomingCallContext = incomingCallContext;
             CallbackUri = callbackUri;
+            CustomCallingContext = new CustomCallingContext(sipHeaders: new Dictionary<string, string>(), voipHeaders: new Dictionary<string, string>());
         }
 
         /// <summary>
@@ -33,14 +34,14 @@ namespace Azure.Communication.CallAutomation
         public Uri CallbackUri { get; }
 
         /// <summary>
-        /// Media Streaming Configuration.
-        /// </summary>
-        public MediaStreamingOptions MediaStreamingOptions { get; set; }
-
-        /// <summary>
         /// Live Transcription Configuration.
         /// </summary>
         public TranscriptionOptions TranscriptionOptions { get; set; }
+
+        /// <summary>
+        /// Media Streaming Configuration.
+        /// </summary>
+        public MediaStreamingOptions MediaStreamingOptions { get; set; }
 
         /// <summary>
         /// AI options for the call such as endpoint URI of the Azure Cognitive Services resource
@@ -56,5 +57,16 @@ namespace Azure.Communication.CallAutomation
         /// The operation context.
         /// </summary>
         public string OperationContext { get; set; }
+
+        /// <summary>
+        /// The Custom Context which contains SIP and voip headers.
+        /// </summary>
+        public CustomCallingContext CustomCallingContext { get; }
+
+        /// <summary> Enables loopback audio functionality for the call. </summary>
+        public bool? EnableLoopbackAudio { get; set; }
+
+        /// <summary> DTMF (Dual-Tone Multi-Frequency) configuration for the call. </summary>
+        public DtmfConfigurationOptions DtmfOptions { get; set; }
     }
 }
