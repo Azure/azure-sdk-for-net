@@ -158,6 +158,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                 }
 
                 await Task.Delay(3000);
+
                 OccurrenceCollection occurrences = DefaultResourceGroupResource.GetOccurrences(scheduledActionName);
 
                 var occurrenceList = new List<OccurrenceResource>();
@@ -169,9 +170,13 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
 
                 if (occurrenceList.Count > 0)
                 {
-                    List<OccurrenceResource> sortedOccurrences = occurrenceList.OrderBy(o => o.Data.Properties.ScheduledOn).ToList();
+                    await DefaultResourceGroupResource.CancelNextOccurrenceScheduledActionAsync(scheduledActionName, new(resourceIds: []));
 
-                    await CancelOccurrenceItem(sortedOccurrences[0], allResourceids, scheduledActionName, OccurrenceState.Scheduled, "RsScheduled");
+                    List<OccurrenceResource> sortedOccurrences = [.. occurrenceList.OrderBy(o => o.Data.Properties.ScheduledOn)];
+
+                    OccurrenceResource cancelledOcc = sortedOccurrences.FirstOrDefault();
+
+                    Assert.IsTrue(cancelledOcc.Data.Properties.ProvisioningState == OccurrenceState.Canceled, "Occurrence is not cancelled as expected.");
 
                     OccurrenceResource triggeredOccurrence = await DefaultResourceGroupResource.TriggerManualOccurrenceScheduledActionAsync(scheduledActionName);
 
@@ -251,9 +256,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                 {
                     IOrderedEnumerable<OccurrenceResource> sortedOccurrences = occurrenceList.OrderBy(o => o.Data.Properties.ScheduledOn);
 
-                    await CancelOccurrenceItem(sortedOccurrences.First(), allResourceids, scheduledActionName, OccurrenceState.Scheduled, "RsScheduled");
+                    await CancelOccurrenceTask(sortedOccurrences.First(), allResourceids, scheduledActionName, OccurrenceState.Scheduled, "RsScheduled");
 
-                    await CancelOccurrenceItem(sortedOccurrences.Last(), allResourceids, scheduledActionName, OccurrenceState.Created, "RsCreated");
+                    await CancelOccurrenceTask(sortedOccurrences.Last(), allResourceids, scheduledActionName, OccurrenceState.Created, "RsCreated");
                 }
             }
             catch (AssertionException ex)
@@ -299,8 +304,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                 {
                     IOrderedEnumerable<OccurrenceResource> sortedOccurrences = occurrenceList.OrderBy(o => o.Data.Properties.ScheduledOn);
 
-                    await DelayOccurrenceItem(sortedOccurrences.First(), allResourceids, scheduledActionName, OccurrenceState.Scheduled, "RsScheduled");
-                    await DelayOccurrenceItem(sortedOccurrences.Last(), allResourceids, scheduledActionName, OccurrenceState.Created, "RsCreated");
+                    await DelayOccurrenceTask(sortedOccurrences.First(), allResourceids, scheduledActionName, OccurrenceState.Scheduled, "RsScheduled");
+                    await DelayOccurrenceTask(sortedOccurrences.Last(), allResourceids, scheduledActionName, OccurrenceState.Created, "RsCreated");
                 }
             }
             catch (AssertionException ex)
@@ -317,7 +322,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
 
         #region Private methods
 
-        private async Task CancelOccurrenceItem(OccurrenceResource occ, List<ResourceIdentifier> resources, string scheduledActionName, OccurrenceState occurrenceStateConfirm, string resourceStateConfirm)
+        private async Task CancelOccurrenceTask(OccurrenceResource occ, List<ResourceIdentifier> resources, string scheduledActionName, OccurrenceState occurrenceStateConfirm, string resourceStateConfirm)
         {
             await occ.CancelAsync(new(resourceIds: [resources[0]]));
 
@@ -372,7 +377,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             }
         }
 
-        private async Task DelayOccurrenceItem(OccurrenceResource occ, List<ResourceIdentifier> resources, string scheduledActionName, OccurrenceState occurrenceStateConfirm, string resourceStateConfirm)
+        private async Task DelayOccurrenceTask(OccurrenceResource occ, List<ResourceIdentifier> resources, string scheduledActionName, OccurrenceState occurrenceStateConfirm, string resourceStateConfirm)
         {
             Assert.True(occ.Data.Properties.ProvisioningState == occurrenceStateConfirm);
 
