@@ -47,13 +47,14 @@ namespace Azure.Health.Deidentification
                 {
                     yield break;
                 }
+                PagedDeidentificationJob result = (PagedDeidentificationJob)response;
                 List<BinaryData> items = new List<BinaryData>();
-                foreach (var item in ((PagedDeidentificationJob)response).Value)
+                foreach (var item in result.Value)
                 {
                     items.Add(BinaryData.FromObjectAsJson(item));
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
-                nextPage = ((PagedDeidentificationJob)response).NextLink;
+                nextPage = result.NextLink;
                 if (nextPage == null)
                 {
                     yield break;
