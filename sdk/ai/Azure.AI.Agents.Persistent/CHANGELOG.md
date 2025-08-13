@@ -5,6 +5,7 @@
 ### Features Added
 
 - Implemented streaming scenario for MCP tool.
+- Added `RunStepDetailsActivity`, describing MCP function parameters.
 
 ### Breaking Changes
 
