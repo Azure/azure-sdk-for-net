@@ -46,8 +46,8 @@ namespace MgmtTypeSpec
                 {
                     yield break;
                 }
-                yield return Page<ZooData>.FromValues((IReadOnlyList<ZooData>)((ZooListResult)response).Value, nextPage?.AbsoluteUri, response);
-                nextPage = ((ZooListResult)response).NextLink;
+                yield return Page<ZooData>.FromValues((IReadOnlyList<ZooData>)ZooListResult.FromResponse(response).Value, nextPage?.AbsoluteUri, response);
+                nextPage = ZooListResult.FromResponse(response).NextLink;
                 if (nextPage == null)
                 {
                     yield break;

@@ -53,8 +53,8 @@ namespace MgmtTypeSpec
                 {
                     yield break;
                 }
-                yield return Page<FooData>.FromValues((IReadOnlyList<FooData>)((FooListResult)response).Value, nextPage?.AbsoluteUri, response);
-                nextPage = ((FooListResult)response).NextLink;
+                yield return Page<FooData>.FromValues((IReadOnlyList<FooData>)FooListResult.FromResponse(response).Value, nextPage?.AbsoluteUri, response);
+                nextPage = FooListResult.FromResponse(response).NextLink;
                 if (nextPage == null)
                 {
                     yield break;
