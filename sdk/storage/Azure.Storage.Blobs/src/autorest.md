@@ -93,6 +93,10 @@ directive:
     delete $.IfSequenceNumberLessThanOrEqualTo["x-ms-parameter-grouping"];
     delete $.IfSequenceNumberLessThan["x-ms-parameter-grouping"];
     delete $.IfSequenceNumberEqualTo["x-ms-parameter-grouping"];
+    delete $.IfBlobMatch["x-ms-parameter-grouping"];
+    delete $.IfBlobModifiedSince["x-ms-parameter-grouping"];
+    delete $.IfBlobNoneMatch["x-ms-parameter-grouping"];
+    delete $.IfBlobUnmodifiedSince["x-ms-parameter-grouping"];
 ```
 
 ### Remove blob-Http-Headers parameter grouping

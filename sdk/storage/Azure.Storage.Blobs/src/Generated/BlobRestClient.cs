@@ -2542,7 +2542,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateGetTagsRequest(int? timeout, string snapshot, string versionId, string ifTags, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch)
+        internal HttpMessage CreateGetTagsRequest(int? timeout, string snapshot, string versionId, string ifTags, string leaseId, DateTimeOffset? ifBlobModifiedSince, DateTimeOffset? ifBlobUnmodifiedSince, string ifBlobMatch, string ifBlobNoneMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2572,21 +2572,21 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-lease-id", leaseId);
             }
-            if (ifModifiedSince != null)
+            if (ifBlobModifiedSince != null)
             {
-                request.Headers.Add("x-ms-blob-if-modified-since", ifModifiedSince.Value, "R");
+                request.Headers.Add("x-ms-blob-if-modified-since", ifBlobModifiedSince.Value, "R");
             }
-            if (ifUnmodifiedSince != null)
+            if (ifBlobUnmodifiedSince != null)
             {
-                request.Headers.Add("x-ms-blob-if-unmodified-since", ifUnmodifiedSince.Value, "R");
+                request.Headers.Add("x-ms-blob-if-unmodified-since", ifBlobUnmodifiedSince.Value, "R");
             }
-            if (ifMatch != null)
+            if (ifBlobMatch != null)
             {
-                request.Headers.Add("x-ms-blob-if-match", ifMatch);
+                request.Headers.Add("x-ms-blob-if-match", ifBlobMatch);
             }
-            if (ifNoneMatch != null)
+            if (ifBlobNoneMatch != null)
             {
-                request.Headers.Add("x-ms-blob-if-none-match", ifNoneMatch);
+                request.Headers.Add("x-ms-blob-if-none-match", ifBlobNoneMatch);
             }
             request.Headers.Add("Accept", "application/xml");
             return message;
@@ -2598,14 +2598,14 @@ namespace Azure.Storage.Blobs
         /// <param name="versionId"> The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
-        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
-        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
-        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifBlobModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifBlobUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="ifBlobMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifBlobNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<BlobTags, BlobGetTagsHeaders>> GetTagsAsync(int? timeout = null, string snapshot = null, string versionId = null, string ifTags = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlobTags, BlobGetTagsHeaders>> GetTagsAsync(int? timeout = null, string snapshot = null, string versionId = null, string ifTags = null, string leaseId = null, DateTimeOffset? ifBlobModifiedSince = null, DateTimeOffset? ifBlobUnmodifiedSince = null, string ifBlobMatch = null, string ifBlobNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetTagsRequest(timeout, snapshot, versionId, ifTags, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch);
+            using var message = CreateGetTagsRequest(timeout, snapshot, versionId, ifTags, leaseId, ifBlobModifiedSince, ifBlobUnmodifiedSince, ifBlobMatch, ifBlobNoneMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobGetTagsHeaders(message.Response);
             switch (message.Response.Status)
@@ -2631,14 +2631,14 @@ namespace Azure.Storage.Blobs
         /// <param name="versionId"> The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
-        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
-        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
-        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifBlobModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifBlobUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="ifBlobMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifBlobNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<BlobTags, BlobGetTagsHeaders> GetTags(int? timeout = null, string snapshot = null, string versionId = null, string ifTags = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlobTags, BlobGetTagsHeaders> GetTags(int? timeout = null, string snapshot = null, string versionId = null, string ifTags = null, string leaseId = null, DateTimeOffset? ifBlobModifiedSince = null, DateTimeOffset? ifBlobUnmodifiedSince = null, string ifBlobMatch = null, string ifBlobNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetTagsRequest(timeout, snapshot, versionId, ifTags, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch);
+            using var message = CreateGetTagsRequest(timeout, snapshot, versionId, ifTags, leaseId, ifBlobModifiedSince, ifBlobUnmodifiedSince, ifBlobMatch, ifBlobNoneMatch);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobGetTagsHeaders(message.Response);
             switch (message.Response.Status)
@@ -2658,7 +2658,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateSetTagsRequest(int? timeout, string versionId, byte[] transactionalContentMD5, byte[] transactionalContentCrc64, string ifTags, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, BlobTags tags)
+        internal HttpMessage CreateSetTagsRequest(int? timeout, string versionId, byte[] transactionalContentMD5, byte[] transactionalContentCrc64, string ifTags, string leaseId, DateTimeOffset? ifBlobModifiedSince, DateTimeOffset? ifBlobUnmodifiedSince, string ifBlobMatch, string ifBlobNoneMatch, BlobTags tags)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -2688,21 +2688,21 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-lease-id", leaseId);
             }
-            if (ifModifiedSince != null)
+            if (ifBlobModifiedSince != null)
             {
-                request.Headers.Add("x-ms-blob-if-modified-since", ifModifiedSince.Value, "R");
+                request.Headers.Add("x-ms-blob-if-modified-since", ifBlobModifiedSince.Value, "R");
             }
-            if (ifUnmodifiedSince != null)
+            if (ifBlobUnmodifiedSince != null)
             {
-                request.Headers.Add("x-ms-blob-if-unmodified-since", ifUnmodifiedSince.Value, "R");
+                request.Headers.Add("x-ms-blob-if-unmodified-since", ifBlobUnmodifiedSince.Value, "R");
             }
-            if (ifMatch != null)
+            if (ifBlobMatch != null)
             {
-                request.Headers.Add("x-ms-blob-if-match", ifMatch);
+                request.Headers.Add("x-ms-blob-if-match", ifBlobMatch);
             }
-            if (ifNoneMatch != null)
+            if (ifBlobNoneMatch != null)
             {
-                request.Headers.Add("x-ms-blob-if-none-match", ifNoneMatch);
+                request.Headers.Add("x-ms-blob-if-none-match", ifBlobNoneMatch);
             }
             request.Headers.Add("Accept", "application/xml");
             if (tags != null)
@@ -2726,15 +2726,15 @@ namespace Azure.Storage.Blobs
         /// <param name="transactionalContentCrc64"> Specify the transactional crc64 for the body, to be validated by the service. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
-        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
-        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
-        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifBlobModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifBlobUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="ifBlobMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifBlobNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="tags"> Blob tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<BlobSetTagsHeaders>> SetTagsAsync(int? timeout = null, string versionId = null, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, string ifTags = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, BlobTags tags = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<BlobSetTagsHeaders>> SetTagsAsync(int? timeout = null, string versionId = null, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, string ifTags = null, string leaseId = null, DateTimeOffset? ifBlobModifiedSince = null, DateTimeOffset? ifBlobUnmodifiedSince = null, string ifBlobMatch = null, string ifBlobNoneMatch = null, BlobTags tags = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetTagsRequest(timeout, versionId, transactionalContentMD5, transactionalContentCrc64, ifTags, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, tags);
+            using var message = CreateSetTagsRequest(timeout, versionId, transactionalContentMD5, transactionalContentCrc64, ifTags, leaseId, ifBlobModifiedSince, ifBlobUnmodifiedSince, ifBlobMatch, ifBlobNoneMatch, tags);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new BlobSetTagsHeaders(message.Response);
             switch (message.Response.Status)
@@ -2753,15 +2753,15 @@ namespace Azure.Storage.Blobs
         /// <param name="transactionalContentCrc64"> Specify the transactional crc64 for the body, to be validated by the service. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
-        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
-        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
-        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="ifBlobModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifBlobUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="ifBlobMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifBlobNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="tags"> Blob tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<BlobSetTagsHeaders> SetTags(int? timeout = null, string versionId = null, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, string ifTags = null, string leaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, BlobTags tags = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<BlobSetTagsHeaders> SetTags(int? timeout = null, string versionId = null, byte[] transactionalContentMD5 = null, byte[] transactionalContentCrc64 = null, string ifTags = null, string leaseId = null, DateTimeOffset? ifBlobModifiedSince = null, DateTimeOffset? ifBlobUnmodifiedSince = null, string ifBlobMatch = null, string ifBlobNoneMatch = null, BlobTags tags = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateSetTagsRequest(timeout, versionId, transactionalContentMD5, transactionalContentCrc64, ifTags, leaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, tags);
+            using var message = CreateSetTagsRequest(timeout, versionId, transactionalContentMD5, transactionalContentCrc64, ifTags, leaseId, ifBlobModifiedSince, ifBlobUnmodifiedSince, ifBlobMatch, ifBlobNoneMatch, tags);
             _pipeline.Send(message, cancellationToken);
             var headers = new BlobSetTagsHeaders(message.Response);
             switch (message.Response.Status)
