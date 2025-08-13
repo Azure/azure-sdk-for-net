@@ -42,5 +42,79 @@ namespace Azure.Generator.Management.Utilities
 
             return clientInfos;
         }
+
+        public static ResourceMethodCategory CategorizeMethods(this ResourceMetadata resourceMetadata)
+        {
+            var methodsInResource = new List<ResourceMethod>();
+            var methodsInCollection = new List<ResourceMethod>();
+            var methodsInExtension = new List<ResourceMethod>();
+            foreach (var method in resourceMetadata.Methods)
+            {
+                var isSingleton = resourceMetadata.SingletonResourceName is not null;
+                switch (method.Kind)
+                {
+                    case ResourceOperationKind.Create:
+                        // create method will go to the collection, or to resource when it is singleton
+                        if (isSingleton)
+                        {
+                            methodsInResource.Add(method);
+                        }
+                        else
+                        {
+                            methodsInCollection.Add(method);
+                        }
+                        break;
+                    case ResourceOperationKind.Get:
+                        // both resource and collection should have get method
+                        methodsInResource.Add(method);
+                        methodsInCollection.Add(method);
+                        break;
+                    case ResourceOperationKind.Update:
+                    case ResourceOperationKind.Delete:
+                        // only resource has get
+                        methodsInResource.Add(method);
+                        break;
+                    case ResourceOperationKind.Action:
+                        // actions should all go to the resource
+                        methodsInResource.Add(method);
+                        break;
+                    case ResourceOperationKind.List:
+                        // list methods might go to the collection or the extension
+                        // when the resource has a parent
+                        if (resourceMetadata.ParentResourceId is not null)
+                        {
+                            if (method.ResourceScope == resourceMetadata.ParentResourceId)
+                            {
+                                methodsInCollection.Add(method);
+                            }
+                            else
+                            {
+                                methodsInExtension.Add(method);
+                            }
+                        }
+                        else
+                        {
+                            if (method.OperationScope == resourceMetadata.ResourceScope)
+                            {
+                                // if the operation scope is the resource scope, it is a collection method
+                                methodsInCollection.Add(method);
+                            }
+                            else
+                            {
+                                // otherwise, it is an extension method
+                                methodsInExtension.Add(method);
+                            }
+                        }
+                        break;
+                    default:
+                        ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                            "general-warning",
+                            $"Unknown resource operation kind '{method.Kind}' for method '{method.OperationPath}' in resource '{resourceMetadata.ResourceIdPattern}'.");
+                        break;
+                }
+            }
+
+            return new(methodsInResource, methodsInCollection, methodsInExtension);
+        }
     }
 }

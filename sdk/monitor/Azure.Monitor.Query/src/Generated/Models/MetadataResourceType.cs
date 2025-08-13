@@ -13,6 +13,38 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Metadata about types of Azure resources, containing relevant tables, functions, etc. </summary>
     internal partial class MetadataResourceType
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MetadataResourceType"/>. </summary>
         /// <param name="id"> The ID of the resource-type. </param>
         /// <param name="type"> The type of the resource-type. </param>
@@ -36,7 +68,8 @@ namespace Azure.Monitor.Query.Models
         /// <param name="tags"> The tags associated with the resource-type. </param>
         /// <param name="properties"> The properties of the resource-type. </param>
         /// <param name="related"> The related metadata items for the resource-type. </param>
-        internal MetadataResourceType(string id, string type, string displayName, string description, IReadOnlyList<string> labels, object tags, object properties, MetadataResourceTypeRelated related)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetadataResourceType(string id, string type, string displayName, string description, IReadOnlyList<string> labels, object tags, object properties, MetadataResourceTypeRelated related, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Type = type;
@@ -46,6 +79,12 @@ namespace Azure.Monitor.Query.Models
             Tags = tags;
             Properties = properties;
             Related = related;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetadataResourceType"/> for deserialization. </summary>
+        internal MetadataResourceType()
+        {
         }
 
         /// <summary> The ID of the resource-type. </summary>
