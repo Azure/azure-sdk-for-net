@@ -207,6 +207,7 @@ namespace MgmtTypeSpec
 
         /// <summary> List Foo resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="FooResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FooResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
@@ -218,6 +219,7 @@ namespace MgmtTypeSpec
 
         /// <summary> List Foo resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="FooResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FooResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
