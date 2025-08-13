@@ -50,8 +50,19 @@ internal class PaginationVisitor : ScmLibraryVisitor
             // TODO -- we do not have to do this once https://github.com/microsoft/typespec/issues/8177 is fixed.
             foreach (var statement in whileStatement.Body)
             {
-                if (statement is YieldReturnStatement { Value: InvokeMethodExpression { MethodName: "FromValues", Arguments: [CastExpression castExpression, ..] } invokeMethodExpression } &&
-                    castExpression.Inner is MemberExpression { Inner: CastExpression innerCastExpression, MemberName: var memberName } &&
+                if (statement is YieldReturnStatement
+                    {
+                        Value: InvokeMethodExpression
+                        {
+                            MethodName: "FromValues",
+                            Arguments: [CastExpression castExpression, ..]
+                        } invokeMethodExpression
+                    } &&
+                    castExpression.Inner is MemberExpression
+                    {
+                        Inner: CastExpression innerCastExpression,
+                        MemberName: var memberName
+                    } &&
                     IsResponseToModelCastExpression(innerCastExpression))
                 {
                     // convert the implicit cast expression to a method call
