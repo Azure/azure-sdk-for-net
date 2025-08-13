@@ -9,6 +9,71 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
 {
     public class JsonPathReaderTests
     {
+        [TestCase("$[\"\"foo\"]", "\"foo")]
+        [TestCase("$[\"f\"oo\"]", "f\"oo")]
+        [TestCase("$[\"foo\"\"]", "foo\"")]
+        [TestCase("$['\'foo']", "'foo")]
+        [TestCase("$['f\'oo']", "f'oo")]
+        [TestCase("$['foo\'']", "foo'")]
+        [TestCase("$.\"foo", "\"foo")]
+        [TestCase("$.f\"oo", "f\"oo")]
+        [TestCase("$.foo\"", "foo\"")]
+        [TestCase("$.\'foo", "'foo")]
+        [TestCase("$.f\'oo", "f'oo")]
+        [TestCase("$.foo\'", "foo'")]
+        [TestCase("$['foo bar']", "foo bar")]
+        [TestCase("$['foo-bar']", "foo-bar")]
+        [TestCase("$['foo_bar']", "foo_bar")]
+        [TestCase("$['foo.bar']", "foo.bar")]
+        [TestCase("$['foo,bar']", "foo,bar")]
+        [TestCase("$['foo:bar']", "foo:bar")]
+        [TestCase("$['foo;bar']", "foo;bar")]
+        [TestCase("$['foo/bar']", "foo/bar")]
+        [TestCase("$['foo\\\\bar']", "foo\\\\bar")]
+        [TestCase("$['foo/bar\\\\baz']", "foo/bar\\\\baz")]
+        [TestCase("$['foo[bar]']", "foo[bar]")]
+        [TestCase("$['foo{bar}']", "foo{bar}")]
+        [TestCase("$['foo(bar)']", "foo(bar)")]
+        [TestCase("$['foo@bar']", "foo@bar")]
+        [TestCase("$['foo#bar']", "foo#bar")]
+        [TestCase("$['foo$bar']", "foo$bar")]
+        [TestCase("$['foo%bar']", "foo%bar")]
+        [TestCase("$['foo^bar']", "foo^bar")]
+        [TestCase("$['foo&bar']", "foo&bar")]
+        [TestCase("$['foo*bar']", "foo*bar")]
+        [TestCase("$['foo!bar']", "foo!bar")]
+        [TestCase("$['foo?bar']", "foo?bar")]
+        [TestCase("$['foo=bar']", "foo=bar")]
+        [TestCase("$['foo<bar>']", "foo<bar>")]
+        [TestCase("$['foo|bar']", "foo|bar")]
+        [TestCase("$['foo~bar']", "foo~bar")]
+        [TestCase("$['foo`bar']", "foo`bar")]
+        [TestCase("$['foo\u263Abar']", "foo\u263Abar")]
+        [TestCase("$['']", "")]
+        [TestCase("$.''", "''")]
+        [TestCase("$['foo''bar']", "foo''bar")]
+        [TestCase("$['foo\"bar']", "foo\"bar")]
+        [TestCase("$['foo\nbar']", "foo\nbar")]
+        [TestCase("$['foo\tbar']", "foo\tbar")]
+        [TestCase("$['foo\rbar']", "foo\rbar")]
+        public void Read_SpecialCharacter(string jsonPath, string propertyName)
+        {
+            JsonPathReader reader = new(jsonPath);
+
+            // Root
+            Assert.IsTrue(reader.Read(), "Expected to read Root token");
+            Assert.AreEqual(JsonPathTokenType.Root, reader.Current.TokenType);
+
+            // PropertySeparator
+            Assert.IsTrue(reader.Read(), "Expected to read PropertySeparator token");
+            Assert.AreEqual(JsonPathTokenType.PropertySeparator, reader.Current.TokenType);
+
+            // Property
+            Assert.IsTrue(reader.Read(), "Expected to read Property token");
+            Assert.AreEqual(JsonPathTokenType.Property, reader.Current.TokenType);
+            Assert.AreEqual(propertyName, Encoding.UTF8.GetString(reader.Current.ValueSpan.ToArray()));
+        }
+
         [Test]
         public void Read_RootToken_ReturnsCorrectly()
         {

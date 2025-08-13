@@ -112,11 +112,18 @@ internal ref struct JsonPathReader
                 return true;
 
             case SingleQuote or DoubleQuote:
-                Current = ReadQuotedString();
-                if (_consumed >= _length || _jsonPath[_consumed] != CloseBracket)
-                    throw new FormatException($"Invalid JsonPath syntax at position {_consumed}: expected ']' after quoted string");
+                if (Current.TokenType == JsonPathTokenType.PropertySeparator && _jsonPath[_consumed - 1] == Dot)
+                {
+                    Current = ReadProperty();
+                }
+                else
+                {
+                    Current = ReadQuotedString();
+                    if (_consumed >= _length || _jsonPath[_consumed] != CloseBracket)
+                        throw new FormatException($"Invalid JsonPath syntax at position {_consumed}: expected ']' after quoted string");
 
-                _consumed++; // Skip closing bracket
+                    _consumed++; // Skip closing bracket
+                }
                 return true;
 
             default:
@@ -162,8 +169,13 @@ internal ref struct JsonPathReader
         byte quote = localJsonPath[_consumed];
         int initial = ++_consumed; // Skip opening quote
 
-        while (_consumed < _length && localJsonPath[_consumed] != quote)
+        while (_consumed < _length)
+        {
+            if (localJsonPath[_consumed] == quote && _consumed + 1 < _length && localJsonPath[_consumed + 1] == ']')
+                break;
+
             _consumed++;
+        }
 
         if (_consumed >= _length)
             throw new FormatException("Unterminated quoted string in JsonPath");
@@ -230,7 +242,11 @@ internal ref struct JsonPathReader
 
     public bool Equals(JsonPathReader other)
     {
-        //reset in case we aren't starting from the beginning
+        // Try fast path if they used the same format style
+        if (_jsonPath.SequenceEqual(other._jsonPath))
+            return true;
+
+        // Compare the tokens
         var x = this;
         var y = other;
         x.Reset();

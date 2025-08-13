@@ -10,13 +10,26 @@ namespace System.ClientModel.Tests.Internal.Perf
     {
         private byte[] _path1a = "$.properties.virtualMachines[0].name"u8.ToArray();
         private byte[] _path1b = "$.properties.virtualMachines[0].name"u8.ToArray();
+        private byte[] _path1aPrime = "$.properties['virtualMachines'][0].name"u8.ToArray();
         private byte[] _path2 = "$.props.virtualMachines[0].name"u8.ToArray();
         private byte[] _path3 = "$.properties.virtualMachines[0].id"u8.ToArray();
+
+        [Benchmark]
+        public int GetHashCode_Comparer()
+        {
+            return JsonPathComparer.Default.GetHashCode(_path1a);
+        }
 
         [Benchmark]
         public bool AreEqual_Comparer()
         {
             return JsonPathComparer.Default.Equals(_path1a, _path1b);
+        }
+
+        [Benchmark]
+        public bool AreEqual_Comparer_AlternateForm()
+        {
+            return JsonPathComparer.Default.Equals(_path1a, _path1aPrime);
         }
 
         [Benchmark]
