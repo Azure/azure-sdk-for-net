@@ -44,8 +44,6 @@ internal class PaginationVisitor : ScmLibraryVisitor
         var doWhileStatement = statements.OfType<DoWhileStatement>().FirstOrDefault();
         if (doWhileStatement is not null)
         {
-            var body = doWhileStatement.Body;
-
             // we manually go over the body statements because currently the framework does not do this.
             // TODO -- we do not have to do this once https://github.com/microsoft/typespec/issues/8177 is fixed.
             foreach (var statement in doWhileStatement.Body)
