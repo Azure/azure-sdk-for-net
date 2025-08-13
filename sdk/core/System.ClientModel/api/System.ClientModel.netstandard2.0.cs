@@ -86,13 +86,11 @@ namespace System.ClientModel.Primitives
         public AdditionalProperties(System.ReadOnlyMemory<byte> rawJson) { throw null; }
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]public bool Contains(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public bool ContainsChildOf(System.ReadOnlySpan<byte> jsonPath, System.ReadOnlySpan<byte> property) { throw null; }
-        public bool ContainsStartsWith(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public bool GetBoolean(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public int GetInt32(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public System.BinaryData GetJson(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public int? GetNullableInt32(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public string? GetString(System.ReadOnlySpan<byte> jsonPath) { throw null; }
-        public bool IsRemoved(byte[] jsonPath) { throw null; }
         public bool IsRemoved(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public void Remove(System.ReadOnlySpan<byte> jsonPath) { }
         public void Set(System.ReadOnlySpan<byte> jsonPath, System.BinaryData value) { }
@@ -106,7 +104,7 @@ namespace System.ClientModel.Primitives
         public void Set(System.ReadOnlySpan<byte> jsonPath, string value) { }
         public void SetNull(System.ReadOnlySpan<byte> jsonPath) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public void SetPropagators(System.ClientModel.Primitives.AdditionalProperties.PropagatorSetter setter, System.ClientModel.Primitives.AdditionalProperties.PropagatorGetter getter) { }
+        public void SetPropagators(System.ClientModel.Primitives.AdditionalProperties.PropagatorSetter setter, System.ClientModel.Primitives.AdditionalProperties.PropagatorGetter getter, System.ClientModel.Primitives.AdditionalProperties.PropagatorIsFlattened isFlattened) { }
         public void Set<T>(System.ReadOnlySpan<byte> jsonPath, System.ClientModel.Primitives.IJsonModel<T> value) { }
         public override string ToString() { throw null; }
         public bool TryGetJson(System.ReadOnlySpan<byte> jsonPath, out System.ReadOnlyMemory<byte> value) { throw null; }
@@ -126,6 +124,8 @@ namespace System.ClientModel.Primitives
         }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public delegate bool PropagatorGetter(System.ReadOnlySpan<byte> jsonPath, out System.ReadOnlyMemory<byte> value);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public delegate bool PropagatorIsFlattened(System.ReadOnlySpan<byte> jsonPath);
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public delegate bool PropagatorSetter(System.ReadOnlySpan<byte> jsonPath, System.ClientModel.Primitives.AdditionalProperties.EncodedValue value);
     }
