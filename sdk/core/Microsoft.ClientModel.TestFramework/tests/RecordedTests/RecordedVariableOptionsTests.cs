@@ -63,7 +63,7 @@ public class RecordedVariableOptionsTests
         var originalValue = "secret-value";
         var result = options.Apply(originalValue);
         Assert.That(result, Is.Not.EqualTo(originalValue));
-        Assert.That(result, Is.EqualTo(SanitizedValue.Default)); // Use the actual default sanitized value
+        Assert.That(result, Is.EqualTo("Sanitized"));
     }
 
     [Test]
@@ -134,7 +134,7 @@ public class RecordedVariableOptionsTests
         var options = new RecordedVariableOptions();
         options.IsSecret(SanitizedValue.Default);
         var result = options.Apply("original");
-        Assert.That(result, Is.EqualTo(SanitizedValue.Default)); // Use the actual default sanitized value constant
+        Assert.That(result, Is.EqualTo("Sanitized")); // Use the actual default sanitized value constant
     }
 
     #endregion
@@ -148,8 +148,11 @@ public class RecordedVariableOptionsTests
         var options2 = new RecordedVariableOptions().IsSecret("VALUE2");
         var result1 = options1.Apply("original");
         var result2 = options2.Apply("original");
-        Assert.That(result1, Is.EqualTo("VALUE1"));
-        Assert.That(result2, Is.EqualTo("VALUE2"));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result1, Is.EqualTo("VALUE1"));
+            Assert.That(result2, Is.EqualTo("VALUE2"));
+        }
     }
 
     [Test]

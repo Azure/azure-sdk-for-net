@@ -50,9 +50,12 @@ public class TestRecordingTests
 
         TestRecording recording = await TestRecording.CreateAsync(RecordedTestMode.Record, "test-session.json", mockProxy.Object, testBase);
 
-        Assert.That(recording.Mode, Is.EqualTo(RecordedTestMode.Record));
-        Assert.That(recording.RecordingId, Is.EqualTo("test-recording-123"));
-        Assert.That(recording.Variables, Is.Not.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(recording.Mode, Is.EqualTo(RecordedTestMode.Record));
+            Assert.That(recording.RecordingId, Is.EqualTo("test-recording-123"));
+            Assert.That(recording.Variables, Is.Not.Null);
+        }
         Assert.That(recording.Variables, Is.Empty);
         Assert.That(recording.HasRequests, Is.False);
 
@@ -80,13 +83,19 @@ public class TestRecordingTests
 
         TestRecording recording = await TestRecording.CreateAsync(RecordedTestMode.Playback, "test-session.json", mockProxy.Object, testBase);
 
-        Assert.That(recording.Mode, Is.EqualTo(RecordedTestMode.Playback));
-        Assert.That(recording.RecordingId, Is.EqualTo("playback-id-123"));
-        Assert.That(recording.Variables, Is.Not.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(recording.Mode, Is.EqualTo(RecordedTestMode.Playback));
+            Assert.That(recording.RecordingId, Is.EqualTo("playback-id-123"));
+            Assert.That(recording.Variables, Is.Not.Null);
+        }
         Assert.That(recording.Variables, Has.Count.EqualTo(2));
-        Assert.That(recording.Variables["TestVar"], Is.EqualTo("TestValue"));
-        Assert.That(recording.Variables["AnotherVar"], Is.EqualTo("AnotherValue"));
-        Assert.That(recording.HasRequests, Is.False);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(recording.Variables["TestVar"], Is.EqualTo("TestValue"));
+            Assert.That(recording.Variables["AnotherVar"], Is.EqualTo("AnotherValue"));
+            Assert.That(recording.HasRequests, Is.False);
+        }
 
         // Verify the correct API call was made
         var request = mockTransport.Requests[0];
@@ -108,12 +117,15 @@ public class TestRecordingTests
 
         TestRecording recording = await TestRecording.CreateAsync(RecordedTestMode.Record, "test-session.json", mockProxy.Object, testBase);
 
-        Assert.That(recording.Mode, Is.EqualTo(RecordedTestMode.Record));
-        Assert.That(recording.RecordingId, Is.EqualTo("test-recording-123"));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(recording.Mode, Is.EqualTo(RecordedTestMode.Record));
+            Assert.That(recording.RecordingId, Is.EqualTo("test-recording-123"));
 
-        // Verify sanitizer API calls were made
-        // Should have: record/start + multiple sanitizer calls
-        Assert.That(mockTransport.Requests.Count, Is.GreaterThan(1));
+            // Verify sanitizer API calls were made
+            // Should have: record/start + multiple sanitizer calls
+            Assert.That(mockTransport.Requests.Count, Is.GreaterThan(1));
+        }
 
         // Verify record/start was called first
         var recordStartRequest = mockTransport.Requests[0];
@@ -204,13 +216,19 @@ public class TestRecordingTests
 
         TestRecording recording = await TestRecording.CreateAsync(RecordedTestMode.Playback, "test-session.json", mockProxy.Object, testBase);
 
-        Assert.That(recording.Mode, Is.EqualTo(RecordedTestMode.Playback));
-        Assert.That(recording.Variables, Is.Not.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(recording.Mode, Is.EqualTo(RecordedTestMode.Playback));
+            Assert.That(recording.Variables, Is.Not.Null);
+        }
         Assert.That(recording.Variables, Has.Count.EqualTo(3));
-        Assert.That(recording.Variables["Var1"], Is.EqualTo("Value1"));
-        Assert.That(recording.Variables["Var2"], Is.EqualTo("Value2"));
-        Assert.That(recording.Variables["DateTimeOffsetNow"], Is.EqualTo("2023-01-01T00:00:00.0000000Z"));
-        Assert.That(recording.Variables, Is.TypeOf<SortedDictionary<string, string>>());
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(recording.Variables["Var1"], Is.EqualTo("Value1"));
+            Assert.That(recording.Variables["Var2"], Is.EqualTo("Value2"));
+            Assert.That(recording.Variables["DateTimeOffsetNow"], Is.EqualTo("2023-01-01T00:00:00.0000000Z"));
+            Assert.That(recording.Variables, Is.TypeOf<SortedDictionary<string, string>>());
+        }
     }
 
     [Test]
@@ -618,12 +636,15 @@ public class TestRecordingTests
 
         // Verify the keys are in sorted order
         var keys = recording.Variables.Keys.ToList();
-        Assert.That(keys, Is.EqualTo(new[] { "AVar", "MVar", "ZVar" }));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(keys, Is.EqualTo(new[] { "AVar", "MVar", "ZVar" }));
 
-        // Verify all values are present
-        Assert.That(recording.Variables["AVar"], Is.EqualTo("AValue"));
-        Assert.That(recording.Variables["MVar"], Is.EqualTo("MValue"));
-        Assert.That(recording.Variables["ZVar"], Is.EqualTo("ZValue"));
+            // Verify all values are present
+            Assert.That(recording.Variables["AVar"], Is.EqualTo("AValue"));
+            Assert.That(recording.Variables["MVar"], Is.EqualTo("MValue"));
+            Assert.That(recording.Variables["ZVar"], Is.EqualTo("ZValue"));
+        }
     }
 
     [Test]
@@ -754,9 +775,12 @@ public class TestRecordingTests
         // Access Random property to trigger seed recording
         var randomValue = recording.Random.Next();
 
-        // Verify that a RandomSeed variable was recorded
-        Assert.That(recording.Variables.ContainsKey("RandomSeed"), Is.True);
-        Assert.That(recording.Variables["RandomSeed"], Is.Not.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            // Verify that a RandomSeed variable was recorded
+            Assert.That(recording.Variables.ContainsKey("RandomSeed"), Is.True);
+            Assert.That(recording.Variables["RandomSeed"], Is.Not.Null);
+        }
         Assert.That(recording.Variables["RandomSeed"], Is.Not.Empty);
 
         // Verify the recorded seed can be parsed as an integer
@@ -926,9 +950,12 @@ public class TestRecordingTests
         // Access Now property to trigger recording
         var nowValue = recording.Now;
 
-        // Verify that DateTimeOffsetNow variable was recorded
-        Assert.That(recording.Variables.ContainsKey("DateTimeOffsetNow"), Is.True);
-        Assert.That(recording.Variables["DateTimeOffsetNow"], Is.Not.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            // Verify that DateTimeOffsetNow variable was recorded
+            Assert.That(recording.Variables.ContainsKey("DateTimeOffsetNow"), Is.True);
+            Assert.That(recording.Variables["DateTimeOffsetNow"], Is.Not.Null);
+        }
         Assert.That(recording.Variables["DateTimeOffsetNow"], Is.Not.Empty);
 
         // Verify the recorded value can be parsed as DateTimeOffset
@@ -1166,8 +1193,11 @@ public class TestRecordingTests
         var id1 = recording1.GenerateId();
         var id2 = recording2.GenerateId();
 
-        Assert.That(id2, Is.EqualTo(id1), "Playback mode should produce deterministic IDs with the same seed");
-        Assert.That(id1, Is.Not.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(id2, Is.EqualTo(id1), "Playback mode should produce deterministic IDs with the same seed");
+            Assert.That(id1, Is.Not.Null);
+        }
         Assert.That(id1, Is.Not.Empty);
     }
 
@@ -1332,12 +1362,15 @@ public class TestRecordingTests
         // Call GetVariable in Record mode
         var result = recording.GetVariable(variableName, defaultValue);
 
-        // Should return the default value
-        Assert.That(result, Is.EqualTo(defaultValue));
+        using (Assert.EnterMultipleScope())
+        {
+            // Should return the default value
+            Assert.That(result, Is.EqualTo(defaultValue));
 
-        // Should store the variable in the Variables dictionary
-        Assert.That(recording.Variables.ContainsKey(variableName), Is.True);
-        Assert.That(recording.Variables[variableName], Is.EqualTo(defaultValue));
+            // Should store the variable in the Variables dictionary
+            Assert.That(recording.Variables.ContainsKey(variableName), Is.True);
+            Assert.That(recording.Variables[variableName], Is.EqualTo(defaultValue));
+        }
     }
 
     [Test]
@@ -1354,11 +1387,14 @@ public class TestRecordingTests
         // Call GetVariable in Live mode
         var result = recording.GetVariable(variableName, defaultValue);
 
-        // Should return the default value
-        Assert.That(result, Is.EqualTo(defaultValue));
+        using (Assert.EnterMultipleScope())
+        {
+            // Should return the default value
+            Assert.That(result, Is.EqualTo(defaultValue));
 
-        // Should NOT store the variable in the Variables dictionary in Live mode
-        Assert.That(recording.Variables.ContainsKey(variableName), Is.False);
+            // Should NOT store the variable in the Variables dictionary in Live mode
+            Assert.That(recording.Variables.ContainsKey(variableName), Is.False);
+        }
     }
 
     [Test]
@@ -1453,12 +1489,15 @@ public class TestRecordingTests
         // Call GetVariable with a sanitizer function
         var result = recording.GetVariable(variableName, secretValue, value => sanitizedValue);
 
-        // Should return the original value
-        Assert.That(result, Is.EqualTo(secretValue));
+        using (Assert.EnterMultipleScope())
+        {
+            // Should return the original value
+            Assert.That(result, Is.EqualTo(secretValue));
 
-        // Should store the sanitized value in the Variables dictionary
-        Assert.That(recording.Variables.ContainsKey(variableName), Is.True);
-        Assert.That(recording.Variables[variableName], Is.EqualTo(sanitizedValue));
+            // Should store the sanitized value in the Variables dictionary
+            Assert.That(recording.Variables.ContainsKey(variableName), Is.True);
+            Assert.That(recording.Variables[variableName], Is.EqualTo(sanitizedValue));
+        }
         Assert.That(recording.Variables[variableName], Is.Not.EqualTo(secretValue));
     }
 
@@ -1529,9 +1568,12 @@ public class TestRecordingTests
         // Call SetVariable in Record mode
         recording.SetVariable(variableName, variableValue);
 
-        // Should store the variable in the Variables dictionary
-        Assert.That(recording.Variables.ContainsKey(variableName), Is.True);
-        Assert.That(recording.Variables[variableName], Is.EqualTo(variableValue));
+        using (Assert.EnterMultipleScope())
+        {
+            // Should store the variable in the Variables dictionary
+            Assert.That(recording.Variables.ContainsKey(variableName), Is.True);
+            Assert.That(recording.Variables[variableName], Is.EqualTo(variableValue));
+        }
     }
 
     [Test]
@@ -1548,9 +1590,12 @@ public class TestRecordingTests
         // Call SetVariable in Live mode
         recording.SetVariable(variableName, variableValue);
 
-        // Should NOT store the variable in the Variables dictionary in Live mode
-        Assert.That(recording.Variables.ContainsKey(variableName), Is.False);
-        Assert.That(recording.Variables.Count, Is.EqualTo(0));
+        using (Assert.EnterMultipleScope())
+        {
+            // Should NOT store the variable in the Variables dictionary in Live mode
+            Assert.That(recording.Variables.ContainsKey(variableName), Is.False);
+            Assert.That(recording.Variables.Count, Is.EqualTo(0));
+        }
     }
 
     [Test]
@@ -1586,9 +1631,12 @@ public class TestRecordingTests
         // Call SetVariable in Playback mode
         recording.SetVariable(variableName, variableValue);
 
-        // Should NOT add the variable in Playback mode
-        Assert.That(recording.Variables.ContainsKey(variableName), Is.False);
-        Assert.That(recording.Variables.Count, Is.EqualTo(1)); // Should remain unchanged
+        using (Assert.EnterMultipleScope())
+        {
+            // Should NOT add the variable in Playback mode
+            Assert.That(recording.Variables.ContainsKey(variableName), Is.False);
+            Assert.That(recording.Variables.Count, Is.EqualTo(1)); // Should remain unchanged
+        }
     }
 
     [Test]
@@ -1614,9 +1662,12 @@ public class TestRecordingTests
         // Call SetVariable with a sanitizer function
         recording.SetVariable(variableName, secretValue, value => sanitizedValue);
 
-        // Should store the sanitized value in the Variables dictionary
-        Assert.That(recording.Variables.ContainsKey(variableName), Is.True);
-        Assert.That(recording.Variables[variableName], Is.EqualTo(sanitizedValue));
+        using (Assert.EnterMultipleScope())
+        {
+            // Should store the sanitized value in the Variables dictionary
+            Assert.That(recording.Variables.ContainsKey(variableName), Is.True);
+            Assert.That(recording.Variables[variableName], Is.EqualTo(sanitizedValue));
+        }
         Assert.That(recording.Variables[variableName], Is.Not.EqualTo(secretValue));
     }
 
@@ -1681,9 +1732,12 @@ public class TestRecordingTests
 
         // Verify that variables were loaded successfully
         Assert.That(recording.Variables.Count, Is.EqualTo(3));
-        Assert.That(recording.Variables.ContainsKey("RandomSeed"), Is.True);
-        Assert.That(recording.Variables.ContainsKey("TestVar1"), Is.True);
-        Assert.That(recording.Variables.ContainsKey("TestVar2"), Is.True);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(recording.Variables.ContainsKey("RandomSeed"), Is.True);
+            Assert.That(recording.Variables.ContainsKey("TestVar1"), Is.True);
+            Assert.That(recording.Variables.ContainsKey("TestVar2"), Is.True);
+        }
 
         // Operations that call ValidateVariables should succeed
         Assert.DoesNotThrow(() =>

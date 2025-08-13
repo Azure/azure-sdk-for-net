@@ -177,11 +177,14 @@ public class LiveOnlyAttributeTests
     {
         var usage = typeof(LiveOnlyAttribute).GetCustomAttribute<AttributeUsageAttribute>();
         Assert.That(usage, Is.Not.Null);
-        Assert.That(usage.ValidOn.HasFlag(AttributeTargets.Method), Is.True);
-        Assert.That(usage.ValidOn.HasFlag(AttributeTargets.Class), Is.True);
-        Assert.That(usage.ValidOn.HasFlag(AttributeTargets.Assembly), Is.True);
-        Assert.That(usage.AllowMultiple, Is.False);
-        Assert.That(usage.Inherited, Is.True);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(usage.ValidOn.HasFlag(AttributeTargets.Method), Is.True);
+            Assert.That(usage.ValidOn.HasFlag(AttributeTargets.Class), Is.True);
+            Assert.That(usage.ValidOn.HasFlag(AttributeTargets.Assembly), Is.True);
+            Assert.That(usage.AllowMultiple, Is.False);
+            Assert.That(usage.Inherited, Is.True);
+        }
     }
 
     // Helper methods and classes

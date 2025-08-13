@@ -1,10 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using Microsoft.ClientModel.TestFramework.Mocks;
 using NUnit.Framework;
 using System;
 using System.Linq;
+
 namespace Microsoft.ClientModel.TestFramework.Tests;
+
 public class MockPipelineHeadersTests
 {
     [Test]
@@ -13,37 +16,49 @@ public class MockPipelineHeadersTests
         MockPipelineResponseHeaders headers = new();
         headers.SetHeader("Content-Type", "application/json");
         headers.SetHeader("X-Custom-Header", "CustomValue");
-        Assert.IsTrue(headers.TryGetValue("Content-Type", out string contentType));
-        Assert.AreEqual("application/json", contentType);
-        Assert.IsTrue(headers.TryGetValue("X-Custom-Header", out string customHeader));
-        Assert.AreEqual("CustomValue", customHeader);
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(headers.TryGetValue("Content-Type", out string contentType), Is.True);
+            Assert.That(contentType, Is.EqualTo("application/json"));
+            Assert.That(headers.TryGetValue("X-Custom-Header", out string customHeader), Is.True);
+            Assert.That(customHeader, Is.EqualTo("CustomValue"));
+        }
     }
+
     [Test]
     public void SettingMultipleValuesResponseHeaders()
     {
         MockPipelineResponseHeaders headers = new();
         string[] setValues = [ "Value1", "Value2", "Value3" ];
+
         headers.SetHeader("X-Multiple-Values", setValues[0]);
         headers.SetHeader("X-Multiple-Values", setValues[1]);
         headers.SetHeader("X-Multiple-Values", setValues[2]);
-        Assert.IsTrue(headers.TryGetValues("X-Multiple-Values", out var headerValues));
+
+        Assert.That(headers.TryGetValues("X-Multiple-Values", out var headerValues), Is.True);
+
         foreach (var value in headerValues)
         {
-            Assert.IsTrue(setValues.Contains(value));
+            Assert.That(setValues.Contains(value), Is.True);
         }
         headers.TryGetValue("X-Multiple-Values", out string singleValue);
-        Assert.AreEqual("Value1,Value2,Value3", singleValue);
+
+        Assert.That(singleValue, Is.EqualTo("Value1,Value2,Value3"));
     }
+
     [Test]
     public void ResponseHeadersJoinsMultipleValues()
     {
         MockPipelineResponseHeaders headers = new();
         string[] setValues = ["Value1", "Value2", "Value3"];
+
         headers.SetHeader("X-Multiple-Values", setValues[0]);
         headers.SetHeader("X-Multiple-Values", setValues[1]);
         headers.SetHeader("X-Multiple-Values", setValues[2]);
         headers.TryGetValue("X-Multiple-Values", out string singleValue);
-        Assert.AreEqual("Value1,Value2,Value3", singleValue);
+
+        Assert.That(singleValue, Is.EqualTo("Value1,Value2,Value3"));
     }
     [Test]
     public void ResponseHeadersJoinsMultipleValuesGetEnumerator()
@@ -57,10 +72,11 @@ public class MockPipelineHeadersTests
         {
             if (header.Key == "X-Multiple-Values")
             {
-                Assert.AreEqual("Value1,Value2,Value3", header.Value);
+                Assert.That(header.Value, Is.EqualTo("Value1,Value2,Value3"));
             }
         }
     }
+
     [Test]
     public void CanAddAndGetRequestHeaders()
     {
@@ -70,11 +86,16 @@ public class MockPipelineHeadersTests
             { "X-Custom-Header", "CustomValue" },
             { "X-Custom-Header", "CustomValue2" }
         };
-        Assert.IsTrue(headers.TryGetValue("Content-Type", out string contentType));
-        Assert.AreEqual("application/json", contentType);
-        Assert.IsTrue(headers.TryGetValue("X-Custom-Header", out string customHeader));
-        Assert.AreEqual("CustomValue,CustomValue2", customHeader);
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(headers.TryGetValue("Content-Type", out string contentType), Is.True);
+            Assert.That(contentType, Is.EqualTo("application/json"));
+            Assert.That(headers.TryGetValue("X-Custom-Header", out string customHeader), Is.True);
+            Assert.That(customHeader, Is.EqualTo("CustomValue,CustomValue2"));
+        }
     }
+
     [Test]
     public void CanAddAndGetMultipleValueRequestHeaders()
     {
@@ -83,42 +104,56 @@ public class MockPipelineHeadersTests
         headers.Add("X-Multiple-Values", setValues[0]);
         headers.Add("X-Multiple-Values", setValues[1]);
         headers.Add("X-Multiple-Values", setValues[2]);
-        Assert.IsTrue(headers.TryGetValues("X-Multiple-Values", out var headerValues));
+
+        Assert.That(headers.TryGetValues("X-Multiple-Values", out var headerValues), Is.True);
+
         foreach (var value in headerValues)
         {
-            Assert.IsTrue(setValues.Contains(value));
+            Assert.That(setValues.Contains(value), Is.True);
         }
+
         headers.TryGetValue("X-Multiple-Values", out string singleValue);
-        Assert.AreEqual("Value1,Value2,Value3", singleValue);
+        Assert.That(singleValue, Is.EqualTo("Value1,Value2,Value3"));
     }
     [Test]
     public void RequestHeadersJoinsMultipleValues()
     {
         MockPipelineRequestHeaders headers = new();
         string[] setValues = ["Value1", "Value2", "Value3"];
+
         headers.Add("X-Multiple-Values", setValues[0]);
         headers.Add("X-Multiple-Values", setValues[1]);
         headers.Add("X-Multiple-Values", setValues[2]);
+
         foreach (var header in headers)
         {
             if (header.Key == "X-Multiple-Values")
             {
-                Assert.AreEqual("Value1,Value2,Value3", header.Value);
+                Assert.That(header.Value, Is.EqualTo("Value1,Value2,Value3"));
             }
         }
     }
+
     [Test]
     public void CanSetRequestHeaders()
     {
         MockPipelineRequestHeaders headers = new();
         headers.Set("Content-Type", "application/json");
         headers.Set("X-Custom-Header", "CustomValue");
-        Assert.IsTrue(headers.TryGetValue("Content-Type", out string contentType));
-        Assert.AreEqual("application/json", contentType);
-        Assert.IsTrue(headers.TryGetValue("X-Custom-Header", out string customHeader));
-        Assert.AreEqual("CustomValue", customHeader);
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(headers.TryGetValue("Content-Type", out string contentType), Is.True);
+            Assert.That(contentType, Is.EqualTo("application/json"));
+            Assert.That(headers.TryGetValue("X-Custom-Header", out string customHeader), Is.True);
+            Assert.That(customHeader, Is.EqualTo("CustomValue"));
+        }
+
         headers.Set("X-Custom-Header", "NewValue");
-        Assert.IsTrue(headers.TryGetValue("X-Custom-Header", out customHeader));
-        Assert.AreEqual("NewValue", customHeader);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(headers.TryGetValue("X-Custom-Header", out string customHeader), Is.True);
+            Assert.That(customHeader, Is.EqualTo("NewValue"));
+        }
     }
 }

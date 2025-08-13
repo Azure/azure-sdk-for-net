@@ -50,8 +50,11 @@ public class LiveTestBaseTests
         var liveTestBase2 = new TestableLiveTestBase();
 
         Assert.That(liveTestBase1.TestEnvironment, Is.Not.SameAs(liveTestBase2.TestEnvironment), "Each instance should have separate TestEnvironment");
-        Assert.That(liveTestBase1.TestEnvironment.Mode, Is.EqualTo(RecordedTestMode.Live), "First instance should be in Live mode");
-        Assert.That(liveTestBase2.TestEnvironment.Mode, Is.EqualTo(RecordedTestMode.Live), "Second instance should be in Live mode");
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(liveTestBase1.TestEnvironment.Mode, Is.EqualTo(RecordedTestMode.Live), "First instance should be in Live mode");
+            Assert.That(liveTestBase2.TestEnvironment.Mode, Is.EqualTo(RecordedTestMode.Live), "Second instance should be in Live mode");
+        }
     }
 
     #endregion
@@ -108,9 +111,12 @@ public class LiveTestBaseTests
         await liveTestBase.WaitForEnvironment();
         await liveTestBase.WaitForEnvironment();
 
-        // Should complete without throwing and environment should still be valid
-        Assert.That(liveTestBase.TestEnvironment.WaitForEnvironmentAsyncCalled, Is.True, "WaitForEnvironmentAsync should have been called");
-        Assert.That(liveTestBase.TestEnvironment.Mode, Is.EqualTo(RecordedTestMode.Live), "Environment should still be in Live mode");
+        using (Assert.EnterMultipleScope())
+        {
+            // Should complete without throwing and environment should still be valid
+            Assert.That(liveTestBase.TestEnvironment.WaitForEnvironmentAsyncCalled, Is.True, "WaitForEnvironmentAsync should have been called");
+            Assert.That(liveTestBase.TestEnvironment.Mode, Is.EqualTo(RecordedTestMode.Live), "Environment should still be in Live mode");
+        }
     }
 
     #endregion

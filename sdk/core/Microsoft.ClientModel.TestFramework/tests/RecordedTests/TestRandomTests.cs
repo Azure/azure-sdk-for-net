@@ -34,8 +34,11 @@ public class TestRandomTests
         var guid2 = testRandom.NewGuid();
 
         Assert.That(guid1, Is.Not.EqualTo(guid2));
-        Assert.That(guid1, Is.Not.EqualTo(Guid.Empty));
-        Assert.That(guid2, Is.Not.EqualTo(Guid.Empty));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(guid1, Is.Not.EqualTo(Guid.Empty));
+            Assert.That(guid2, Is.Not.EqualTo(Guid.Empty));
+        }
     }
 
     [Test]
@@ -133,8 +136,11 @@ public class TestRandomTests
         var guid2 = testRandom.NewGuid();
         var guid3 = testRandom.NewGuid();
 
-        Assert.That(guid1, Is.Not.EqualTo(guid2));
-        Assert.That(guid2, Is.Not.EqualTo(guid3));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(guid1, Is.Not.EqualTo(guid2));
+            Assert.That(guid2, Is.Not.EqualTo(guid3));
+        }
         Assert.That(guid1, Is.Not.EqualTo(guid3));
     }
 
@@ -147,8 +153,11 @@ public class TestRandomTests
         var guid2 = testRandom.NewGuid();
         var guid3 = testRandom.NewGuid();
 
-        Assert.That(guid1, Is.Not.EqualTo(guid2));
-        Assert.That(guid2, Is.Not.EqualTo(guid3));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(guid1, Is.Not.EqualTo(guid2));
+            Assert.That(guid2, Is.Not.EqualTo(guid3));
+        }
         Assert.That(guid1, Is.Not.EqualTo(guid3));
     }
 

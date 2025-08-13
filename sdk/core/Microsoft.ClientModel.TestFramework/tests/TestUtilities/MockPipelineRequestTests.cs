@@ -14,17 +14,20 @@ public class MockPipelineRequestTests
     public void DefaultConstructor_SetsDefaultValues()
     {
         var request = new MockPipelineRequest();
-        Assert.AreEqual("GET", request.Method);
-        Assert.AreEqual("https://www.example.com/", request.Uri?.ToString());
-        Assert.IsNull(request.Content);
-        Assert.IsNotNull(request.Headers);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(request.Method, Is.EqualTo("GET"));
+            Assert.That(request.Uri?.ToString(), Is.EqualTo("https://www.example.com/"));
+            Assert.That(request.Content, Is.Null);
+            Assert.That(request.Headers, Is.Not.Null);
+        }
     }
     [Test]
     public void Method_CanBeSetAndRetrieved()
     {
         var request = new MockPipelineRequest();
         request.Method = "POST";
-        Assert.AreEqual("POST", request.Method);
+        Assert.That(request.Method, Is.EqualTo("POST"));
     }
     [Test]
     public void Method_CanBeSetToAllHttpMethods()
@@ -34,7 +37,7 @@ public class MockPipelineRequestTests
         foreach (var method in httpMethods)
         {
             request.Method = method;
-            Assert.AreEqual(method, request.Method);
+            Assert.That(request.Method, Is.EqualTo(method));
         }
     }
     [Test]
@@ -43,8 +46,8 @@ public class MockPipelineRequestTests
         var request = new MockPipelineRequest();
         var testUri = new Uri("https://api.example.com/v1/resource");
         request.Uri = testUri;
-        Assert.AreEqual(testUri, request.Uri);
-        Assert.AreEqual("https://api.example.com/v1/resource", request.Uri.ToString());
+        Assert.That(request.Uri, Is.EqualTo(testUri));
+        Assert.That(request.Uri.ToString(), Is.EqualTo("https://api.example.com/v1/resource"));
     }
     [Test]
     public void Uri_CanBeSetToNull()
@@ -53,7 +56,7 @@ public class MockPipelineRequestTests
         var testUri = new Uri("https://api.example.com/v1/resource");
         request.Uri = testUri;
         request.Uri = null;
-        Assert.IsNull(request.Uri);
+        Assert.That(request.Uri, Is.Null);
     }
     [Test]
     public void Content_CanBeSetAndRetrieved()
@@ -61,7 +64,7 @@ public class MockPipelineRequestTests
         var request = new MockPipelineRequest();
         var content = BinaryContent.Create(BinaryData.FromString("test content"));
         request.Content = content;
-        Assert.AreSame(content, request.Content);
+        Assert.That(request.Content, Is.SameAs(content));
     }
     [Test]
     public void Content_CanBeSetToNull()
@@ -70,7 +73,7 @@ public class MockPipelineRequestTests
         var content = BinaryContent.Create(BinaryData.FromString("test content"));
         request.Content = content;
         request.Content = null;
-        Assert.IsNull(request.Content);
+        Assert.That(request.Content, Is.Null);
     }
     [Test]
     public void Content_WithJsonData_IsSetCorrectly()
@@ -79,13 +82,13 @@ public class MockPipelineRequestTests
         var jsonContent = """{"name": "test", "value": 123}""";
         var content = BinaryContent.Create(BinaryData.FromString(jsonContent));
         request.Content = content;
-        Assert.IsNotNull(request.Content);
+        Assert.That(request.Content, Is.Not.Null);
     }
     [Test]
     public void Headers_ReturnsNonNullInstance()
     {
         var request = new MockPipelineRequest();
-        Assert.IsNotNull(request.Headers);
+        Assert.That(request.Headers, Is.Not.Null);
     }
     [Test]
     public void Headers_CanAddAndRetrieveValues()
@@ -93,10 +96,13 @@ public class MockPipelineRequestTests
         var request = new MockPipelineRequest();
         request.Headers.Add("Content-Type", "application/json");
         request.Headers.Add("Authorization", "Bearer token123");
-        Assert.IsTrue(request.Headers.TryGetValue("Content-Type", out var contentType));
-        Assert.AreEqual("application/json", contentType);
-        Assert.IsTrue(request.Headers.TryGetValue("Authorization", out var auth));
-        Assert.AreEqual("Bearer token123", auth);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(request.Headers.TryGetValue("Content-Type", out var contentType), Is.True);
+            Assert.That(contentType, Is.EqualTo("application/json"));
+            Assert.That(request.Headers.TryGetValue("Authorization", out var auth), Is.True);
+            Assert.That(auth, Is.EqualTo("Bearer token123"));
+        }
     }
     [Test]
     public void Headers_PersistAcrossRequests()
@@ -104,9 +110,12 @@ public class MockPipelineRequestTests
         var request = new MockPipelineRequest();
         request.Headers.Add("X-Custom-Header", "custom-value");
         var retrievedHeaders = request.Headers;
-        Assert.AreSame(request.Headers, retrievedHeaders);
-        Assert.IsTrue(retrievedHeaders.TryGetValue("X-Custom-Header", out var value));
-        Assert.AreEqual("custom-value", value);
+        Assert.That(retrievedHeaders, Is.SameAs(request.Headers));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(retrievedHeaders.TryGetValue("X-Custom-Header", out var value), Is.True);
+            Assert.That(value, Is.EqualTo("custom-value"));
+        }
     }
     [Test]
     public void Dispose_DoesNotThrow()
@@ -126,7 +135,7 @@ public class MockPipelineRequestTests
     public void Request_InheritsFromPipelineRequest()
     {
         var request = new MockPipelineRequest();
-        Assert.IsInstanceOf<PipelineRequest>(request);
+        Assert.That(request, Is.InstanceOf<PipelineRequest>());
     }
     [Test]
     public void Request_CanBeUsedPolymorphically()
@@ -134,8 +143,11 @@ public class MockPipelineRequestTests
         PipelineRequest request = new MockPipelineRequest();
         request.Method = "PUT";
         request.Uri = new Uri("https://polymorphic.example.com");
-        Assert.AreEqual("PUT", request.Method);
-        Assert.AreEqual("https://polymorphic.example.com/", request.Uri.ToString());
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(request.Method, Is.EqualTo("PUT"));
+            Assert.That(request.Uri.ToString(), Is.EqualTo("https://polymorphic.example.com/"));
+        }
     }
     [Test]
     public void Request_WithComplexUri_HandlesCorrectly()
@@ -143,13 +155,16 @@ public class MockPipelineRequestTests
         var request = new MockPipelineRequest();
         var complexUri = new Uri("https://api.example.com:8080/v2/users/123?include=profile&format=json#section");
         request.Uri = complexUri;
-        Assert.AreEqual(complexUri, request.Uri);
-        Assert.AreEqual("https", request.Uri.Scheme);
-        Assert.AreEqual("api.example.com", request.Uri.Host);
-        Assert.AreEqual(8080, request.Uri.Port);
-        Assert.AreEqual("/v2/users/123", request.Uri.AbsolutePath);
-        Assert.AreEqual("?include=profile&format=json", request.Uri.Query);
-        Assert.AreEqual("#section", request.Uri.Fragment);
+        Assert.That(request.Uri, Is.EqualTo(complexUri));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(request.Uri.Scheme, Is.EqualTo("https"));
+            Assert.That(request.Uri.Host, Is.EqualTo("api.example.com"));
+            Assert.That(request.Uri.Port, Is.EqualTo(8080));
+            Assert.That(request.Uri.AbsolutePath, Is.EqualTo("/v2/users/123"));
+            Assert.That(request.Uri.Query, Is.EqualTo("?include=profile&format=json"));
+            Assert.That(request.Uri.Fragment, Is.EqualTo("#section"));
+        }
     }
     [Test]
     public void Request_SupportsMethodChaining()
@@ -160,24 +175,27 @@ public class MockPipelineRequestTests
         request.Uri = new Uri("https://chain.example.com");
         request.Content = content;
         request.Headers.Add("X-Test", "chained");
-        Assert.AreEqual("POST", request.Method);
-        Assert.AreEqual("https://chain.example.com/", request.Uri.ToString());
-        Assert.AreSame(content, request.Content);
-        Assert.IsTrue(request.Headers.TryGetValue("X-Test", out var headerValue));
-        Assert.AreEqual("chained", headerValue);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(request.Method, Is.EqualTo("POST"));
+            Assert.That(request.Uri.ToString(), Is.EqualTo("https://chain.example.com/"));
+            Assert.That(request.Content, Is.SameAs(content));
+            Assert.That(request.Headers.TryGetValue("X-Test", out var headerValue), Is.True);
+            Assert.That(headerValue, Is.EqualTo("chained"));
+        }
     }
     [Test]
     public void Request_HandlesEmptyStringMethod()
     {
         var request = new MockPipelineRequest();
         request.Method = "";
-        Assert.AreEqual("", request.Method);
+        Assert.That(request.Method, Is.Empty);
     }
     [Test]
     public void Request_HandlesNullMethod()
     {
         var request = new MockPipelineRequest();
         request.Method = null!;
-        Assert.IsNull(request.Method);
+        Assert.That(request.Method, Is.Null);
     }
 }

@@ -24,16 +24,19 @@ public class MockPipelineRequestHeadersTests
     public void Constructor_CreatesEmptyHeadersCollection()
     {
         var headers = new MockPipelineRequestHeaders();
-        Assert.IsNotNull(headers);
-        Assert.IsFalse(headers.Any());
+        Assert.That(headers, Is.Not.Null);
+        Assert.That(headers.Any(), Is.False);
     }
 
     [Test]
     public void Add_SingleHeader_AddsHeaderCorrectly()
     {
         _headers.Add("Content-Type", "application/json");
-        Assert.IsTrue(_headers.TryGetValue("Content-Type", out var value));
-        Assert.AreEqual("application/json", value);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(_headers.TryGetValue("Content-Type", out var value), Is.True);
+            Assert.That(value, Is.EqualTo("application/json"));
+        }
     }
 
     [Test]
@@ -42,12 +45,15 @@ public class MockPipelineRequestHeadersTests
         _headers.Add("Content-Type", "application/json");
         _headers.Add("Authorization", "Bearer token123");
         _headers.Add("X-Custom-Header", "custom-value");
-        Assert.IsTrue(_headers.TryGetValue("Content-Type", out var contentType));
-        Assert.AreEqual("application/json", contentType);
-        Assert.IsTrue(_headers.TryGetValue("Authorization", out var auth));
-        Assert.AreEqual("Bearer token123", auth);
-        Assert.IsTrue(_headers.TryGetValue("X-Custom-Header", out var custom));
-        Assert.AreEqual("custom-value", custom);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(_headers.TryGetValue("Content-Type", out var contentType), Is.True);
+            Assert.That(contentType, Is.EqualTo("application/json"));
+            Assert.That(_headers.TryGetValue("Authorization", out var auth), Is.True);
+            Assert.That(auth, Is.EqualTo("Bearer token123"));
+            Assert.That(_headers.TryGetValue("X-Custom-Header", out var custom), Is.True);
+            Assert.That(custom, Is.EqualTo("custom-value"));
+        }
     }
 
     [Test]
@@ -56,8 +62,11 @@ public class MockPipelineRequestHeadersTests
         _headers.Add("Accept", "application/json");
         _headers.Add("Accept", "text/html");
         _headers.Add("Accept", "application/xml");
-        Assert.IsTrue(_headers.TryGetValue("Accept", out var combinedValue));
-        Assert.AreEqual("application/json,text/html,application/xml", combinedValue);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(_headers.TryGetValue("Accept", out var combinedValue), Is.True);
+            Assert.That(combinedValue, Is.EqualTo("application/json,text/html,application/xml"));
+        }
     }
 
     [Test]
@@ -66,44 +75,59 @@ public class MockPipelineRequestHeadersTests
         _headers.Add("content-type", "application/json");
         _headers.Add("Content-Type", "text/html");
         _headers.Add("CONTENT-TYPE", "application/xml");
-        Assert.IsTrue(_headers.TryGetValue("Content-Type", out var value));
-        Assert.AreEqual("application/json,text/html,application/xml", value);
-        Assert.IsTrue(_headers.TryGetValue("content-type", out var lowerValue));
-        Assert.AreEqual("application/json,text/html,application/xml", lowerValue);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(_headers.TryGetValue("Content-Type", out var value), Is.True);
+            Assert.That(value, Is.EqualTo("application/json,text/html,application/xml"));
+            Assert.That(_headers.TryGetValue("content-type", out var lowerValue), Is.True);
+            Assert.That(lowerValue, Is.EqualTo("application/json,text/html,application/xml"));
+        }
     }
 
     [Test]
     public void TryGetValue_NonExistentHeader_ReturnsFalse()
     {
-        Assert.IsFalse(_headers.TryGetValue("Non-Existent", out var value));
-        Assert.IsNull(value);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(_headers.TryGetValue("Non-Existent", out var value), Is.False);
+            Assert.That(value, Is.Null);
+        }
     }
 
     [Test]
     public void TryGetValue_ExistingHeader_ReturnsTrue()
     {
         _headers.Add("Test-Header", "test-value");
-        Assert.IsTrue(_headers.TryGetValue("Test-Header", out var value));
-        Assert.AreEqual("test-value", value);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(_headers.TryGetValue("Test-Header", out var value), Is.True);
+            Assert.That(value, Is.EqualTo("test-value"));
+        }
     }
 
     [Test]
     public void TryGetValue_CaseInsensitive_ReturnsCorrectValue()
     {
         _headers.Add("Content-Length", "1024");
-        Assert.IsTrue(_headers.TryGetValue("content-length", out var value1));
-        Assert.AreEqual("1024", value1);
-        Assert.IsTrue(_headers.TryGetValue("CONTENT-LENGTH", out var value2));
-        Assert.AreEqual("1024", value2);
-        Assert.IsTrue(_headers.TryGetValue("Content-Length", out var value3));
-        Assert.AreEqual("1024", value3);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(_headers.TryGetValue("content-length", out var value1), Is.True);
+            Assert.That(value1, Is.EqualTo("1024"));
+            Assert.That(_headers.TryGetValue("CONTENT-LENGTH", out var value2), Is.True);
+            Assert.That(value2, Is.EqualTo("1024"));
+            Assert.That(_headers.TryGetValue("Content-Length", out var value3), Is.True);
+            Assert.That(value3, Is.EqualTo("1024"));
+        }
     }
 
     [Test]
     public void TryGetValues_NonExistentHeader_ReturnsFalse()
     {
-        Assert.IsFalse(_headers.TryGetValues("Non-Existent", out var values));
-        Assert.IsNull(values);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(_headers.TryGetValues("Non-Existent", out var values), Is.False);
+            Assert.That(values, Is.Null);
+        }
     }
 
     [Test]
@@ -113,13 +137,19 @@ public class MockPipelineRequestHeadersTests
         _headers.Add("Cache-Control", "no-store");
         _headers.Add("Cache-Control", "must-revalidate");
         var success = _headers.TryGetValues("Cache-Control", out var values);
-        Assert.IsTrue(success);
-        Assert.IsNotNull(values);
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(success, Is.True);
+            Assert.That(values, Is.Not.Null);
+        }
+
         var valuesList = values.ToList();
-        Assert.AreEqual(3, valuesList.Count);
-        Assert.Contains("no-cache", valuesList);
-        Assert.Contains("no-store", valuesList);
-        Assert.Contains("must-revalidate", valuesList);
+
+        Assert.That(valuesList.Count, Is.EqualTo(3));
+        Assert.That(valuesList, Has.Member("no-cache"));
+        Assert.That(valuesList, Has.Member("no-store"));
+        Assert.That(valuesList, Has.Member("must-revalidate"));
     }
 
     [Test]
@@ -127,18 +157,25 @@ public class MockPipelineRequestHeadersTests
     {
         _headers.Add("User-Agent", "TestAgent/1.0");
         var success = _headers.TryGetValues("User-Agent", out var values);
-        Assert.IsTrue(success);
-        Assert.IsNotNull(values);
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(success, Is.True);
+            Assert.That(values, Is.Not.Null);
+        }
+
         var valuesList = values.ToList();
-        Assert.AreEqual(1, valuesList.Count);
-        Assert.AreEqual("TestAgent/1.0", valuesList[0]);
+
+        Assert.That(valuesList.Count, Is.EqualTo(1));
+        Assert.That(valuesList[0], Is.EqualTo("TestAgent/1.0"));
     }
 
     [Test]
     public void GetEnumerator_EmptyHeaders_ReturnsEmptyEnumeration()
     {
         var headers = _headers.ToList();
-        Assert.AreEqual(0, headers.Count);
+
+        Assert.That(headers.Count, Is.EqualTo(0));
     }
 
     [Test]
@@ -148,17 +185,34 @@ public class MockPipelineRequestHeadersTests
         _headers.Add("Authorization", "Bearer token");
         _headers.Add("Accept", "application/json");
         _headers.Add("Accept", "text/html");
+
         var headers = _headers.ToList();
-        Assert.AreEqual(3, headers.Count); // 3 unique header names
+
+        Assert.That(headers.Count, Is.EqualTo(3)); // 3 unique header names
+
         var contentType = headers.FirstOrDefault(h => h.Key.Equals("Content-Type", StringComparison.OrdinalIgnoreCase));
-        Assert.IsNotNull(contentType.Key);
-        Assert.AreEqual("application/json", contentType.Value);
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(contentType.Key, Is.Not.Null);
+            Assert.That(contentType.Value, Is.EqualTo("application/json"));
+        }
+
         var authorization = headers.FirstOrDefault(h => h.Key.Equals("Authorization", StringComparison.OrdinalIgnoreCase));
-        Assert.IsNotNull(authorization.Key);
-        Assert.AreEqual("Bearer token", authorization.Value);
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(authorization.Key, Is.Not.Null);
+            Assert.That(authorization.Value, Is.EqualTo("Bearer token"));
+        }
+
         var accept = headers.FirstOrDefault(h => h.Key.Equals("Accept", StringComparison.OrdinalIgnoreCase));
-        Assert.IsNotNull(accept.Key);
-        Assert.AreEqual("application/json,text/html", accept.Value);
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(accept.Key, Is.Not.Null);
+            Assert.That(accept.Value, Is.EqualTo("application/json,text/html"));
+        }
     }
 
     [Test]
@@ -167,11 +221,18 @@ public class MockPipelineRequestHeadersTests
         _headers.Add("Via", "1.1 proxy1");
         _headers.Add("Via", "1.0 proxy2");
         _headers.Add("Via", "1.1 proxy3");
+
         var headers = _headers.ToList();
-        Assert.AreEqual(1, headers.Count);
+
+        Assert.That(headers.Count, Is.EqualTo(1));
+
         var viaHeader = headers[0];
-        Assert.AreEqual("Via", viaHeader.Key);
-        Assert.AreEqual("1.1 proxy1,1.0 proxy2,1.1 proxy3", viaHeader.Value);
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(viaHeader.Key, Is.EqualTo("Via"));
+            Assert.That(viaHeader.Value, Is.EqualTo("1.1 proxy1,1.0 proxy2,1.1 proxy3"));
+        }
     }
 
     [Test]
@@ -184,28 +245,40 @@ public class MockPipelineRequestHeadersTests
     public void Add_EmptyHeaderName_AllowsEmptyName()
     {
         Assert.DoesNotThrow(() => _headers.Add("", "value"));
-        Assert.IsTrue(_headers.TryGetValue("", out var value));
-        Assert.AreEqual("value", value);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(_headers.TryGetValue("", out var value), Is.True);
+            Assert.That(value, Is.EqualTo("value"));
+        }
     }
 
     [Test]
     public void Add_EmptyHeaderValue_AddsEmptyValue()
     {
         _headers.Add("Test-Header", "");
-        Assert.IsTrue(_headers.TryGetValue("Test-Header", out var value));
-        Assert.AreEqual("", value);
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(_headers.TryGetValue("Test-Header", out var value), Is.True);
+            Assert.That(value, Is.Empty);
+        }
     }
     [Test]
     public void Headers_PersistAcrossOperations()
     {
         _headers.Add("Persistent-Header", "persistent-value");
         _headers.Add("Another-Header", "another-value");
+
         var success1 = _headers.TryGetValue("Persistent-Header", out var value1);
         var success2 = _headers.TryGetValue("Another-Header", out var value2);
-        Assert.IsTrue(success1);
-        Assert.AreEqual("persistent-value", value1);
-        Assert.IsTrue(success2);
-        Assert.AreEqual("another-value", value2);
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(success1, Is.True);
+            Assert.That(value1, Is.EqualTo("persistent-value"));
+            Assert.That(success2, Is.True);
+            Assert.That(value2, Is.EqualTo("another-value"));
+        }
     }
     [Test]
     public void Headers_SupportsStandardHttpHeaders()
@@ -223,14 +296,19 @@ public class MockPipelineRequestHeadersTests
             { "Host", "api.example.com" },
             { "User-Agent", "TestClient/1.0" }
         };
+
         foreach (var header in standardHeaders)
         {
             _headers.Add(header.Key, header.Value);
         }
+
         foreach (var header in standardHeaders)
         {
-            Assert.IsTrue(_headers.TryGetValue(header.Key, out var value));
-            Assert.AreEqual(header.Value, value);
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(_headers.TryGetValue(header.Key, out var value), Is.True);
+                Assert.That(value, Is.EqualTo(header.Value));
+            }
         }
     }
 }

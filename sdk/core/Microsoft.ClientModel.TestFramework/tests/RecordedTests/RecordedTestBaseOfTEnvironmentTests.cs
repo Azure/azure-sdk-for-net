@@ -27,8 +27,11 @@ public class RecordedTestBaseOfTEnvironmentTests
     {
         var testBase = new TestableRecordedTestBase(isAsync: true, RecordedTestMode.Record);
 
-        Assert.That(testBase.Mode, Is.EqualTo(RecordedTestMode.Record), "Base mode should be set correctly");
-        Assert.That(testBase.TestEnvironment.Mode, Is.EqualTo(RecordedTestMode.Record), "TestEnvironment mode should match base mode");
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(testBase.Mode, Is.EqualTo(RecordedTestMode.Record), "Base mode should be set correctly");
+            Assert.That(testBase.TestEnvironment.Mode, Is.EqualTo(RecordedTestMode.Record), "TestEnvironment mode should match base mode");
+        }
     }
 
     [Test]
@@ -46,12 +49,18 @@ public class RecordedTestBaseOfTEnvironmentTests
     public void ConstructorCallsBaseConstructorWithCorrectParameters()
     {
         var asyncTestBase = new TestableRecordedTestBase(isAsync: true, RecordedTestMode.Live);
-        Assert.That(asyncTestBase.IsAsync, Is.True, "IsAsync should be passed to base constructor");
-        Assert.That(asyncTestBase.Mode, Is.EqualTo(RecordedTestMode.Live), "Mode should be passed to base constructor");
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(asyncTestBase.IsAsync, Is.True, "IsAsync should be passed to base constructor");
+            Assert.That(asyncTestBase.Mode, Is.EqualTo(RecordedTestMode.Live), "Mode should be passed to base constructor");
+        }
 
         var syncTestBase = new TestableRecordedTestBase(isAsync: false, RecordedTestMode.Record);
-        Assert.That(syncTestBase.IsAsync, Is.False, "IsAsync should be passed to base constructor");
-        Assert.That(syncTestBase.Mode, Is.EqualTo(RecordedTestMode.Record), "Mode should be passed to base constructor");
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(syncTestBase.IsAsync, Is.False, "IsAsync should be passed to base constructor");
+            Assert.That(syncTestBase.Mode, Is.EqualTo(RecordedTestMode.Record), "Mode should be passed to base constructor");
+        }
     }
 
     #endregion
@@ -161,8 +170,11 @@ public class RecordedTestBaseOfTEnvironmentTests
         var testBase2 = new TestableRecordedTestBase(isAsync: false, RecordedTestMode.Playback);
 
         Assert.That(testBase1.TestEnvironment, Is.Not.SameAs(testBase2.TestEnvironment), "Each instance should have separate TestEnvironment");
-        Assert.That(testBase1.TestEnvironment.Mode, Is.EqualTo(RecordedTestMode.Record), "First instance should have Record mode");
-        Assert.That(testBase2.TestEnvironment.Mode, Is.EqualTo(RecordedTestMode.Playback), "Second instance should have Playback mode");
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(testBase1.TestEnvironment.Mode, Is.EqualTo(RecordedTestMode.Record), "First instance should have Record mode");
+            Assert.That(testBase2.TestEnvironment.Mode, Is.EqualTo(RecordedTestMode.Playback), "Second instance should have Playback mode");
+        }
     }
 
     [Test]

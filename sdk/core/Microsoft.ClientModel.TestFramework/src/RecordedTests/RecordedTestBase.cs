@@ -619,13 +619,13 @@ public abstract class RecordedTestBase : ClientTestBase
         if (Mode != RecordedTestMode.Live &&
             test.Properties.ContainsKey("_SkipRecordings"))
         {
-            throw new IgnoreException((string?)test.Properties.Get("_SkipRecordings"));
+            throw new IgnoreException((string?)test.Properties.Get("_SkipRecordings") ?? string.Empty);
         }
 
         if (Mode == RecordedTestMode.Live &&
             test.Properties.ContainsKey("_SkipLive"))
         {
-            throw new IgnoreException((string?)test.Properties.Get("_SkipLive"));
+            throw new IgnoreException((string?)test.Properties.Get("_SkipLive") ?? string.Empty);
         }
 
         Recording = await CreateTestRecordingAsync(Mode, GetSessionFilePath()).ConfigureAwait(false);

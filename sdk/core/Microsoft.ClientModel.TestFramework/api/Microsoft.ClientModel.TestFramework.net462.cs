@@ -1,9 +1,5 @@
 namespace Microsoft.ClientModel.TestFramework
 {
-    public static partial class AsyncAssert
-    {
-        public static System.Threading.Tasks.Task<T> ThrowsAsync<T>(System.Func<System.Threading.Tasks.Task> action) where T : System.Exception { throw null; }
-    }
     [System.AttributeUsageAttribute(System.AttributeTargets.Assembly | System.AttributeTargets.Class | System.AttributeTargets.Method, AllowMultiple=false, Inherited=true)]
     public partial class AsyncOnlyAttribute : NUnit.Framework.NUnitAttribute
     {
@@ -251,6 +247,111 @@ namespace Microsoft.ClientModel.TestFramework
     public partial class SyncOnlyAttribute : NUnit.Framework.NUnitAttribute
     {
         public SyncOnlyAttribute() { }
+    }
+    public static partial class TaskExtensions
+    {
+        public static System.TimeSpan DefaultTimeout { get { throw null; } }
+        public static Microsoft.ClientModel.TestFramework.TaskExtensions.WithCancellationTaskAwaitable AwaitWithCancellation(this System.Threading.Tasks.Task task, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TaskExtensions.WithCancellationTaskAwaitable<T> AwaitWithCancellation<T>(this System.Threading.Tasks.Task<T> task, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TaskExtensions.WithCancellationValueTaskAwaitable<T> AwaitWithCancellation<T>(this System.Threading.Tasks.ValueTask<T> task, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public static System.Runtime.CompilerServices.ConfiguredValueTaskAwaitable EnsureCompleted(this System.Runtime.CompilerServices.ConfiguredValueTaskAwaitable awaitable, bool async) { throw null; }
+        public static void EnsureCompleted(this System.Threading.Tasks.Task task) { }
+        public static void EnsureCompleted(this System.Threading.Tasks.ValueTask task) { }
+        public static System.Runtime.CompilerServices.ConfiguredValueTaskAwaitable<T> EnsureCompleted<T>(this System.Runtime.CompilerServices.ConfiguredValueTaskAwaitable<T> awaitable, bool async) { throw null; }
+        public static T EnsureCompleted<T>(this System.Threading.Tasks.Task<T> task) { throw null; }
+        public static T EnsureCompleted<T>(this System.Threading.Tasks.ValueTask<T> task) { throw null; }
+        public static Microsoft.ClientModel.TestFramework.TaskExtensions.Enumerable<T> EnsureSyncEnumerable<T>(this System.Collections.Generic.IAsyncEnumerable<T> asyncEnumerable) { throw null; }
+        public static object? GetResultFromTask(object returnValue) { throw null; }
+        public static object? GetValueFromTask(System.Type taskResultType, object instrumentedResult) { throw null; }
+        public static bool? IsTaskFaulted(object taskObj) { throw null; }
+        public static bool IsTaskType(System.Type type) { throw null; }
+        public static System.Threading.Tasks.Task TimeoutAfter(this System.Threading.Tasks.Task task, System.TimeSpan timeout, [System.Runtime.CompilerServices.CallerFilePathAttribute] string? filePath = null, [System.Runtime.CompilerServices.CallerLineNumberAttribute] int lineNumber = 0) { throw null; }
+        public static System.Threading.Tasks.ValueTask TimeoutAfter(this System.Threading.Tasks.ValueTask task, System.TimeSpan timeout, [System.Runtime.CompilerServices.CallerFilePathAttribute] string? filePath = null, [System.Runtime.CompilerServices.CallerLineNumberAttribute] int lineNumber = 0) { throw null; }
+        public static System.Threading.Tasks.Task TimeoutAfterDefault(this System.Threading.Tasks.Task task, [System.Runtime.CompilerServices.CallerFilePathAttribute] string? filePath = null, [System.Runtime.CompilerServices.CallerLineNumberAttribute] int lineNumber = 0) { throw null; }
+        public static System.Threading.Tasks.ValueTask TimeoutAfterDefault(this System.Threading.Tasks.ValueTask task, [System.Runtime.CompilerServices.CallerFilePathAttribute] string? filePath = null, [System.Runtime.CompilerServices.CallerLineNumberAttribute] int lineNumber = 0) { throw null; }
+        public static System.Threading.Tasks.Task<T> TimeoutAfterDefault<T>(this System.Threading.Tasks.Task<T> task, [System.Runtime.CompilerServices.CallerFilePathAttribute] string? filePath = null, [System.Runtime.CompilerServices.CallerLineNumberAttribute] int lineNumber = 0) { throw null; }
+        public static System.Threading.Tasks.ValueTask<T> TimeoutAfterDefault<T>(this System.Threading.Tasks.ValueTask<T> task, [System.Runtime.CompilerServices.CallerFilePathAttribute] string? filePath = null, [System.Runtime.CompilerServices.CallerLineNumberAttribute] int lineNumber = 0) { throw null; }
+        public static System.Threading.Tasks.Task<T> TimeoutAfter<T>(this System.Threading.Tasks.Task<T> task, System.TimeSpan timeout, [System.Runtime.CompilerServices.CallerFilePathAttribute] string? filePath = null, [System.Runtime.CompilerServices.CallerLineNumberAttribute] int lineNumber = 0) { throw null; }
+        public static System.Threading.Tasks.ValueTask<T> TimeoutAfter<T>(this System.Threading.Tasks.ValueTask<T> task, System.TimeSpan timeout, [System.Runtime.CompilerServices.CallerFilePathAttribute] string? filePath = null, [System.Runtime.CompilerServices.CallerLineNumberAttribute] int lineNumber = 0) { throw null; }
+        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+        public readonly partial struct Enumerable<T> : System.Collections.Generic.IEnumerable<T>, System.Collections.IEnumerable
+        {
+            private readonly object _dummy;
+            private readonly int _dummyPrimitive;
+            public Enumerable(System.Collections.Generic.IAsyncEnumerable<T> asyncEnumerable) { throw null; }
+            public Microsoft.ClientModel.TestFramework.TaskExtensions.Enumerator<T> GetEnumerator() { throw null; }
+            System.Collections.Generic.IEnumerator<T> System.Collections.Generic.IEnumerable<T>.GetEnumerator() { throw null; }
+            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+        }
+        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+        public readonly partial struct Enumerator<T> : System.Collections.Generic.IEnumerator<T>, System.Collections.IEnumerator, System.IDisposable
+        {
+            private readonly object _dummy;
+            private readonly int _dummyPrimitive;
+            public Enumerator(System.Collections.Generic.IAsyncEnumerator<T> asyncEnumerator) { throw null; }
+            public T Current { get { throw null; } }
+            object? System.Collections.IEnumerator.Current { get { throw null; } }
+            public void Dispose() { }
+            public bool MoveNext() { throw null; }
+            public void Reset() { }
+        }
+        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+        public readonly partial struct WithCancellationTaskAwaitable
+        {
+            private readonly object _dummy;
+            private readonly int _dummyPrimitive;
+            public WithCancellationTaskAwaitable(System.Threading.Tasks.Task task, System.Threading.CancellationToken cancellationToken) { throw null; }
+            public Microsoft.ClientModel.TestFramework.TaskExtensions.WithCancellationTaskAwaiter GetAwaiter() { throw null; }
+        }
+        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+        public readonly partial struct WithCancellationTaskAwaitable<T>
+        {
+            private readonly object _dummy;
+            private readonly int _dummyPrimitive;
+            public WithCancellationTaskAwaitable(System.Threading.Tasks.Task<T> task, System.Threading.CancellationToken cancellationToken) { throw null; }
+            public Microsoft.ClientModel.TestFramework.TaskExtensions.WithCancellationTaskAwaiter<T> GetAwaiter() { throw null; }
+        }
+        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+        public readonly partial struct WithCancellationTaskAwaiter : System.Runtime.CompilerServices.ICriticalNotifyCompletion, System.Runtime.CompilerServices.INotifyCompletion
+        {
+            private readonly object _dummy;
+            private readonly int _dummyPrimitive;
+            public WithCancellationTaskAwaiter(System.Runtime.CompilerServices.ConfiguredTaskAwaitable.ConfiguredTaskAwaiter awaiter, System.Threading.CancellationToken cancellationToken) { throw null; }
+            public bool IsCompleted { get { throw null; } }
+            public void GetResult() { }
+            public void OnCompleted(System.Action continuation) { }
+            public void UnsafeOnCompleted(System.Action continuation) { }
+        }
+        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+        public readonly partial struct WithCancellationTaskAwaiter<T> : System.Runtime.CompilerServices.ICriticalNotifyCompletion, System.Runtime.CompilerServices.INotifyCompletion
+        {
+            private readonly object _dummy;
+            private readonly int _dummyPrimitive;
+            public WithCancellationTaskAwaiter(System.Runtime.CompilerServices.ConfiguredTaskAwaitable<T>.ConfiguredTaskAwaiter awaiter, System.Threading.CancellationToken cancellationToken) { throw null; }
+            public bool IsCompleted { get { throw null; } }
+            public T GetResult() { throw null; }
+            public void OnCompleted(System.Action continuation) { }
+            public void UnsafeOnCompleted(System.Action continuation) { }
+        }
+        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+        public readonly partial struct WithCancellationValueTaskAwaitable<T>
+        {
+            private readonly object _dummy;
+            private readonly int _dummyPrimitive;
+            public WithCancellationValueTaskAwaitable(System.Threading.Tasks.ValueTask<T> task, System.Threading.CancellationToken cancellationToken) { throw null; }
+            public Microsoft.ClientModel.TestFramework.TaskExtensions.WithCancellationValueTaskAwaiter<T> GetAwaiter() { throw null; }
+        }
+        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+        public readonly partial struct WithCancellationValueTaskAwaiter<T> : System.Runtime.CompilerServices.ICriticalNotifyCompletion, System.Runtime.CompilerServices.INotifyCompletion
+        {
+            private readonly object _dummy;
+            private readonly int _dummyPrimitive;
+            public WithCancellationValueTaskAwaiter(System.Runtime.CompilerServices.ConfiguredValueTaskAwaitable<T>.ConfiguredValueTaskAwaiter awaiter, System.Threading.CancellationToken cancellationToken) { throw null; }
+            public bool IsCompleted { get { throw null; } }
+            public T GetResult() { throw null; }
+            public void OnCompleted(System.Action continuation) { }
+            public void UnsafeOnCompleted(System.Action continuation) { }
+        }
     }
     public static partial class TestAsyncEnumerableExtensions
     {

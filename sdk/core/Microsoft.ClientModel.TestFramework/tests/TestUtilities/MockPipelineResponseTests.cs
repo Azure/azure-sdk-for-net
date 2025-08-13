@@ -14,9 +14,9 @@ public class MockPipelineResponseTests
     {
         MockPipelineResponse mockResponse = new();
         mockResponse.SetIsError(true);
-        Assert.IsTrue(mockResponse.IsError);
+        Assert.That(mockResponse.IsError, Is.True);
         mockResponse.SetIsError(false);
-        Assert.IsFalse(mockResponse.IsError);
+        Assert.That(mockResponse.IsError, Is.False);
     }
 
     [Test]
@@ -25,10 +25,13 @@ public class MockPipelineResponseTests
         MockPipelineResponse mockResponse = new();
         mockResponse.WithHeader("Content-Type", "application/json");
         mockResponse.WithHeader("X-Custom-Header", "CustomValue");
-        Assert.IsTrue(mockResponse.Headers.TryGetValue("Content-Type", out string value));
-        Assert.AreEqual("application/json", value);
-        Assert.IsTrue(mockResponse.Headers.TryGetValue("X-Custom-Header", out value));
-        Assert.AreEqual("CustomValue", value);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(mockResponse.Headers.TryGetValue("Content-Type", out string value), Is.True);
+            Assert.That(value, Is.EqualTo("application/json"));
+            Assert.That(mockResponse.Headers.TryGetValue("X-Custom-Header", out value), Is.True);
+            Assert.That(value, Is.EqualTo("CustomValue"));
+        }
     }
 
     [Test]
@@ -37,12 +40,12 @@ public class MockPipelineResponseTests
         MockPipelineResponse mockResponse = new();
         byte[] content = Encoding.UTF8.GetBytes("Hello, World!");
         mockResponse.WithContent(content);
-        Assert.IsNotNull(mockResponse.ContentStream);
+        Assert.That(mockResponse.ContentStream, Is.Not.Null);
         using (var reader = new StreamReader(mockResponse.ContentStream, Encoding.UTF8))
         {
             mockResponse.ContentStream.Position = 0; // Reset stream position for reading
             string result = reader.ReadToEnd();
-            Assert.AreEqual("Hello, World!", result);
+            Assert.That(result, Is.EqualTo("Hello, World!"));
         }
     }
 
@@ -52,12 +55,12 @@ public class MockPipelineResponseTests
         MockPipelineResponse mockResponse = new();
         string content = "Hello, World!";
         mockResponse.WithContent(content);
-        Assert.IsNotNull(mockResponse.ContentStream);
+        Assert.That(mockResponse.ContentStream, Is.Not.Null);
         using (var reader = new StreamReader(mockResponse.ContentStream, Encoding.UTF8))
         {
             mockResponse.ContentStream.Position = 0; // Reset stream position for reading
             string result = reader.ReadToEnd();
-            Assert.AreEqual("Hello, World!", result);
+            Assert.That(result, Is.EqualTo("Hello, World!"));
         }
     }
 
@@ -65,20 +68,26 @@ public class MockPipelineResponseTests
     public void ConstructorWithStatusAndReasonPhraseSetsPropertiesCorrectly()
     {
         var response = new MockPipelineResponse(404, "Not Found");
-        Assert.AreEqual(404, response.Status);
-        Assert.AreEqual("Not Found", response.ReasonPhrase);
-        Assert.IsFalse(response.IsError);
-        Assert.IsFalse(response.IsDisposed);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(response.Status, Is.EqualTo(404));
+            Assert.That(response.ReasonPhrase, Is.EqualTo("Not Found"));
+            Assert.That(response.IsError, Is.False);
+            Assert.That(response.IsDisposed, Is.False);
+        }
     }
 
     [Test]
     public void ConstructorWithDefaultValuesSetsDefaultProperties()
     {
         var response = new MockPipelineResponse();
-        Assert.AreEqual(0, response.Status);
-        Assert.AreEqual("", response.ReasonPhrase);
-        Assert.IsFalse(response.IsError);
-        Assert.IsFalse(response.IsDisposed);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(response.Status, Is.EqualTo(0));
+            Assert.That(response.ReasonPhrase, Is.Empty);
+            Assert.That(response.IsError, Is.False);
+            Assert.That(response.IsDisposed, Is.False);
+        }
     }
 
     [Test]
@@ -88,12 +97,15 @@ public class MockPipelineResponseTests
             .WithHeader("Content-Type", "application/json")
             .WithHeader("Cache-Control", "no-cache")
             .WithHeader("X-Custom", "custom-value");
-        Assert.IsTrue(response.Headers.TryGetValue("Content-Type", out var contentType));
-        Assert.AreEqual("application/json", contentType);
-        Assert.IsTrue(response.Headers.TryGetValue("Cache-Control", out var cacheControl));
-        Assert.AreEqual("no-cache", cacheControl);
-        Assert.IsTrue(response.Headers.TryGetValue("X-Custom", out var custom));
-        Assert.AreEqual("custom-value", custom);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(response.Headers.TryGetValue("Content-Type", out var contentType), Is.True);
+            Assert.That(contentType, Is.EqualTo("application/json"));
+            Assert.That(response.Headers.TryGetValue("Cache-Control", out var cacheControl), Is.True);
+            Assert.That(cacheControl, Is.EqualTo("no-cache"));
+            Assert.That(response.Headers.TryGetValue("X-Custom", out var custom), Is.True);
+            Assert.That(custom, Is.EqualTo("custom-value"));
+        }
     }
 
     [Test]
@@ -102,11 +114,14 @@ public class MockPipelineResponseTests
         var response = new MockPipelineResponse(201, "Created")
             .WithContent("response body")
             .WithHeader("Location", "/api/resource/123");
-        Assert.AreEqual(201, response.Status);
-        Assert.AreEqual("Created", response.ReasonPhrase);
-        Assert.AreEqual("response body", response.Content.ToString());
-        Assert.IsTrue(response.Headers.TryGetValue("Location", out var location));
-        Assert.AreEqual("/api/resource/123", location);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(response.Status, Is.EqualTo(201));
+            Assert.That(response.ReasonPhrase, Is.EqualTo("Created"));
+            Assert.That(response.Content.ToString(), Is.EqualTo("response body"));
+            Assert.That(response.Headers.TryGetValue("Location", out var location), Is.True);
+            Assert.That(location, Is.EqualTo("/api/resource/123"));
+        }
     }
 
     [Test]
@@ -114,8 +129,8 @@ public class MockPipelineResponseTests
     {
         var response = new MockPipelineResponse();
         var contentStream = response.ContentStream;
-        Assert.IsNotNull(contentStream);
-        Assert.AreEqual(0, contentStream.Length);
+        Assert.That(contentStream, Is.Not.Null);
+        Assert.That(contentStream.Length, Is.EqualTo(0));
     }
 
     [Test]
@@ -123,8 +138,8 @@ public class MockPipelineResponseTests
     {
         var response = new MockPipelineResponse();
         var content = response.Content;
-        Assert.IsNotNull(content);
-        Assert.AreEqual(0, content.ToArray().Length);
+        Assert.That(content, Is.Not.Null);
+        Assert.That(content.ToArray().Length, Is.EqualTo(0));
     }
 
     [Test]
@@ -132,8 +147,8 @@ public class MockPipelineResponseTests
     {
         var response = new MockPipelineResponse().WithContent("initial content");
         response.ContentStream = null;
-        Assert.IsNotNull(response.ContentStream);
-        Assert.AreEqual(0, response.ContentStream.Length);
+        Assert.That(response.ContentStream, Is.Not.Null);
+        Assert.That(response.ContentStream.Length, Is.EqualTo(0));
     }
 
     [Test]
@@ -147,7 +162,7 @@ public class MockPipelineResponseTests
         resultStream.Position = 0;
         using var reader = new StreamReader(resultStream, Encoding.UTF8);
         var result = reader.ReadToEnd();
-        Assert.AreEqual(customContent, result);
+        Assert.That(result, Is.EqualTo(customContent));
     }
 
     [Test]
@@ -155,7 +170,7 @@ public class MockPipelineResponseTests
     {
         var response = new MockPipelineResponse();
         response.Dispose();
-        Assert.IsTrue(response.IsDisposed);
+        Assert.That(response.IsDisposed, Is.True);
     }
 
     [Test]
@@ -165,7 +180,7 @@ public class MockPipelineResponseTests
         Assert.DoesNotThrow(() => response.Dispose());
         Assert.DoesNotThrow(() => response.Dispose());
         Assert.DoesNotThrow(() => response.Dispose());
-        Assert.IsTrue(response.IsDisposed);
+        Assert.That(response.IsDisposed, Is.True);
     }
 
     [Test]
@@ -173,26 +188,35 @@ public class MockPipelineResponseTests
     {
         var response = new MockPipelineResponse().WithContent("disposable content");
         response.Dispose();
-        Assert.IsTrue(response.IsDisposed);
-        Assert.AreEqual("disposable content", response.Content.ToString());
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(response.IsDisposed, Is.True);
+            Assert.That(response.Content.ToString(), Is.EqualTo("disposable content"));
+        }
     }
 
     [Test]
     public void WithContentEmptyStringSetsEmptyContent()
     {
         var response = new MockPipelineResponse().WithContent("");
-        Assert.AreEqual("", response.Content.ToString());
-        Assert.IsNotNull(response.ContentStream);
-        Assert.AreEqual(0, response.ContentStream.Length);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(response.Content.ToString(), Is.Empty);
+            Assert.That(response.ContentStream, Is.Not.Null);
+        }
+        Assert.That(response.ContentStream.Length, Is.EqualTo(0));
     }
 
     [Test]
     public void WithContentEmptyByteArraySetsEmptyContent()
     {
         var response = new MockPipelineResponse().WithContent(new byte[0]);
-        Assert.AreEqual(0, response.Content.ToArray().Length);
-        Assert.IsNotNull(response.ContentStream);
-        Assert.AreEqual(0, response.ContentStream.Length);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(response.Content.ToArray().Length, Is.EqualTo(0));
+            Assert.That(response.ContentStream, Is.Not.Null);
+        }
+        Assert.That(response.ContentStream.Length, Is.EqualTo(0));
     }
 
     [Test]
@@ -200,26 +224,29 @@ public class MockPipelineResponseTests
     {
         var largeContent = new string('x', 10000);
         var response = new MockPipelineResponse().WithContent(largeContent);
-        Assert.AreEqual(largeContent, response.Content.ToString());
-        Assert.AreEqual(10000, response.Content.ToArray().Length);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(response.Content.ToString(), Is.EqualTo(largeContent));
+            Assert.That(response.Content.ToArray().Length, Is.EqualTo(10000));
+        }
     }
 
     [Test]
     public void SetIsErrorAffectsIsErrorProperty()
     {
         var response = new MockPipelineResponse();
-        Assert.IsFalse(response.IsError);
+        Assert.That(response.IsError, Is.False);
         response.SetIsError(true);
-        Assert.IsTrue(response.IsError);
+        Assert.That(response.IsError, Is.True);
         response.SetIsError(false);
-        Assert.IsFalse(response.IsError);
+        Assert.That(response.IsError, Is.False);
     }
 
     [Test]
     public void ResponseInheritsFromPipelineResponse()
     {
         var response = new MockPipelineResponse();
-        Assert.IsInstanceOf<System.ClientModel.Primitives.PipelineResponse>(response);
+        Assert.That(response, Is.InstanceOf<System.ClientModel.Primitives.PipelineResponse>());
     }
 
     [Test]
@@ -228,7 +255,7 @@ public class MockPipelineResponseTests
         var response = new MockPipelineResponse();
         var headers1 = response.Headers;
         var headers2 = response.Headers;
-        Assert.AreSame(headers1, headers2);
+        Assert.That(headers2, Is.SameAs(headers1));
     }
 
     [Test]
@@ -238,8 +265,11 @@ public class MockPipelineResponseTests
         var response = new MockPipelineResponse(200, "OK")
             .WithContent(jsonContent)
             .WithHeader("Content-Type", "application/json");
-        Assert.AreEqual(jsonContent, response.Content.ToString());
-        Assert.IsTrue(response.Headers.TryGetValue("Content-Type", out var contentType));
-        Assert.AreEqual("application/json", contentType);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(response.Content.ToString(), Is.EqualTo(jsonContent));
+            Assert.That(response.Headers.TryGetValue("Content-Type", out var contentType), Is.True);
+            Assert.That(contentType, Is.EqualTo("application/json"));
+        }
     }
 }

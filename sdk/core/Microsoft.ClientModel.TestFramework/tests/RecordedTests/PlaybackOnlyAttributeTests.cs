@@ -19,7 +19,7 @@ public class PlaybackOnlyAttributeTests
         using (new TestEnvVar("CLIENTMODEL_TEST_MODE", "Playback"))
         {
             attribute.ApplyToTest(test);
-            Assert.AreEqual(RunState.Runnable, test.RunState);
+            Assert.That(test.RunState, Is.EqualTo(RunState.Runnable));
         }
     }
 
@@ -32,9 +32,9 @@ public class PlaybackOnlyAttributeTests
         using (new TestEnvVar("CLIENTMODEL_TEST_MODE", "Live"))
         {
             attribute.ApplyToTest(test);
-            Assert.AreEqual(RunState.Ignored, test.RunState);
+            Assert.That(test.RunState, Is.EqualTo(RunState.Ignored));
             var skipReason = test.Properties.Get("_SKIPREASON");
-            Assert.IsNotNull(skipReason);
+            Assert.That(skipReason, Is.Not.Null);
             Assert.That(skipReason.ToString(), Contains.Substring("Playback tests will not run when CLIENTMODEL_TEST_MODE is Live"));
             Assert.That(skipReason.ToString(), Contains.Substring(reason));
         }
@@ -49,9 +49,9 @@ public class PlaybackOnlyAttributeTests
         using (new TestEnvVar("CLIENTMODEL_TEST_MODE", "Record"))
         {
             attribute.ApplyToTest(test);
-            Assert.AreEqual(RunState.Ignored, test.RunState);
+            Assert.That(test.RunState, Is.EqualTo(RunState.Ignored));
             var skipReason = test.Properties.Get("_SKIPREASON");
-            Assert.IsNotNull(skipReason);
+            Assert.That(skipReason, Is.Not.Null);
             Assert.That(skipReason.ToString(), Contains.Substring("Playback tests will not run when CLIENTMODEL_TEST_MODE is Record"));
             Assert.That(skipReason.ToString(), Contains.Substring(reason));
         }
@@ -66,7 +66,7 @@ public class PlaybackOnlyAttributeTests
         using (new TestEnvVar("CLIENTMODEL_TEST_MODE", "Live"))
         {
             attribute.ApplyToTest(test);
-            Assert.AreEqual(RunState.NotRunnable, test.RunState);
+            Assert.That(test.RunState, Is.EqualTo(RunState.NotRunnable));
         }
     }
 
@@ -89,21 +89,21 @@ public class PlaybackOnlyAttributeTests
     {
         var method = typeof(TestClassWithPlaybackOnlyMethod).GetMethod(nameof(TestClassWithPlaybackOnlyMethod.PlaybackOnlyMethod));
         var attribute = method.GetCustomAttribute<PlaybackOnlyAttribute>();
-        Assert.IsNotNull(attribute);
+        Assert.That(attribute, Is.Not.Null);
     }
 
     [Test]
     public void CanBeAppliedToClass()
     {
         var attribute = typeof(PlaybackOnlyTestClass).GetCustomAttribute<PlaybackOnlyAttribute>();
-        Assert.IsNotNull(attribute);
+        Assert.That(attribute, Is.Not.Null);
     }
 
     [Test]
     public void AllowMultipleIsTrue()
     {
         var usage = typeof(PlaybackOnlyAttribute).GetCustomAttribute<AttributeUsageAttribute>();
-        Assert.IsTrue(usage.AllowMultiple);
+        Assert.That(usage.AllowMultiple, Is.True);
     }
 
     [Test]
@@ -111,9 +111,12 @@ public class PlaybackOnlyAttributeTests
     {
         var playbackAttr = new PlaybackOnlyAttribute("test");
         var liveAttr = new LiveOnlyAttribute();
-        Assert.IsInstanceOf<PlaybackOnlyAttribute>(playbackAttr);
-        Assert.IsInstanceOf<LiveOnlyAttribute>(liveAttr);
-        Assert.AreNotEqual(playbackAttr.GetType(), liveAttr.GetType());
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(playbackAttr, Is.InstanceOf<PlaybackOnlyAttribute>());
+            Assert.That(liveAttr, Is.InstanceOf<LiveOnlyAttribute>());
+        }
+        Assert.That(liveAttr.GetType(), Is.Not.EqualTo(playbackAttr.GetType()));
     }
 
     // Helper methods and classes

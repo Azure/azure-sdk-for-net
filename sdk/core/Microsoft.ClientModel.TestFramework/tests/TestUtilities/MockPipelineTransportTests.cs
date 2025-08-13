@@ -31,10 +31,13 @@ public class MockPipelineTransportTests
         };
         var message = transport.CreateMessage();
         transport.Process(message);
-        Assert.AreEqual(1, transport.Requests.Count);
-        Assert.AreEqual(1, callsToOnSendingRequest);
-        Assert.AreEqual(1, callsToOnReceivedResponse);
-        Assert.AreSame(mockResponse, message.Response);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(transport.Requests.Count, Is.EqualTo(1));
+            Assert.That(callsToOnSendingRequest, Is.EqualTo(1));
+            Assert.That(callsToOnReceivedResponse, Is.EqualTo(1));
+            Assert.That(message.Response, Is.SameAs(mockResponse));
+        }
     }
 
     [Test]
@@ -45,10 +48,12 @@ public class MockPipelineTransportTests
             addDelay: true);
         var message = transport.CreateMessage();
         var stopwatch = Stopwatch.StartNew();
+
         transport.Process(message);
         stopwatch.Stop();
-        Assert.IsNotNull(message.Response);
-        Assert.AreEqual(200, message.Response.Status);
+
+        Assert.That(message.Response, Is.Not.Null);
+        Assert.That(message.Response.Status, Is.EqualTo(200));
         // Note: The delay is implementation-dependent, we just verify it doesn't break
     }
 
@@ -58,13 +63,17 @@ public class MockPipelineTransportTests
         var transport = new MockPipelineTransport(
             message => new MockPipelineResponse(200),
             addDelay: true);
+
         transport.ExpectSyncPipeline = false;
         var message = transport.CreateMessage();
         var stopwatch = Stopwatch.StartNew();
+
         await transport.ProcessAsync(message);
+
         stopwatch.Stop();
-        Assert.IsNotNull(message.Response);
-        Assert.AreEqual(200, message.Response.Status);
+
+        Assert.That(message.Response, Is.Not.Null);
+        Assert.That(message.Response.Status, Is.EqualTo(200));
         // Note: The delay is implementation-dependent, we just verify it doesn't break
     }
 
@@ -77,13 +86,18 @@ public class MockPipelineTransportTests
                 .WithHeader("X-Async", "true"));
         transport.ExpectSyncPipeline = false;
         var message = transport.CreateMessage();
+
         await transport.ProcessAsync(message);
-        Assert.IsNotNull(message.Response);
-        Assert.AreEqual(201, message.Response.Status);
-        Assert.AreEqual("Created", message.Response.ReasonPhrase);
-        Assert.AreEqual("async content", message.Response.Content.ToString());
-        Assert.IsTrue(message.Response.Headers.TryGetValue("X-Async", out var asyncHeader));
-        Assert.AreEqual("true", asyncHeader);
+
+        Assert.That(message.Response, Is.Not.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(message.Response.Status, Is.EqualTo(201));
+            Assert.That(message.Response.ReasonPhrase, Is.EqualTo("Created"));
+            Assert.That(message.Response.Content.ToString(), Is.EqualTo("async content"));
+            Assert.That(message.Response.Headers.TryGetValue("X-Async", out var asyncHeader), Is.True);
+            Assert.That(asyncHeader, Is.EqualTo("true"));
+        }
     }
 
     [Test]
@@ -91,6 +105,7 @@ public class MockPipelineTransportTests
     {
         MockPipelineTransport transport = new(message => new MockPipelineResponse(200));
         transport.ExpectSyncPipeline = false;
+
         Assert.Throws<InvalidOperationException>(() => transport.Process(transport.CreateMessage()));
     }
 
@@ -99,6 +114,7 @@ public class MockPipelineTransportTests
     {
         MockPipelineTransport transport = new(message => new MockPipelineResponse(200));
         transport.ExpectSyncPipeline = true;
+
         Assert.Throws<InvalidOperationException>(() => transport.ProcessAsync(transport.CreateMessage()).GetAwaiter().GetResult());
     }
 
@@ -106,11 +122,15 @@ public class MockPipelineTransportTests
     public void DefaultConstructorCreatesTransportWithDefaults()
     {
         var transport = new MockPipelineTransport();
-        Assert.IsNotNull(transport);
-        Assert.IsTrue(transport.ExpectSyncPipeline);
-        Assert.AreEqual(0, transport.Requests.Count);
-        Assert.IsNull(transport.OnSendingRequest);
-        Assert.IsNull(transport.OnReceivedResponse);
+
+        Assert.That(transport, Is.Not.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(transport.ExpectSyncPipeline, Is.True);
+            Assert.That(transport.Requests.Count, Is.EqualTo(0));
+            Assert.That(transport.OnSendingRequest, Is.Null);
+            Assert.That(transport.OnReceivedResponse, Is.Null);
+        }
     }
 
     [Test]
@@ -118,10 +138,11 @@ public class MockPipelineTransportTests
     {
         var transport = new MockPipelineTransport();
         var message = transport.CreateMessage();
-        Assert.IsNotNull(message);
-        Assert.IsInstanceOf<MockPipelineMessage>(message);
-        Assert.IsNotNull(message.Request);
-        Assert.IsInstanceOf<MockPipelineRequest>(message.Request);
+
+        Assert.That(message, Is.Not.Null);
+        Assert.That(message, Is.InstanceOf<MockPipelineMessage>());
+        Assert.That(message.Request, Is.Not.Null);
+        Assert.That(message.Request, Is.InstanceOf<MockPipelineRequest>());
     }
 
     [Test]
@@ -130,9 +151,13 @@ public class MockPipelineTransportTests
         var transport = new MockPipelineTransport();
         var message = transport.CreateMessage();
         transport.Process(message);
-        Assert.IsNotNull(message.Response);
-        Assert.AreEqual(200, message.Response.Status);
-        Assert.AreEqual(1, transport.Requests.Count);
+
+        Assert.That(message.Response, Is.Not.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(message.Response.Status, Is.EqualTo(200));
+            Assert.That(transport.Requests.Count, Is.EqualTo(1));
+        }
     }
 
     [Test]
@@ -144,12 +169,16 @@ public class MockPipelineTransportTests
                 .WithHeader("X-Error-Code", "RESOURCE_NOT_FOUND"));
         var message = transport.CreateMessage();
         transport.Process(message);
-        Assert.IsNotNull(message.Response);
-        Assert.AreEqual(404, message.Response.Status);
-        Assert.AreEqual("Not Found", message.Response.ReasonPhrase);
-        Assert.AreEqual("Resource not found", message.Response.Content.ToString());
-        Assert.IsTrue(message.Response.Headers.TryGetValue("X-Error-Code", out var errorCode));
-        Assert.AreEqual("RESOURCE_NOT_FOUND", errorCode);
+
+        Assert.That(message.Response, Is.Not.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(message.Response.Status, Is.EqualTo(404));
+            Assert.That(message.Response.ReasonPhrase, Is.EqualTo("Not Found"));
+            Assert.That(message.Response.Content.ToString(), Is.EqualTo("Resource not found"));
+            Assert.That(message.Response.Headers.TryGetValue("X-Error-Code", out var errorCode), Is.True);
+            Assert.That(errorCode, Is.EqualTo("RESOURCE_NOT_FOUND"));
+        }
     }
 
     [Test]
@@ -157,13 +186,18 @@ public class MockPipelineTransportTests
     {
         var transport = new MockPipelineTransport();
         var message = transport.CreateMessage();
+
         message.Request.Method = "POST";
         message.Request.Uri = new Uri("https://api.example.com/data");
         transport.Process(message);
-        Assert.AreEqual(1, transport.Requests.Count);
+
+        Assert.That(transport.Requests.Count, Is.EqualTo(1));
         var capturedRequest = transport.Requests[0];
-        Assert.AreEqual("POST", capturedRequest.Method);
-        Assert.AreEqual("https://api.example.com/data", capturedRequest.Uri?.ToString());
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(capturedRequest.Method, Is.EqualTo("POST"));
+            Assert.That(capturedRequest.Uri?.ToString(), Is.EqualTo("https://api.example.com/data"));
+        }
     }
 
     [Test]
@@ -173,16 +207,22 @@ public class MockPipelineTransportTests
         var message1 = transport.CreateMessage();
         var message2 = transport.CreateMessage();
         var message3 = transport.CreateMessage();
+
         message1.Request.Method = "GET";
         message2.Request.Method = "POST";
         message3.Request.Method = "DELETE";
+
         transport.Process(message1);
         transport.Process(message2);
         transport.Process(message3);
-        Assert.AreEqual(3, transport.Requests.Count);
-        Assert.AreEqual("GET", transport.Requests[0].Method);
-        Assert.AreEqual("POST", transport.Requests[1].Method);
-        Assert.AreEqual("DELETE", transport.Requests[2].Method);
+
+        Assert.That(transport.Requests.Count, Is.EqualTo(3));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(transport.Requests[0].Method, Is.EqualTo("GET"));
+            Assert.That(transport.Requests[1].Method, Is.EqualTo("POST"));
+            Assert.That(transport.Requests[2].Method, Is.EqualTo("DELETE"));
+        }
     }
 
     [Test]
@@ -194,13 +234,18 @@ public class MockPipelineTransportTests
             OnSendingRequest = msg =>
             {
                 requestCount++;
-                Assert.IsNull(msg.Response); // Response should not be set yet
+                Assert.That(msg.Response, Is.Null); // Response should not be set yet
             }
         };
+
         var message = transport.CreateMessage();
         transport.Process(message);
-        Assert.AreEqual(1, requestCount);
-        Assert.IsNotNull(message.Response);
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(requestCount, Is.EqualTo(1));
+            Assert.That(message.Response, Is.Not.Null);
+        }
     }
 
     [Test]
@@ -212,13 +257,15 @@ public class MockPipelineTransportTests
             OnReceivedResponse = msg =>
             {
                 responseCount++;
-                Assert.IsNotNull(msg.Response); // Response should be set
-                Assert.AreEqual(200, msg.Response.Status);
+                Assert.That(msg.Response, Is.Not.Null); // Response should be set
+                Assert.That(msg.Response.Status, Is.EqualTo(200));
             }
         };
+
         var message = transport.CreateMessage();
         transport.Process(message);
-        Assert.AreEqual(1, responseCount);
+
+        Assert.That(responseCount, Is.EqualTo(1));
     }
 
     [Test]
@@ -226,16 +273,18 @@ public class MockPipelineTransportTests
     {
         var transport = new MockPipelineTransport();
         var nonMockMessage = new NonMockPipelineMessage();
+
         var exception = Assert.Throws<InvalidOperationException>(() => transport.Process(nonMockMessage));
     }
 
     [Test]
-    public async Task ProcessAsyncWithNonMockMessageThrowsInvalidOperationException()
+    public void ProcessAsyncWithNonMockMessageThrowsInvalidOperationException()
     {
         var transport = new MockPipelineTransport();
         transport.ExpectSyncPipeline = false;
         var nonMockMessage = new NonMockPipelineMessage();
-        var exception = await AsyncAssert.ThrowsAsync<InvalidOperationException>(
+
+        var exception = Assert.ThrowsAsync<InvalidOperationException>(
             async () => await transport.ProcessAsync(nonMockMessage));
     }
 
@@ -248,18 +297,22 @@ public class MockPipelineTransportTests
             receivedMessage = msg;
             return new MockPipelineResponse(200);
         });
+
         var originalMessage = transport.CreateMessage();
         originalMessage.Request.Method = "PUT";
+
         transport.Process(originalMessage);
-        Assert.IsNotNull(receivedMessage);
-        Assert.AreSame(originalMessage, receivedMessage);
-        Assert.AreEqual("PUT", receivedMessage.Request.Method);
+
+        Assert.That(receivedMessage, Is.Not.Null);
+        Assert.That(receivedMessage, Is.SameAs(originalMessage));
+        Assert.That(receivedMessage.Request.Method, Is.EqualTo("PUT"));
     }
 
     [Test]
     public async Task ProcessAsyncWithCallbacksExecutesInCorrectOrder()
     {
         var executionOrder = new System.Collections.Generic.List<string>();
+
         var transport = new MockPipelineTransport(msg =>
         {
             executionOrder.Add("ResponseFactory");
@@ -269,13 +322,19 @@ public class MockPipelineTransportTests
             OnSendingRequest = msg => executionOrder.Add("OnSendingRequest"),
             OnReceivedResponse = msg => executionOrder.Add("OnReceivedResponse")
         };
+
         transport.ExpectSyncPipeline = false;
         var message = transport.CreateMessage();
+
         await transport.ProcessAsync(message);
-        Assert.AreEqual(3, executionOrder.Count);
-        Assert.AreEqual("OnSendingRequest", executionOrder[0]);
-        Assert.AreEqual("ResponseFactory", executionOrder[1]);
-        Assert.AreEqual("OnReceivedResponse", executionOrder[2]);
+
+        Assert.That(executionOrder.Count, Is.EqualTo(3));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(executionOrder[0], Is.EqualTo("OnSendingRequest"));
+            Assert.That(executionOrder[1], Is.EqualTo("ResponseFactory"));
+            Assert.That(executionOrder[2], Is.EqualTo("OnReceivedResponse"));
+        }
     }
 
     // Helper class for testing non-mock message handling

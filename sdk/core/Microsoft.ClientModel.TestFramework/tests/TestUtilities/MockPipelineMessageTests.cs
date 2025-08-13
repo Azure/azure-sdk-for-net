@@ -4,6 +4,7 @@ using Microsoft.ClientModel.TestFramework.Mocks;
 using NUnit.Framework;
 using System.ClientModel.Primitives;
 namespace Microsoft.ClientModel.TestFramework.Tests;
+
 [TestFixture]
 public class MockPipelineMessageTests
 {
@@ -11,28 +12,37 @@ public class MockPipelineMessageTests
     public void DefaultConstructor_CreatesMessageWithDefaultRequest()
     {
         var message = new MockPipelineMessage();
-        Assert.IsNotNull(message);
-        Assert.IsNotNull(message.Request);
-        Assert.IsInstanceOf<MockPipelineRequest>(message.Request);
-        Assert.IsNull(message.Response);
+        Assert.That(message, Is.Not.Null);
+        Assert.That(message.Request, Is.Not.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(message.Request, Is.InstanceOf<MockPipelineRequest>());
+            Assert.That(message.Response, Is.Null);
+        }
     }
+
     [Test]
     public void Constructor_WithRequest_SetsRequestCorrectly()
     {
         var request = new MockPipelineRequest();
         var message = new MockPipelineMessage(request);
-        Assert.IsNotNull(message);
-        Assert.AreSame(request, message.Request);
-        Assert.IsNull(message.Response);
+        Assert.That(message, Is.Not.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(message.Request, Is.SameAs(request));
+            Assert.That(message.Response, Is.Null);
+        }
     }
+
     [Test]
     public void SetResponse_SetsResponseCorrectly()
     {
         var message = new MockPipelineMessage();
         var response = new MockPipelineResponse(200, "OK");
         message.SetResponse(response);
-        Assert.AreSame(response, message.Response);
+        Assert.That(message.Response, Is.SameAs(response));
     }
+
     [Test]
     public void SetResponse_WithDifferentResponses_UpdatesResponse()
     {
@@ -40,11 +50,12 @@ public class MockPipelineMessageTests
         var response1 = new MockPipelineResponse(200, "OK");
         var response2 = new MockPipelineResponse(404, "Not Found");
         message.SetResponse(response1);
-        Assert.AreSame(response1, message.Response);
+        Assert.That(message.Response, Is.SameAs(response1));
         message.SetResponse(response2);
-        Assert.AreSame(response2, message.Response);
-        Assert.AreNotSame(response1, message.Response);
+        Assert.That(message.Response, Is.SameAs(response2));
+        Assert.That(message.Response, Is.Not.SameAs(response1));
     }
+
     [Test]
     public void SetResponse_WithNull_SetsResponseToNull()
     {
@@ -52,14 +63,16 @@ public class MockPipelineMessageTests
         var response = new MockPipelineResponse(200, "OK");
         message.SetResponse(response);
         message.SetResponse(null!);
-        Assert.IsNull(message.Response);
+        Assert.That(message.Response, Is.Null);
     }
+
     [Test]
     public void Message_InheritsFromPipelineMessage()
     {
         var message = new MockPipelineMessage();
-        Assert.IsInstanceOf<PipelineMessage>(message);
+        Assert.That(message, Is.InstanceOf<PipelineMessage>());
     }
+
     [Test]
     public void Message_WithCustomRequest_PreservesRequestProperties()
     {
@@ -67,21 +80,29 @@ public class MockPipelineMessageTests
         request.Method = "POST";
         request.Uri = new System.Uri("https://example.com/api");
         var message = new MockPipelineMessage(request);
-        Assert.AreSame(request, message.Request);
-        Assert.AreEqual("POST", message.Request.Method);
-        Assert.AreEqual("https://example.com/api", message.Request.Uri?.ToString());
+        Assert.That(message.Request, Is.SameAs(request));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(message.Request.Method, Is.EqualTo("POST"));
+            Assert.That(message.Request.Uri?.ToString(), Is.EqualTo("https://example.com/api"));
+        }
     }
+
     [Test]
     public void Message_CanBeUsedInPipelineContext()
     {
         var message = new MockPipelineMessage();
         var response = new MockPipelineResponse(201, "Created");
         message.SetResponse(response);
-        Assert.IsNotNull(message.Request);
-        Assert.IsNotNull(message.Response);
-        Assert.AreEqual(201, message.Response.Status);
-        Assert.AreEqual("Created", message.Response.ReasonPhrase);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(message.Request, Is.Not.Null);
+            Assert.That(message.Response, Is.Not.Null);
+        }
+        Assert.That(message.Response.Status, Is.EqualTo(201));
+        Assert.That(message.Response.ReasonPhrase, Is.EqualTo("Created"));
     }
+
     [Test]
     public void Message_AllowsResponseAccess()
     {
@@ -89,10 +110,14 @@ public class MockPipelineMessageTests
         var response = new MockPipelineResponse(500, "Internal Server Error");
         response.SetIsError(true);
         message.SetResponse(response);
-        Assert.IsTrue(message.Response.IsError);
-        Assert.AreEqual(500, message.Response.Status);
-        Assert.AreEqual("Internal Server Error", message.Response.ReasonPhrase);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(message.Response.IsError, Is.True);
+            Assert.That(message.Response.Status, Is.EqualTo(500));
+            Assert.That(message.Response.ReasonPhrase, Is.EqualTo("Internal Server Error"));
+        }
     }
+
     [Test]
     public void Message_SupportsMultipleResponseUpdates()
     {
@@ -106,9 +131,12 @@ public class MockPipelineMessageTests
         foreach (var response in responses)
         {
             message.SetResponse(response);
-            Assert.AreSame(response, message.Response);
-            Assert.AreEqual(response.Status, message.Response.Status);
-            Assert.AreEqual(response.ReasonPhrase, message.Response.ReasonPhrase);
+            Assert.That(message.Response, Is.SameAs(response));
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(message.Response.Status, Is.EqualTo(response.Status));
+                Assert.That(message.Response.ReasonPhrase, Is.EqualTo(response.ReasonPhrase));
+            }
         }
     }
 }

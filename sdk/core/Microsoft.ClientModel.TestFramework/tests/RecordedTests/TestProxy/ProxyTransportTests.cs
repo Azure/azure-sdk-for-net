@@ -118,8 +118,11 @@ public class ProxyTransportTests
 
         var message = proxyTransport.CreateMessage();
 
-        Assert.That(message, Is.Not.Null, "Should create a message");
-        Assert.That(testRecording.HasRequests, Is.True, "Should set HasRequests to true");
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(message, Is.Not.Null, "Should create a message");
+            Assert.That(testRecording.HasRequests, Is.True, "Should set HasRequests to true");
+        }
     }
 
     [Test]
@@ -195,15 +198,18 @@ public class ProxyTransportTests
             // Expected to throw due to null port, but we can still verify headers were set
         }
 
-        // Verify that headers would have been set before the port error
-        Assert.That(message.Request.Headers.TryGetValue("x-recording-id", out string recordingId), Is.True, "Should set recording ID header");
-        Assert.That(recordingId, Is.EqualTo("test-recording-headers"), "Should set correct recording ID");
+        using (Assert.EnterMultipleScope())
+        {
+            // Verify that headers would have been set before the port error
+            Assert.That(message.Request.Headers.TryGetValue("x-recording-id", out string recordingId), Is.True, "Should set recording ID header");
+            Assert.That(recordingId, Is.EqualTo("test-recording-headers"), "Should set correct recording ID");
 
-        Assert.That(message.Request.Headers.TryGetValue("x-recording-mode", out string recordingMode), Is.True, "Should set recording mode header");
-        Assert.That(recordingMode, Is.EqualTo("record"), "Should set correct recording mode");
+            Assert.That(message.Request.Headers.TryGetValue("x-recording-mode", out string recordingMode), Is.True, "Should set recording mode header");
+            Assert.That(recordingMode, Is.EqualTo("record"), "Should set correct recording mode");
 
-        Assert.That(message.Request.Headers.TryGetValue("x-recording-upstream-base-uri", out string upstreamUri), Is.True, "Should set upstream URI header");
-        Assert.That(upstreamUri, Is.EqualTo("http://example.com/"), "Should set correct upstream base URI");
+            Assert.That(message.Request.Headers.TryGetValue("x-recording-upstream-base-uri", out string upstreamUri), Is.True, "Should set upstream URI header");
+            Assert.That(upstreamUri, Is.EqualTo("http://example.com/"), "Should set correct upstream base URI");
+        }
     }
 
     #endregion
@@ -232,9 +238,12 @@ public class ProxyTransportTests
             // Expected due to null port, but we can verify headers were set
         }
 
-        // Verify skip header was added
-        Assert.That(message.Request.Headers.TryGetValue("x-recording-skip", out string skipHeader), Is.True, "Should add skip header");
-        Assert.That(skipHeader, Is.EqualTo("request-response"), "Should add skip header for DoNotRecord");
+        using (Assert.EnterMultipleScope())
+        {
+            // Verify skip header was added
+            Assert.That(message.Request.Headers.TryGetValue("x-recording-skip", out string skipHeader), Is.True, "Should add skip header");
+            Assert.That(skipHeader, Is.EqualTo("request-response"), "Should add skip header for DoNotRecord");
+        }
     }
 
     [Test]
@@ -259,9 +268,12 @@ public class ProxyTransportTests
             // Expected due to null port, but we can verify headers were set
         }
 
-        // Verify skip header was added
-        Assert.That(message.Request.Headers.TryGetValue("x-recording-skip", out string skipHeader), Is.True, "Should add skip header");
-        Assert.That(skipHeader, Is.EqualTo("request-body"), "Should add skip header for RecordWithoutRequestBody");
+        using (Assert.EnterMultipleScope())
+        {
+            // Verify skip header was added
+            Assert.That(message.Request.Headers.TryGetValue("x-recording-skip", out string skipHeader), Is.True, "Should add skip header");
+            Assert.That(skipHeader, Is.EqualTo("request-body"), "Should add skip header for RecordWithoutRequestBody");
+        }
     }
 
     [Test]

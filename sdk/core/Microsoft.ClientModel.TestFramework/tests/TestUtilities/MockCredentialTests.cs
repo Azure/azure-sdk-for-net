@@ -16,7 +16,7 @@ public class MockCredentialTests
     public void DefaultConstructor_CreatesCredentialWithDefaultValues()
     {
         var credential = new MockCredential();
-        Assert.IsNotNull(credential);
+        Assert.That(credential, Is.Not.Null);
     }
     [Test]
     public void Constructor_WithTokenAndExpiration_SetsPropertiesCorrectly()
@@ -24,7 +24,7 @@ public class MockCredentialTests
         var token = "test-token";
         var expiresOn = DateTimeOffset.UtcNow.AddMinutes(30);
         var credential = new MockCredential(token, expiresOn);
-        Assert.IsNotNull(credential);
+        Assert.That(credential, Is.Not.Null);
         // Token and expiration will be validated in GetToken tests
     }
     [Test]
@@ -43,7 +43,7 @@ public class MockCredentialTests
             { "tenant", "test-tenant" }
         };
         var tokenOptions = credential.CreateTokenOptions(properties);
-        Assert.IsNull(tokenOptions);
+        Assert.That(tokenOptions, Is.Null);
     }
     [Test]
     public void GetToken_ReturnsCorrectToken()
@@ -53,11 +53,14 @@ public class MockCredentialTests
         var credential = new MockCredential(expectedToken, expectedExpiration);
         var options = new GetTokenOptions(new Dictionary<string, object>());
         var authToken = credential.GetToken(options, CancellationToken.None);
-        Assert.IsNotNull(authToken);
-        Assert.AreEqual(expectedToken, authToken.TokenValue);
-        Assert.AreEqual("Bearer", authToken.TokenType);
-        Assert.AreEqual(expectedExpiration, authToken.ExpiresOn);
-        Assert.IsNull(authToken.RefreshOn);
+        Assert.That(authToken, Is.Not.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(authToken.TokenValue, Is.EqualTo(expectedToken));
+            Assert.That(authToken.TokenType, Is.EqualTo("Bearer"));
+            Assert.That(authToken.ExpiresOn, Is.EqualTo(expectedExpiration));
+            Assert.That(authToken.RefreshOn, Is.Null);
+        }
     }
     [Test]
     public void GetToken_WithCancellationToken_ReturnsCorrectToken()
@@ -68,10 +71,13 @@ public class MockCredentialTests
         var options = new GetTokenOptions(new Dictionary<string, object>());
         using var cts = new CancellationTokenSource();
         var authToken = credential.GetToken(options, cts.Token);
-        Assert.IsNotNull(authToken);
-        Assert.AreEqual(expectedToken, authToken.TokenValue);
-        Assert.AreEqual("Bearer", authToken.TokenType);
-        Assert.AreEqual(expectedExpiration, authToken.ExpiresOn);
+        Assert.That(authToken, Is.Not.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(authToken.TokenValue, Is.EqualTo(expectedToken));
+            Assert.That(authToken.TokenType, Is.EqualTo("Bearer"));
+            Assert.That(authToken.ExpiresOn, Is.EqualTo(expectedExpiration));
+        }
     }
     [Test]
     public async Task GetTokenAsync_ReturnsCorrectToken()
@@ -81,11 +87,14 @@ public class MockCredentialTests
         var credential = new MockCredential(expectedToken, expectedExpiration);
         var options = new GetTokenOptions(new Dictionary<string, object>());
         var authToken = await credential.GetTokenAsync(options, CancellationToken.None);
-        Assert.IsNotNull(authToken);
-        Assert.AreEqual(expectedToken, authToken.TokenValue);
-        Assert.AreEqual("Bearer", authToken.TokenType);
-        Assert.AreEqual(expectedExpiration, authToken.ExpiresOn);
-        Assert.IsNull(authToken.RefreshOn);
+        Assert.That(authToken, Is.Not.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(authToken.TokenValue, Is.EqualTo(expectedToken));
+            Assert.That(authToken.TokenType, Is.EqualTo("Bearer"));
+            Assert.That(authToken.ExpiresOn, Is.EqualTo(expectedExpiration));
+            Assert.That(authToken.RefreshOn, Is.Null);
+        }
     }
     [Test]
     public async Task GetTokenAsync_WithCancellationToken_ReturnsCorrectToken()
@@ -96,10 +105,13 @@ public class MockCredentialTests
         var options = new GetTokenOptions(new Dictionary<string, object>());
         using var cts = new CancellationTokenSource();
         var authToken = await credential.GetTokenAsync(options, cts.Token);
-        Assert.IsNotNull(authToken);
-        Assert.AreEqual(expectedToken, authToken.TokenValue);
-        Assert.AreEqual("Bearer", authToken.TokenType);
-        Assert.AreEqual(expectedExpiration, authToken.ExpiresOn);
+        Assert.That(authToken, Is.Not.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(authToken.TokenValue, Is.EqualTo(expectedToken));
+            Assert.That(authToken.TokenType, Is.EqualTo("Bearer"));
+            Assert.That(authToken.ExpiresOn, Is.EqualTo(expectedExpiration));
+        }
     }
     [Test]
     public void GetToken_DefaultCredential_ReturnsDefaultValues()
@@ -107,11 +119,14 @@ public class MockCredentialTests
         var credential = new MockCredential();
         var options = new GetTokenOptions(new Dictionary<string, object>());
         var authToken = credential.GetToken(options, CancellationToken.None);
-        Assert.IsNotNull(authToken);
-        Assert.AreEqual("mock-token", authToken.TokenValue);
-        Assert.AreEqual("Bearer", authToken.TokenType);
-        Assert.IsTrue(authToken.ExpiresOn > DateTimeOffset.UtcNow);
-        Assert.IsTrue(authToken.ExpiresOn < DateTimeOffset.UtcNow.AddHours(2));
+        Assert.That(authToken, Is.Not.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(authToken.TokenValue, Is.EqualTo("mock-token"));
+            Assert.That(authToken.TokenType, Is.EqualTo("Bearer"));
+            Assert.That(authToken.ExpiresOn > DateTimeOffset.UtcNow, Is.True);
+            Assert.That(authToken.ExpiresOn < DateTimeOffset.UtcNow.AddHours(2), Is.True);
+        }
     }
     [Test]
     public async Task GetTokenAsync_DefaultCredential_ReturnsDefaultValues()
@@ -119,27 +134,30 @@ public class MockCredentialTests
         var credential = new MockCredential();
         var options = new GetTokenOptions(new Dictionary<string, object>());
         var authToken = await credential.GetTokenAsync(options, CancellationToken.None);
-        Assert.IsNotNull(authToken);
-        Assert.AreEqual("mock-token", authToken.TokenValue);
-        Assert.AreEqual("Bearer", authToken.TokenType);
-        Assert.IsTrue(authToken.ExpiresOn > DateTimeOffset.UtcNow);
-        Assert.IsTrue(authToken.ExpiresOn < DateTimeOffset.UtcNow.AddHours(2));
+        Assert.That(authToken, Is.Not.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(authToken.TokenValue, Is.EqualTo("mock-token"));
+            Assert.That(authToken.TokenType, Is.EqualTo("Bearer"));
+            Assert.That(authToken.ExpiresOn > DateTimeOffset.UtcNow, Is.True);
+            Assert.That(authToken.ExpiresOn < DateTimeOffset.UtcNow.AddHours(2), Is.True);
+        }
     }
     [Test]
     public void GetToken_WithNullOptions_ReturnsToken()
     {
         var credential = new MockCredential();
         var authToken = credential.GetToken(null!, CancellationToken.None);
-        Assert.IsNotNull(authToken);
-        Assert.AreEqual("mock-token", authToken.TokenValue);
+        Assert.That(authToken, Is.Not.Null);
+        Assert.That(authToken.TokenValue, Is.EqualTo("mock-token"));
     }
     [Test]
     public async Task GetTokenAsync_WithNullOptions_ReturnsToken()
     {
         var credential = new MockCredential();
         var authToken = await credential.GetTokenAsync(null!, CancellationToken.None);
-        Assert.IsNotNull(authToken);
-        Assert.AreEqual("mock-token", authToken.TokenValue);
+        Assert.That(authToken, Is.Not.Null);
+        Assert.That(authToken.TokenValue, Is.EqualTo("mock-token"));
     }
     [Test]
     public void GetToken_WithExpiredToken_StillReturnsToken()
@@ -148,9 +166,12 @@ public class MockCredentialTests
         var credential = new MockCredential("expired-token", expiredTime);
         var options = new GetTokenOptions(new Dictionary<string, object>());
         var authToken = credential.GetToken(options, CancellationToken.None);
-        Assert.IsNotNull(authToken);
-        Assert.AreEqual("expired-token", authToken.TokenValue);
-        Assert.AreEqual(expiredTime, authToken.ExpiresOn);
+        Assert.That(authToken, Is.Not.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(authToken.TokenValue, Is.EqualTo("expired-token"));
+            Assert.That(authToken.ExpiresOn, Is.EqualTo(expiredTime));
+        }
     }
     [Test]
     public void GetToken_MultipleCalls_ReturnsSameToken()
@@ -161,9 +182,12 @@ public class MockCredentialTests
         // Act
         var token1 = credential.GetToken(options, CancellationToken.None);
         var token2 = credential.GetToken(options, CancellationToken.None);
-        // Assert
-        Assert.AreEqual(token1.TokenValue, token2.TokenValue);
-        Assert.AreEqual(token1.ExpiresOn, token2.ExpiresOn);
-        Assert.AreEqual(token1.TokenType, token2.TokenType);
+        using (Assert.EnterMultipleScope())
+        {
+            // Assert
+            Assert.That(token2.TokenValue, Is.EqualTo(token1.TokenValue));
+            Assert.That(token2.ExpiresOn, Is.EqualTo(token1.ExpiresOn));
+            Assert.That(token2.TokenType, Is.EqualTo(token1.TokenType));
+        }
     }
 }

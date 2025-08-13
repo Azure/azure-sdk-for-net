@@ -117,10 +117,13 @@ public class SyncAsyncTestBaseTests
             return new MockPipelineResponse(200);
         });
 
-        // The factory shouldn't be called during creation
-        Assert.That(callCount, Is.EqualTo(0));
+        using (Assert.EnterMultipleScope())
+        {
+            // The factory shouldn't be called during creation
+            Assert.That(callCount, Is.EqualTo(0));
 
-        Assert.That(transport, Is.Not.Null);
+            Assert.That(transport, Is.Not.Null);
+        }
     }
 
     #endregion

@@ -44,8 +44,11 @@ public class SyncAsyncPolicyTestBaseTests
 
         testBase.ProcessMessage(message, policy);
 
-        Assert.That(policy.ProcessAsyncCalled, Is.True);
-        Assert.That(policy.ProcessSyncCalled, Is.False);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(policy.ProcessAsyncCalled, Is.True);
+            Assert.That(policy.ProcessSyncCalled, Is.False);
+        }
     }
 
     [Test]
@@ -57,8 +60,11 @@ public class SyncAsyncPolicyTestBaseTests
 
         testBase.ProcessMessage(message, policy);
 
-        Assert.That(policy.ProcessSyncCalled, Is.True);
-        Assert.That(policy.ProcessAsyncCalled, Is.False);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(policy.ProcessSyncCalled, Is.True);
+            Assert.That(policy.ProcessAsyncCalled, Is.False);
+        }
     }
 
     [Test]
@@ -118,8 +124,11 @@ public class SyncAsyncPolicyTestBaseTests
 
         testBase.ProcessMessage(message, policy);
 
-        Assert.That(policy.ProcessedMessage, Is.SameAs(message));
-        Assert.That(policy.ProcessAsyncCalled, Is.True);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(policy.ProcessedMessage, Is.SameAs(message));
+            Assert.That(policy.ProcessAsyncCalled, Is.True);
+        }
     }
 
     [Test]
@@ -131,8 +140,11 @@ public class SyncAsyncPolicyTestBaseTests
 
         testBase.ProcessMessage(message, policy);
 
-        Assert.That(policy.ProcessedMessage, Is.SameAs(message));
-        Assert.That(policy.ProcessSyncCalled, Is.True);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(policy.ProcessedMessage, Is.SameAs(message));
+            Assert.That(policy.ProcessSyncCalled, Is.True);
+        }
     }
 
     [Test]
@@ -145,9 +157,12 @@ public class SyncAsyncPolicyTestBaseTests
 
         testBase.ProcessMessage(message, policy, next.ProcessAsync);
 
-        Assert.That(policy.ProcessedMessage, Is.SameAs(message));
-        Assert.That(policy.NextDelegate, Is.Not.Null);
-        Assert.That(policy.ProcessAsyncWithNextCalled, Is.True);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(policy.ProcessedMessage, Is.SameAs(message));
+            Assert.That(policy.NextDelegate, Is.Not.Null);
+            Assert.That(policy.ProcessAsyncWithNextCalled, Is.True);
+        }
     }
 
     [Test]
@@ -160,9 +175,12 @@ public class SyncAsyncPolicyTestBaseTests
 
         testBase.ProcessMessage(message, policy, next.Process);
 
-        Assert.That(policy.ProcessedMessage, Is.SameAs(message));
-        Assert.That(policy.NextAction, Is.Not.Null);
-        Assert.That(policy.ProcessSyncWithNextCalled, Is.True);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(policy.ProcessedMessage, Is.SameAs(message));
+            Assert.That(policy.NextAction, Is.Not.Null);
+            Assert.That(policy.ProcessSyncWithNextCalled, Is.True);
+        }
     }
 
     #endregion

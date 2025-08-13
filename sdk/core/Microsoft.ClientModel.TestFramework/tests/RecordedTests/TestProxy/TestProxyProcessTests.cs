@@ -56,8 +56,11 @@ public class TestProxyProcessTests
 
         // Mock constructor should create instance but clients will be null/default
         Assert.That(mockProxy, Is.Not.Null, "Mock constructor should create instance");
-        Assert.That(mockProxy.ProxyPortHttp, Is.Null, "Mock instance should not have HTTP port");
-        Assert.That(mockProxy.ProxyPortHttps, Is.Null, "Mock instance should not have HTTPS port");
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(mockProxy.ProxyPortHttp, Is.Null, "Mock instance should not have HTTP port");
+            Assert.That(mockProxy.ProxyPortHttps, Is.Null, "Mock instance should not have HTTPS port");
+        }
     }
 
     #endregion
@@ -69,8 +72,11 @@ public class TestProxyProcessTests
     {
         var mockProxy = new TestProxyProcess();
 
-        Assert.That(mockProxy.ProxyPortHttp, Is.Null, "Mock HTTP port should be null");
-        Assert.That(mockProxy.ProxyPortHttps, Is.Null, "Mock HTTPS port should be null");
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(mockProxy.ProxyPortHttp, Is.Null, "Mock HTTP port should be null");
+            Assert.That(mockProxy.ProxyPortHttps, Is.Null, "Mock HTTPS port should be null");
+        }
     }
 
     #endregion
@@ -88,8 +94,11 @@ public class TestProxyProcessTests
         var result = (bool)method!.Invoke(null, parameters)!;
         var port = parameters[2] as int?;
 
-        Assert.That(result, Is.True, "Should successfully parse HTTP port");
-        Assert.That(port, Is.EqualTo(5000), "Should extract correct port number");
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result, Is.True, "Should successfully parse HTTP port");
+            Assert.That(port, Is.EqualTo(5000), "Should extract correct port number");
+        }
     }
 
     [Test]
@@ -103,8 +112,11 @@ public class TestProxyProcessTests
         var result = (bool)method!.Invoke(null, parameters)!;
         var port = parameters[2] as int?;
 
-        Assert.That(result, Is.True, "Should successfully parse HTTPS port");
-        Assert.That(port, Is.EqualTo(5001), "Should extract correct port number");
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result, Is.True, "Should successfully parse HTTPS port");
+            Assert.That(port, Is.EqualTo(5001), "Should extract correct port number");
+        }
     }
 
     [Test]
@@ -118,8 +130,11 @@ public class TestProxyProcessTests
         var result = (bool)method!.Invoke(null, parameters)!;
         var port = parameters[2] as int?;
 
-        Assert.That(result, Is.False, "Should return false for null output");
-        Assert.That(port, Is.Null, "Port should remain null");
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result, Is.False, "Should return false for null output");
+            Assert.That(port, Is.Null, "Port should remain null");
+        }
     }
 
     [Test]
@@ -133,8 +148,11 @@ public class TestProxyProcessTests
         var result = (bool)method!.Invoke(null, parameters)!;
         var port = parameters[2] as int?;
 
-        Assert.That(result, Is.False, "Should return false for invalid output");
-        Assert.That(port, Is.Null, "Port should remain null");
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result, Is.False, "Should return false for invalid output");
+            Assert.That(port, Is.Null, "Port should remain null");
+        }
     }
 
     [Test]
@@ -148,8 +166,11 @@ public class TestProxyProcessTests
         var result = (bool)method!.Invoke(null, parameters)!;
         var port = parameters[2] as int?;
 
-        Assert.That(result, Is.False, "Should return false for wrong scheme");
-        Assert.That(port, Is.Null, "Port should remain null");
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result, Is.False, "Should return false for wrong scheme");
+            Assert.That(port, Is.Null, "Port should remain null");
+        }
     }
 
     #endregion

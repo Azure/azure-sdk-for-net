@@ -79,8 +79,11 @@ public class GetOriginalInterceptorTests
 
         interceptor.Intercept(invocation);
 
-        Assert.That(invocation.Proceeded, Is.True);
-        Assert.That(invocation.ReturnValue, Is.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(invocation.Proceeded, Is.True);
+            Assert.That(invocation.ReturnValue, Is.Null);
+        }
     }
 
     [Test]

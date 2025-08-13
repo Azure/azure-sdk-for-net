@@ -69,8 +69,11 @@ public class AsyncCollectionResultInterceptorTests
 
         var result = await interceptor.MoveNextAsync();
 
-        Assert.That(result, Is.True);
-        Assert.That(inner.MoveNextCalled, Is.True);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result, Is.True);
+            Assert.That(inner.MoveNextCalled, Is.True);
+        }
     }
 
     [Test]

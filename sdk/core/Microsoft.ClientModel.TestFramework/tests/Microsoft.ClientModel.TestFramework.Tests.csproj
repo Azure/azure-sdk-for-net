@@ -12,9 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-	  <PackageReference Include="NUnit3TestAdapter" />
-		<PackageReference Include="NUnit" />
+	  <PackageReference Include="NUnit3TestAdapter" VersionOverride="5.1.0" />
+		<PackageReference Include="NUnit" VersionOverride="4.4.0" />
 		<PackageReference Include="Moq" />
   </ItemGroup>
 

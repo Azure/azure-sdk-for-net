@@ -95,8 +95,11 @@ public class UseSyncMethodsInterceptorTests
 
         interceptor.Intercept(invocation);
 
-        Assert.That(testClient.GetDataCalled, Is.True);
-        Assert.That(invocation.ReturnValue, Is.InstanceOf<Task<string>>());
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(testClient.GetDataCalled, Is.True);
+            Assert.That(invocation.ReturnValue, Is.InstanceOf<Task<string>>());
+        }
     }
 
     [Test]
@@ -108,8 +111,11 @@ public class UseSyncMethodsInterceptorTests
 
         interceptor.Intercept(invocation);
 
-        Assert.That(testClient.GetCollectionCalled, Is.True);
-        Assert.That(invocation.ReturnValue, Is.InstanceOf<UseSyncMethodsInterceptor.SyncPageableWrapper<string>>());
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(testClient.GetCollectionCalled, Is.True);
+            Assert.That(invocation.ReturnValue, Is.InstanceOf<UseSyncMethodsInterceptor.SyncPageableWrapper<string>>());
+        }
     }
 
     [Test]
@@ -121,8 +127,11 @@ public class UseSyncMethodsInterceptorTests
 
         interceptor.Intercept(invocation);
 
-        Assert.That(testClient.GetValueTaskDataCalled, Is.True);
-        Assert.That(invocation.ReturnValue, Is.InstanceOf<ValueTask<string>>());
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(testClient.GetValueTaskDataCalled, Is.True);
+            Assert.That(invocation.ReturnValue, Is.InstanceOf<ValueTask<string>>());
+        }
     }
 
     #endregion

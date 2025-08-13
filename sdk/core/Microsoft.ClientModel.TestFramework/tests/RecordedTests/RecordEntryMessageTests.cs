@@ -20,8 +20,11 @@ public class RecordEntryMessageTests
         var message = new RecordEntryMessage();
 
         Assert.That(message.Headers, Is.Not.Null);
-        Assert.That(message.Headers.Count, Is.EqualTo(0));
-        Assert.That(message.Body, Is.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(message.Headers.Count, Is.EqualTo(0));
+            Assert.That(message.Body, Is.Null);
+        }
     }
 
     [Test]
@@ -62,8 +65,11 @@ public class RecordEntryMessageTests
 
         var result = message.TryGetContentType(out string actualContentType);
 
-        Assert.That(result, Is.EqualTo(expectedResult));
-        Assert.That(actualContentType, Is.EqualTo(expectedContentType));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result, Is.EqualTo(expectedResult));
+            Assert.That(actualContentType, Is.EqualTo(expectedContentType));
+        }
     }
 
     [Test]
@@ -73,8 +79,11 @@ public class RecordEntryMessageTests
 
         var result = message.TryGetContentType(out string contentType);
 
-        Assert.That(result, Is.False);
-        Assert.That(contentType, Is.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result, Is.False);
+            Assert.That(contentType, Is.Null);
+        }
     }
 
     [Test]
@@ -85,8 +94,11 @@ public class RecordEntryMessageTests
 
         var result = message.TryGetContentType(out string contentType);
 
-        Assert.That(result, Is.False);
-        Assert.That(contentType, Is.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result, Is.False);
+            Assert.That(contentType, Is.Null);
+        }
     }
 
     [Test]
@@ -97,8 +109,11 @@ public class RecordEntryMessageTests
 
         var result = message.TryGetContentType(out string contentType);
 
-        Assert.That(result, Is.False);
-        Assert.That(contentType, Is.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result, Is.False);
+            Assert.That(contentType, Is.Null);
+        }
     }
 
     #endregion
@@ -137,8 +152,11 @@ public class RecordEntryMessageTests
 
         var result = message.IsTextContentType(out Encoding encoding);
 
-        Assert.That(result, Is.False);
-        Assert.That(encoding, Is.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result, Is.False);
+            Assert.That(encoding, Is.Null);
+        }
     }
 
     #endregion
@@ -154,8 +172,11 @@ public class RecordEntryMessageTests
 
         var result = message.TryGetBodyAsText(out string text);
 
-        Assert.That(result, Is.True);
-        Assert.That(text, Is.EqualTo("Hello, World!"));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result, Is.True);
+            Assert.That(text, Is.EqualTo("Hello, World!"));
+        }
     }
 
     [Test]
@@ -168,8 +189,11 @@ public class RecordEntryMessageTests
 
         var result = message.TryGetBodyAsText(out string text);
 
-        Assert.That(result, Is.True);
-        Assert.That(text, Is.EqualTo(jsonContent));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result, Is.True);
+            Assert.That(text, Is.EqualTo(jsonContent));
+        }
     }
 
     [Test]
@@ -181,8 +205,11 @@ public class RecordEntryMessageTests
 
         var result = message.TryGetBodyAsText(out string text);
 
-        Assert.That(result, Is.False);
-        Assert.That(text, Is.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result, Is.False);
+            Assert.That(text, Is.Null);
+        }
     }
 
     [Test]
@@ -193,8 +220,11 @@ public class RecordEntryMessageTests
 
         var result = message.TryGetBodyAsText(out string text);
 
-        Assert.That(result, Is.False);
-        Assert.That(text, Is.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result, Is.False);
+            Assert.That(text, Is.Null);
+        }
     }
 
     [Test]
@@ -207,8 +237,11 @@ public class RecordEntryMessageTests
 
         var result = message.TryGetBodyAsText(out string text);
 
-        Assert.That(result, Is.True);
-        Assert.That(text, Is.EqualTo(content));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result, Is.True);
+            Assert.That(text, Is.EqualTo(content));
+        }
     }
 
     #endregion
@@ -283,8 +316,11 @@ public class RecordEntryMessageTests
 
         var result = message.TryGetBodyAsText(out string text);
 
-        Assert.That(result, Is.True);
-        Assert.That(text, Is.EqualTo(xmlContent));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result, Is.True);
+            Assert.That(text, Is.EqualTo(xmlContent));
+        }
     }
 
     #endregion

@@ -25,8 +25,11 @@ public class RecordedTestBaseTests
     {
         var testBase = new TestableRecordedTestBase(isAsync: true);
 
-        Assert.That(testBase.IsAsync, Is.True);
-        Assert.That(testBase.Mode, Is.EqualTo(TestEnvironment.GlobalTestMode));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(testBase.IsAsync, Is.True);
+            Assert.That(testBase.Mode, Is.EqualTo(TestEnvironment.GlobalTestMode));
+        }
     }
 
     [Test]
@@ -34,8 +37,11 @@ public class RecordedTestBaseTests
     {
         var testBase = new TestableRecordedTestBase(isAsync: false);
 
-        Assert.That(testBase.IsAsync, Is.False);
-        Assert.That(testBase.Mode, Is.EqualTo(TestEnvironment.GlobalTestMode));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(testBase.IsAsync, Is.False);
+            Assert.That(testBase.Mode, Is.EqualTo(TestEnvironment.GlobalTestMode));
+        }
     }
 
     [Test]
@@ -43,8 +49,11 @@ public class RecordedTestBaseTests
     {
         var testBase = new TestableRecordedTestBase(isAsync: true, RecordedTestMode.Record);
 
-        Assert.That(testBase.IsAsync, Is.True);
-        Assert.That(testBase.Mode, Is.EqualTo(RecordedTestMode.Record));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(testBase.IsAsync, Is.True);
+            Assert.That(testBase.Mode, Is.EqualTo(RecordedTestMode.Record));
+        }
     }
 
     [Test]
@@ -52,8 +61,11 @@ public class RecordedTestBaseTests
     {
         var testBase = new TestableRecordedTestBase(isAsync: false, RecordedTestMode.Live);
 
-        Assert.That(testBase.IsAsync, Is.False);
-        Assert.That(testBase.Mode, Is.EqualTo(RecordedTestMode.Live));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(testBase.IsAsync, Is.False);
+            Assert.That(testBase.Mode, Is.EqualTo(RecordedTestMode.Live));
+        }
     }
 
     [Test]
@@ -96,33 +108,48 @@ public class RecordedTestBaseTests
         var testBase = new TestableRecordedTestBase(isAsync: true);
 
         Assert.That(testBase.JsonPathSanitizers, Is.Not.Null);
-        Assert.That(testBase.JsonPathSanitizers, Is.Empty);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(testBase.JsonPathSanitizers, Is.Empty);
 
-        Assert.That(testBase.BodyKeySanitizers, Is.Not.Null);
+            Assert.That(testBase.BodyKeySanitizers, Is.Not.Null);
+        }
         Assert.That(testBase.BodyKeySanitizers, Is.Empty);
 
         Assert.That(testBase.BodyRegexSanitizers, Is.Not.Null);
-        Assert.That(testBase.BodyRegexSanitizers, Is.Empty);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(testBase.BodyRegexSanitizers, Is.Empty);
 
-        Assert.That(testBase.UriRegexSanitizers, Is.Not.Null);
+            Assert.That(testBase.UriRegexSanitizers, Is.Not.Null);
+        }
         Assert.That(testBase.UriRegexSanitizers.Count, Is.EqualTo(2));
-        Assert.That(testBase.UriRegexSanitizers.Any(s => s.Regex.Contains("skoid")), Is.True);
-        Assert.That(testBase.UriRegexSanitizers.Any(s => s.Regex.Contains("sktid")), Is.True);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(testBase.UriRegexSanitizers.Any(s => s.Regex.Contains("skoid")), Is.True);
+            Assert.That(testBase.UriRegexSanitizers.Any(s => s.Regex.Contains("sktid")), Is.True);
 
-        Assert.That(testBase.HeaderRegexSanitizers, Is.Not.Null);
+            Assert.That(testBase.HeaderRegexSanitizers, Is.Not.Null);
+        }
         Assert.That(testBase.HeaderRegexSanitizers, Is.Empty);
 
         Assert.That(testBase.SanitizedHeaders, Is.Not.Null);
-        Assert.That(testBase.SanitizedHeaders, Is.Empty);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(testBase.SanitizedHeaders, Is.Empty);
 
-        Assert.That(testBase.SanitizedQueryParameters, Is.Not.Null);
+            Assert.That(testBase.SanitizedQueryParameters, Is.Not.Null);
+        }
         Assert.That(testBase.SanitizedQueryParameters.Count, Is.EqualTo(4));
         Assert.That(testBase.SanitizedQueryParameters, Contains.Item("sig"));
         Assert.That(testBase.SanitizedQueryParameters, Contains.Item("sip"));
         Assert.That(testBase.SanitizedQueryParameters, Contains.Item("client_id"));
-        Assert.That(testBase.SanitizedQueryParameters, Contains.Item("client_secret"));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(testBase.SanitizedQueryParameters, Contains.Item("client_secret"));
 
-        Assert.That(testBase.SanitizedQueryParametersInHeaders, Is.Not.Null);
+            Assert.That(testBase.SanitizedQueryParametersInHeaders, Is.Not.Null);
+        }
         Assert.That(testBase.SanitizedQueryParametersInHeaders, Is.Empty);
 
         Assert.That(testBase.SanitizersToRemove, Is.Not.Null);
@@ -142,9 +169,12 @@ public class RecordedTestBaseTests
         Assert.That(testBase.IgnoredHeaders, Contains.Item("x-ms-client-request-id"));
         Assert.That(testBase.IgnoredHeaders, Contains.Item("User-Agent"));
         Assert.That(testBase.IgnoredHeaders, Contains.Item("Request-Id"));
-        Assert.That(testBase.IgnoredHeaders, Contains.Item("traceparent"));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(testBase.IgnoredHeaders, Contains.Item("traceparent"));
 
-        Assert.That(testBase.IgnoredQueryParameters, Is.Not.Null);
+            Assert.That(testBase.IgnoredQueryParameters, Is.Not.Null);
+        }
         Assert.That(testBase.IgnoredQueryParameters, Is.Empty);
     }
 
@@ -200,12 +230,18 @@ public class RecordedTestBaseTests
         await testBase.StartTestRecordingAsync();
 
         Assert.That(testBase.Recording, Is.Not.Null, "Recording should be created");
-        Assert.That(testBase.Recording.Mode, Is.EqualTo(RecordedTestMode.Record), "Recording mode should be Record");
-        Assert.That(testBase.Recording.RecordingId, Is.EqualTo("test-recording-123"), "Recording ID should match response header");
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(testBase.Recording.Mode, Is.EqualTo(RecordedTestMode.Record), "Recording mode should be Record");
+            Assert.That(testBase.Recording.RecordingId, Is.EqualTo("test-recording-123"), "Recording ID should match response header");
+        }
 
         var request = mockTransport.Requests[0];
-        Assert.That(request.Uri.LocalPath, Does.Contain("record/start"), "Should call record/start endpoint");
-        Assert.That(testBase.TestStartTime, Is.GreaterThan(default(DateTime)), "TestStartTime should be set");
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(request.Uri.LocalPath, Does.Contain("record/start"), "Should call record/start endpoint");
+            Assert.That(testBase.TestStartTime, Is.GreaterThan(default(DateTime)), "TestStartTime should be set");
+        }
     }
 
     [Test]
@@ -216,8 +252,11 @@ public class RecordedTestBaseTests
         await testBase.StartTestRecordingAsync();
 
         Assert.That(testBase.Recording, Is.Not.Null, "Recording should be created even in Live mode");
-        Assert.That(testBase.Recording.Mode, Is.EqualTo(RecordedTestMode.Live), "Recording mode should be Live");
-        Assert.That(testBase.TestStartTime, Is.GreaterThan(default(DateTime)), "TestStartTime should be set");
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(testBase.Recording.Mode, Is.EqualTo(RecordedTestMode.Live), "Recording mode should be Live");
+            Assert.That(testBase.TestStartTime, Is.GreaterThan(default(DateTime)), "TestStartTime should be set");
+        }
     }
 
     [Test]
@@ -241,12 +280,18 @@ public class RecordedTestBaseTests
         await testBase.StartTestRecordingAsync();
 
         Assert.That(testBase.Recording, Is.Not.Null, "Recording should be created");
-        Assert.That(testBase.Recording.Mode, Is.EqualTo(RecordedTestMode.Playback), "Recording mode should be Playback");
-        Assert.That(testBase.Recording.RecordingId, Is.EqualTo("playback-recording-456"), "Recording ID should match response header");
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(testBase.Recording.Mode, Is.EqualTo(RecordedTestMode.Playback), "Recording mode should be Playback");
+            Assert.That(testBase.Recording.RecordingId, Is.EqualTo("playback-recording-456"), "Recording ID should match response header");
+        }
 
         var request = mockTransport.Requests[0];
-        Assert.That(request.Uri.LocalPath, Does.Contain("playback/start"), "Should call playback/start endpoint");
-        Assert.That(testBase.TestStartTime, Is.GreaterThan(default(DateTime)), "TestStartTime should be set");
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(request.Uri.LocalPath, Does.Contain("playback/start"), "Should call playback/start endpoint");
+            Assert.That(testBase.TestStartTime, Is.GreaterThan(default(DateTime)), "TestStartTime should be set");
+        }
     }
 
     [Test]
@@ -677,10 +722,13 @@ public class RecordedTestBaseTests
 
         // Verify sanitizer calls were made for JSON paths
         var sanitizerCalls = requestCalls.Where(r => r.Uri.LocalPath.Contains("/admin/addsanitizer")).ToList();
-        Assert.That(sanitizerCalls.Count, Is.GreaterThan(0), "Should have sanitizer calls");
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(sanitizerCalls.Count, Is.GreaterThan(0), "Should have sanitizer calls");
 
-        // Verify the added JSON path sanitizers were applied
-        Assert.That(testBase.JsonPathSanitizers, Contains.Item("$.sensitive.field1"));
+            // Verify the added JSON path sanitizers were applied
+            Assert.That(testBase.JsonPathSanitizers, Contains.Item("$.sensitive.field1"));
+        }
         Assert.That(testBase.JsonPathSanitizers, Contains.Item("$.user.password"));
     }
 
@@ -719,10 +767,13 @@ public class RecordedTestBaseTests
 
         // Verify the sanitizers were added
         Assert.That(testBase.BodyKeySanitizers.Count, Is.EqualTo(2));
-        Assert.That(testBase.BodyKeySanitizers[0].JsonPath, Is.EqualTo("$.api.key"));
-        Assert.That(testBase.BodyKeySanitizers[0].Value, Is.EqualTo("REDACTED_KEY"));
-        Assert.That(testBase.BodyKeySanitizers[1].JsonPath, Is.EqualTo("$.credentials.secret"));
-        Assert.That(testBase.BodyKeySanitizers[1].Value, Is.EqualTo("REDACTED_SECRET"));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(testBase.BodyKeySanitizers[0].JsonPath, Is.EqualTo("$.api.key"));
+            Assert.That(testBase.BodyKeySanitizers[0].Value, Is.EqualTo("REDACTED_KEY"));
+            Assert.That(testBase.BodyKeySanitizers[1].JsonPath, Is.EqualTo("$.credentials.secret"));
+            Assert.That(testBase.BodyKeySanitizers[1].Value, Is.EqualTo("REDACTED_SECRET"));
+        }
 
         // Verify sanitizer calls were made
         var sanitizerCalls = requestCalls.Where(r => r.Uri.LocalPath.Contains("/admin/addsanitizer")).ToList();
@@ -764,10 +815,13 @@ public class RecordedTestBaseTests
 
         // Verify the sanitizers were added
         Assert.That(testBase.BodyRegexSanitizers.Count, Is.EqualTo(2));
-        Assert.That(testBase.BodyRegexSanitizers[0].Regex, Is.EqualTo("password\\\":\\s*\\\"[^\\\"]*"));
-        Assert.That(testBase.BodyRegexSanitizers[0].Value, Is.EqualTo("password\":\"REDACTED"));
-        Assert.That(testBase.BodyRegexSanitizers[1].Regex, Is.EqualTo("token\\\":\\s*\\\"[^\\\"]*"));
-        Assert.That(testBase.BodyRegexSanitizers[1].Value, Is.EqualTo("token\":\"REDACTED"));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(testBase.BodyRegexSanitizers[0].Regex, Is.EqualTo("password\\\":\\s*\\\"[^\\\"]*"));
+            Assert.That(testBase.BodyRegexSanitizers[0].Value, Is.EqualTo("password\":\"REDACTED"));
+            Assert.That(testBase.BodyRegexSanitizers[1].Regex, Is.EqualTo("token\\\":\\s*\\\"[^\\\"]*"));
+            Assert.That(testBase.BodyRegexSanitizers[1].Value, Is.EqualTo("token\":\"REDACTED"));
+        }
 
         // Verify sanitizer calls were made
         var sanitizerCalls = requestCalls.Where(r => r.Uri.LocalPath.Contains("/admin/addsanitizer")).ToList();
@@ -809,8 +863,11 @@ public class RecordedTestBaseTests
         Assert.That(testBase.UriRegexSanitizers.Count, Is.EqualTo(3));
         var customAdded = testBase.UriRegexSanitizers.FirstOrDefault(s => s.Regex.Contains("subscriptionId"));
         Assert.That(customAdded, Is.Not.Null, "Custom URI regex sanitizer should be added");
-        Assert.That(customAdded.Regex, Is.EqualTo("subscriptionId=[^&]+"));
-        Assert.That(customAdded.Value, Is.EqualTo("subscriptionId=00000000-0000-0000-0000-000000000000"));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(customAdded.Regex, Is.EqualTo("subscriptionId=[^&]+"));
+            Assert.That(customAdded.Value, Is.EqualTo("subscriptionId=00000000-0000-0000-0000-000000000000"));
+        }
 
         // Verify sanitizer calls were made
         var sanitizerCalls = requestCalls.Where(r => r.Uri.LocalPath.Contains("/admin/addsanitizer")).ToList();
@@ -852,10 +909,13 @@ public class RecordedTestBaseTests
 
         // Verify the sanitizers were added
         Assert.That(testBase.HeaderRegexSanitizers.Count, Is.EqualTo(2));
-        Assert.That(testBase.HeaderRegexSanitizers[0].Key, Is.EqualTo("Authorization"));
-        Assert.That(testBase.HeaderRegexSanitizers[0].Value, Is.EqualTo("REDACTED"));
-        Assert.That(testBase.HeaderRegexSanitizers[1].Key, Is.EqualTo("x-api-key"));
-        Assert.That(testBase.HeaderRegexSanitizers[1].Value, Is.EqualTo("REDACTED_API_KEY"));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(testBase.HeaderRegexSanitizers[0].Key, Is.EqualTo("Authorization"));
+            Assert.That(testBase.HeaderRegexSanitizers[0].Value, Is.EqualTo("REDACTED"));
+            Assert.That(testBase.HeaderRegexSanitizers[1].Key, Is.EqualTo("x-api-key"));
+            Assert.That(testBase.HeaderRegexSanitizers[1].Value, Is.EqualTo("REDACTED_API_KEY"));
+        }
 
         // Verify sanitizer calls were made
         var sanitizerCalls = requestCalls.Where(r => r.Uri.LocalPath.Contains("/admin/addsanitizer")).ToList();

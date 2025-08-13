@@ -11,85 +11,105 @@ namespace Microsoft.ClientModel.TestFramework.Tests;
 public class TestAsyncEnumerableExtensionsTests
 {
     [Test]
-    public async Task ToEnumerableAsync_WithEmptyAsyncEnumerable_ReturnsEmptyList()
+    public async Task ToEnumerableAsyncWithEmptyAsyncEnumerableReturnsEmptyList()
     {
         var asyncEnumerable = CreateAsyncEnumerable(new List<int>());
         var result = await asyncEnumerable.ToEnumerableAsync();
-        Assert.IsNotNull(result);
-        Assert.AreEqual(0, result.Count);
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.Count, Is.EqualTo(0));
     }
+
     [Test]
-    public async Task ToEnumerableAsync_WithSingleItem_ReturnsListWithOneItem()
+    public async Task ToEnumerableAsyncWithSingleItemReturnsListWithOneItem()
     {
         var items = new List<string> { "single-item" };
         var asyncEnumerable = CreateAsyncEnumerable(items);
         var result = await asyncEnumerable.ToEnumerableAsync();
-        Assert.IsNotNull(result);
-        Assert.AreEqual(1, result.Count);
-        Assert.AreEqual("single-item", result[0]);
+
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.Count, Is.EqualTo(1));
+        Assert.That(result[0], Is.EqualTo("single-item"));
     }
+
     [Test]
-    public async Task ToEnumerableAsync_WithMultipleItems_ReturnsListWithAllItems()
+    public async Task ToEnumerableAsyncWithMultipleItemsReturnsListWithAllItems()
     {
         var items = new List<int> { 1, 2, 3, 4, 5 };
         var asyncEnumerable = CreateAsyncEnumerable(items);
         var result = await asyncEnumerable.ToEnumerableAsync();
-        Assert.IsNotNull(result);
-        Assert.AreEqual(5, result.Count);
-        CollectionAssert.AreEqual(items, result);
+
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.Count, Is.EqualTo(5));
+        Assert.That(result, Is.EqualTo(items).AsCollection);
     }
+
     [Test]
-    public async Task ToEnumerableAsync_WithStringItems_PreservesOrder()
+    public async Task ToEnumerableAsyncWithStringItemsPreservesOrder()
     {
         var items = new List<string> { "first", "second", "third", "fourth" };
         var asyncEnumerable = CreateAsyncEnumerable(items);
         var result = await asyncEnumerable.ToEnumerableAsync();
-        Assert.IsNotNull(result);
-        Assert.AreEqual(4, result.Count);
+
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.Count, Is.EqualTo(4));
+
         for (int i = 0; i < items.Count; i++)
         {
-            Assert.AreEqual(items[i], result[i]);
+            Assert.That(result[i], Is.EqualTo(items[i]));
         }
     }
+
     [Test]
-    public async Task ToEnumerableAsync_WithNullItems_HandlesNullsCorrectly()
+    public async Task ToEnumerableAsyncWithNullItemsHandlesNullsCorrectly()
     {
         var items = new List<string> { "not-null", null, "also-not-null", null };
         var asyncEnumerable = CreateAsyncEnumerable(items);
         var result = await asyncEnumerable.ToEnumerableAsync();
-        Assert.IsNotNull(result);
-        Assert.AreEqual(4, result.Count);
-        Assert.AreEqual("not-null", result[0]);
-        Assert.IsNull(result[1]);
-        Assert.AreEqual("also-not-null", result[2]);
-        Assert.IsNull(result[3]);
+
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.Count, Is.EqualTo(4));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result[0], Is.EqualTo("not-null"));
+            Assert.That(result[1], Is.Null);
+            Assert.That(result[2], Is.EqualTo("also-not-null"));
+            Assert.That(result[3], Is.Null);
+        }
     }
+
     [Test]
-    public async Task ToEnumerableAsync_WithLargeCollection_HandlesLargeDataSets()
+    public async Task ToEnumerableAsyncWithLargeCollectionHandlesLargeDataSets()
     {
         var items = Enumerable.Range(1, 1000).ToList();
         var asyncEnumerable = CreateAsyncEnumerable(items);
         var result = await asyncEnumerable.ToEnumerableAsync();
-        Assert.IsNotNull(result);
-        Assert.AreEqual(1000, result.Count);
-        CollectionAssert.AreEqual(items, result);
+
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.Count, Is.EqualTo(1000));
+        Assert.That(result, Is.EqualTo(items).AsCollection);
     }
+
     [Test]
-    public async Task ToEnumerableAsync_WithAsyncDelay_WaitsForAllItems()
+    public async Task ToEnumerableAsyncWithAsyncDelayWaitsForAllItems()
     {
         var items = new List<string> { "delayed1", "delayed2", "delayed3" };
         var asyncEnumerable = CreateAsyncEnumerableWithDelay(items, 10);
         var startTime = DateTime.UtcNow;
         var result = await asyncEnumerable.ToEnumerableAsync();
         var endTime = DateTime.UtcNow;
-        Assert.IsNotNull(result);
-        Assert.AreEqual(3, result.Count);
-        CollectionAssert.AreEqual(items, result);
-        // Verify some delay occurred (should be at least 30ms for 3 items with 10ms delay each)
-        Assert.IsTrue((endTime - startTime).TotalMilliseconds >= 20);
+
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.Count, Is.EqualTo(3));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result, Is.EqualTo(items).AsCollection);
+            // Verify some delay occurred (should be at least 30ms for 3 items with 10ms delay each)
+            Assert.That((endTime - startTime).TotalMilliseconds >= 20, Is.True);
+        }
     }
+
     [Test]
-    public async Task ToEnumerableAsync_WithComplexObjects_PreservesObjectReferences()
+    public async Task ToEnumerableAsyncWithComplexObjectsPreservesObjectReferences()
     {
         var items = new List<TestObject>
         {
@@ -99,44 +119,59 @@ public class TestAsyncEnumerableExtensionsTests
         };
         var asyncEnumerable = CreateAsyncEnumerable(items);
         var result = await asyncEnumerable.ToEnumerableAsync();
-        Assert.IsNotNull(result);
-        Assert.AreEqual(3, result.Count);
+
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.Count, Is.EqualTo(3));
+
         for (int i = 0; i < items.Count; i++)
         {
-            Assert.AreSame(items[i], result[i]);
-            Assert.AreEqual(items[i].Id, result[i].Id);
-            Assert.AreEqual(items[i].Name, result[i].Name);
+            Assert.That(result[i], Is.SameAs(items[i]));
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(result[i].Id, Is.EqualTo(items[i].Id));
+                Assert.That(result[i].Name, Is.EqualTo(items[i].Name));
+            }
         }
     }
+
     [Test]
-    public async Task ToEnumerableAsync_CalledMultipleTimes_ReturnsNewListEachTime()
+    public async Task ToEnumerableAsyncCalledMultipleTimesReturnsNewListEachTime()
     {
         var items = new List<int> { 1, 2, 3 };
         var asyncEnumerable = CreateAsyncEnumerable(items);
         var result1 = await asyncEnumerable.ToEnumerableAsync();
         var result2 = await asyncEnumerable.ToEnumerableAsync();
-        Assert.IsNotNull(result1);
-        Assert.IsNotNull(result2);
-        Assert.AreNotSame(result1, result2); // Different list instances
-        CollectionAssert.AreEqual(result1, result2); // Same content
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result1, Is.Not.Null);
+            Assert.That(result2, Is.Not.Null);
+        }
+        Assert.That(result2, Is.Not.SameAs(result1)); // Different list instances
+        Assert.That(result2, Is.EqualTo(result1).AsCollection); // Same content
     }
+
     [Test]
-    public async Task ToEnumerableAsync_WithThrowingAsyncEnumerable_PropagatesException()
+    public void ToEnumerableAsyncWithThrowingAsyncEnumerablePropagatesException()
     {
         var asyncEnumerable = CreateThrowingAsyncEnumerable<int>();
-        var exception = await AsyncAssert.ThrowsAsync<InvalidOperationException>(
+        var exception = Assert.ThrowsAsync<InvalidOperationException>(
             async () => await asyncEnumerable.ToEnumerableAsync());
-        Assert.AreEqual("Test exception from async enumerable", exception.Message);
+
+        Assert.That(exception.Message, Is.EqualTo("Test exception from async enumerable"));
     }
+
     [Test]
-    public async Task ToEnumerableAsync_WithPartiallyThrowingAsyncEnumerable_ReturnsItemsBeforeException()
+    public void ToEnumerableAsyncWithPartiallyThrowingAsyncEnumerableReturnsItemsBeforeException()
     {
         var asyncEnumerable = CreatePartiallyThrowingAsyncEnumerable();
-        var exception = await AsyncAssert.ThrowsAsync<InvalidOperationException>(
+        var exception = Assert.ThrowsAsync<InvalidOperationException>(
             async () => await asyncEnumerable.ToEnumerableAsync());
-        Assert.AreEqual("Partial enumeration exception", exception.Message);
+
+        Assert.That(exception.Message, Is.EqualTo("Partial enumeration exception"));
     }
-    // Helper methods for creating test async enumerables
+
+    // Helper methods for creating test async enumerable
     private static async IAsyncEnumerable<T> CreateAsyncEnumerable<T>(IEnumerable<T> items)
     {
         foreach (var item in items)
@@ -145,6 +180,7 @@ public class TestAsyncEnumerableExtensionsTests
             yield return item;
         }
     }
+
     private static async IAsyncEnumerable<T> CreateAsyncEnumerableWithDelay<T>(IEnumerable<T> items, int delayMs)
     {
         foreach (var item in items)
@@ -153,6 +189,7 @@ public class TestAsyncEnumerableExtensionsTests
             yield return item;
         }
     }
+
     private static async IAsyncEnumerable<T> CreateThrowingAsyncEnumerable<T>()
     {
         await Task.Yield();
@@ -161,6 +198,7 @@ public class TestAsyncEnumerableExtensionsTests
         yield break;
 #pragma warning restore CS0162 // Unreachable code detected
     }
+
     private static async IAsyncEnumerable<int> CreatePartiallyThrowingAsyncEnumerable()
     {
         yield return 1;
@@ -169,6 +207,7 @@ public class TestAsyncEnumerableExtensionsTests
         await Task.Yield();
         throw new InvalidOperationException("Partial enumeration exception");
     }
+
     private class TestObject
     {
         public int Id { get; set; }

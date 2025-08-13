@@ -439,8 +439,11 @@ public class TestEnvironmentTests
         var result = environment.ParseEnvironmentFile();
 
         Assert.That(result, Contains.Key("KEY1"));
-        Assert.That(result["KEY1"], Is.EqualTo("VALUE1"));
-        Assert.That(result, Contains.Key("KEY2"));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result["KEY1"], Is.EqualTo("VALUE1"));
+            Assert.That(result, Contains.Key("KEY2"));
+        }
         Assert.That(result["KEY2"], Is.EqualTo("VALUE2"));
     }
 

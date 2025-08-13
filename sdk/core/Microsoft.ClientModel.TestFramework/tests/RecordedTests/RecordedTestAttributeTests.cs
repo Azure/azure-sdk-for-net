@@ -180,8 +180,11 @@ public class RecordedTestAttributeTests
         var context = new TestExecutionContext();
         context.CurrentTest = test;
         var result = wrappedCommand.Execute(context);
-        Assert.That(result.ResultState.Status, Is.EqualTo(TestStatus.Failed));
-        Assert.That(result.Message, Is.EqualTo("Test failed"));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result.ResultState.Status, Is.EqualTo(TestStatus.Failed));
+            Assert.That(result.Message, Is.EqualTo("Test failed"));
+        }
     }
 
     [Test]
@@ -197,8 +200,11 @@ public class RecordedTestAttributeTests
         var context = new TestExecutionContext();
         context.CurrentTest = test;
         var result = wrappedCommand.Execute(context);
-        Assert.That(result.ResultState.Status, Is.EqualTo(TestStatus.Failed));
-        Assert.That(result.Message, Is.EqualTo("Test failed"));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result.ResultState.Status, Is.EqualTo(TestStatus.Failed));
+            Assert.That(result.Message, Is.EqualTo("Test failed"));
+        }
     }
 
     [Test]
@@ -216,9 +222,12 @@ public class RecordedTestAttributeTests
         var liveCommand = attribute.Wrap(new MockTestCommand(liveTest, passedResult));
         var recordCommand = attribute.Wrap(new MockTestCommand(recordTest, passedResult));
         var playbackCommand = attribute.Wrap(new MockTestCommand(playbackTest, passedResult));
-        Assert.That(liveCommand, Is.Not.Null);
-        Assert.That(recordCommand, Is.Not.Null);
-        Assert.That(playbackCommand, Is.Not.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(liveCommand, Is.Not.Null);
+            Assert.That(recordCommand, Is.Not.Null);
+            Assert.That(playbackCommand, Is.Not.Null);
+        }
     }
 
     [Test]
@@ -249,7 +258,10 @@ public class RecordedTestAttributeTests
         var originalTestObject = new object();
         context.TestObject = originalTestObject;
         wrappedCommand.Execute(context);
-        Assert.That(context.CurrentTest, Is.SameAs(test));
-        Assert.That(context.TestObject, Is.SameAs(originalTestObject));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(context.CurrentTest, Is.SameAs(test));
+            Assert.That(context.TestObject, Is.SameAs(originalTestObject));
+        }
     }
 }

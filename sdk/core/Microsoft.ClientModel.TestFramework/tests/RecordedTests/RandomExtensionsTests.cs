@@ -61,8 +61,11 @@ public class RandomExtensionsTests
         var guid2 = random.NewGuid();
         var guid3 = random.NewGuid();
 
-        Assert.That(guid1, Is.Not.EqualTo(guid2));
-        Assert.That(guid2, Is.Not.EqualTo(guid3));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(guid1, Is.Not.EqualTo(guid2));
+            Assert.That(guid2, Is.Not.EqualTo(guid3));
+        }
         Assert.That(guid1, Is.Not.EqualTo(guid3));
     }
 

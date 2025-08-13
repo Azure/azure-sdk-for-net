@@ -50,8 +50,11 @@ public class ProxyResultInterceptorTests
 
         interceptor.Intercept(invocation);
 
-        Assert.That(testBase.CreateProxyFromClientCalled, Is.True);
-        Assert.That(invocation.ReturnValue, Is.Not.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(testBase.CreateProxyFromClientCalled, Is.True);
+            Assert.That(invocation.ReturnValue, Is.Not.Null);
+        }
     }
 
     [Test]
@@ -64,8 +67,11 @@ public class ProxyResultInterceptorTests
 
         interceptor.Intercept(invocation);
 
-        Assert.That(invocation.Proceeded, Is.True);
-        Assert.That(testBase.CreateProxyFromClientCalled, Is.False);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(invocation.Proceeded, Is.True);
+            Assert.That(testBase.CreateProxyFromClientCalled, Is.False);
+        }
     }
 
     [Test]
@@ -78,8 +84,11 @@ public class ProxyResultInterceptorTests
 
         interceptor.Intercept(invocation);
 
-        Assert.That(invocation.Proceeded, Is.True);
-        Assert.That(testBase.CreateProxyFromClientCalled, Is.False);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(invocation.Proceeded, Is.True);
+            Assert.That(testBase.CreateProxyFromClientCalled, Is.False);
+        }
     }
 
     [Test]
@@ -92,8 +101,11 @@ public class ProxyResultInterceptorTests
 
         interceptor.Intercept(invocation);
 
-        Assert.That(invocation.Proceeded, Is.True);
-        Assert.That(testBase.CreateProxyFromClientCalled, Is.False);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(invocation.Proceeded, Is.True);
+            Assert.That(testBase.CreateProxyFromClientCalled, Is.False);
+        }
     }
 
     #endregion
@@ -159,8 +171,11 @@ public class ProxyResultInterceptorTests
 
         interceptor.Intercept(invocation);
 
-        Assert.That(invocation.Proceeded, Is.True);
-        Assert.That(testBase.CreateProxyFromClientCalled, Is.False);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(invocation.Proceeded, Is.True);
+            Assert.That(testBase.CreateProxyFromClientCalled, Is.False);
+        }
     }
 
     #endregion
@@ -178,8 +193,11 @@ public class ProxyResultInterceptorTests
         var result = await interceptor.InstrumentOperationInterceptor<TestOperationResult>(
             invocation, () => new ValueTask<TestOperationResult>(operation));
 
-        Assert.That(testBase.CreateProxyFromOperationResultCalled, Is.True);
-        Assert.That(result, Is.Not.Null);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(testBase.CreateProxyFromOperationResultCalled, Is.True);
+            Assert.That(result, Is.Not.Null);
+        }
     }
 
     #endregion

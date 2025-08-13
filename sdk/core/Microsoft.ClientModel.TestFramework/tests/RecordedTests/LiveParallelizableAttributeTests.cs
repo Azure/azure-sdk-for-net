@@ -55,10 +55,13 @@ public class LiveParallelizableAttributeTests
             var fixturesAttr = new LiveParallelizableAttribute(ParallelScope.Fixtures);
             var allAttr = new LiveParallelizableAttribute(ParallelScope.All);
 
-            Assert.That(selfAttr.Properties.Get(PropertyNames.ParallelScope), Is.EqualTo(ParallelScope.Self));
-            Assert.That(childrenAttr.Properties.Get(PropertyNames.ParallelScope), Is.EqualTo(ParallelScope.Children));
-            Assert.That(fixturesAttr.Properties.Get(PropertyNames.ParallelScope), Is.EqualTo(ParallelScope.Fixtures));
-            Assert.That(allAttr.Properties.Get(PropertyNames.ParallelScope), Is.EqualTo(ParallelScope.All));
+            using (Assert.EnterMultipleScope())
+            {
+                Assert.That(selfAttr.Properties.Get(PropertyNames.ParallelScope), Is.EqualTo(ParallelScope.Self));
+                Assert.That(childrenAttr.Properties.Get(PropertyNames.ParallelScope), Is.EqualTo(ParallelScope.Children));
+                Assert.That(fixturesAttr.Properties.Get(PropertyNames.ParallelScope), Is.EqualTo(ParallelScope.Fixtures));
+                Assert.That(allAttr.Properties.Get(PropertyNames.ParallelScope), Is.EqualTo(ParallelScope.All));
+            }
         }
     }
 

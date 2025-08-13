@@ -72,8 +72,11 @@ public class OperationResultInterceptorTests
 
         interceptor.Intercept(invocation);
 
-        Assert.That(invocation.ReturnValue, Is.Not.Null);
-        Assert.That(invocation.Proceeded, Is.False);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(invocation.ReturnValue, Is.Not.Null);
+            Assert.That(invocation.Proceeded, Is.False);
+        }
     }
 
     [Test]
@@ -119,8 +122,11 @@ public class OperationResultInterceptorTests
 
         await OperationResultInterceptor.InvokeWaitForCompletionAsync(operation, CancellationToken.None);
 
-        Assert.That(operation.UpdateStatusCallCount, Is.EqualTo(3));
-        Assert.That(operation.HasCompleted, Is.True);
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(operation.UpdateStatusCallCount, Is.EqualTo(3));
+            Assert.That(operation.HasCompleted, Is.True);
+        }
     }
 
     [Test]

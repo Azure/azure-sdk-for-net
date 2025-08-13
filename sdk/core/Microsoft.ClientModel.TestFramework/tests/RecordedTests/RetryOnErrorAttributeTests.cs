@@ -50,8 +50,11 @@ public class RetryOnErrorAttributeTests
 
         var finalResult = wrappedCommand.Execute(context);
 
-        Assert.That(finalResult.ResultState.Status, Is.EqualTo(TestStatus.Passed));
-        Assert.That(command.ExecutionCount, Is.EqualTo(1));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(finalResult.ResultState.Status, Is.EqualTo(TestStatus.Passed));
+            Assert.That(command.ExecutionCount, Is.EqualTo(1));
+        }
     }
 
     [Test]
@@ -68,8 +71,11 @@ public class RetryOnErrorAttributeTests
 
         var finalResult = wrappedCommand.Execute(context);
 
-        Assert.That(finalResult.ResultState.Status, Is.EqualTo(TestStatus.Failed));
-        Assert.That(command.ExecutionCount, Is.EqualTo(1)); // Should not retry
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(finalResult.ResultState.Status, Is.EqualTo(TestStatus.Failed));
+            Assert.That(command.ExecutionCount, Is.EqualTo(1)); // Should not retry
+        }
     }
 
     // Mock classes for testing

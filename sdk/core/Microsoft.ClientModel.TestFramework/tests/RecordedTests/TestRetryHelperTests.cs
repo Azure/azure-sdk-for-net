@@ -37,8 +37,11 @@ public class TestRetryHelperTests
             return Task.FromResult(expectedResult);
         };
         var result = await helper.RetryAsync(operation, maxIterations: 5);
-        Assert.That(result, Is.EqualTo(expectedResult));
-        Assert.That(attemptCount, Is.EqualTo(3));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result, Is.EqualTo(expectedResult));
+            Assert.That(attemptCount, Is.EqualTo(3));
+        }
     }
 
     [Test]
@@ -53,8 +56,11 @@ public class TestRetryHelperTests
         };
         var exception = Assert.ThrowsAsync<AggregateException>(
             () => helper.RetryAsync(operation, maxIterations: 3));
-        Assert.That(exception.InnerExceptions.Count, Is.EqualTo(3));
-        Assert.That(attemptCount, Is.EqualTo(3));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(exception.InnerExceptions.Count, Is.EqualTo(3));
+            Assert.That(attemptCount, Is.EqualTo(3));
+        }
     }
 
     [Test]
@@ -76,9 +82,12 @@ public class TestRetryHelperTests
         var result = await helper.RetryAsync(operation, maxIterations: 3);
         var elapsed = DateTime.UtcNow - startTime;
 
-        Assert.That(result, Is.EqualTo("success"));
-        // Should complete very quickly with no wait
-        Assert.That(elapsed.TotalSeconds, Is.LessThan(1.0));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result, Is.EqualTo("success"));
+            // Should complete very quickly with no wait
+            Assert.That(elapsed.TotalSeconds, Is.LessThan(1.0));
+        }
     }
 
     [Test]
@@ -101,9 +110,12 @@ public class TestRetryHelperTests
         var result = await helper.RetryAsync(operation, maxIterations: 3, delay: customDelay);
         var elapsed = DateTime.UtcNow - startTime;
 
-        Assert.That(result, Is.EqualTo("success"));
-        // Should have at least the custom delay
-        Assert.That(elapsed.TotalMilliseconds, Is.GreaterThan(80));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result, Is.EqualTo("success"));
+            // Should have at least the custom delay
+            Assert.That(elapsed.TotalMilliseconds, Is.GreaterThan(80));
+        }
         Assert.That(elapsed.TotalMilliseconds, Is.LessThan(1000)); // But not the default 5 seconds
     }
 
@@ -120,8 +132,11 @@ public class TestRetryHelperTests
 
         var exception = Assert.ThrowsAsync<InvalidOperationException>(
             () => helper.RetryAsync(operation, maxIterations: 0));
-        Assert.That(exception.Message, Is.EqualTo("operation failed"));
-        Assert.That(attemptCount, Is.EqualTo(0));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(exception.Message, Is.EqualTo("operation failed"));
+            Assert.That(attemptCount, Is.EqualTo(0));
+        }
     }
 
     [Test]
@@ -149,9 +164,12 @@ public class TestRetryHelperTests
         var exception = Assert.ThrowsAsync<AggregateException>(
             () => helper.RetryAsync(operation, maxIterations: 3));
         Assert.That(exception.InnerExceptions.Count, Is.EqualTo(3));
-        Assert.That(exception.InnerExceptions[0], Is.InstanceOf<ArgumentException>());
-        Assert.That(exception.InnerExceptions[1], Is.InstanceOf<InvalidOperationException>());
-        Assert.That(exception.InnerExceptions[2], Is.InstanceOf<NotSupportedException>());
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(exception.InnerExceptions[0], Is.InstanceOf<ArgumentException>());
+            Assert.That(exception.InnerExceptions[1], Is.InstanceOf<InvalidOperationException>());
+            Assert.That(exception.InnerExceptions[2], Is.InstanceOf<NotSupportedException>());
+        }
     }
 
     [Test]
@@ -167,9 +185,12 @@ public class TestRetryHelperTests
         var boolResult = await helper.RetryAsync(boolOperation);
         var listResult = await helper.RetryAsync(listOperation);
 
-        Assert.That(intResult, Is.EqualTo(42));
-        Assert.That(boolResult, Is.True);
-        Assert.That(listResult.Count, Is.EqualTo(1));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(intResult, Is.EqualTo(42));
+            Assert.That(boolResult, Is.True);
+            Assert.That(listResult.Count, Is.EqualTo(1));
+        }
         Assert.That(listResult[0], Is.EqualTo("test"));
     }
 
@@ -191,8 +212,11 @@ public class TestRetryHelperTests
 
         var result = await helper.RetryAsync(operation);
 
-        Assert.That(result, Is.EqualTo("async success"));
-        Assert.That(attemptCount, Is.EqualTo(2));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result, Is.EqualTo("async success"));
+            Assert.That(attemptCount, Is.EqualTo(2));
+        }
     }
 
     [Test]
@@ -215,8 +239,11 @@ public class TestRetryHelperTests
         var result = await helper.RetryAsync(operation, delay: customDelay);
         var elapsed = DateTime.UtcNow - startTime;
 
-        Assert.That(result, Is.EqualTo("success"));
-        // Should be fast despite custom delay because noWait is true
-        Assert.That(elapsed.TotalSeconds, Is.LessThan(1.0));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result, Is.EqualTo("success"));
+            // Should be fast despite custom delay because noWait is true
+            Assert.That(elapsed.TotalSeconds, Is.LessThan(1.0));
+        }
     }
 }

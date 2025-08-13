@@ -4,6 +4,7 @@
     <AssemblyTitle>SDK Code Generation Microsoft.ClientModel.TestFramework</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Microsoft.ClientModel.TestFramework</PackageTags>
+    <RequiredTargetFrameworks>net462;net8.0;net9.0</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
@@ -15,7 +16,7 @@
 
   <ItemGroup>
     <PackageReference Include="Castle.Core" />
-    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit" VersionOverride="4.4.0" />
     <PackageReference Include="System.ClientModel" /> 
     <PackageReference Include="System.Security.Cryptography.ProtectedData" />
   </ItemGroup>
