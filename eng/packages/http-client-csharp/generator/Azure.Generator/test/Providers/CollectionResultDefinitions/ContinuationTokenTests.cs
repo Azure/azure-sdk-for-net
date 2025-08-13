@@ -131,7 +131,7 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
             [
                 InputFactory.Property("color", InputPrimitiveType.String, isRequired: true),
             ]);
-            var parameter = InputFactory.Parameter("myToken", InputPrimitiveType.String, isRequired: true, location: InputRequestLocation.Query);
+            var parameter = InputFactory.QueryParameter("myToken", InputPrimitiveType.String, isRequired: true);
             var paging = InputFactory.ContinuationTokenPagingMetadata(parameter, "cats", "nextPage", responseLocation);
             var response = InputFactory.OperationResponse(
                 [200],
