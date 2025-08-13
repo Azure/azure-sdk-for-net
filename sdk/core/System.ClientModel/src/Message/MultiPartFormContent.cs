@@ -6,6 +6,7 @@ using System.Net.Http.Headers;
 using System.Net;
 using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
+using System.Text.Json;
 
 namespace System.ClientModel;
 
@@ -102,12 +103,19 @@ public class MultiPartFormContent : BinaryContent
     /// <param name="name"></param>
     /// <param name="content"></param>
     /// <param name="mediaType"></param>
-    public void Add(string name, string content, string? mediaType = MediaTypeTextPlain)
+    public void Add(string name, string content, string? mediaType = MediaTypeApplicationJson)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-        Add(new StringContent(content), name, mediaType: mediaType);
+        if (mediaType == MediaTypeApplicationJson)
+        {
+            Add(new ByteArrayContent(JsonSerializer.SerializeToUtf8Bytes(content)), name, mediaType);
+        }
+        else
+        {
+            Add(new StringContent(content), name, mediaType ?? MediaTypeTextPlain);
+        }
     }
 
     // CUSTOM: Add optional content type parameter to the Add method.
@@ -117,13 +125,20 @@ public class MultiPartFormContent : BinaryContent
     /// <param name="name"></param>
     /// <param name="content"></param>
     /// <param name="mediaType"></param>
-    public void Add(string name, int content, string? mediaType = MediaTypeTextPlain)
+    public void Add(string name, int content, string? mediaType = MediaTypeApplicationJson)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-        string value = content.ToString("G", CultureInfo.InvariantCulture);
-        Add(new StringContent(value), name, mediaType: mediaType);
+        if (mediaType == MediaTypeApplicationJson)
+        {
+            Add(new ByteArrayContent(JsonSerializer.SerializeToUtf8Bytes(content)), name, mediaType);
+        }
+        else
+        {
+            string value = content.ToString("G", CultureInfo.InvariantCulture);
+            Add(new StringContent(value), name, mediaType ?? MediaTypeTextPlain);
+        }
     }
 
     // CUSTOM: Add optional content type parameter to the Add method.
@@ -133,13 +148,20 @@ public class MultiPartFormContent : BinaryContent
     /// <param name="name"></param>
     /// <param name="content"></param>
     /// <param name="mediaType"></param>
-    public void Add(string name, long content, string? mediaType = MediaTypeTextPlain)
+    public void Add(string name, long content, string? mediaType = MediaTypeApplicationJson)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-        string value = content.ToString("G", CultureInfo.InvariantCulture);
-        Add(new StringContent(value), name, mediaType: mediaType);
+        if (mediaType == MediaTypeApplicationJson)
+        {
+            Add(new ByteArrayContent(JsonSerializer.SerializeToUtf8Bytes(content)), name, mediaType);
+        }
+        else
+        {
+            string value = content.ToString("G", CultureInfo.InvariantCulture);
+            Add(new StringContent(value), name, mediaType ?? MediaTypeTextPlain);
+        }
     }
 
     // CUSTOM: Add optional content type parameter to the Add method.
@@ -149,13 +171,20 @@ public class MultiPartFormContent : BinaryContent
     /// <param name="name"></param>
     /// <param name="content"></param>
     /// <param name="mediaType"></param>
-    public void Add(string name, float content, string? mediaType = MediaTypeTextPlain)
+    public void Add(string name, float content, string? mediaType = MediaTypeApplicationJson)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-        string value = content.ToString("G", CultureInfo.InvariantCulture);
-        Add(new StringContent(value), name, mediaType: mediaType);
+        if (mediaType == MediaTypeApplicationJson)
+        {
+            Add(new ByteArrayContent(JsonSerializer.SerializeToUtf8Bytes(content)), name, mediaType);
+        }
+        else
+        {
+            string value = content.ToString("G", CultureInfo.InvariantCulture);
+            Add(new StringContent(value), name, mediaType ?? MediaTypeTextPlain);
+        }
     }
 
     // CUSTOM: Add optional content type parameter to the Add method.
@@ -165,13 +194,20 @@ public class MultiPartFormContent : BinaryContent
     /// <param name="name"></param>
     /// <param name="content"></param>
     /// <param name="mediaType"></param>
-    public void Add(string name, double content, string? mediaType = MediaTypeTextPlain)
+    public void Add(string name, double content, string? mediaType = MediaTypeApplicationJson)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-        string value = content.ToString("G", CultureInfo.InvariantCulture);
-        Add(new StringContent(value), name, mediaType: mediaType);
+        if (mediaType == MediaTypeApplicationJson)
+        {
+            Add(new ByteArrayContent(JsonSerializer.SerializeToUtf8Bytes(content)), name, mediaType);
+        }
+        else
+        {
+            string value = content.ToString("G", CultureInfo.InvariantCulture);
+            Add(new StringContent(value), name, mediaType ?? MediaTypeTextPlain);
+        }
     }
 
     // CUSTOM: Add optional content type parameter to the Add method.
@@ -181,29 +217,20 @@ public class MultiPartFormContent : BinaryContent
     /// <param name="name"></param>
     /// <param name="content"></param>
     /// <param name="mediaType"></param>
-    public void Add(string name, decimal content, string? mediaType = MediaTypeTextPlain)
+    public void Add(string name, decimal content, string? mediaType = MediaTypeApplicationJson)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-        string value = content.ToString("G", CultureInfo.InvariantCulture);
-        Add(new StringContent(value), name, mediaType: mediaType);
-    }
-
-    // CUSTOM: Add optional content type parameter to the Add method.
-    /// <summary>
-    /// Adds a part to the multipart content with the specified name and boolean content.
-    /// </summary>
-    /// <param name="name"></param>
-    /// <param name="content"></param>
-    /// <param name="mediaType"></param>
-    public void Add(string name, bool content, string? mediaType = MediaTypeTextPlain)
-    {
-        Argument.AssertNotNull(content, nameof(content));
-        Argument.AssertNotNullOrEmpty(name, nameof(name));
-
-        string value = content ? "true" : "false";
-        Add(new StringContent(value), name, mediaType: mediaType);
+        if (mediaType == MediaTypeApplicationJson)
+        {
+            Add(new ByteArrayContent(JsonSerializer.SerializeToUtf8Bytes(content)), name, mediaType);
+        }
+        else
+        {
+            string value = content.ToString("G", CultureInfo.InvariantCulture);
+            Add(new StringContent(value), name, mediaType ?? MediaTypeTextPlain);
+        }
     }
 
     // CUSTOM: Add optional content type parameter to the Add method.
