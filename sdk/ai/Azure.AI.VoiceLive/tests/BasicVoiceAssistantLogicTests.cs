@@ -169,7 +169,7 @@ namespace Azure.AI.VoiceLive.Tests
             // and demonstrates the event creation patterns.
 
             // Create speech started event
-            var speechStartedEvent = AIVoiceLiveModelFactory.ServerEventInputAudioBufferSpeechStarted(
+            var speechStartedEvent = VoiceLiveModelFactory.ServerEventInputAudioBufferSpeechStarted(
                 eventId: "evt-1",
                 audioStartMs: 100,
                 itemId: "item-1");
@@ -179,7 +179,7 @@ namespace Azure.AI.VoiceLive.Tests
             Assert.That(speechStartedEvent.ItemId, Is.EqualTo("item-1"));
 
             // Create speech stopped event
-            var speechStoppedEvent = AIVoiceLiveModelFactory.ServerEventInputAudioBufferSpeechStopped(
+            var speechStoppedEvent = VoiceLiveModelFactory.ServerEventInputAudioBufferSpeechStopped(
                 eventId: "evt-2",
                 audioEndMs: 2000,
                 itemId: "item-2");
@@ -192,7 +192,7 @@ namespace Azure.AI.VoiceLive.Tests
             var testAudioData = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08 };
             var audioDelta = BinaryData.FromBytes(testAudioData);
 
-            var responseAudioDeltaEvent = AIVoiceLiveModelFactory.ServerEventResponseAudioDelta(
+            var responseAudioDeltaEvent = VoiceLiveModelFactory.ServerEventResponseAudioDelta(
                 eventId: "evt-3",
                 responseId: "resp-1",
                 itemId: "item-3",

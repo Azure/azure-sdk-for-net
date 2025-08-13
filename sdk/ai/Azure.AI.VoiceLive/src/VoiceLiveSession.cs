@@ -184,7 +184,7 @@ namespace Azure.AI.VoiceLive
             Argument.AssertNotNull(command, nameof(command));
             ThrowIfDisposed();
 
-            var data = ((IPersistableModel<ClientEvent>)command).Write(default);
+            var data = ((IPersistableModel<ClientEvent>)command).Write(ModelReaderWriterOptions.Json);
             await SendCommandAsync(data, cancellationToken).ConfigureAwait(false);
         }
 

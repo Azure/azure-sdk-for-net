@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
@@ -85,7 +86,7 @@ namespace Azure.AI.VoiceLive
 
             if (Voice != null)
             {
-                session.Voice = null;
+                session.Voice = ((IJsonModel<VoiceBase>)Voice).Write(ModelReaderWriterOptions.Json);
             }
 
             if (!string.IsNullOrEmpty(Model))
