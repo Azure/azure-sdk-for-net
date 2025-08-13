@@ -20,7 +20,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.AreEqual(5, model.Patch.GetInt32(pointer));
             Assert.AreEqual(5, model.Patch.GetNullableInt32(pointer));
 
-            var data = WriteModifiedModel(model, "foobar", "5");
+            var data = ModelReaderWriter.Write(model);
+            Assert.AreEqual(
+                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\",\"foobar\":5}",
+                data.ToString());
 
             var model2 = GetRoundTripModel(data);
             Assert.AreEqual(5, model2.Patch.GetInt32(pointer));
@@ -36,7 +39,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             model.Patch.SetNull("$.foobar"u8);
 
             Assert.Throws<FormatException>(() => model.Patch.GetInt32("$.foobar"u8));
-            var data = WriteModifiedModel(model, "foobar", "null");
+            var data = ModelReaderWriter.Write(model);
+            Assert.AreEqual(
+                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\",\"foobar\":null}",
+                data.ToString());
 
             var model2 = GetRoundTripModel(data);
             Assert.AreEqual(null, model2.Patch.GetNullableInt32("$.foobar"u8));
@@ -55,7 +61,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             model.Patch.Set(pointer, value);
 
             Assert.AreEqual(value, model.Patch.GetString(pointer));
-            var data = WriteModifiedModel(model, "foobar", "\"some value\"");
+            var data = ModelReaderWriter.Write(model);
+            Assert.AreEqual(
+                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\",\"foobar\":\"some value\"}",
+                data.ToString());
 
             var model2 = GetRoundTripModel(data);
             Assert.AreEqual(value, model2.Patch.GetString(pointer));
@@ -76,7 +85,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.AreEqual("some other value", model.Patch.GetString(pointer));
             Assert.AreEqual("some other value", model.Patch.GetString("$['foobar']"u8));
 
-            var data = WriteModifiedModel(model, "foobar", "\"some other value\"");
+            var data = ModelReaderWriter.Write(model);
+            Assert.AreEqual(
+                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\",\"foobar\":\"some other value\"}",
+                data.ToString());
 
             var model2 = GetRoundTripModel(data);
             Assert.AreEqual("some other value", model2.Patch.GetString(pointer));
@@ -95,7 +107,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.AreEqual(null, model.Patch.GetString(pointer));
             Assert.AreEqual(null, model.Patch.GetNullableInt32(pointer));
 
-            var data = WriteModifiedModel(model, "foobar", "null");
+            var data = ModelReaderWriter.Write(model);
+            Assert.AreEqual(
+                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\",\"foobar\":null}",
+                data.ToString());
 
             var model2 = GetRoundTripModel(data);
             Assert.AreEqual(null, model2.Patch.GetString(pointer));
@@ -117,7 +132,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.AreEqual(expectedValue, model.Patch.GetInt32(propertyNameSpan));
             Assert.AreEqual(expectedValue, model.Patch.GetNullableInt32(propertyNameSpan));
 
-            var data = WriteModifiedModel(model, "platformUpdateDomainCount", $"{expectedValue}");
+            var data = ModelReaderWriter.Write(model);
+            Assert.AreEqual(
+                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformFaultDomainCount\":3,\"platformUpdateDomainCount\":999},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\"}",
+                data.ToString());
 
             var model2 = GetRoundTripModel(data);
             // potential symmetry issue we set with Patch property but we have to get on the round trip with actual property
@@ -141,11 +159,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.AreEqual(expectedValue, model.Patch.GetString(propertyNameSpan));
             Assert.AreEqual("eastus", model.Location);
 
-            var data = WriteModifiedModel(model, propertyName, $"\"{expectedValue}\"");
+            var data = ModelReaderWriter.Write(model);
+            Assert.AreEqual(
+                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\",\"location\":\"new-location\"}",
+                data.ToString());
 
             var model2 = GetRoundTripModel(data);
-            // potential symmetry issue we set with Patch property but we have to get on the round trip with actual property
-            //Assert.AreEqual(expectedValue, model2.Patch.GetString(propertyNameSpan));
+            Assert.AreEqual(expectedValue, model2.Patch.GetString(propertyNameSpan));
             Assert.AreEqual(expectedValue, model2.Location);
 
             AssertCommon(model, model2, propertyName);
@@ -164,15 +184,16 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             model.Patch.Set(propertyNameSpan, expectedValue);
 
             Assert.AreEqual(expectedValue, model.Patch.GetString(propertyNameSpan));
-            // should this propagate before serialization time?
-            //Assert.AreEqual(expectedValue, model.Sku.Patch.GetString("name"u8));
+            Assert.AreEqual(expectedValue, model.Sku.Patch.GetString("$.name"u8));
 
-            var data = WriteModifiedModel(model);
+            var data = ModelReaderWriter.Write(model);
+            Assert.AreEqual(
+                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"new-sku-name\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\"}",
+                data.ToString());
 
             var model2 = GetRoundTripModel(data);
-            // potential symmetry issue we set with Patch property but we have to get on the round trip with actual property
-            //Assert.AreEqual(expectedValue, model2.Patch.GetString(propertyNameSpan));
-            //Assert.AreEqual(expectedValue, model2.Sku.Patch.GetString("name"u8));
+            Assert.AreEqual(expectedValue, model2.Patch.GetString(propertyNameSpan));
+            Assert.AreEqual(expectedValue, model2.Sku.Patch.GetString("$.name"u8));
             Assert.AreEqual(expectedValue, model2.Sku.Name);
 
             AssertCommon(model, model2, "sku");
@@ -190,7 +211,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             Assert.AreEqual(expectedValue, model.Patch.GetString(propertyNameSpan));
 
-            var data = WriteModifiedModel(model, "something", "\"something-value\"");
+            var data = ModelReaderWriter.Write(model);
+            Assert.AreEqual(
+                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\",\"something\":\"something-value\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\"}",
+                data.ToString());
 
             var model2 = GetRoundTripModel(data);
             //Assert.AreEqual(expectedValue, model2.Json.GetString(propertyNameSpan));
@@ -214,9 +238,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.AreEqual(123, model.Patch.GetInt32("$.foobar.x.y"u8));
             Assert.AreEqual(123, model.Patch.GetNullableInt32("$.foobar.x.y"u8));
 
-            var data = WriteModifiedModel(model, "foobar", "{\"x\":{\"y\":123}}");
+            var data = ModelReaderWriter.Write(model);
+            Assert.AreEqual(
+                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\",\"foobar\":{\"x\":{\"y\":123}}}",
+                data.ToString());
 
             var model2 = GetRoundTripModel(data);
+
             CollectionAssert.AreEqual(expectedValue.ToArray(), model2.Patch.GetJson(pointer).ToArray());
             Assert.AreEqual("{\"y\":123}"u8.ToArray(), model2.Patch.GetJson("$.foobar.x"u8).ToArray());
             Assert.AreEqual(123, model2.Patch.GetInt32("$.foobar.x.y"u8));
@@ -242,7 +270,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             CollectionAssert.AreEqual(expectedValue.ToArray(), model.Patch.GetJson(pointer).ToArray());
 
-            var data = WriteModifiedModel(model, "foobar", "{\"x\":{\"y\":123}}");
+            var data = ModelReaderWriter.Write(model);
+            Assert.AreEqual(
+                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\",\"foobar\":{\"x\":{\"y\":123}}}",
+                data.ToString());
 
             var model2 = GetRoundTripModel(data);
             CollectionAssert.AreEqual(expectedValue.ToArray(), model2.Patch.GetJson(pointer).ToArray());
@@ -261,7 +292,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             CollectionAssert.AreEqual(expectedValue.ToArray(), model.Patch.GetJson(pointer).ToArray());
 
-            var data = WriteModifiedModel(model, "sku", "{\"name\":\"replaced-name\",\"foo\":123}");
+            var data = ModelReaderWriter.Write(model);
+            Assert.AreEqual(
+                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"replaced-name\",\"foo\":123},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\"}",
+                data.ToString());
 
             var model2 = GetRoundTripModel(data);
             Assert.AreEqual("replaced-name", model2.Sku.Name);
@@ -284,7 +318,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             model.Location = "another-location";
             Assert.AreEqual("new-location", model.Patch.GetString(pointer));
 
-            var data = WriteModifiedModel(model);
+            var data = ModelReaderWriter.Write(model);
+            Assert.AreEqual(
+                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\",\"location\":\"new-location\"}",
+                data.ToString());
 
             var model2 = GetRoundTripModel(data);
 
@@ -304,7 +341,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             Assert.AreEqual("vmName1", model.Patch.GetString("$.foobar.name"u8));
 
-            var data = WriteModifiedModel(model, "foobar", "{\"x\":\"value\",\"name\":\"vmName1\"}");
+            var data = ModelReaderWriter.Write(model);
+            Assert.AreEqual(
+                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\",\"foobar\":{\"x\":\"value\",\"name\":\"vmName1\"}}",
+                data.ToString());
 
             var model2 = GetRoundTripModel(data);
 
@@ -319,17 +359,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             var model = ModelReaderWriter.Read<AvailabilitySetData>(BinaryData.FromString(JsonPayload));
             Assert.IsNotNull(model);
             return model!;
-        }
-
-        private static BinaryData WriteModifiedModel(AvailabilitySetData model, string? propertyName = null, string? expectedJsonValue = null)
-        {
-            var data = ModelReaderWriter.Write(model);
-            if (propertyName is not null)
-            {
-                var json = data.ToString();
-                Assert.IsTrue(json.Contains($"\"{propertyName}\":{expectedJsonValue}"), $"Did not find \"{propertyName}\":{expectedJsonValue}, json was:\n{json}");
-            }
-            return data;
         }
 
         private static AvailabilitySetData GetRoundTripModel(BinaryData data)

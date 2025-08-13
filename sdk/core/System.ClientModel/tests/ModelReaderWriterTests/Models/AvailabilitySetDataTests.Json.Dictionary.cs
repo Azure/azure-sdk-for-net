@@ -26,7 +26,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.AreEqual("{\"x\":\"value2\"}"u8.ToArray(), model.Patch.GetJson("$.newDictionary['key2']"u8).ToArray());
             Assert.AreEqual("{\"x\":\"value2\"}"u8.ToArray(), model.Patch.GetJson("$.newDictionary.key2"u8).ToArray());
 
-            var data = WriteModifiedModel(model, "newDictionary", "{\"key1\":{\"x\":\"value1\"},\"key2\":{\"x\":\"value2\"}}");
+            var data = ModelReaderWriter.Write(model);
+            Assert.AreEqual(
+                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\",\"newDictionary\":{\"key1\":{\"x\":\"value1\"},\"key2\":{\"x\":\"value2\"}}}",
+                data.ToString());
 
             var model2 = GetRoundTripModel(data);
             Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model2.Patch.GetJson("$.newDictionary['key1']"u8).ToArray());
@@ -46,8 +49,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             model.Patch.Set("$['tags'].insertedKey2"u8, "insertedValue2");
 
             Assert.AreEqual("insertedValue", model.Patch.GetString("$.tags.insertedKey"u8));
+            Assert.AreEqual("insertedValue2", model.Patch.GetString("$.tags.insertedKey2"u8));
 
-            var data = WriteModifiedModel(model, "tags", "{\"key\":\"value\",\"insertedKey\":\"insertedValue\",\"insertedKey2\":\"insertedValue2\"}");
+            var data = ModelReaderWriter.Write(model);
+            Assert.AreEqual(
+                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\",\"insertedKey\":\"insertedValue\",\"insertedKey2\":\"insertedValue2\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\"}",
+                data.ToString());
 
             var model2 = GetRoundTripModel(data);
             Assert.AreEqual("insertedValue", model2.Patch.GetString("$['tags']['insertedKey']"u8));
@@ -85,7 +92,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 ResourceType = "Microsoft.Compute/availabilitySets",
             });
 
-            var data = ModelReaderWriter.Write(model, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
+            var data = ModelReaderWriter.Write(model);
+            Assert.AreEqual(
+                "{\"testAS-3375\":{\"name\":\"testAS-3377\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3377\",\"type\":\"Microsoft.Compute/availabilitySets\",\"location\":\"brazilsouth\",\"properties\":{}},\"testAS-3376\":{\"name\":\"testAS-3376\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3376\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":6,\"platformFaultDomainCount\":4}}}",
+                data.ToString());
 
             var model2 = ModelReaderWriter.Read<DictionaryOfAset>(data, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
 
@@ -120,7 +130,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             model.Patch.Remove("$.testAS-3375"u8);
 
-            var data = ModelReaderWriter.Write(model, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
+            var data = ModelReaderWriter.Write(model);
+            Assert.AreEqual(
+                "{\"testAS-3376\":{\"name\":\"testAS-3376\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3376\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":6,\"platformFaultDomainCount\":4}}}",
+                data.ToString());
 
             var model2 = ModelReaderWriter.Read<DictionaryOfAset>(data, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
 
@@ -154,7 +167,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 ResourceType = "Microsoft.Compute/availabilitySets",
             });
 
-            var data = ModelReaderWriter.Write(model, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
+            var data = ModelReaderWriter.Write(model);
+            Assert.AreEqual(
+                "{\"testAS-3375\":{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3}},\"testAS-3376\":{\"name\":\"testAS-3376\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3376\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":6,\"platformFaultDomainCount\":4}},\"testAS-3377\":{\"name\":\"testAS-3377\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3377\",\"type\":\"Microsoft.Compute/availabilitySets\",\"location\":\"brazilsouth\",\"properties\":{}}}",
+                data.ToString());
 
             var model2 = ModelReaderWriter.Read<DictionaryOfAset>(data, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
 
@@ -177,7 +193,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             Assert.AreEqual(999, model2.Patch.GetInt32("$.testAS-3377.foobar"u8));
 
-            var data2 = ModelReaderWriter.Write(model2, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
+            var data2 = ModelReaderWriter.Write(model2);
+            Assert.AreEqual(
+                "{\"testAS-3375\":{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3}},\"testAS-3376\":{\"name\":\"testAS-3376\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3376\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":6,\"platformFaultDomainCount\":4}},\"testAS-3377\":{\"name\":\"testAS-3377\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3377\",\"type\":\"Microsoft.Compute/availabilitySets\",\"location\":\"brazilsouth\",\"properties\":{},\"foobar\":999}}",
+                data2.ToString());
 
             var model3 = ModelReaderWriter.Read<DictionaryOfAset>(data2, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
 
@@ -216,7 +235,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             model.Patch.Set("$.testAS-3375.properties.platformUpdateDomainCount"u8, 10);
 
-            var data = ModelReaderWriter.Write(model, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
+            var data = ModelReaderWriter.Write(model);
+            Assert.AreEqual(
+                "{\"testAS-3375\":{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformFaultDomainCount\":3,\"platformUpdateDomainCount\":10}},\"testAS-3376\":{\"name\":\"testAS-3376\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3376\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":6,\"platformFaultDomainCount\":4}}}",
+                data.ToString());
 
             var model2 = ModelReaderWriter.Read<DictionaryOfAset>(data, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
 
@@ -250,7 +272,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             model.Patch.Remove("$.testAS-3375.name"u8);
 
-            var data = ModelReaderWriter.Write(model, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
+            var data = ModelReaderWriter.Write(model);
+            Assert.AreEqual(
+                "{\"testAS-3375\":{\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3}},\"testAS-3376\":{\"name\":\"testAS-3376\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3376\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":6,\"platformFaultDomainCount\":4}}}",
+                data.ToString());
 
             var model2 = ModelReaderWriter.Read<DictionaryOfAset>(data, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
 

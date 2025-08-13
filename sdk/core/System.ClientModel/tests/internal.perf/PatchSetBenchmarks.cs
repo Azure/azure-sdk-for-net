@@ -12,6 +12,7 @@ using BenchmarkDotNet.Attributes;
 
 namespace System.ClientModel.Tests.Internal.Perf
 {
+#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
     public class PatchSetBenchmarks
     {
         private BinaryData _data;
@@ -31,10 +32,13 @@ namespace System.ClientModel.Tests.Internal.Perf
             for (int i = 0; i < operationsPerInvoke; i++)
             {
                 _models.Add(ModelReaderWriter.Read<AvailabilitySetData>(_data, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default));
+                _models[i].Patch.Set("$.x"u8, 0); // force initialize the patch
+                _models[i].Sku.Patch.Set("$.x"u8, 0); // force initialize the patch in nested model
                 for (int j = 0; j < 20; j++)
                 {
                     _models[i].VirtualMachines.Add(new WritableSubResource { Id = $"vmId{j}" });
                 }
+                _models[i].VirtualMachines[5].Patch.Set("$.x"u8, 0); // force initialize the patch in array item
             }
         }
 
@@ -67,7 +71,7 @@ namespace System.ClientModel.Tests.Internal.Perf
         {
             for (int i = 0; i < operationsPerInvoke; i++)
             {
-                _models[i].Patch.Set("$.properties.virtualMachines[0].id"u8, "newId");
+                _models[i].Patch.Set("$.properties.virtualMachines[5].id"u8, "newId");
             }
         }
 
@@ -76,7 +80,7 @@ namespace System.ClientModel.Tests.Internal.Perf
         {
             for (int i = 0; i < operationsPerInvoke; i++)
             {
-                _models[i].Patch.Set("$.properties.virtualMachines[0].foobar"u8, "value");
+                _models[i].Patch.Set("$.properties.virtualMachines[5].foobar"u8, "value");
             }
         }
 
@@ -98,4 +102,5 @@ namespace System.ClientModel.Tests.Internal.Perf
             }
         }
     }
+#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 }

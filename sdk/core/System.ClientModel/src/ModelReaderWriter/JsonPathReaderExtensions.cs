@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Buffers.Text;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 
@@ -72,6 +73,9 @@ internal static class JsonPathReaderExtensions
 
         return true;
     }
+
+    public static ReadOnlySpan<byte> GetFirstProperty(this ReadOnlySpan<byte> jsonPath)
+        => new JsonPathReader(jsonPath).GetFirstProperty();
 
     public static ReadOnlySpan<byte> GetPropertyName(this ReadOnlySpan<byte> jsonPath)
     {
@@ -166,9 +170,15 @@ internal static class JsonPathReaderExtensions
             : indexSpan.Slice(0, indexSpan.Length - 1);
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsRoot(this byte[] jsonPath)
         => IsRoot(jsonPath.AsSpan());
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static bool IsRoot(this Span<byte> jsonPath)
+        => IsRoot((ReadOnlySpan<byte>)jsonPath);
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsRoot(this ReadOnlySpan<byte> jsonPath)
     {
         if (jsonPath.IsEmpty || jsonPath[0] != (byte)'$')
@@ -191,30 +201,53 @@ internal static class JsonPathReaderExtensions
 
     public static byte[] Set(this ReadOnlyMemory<byte> json, ReadOnlySpan<byte> jsonPath, ReadOnlyMemory<byte> jsonReplacement)
     {
+        long endLeft;
+
         if (TryFind(json.Span, jsonPath, out Utf8JsonReader jsonReader))
         {
-            long endLeft = jsonReader.TokenStartIndex;
+            endLeft = jsonReader.TokenStartIndex;
             jsonReader.Skip();
             jsonReader.Read();
             long startRight = jsonReader.TokenStartIndex;
 
             return [.. json.Slice(0, (int)endLeft).Span, .. jsonReplacement.Span, .. json.Slice((int)startRight).Span];
         }
-        else
+
+        if (jsonPath.IsArrayInsert())
         {
-            long endLeft = jsonReader.TokenStartIndex;
+            if (jsonReader.TokenType != JsonTokenType.StartArray)
+            {
+                throw new InvalidOperationException("Cannot insert into an array when the target is not an array.");
+            }
+
+            //skip to the end of the array
+            while (jsonReader.Read() && jsonReader.TokenType != JsonTokenType.EndArray)
+            {
+                jsonReader.Skip();
+            }
+
+            endLeft = jsonReader.TokenStartIndex;
             return
-            [
+                [
                 .. json.Slice(0, (int)endLeft).Span,
                 (byte)',',
-                (byte)'"',
-                ..jsonPath.GetPropertyName(),
-                (byte)'"',
-                (byte)':',
                 .. jsonReplacement.Span,
                 .. json.Slice((int)endLeft).Span
             ];
         }
+
+        endLeft = jsonReader.TokenStartIndex;
+        return
+                [
+            .. json.Slice(0, (int)endLeft).Span,
+            (byte)',',
+            (byte)'"',
+            ..jsonPath.GetPropertyName(),
+            (byte)'"',
+            (byte)':',
+            .. jsonReplacement.Span,
+            .. json.Slice((int)endLeft).Span
+        ];
     }
 
     public static ReadOnlyMemory<byte> GetJson(this ReadOnlyMemory<byte> json, ReadOnlySpan<byte> jsonPath)
@@ -260,7 +293,11 @@ internal static class JsonPathReaderExtensions
             throw new ArgumentException("JsonPath must start with '$'", nameof(jsonPath));
 
         JsonPathReader pathReader = new(jsonPath);
+        return jsonReader.Advance(ref pathReader);
+    }
 
+    public static bool Advance(ref this Utf8JsonReader jsonReader, ref JsonPathReader pathReader)
+    {
         while (pathReader.Read())
         {
             switch (pathReader.Current.TokenType)

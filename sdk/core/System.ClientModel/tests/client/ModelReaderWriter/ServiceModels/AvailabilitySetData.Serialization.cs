@@ -28,6 +28,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
 
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             writer.WriteStartObject();
             if (options.Format == "J" && !Patch.Contains("$.name"u8))
             {
@@ -94,7 +95,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                     writer.WriteStartArray();
                     for (int i=0; i< VirtualMachines.Count; i++)
                     {
-                        if (VirtualMachines[i].Patch.IsRemoved("$"u8.ToArray()))
+                        if (VirtualMachines[i].Patch.IsRemoved("$"u8))
                             continue;
 
                         ((IJsonModel<WritableSubResource>)VirtualMachines[i]).Write(writer, options);
@@ -116,6 +117,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             Patch.Write(writer);
 
             writer.WriteEndObject();
+#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         }
 
         public static AvailabilitySetData DeserializeAvailabilitySetData(JsonElement element, ModelReaderWriterOptions options, BinaryData data)
@@ -136,7 +138,9 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             OptionalProperty<IList<WritableSubResource>> virtualMachines = default;
             OptionalProperty<WritableSubResource> proximityPlacementGroup = default;
             OptionalProperty<IReadOnlyList<InstanceViewStatus>> statuses = default;
+#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             AdditionalProperties additionalProperties = new(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
+#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -145,7 +149,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                     {
                         continue;
                     }
-                    sku = ComputeSku.DeserializeComputeSku(property.Value, options, null);
+                    sku = ComputeSku.DeserializeComputeSku(property.Value, options, property.Value.GetUtf8Bytes());
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -255,7 +259,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                             statuses = array;
                             continue;
                         }
-                        additionalProperties.Set([.. "$.properties."u8, .. Encoding.UTF8.GetBytes(property.Name)], property.Value.GetUtf8Bytes());
+                        additionalProperties.Set([.. "$.properties."u8, .. Encoding.UTF8.GetBytes(property0.Name)], property0.Value.GetUtf8Bytes());
 
                     }
                     continue;
@@ -338,6 +342,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
 
         string IPersistableModel<AvailabilitySetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         private bool PropagateSet(ReadOnlySpan<byte> jsonPath, AdditionalProperties.EncodedValue value)
         {
             ReadOnlySpan<byte> local = jsonPath.SliceToStartOfPropertyName();
@@ -388,6 +393,15 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             }
 
             return false;
+        }
+#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+
+        private bool IsFlattened(ReadOnlySpan<byte> jsonPath)
+        {
+            ReadOnlySpan<byte> local = jsonPath.SliceToStartOfPropertyName();
+
+            return local.StartsWith("properties"u8) ||
+                local.StartsWith("tags"u8);
         }
 
         private static bool TryGetIndex(int propertyLength, ReadOnlySpan<byte> indexSlice, out int index, out int bytesConsumed)

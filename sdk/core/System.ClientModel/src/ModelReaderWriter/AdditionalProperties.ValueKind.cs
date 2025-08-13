@@ -7,7 +7,7 @@ public partial struct AdditionalProperties
 {
     // Value kinds for encoding type information in byte arrays
     [Flags]
-    internal enum ValueKind : Int16
+    internal enum ValueKind : short
     {
         None = 0,
         Json = 1 << 0,

@@ -28,6 +28,24 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
+        public void AddPrimitive_StringAndInt()
+        {
+            AdditionalProperties ap = new();
+            ap.Set("$.property"u8, "value");
+            ap.Set("$.property2"u8, 10);
+            Assert.IsTrue(ap.Contains("$.property"u8));
+            Assert.AreEqual("value", ap.GetString("$.property"u8));
+            Assert.AreEqual(10, ap.GetInt32("$.property2"u8));
+
+            using var stream = new MemoryStream();
+            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+            ap.Write(writer);
+            writer.Flush();
+
+            Assert.AreEqual("{\"property\":\"value\",\"property2\":10}", GetJsonString(stream));
+        }
+
+        [Test]
         public void AddRootArray_String()
         {
             AdditionalProperties ap = new();
@@ -45,17 +63,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        [Ignore("WIP")]
         public void AddRootArray_Property_String()
         {
             AdditionalProperties ap = new();
-            //should I be able to project that there is an array, it has 1 item and that item has a property?
-            //perhaps propagate to _properties on Set like we propagate to the model?
             ap.Set("$[0].property"u8, "value");
-            Assert.IsTrue(ap.Contains("$[0].property"u8));
-            // wont' exist because the array and object in that array are projected
-            //Assert.AreEqual("[{\"property\":\"value\"}]"u8.ToArray(), ap.GetJson("$"u8).ToArray());
-            //Assert.AreEqual("{\"property\":\"value\"}"u8.ToArray(), ap.GetJson("$[0]"u8).ToArray());
+
+            Assert.IsTrue(ap.Contains("$[-]"u8));
+            Assert.AreEqual("[{\"property\":\"value\"}]"u8.ToArray(), ap.GetJson("$[-]"u8).ToArray());
+            Assert.AreEqual("{\"property\":\"value\"}"u8.ToArray(), ap.GetJson("$[0]"u8).ToArray());
             Assert.AreEqual("value", ap.GetString("$[0].property"u8));
 
             using var stream = new MemoryStream();

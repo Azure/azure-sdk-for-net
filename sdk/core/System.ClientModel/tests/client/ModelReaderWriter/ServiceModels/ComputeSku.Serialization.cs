@@ -7,6 +7,7 @@ using System.ClientModel.Primitives;
 using System.ClientModel.Tests.ModelReaderWriterTests;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Text.Json;
 using ClientModel.Tests.ClientShared;
@@ -15,14 +16,17 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
 {
     public partial class ComputeSku : IJsonModel<ComputeSku>
     {
+        [Experimental("SCM0001")]
         private AdditionalProperties _patch = new();
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [Experimental("SCM0001")]
         public ref AdditionalProperties Patch => ref _patch;
 
         void IJsonModel<ComputeSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
 
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             if (Patch.Contains("$"u8))
             {
                 writer.WriteRawValue(Patch.GetJson("$"u8));
@@ -30,17 +34,17 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             }
 
             writer.WriteStartObject();
-            if (OptionalProperty.IsDefined(Name) && !Patch.Contains("name"u8))
+            if (OptionalProperty.IsDefined(Name) && !Patch.Contains("$.name"u8))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (OptionalProperty.IsDefined(Tier) && !Patch.Contains("tier"u8))
+            if (OptionalProperty.IsDefined(Tier) && !Patch.Contains("$.tier"u8))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier);
             }
-            if (OptionalProperty.IsDefined(Capacity) && !Patch.Contains("capacity"u8))
+            if (OptionalProperty.IsDefined(Capacity) && !Patch.Contains("$.capacity"u8))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
@@ -49,6 +53,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             Patch.Write(writer);
 
             writer.WriteEndObject();
+#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         }
 
         internal static ComputeSku DeserializeComputeSku(JsonElement element, ModelReaderWriterOptions options, BinaryData data)
@@ -62,7 +67,9 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             OptionalProperty<string> name = default;
             OptionalProperty<string> tier = default;
             OptionalProperty<long> capacity = default;
+#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             AdditionalProperties additionalProperties = new(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
+#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

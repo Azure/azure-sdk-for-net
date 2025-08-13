@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Buffers.Text;
+using System.ClientModel.Internal;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -20,6 +21,7 @@ public partial struct AdditionalProperties
 
     private PropagatorSetter? _propagatorSetter;
     private PropagatorGetter? _propagatorGetter;
+    private PropagatorIsFlattened? _propagatorIsFlattened;
 
     // Singleton arrays for common values
     private static readonly EncodedValue s_removedValueArray = new(ValueKind.Removed, Array.Empty<byte>());
@@ -183,61 +185,6 @@ public partial struct AdditionalProperties
         return false;
     }
 
-    private ReadOnlyMemory<byte> CombineAllArrayItems(ReadOnlySpan<byte> jsonPath)
-    {
-        if (_properties == null)
-        {
-            return ReadOnlyMemory<byte>.Empty;
-        }
-
-        var rootArrayName = jsonPath.Slice(0, jsonPath.Length - 2);
-        //is it worth it to calculate the size?
-        int size = 0;
-        int count = 0;
-        foreach (var kvp in _properties)
-        {
-            if (rootArrayName.Length == kvp.Key.Length || !kvp.Key.AsSpan().StartsWith(rootArrayName))
-                continue;
-
-            count++;
-            size += kvp.Value.Value.Length;
-        }
-
-        if (count == 0)
-        {
-            //check for the full array entry
-            if (_properties.TryGetValue(jsonPath.GetParent(), out var fullArrayValue))
-            {
-                return fullArrayValue.Value;
-            }
-            return ReadOnlyMemory<byte>.Empty;
-        }
-        else
-        {
-            //combine all entries that start with the name
-            using var memoryStream = new MemoryStream(size + count + 2);
-            memoryStream.WriteByte((byte)'[');
-            int current = 0;
-            foreach (var kvp in _properties)
-            {
-                if (rootArrayName.Length == kvp.Key.Length || !kvp.Key.AsSpan().StartsWith(rootArrayName))
-                    continue;
-
-#if NET6_0_OR_GREATER
-                memoryStream.Write(kvp.Value.Value.Span);
-#else
-                memoryStream.Write(kvp.Value.Value.ToArray(), 0, kvp.Value.Value.Length);
-#endif
-                if (current++ < count - 1)
-                {
-                    memoryStream.WriteByte((byte)',');
-                }
-            }
-            memoryStream.WriteByte((byte)']');
-            return memoryStream.GetBuffer().AsMemory(0, (int)memoryStream.Length);
-        }
-    }
-
     private static bool IsAnonymousType(object obj)
     {
         if (obj == null)
@@ -381,62 +328,154 @@ public partial struct AdditionalProperties
         if (_propagatorSetter is not null && _propagatorSetter(jsonPath, encodedValue))
             return;
 
-        if (_properties == null)
-        {
-            _properties = new(JsonPathComparer.Default);
-        }
+        _properties ??= new(JsonPathComparer.Default);
 
-        if (encodedValue.Kind.HasFlag(ValueKind.Removed))
+        var parent = jsonPath.GetParent();
+        if (parent.IsRoot() || (_propagatorIsFlattened is not null && _propagatorIsFlattened(jsonPath.GetFirstProperty())))
         {
-            // if its remove we need to look at parents before inserting
-            if (!_properties.TryGetValue(jsonPath, out var currentValue))
-            {
-                if (TryGetParentMatch(jsonPath, false, out var parentBytes, out currentValue))
-                {
-                    var childSlice = parentBytes.IsArrayInsert() ? jsonPath.Slice(parentBytes.Length - 3) : jsonPath.Slice(parentBytes.Length);
-                    Span<byte> childPath = stackalloc byte[childSlice.Length + 1];
-                    childPath[0] = (byte)'$';
-                    childSlice.CopyTo(childPath.Slice(1));
-                    var modifiedValue = currentValue.Value.Remove(childPath);
-                    _properties.Set(parentBytes, new(currentValue.Kind, modifiedValue));
-                }
-                else
-                {
-                    _properties.Set(jsonPath, encodedValue);
-                }
-            }
-        }
-        else
-        {
-            if (jsonPath.EndsWith("[-]"u8))
+            if (jsonPath.IsArrayInsert())
             {
                 if (_properties.TryGetValue(jsonPath, out var currentValue))
                 {
                     byte[] newValue = [.. currentValue.Value.Span.Slice(0, currentValue.Value.Span.Length - 1), (byte)',', .. encodedValue.Value.Span, (byte)']'];
-                    _properties.Set(jsonPath, new(currentValue.Kind, newValue));
+                    _properties.Set(jsonPath, new(ValueKind.Json, newValue));
                 }
                 else
                 {
                     byte[] newValue = [(byte)'[', .. encodedValue.Value.Span, (byte)']'];
-                    _properties.Set(jsonPath, new(encodedValue.Kind, newValue));
+                    _properties.Set(jsonPath, new(ValueKind.Json, newValue));
                 }
             }
             else
             {
-                if (TryGetParentMatch(jsonPath, false, out var parentBytes, out var currentValue))
-                {
-                    // if we have a parent, we need to modify the parent value
-                    var childSlice = parentBytes.IsArrayInsert() ? jsonPath.Slice(parentBytes.Length - 3) : jsonPath.Slice(parentBytes.Length);
-                    Span<byte> childPath = stackalloc byte[childSlice.Length + 1];
-                    childPath[0] = (byte)'$';
-                    childSlice.CopyTo(childPath.Slice(1));
-                    var modifiedValue = currentValue.Value.Set(childPath, encodedValue.Value);
-                    _properties.Set(parentBytes, new(currentValue.Kind, modifiedValue));
-                }
-                else
-                {
-                    _properties.Set(jsonPath, encodedValue);
-                }
+                _properties.Set(jsonPath, encodedValue);
+            }
+        }
+        else
+        {
+            PropagateJsonPath(jsonPath, encodedValue);
+        }
+    }
+
+    private bool PropagateJsonPath(ReadOnlySpan<byte> jsonPath, EncodedValue encodedValue)
+    {
+        _properties ??= new(JsonPathComparer.Default);
+
+        Span<byte> childPath = stackalloc byte[jsonPath.Length];
+        var currentPath = jsonPath;
+        var lastPath = jsonPath;
+        do
+        {
+            if (_properties.TryGetValue(currentPath, out var currentValue))
+            {
+                GetSubPath(currentPath, jsonPath, ref childPath);
+                _properties.Set(currentPath, new(ValueKind.Json, GetNewJson(currentValue, childPath, encodedValue)));
+                return true;
+            }
+
+            lastPath = currentPath;
+            currentPath = currentPath.GetParent();
+        } while (!currentPath.IsRoot());
+
+        GetSubPath(lastPath, jsonPath, ref childPath);
+        _properties.Set(lastPath, new(ValueKind.Json, GetNewJson(EncodedValue.Empty, childPath, encodedValue)));
+
+        return false;
+    }
+
+    private static void GetSubPath(ReadOnlySpan<byte> parentPath, ReadOnlySpan<byte> fullPath, ref Span<byte> subPath)
+    {
+        var childSlice = parentPath.IsArrayInsert() ? fullPath.Slice(parentPath.Length - 3) : fullPath.Slice(parentPath.Length);
+        subPath[0] = (byte)'$';
+        childSlice.CopyTo(subPath.Slice(1));
+        subPath = subPath.Slice(0, childSlice.Length + 1);
+    }
+
+    private ReadOnlyMemory<byte> GetNewJson(EncodedValue currentValue, ReadOnlySpan<byte> jsonPath, EncodedValue encodedValue)
+    {
+        JsonPathReader pathReader = new(jsonPath);
+        if (!currentValue.Value.IsEmpty)
+        {
+            if (encodedValue.Kind == ValueKind.Removed)
+            {
+                return currentValue.Value.Remove(jsonPath);
+            }
+            else
+            {
+                return currentValue.Value.Set(jsonPath, encodedValue.Value);
+            }
+        }
+        else
+        {
+            using var buffer = new UnsafeBufferSequence();
+            using var writer = new Utf8JsonWriter(buffer);
+
+            ProjectJson(writer, ref pathReader, encodedValue, false);
+
+            writer.Flush();
+            using var bufferReader = buffer.ExtractReader();
+            return bufferReader.ToBinaryData().ToMemory();
+        }
+    }
+
+    private void ProjectJson(Utf8JsonWriter writer, ref JsonPathReader pathReader, EncodedValue encodedValue, bool inArray)
+    {
+        while (pathReader.Read())
+        {
+            switch (pathReader.Current.TokenType)
+            {
+                case JsonPathTokenType.Root:
+                    break;
+                case JsonPathTokenType.ArrayIndex:
+                    writer.WriteStartArray();
+                    Utf8Parser.TryParse(pathReader.Current.ValueSpan, out int index, out _);
+                    for (int i = 0; i < index - 1; i++)
+                    {
+                        writer.WriteNullValue(); // Placeholder for array items
+                    }
+                    var readerCopy = pathReader;
+                    if (readerCopy.Read() && readerCopy.Current.TokenType == JsonPathTokenType.End)
+                    {
+                        writer.WriteRawValue(encodedValue.Value.Span);
+                    }
+                    else
+                    {
+                        ProjectJson(writer, ref pathReader, encodedValue, true);
+                    }
+                    writer.WriteEndArray();
+                    break;
+                case JsonPathTokenType.Property:
+                    if (!inArray)
+                    {
+                        writer.WritePropertyName(pathReader.Current.ValueSpan);
+                    }
+                    readerCopy = pathReader;
+                    if (readerCopy.Read() && readerCopy.Current.TokenType == JsonPathTokenType.End)
+                    {
+                        writer.WriteRawValue(encodedValue.Value.Span);
+                    }
+                    else
+                    {
+                        ProjectJson(writer, ref pathReader, encodedValue, false);
+                    }
+                    break;
+                case JsonPathTokenType.PropertySeparator:
+                    writer.WriteStartObject();
+                    readerCopy = pathReader;
+                    if (readerCopy.Read() && readerCopy.Current.TokenType == JsonPathTokenType.End)
+                    {
+                        writer.WriteRawValue(encodedValue.Value.Span);
+                    }
+                    else
+                    {
+                        ProjectJson(writer, ref pathReader, encodedValue, false);
+                    }
+                    writer.WriteEndObject();
+                    break;
+                case JsonPathTokenType.End:
+                    break;
+                default:
+                    throw new Exception($"Unexpected token type: {pathReader.Current.TokenType}");
             }
         }
     }

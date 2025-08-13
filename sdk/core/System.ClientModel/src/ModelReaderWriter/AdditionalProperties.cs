@@ -14,6 +14,7 @@ namespace System.ClientModel.Primitives;
 /// <summary>
 /// .
 /// </summary>
+[Experimental("SCM0001")]
 public partial struct AdditionalProperties
 {
     /// <summary>
@@ -35,6 +36,13 @@ public partial struct AdditionalProperties
     /// <summary>
     /// .
     /// </summary>
+    /// <param name="jsonPath"></param>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public delegate bool PropagatorIsFlattened(ReadOnlySpan<byte> jsonPath);
+
+    /// <summary>
+    /// .
+    /// </summary>
     /// <param name="rawJson"></param>
     public AdditionalProperties(ReadOnlyMemory<byte> rawJson)
     {
@@ -46,11 +54,13 @@ public partial struct AdditionalProperties
     /// </summary>
     /// <param name="setter"></param>
     /// <param name="getter"></param>
+    /// <param name="isFlattened"></param>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public void SetPropagators(PropagatorSetter setter, PropagatorGetter getter)
+    public void SetPropagators(PropagatorSetter setter, PropagatorGetter getter, PropagatorIsFlattened isFlattened)
     {
         _propagatorSetter = setter;
         _propagatorGetter = getter;
+        _propagatorIsFlattened = isFlattened;
     }
 
     /// <summary>
@@ -65,28 +75,6 @@ public partial struct AdditionalProperties
             return false;
 
         return _properties.ContainsKey(jsonPath);
-    }
-
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="jsonPath"></param>
-    /// <returns></returns>
-    public bool ContainsStartsWith(ReadOnlySpan<byte> jsonPath)
-    {
-        if (_properties == null)
-            return false;
-
-        foreach (var kvp in _properties)
-        {
-            // TODO: this does not normalize the jsonPath
-            if (jsonPath.Length == kvp.Key.Length || kvp.Key.AsSpan().StartsWith(jsonPath))
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /// <summary>
@@ -394,7 +382,7 @@ public partial struct AdditionalProperties
 
         foreach (var kvp in _properties)
         {
-            if (kvp.Key.IsRoot())
+            if (kvp.Key.IsRoot() || (_propagatorIsFlattened is not null && _propagatorIsFlattened(kvp.Key)))
                 continue;
 
             if (kvp.Value.Kind == ValueKind.Removed || kvp.Value.Kind.HasFlag(ValueKind.Written))
@@ -476,14 +464,6 @@ public partial struct AdditionalProperties
 
         return _properties.TryGetValue(jsonPath, out var value) && value.Kind == ValueKind.Removed;
     }
-
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="jsonPath"></param>
-    /// <returns></returns>
-    public bool IsRemoved(byte[] jsonPath)
-        => IsRemoved(jsonPath.AsSpan());
 
     /// <summary>
     /// .

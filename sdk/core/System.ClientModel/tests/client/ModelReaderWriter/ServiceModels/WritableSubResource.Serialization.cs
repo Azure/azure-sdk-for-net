@@ -24,6 +24,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
         /// <param name="writer"> Input Json writer. </param>
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             if (writer is null)
             {
                 throw new ArgumentNullException(nameof(writer));
@@ -45,6 +46,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
             Patch.Write(writer);
 
             writer.WriteEndObject();
+#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         }
 
         /// <summary>
@@ -57,7 +59,9 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
             options ??= ModelReaderWriterHelper.WireOptions;
 
             string? id = default;
+#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             AdditionalProperties additionalProperties = new(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
+#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))

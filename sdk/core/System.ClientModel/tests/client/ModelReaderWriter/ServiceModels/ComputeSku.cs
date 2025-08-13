@@ -19,12 +19,16 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
         /// <param name="name"> The sku name. </param>
         /// <param name="tier"> Specifies the tier of virtual machines in a scale set.&lt;br /&gt;&lt;br /&gt; Possible Values:&lt;br /&gt;&lt;br /&gt; **Standard**&lt;br /&gt;&lt;br /&gt; **Basic**. </param>
         /// <param name="capacity"> Specifies the number of virtual machines in the scale set. </param>
+#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         internal ComputeSku(string name, string tier, long? capacity, in AdditionalProperties additionalProperties)
+#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         {
             Name = name;
             Tier = tier;
             Capacity = capacity;
+#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             _patch = additionalProperties;
+#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         }
 
         /// <summary> The sku name. </summary>
