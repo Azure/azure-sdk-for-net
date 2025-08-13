@@ -41,8 +41,9 @@ namespace BasicTypeSpec
                 {
                     yield break;
                 }
+                ListWithStringNextLinkResponse result = (ListWithStringNextLinkResponse)response;
                 List<BinaryData> items = new List<BinaryData>();
-                foreach (var item in ((ListWithStringNextLinkResponse)response).Things)
+                foreach (var item in result.Things)
                 {
                     items.Add(BinaryData.FromObjectAsJson(item));
                 }
