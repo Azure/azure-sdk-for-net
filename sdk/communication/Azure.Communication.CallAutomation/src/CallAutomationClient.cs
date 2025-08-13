@@ -262,7 +262,7 @@ namespace Azure.Communication.CallAutomation
             request.CustomCallingContext = new CustomCallingContextInternal(
                 options.CustomCallingContext?.VoipHeaders ?? new ChangeTrackingDictionary<string, string>(),
                 options.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>());
-            request.DtmfOptions = new DtmfConfigurationOptionsInternal(options.DtmfOptions.EnableDtmfBroadcastInGroupCalls);
+            request.DtmfOptions = options.DtmfOptions == null ? null : new DtmfConfigurationOptionsInternal(options.DtmfOptions.EnableDtmfBroadcastInGroupCalls);
 
             return request;
         }
