@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -15,6 +16,9 @@ namespace Azure.Security.ConfidentialLedger
     {
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
+
+    internal const string IdentityServiceBaseUrl = "https://identity.confidential-ledger.core.azure.com";
+    internal const string LedgerDomainSuffix = "confidential-ledger.azure.com";
 
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
@@ -57,145 +61,115 @@ namespace Azure.Security.ConfidentialLedger
             Uri primaryEndpoint,
             CancellationToken cancellationToken = default)
         {
-            var failoverEndpoints = new List<Uri>();
-
             try
             {
                 string ledgerId = primaryEndpoint.Host.Substring(0, primaryEndpoint.Host.IndexOf('.'));
 
-                Uri failoverUrl = new Uri($"https://identity.confidential-ledger.core.azure.com/failover/{ledgerId}");
+                Uri failoverUrl = new Uri($"{IdentityServiceBaseUrl}/failover/{ledgerId}");
 
                 using HttpMessage message = CreateFailoverRequest(failoverUrl);
                 Response response = await _pipeline.ProcessMessageAsync(message, new RequestContext()).ConfigureAwait(false);
-
-                if (response.Status == 200)
-                {
-                    using JsonDocument jsonDoc = JsonDocument.Parse(response.Content);
-                    jsonDoc.RootElement.TryGetProperty("ledgerId", out _); // fire & forget
-                    if (jsonDoc.RootElement.TryGetProperty("failoverLedgers", out JsonElement failoverArray))
-                    {
-                        foreach (JsonElement failoverLedger in failoverArray.EnumerateArray())
-                        {
-                            string failoverLedgerId = null;
-                            try
-                            {
-                                switch (failoverLedger.ValueKind)
-                                {
-                                    case JsonValueKind.String:
-                                        failoverLedgerId = failoverLedger.GetString();
-                                        break;
-                                    case JsonValueKind.Object:
-                                        if (failoverLedger.TryGetProperty("name", out JsonElement nameProp) && nameProp.ValueKind == JsonValueKind.String)
-                                        {
-                                            failoverLedgerId = nameProp.GetString();
-                                        }
-                                        else
-                                        {
-                                            foreach (JsonProperty prop in failoverLedger.EnumerateObject())
-                                            {
-                                                if (prop.Value.ValueKind == JsonValueKind.String && string.Equals(prop.Name, "id", StringComparison.OrdinalIgnoreCase))
-                                                {
-                                                    failoverLedgerId = prop.Value.GetString();
-                                                    break;
-                                                }
-                                            }
-                                        }
-                                        break;
-                                }
-                            }
-                            catch (Exception)
-                            {
-                                // ignore element issues
-                            }
-
-                            if (!string.IsNullOrEmpty(failoverLedgerId))
-                            {
-                                Uri endpoint = new UriBuilder(primaryEndpoint) { Host = $"{failoverLedgerId}.confidential-ledger.azure.com" }.Uri;
-                                failoverEndpoints.Add(endpoint);
-                            }
-                        }
-                    }
-                }
+                return ParseFailoverEndpoints(primaryEndpoint, response);
             }
             catch (Exception)
             {
                 // suppress metadata retrieval exception
             }
-
-            return failoverEndpoints;
+            return new List<Uri>();
         }
 
         private List<Uri> GetFailoverEndpoints(
             Uri primaryEndpoint,
             CancellationToken cancellationToken = default)
         {
-            var failoverEndpoints = new List<Uri>();
-
             try
             {
                 // retrieving sync metadata
                 string ledgerId = primaryEndpoint.Host.Substring(0, primaryEndpoint.Host.IndexOf('.'));
 
-                Uri failoverUrl = new Uri($"https://identity.confidential-ledger.core.azure.com/failover/{ledgerId}");
+                Uri failoverUrl = new Uri($"{IdentityServiceBaseUrl}/failover/{ledgerId}");
 
                 using HttpMessage message = CreateFailoverRequest(failoverUrl);
                 Response response = _pipeline.ProcessMessage(message, new RequestContext());
+                return ParseFailoverEndpoints(primaryEndpoint, response);
+            }
+            catch (Exception)
+            {
+                // suppress metadata retrieval exception
+            }
+            return new List<Uri>();
+        }
 
-                if (response.Status == 200)
+        private static List<Uri> ParseFailoverEndpoints(Uri primaryEndpoint, Response response)
+        {
+            var endpoints = new List<Uri>();
+            if (response?.Status != 200)
+            {
+                return endpoints;
+            }
+            try
+            {
+                using JsonDocument jsonDoc = JsonDocument.Parse(response.Content);
+                jsonDoc.RootElement.TryGetProperty("ledgerId", out _); // optional
+                if (jsonDoc.RootElement.TryGetProperty("failoverLedgers", out JsonElement failoverArray))
                 {
-                    using JsonDocument jsonDoc = JsonDocument.Parse(response.Content);
-                    jsonDoc.RootElement.TryGetProperty("ledgerId", out _);
-                    if (jsonDoc.RootElement.TryGetProperty("failoverLedgers", out JsonElement failoverArray))
+                    foreach (JsonElement failoverLedger in failoverArray.EnumerateArray())
                     {
-                        foreach (JsonElement failoverLedger in failoverArray.EnumerateArray())
+                        string failoverLedgerId = null;
+                        try
                         {
-                            string failoverLedgerId = null;
-                            try
+                            switch (failoverLedger.ValueKind)
                             {
-                                switch (failoverLedger.ValueKind)
-                                {
-                                    case JsonValueKind.String:
-                                        failoverLedgerId = failoverLedger.GetString();
-                                        break;
-                                    case JsonValueKind.Object:
-                                        if (failoverLedger.TryGetProperty("name", out JsonElement nameProp) && nameProp.ValueKind == JsonValueKind.String)
+                                case JsonValueKind.String:
+                                    failoverLedgerId = failoverLedger.GetString();
+                                    break;
+                                case JsonValueKind.Object:
+                                    if (failoverLedger.TryGetProperty("name", out JsonElement nameProp) && nameProp.ValueKind == JsonValueKind.String)
+                                    {
+                                        failoverLedgerId = nameProp.GetString();
+                                    }
+                                    else
+                                    {
+                                        foreach (JsonProperty prop in failoverLedger.EnumerateObject())
                                         {
-                                            failoverLedgerId = nameProp.GetString();
-                                        }
-                                        else
-                                        {
-                                            foreach (JsonProperty prop in failoverLedger.EnumerateObject())
+                                            if (prop.Value.ValueKind == JsonValueKind.String && string.Equals(prop.Name, "id", StringComparison.OrdinalIgnoreCase))
                                             {
-                                                if (prop.Value.ValueKind == JsonValueKind.String && string.Equals(prop.Name, "id", StringComparison.OrdinalIgnoreCase))
-                                                {
-                                                    failoverLedgerId = prop.Value.GetString();
-                                                    break;
-                                                }
+                                                failoverLedgerId = prop.Value.GetString();
+                                                break;
                                             }
                                         }
-                                        break;
-                                }
+                                    }
+                                    break;
                             }
-                            catch (Exception)
-                            {
-                                // ignore element issues
-                            }
+                        }
+                        catch (JsonException jex)
+                        {
+#if DEBUG
+                            Debug.WriteLine($"[ConfidentialLedgerFailoverService] JSON parse issue for failoverLedger element: {jex.Message}");
+#endif
+                            _ = jex; // suppress unused warning in non-DEBUG builds
+                        }
+                        catch (InvalidOperationException ioex)
+                        {
+#if DEBUG
+                            Debug.WriteLine($"[ConfidentialLedgerFailoverService] Invalid operation while parsing failoverLedger element: {ioex.Message}");
+#endif
+                            _ = ioex; // suppress unused warning in non-DEBUG builds
+                        }
 
-                            if (!string.IsNullOrEmpty(failoverLedgerId))
-                            {
-                                Uri endpoint = new UriBuilder(primaryEndpoint) { Host = $"{failoverLedgerId}.confidential-ledger.azure.com" }.Uri;
-                                failoverEndpoints.Add(endpoint);
-                            }
+                        if (!string.IsNullOrEmpty(failoverLedgerId))
+                        {
+                            Uri endpoint = new UriBuilder(primaryEndpoint) { Host = $"{failoverLedgerId}.{LedgerDomainSuffix}" }.Uri;
+                            endpoints.Add(endpoint);
                         }
                     }
                 }
             }
             catch (Exception)
             {
-                // suppress metadata retrieval exception
+                // ignore entire parse failure
             }
-
-            return failoverEndpoints;
+            return endpoints;
         }
 
         private HttpMessage CreateFailoverRequest(Uri failoverUrl)
