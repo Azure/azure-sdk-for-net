@@ -9,6 +9,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -100,6 +101,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         public enum ToolTypes
         {
             BingGrounding,
+            BingCustomGrounding,
             OpenAPI,
             DeepResearch,
             AzureAISearch,
@@ -111,6 +113,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         public Dictionary<ToolTypes, Type> ExpectedDeltas = new()
         {
             {ToolTypes.BingGrounding, typeof(RunStepDeltaBingGroundingToolCall) },
+            {ToolTypes.BingCustomGrounding, typeof(RunStepDeltaCustomBingGroundingToolCall)},
             {ToolTypes.OpenAPI, typeof(RunStepDeltaOpenAPIToolCall)},
             {ToolTypes.DeepResearch, typeof(RunStepDeltaDeepResearchToolCall)},
             {ToolTypes.AzureAISearch, typeof(RunStepDeltaAzureAISearchToolCall)},
@@ -121,6 +124,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         public Dictionary<ToolTypes, Type> ExpectedToolCalls = new()
         {
             {ToolTypes.BingGrounding, typeof(RunStepBingGroundingToolCall) },
+            {ToolTypes.BingCustomGrounding, typeof(RunStepBingCustomSearchToolCall)},
             {ToolTypes.OpenAPI, typeof(RunStepOpenAPIToolCall)},
             {ToolTypes.DeepResearch, typeof(RunStepDeepResearchToolCall)},
             {ToolTypes.AzureAISearch, typeof(RunStepAzureAISearchToolCall)},
@@ -131,6 +135,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         public Dictionary<ToolTypes, string> ToolPrompts = new()
         {
             {ToolTypes.BingGrounding, "How does wikipedia explain Euler's Identity?" },
+            {ToolTypes.BingCustomGrounding, "How many medals did the USA win in the 2024 summer olympics?"},
             {ToolTypes.OpenAPI, "What's the weather in Seattle?"},
             {ToolTypes.DeepResearch, "Research the current state of studies on orca intelligence and orca language, " +
                 "including what is currently known about orcas' cognitive capabilities, " +
@@ -144,17 +149,19 @@ namespace Azure.AI.Agents.Persistent.Tests
 
         public Dictionary<ToolTypes, string> ToolInstructions = new()
         {
-            {ToolTypes.BingGrounding, "You are helpful agent." },
+            {ToolTypes.BingGrounding, "You are helpful agent."},
+            {ToolTypes.BingCustomGrounding, "You are helpful agent."},
             {ToolTypes.OpenAPI, "You are helpful agent."},
             {ToolTypes.DeepResearch, "You are a helpful agent that assists in researching scientific topics."},
             {ToolTypes.AzureAISearch, "You are a helpful agent that can search for information using Azure AI Search."},
             {ToolTypes.ConnectedAgent, "You are a helpful assistant, and use the connected agents to get stock prices."},
-            {ToolTypes.FileSearch,  "You are helpful agent."}
+            {ToolTypes.FileSearch,  "You are helpful agent."},
         };
 
         public Dictionary<ToolTypes, string> RequiredTextInResponse = new()
         {
-            { ToolTypes.AzureFunction, "bar" }
+            {ToolTypes.AzureFunction, "bar"},
+            {ToolTypes.BingCustomGrounding, "40.+gold.+44 silver.+42.+bronze"}
         };
         #endregion
 
@@ -1884,6 +1891,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [TestCase(ToolTypes.FileSearch)]
         [TestCase(ToolTypes.AzureAISearch)]
         [TestCase(ToolTypes.AzureFunction)]
+        [TestCase(ToolTypes.BingCustomGrounding)]
         public async Task TestToolCall(ToolTypes toolToTest)
         {
             PersistentAgentsClient client = GetClient();
@@ -1922,7 +1930,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             );
             MessageTextUriCitationAnnotation expectedUriAnnotation = null;
             MessageTextFileCitationAnnotation expectedFileAnnotation = null;
-            if (toolToTest == ToolTypes.BingGrounding || toolToTest == ToolTypes.DeepResearch)
+            if (toolToTest == ToolTypes.BingGrounding || toolToTest == ToolTypes.DeepResearch || toolToTest == ToolTypes.BingCustomGrounding)
             {
                 expectedUriAnnotation = new("test", new MessageTextUriCitationDetails("*", "*", null));
             }
@@ -1958,6 +1966,8 @@ namespace Azure.AI.Agents.Persistent.Tests
                         {
                             foreach (MessageTextAnnotation annotation in textItem.Annotations)
                             {
+                                if (annotationFound)
+                                    break;
                                 if (annotation is MessageTextUriCitationAnnotation uriAnnotation)
                                 {
                                     annotationFound = ((string.Equals(expectedUriAnnotation.UriCitation.Uri, "*") && !string.IsNullOrEmpty(uriAnnotation.UriCitation.Uri)) || string.Equals(expectedUriAnnotation.UriCitation.Uri, uriAnnotation.UriCitation.Uri)) && ((string.Equals(expectedUriAnnotation.UriCitation.Title, "*") && !string.IsNullOrEmpty(uriAnnotation.UriCitation.Title)) || string.Equals(expectedUriAnnotation.UriCitation.Title, uriAnnotation.UriCitation.Title));
@@ -1966,13 +1976,11 @@ namespace Azure.AI.Agents.Persistent.Tests
                                 {
                                     annotationFound = string.Equals(expectedFileAnnotation.FileId, fileAnnotation.FileId);
                                 }
-                                if (annotationFound)
-                                    break;
                             }
                         }
                         if (!responseFound)
                         {
-                            responseFound = textItem.Text.ToLower().Contains(expectedResponse.ToLower());
+                            responseFound = Regex.Match(textItem.Text.ToLower(), expectedResponse.ToLower()).Success;
                         }
                     }
                     if (annotationFound)
@@ -2157,6 +2165,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [TestCase(ToolTypes.DeepResearch)]
         [TestCase(ToolTypes.ConnectedAgent)]
         [TestCase(ToolTypes.FileSearch)]
+        [TestCase(ToolTypes.BingCustomGrounding)]
         // AzureAISearch is tested separately in TestAzureAiSearchStreaming.
         public async Task TestStreamDelta(ToolTypes toolToTest)
         {
@@ -2179,7 +2188,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             MessageDeltaTextUriCitationAnnotation uriAnnotation = null;
             MessageDeltaTextFileCitationAnnotation fileAnnotation = null;
-            if (toolToTest == ToolTypes.BingGrounding)
+            if (toolToTest == ToolTypes.BingGrounding || toolToTest == ToolTypes.DeepResearch || toolToTest == ToolTypes.BingCustomGrounding)
             {
                 uriAnnotation = new(42, new MessageDeltaTextUriCitationDetails("*", "*", null));
             }
@@ -2200,7 +2209,17 @@ namespace Azure.AI.Agents.Persistent.Tests
                 threadId: thread.Id,
                 role: MessageRole.User,
                 content: ToolPrompts[toolToTest]);
-            await ValidateStream(client: client, agentId: agent.Id, threadId: thread.Id, runStepDeltaType: ExpectedDeltas[toolToTest], uriAnnotation: uriAnnotation, fileAnnotation: fileAnnotation);
+            string searchPattern = default;
+            RequiredTextInResponse.TryGetValue(toolToTest, out searchPattern);
+            await ValidateStream(
+                client: client,
+                agentId: agent.Id,
+                threadId: thread.Id,
+                runStepDeltaType: ExpectedDeltas[toolToTest],
+                uriAnnotation: uriAnnotation,
+                fileAnnotation: fileAnnotation,
+                agentMessagePattern: searchPattern
+                );
         }
 
         #region Helpers
@@ -2210,7 +2229,8 @@ namespace Azure.AI.Agents.Persistent.Tests
             string threadId,
             Type runStepDeltaType,
             MessageDeltaTextUriCitationAnnotation uriAnnotation = null,
-            MessageDeltaTextFileCitationAnnotation fileAnnotation = null
+            MessageDeltaTextFileCitationAnnotation fileAnnotation = null,
+            string agentMessagePattern = null
         )
         {
             bool isStarted = false;
@@ -2219,6 +2239,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             bool isCompleted = false;
             bool fileAnnotationFound = fileAnnotation is null;
             bool urlAnnotationFound = uriAnnotation is null;
+            StringBuilder sbAgentMessages = new();
             await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(threadId, agentId))
             {
                 if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
@@ -2227,7 +2248,6 @@ namespace Azure.AI.Agents.Persistent.Tests
                 }
                 else if (streamingUpdate is MessageContentUpdate msg)
                 {
-                    Console.WriteLine(msg.Text);
                     receivedMessage = true;
                     if (!fileAnnotationFound && msg.TextAnnotation is not null && !string.IsNullOrEmpty(msg.TextAnnotation.InputFileId))
                     {
@@ -2237,6 +2257,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                     {
                         urlAnnotationFound = ((string.Equals(uriAnnotation.UriCitation.Uri, "*") && !string.IsNullOrEmpty(msg.TextAnnotation.Url)) || string.Equals(uriAnnotation.UriCitation.Uri, msg.TextAnnotation.Url)) && ((string.Equals(uriAnnotation.UriCitation.Title, "*") && !string.IsNullOrEmpty(msg.TextAnnotation.Title)) || string.Equals(uriAnnotation.UriCitation.Title, msg.TextAnnotation.Title));
                     }
+                    sbAgentMessages.Append(msg.Text);
                 }
                 else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunFailed && streamingUpdate is RunUpdate errorStep)
                 {
@@ -2261,6 +2282,8 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.True(isCompleted, "The stream was not completed.");
             Assert.True(urlAnnotationFound, "The Uri annotation was not found.");
             Assert.True(fileAnnotationFound, "The file annotation was not found.");
+            if (!string.IsNullOrEmpty(agentMessagePattern))
+                Assert.True(Regex.Match(sbAgentMessages.ToString(), agentMessagePattern).Success, $"The regular expression {agentMessagePattern} was not fount in agent message(s) {sbAgentMessages.ToString()}");
         }
 
         private static string CreateTempDirMayBe()
@@ -2511,6 +2534,12 @@ namespace Azure.AI.Agents.Persistent.Tests
                                     },
                                 },
                             new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }
+                        )
+                    ),
+                    ToolTypes.BingCustomGrounding => new BingCustomSearchToolDefinition(
+                        new BingCustomSearchToolParameters(
+                            connectionId: TestEnvironment.BING_CUSTOM_CONNECTION_ID,
+                            instanceName: TestEnvironment.BING_CONFIGURATION_NAME
                         )
                     ),
                     _ => null
