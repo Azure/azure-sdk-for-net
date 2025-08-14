@@ -36,12 +36,10 @@ namespace Azure.Core.Pipeline
         /// Updates the transport with the provided <paramref name="options"/>.
         /// </summary>
         /// <param name="options">The options to use for updating the transport.</param>
-        /// <returns>
-        /// <c>true</c> if the transport was updated successfully; otherwise, <c>false</c>.
-        /// </returns>
-        public virtual bool TryUpdateTransport(HttpPipelineTransportOptions options)
+
+        public virtual void UpdateTransport(HttpPipelineTransportOptions options)
         {
-            return false;
+            throw new NotSupportedException("This transport does not support updating options.");
         }
 
         /// <summary>
@@ -66,7 +64,7 @@ namespace Azure.Core.Pipeline
             return options switch
             {
                 null => HttpClientTransport.Shared,
-                _ => HttpClientTransport.Create(o => new HttpClientTransport(o), options)
+                _ => new HttpClientTransport(options)
             };
         }
     }

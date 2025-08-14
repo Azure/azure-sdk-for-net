@@ -28,20 +28,26 @@ namespace Azure.Core.Pipeline
         // The transport's private HttpClient is internal because it is used by tests.
         internal HttpClient Client => _client;
 
-        internal Func<HttpPipelineTransportOptions, HttpClientTransport>? TransportFactory { get; set; }
+        internal Func<HttpPipelineTransportOptions, HttpClient>? _clientFactory { get; }
+        internal Func<HttpPipelineTransportOptions, HttpMessageHandler>? _handlerFactory { get; }
 
         /// <summary>
         /// Creates a new <see cref="HttpClientTransport"/> instance using default configuration.
         /// </summary>
         public HttpClientTransport() : this(CreateDefaultClient())
-        { }
+        {
+            _clientFactory = o => CreateDefaultClient(o);
+        }
 
         /// <summary>
         /// Creates a new <see cref="HttpClientTransport"/> instance using default configuration.
         /// </summary>
         /// <param name="options">The <see cref="HttpPipelineTransportOptions"/> that to configure the behavior of the transport.</param>
-        internal HttpClientTransport(HttpPipelineTransportOptions? options = null) : this(CreateDefaultClient(options))
-        { }
+        internal HttpClientTransport(HttpPipelineTransportOptions? options = null)
+            : this(o => CreateDefaultClient(options))
+        {
+            _clientFactory = o => CreateDefaultClient(o);
+        }
 
         /// <summary>
         /// Creates a new instance of <see cref="HttpClientTransport"/> using the provided client instance.
@@ -50,6 +56,16 @@ namespace Azure.Core.Pipeline
         public HttpClientTransport(HttpMessageHandler messageHandler)
         {
             _client = new HttpClient(messageHandler) ?? throw new ArgumentNullException(nameof(messageHandler));
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="HttpClientTransport"/> using the provided handler factory.
+        /// </summary>
+        /// <param name="handlerFactory">The factory function to create the message handler.</param>
+        public HttpClientTransport(Func<HttpPipelineTransportOptions, HttpMessageHandler> handlerFactory)
+            : this(handlerFactory.Invoke(new HttpPipelineTransportOptions()))
+        {
+            _handlerFactory = handlerFactory;
         }
 
         /// <summary>
@@ -63,52 +79,34 @@ namespace Azure.Core.Pipeline
 
         /// <summary>
         /// Creates a new instance of <see cref="HttpClientTransport"/> using the provided factory.
-        /// Subsequent calls to <see cref="HttpPipelineTransport.TryUpdateTransport(HttpPipelineTransportOptions)"/> will use the new transport.
         /// </summary>
-        /// <param name="transportUpdateFactory">The factory function to create the transport.</param>
-        /// <param name="options">The options to pass to the factory.</param>
-        /// <returns>A new <see cref="HttpClientTransport"/> instance.</returns>
-        public static HttpClientTransport Create(
-            Func<HttpPipelineTransportOptions, HttpClientTransport> transportUpdateFactory,
-            HttpPipelineTransportOptions? options = null)
+        /// <param name="clientFactory">The factory function to create the client.</param>
+        public HttpClientTransport(Func<HttpPipelineTransportOptions, HttpClient> clientFactory) : this(clientFactory.Invoke(new HttpPipelineTransportOptions()))
         {
-            if (transportUpdateFactory == null)
-            {
-                throw new ArgumentNullException(nameof(transportUpdateFactory));
-            }
-
-            // Use the factory to create the initial transport with the provided options
-            HttpClientTransport transport = transportUpdateFactory(options!);
-            if (transport == null)
-            {
-                throw new InvalidOperationException("The transport factory returned null.");
-            }
-
-            // Set the factory so it can be used for subsequent updates
-            transport.TransportFactory = transportUpdateFactory;
-            return transport;
+            _clientFactory = clientFactory;
         }
 
         /// <inheritdoc />
-        public override bool TryUpdateTransport(HttpPipelineTransportOptions options)
+        public override void UpdateTransport(HttpPipelineTransportOptions options)
         {
-            if (TransportFactory == null)
+            if (this == Shared)
             {
-                return false;
+                throw new InvalidOperationException("Cannot update the shared HttpClientTransport instance.");
             }
 
-            var newTransport = TransportFactory(options);
-            if (newTransport == null)
+            HttpClient? newClient = null;
+            if (_clientFactory != null)
             {
-                return false;
+                newClient = _clientFactory(options);
+            }
+            else if (_handlerFactory != null)
+            {
+                var handler = _handlerFactory(options);
+                newClient = new HttpClient(handler);
             }
 
-            var oldClient = Interlocked.Exchange(ref _client, newTransport.Client);
-            if (oldClient != null && oldClient != Shared.Client)
-            {
-                oldClient.Dispose();
-            }
-            return true;
+            var oldClient = Interlocked.Exchange(ref _client!, newClient);
+            oldClient!.Dispose();
         }
 
         /// <inheritdoc />

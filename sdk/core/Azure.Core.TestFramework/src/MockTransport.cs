@@ -74,10 +74,9 @@ namespace Azure.Core.TestFramework
             await ProcessCore(message);
         }
 
-        public override bool TryUpdateTransport(HttpPipelineTransportOptions options)
+        public override void UpdateTransport(HttpPipelineTransportOptions options)
         {
             TransportUpdates.Add(options);
-            return true;
         }
 
         private async Task ProcessCore(HttpMessage message)

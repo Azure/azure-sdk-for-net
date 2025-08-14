@@ -32,7 +32,7 @@ namespace Azure.Core.Tests
         {
         }
 
-        protected abstract HttpPipelineTransport GetTransport(bool https = false, HttpPipelineTransportOptions options = null, Func<HttpPipelineTransportOptions, HttpClientTransport> transportFactory = null);
+        protected abstract HttpPipelineTransport GetTransport(bool https = false, HttpPipelineTransportOptions options = null);
 
         public static object[] ContentWithLength =>
             new object[]
@@ -1159,7 +1159,7 @@ namespace Azure.Core.Tests
                 var options = new HttpPipelineTransportOptions();
                 options.ServerCertificateCustomValidationCallback = args => true;
 
-                var transport = GetTransport(true, options, o => new HttpClientTransport(o));
+                var transport = GetTransport(true, options);
 
                 // Initially no client certificate
                 Request request = transport.CreateRequest();
@@ -1170,7 +1170,7 @@ namespace Azure.Core.Tests
                 // Now set the client certificate and update the transport
                 options.ClientCertificates.Add(clientCert);
 
-                Assert.IsTrue(transport.TryUpdateTransport(options));
+                transport.UpdateTransport(options);
                 setClientCertificate = true;
 
                 request = transport.CreateRequest();
@@ -1218,7 +1218,7 @@ namespace Azure.Core.Tests
                 options.ServerCertificateCustomValidationCallback = args => true;
                 options.ClientCertificates.Add(clientCert);
 
-                var transport = GetTransport(true, options, o => new HttpClientTransport(o));
+                var transport = GetTransport(true, options);
 
                 // Initially no client certificate
                 Request request = transport.CreateRequest();
@@ -1230,7 +1230,7 @@ namespace Azure.Core.Tests
                 options.ClientCertificates.Clear();
                 options.ClientCertificates.Add(anotherCert);
 
-                Assert.IsTrue(transport.TryUpdateTransport(options));
+                transport.UpdateTransport(options);
                 setClientCertificate = true;
 
                 request = transport.CreateRequest();

@@ -61,7 +61,7 @@ namespace Azure.Core
         /// <param name="refreshOn">Specifies the time when the cached token should be proactively refreshed.</param>
         /// <param name="tokenType">The access token type.</param>
         /// <param name="bindingCertificate">The binding certificate for the access token.</param>
-        public AccessToken(string accessToken, DateTimeOffset expiresOn, DateTimeOffset? refreshOn, string tokenType, X509Certificate2? bindingCertificate)
+        public AccessToken(string accessToken, DateTimeOffset expiresOn, DateTimeOffset? refreshOn, string tokenType, X509Certificate2 bindingCertificate)
         {
             Token = accessToken;
             ExpiresOn = expiresOn;
