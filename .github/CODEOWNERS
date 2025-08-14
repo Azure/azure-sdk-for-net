@@ -1118,7 +1118,7 @@
 # ServiceLabel: %Planetary Computer %Mgmt
 # ServiceOwners:                                                   @shaktichetan23
 
-# PRLabel: %System.Linq.Enumerable+WhereSelectListIterator`2[System.String,System.String]
+# PRLabel: %PureStorage
 /sdk/purestorageblock/Azure.ResourceManager.*/                     @deepakmauryams @deepakmauryams @ReilleyMilne
 
 # ServiceLabel: %PureStorage %Mgmt
