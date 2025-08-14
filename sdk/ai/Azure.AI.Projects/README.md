@@ -221,13 +221,13 @@ EnableSystemClientModelDebugging();
 AIProjectClient projectClient = CreateDebugClient(endpoint);
 
 Console.WriteLine("List all deployments:");
-foreach (AssetDeployment deployment in projectClient.Deployments.Get())
+foreach (AssetDeployment deployment in projectClient.Deployments.GetDeployments())
 {
     Console.WriteLine(deployment);
 }
 
 Console.WriteLine($"List all deployments by the model publisher `{modelPublisher}`:");
-foreach (AssetDeployment deployment in projectClient.Deployments.Get(modelPublisher: modelPublisher))
+foreach (AssetDeployment deployment in projectClient.Deployments.GetDeployments(modelPublisher: modelPublisher))
 {
     Console.WriteLine(deployment);
 }
@@ -268,11 +268,11 @@ ConnectionProperties specificConnectionCredentials = projectClient.Connections.G
 Console.WriteLine(specificConnectionCredentials);
 
 Console.WriteLine($"Get the properties of the default connection:");
-ConnectionProperties defaultConnection = projectClient.Connections.GetDefault(includeCredentials: false);
+ConnectionProperties defaultConnection = projectClient.Connections.GetDefaultConnection(includeCredentials: false);
 Console.WriteLine(defaultConnection);
 
 Console.WriteLine($"Get the properties of the default connection with credentials:");
-ConnectionProperties defaultConnectionCredentials = projectClient.Connections.GetDefault(includeCredentials: true);
+ConnectionProperties defaultConnectionCredentials = projectClient.Connections.GetDefaultConnection(includeCredentials: true);
 Console.WriteLine(defaultConnectionCredentials);
 ```
 
@@ -311,7 +311,7 @@ FolderDatasetVersion folderDataset = projectClient.Datasets.UploadFolder(
 Console.WriteLine(folderDataset);
 
 Console.WriteLine($"Retrieving Dataset version {datasetVersion1}:");
-DatasetVersion dataset = projectClient.Datasets.Get(datasetName, datasetVersion1);
+DatasetVersion dataset = projectClient.Datasets.GetDataset(datasetName, datasetVersion1);
 Console.WriteLine(dataset.Id);
 
 Console.WriteLine($"Retrieving credentials of Dataset {datasetName} version {datasetVersion1}:");
@@ -319,14 +319,14 @@ DatasetCredential credentials = projectClient.Datasets.GetCredentials(datasetNam
 Console.WriteLine(credentials);
 
 Console.WriteLine($"Listing all versions for Dataset '{datasetName}':");
-foreach (DatasetVersion ds in projectClient.Datasets.GetVersions(datasetName))
+foreach (DatasetVersion ds in projectClient.Datasets.GetDatasetVersions(datasetName))
 {
     Console.WriteLine(ds);
     Console.WriteLine(ds.Version);
 }
 
 Console.WriteLine($"Listing latest versions for all datasets:");
-foreach (DatasetVersion ds in projectClient.Datasets.Get())
+foreach (DatasetVersion ds in projectClient.Datasets.GetDatasets())
 {
     Console.WriteLine($"{ds.Name}, {ds.Version}, {ds.Id}");
 }
@@ -359,7 +359,7 @@ BinaryContent content = BinaryContent.Create(BinaryData.FromObjectAsJson(new
 }));
 
 Console.WriteLine($"Create an Index named `{indexName}` referencing an existing AI Search resource:");
-SearchIndex index = projectClient.Indexes.CreateOrUpdate(
+SearchIndex index = (SearchIndex)projectClient.Indexes.CreateOrUpdate(
     name: indexName,
     version: indexVersion,
     content: content
@@ -367,17 +367,17 @@ SearchIndex index = projectClient.Indexes.CreateOrUpdate(
 Console.WriteLine(index);
 
 Console.WriteLine($"Get an existing Index named `{indexName}`, version `{indexVersion}`:");
-SearchIndex retrievedIndex = projectClient.Indexes.Get(name: indexName, version: indexVersion);
+SearchIndex retrievedIndex = projectClient.Indexes.GetIndex(name: indexName, version: indexVersion);
 Console.WriteLine(retrievedIndex);
 
 Console.WriteLine($"Listing all versions of the Index named `{indexName}`:");
-foreach (SearchIndex version in projectClient.Indexes.GetVersions(name: indexName))
+foreach (SearchIndex version in projectClient.Indexes.GetIndexVersions(name: indexName))
 {
     Console.WriteLine(version);
 }
 
 Console.WriteLine($"Listing all Indices:");
-foreach (SearchIndex version in projectClient.Indexes.Get())
+foreach (SearchIndex version in projectClient.Indexes.GetIndexes())
 {
     Console.WriteLine(version);
 }
@@ -393,7 +393,7 @@ Any operation that fails will throw a [RequestFailedException][RequestFailedExce
 ```C# Snippet:AI_Projects_Readme_Troubleshooting
 try
 {
-    projectClient.Datasets.Get("non-existent-dataset-name", "non-existent-dataset-version");
+    projectClient.Datasets.GetDataset("non-existent-dataset-name", "non-existent-dataset-version");
 }
 catch (ClientResultException ex) when (ex.Status == 404)
 {
