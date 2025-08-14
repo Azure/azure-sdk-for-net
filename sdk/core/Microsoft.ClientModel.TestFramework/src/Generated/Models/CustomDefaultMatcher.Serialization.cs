@@ -12,10 +12,10 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Microsoft.ClientModel.TestFramework;
 
-namespace Microsoft.ClientModel.TestFramework.TestProxy
+namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
 {
     /// <summary> The CustomDefaultMatcher. </summary>
-    internal partial class CustomDefaultMatcher : IJsonModel<CustomDefaultMatcher>
+    public partial class CustomDefaultMatcher : IJsonModel<CustomDefaultMatcher>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -35,20 +35,25 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             {
                 throw new FormatException($"The model {nameof(CustomDefaultMatcher)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ExcludedHeaders))
-            {
-                writer.WritePropertyName("excludedHeaders"u8);
-                writer.WriteStringValue(ExcludedHeaders);
-            }
             if (Optional.IsDefined(CompareBodies))
             {
                 writer.WritePropertyName("compareBodies"u8);
                 writer.WriteBooleanValue(CompareBodies.Value);
             }
+            if (Optional.IsDefined(ExcludedHeaders))
+            {
+                writer.WritePropertyName("excludedHeaders"u8);
+                writer.WriteStringValue(ExcludedHeaders);
+            }
             if (Optional.IsDefined(IgnoredHeaders))
             {
                 writer.WritePropertyName("ignoredHeaders"u8);
                 writer.WriteStringValue(IgnoredHeaders);
+            }
+            if (Optional.IsDefined(IgnoreQueryOrdering))
+            {
+                writer.WritePropertyName("ignoreQueryOrdering"u8);
+                writer.WriteBooleanValue(IgnoreQueryOrdering.Value);
             }
             if (Optional.IsDefined(IgnoredQueryParameters))
             {
@@ -97,18 +102,14 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             {
                 return null;
             }
-            string excludedHeaders = default;
             bool? compareBodies = default;
+            string excludedHeaders = default;
             string ignoredHeaders = default;
+            bool? ignoreQueryOrdering = default;
             string ignoredQueryParameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("excludedHeaders"u8))
-                {
-                    excludedHeaders = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("compareBodies"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -118,9 +119,23 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
                     compareBodies = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("excludedHeaders"u8))
+                {
+                    excludedHeaders = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("ignoredHeaders"u8))
                 {
                     ignoredHeaders = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("ignoreQueryOrdering"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ignoreQueryOrdering = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("ignoredQueryParameters"u8))
@@ -133,7 +148,13 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CustomDefaultMatcher(excludedHeaders, compareBodies, ignoredHeaders, ignoredQueryParameters, additionalBinaryDataProperties);
+            return new CustomDefaultMatcher(
+                compareBodies,
+                excludedHeaders,
+                ignoredHeaders,
+                ignoreQueryOrdering,
+                ignoredQueryParameters,
+                additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

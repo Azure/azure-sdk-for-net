@@ -9,49 +9,31 @@ using System;
 using System.Collections.Generic;
 using Microsoft.ClientModel.TestFramework;
 
-namespace Microsoft.ClientModel.TestFramework.TestProxy
+namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
 {
     /// <summary> The BodyKeySanitizer. </summary>
-    public partial class BodyKeySanitizer
+    public partial class BodyKeySanitizer : SanitizerAddition
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="BodyKeySanitizer"/>. </summary>
-        /// <param name="jsonPath"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jsonPath"/> is null. </exception>
-        public BodyKeySanitizer(string jsonPath)
+        /// <param name="body"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public BodyKeySanitizer(BodyKeySanitizerBody body) : base(SanitizerType.BodyKeySanitizer)
         {
-            Argument.AssertNotNull(jsonPath, nameof(jsonPath));
+            Argument.AssertNotNull(body, nameof(body));
 
-            JsonPath = jsonPath;
+            Body = body;
         }
 
         /// <summary> Initializes a new instance of <see cref="BodyKeySanitizer"/>. </summary>
-        /// <param name="jsonPath"></param>
-        /// <param name="value"></param>
-        /// <param name="regex"></param>
-        /// <param name="groupForReplace"></param>
+        /// <param name="name"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BodyKeySanitizer(string jsonPath, string value, string regex, string groupForReplace, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="body"></param>
+        internal BodyKeySanitizer(SanitizerType name, IDictionary<string, BinaryData> additionalBinaryDataProperties, BodyKeySanitizerBody body) : base(name, additionalBinaryDataProperties)
         {
-            JsonPath = jsonPath;
-            Value = value;
-            Regex = regex;
-            GroupForReplace = groupForReplace;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Body = body;
         }
 
-        /// <summary> Gets the JsonPath. </summary>
-        public string JsonPath { get; }
-
-        /// <summary> Gets or sets the Value. </summary>
-        public string Value { get; set; }
-
-        /// <summary> Gets or sets the Regex. </summary>
-        public string Regex { get; set; }
-
-        /// <summary> Gets or sets the GroupForReplace. </summary>
-        public string GroupForReplace { get; set; }
+        /// <summary> Gets the Body. </summary>
+        public BodyKeySanitizerBody Body { get; }
     }
 }

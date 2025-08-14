@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Microsoft.ClientModel.TestFramework.TestProxy;
+namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin;
 
 public partial class HeaderRegexSanitizer
 {
@@ -26,10 +26,5 @@ public partial class HeaderRegexSanitizer
     /// the specified query parameter within the specified header value.
     /// </returns>
     public static HeaderRegexSanitizer CreateWithQueryParameter(string headerKey, string queryParameter, string sanitizedValue) =>
-        new(headerKey)
-        {
-            Value = sanitizedValue,
-            Regex = $@"([\x0026|&|?]{queryParameter}=)(?<group>[^&]+)",
-            GroupForReplace = "group"
-        };
+        new(new HeaderRegexSanitizerBody(key: headerKey, value: sanitizedValue, regex: $@"([\x0026|&|?]{queryParameter}=)(?<group>[^&]+)", groupForReplace: "group", condition: null, additionalBinaryDataProperties: null));
 }

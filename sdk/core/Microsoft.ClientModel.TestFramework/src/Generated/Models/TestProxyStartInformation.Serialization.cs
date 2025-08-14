@@ -42,10 +42,10 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             }
             writer.WritePropertyName("x-recording-file"u8);
             writer.WriteStringValue(XRecordingFile);
-            if (Optional.IsDefined(XRecordingAssetsFiles))
+            if (Optional.IsDefined(XRecordingAssetsFile))
             {
                 writer.WritePropertyName("x-recording-assets-file"u8);
-                writer.WriteStringValue(XRecordingAssetsFiles);
+                writer.WriteStringValue(XRecordingAssetsFile);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -90,7 +90,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
                 return null;
             }
             string xRecordingFile = default;
-            string xRecordingAssetsFiles = default;
+            string xRecordingAssetsFile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -101,7 +101,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
                 }
                 if (prop.NameEquals("x-recording-assets-file"u8))
                 {
-                    xRecordingAssetsFiles = prop.Value.GetString();
+                    xRecordingAssetsFile = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -109,7 +109,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TestProxyStartInformation(xRecordingFile, xRecordingAssetsFiles, additionalBinaryDataProperties);
+            return new TestProxyStartInformation(xRecordingFile, xRecordingAssetsFile, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

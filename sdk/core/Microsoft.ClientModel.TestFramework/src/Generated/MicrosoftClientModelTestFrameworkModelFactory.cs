@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.ClientModel.TestFramework.TestProxy;
+using Microsoft.ClientModel.TestFramework.TestProxy.Admin;
 
 namespace Microsoft.ClientModel.TestFramework
 {
@@ -16,121 +17,347 @@ namespace Microsoft.ClientModel.TestFramework
     {
         /// <summary> The TestProxyStartInformation. </summary>
         /// <param name="xRecordingFile"></param>
-        /// <param name="xRecordingAssetsFiles"></param>
+        /// <param name="xRecordingAssetsFile"></param>
         /// <returns> A new <see cref="TestProxy.TestProxyStartInformation"/> instance for mocking. </returns>
-        public static TestProxyStartInformation TestProxyStartInformation(string xRecordingFile = default, string xRecordingAssetsFiles = default)
+        public static TestProxyStartInformation TestProxyStartInformation(string xRecordingFile = default, string xRecordingAssetsFile = default)
         {
-            return new TestProxyStartInformation(xRecordingFile, xRecordingAssetsFiles, additionalBinaryDataProperties: null);
+            return new TestProxyStartInformation(xRecordingFile, xRecordingAssetsFile, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The ProxyOptions. </summary>
-        /// <param name="transport"></param>
-        /// <returns> A new <see cref="TestProxy.ProxyOptions"/> instance for mocking. </returns>
-        public static ProxyOptions ProxyOptions(ProxyOptionsTransport transport = default)
+        /// <summary> The CustomDefaultMatcher. </summary>
+        /// <param name="compareBodies"></param>
+        /// <param name="excludedHeaders"></param>
+        /// <param name="ignoredHeaders"></param>
+        /// <param name="ignoreQueryOrdering"></param>
+        /// <param name="ignoredQueryParameters"></param>
+        /// <returns> A new <see cref="TestProxy.Admin.CustomDefaultMatcher"/> instance for mocking. </returns>
+        public static CustomDefaultMatcher CustomDefaultMatcher(bool? compareBodies = default, string excludedHeaders = default, string ignoredHeaders = default, bool? ignoreQueryOrdering = default, string ignoredQueryParameters = default)
         {
-            return new ProxyOptions(transport, additionalBinaryDataProperties: null);
+            return new CustomDefaultMatcher(
+                compareBodies,
+                excludedHeaders,
+                ignoredHeaders,
+                ignoreQueryOrdering,
+                ignoredQueryParameters,
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The ProxyOptionsTransport. </summary>
-        /// <param name="allowAutoRedirect"></param>
-        /// <param name="tlsValidationCert"></param>
-        /// <param name="certificates"></param>
-        /// <returns> A new <see cref="TestProxy.ProxyOptionsTransport"/> instance for mocking. </returns>
-        public static ProxyOptionsTransport ProxyOptionsTransport(bool allowAutoRedirect = default, string tlsValidationCert = default, IEnumerable<ProxyOptionsTransportCertificationsItem> certificates = default)
+        /// <summary>
+        /// The SanitizerAddition.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BodyKeySanitizer"/>, <see cref="BodyRegexSanitizer"/>, <see cref="BodyStringSanitizer"/>, <see cref="GeneralRegexSanitizer"/>, <see cref="GeneralStringSanitizer"/>, <see cref="HeaderRegexSanitizer"/>, <see cref="HeaderStringSanitizer"/>, <see cref="OAuthResponseSanitizer"/>, <see cref="RegexEntrySanitizer"/>, <see cref="RemoveHeaderSanitizer"/>, <see cref="UriRegexSanitizer"/>, <see cref="UriStringSanitizer"/>, and <see cref="UriSubscriptionIdSanitizer"/>.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="TestProxy.Admin.SanitizerAddition"/> instance for mocking. </returns>
+        public static SanitizerAddition SanitizerAddition(string name = default)
         {
-            certificates ??= new ChangeTrackingList<ProxyOptionsTransportCertificationsItem>();
-
-            return new ProxyOptionsTransport(allowAutoRedirect, tlsValidationCert, certificates?.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The ProxyOptionsTransportCertificationsItem. </summary>
-        /// <param name="pemValue"></param>
-        /// <param name="pemKey"></param>
-        /// <returns> A new <see cref="TestProxy.ProxyOptionsTransportCertificationsItem"/> instance for mocking. </returns>
-        public static ProxyOptionsTransportCertificationsItem ProxyOptionsTransportCertificationsItem(string pemValue = default, string pemKey = default)
-        {
-            return new ProxyOptionsTransportCertificationsItem(pemValue, pemKey, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The SanitizersToRemove. </summary>
-        /// <param name="sanitizers"></param>
-        /// <returns> A new <see cref="TestProxy.SanitizersToRemove"/> instance for mocking. </returns>
-        public static SanitizersToRemove SanitizersToRemove(IEnumerable<string> sanitizers = default)
-        {
-            sanitizers ??= new ChangeTrackingList<string>();
-
-            return new SanitizersToRemove(sanitizers?.ToList(), additionalBinaryDataProperties: null);
+            return new UnknownSanitizerAddition(name.ToSanitizerType(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The BodyKeySanitizer. </summary>
+        /// <param name="body"></param>
+        /// <returns> A new <see cref="TestProxy.Admin.BodyKeySanitizer"/> instance for mocking. </returns>
+        public static BodyKeySanitizer BodyKeySanitizer(BodyKeySanitizerBody body = default)
+        {
+            return new BodyKeySanitizer(SanitizerType.BodyKeySanitizer, additionalBinaryDataProperties: null, body);
+        }
+
+        /// <summary> The BodyKeySanitizerBody. </summary>
         /// <param name="jsonPath"></param>
         /// <param name="value"></param>
         /// <param name="regex"></param>
         /// <param name="groupForReplace"></param>
-        /// <returns> A new <see cref="TestProxy.BodyKeySanitizer"/> instance for mocking. </returns>
-        public static BodyKeySanitizer BodyKeySanitizer(string jsonPath = default, string value = default, string regex = default, string groupForReplace = default)
+        /// <param name="condition"></param>
+        /// <returns> A new <see cref="TestProxy.Admin.BodyKeySanitizerBody"/> instance for mocking. </returns>
+        public static BodyKeySanitizerBody BodyKeySanitizerBody(string jsonPath = default, string value = default, string regex = default, string groupForReplace = default, ApplyCondition condition = default)
         {
-            return new BodyKeySanitizer(jsonPath, value, regex, groupForReplace, additionalBinaryDataProperties: null);
+            return new BodyKeySanitizerBody(
+                jsonPath,
+                value,
+                regex,
+                groupForReplace,
+                condition,
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The HeaderRegexSanitizer. </summary>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
-        /// <param name="regex"></param>
-        /// <param name="groupForReplace"></param>
-        /// <returns> A new <see cref="TestProxy.HeaderRegexSanitizer"/> instance for mocking. </returns>
-        public static HeaderRegexSanitizer HeaderRegexSanitizer(string key = default, string value = default, string regex = default, string groupForReplace = default)
+        /// <summary> The ApplyCondition. </summary>
+        /// <param name="uriRegex"></param>
+        /// <returns> A new <see cref="TestProxy.Admin.ApplyCondition"/> instance for mocking. </returns>
+        public static ApplyCondition ApplyCondition(string uriRegex = default)
         {
-            return new HeaderRegexSanitizer(key, value, regex, groupForReplace, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The UriRegexSanitizer. </summary>
-        /// <param name="regex"></param>
-        /// <param name="value"></param>
-        /// <param name="groupForReplace"></param>
-        /// <returns> A new <see cref="TestProxy.UriRegexSanitizer"/> instance for mocking. </returns>
-        public static UriRegexSanitizer UriRegexSanitizer(string regex = default, string value = default, string groupForReplace = default)
-        {
-            return new UriRegexSanitizer(regex, value, groupForReplace, additionalBinaryDataProperties: null);
+            return new ApplyCondition(uriRegex, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The BodyRegexSanitizer. </summary>
-        /// <param name="regex"></param>
+        /// <param name="body"></param>
+        /// <returns> A new <see cref="TestProxy.Admin.BodyRegexSanitizer"/> instance for mocking. </returns>
+        public static BodyRegexSanitizer BodyRegexSanitizer(BodyRegexSanitizerBody body = default)
+        {
+            return new BodyRegexSanitizer(SanitizerType.BodyRegexSanitizer, additionalBinaryDataProperties: null, body);
+        }
+
+        /// <summary> The BodyRegexSanitizerBody. </summary>
         /// <param name="value"></param>
+        /// <param name="regex"></param>
         /// <param name="groupForReplace"></param>
         /// <param name="condition"></param>
-        /// <returns> A new <see cref="TestProxy.BodyRegexSanitizer"/> instance for mocking. </returns>
-        public static BodyRegexSanitizer BodyRegexSanitizer(string regex = default, string value = default, string groupForReplace = default, SanitizerCondition condition = default)
+        /// <returns> A new <see cref="TestProxy.Admin.BodyRegexSanitizerBody"/> instance for mocking. </returns>
+        public static BodyRegexSanitizerBody BodyRegexSanitizerBody(string value = default, string regex = default, string groupForReplace = default, ApplyCondition condition = default)
         {
-            return new BodyRegexSanitizer(regex, value, groupForReplace, condition, additionalBinaryDataProperties: null);
+            return new BodyRegexSanitizerBody(value, regex, groupForReplace, condition, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The SanitizerCondition. </summary>
-        /// <param name="uriRegex"></param>
-        /// <param name="responseHeader"></param>
-        /// <returns> A new <see cref="TestProxy.SanitizerCondition"/> instance for mocking. </returns>
-        public static SanitizerCondition SanitizerCondition(string uriRegex = default, HeaderCondition responseHeader = default)
+        /// <summary> The BodyStringSanitizer. </summary>
+        /// <param name="body"></param>
+        /// <returns> A new <see cref="TestProxy.Admin.BodyStringSanitizer"/> instance for mocking. </returns>
+        public static BodyStringSanitizer BodyStringSanitizer(BodyStringSanitizerBody body = default)
         {
-            return new SanitizerCondition(uriRegex, responseHeader, additionalBinaryDataProperties: null);
+            return new BodyStringSanitizer(SanitizerType.BodyStringSanitizer, additionalBinaryDataProperties: null, body);
         }
 
-        /// <summary> The HeaderCondition. </summary>
-        /// <param name="key"></param>
-        /// <param name="valueRegex"></param>
-        /// <returns> A new <see cref="TestProxy.HeaderCondition"/> instance for mocking. </returns>
-        public static HeaderCondition HeaderCondition(string key = default, string valueRegex = default)
-        {
-            return new HeaderCondition(key, valueRegex, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The HeaderTransform. </summary>
-        /// <param name="key"></param>
+        /// <summary> The BodyStringSanitizerBody. </summary>
+        /// <param name="target"></param>
         /// <param name="value"></param>
         /// <param name="condition"></param>
-        /// <returns> A new <see cref="TestProxy.HeaderTransform"/> instance for mocking. </returns>
-        public static HeaderTransform HeaderTransform(string key = default, string value = default, SanitizerCondition condition = default)
+        /// <returns> A new <see cref="TestProxy.Admin.BodyStringSanitizerBody"/> instance for mocking. </returns>
+        public static BodyStringSanitizerBody BodyStringSanitizerBody(string target = default, string value = default, ApplyCondition condition = default)
         {
-            return new HeaderTransform(key, value, condition, additionalBinaryDataProperties: null);
+            return new BodyStringSanitizerBody(target, value, condition, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The GeneralRegexSanitizer. </summary>
+        /// <param name="body"></param>
+        /// <returns> A new <see cref="TestProxy.Admin.GeneralRegexSanitizer"/> instance for mocking. </returns>
+        public static GeneralRegexSanitizer GeneralRegexSanitizer(GeneralRegexSanitizerBody body = default)
+        {
+            return new GeneralRegexSanitizer(SanitizerType.GeneralRegexSanitizer, additionalBinaryDataProperties: null, body);
+        }
+
+        /// <summary> The GeneralRegexSanitizerBody. </summary>
+        /// <param name="value"></param>
+        /// <param name="regex"></param>
+        /// <param name="groupForReplace"></param>
+        /// <param name="condition"></param>
+        /// <returns> A new <see cref="TestProxy.Admin.GeneralRegexSanitizerBody"/> instance for mocking. </returns>
+        public static GeneralRegexSanitizerBody GeneralRegexSanitizerBody(string value = default, string regex = default, string groupForReplace = default, ApplyCondition condition = default)
+        {
+            return new GeneralRegexSanitizerBody(value, regex, groupForReplace, condition, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The GeneralStringSanitizer. </summary>
+        /// <param name="body"></param>
+        /// <returns> A new <see cref="TestProxy.Admin.GeneralStringSanitizer"/> instance for mocking. </returns>
+        public static GeneralStringSanitizer GeneralStringSanitizer(GeneralStringSanitizerBody body = default)
+        {
+            return new GeneralStringSanitizer(SanitizerType.GeneralStringSanitizer, additionalBinaryDataProperties: null, body);
+        }
+
+        /// <summary> The GeneralStringSanitizerBody. </summary>
+        /// <param name="target"></param>
+        /// <param name="value"></param>
+        /// <param name="condition"></param>
+        /// <returns> A new <see cref="TestProxy.Admin.GeneralStringSanitizerBody"/> instance for mocking. </returns>
+        public static GeneralStringSanitizerBody GeneralStringSanitizerBody(string target = default, string value = default, ApplyCondition condition = default)
+        {
+            return new GeneralStringSanitizerBody(target, value, condition, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The HeaderRegexSanitizer. </summary>
+        /// <param name="body"></param>
+        /// <returns> A new <see cref="TestProxy.Admin.HeaderRegexSanitizer"/> instance for mocking. </returns>
+        public static HeaderRegexSanitizer HeaderRegexSanitizer(HeaderRegexSanitizerBody body = default)
+        {
+            return new HeaderRegexSanitizer(SanitizerType.HeaderRegexSanitizer, additionalBinaryDataProperties: null, body);
+        }
+
+        /// <summary> The HeaderRegexSanitizerBody. </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <param name="regex"></param>
+        /// <param name="groupForReplace"></param>
+        /// <param name="condition"></param>
+        /// <returns> A new <see cref="TestProxy.Admin.HeaderRegexSanitizerBody"/> instance for mocking. </returns>
+        public static HeaderRegexSanitizerBody HeaderRegexSanitizerBody(string key = default, string value = default, string regex = default, string groupForReplace = default, ApplyCondition condition = default)
+        {
+            return new HeaderRegexSanitizerBody(
+                key,
+                value,
+                regex,
+                groupForReplace,
+                condition,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The HeaderStringSanitizer. </summary>
+        /// <param name="body"></param>
+        /// <returns> A new <see cref="TestProxy.Admin.HeaderStringSanitizer"/> instance for mocking. </returns>
+        public static HeaderStringSanitizer HeaderStringSanitizer(HeaderStringSanitizerBody body = default)
+        {
+            return new HeaderStringSanitizer(SanitizerType.HeaderStringSanitizer, additionalBinaryDataProperties: null, body);
+        }
+
+        /// <summary> The HeaderStringSanitizerBody. </summary>
+        /// <param name="key"></param>
+        /// <param name="target"></param>
+        /// <param name="value"></param>
+        /// <param name="condition"></param>
+        /// <returns> A new <see cref="TestProxy.Admin.HeaderStringSanitizerBody"/> instance for mocking. </returns>
+        public static HeaderStringSanitizerBody HeaderStringSanitizerBody(string key = default, string target = default, string value = default, ApplyCondition condition = default)
+        {
+            return new HeaderStringSanitizerBody(key, target, value, condition, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The OAuthResponseSanitizer. </summary>
+        /// <returns> A new <see cref="TestProxy.Admin.OAuthResponseSanitizer"/> instance for mocking. </returns>
+        public static OAuthResponseSanitizer OAuthResponseSanitizer()
+        {
+            return new OAuthResponseSanitizer(SanitizerType.OAuthResponseSanitizer, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The RegexEntrySanitizer. </summary>
+        /// <param name="body"></param>
+        /// <returns> A new <see cref="TestProxy.Admin.RegexEntrySanitizer"/> instance for mocking. </returns>
+        public static RegexEntrySanitizer RegexEntrySanitizer(RegexEntrySanitizerBody body = default)
+        {
+            return new RegexEntrySanitizer(SanitizerType.RegexEntrySanitizer, additionalBinaryDataProperties: null, body);
+        }
+
+        /// <summary> The RegexEntrySanitizerBody. </summary>
+        /// <param name="target"></param>
+        /// <param name="regex"></param>
+        /// <returns> A new <see cref="TestProxy.Admin.RegexEntrySanitizerBody"/> instance for mocking. </returns>
+        public static RegexEntrySanitizerBody RegexEntrySanitizerBody(RegexEntryValues target = default, string regex = default)
+        {
+            return new RegexEntrySanitizerBody(target, regex, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The RemoveHeaderSanitizer. </summary>
+        /// <param name="body"></param>
+        /// <returns> A new <see cref="TestProxy.Admin.RemoveHeaderSanitizer"/> instance for mocking. </returns>
+        public static RemoveHeaderSanitizer RemoveHeaderSanitizer(RemoveHeaderSanitizerBody body = default)
+        {
+            return new RemoveHeaderSanitizer(SanitizerType.RemoveHeaderSanitizer, additionalBinaryDataProperties: null, body);
+        }
+
+        /// <summary> The RemoveHeaderSanitizerBody. </summary>
+        /// <param name="headersForRemoval"></param>
+        /// <returns> A new <see cref="TestProxy.Admin.RemoveHeaderSanitizerBody"/> instance for mocking. </returns>
+        public static RemoveHeaderSanitizerBody RemoveHeaderSanitizerBody(string headersForRemoval = default)
+        {
+            return new RemoveHeaderSanitizerBody(headersForRemoval, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The UriRegexSanitizer. </summary>
+        /// <param name="body"></param>
+        /// <returns> A new <see cref="TestProxy.Admin.UriRegexSanitizer"/> instance for mocking. </returns>
+        public static UriRegexSanitizer UriRegexSanitizer(UriRegexSanitizerBody body = default)
+        {
+            return new UriRegexSanitizer(SanitizerType.UriRegexSanitizer, additionalBinaryDataProperties: null, body);
+        }
+
+        /// <summary> The UriRegexSanitizerBody. </summary>
+        /// <param name="value"></param>
+        /// <param name="regex"></param>
+        /// <param name="groupForReplace"></param>
+        /// <param name="condition"></param>
+        /// <returns> A new <see cref="TestProxy.Admin.UriRegexSanitizerBody"/> instance for mocking. </returns>
+        public static UriRegexSanitizerBody UriRegexSanitizerBody(string value = default, string regex = default, string groupForReplace = default, ApplyCondition condition = default)
+        {
+            return new UriRegexSanitizerBody(value, regex, groupForReplace, condition, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The UriStringSanitizer. </summary>
+        /// <param name="body"></param>
+        /// <returns> A new <see cref="TestProxy.Admin.UriStringSanitizer"/> instance for mocking. </returns>
+        public static UriStringSanitizer UriStringSanitizer(UriStringSanitizerBody body = default)
+        {
+            return new UriStringSanitizer(SanitizerType.UriStringSanitizer, additionalBinaryDataProperties: null, body);
+        }
+
+        /// <summary> The UriStringSanitizerBody. </summary>
+        /// <param name="target"></param>
+        /// <param name="value"></param>
+        /// <param name="condition"></param>
+        /// <returns> A new <see cref="TestProxy.Admin.UriStringSanitizerBody"/> instance for mocking. </returns>
+        public static UriStringSanitizerBody UriStringSanitizerBody(string target = default, string value = default, ApplyCondition condition = default)
+        {
+            return new UriStringSanitizerBody(target, value, condition, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The UriSubscriptionIdSanitizer. </summary>
+        /// <param name="body"></param>
+        /// <returns> A new <see cref="TestProxy.Admin.UriSubscriptionIdSanitizer"/> instance for mocking. </returns>
+        public static UriSubscriptionIdSanitizer UriSubscriptionIdSanitizer(UriSubscriptionIdSanitizerBody body = default)
+        {
+            return new UriSubscriptionIdSanitizer(SanitizerType.UriSubscriptionIdSanitizer, additionalBinaryDataProperties: null, body);
+        }
+
+        /// <summary> The UriSubscriptionIdSanitizerBody. </summary>
+        /// <param name="value"></param>
+        /// <param name="condition"></param>
+        /// <returns> A new <see cref="TestProxy.Admin.UriSubscriptionIdSanitizerBody"/> instance for mocking. </returns>
+        public static UriSubscriptionIdSanitizerBody UriSubscriptionIdSanitizerBody(string value = default, ApplyCondition condition = default)
+        {
+            return new UriSubscriptionIdSanitizerBody(value, condition, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The SanitizerList. </summary>
+        /// <param name="sanitizers"></param>
+        /// <returns> A new <see cref="TestProxy.Admin.SanitizerList"/> instance for mocking. </returns>
+        public static SanitizerList SanitizerList(IEnumerable<string> sanitizers = default)
+        {
+            sanitizers ??= new ChangeTrackingList<string>();
+
+            return new SanitizerList(sanitizers?.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The RemovedSanitizers. </summary>
+        /// <param name="removed"></param>
+        /// <returns> A new <see cref="TestProxy.Admin.RemovedSanitizers"/> instance for mocking. </returns>
+        public static RemovedSanitizers RemovedSanitizers(IEnumerable<string> removed = default)
+        {
+            removed ??= new ChangeTrackingList<string>();
+
+            return new RemovedSanitizers(removed?.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The RecordingOptions. </summary>
+        /// <param name="handleRedirects"></param>
+        /// <param name="contextDirectory"></param>
+        /// <param name="assetsStore"></param>
+        /// <param name="transport"></param>
+        /// <returns> A new <see cref="TestProxy.Admin.RecordingOptions"/> instance for mocking. </returns>
+        public static RecordingOptions RecordingOptions(bool? handleRedirects = default, string contextDirectory = default, StoreType? assetsStore = default, TransportCustomizations transport = default)
+        {
+            return new RecordingOptions(handleRedirects, contextDirectory, assetsStore, transport, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The TransportCustomizations. </summary>
+        /// <param name="allowAutoRedirect"></param>
+        /// <param name="tlsValidationCert"></param>
+        /// <param name="tlsValidationCertHost"></param>
+        /// <param name="certificates"></param>
+        /// <param name="playbackResponseTime"></param>
+        /// <returns> A new <see cref="TestProxy.Admin.TransportCustomizations"/> instance for mocking. </returns>
+        public static TransportCustomizations TransportCustomizations(bool? allowAutoRedirect = default, string tlsValidationCert = default, string tlsValidationCertHost = default, IEnumerable<TestProxyCertificate> certificates = default, int? playbackResponseTime = default)
+        {
+            certificates ??= new ChangeTrackingList<TestProxyCertificate>();
+
+            return new TransportCustomizations(
+                allowAutoRedirect,
+                tlsValidationCert,
+                tlsValidationCertHost,
+                certificates?.ToList(),
+                playbackResponseTime,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The TestProxyCertificate. </summary>
+        /// <param name="pemValue"></param>
+        /// <param name="pemKey"></param>
+        /// <returns> A new <see cref="TestProxy.Admin.TestProxyCertificate"/> instance for mocking. </returns>
+        public static TestProxyCertificate TestProxyCertificate(string pemValue = default, string pemKey = default)
+        {
+            return new TestProxyCertificate(pemValue, pemKey, additionalBinaryDataProperties: null);
         }
     }
 }

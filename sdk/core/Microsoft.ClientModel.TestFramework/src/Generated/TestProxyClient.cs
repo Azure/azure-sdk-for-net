@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.ClientModel.TestFramework;
+using Microsoft.ClientModel.TestFramework.TestProxy.Admin;
 
 namespace Microsoft.ClientModel.TestFramework.TestProxy
 {
@@ -19,161 +20,29 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
     public partial class TestProxyClient
     {
         private readonly Uri _endpoint;
+        private TestProxyAdminClient _cachedTestProxyAdminClient;
 
-        /// <summary> Initializes a new instance of TestProxyClient for mocking. </summary>
-        protected TestProxyClient()
+        /// <summary> Initializes a new instance of TestProxyClient. </summary>
+        public TestProxyClient() : this(new Uri("https://localhost:5001/"), new TestProxyClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of TestProxyClient. </summary>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        internal TestProxyClient(ClientPipeline pipeline, Uri endpoint)
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public TestProxyClient(Uri endpoint, TestProxyClientOptions options)
         {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            options ??= new TestProxyClientOptions();
+
             _endpoint = endpoint;
-            Pipeline = pipeline;
+            Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), Array.Empty<PipelinePolicy>(), Array.Empty<PipelinePolicy>());
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
-
-        /// <summary>
-        /// [Protocol Method] Start playback for a test.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult StartPlayback(BinaryContent content, RequestOptions options = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using PipelineMessage message = CreateStartPlaybackRequest(content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-        }
-
-        /// <summary>
-        /// [Protocol Method] Start playback for a test.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> StartPlaybackAsync(BinaryContent content, RequestOptions options = null)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using PipelineMessage message = CreateStartPlaybackRequest(content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-        }
-
-        /// <summary> Start playback for a test. </summary>
-        /// <param name="body"> File location of the recording. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<IReadOnlyDictionary<string, string>> StartPlayback(TestProxyStartInformation body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            ClientResult result = StartPlayback(body, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
-            return ClientResult.FromValue(result.GetRawResponse().Content.ToObjectFromJson<IReadOnlyDictionary<string, string>>(), result.GetRawResponse());
-        }
-
-        /// <summary> Start playback for a test. </summary>
-        /// <param name="body"> File location of the recording. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<IReadOnlyDictionary<string, string>>> StartPlaybackAsync(TestProxyStartInformation body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(body, nameof(body));
-
-            ClientResult result = await StartPlaybackAsync(body, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return ClientResult.FromValue(result.GetRawResponse().Content.ToObjectFromJson<IReadOnlyDictionary<string, string>>(), result.GetRawResponse());
-        }
-
-        /// <summary>
-        /// [Protocol Method] Stop playback for a test.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="recordingId"> The recording ID to stop playback for. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="recordingId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult StopPlayback(string recordingId, RequestOptions options)
-        {
-            Argument.AssertNotNullOrEmpty(recordingId, nameof(recordingId));
-
-            using PipelineMessage message = CreateStopPlaybackRequest(recordingId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-        }
-
-        /// <summary>
-        /// [Protocol Method] Stop playback for a test.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="recordingId"> The recording ID to stop playback for. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="recordingId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> StopPlaybackAsync(string recordingId, RequestOptions options)
-        {
-            Argument.AssertNotNullOrEmpty(recordingId, nameof(recordingId));
-
-            using PipelineMessage message = CreateStopPlaybackRequest(recordingId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-        }
-
-        /// <summary> Stop playback for a test. </summary>
-        /// <param name="recordingId"> The recording ID to stop playback for. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="recordingId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult StopPlayback(string recordingId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(recordingId, nameof(recordingId));
-
-            return StopPlayback(recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
-        }
-
-        /// <summary> Stop playback for a test. </summary>
-        /// <param name="recordingId"> The recording ID to stop playback for. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="recordingId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult> StopPlaybackAsync(string recordingId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(recordingId, nameof(recordingId));
-
-            return await StopPlaybackAsync(recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        }
 
         /// <summary>
         /// [Protocol Method] Start recording for a test.
@@ -242,7 +111,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         }
 
         /// <summary>
-        /// [Protocol Method] Stop recording a test.
+        /// [Protocol Method] Stop recording for a test.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -251,7 +120,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// </summary>
         /// <param name="recordingId"> The recording ID. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="recordingSkip"> Set to request-response to skip recording this session. </param>
+        /// <param name="recordingSkip"> Optional header that can be set to request-response to skip recording this session. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="recordingId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -267,7 +136,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         }
 
         /// <summary>
-        /// [Protocol Method] Stop recording a test.
+        /// [Protocol Method] Stop recording for a test.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -276,7 +145,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// </summary>
         /// <param name="recordingId"> The recording ID. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="recordingSkip"> Set to request-response to skip recording this session. </param>
+        /// <param name="recordingSkip"> Optional header that can be set to request-response to skip recording this session. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="recordingId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -291,10 +160,10 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Stop recording a test. </summary>
+        /// <summary> Stop recording for a test. </summary>
         /// <param name="recordingId"> The recording ID. </param>
-        /// <param name="variables"> Variables for the recording. </param>
-        /// <param name="recordingSkip"> Set to request-response to skip recording this session. </param>
+        /// <param name="variables"> A set of variables for the recording session. </param>
+        /// <param name="recordingSkip"> Optional header that can be set to request-response to skip recording this session. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> or <paramref name="variables"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="recordingId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -308,10 +177,10 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             return StopRecord(recordingId, content, recordingSkip, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
-        /// <summary> Stop recording a test. </summary>
+        /// <summary> Stop recording for a test. </summary>
         /// <param name="recordingId"> The recording ID. </param>
-        /// <param name="variables"> Variables for the recording. </param>
-        /// <param name="recordingSkip"> Set to request-response to skip recording this session. </param>
+        /// <param name="variables"> A set of variables for the recording session. </param>
+        /// <param name="recordingSkip"> Optional header that can be set to request-response to skip recording this session. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> or <paramref name="variables"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="recordingId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -326,7 +195,79 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         }
 
         /// <summary>
-        /// [Protocol Method] Set the proxy recording options.
+        /// [Protocol Method] Start playback for a test recording.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="recordingId"> The recording ID. If provided, the server will duplicate an existing playback session and return the new session's recordingId. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual ClientResult StartPlayback(BinaryContent content, string recordingId = default, RequestOptions options = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using PipelineMessage message = CreateStartPlaybackRequest(content, recordingId, options);
+            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+        }
+
+        /// <summary>
+        /// [Protocol Method] Start playback for a test recording.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="recordingId"> The recording ID. If provided, the server will duplicate an existing playback session and return the new session's recordingId. </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<ClientResult> StartPlaybackAsync(BinaryContent content, string recordingId = default, RequestOptions options = null)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using PipelineMessage message = CreateStartPlaybackRequest(content, recordingId, options);
+            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+        }
+
+        /// <summary> Start playback for a test recording. </summary>
+        /// <param name="body"> File location of the recording. </param>
+        /// <param name="recordingId"> The recording ID. If provided, the server will duplicate an existing playback session and return the new session's recordingId. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual ClientResult<IReadOnlyDictionary<string, string>> StartPlayback(TestProxyStartInformation body, string recordingId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            ClientResult result = StartPlayback(body, recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return ClientResult.FromValue(result.GetRawResponse().Content.ToObjectFromJson<IReadOnlyDictionary<string, string>>(), result.GetRawResponse());
+        }
+
+        /// <summary> Start playback for a test recording. </summary>
+        /// <param name="body"> File location of the recording. </param>
+        /// <param name="recordingId"> The recording ID. If provided, the server will duplicate an existing playback session and return the new session's recordingId. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        public virtual async Task<ClientResult<IReadOnlyDictionary<string, string>>> StartPlaybackAsync(TestProxyStartInformation body, string recordingId = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            ClientResult result = await StartPlaybackAsync(body, recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return ClientResult.FromValue(result.GetRawResponse().Content.ToObjectFromJson<IReadOnlyDictionary<string, string>>(), result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// [Protocol Method] Stop playback for a test recording.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -334,23 +275,21 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// </list>
         /// </summary>
         /// <param name="recordingId"> The recording ID. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="recordingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult SetRecordingTransportOptions(string recordingId, BinaryContent content, RequestOptions options = null)
+        public virtual ClientResult StopPlayback(string recordingId, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(recordingId, nameof(recordingId));
-            Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateSetRecordingTransportOptionsRequest(recordingId, content, options);
+            using PipelineMessage message = CreateStopPlaybackRequest(recordingId, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
         /// <summary>
-        /// [Protocol Method] Set the proxy recording options.
+        /// [Protocol Method] Stop playback for a test recording.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -358,643 +297,49 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         /// </list>
         /// </summary>
         /// <param name="recordingId"> The recording ID. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="recordingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> SetRecordingTransportOptionsAsync(string recordingId, BinaryContent content, RequestOptions options = null)
+        public virtual async Task<ClientResult> StopPlaybackAsync(string recordingId, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(recordingId, nameof(recordingId));
-            Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateSetRecordingTransportOptionsRequest(recordingId, content, options);
+            using PipelineMessage message = CreateStopPlaybackRequest(recordingId, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
-        /// <summary> Set the proxy recording options. </summary>
+        /// <summary> Stop playback for a test recording. </summary>
         /// <param name="recordingId"> The recording ID. </param>
-        /// <param name="proxyOptions"> File location of the recording. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> or <paramref name="proxyOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="recordingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult SetRecordingTransportOptions(string recordingId, ProxyOptions proxyOptions, CancellationToken cancellationToken = default)
+        public virtual ClientResult StopPlayback(string recordingId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recordingId, nameof(recordingId));
-            Argument.AssertNotNull(proxyOptions, nameof(proxyOptions));
 
-            return SetRecordingTransportOptions(recordingId, proxyOptions, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return StopPlayback(recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
-        /// <summary> Set the proxy recording options. </summary>
+        /// <summary> Stop playback for a test recording. </summary>
         /// <param name="recordingId"> The recording ID. </param>
-        /// <param name="proxyOptions"> File location of the recording. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> or <paramref name="proxyOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="recordingId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult> SetRecordingTransportOptionsAsync(string recordingId, ProxyOptions proxyOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult> StopPlaybackAsync(string recordingId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recordingId, nameof(recordingId));
-            Argument.AssertNotNull(proxyOptions, nameof(proxyOptions));
 
-            return await SetRecordingTransportOptionsAsync(recordingId, proxyOptions, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await StopPlaybackAsync(recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// [Protocol Method] Removes Sanitizers
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="recordingId"> The recording ID to apply the transform to. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="recordingId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult RemoveSanitizers(string recordingId, BinaryContent content, RequestOptions options = null)
+        /// <summary> Initializes a new instance of TestProxyAdminClient. </summary>
+        public virtual TestProxyAdminClient GetTestProxyAdminClient()
         {
-            Argument.AssertNotNullOrEmpty(recordingId, nameof(recordingId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using PipelineMessage message = CreateRemoveSanitizersRequest(recordingId, content, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-        }
-
-        /// <summary>
-        /// [Protocol Method] Removes Sanitizers
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="recordingId"> The recording ID to apply the transform to. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="recordingId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> RemoveSanitizersAsync(string recordingId, BinaryContent content, RequestOptions options = null)
-        {
-            Argument.AssertNotNullOrEmpty(recordingId, nameof(recordingId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using PipelineMessage message = CreateRemoveSanitizersRequest(recordingId, content, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-        }
-
-        /// <summary> Removes Sanitizers. </summary>
-        /// <param name="recordingId"> The recording ID to apply the transform to. </param>
-        /// <param name="sanitizers"> Sanitizers to remove. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> or <paramref name="sanitizers"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="recordingId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult RemoveSanitizers(string recordingId, SanitizersToRemove sanitizers, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(recordingId, nameof(recordingId));
-            Argument.AssertNotNull(sanitizers, nameof(sanitizers));
-
-            return RemoveSanitizers(recordingId, sanitizers, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
-        }
-
-        /// <summary> Removes Sanitizers. </summary>
-        /// <param name="recordingId"> The recording ID to apply the transform to. </param>
-        /// <param name="sanitizers"> Sanitizers to remove. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> or <paramref name="sanitizers"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="recordingId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult> RemoveSanitizersAsync(string recordingId, SanitizersToRemove sanitizers, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(recordingId, nameof(recordingId));
-            Argument.AssertNotNull(sanitizers, nameof(sanitizers));
-
-            return await RemoveSanitizersAsync(recordingId, sanitizers, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Add a sanitizer.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="sanitizerType"> The type of sanitizer. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="recordingId"> The recording ID to apply the sanitizer to. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult AddSanitizer(string sanitizerType, BinaryContent content, string recordingId = default, RequestOptions options = null)
-        {
-            using PipelineMessage message = CreateAddSanitizerRequest(sanitizerType, content, recordingId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-        }
-
-        /// <summary>
-        /// [Protocol Method] Add a sanitizer.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="sanitizerType"> The type of sanitizer. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="recordingId"> The recording ID to apply the sanitizer to. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> AddSanitizerAsync(string sanitizerType, BinaryContent content, string recordingId = default, RequestOptions options = null)
-        {
-            using PipelineMessage message = CreateAddSanitizerRequest(sanitizerType, content, recordingId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-        }
-
-        /// <summary> Add a sanitizer. </summary>
-        /// <param name="sanitizerType"> The type of sanitizer. </param>
-        /// <param name="sanitizer"></param>
-        /// <param name="recordingId"> The recording ID to apply the sanitizer to. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult AddSanitizer(SanitizerType sanitizerType, BinaryData sanitizer, string recordingId = default, CancellationToken cancellationToken = default)
-        {
-            return AddSanitizer(sanitizerType.ToSerialString(), BinaryContent.Create(sanitizer), recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
-        }
-
-        /// <summary> Add a sanitizer. </summary>
-        /// <param name="sanitizerType"> The type of sanitizer. </param>
-        /// <param name="sanitizer"></param>
-        /// <param name="recordingId"> The recording ID to apply the sanitizer to. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult> AddSanitizerAsync(SanitizerType sanitizerType, BinaryData sanitizer, string recordingId = default, CancellationToken cancellationToken = default)
-        {
-            return await AddSanitizerAsync(sanitizerType.ToSerialString(), BinaryContent.Create(sanitizer), recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Stop recording for a test.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="sanitizerType"></param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="recordingId"> The recording ID to apply the sanitizer to. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult AddBodyKeySanitizer(string sanitizerType, BinaryContent content, string recordingId = default, RequestOptions options = null)
-        {
-            using PipelineMessage message = CreateAddBodyKeySanitizerRequest(sanitizerType, content, recordingId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-        }
-
-        /// <summary>
-        /// [Protocol Method] Stop recording for a test.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="sanitizerType"></param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="recordingId"> The recording ID to apply the sanitizer to. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> AddBodyKeySanitizerAsync(string sanitizerType, BinaryContent content, string recordingId = default, RequestOptions options = null)
-        {
-            using PipelineMessage message = CreateAddBodyKeySanitizerRequest(sanitizerType, content, recordingId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-        }
-
-        /// <summary> Stop recording for a test. </summary>
-        /// <param name="sanitizerType"></param>
-        /// <param name="sanitizer"> The body for a header regex sanitizer. </param>
-        /// <param name="recordingId"> The recording ID to apply the sanitizer to. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult AddBodyKeySanitizer(SanitizerType sanitizerType, BodyKeySanitizer sanitizer, string recordingId = default, CancellationToken cancellationToken = default)
-        {
-            return AddBodyKeySanitizer(sanitizerType.ToSerialString(), sanitizer, recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
-        }
-
-        /// <summary> Stop recording for a test. </summary>
-        /// <param name="sanitizerType"></param>
-        /// <param name="sanitizer"> The body for a header regex sanitizer. </param>
-        /// <param name="recordingId"> The recording ID to apply the sanitizer to. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult> AddBodyKeySanitizerAsync(SanitizerType sanitizerType, BodyKeySanitizer sanitizer, string recordingId = default, CancellationToken cancellationToken = default)
-        {
-            return await AddBodyKeySanitizerAsync(sanitizerType.ToSerialString(), sanitizer, recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Add header sanitizer.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="sanitizerType"></param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="recordingId"> The recording ID to apply the sanitizer to. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult AddHeaderSanitizer(string sanitizerType, BinaryContent content, string recordingId = default, RequestOptions options = null)
-        {
-            using PipelineMessage message = CreateAddHeaderSanitizerRequest(sanitizerType, content, recordingId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-        }
-
-        /// <summary>
-        /// [Protocol Method] Add header sanitizer.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="sanitizerType"></param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="recordingId"> The recording ID to apply the sanitizer to. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> AddHeaderSanitizerAsync(string sanitizerType, BinaryContent content, string recordingId = default, RequestOptions options = null)
-        {
-            using PipelineMessage message = CreateAddHeaderSanitizerRequest(sanitizerType, content, recordingId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-        }
-
-        /// <summary> Add header sanitizer. </summary>
-        /// <param name="sanitizerType"></param>
-        /// <param name="sanitizer"> The body for a header regex sanitizer. </param>
-        /// <param name="recordingId"> The recording ID to apply the sanitizer to. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult AddHeaderSanitizer(SanitizerType sanitizerType, HeaderRegexSanitizer sanitizer, string recordingId = default, CancellationToken cancellationToken = default)
-        {
-            return AddHeaderSanitizer(sanitizerType.ToSerialString(), sanitizer, recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
-        }
-
-        /// <summary> Add header sanitizer. </summary>
-        /// <param name="sanitizerType"></param>
-        /// <param name="sanitizer"> The body for a header regex sanitizer. </param>
-        /// <param name="recordingId"> The recording ID to apply the sanitizer to. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult> AddHeaderSanitizerAsync(SanitizerType sanitizerType, HeaderRegexSanitizer sanitizer, string recordingId = default, CancellationToken cancellationToken = default)
-        {
-            return await AddHeaderSanitizerAsync(sanitizerType.ToSerialString(), sanitizer, recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// [Protocol Method] AddUriSanitizer
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="sanitizerType"></param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="recordingId"> The recording ID to apply the sanitizer to. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult AddUriSanitizer(string sanitizerType, BinaryContent content, string recordingId = default, RequestOptions options = null)
-        {
-            using PipelineMessage message = CreateAddUriSanitizerRequest(sanitizerType, content, recordingId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-        }
-
-        /// <summary>
-        /// [Protocol Method] AddUriSanitizer
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="sanitizerType"></param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="recordingId"> The recording ID to apply the sanitizer to. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> AddUriSanitizerAsync(string sanitizerType, BinaryContent content, string recordingId = default, RequestOptions options = null)
-        {
-            using PipelineMessage message = CreateAddUriSanitizerRequest(sanitizerType, content, recordingId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-        }
-
-        /// <summary> AddUriSanitizer. </summary>
-        /// <param name="sanitizerType"></param>
-        /// <param name="sanitizer"> The URI regex sanitizer configuration. </param>
-        /// <param name="recordingId"> The recording ID to apply the sanitizer to. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult AddUriSanitizer(SanitizerType sanitizerType, UriRegexSanitizer sanitizer, string recordingId = default, CancellationToken cancellationToken = default)
-        {
-            return AddUriSanitizer(sanitizerType.ToSerialString(), sanitizer, recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
-        }
-
-        /// <summary> AddUriSanitizer. </summary>
-        /// <param name="sanitizerType"></param>
-        /// <param name="sanitizer"> The URI regex sanitizer configuration. </param>
-        /// <param name="recordingId"> The recording ID to apply the sanitizer to. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult> AddUriSanitizerAsync(SanitizerType sanitizerType, UriRegexSanitizer sanitizer, string recordingId = default, CancellationToken cancellationToken = default)
-        {
-            return await AddUriSanitizerAsync(sanitizerType.ToSerialString(), sanitizer, recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Add a sanitizer.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="sanitizerType"></param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="recordingId"> The recording ID to apply the sanitizer to. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult AddBodyRegexSanitizer(string sanitizerType, BinaryContent content, string recordingId = default, RequestOptions options = null)
-        {
-            using PipelineMessage message = CreateAddBodyRegexSanitizerRequest(sanitizerType, content, recordingId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-        }
-
-        /// <summary>
-        /// [Protocol Method] Add a sanitizer.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="sanitizerType"></param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="recordingId"> The recording ID to apply the sanitizer to. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> AddBodyRegexSanitizerAsync(string sanitizerType, BinaryContent content, string recordingId = default, RequestOptions options = null)
-        {
-            using PipelineMessage message = CreateAddBodyRegexSanitizerRequest(sanitizerType, content, recordingId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-        }
-
-        /// <summary> Add a sanitizer. </summary>
-        /// <param name="sanitizerType"></param>
-        /// <param name="sanitizer"> The body for a body regex sanitizer. </param>
-        /// <param name="recordingId"> The recording ID to apply the sanitizer to. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult AddBodyRegexSanitizer(SanitizerType sanitizerType, BodyRegexSanitizer sanitizer, string recordingId = default, CancellationToken cancellationToken = default)
-        {
-            return AddBodyRegexSanitizer(sanitizerType.ToSerialString(), sanitizer, recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
-        }
-
-        /// <summary> Add a sanitizer. </summary>
-        /// <param name="sanitizerType"></param>
-        /// <param name="sanitizer"> The body for a body regex sanitizer. </param>
-        /// <param name="recordingId"> The recording ID to apply the sanitizer to. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult> AddBodyRegexSanitizerAsync(SanitizerType sanitizerType, BodyRegexSanitizer sanitizer, string recordingId = default, CancellationToken cancellationToken = default)
-        {
-            return await AddBodyRegexSanitizerAsync(sanitizerType.ToSerialString(), sanitizer, recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Add a matcher.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="matcherType"> The type of matcher to add. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="recordingId"> The recording ID to apply the matcher to. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult SetMatcher(string matcherType, BinaryContent content = null, string recordingId = default, RequestOptions options = null)
-        {
-            using PipelineMessage message = CreateSetMatcherRequest(matcherType, content, recordingId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-        }
-
-        /// <summary>
-        /// [Protocol Method] Add a matcher.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="matcherType"> The type of matcher to add. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="recordingId"> The recording ID to apply the matcher to. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> SetMatcherAsync(string matcherType, BinaryContent content = null, string recordingId = default, RequestOptions options = null)
-        {
-            using PipelineMessage message = CreateSetMatcherRequest(matcherType, content, recordingId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-        }
-
-        /// <summary> Add a matcher. </summary>
-        /// <param name="matcherType"> The type of matcher to add. </param>
-        /// <param name="matcher"> The matcher configuration (only required for CustomDefaultMatcher). </param>
-        /// <param name="recordingId"> The recording ID to apply the matcher to. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult SetMatcher(MatcherType matcherType, CustomDefaultMatcher matcher = default, string recordingId = default, CancellationToken cancellationToken = default)
-        {
-            return SetMatcher(matcherType.ToSerialString(), matcher, recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
-        }
-
-        /// <summary> Add a matcher. </summary>
-        /// <param name="matcherType"> The type of matcher to add. </param>
-        /// <param name="matcher"> The matcher configuration (only required for CustomDefaultMatcher). </param>
-        /// <param name="recordingId"> The recording ID to apply the matcher to. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult> SetMatcherAsync(MatcherType matcherType, CustomDefaultMatcher matcher = default, string recordingId = default, CancellationToken cancellationToken = default)
-        {
-            return await SetMatcherAsync(matcherType.ToSerialString(), matcher, recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Add a transform.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="transformType"> The type of transform. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="recordingId"> The recording ID to apply the transform to. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="transformType"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="transformType"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult AddTransform(string transformType, BinaryContent content, string recordingId = default, RequestOptions options = null)
-        {
-            Argument.AssertNotNullOrEmpty(transformType, nameof(transformType));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using PipelineMessage message = CreateAddTransformRequest(transformType, content, recordingId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-        }
-
-        /// <summary>
-        /// [Protocol Method] Add a transform.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="transformType"> The type of transform. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="recordingId"> The recording ID to apply the transform to. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="transformType"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="transformType"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> AddTransformAsync(string transformType, BinaryContent content, string recordingId = default, RequestOptions options = null)
-        {
-            Argument.AssertNotNullOrEmpty(transformType, nameof(transformType));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using PipelineMessage message = CreateAddTransformRequest(transformType, content, recordingId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-        }
-
-        /// <summary> Add a transform. </summary>
-        /// <param name="transformType"> The type of transform. </param>
-        /// <param name="transform"></param>
-        /// <param name="recordingId"> The recording ID to apply the transform to. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="transformType"/> or <paramref name="transform"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="transformType"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult AddTransform(string transformType, BinaryData transform, string recordingId = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(transformType, nameof(transformType));
-            Argument.AssertNotNull(transform, nameof(transform));
-
-            return AddTransform(transformType, BinaryContent.Create(transform), recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
-        }
-
-        /// <summary> Add a transform. </summary>
-        /// <param name="transformType"> The type of transform. </param>
-        /// <param name="transform"></param>
-        /// <param name="recordingId"> The recording ID to apply the transform to. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="transformType"/> or <paramref name="transform"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="transformType"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult> AddTransformAsync(string transformType, BinaryData transform, string recordingId = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(transformType, nameof(transformType));
-            Argument.AssertNotNull(transform, nameof(transform));
-
-            return await AddTransformAsync(transformType, BinaryContent.Create(transform), recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Add a header transform.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="transformType"> The type of transform. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="recordingId"> The recording ID to apply the transform to. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult AddHeaderTransform(string transformType, BinaryContent content, string recordingId = default, RequestOptions options = null)
-        {
-            using PipelineMessage message = CreateAddHeaderTransformRequest(transformType, content, recordingId, options);
-            return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-        }
-
-        /// <summary>
-        /// [Protocol Method] Add a header transform.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="transformType"> The type of transform. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="recordingId"> The recording ID to apply the transform to. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> AddHeaderTransformAsync(string transformType, BinaryContent content, string recordingId = default, RequestOptions options = null)
-        {
-            using PipelineMessage message = CreateAddHeaderTransformRequest(transformType, content, recordingId, options);
-            return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-        }
-
-        /// <summary> Add a header transform. </summary>
-        /// <param name="transformType"> The type of transform. </param>
-        /// <param name="transform"> The body for a header transform. </param>
-        /// <param name="recordingId"> The recording ID to apply the transform to. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult AddHeaderTransform(string transformType, HeaderTransform transform, string recordingId = default, CancellationToken cancellationToken = default)
-        {
-            return AddHeaderTransform(transformType, transform, recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
-        }
-
-        /// <summary> Add a header transform. </summary>
-        /// <param name="transformType"> The type of transform. </param>
-        /// <param name="transform"> The body for a header transform. </param>
-        /// <param name="recordingId"> The recording ID to apply the transform to. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult> AddHeaderTransformAsync(string transformType, HeaderTransform transform, string recordingId = default, CancellationToken cancellationToken = default)
-        {
-            return await AddHeaderTransformAsync(transformType, transform, recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return Volatile.Read(ref _cachedTestProxyAdminClient) ?? Interlocked.CompareExchange(ref _cachedTestProxyAdminClient, new TestProxyAdminClient(Pipeline, _endpoint), null) ?? _cachedTestProxyAdminClient;
         }
     }
 }

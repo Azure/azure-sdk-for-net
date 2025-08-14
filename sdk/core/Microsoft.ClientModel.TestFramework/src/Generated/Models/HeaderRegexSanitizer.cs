@@ -9,49 +9,31 @@ using System;
 using System.Collections.Generic;
 using Microsoft.ClientModel.TestFramework;
 
-namespace Microsoft.ClientModel.TestFramework.TestProxy
+namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
 {
     /// <summary> The HeaderRegexSanitizer. </summary>
-    public partial class HeaderRegexSanitizer
+    public partial class HeaderRegexSanitizer : SanitizerAddition
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="HeaderRegexSanitizer"/>. </summary>
-        /// <param name="key"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public HeaderRegexSanitizer(string key)
+        /// <param name="body"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public HeaderRegexSanitizer(HeaderRegexSanitizerBody body) : base(SanitizerType.HeaderRegexSanitizer)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(body, nameof(body));
 
-            Key = key;
+            Body = body;
         }
 
         /// <summary> Initializes a new instance of <see cref="HeaderRegexSanitizer"/>. </summary>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
-        /// <param name="regex"></param>
-        /// <param name="groupForReplace"></param>
+        /// <param name="name"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HeaderRegexSanitizer(string key, string value, string regex, string groupForReplace, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="body"></param>
+        internal HeaderRegexSanitizer(SanitizerType name, IDictionary<string, BinaryData> additionalBinaryDataProperties, HeaderRegexSanitizerBody body) : base(name, additionalBinaryDataProperties)
         {
-            Key = key;
-            Value = value;
-            Regex = regex;
-            GroupForReplace = groupForReplace;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Body = body;
         }
 
-        /// <summary> Gets the Key. </summary>
-        public string Key { get; }
-
-        /// <summary> Gets or sets the Value. </summary>
-        public string Value { get; set; }
-
-        /// <summary> Gets or sets the Regex. </summary>
-        public string Regex { get; set; }
-
-        /// <summary> Gets or sets the GroupForReplace. </summary>
-        public string GroupForReplace { get; set; }
+        /// <summary> Gets the Body. </summary>
+        public HeaderRegexSanitizerBody Body { get; }
     }
 }

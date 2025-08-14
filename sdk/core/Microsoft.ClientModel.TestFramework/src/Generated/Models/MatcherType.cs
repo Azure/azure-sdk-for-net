@@ -5,14 +5,16 @@
 
 #nullable disable
 
-namespace Microsoft.ClientModel.TestFramework.TestProxy
+namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
 {
     /// <summary></summary>
-    internal enum MatcherType
+    public enum MatcherType
     {
         /// <summary> BodilessMatcher. </summary>
         BodilessMatcher,
         /// <summary> CustomDefaultMatcher. </summary>
-        CustomDefaultMatcher
+        CustomDefaultMatcher,
+        /// <summary> HeaderlessMatcher. </summary>
+        HeaderlessMatcher
     }
 }

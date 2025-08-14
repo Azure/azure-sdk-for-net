@@ -6,13 +6,12 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Microsoft.ClientModel.TestFramework;
 
-namespace Microsoft.ClientModel.TestFramework.TestProxy
+namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
 {
     /// <summary> The BodyRegexSanitizer. </summary>
     public partial class BodyRegexSanitizer : IJsonModel<BodyRegexSanitizer>
@@ -33,54 +32,25 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BodyRegexSanitizer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BodyRegexSanitizer)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("regex"u8);
-            writer.WriteStringValue(Regex);
-            if (Optional.IsDefined(Value))
-            {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStringValue(Value);
-            }
-            if (Optional.IsDefined(GroupForReplace))
-            {
-                writer.WritePropertyName("groupForReplace"u8);
-                writer.WriteStringValue(GroupForReplace);
-            }
-            if (Optional.IsDefined(Condition))
-            {
-                writer.WritePropertyName("condition"u8);
-                writer.WriteObjectValue(Condition, options);
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("Body"u8);
+            writer.WriteObjectValue(Body, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BodyRegexSanitizer IJsonModel<BodyRegexSanitizer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BodyRegexSanitizer IJsonModel<BodyRegexSanitizer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (BodyRegexSanitizer)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BodyRegexSanitizer JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override SanitizerAddition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BodyRegexSanitizer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -99,35 +69,19 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             {
                 return null;
             }
-            string regex = default;
-            string value = default;
-            string groupForReplace = default;
-            SanitizerCondition condition = default;
+            SanitizerType name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            BodyRegexSanitizerBody body = default;
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("regex"u8))
+                if (prop.NameEquals("Name"u8))
                 {
-                    regex = prop.Value.GetString();
+                    name = prop.Value.GetString().ToSanitizerType();
                     continue;
                 }
-                if (prop.NameEquals("value"u8))
+                if (prop.NameEquals("Body"u8))
                 {
-                    value = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("groupForReplace"u8))
-                {
-                    groupForReplace = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("condition"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    condition = SanitizerCondition.DeserializeSanitizerCondition(prop.Value, options);
+                    body = BodyRegexSanitizerBody.DeserializeBodyRegexSanitizerBody(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -135,14 +89,14 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BodyRegexSanitizer(regex, value, groupForReplace, condition, additionalBinaryDataProperties);
+            return new BodyRegexSanitizer(name, additionalBinaryDataProperties, body);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<BodyRegexSanitizer>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BodyRegexSanitizer>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -156,11 +110,11 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BodyRegexSanitizer IPersistableModel<BodyRegexSanitizer>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BodyRegexSanitizer IPersistableModel<BodyRegexSanitizer>.Create(BinaryData data, ModelReaderWriterOptions options) => (BodyRegexSanitizer)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BodyRegexSanitizer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override SanitizerAddition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BodyRegexSanitizer>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -177,15 +131,5 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BodyRegexSanitizer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="bodyRegexSanitizer"> The <see cref="BodyRegexSanitizer"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(BodyRegexSanitizer bodyRegexSanitizer)
-        {
-            if (bodyRegexSanitizer == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(bodyRegexSanitizer, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

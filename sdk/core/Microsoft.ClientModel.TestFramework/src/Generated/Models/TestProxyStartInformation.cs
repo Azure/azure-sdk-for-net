@@ -29,19 +29,19 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
 
         /// <summary> Initializes a new instance of <see cref="TestProxyStartInformation"/>. </summary>
         /// <param name="xRecordingFile"></param>
-        /// <param name="xRecordingAssetsFiles"></param>
+        /// <param name="xRecordingAssetsFile"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TestProxyStartInformation(string xRecordingFile, string xRecordingAssetsFiles, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TestProxyStartInformation(string xRecordingFile, string xRecordingAssetsFile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             XRecordingFile = xRecordingFile;
-            XRecordingAssetsFiles = xRecordingAssetsFiles;
+            XRecordingAssetsFile = xRecordingAssetsFile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets the XRecordingFile. </summary>
         public string XRecordingFile { get; }
 
-        /// <summary> Gets or sets the XRecordingAssetsFiles. </summary>
-        public string XRecordingAssetsFiles { get; set; }
+        /// <summary> Gets or sets the XRecordingAssetsFile. </summary>
+        public string XRecordingAssetsFile { get; set; }
     }
 }

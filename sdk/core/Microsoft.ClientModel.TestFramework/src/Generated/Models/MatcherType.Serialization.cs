@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Microsoft.ClientModel.TestFramework.TestProxy
+namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
 {
     internal static partial class MatcherTypeExtensions
     {
@@ -16,6 +16,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         {
             MatcherType.BodilessMatcher => "BodilessMatcher",
             MatcherType.CustomDefaultMatcher => "CustomDefaultMatcher",
+            MatcherType.HeaderlessMatcher => "HeaderlessMatcher",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MatcherType value.")
         };
 
@@ -29,6 +30,10 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "CustomDefaultMatcher"))
             {
                 return MatcherType.CustomDefaultMatcher;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "HeaderlessMatcher"))
+            {
+                return MatcherType.HeaderlessMatcher;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MatcherType value.");
         }

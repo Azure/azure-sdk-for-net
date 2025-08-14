@@ -6,13 +6,12 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Microsoft.ClientModel.TestFramework;
 
-namespace Microsoft.ClientModel.TestFramework.TestProxy
+namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
 {
     /// <summary> The UriRegexSanitizer. </summary>
     public partial class UriRegexSanitizer : IJsonModel<UriRegexSanitizer>
@@ -33,49 +32,25 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<UriRegexSanitizer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(UriRegexSanitizer)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("regex"u8);
-            writer.WriteStringValue(Regex);
-            if (Optional.IsDefined(Value))
-            {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStringValue(Value);
-            }
-            if (Optional.IsDefined(GroupForReplace))
-            {
-                writer.WritePropertyName("groupForReplace"u8);
-                writer.WriteStringValue(GroupForReplace);
-            }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("Body"u8);
+            writer.WriteObjectValue(Body, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UriRegexSanitizer IJsonModel<UriRegexSanitizer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        UriRegexSanitizer IJsonModel<UriRegexSanitizer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UriRegexSanitizer)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UriRegexSanitizer JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override SanitizerAddition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<UriRegexSanitizer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -94,25 +69,19 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             {
                 return null;
             }
-            string regex = default;
-            string value = default;
-            string groupForReplace = default;
+            SanitizerType name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            UriRegexSanitizerBody body = default;
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("regex"u8))
+                if (prop.NameEquals("Name"u8))
                 {
-                    regex = prop.Value.GetString();
+                    name = prop.Value.GetString().ToSanitizerType();
                     continue;
                 }
-                if (prop.NameEquals("value"u8))
+                if (prop.NameEquals("Body"u8))
                 {
-                    value = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("groupForReplace"u8))
-                {
-                    groupForReplace = prop.Value.GetString();
+                    body = UriRegexSanitizerBody.DeserializeUriRegexSanitizerBody(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -120,14 +89,14 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UriRegexSanitizer(regex, value, groupForReplace, additionalBinaryDataProperties);
+            return new UriRegexSanitizer(name, additionalBinaryDataProperties, body);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<UriRegexSanitizer>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<UriRegexSanitizer>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -141,11 +110,11 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UriRegexSanitizer IPersistableModel<UriRegexSanitizer>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        UriRegexSanitizer IPersistableModel<UriRegexSanitizer>.Create(BinaryData data, ModelReaderWriterOptions options) => (UriRegexSanitizer)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UriRegexSanitizer PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override SanitizerAddition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<UriRegexSanitizer>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -162,15 +131,5 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<UriRegexSanitizer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="uriRegexSanitizer"> The <see cref="UriRegexSanitizer"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(UriRegexSanitizer uriRegexSanitizer)
-        {
-            if (uriRegexSanitizer == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(uriRegexSanitizer, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

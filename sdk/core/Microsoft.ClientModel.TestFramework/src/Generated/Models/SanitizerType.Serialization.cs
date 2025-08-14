@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Microsoft.ClientModel.TestFramework.TestProxy
+namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
 {
     internal static partial class SanitizerTypeExtensions
     {
@@ -15,9 +15,18 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         public static string ToSerialString(this SanitizerType value) => value switch
         {
             SanitizerType.BodyKeySanitizer => "BodyKeySanitizer",
-            SanitizerType.HeaderRegexSanitizer => "HeaderRegexSanitizer",
-            SanitizerType.UriRegexSanitizer => "UriRegexSanitizer",
             SanitizerType.BodyRegexSanitizer => "BodyRegexSanitizer",
+            SanitizerType.BodyStringSanitizer => "BodyStringSanitizer",
+            SanitizerType.GeneralRegexSanitizer => "GeneralRegexSanitizer",
+            SanitizerType.GeneralStringSanitizer => "GeneralStringSanitizer",
+            SanitizerType.HeaderRegexSanitizer => "HeaderRegexSanitizer",
+            SanitizerType.HeaderStringSanitizer => "HeaderStringSanitizer",
+            SanitizerType.OAuthResponseSanitizer => "OAuthResponseSanitizer",
+            SanitizerType.RegexEntrySanitizer => "RegexEntrySanitizer",
+            SanitizerType.RemoveHeaderSanitizer => "RemoveHeaderSanitizer",
+            SanitizerType.UriRegexSanitizer => "UriRegexSanitizer",
+            SanitizerType.UriStringSanitizer => "UriStringSanitizer",
+            SanitizerType.UriSubscriptionIdSanitizer => "UriSubscriptionIdSanitizer",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SanitizerType value.")
         };
 
@@ -28,17 +37,53 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             {
                 return SanitizerType.BodyKeySanitizer;
             }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BodyRegexSanitizer"))
+            {
+                return SanitizerType.BodyRegexSanitizer;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BodyStringSanitizer"))
+            {
+                return SanitizerType.BodyStringSanitizer;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "GeneralRegexSanitizer"))
+            {
+                return SanitizerType.GeneralRegexSanitizer;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "GeneralStringSanitizer"))
+            {
+                return SanitizerType.GeneralStringSanitizer;
+            }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "HeaderRegexSanitizer"))
             {
                 return SanitizerType.HeaderRegexSanitizer;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "HeaderStringSanitizer"))
+            {
+                return SanitizerType.HeaderStringSanitizer;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "OAuthResponseSanitizer"))
+            {
+                return SanitizerType.OAuthResponseSanitizer;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RegexEntrySanitizer"))
+            {
+                return SanitizerType.RegexEntrySanitizer;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RemoveHeaderSanitizer"))
+            {
+                return SanitizerType.RemoveHeaderSanitizer;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "UriRegexSanitizer"))
             {
                 return SanitizerType.UriRegexSanitizer;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BodyRegexSanitizer"))
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UriStringSanitizer"))
             {
-                return SanitizerType.BodyRegexSanitizer;
+                return SanitizerType.UriStringSanitizer;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UriSubscriptionIdSanitizer"))
+            {
+                return SanitizerType.UriSubscriptionIdSanitizer;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SanitizerType value.");
         }

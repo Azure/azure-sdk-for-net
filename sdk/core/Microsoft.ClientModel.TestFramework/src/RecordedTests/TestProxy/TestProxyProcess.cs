@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.ClientModel.TestFramework.TestProxy;
+using Microsoft.ClientModel.TestFramework.TestProxy.Admin;
 using NUnit.Framework;
 
 namespace Microsoft.ClientModel.TestFramework;
@@ -45,12 +46,13 @@ public class TestProxyProcess
     /// <summary>
     /// Gets the test framework client for interacting with the test proxy.
     /// </summary>
-    internal virtual TestFrameworkClient Client { get; }
+    internal virtual TestProxyAdminClient AdminClient { get; }
 
     /// <summary>
     /// Gets the test proxy client for proxy-specific operations.
     /// </summary>
     internal virtual TestProxyClient ProxyClient { get; }
+
     private readonly StringBuilder _errorBuffer = new();
     private static readonly object _lock = new();
     private static TestProxyProcess? _shared;
@@ -85,7 +87,7 @@ public class TestProxyProcess
     // For mocking
     internal TestProxyProcess()
     {
-        Client = default!;
+        AdminClient = default!;
         ProxyClient = default!;
     }
 
@@ -173,9 +175,9 @@ public class TestProxyProcess
                                                 $"https: {_proxyPortHttps}");
         }
 
-        var options = new TestFrameworkClientOptions();
-        Client = new TestFrameworkClient(new Uri($"http://{IpAddress}:{_proxyPortHttp}"), options);
-        ProxyClient = Client.GetTestProxyClient();
+        var options = new TestProxyClientOptions();
+        ProxyClient = new TestProxyClient(new Uri($"http://{IpAddress}:{_proxyPortHttp}"), options);
+        AdminClient = ProxyClient.GetTestProxyAdminClient();
 
         _ = Task.Run(
             () =>

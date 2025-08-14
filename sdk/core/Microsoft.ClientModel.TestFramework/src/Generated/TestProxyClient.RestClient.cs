@@ -18,7 +18,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
 
         private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
-        internal PipelineMessage CreateStartPlaybackRequest(BinaryContent content, RequestOptions options)
+        internal PipelineMessage CreateStartRecordRequest(BinaryContent content, RequestOptions options)
         {
             PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -26,8 +26,51 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             request.Method = "POST";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/playback/start", false);
+            uri.AppendPath("/Record/Start", false);
             request.Uri = uri.ToUri();
+            request.Headers.Set("Content-Type", "application/json");
+            request.Headers.Set("Accept", "application/json");
+            request.Content = content;
+            message.Apply(options);
+            return message;
+        }
+
+        internal PipelineMessage CreateStopRecordRequest(string recordingId, BinaryContent content, string recordingSkip, RequestOptions options)
+        {
+            PipelineMessage message = Pipeline.CreateMessage();
+            message.ResponseClassifier = PipelineMessageClassifier200;
+            PipelineRequest request = message.Request;
+            request.Method = "POST";
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/Record/Stop", false);
+            request.Uri = uri.ToUri();
+            request.Headers.Set("x-recording-id", recordingId);
+            if (recordingSkip != null)
+            {
+                request.Headers.Set("x-recording-skip", recordingSkip);
+            }
+            request.Headers.Set("Content-Type", "application/json");
+            request.Headers.Set("Accept", "application/json");
+            request.Content = content;
+            message.Apply(options);
+            return message;
+        }
+
+        internal PipelineMessage CreateStartPlaybackRequest(BinaryContent content, string recordingId, RequestOptions options)
+        {
+            PipelineMessage message = Pipeline.CreateMessage();
+            message.ResponseClassifier = PipelineMessageClassifier200;
+            PipelineRequest request = message.Request;
+            request.Method = "POST";
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/Playback/Start", false);
+            request.Uri = uri.ToUri();
+            if (recordingId != null)
+            {
+                request.Headers.Set("x-recording-id", recordingId);
+            }
             request.Headers.Set("Content-Type", "application/json");
             request.Headers.Set("Accept", "application/json");
             request.Content = content;
@@ -43,251 +86,10 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
             request.Method = "POST";
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/playback/stop", false);
+            uri.AppendPath("/Playback/Stop", false);
             request.Uri = uri.ToUri();
             request.Headers.Set("x-recording-id", recordingId);
-            message.Apply(options);
-            return message;
-        }
-
-        internal PipelineMessage CreateStartRecordRequest(BinaryContent content, RequestOptions options)
-        {
-            PipelineMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
-            PipelineRequest request = message.Request;
-            request.Method = "POST";
-            ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/record/start", false);
-            request.Uri = uri.ToUri();
-            request.Headers.Set("Content-Type", "application/json");
-            request.Content = content;
-            message.Apply(options);
-            return message;
-        }
-
-        internal PipelineMessage CreateStopRecordRequest(string recordingId, BinaryContent content, string recordingSkip, RequestOptions options)
-        {
-            PipelineMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
-            PipelineRequest request = message.Request;
-            request.Method = "POST";
-            ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/record/stop", false);
-            request.Uri = uri.ToUri();
-            request.Headers.Set("x-recording-id", recordingId);
-            if (recordingSkip != null)
-            {
-                request.Headers.Set("x-recording-skip", recordingSkip);
-            }
-            request.Headers.Set("Content-Type", "application/json");
-            request.Content = content;
-            message.Apply(options);
-            return message;
-        }
-
-        internal PipelineMessage CreateSetRecordingTransportOptionsRequest(string recordingId, BinaryContent content, RequestOptions options)
-        {
-            PipelineMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
-            PipelineRequest request = message.Request;
-            request.Method = "POST";
-            ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/admin/setrecordingoptions", false);
-            request.Uri = uri.ToUri();
-            request.Headers.Set("x-recording-id", recordingId);
-            request.Headers.Set("Content-Type", "application/json");
-            request.Content = content;
-            message.Apply(options);
-            return message;
-        }
-
-        internal PipelineMessage CreateRemoveSanitizersRequest(string recordingId, BinaryContent content, RequestOptions options)
-        {
-            PipelineMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
-            PipelineRequest request = message.Request;
-            request.Method = "POST";
-            ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/admin/removesanitizers", false);
-            request.Uri = uri.ToUri();
-            request.Headers.Set("x-recording-id", recordingId);
-            request.Headers.Set("Content-Type", "application/json");
-            request.Content = content;
-            message.Apply(options);
-            return message;
-        }
-
-        internal PipelineMessage CreateAddSanitizerRequest(string sanitizerType, BinaryContent content, string recordingId, RequestOptions options)
-        {
-            PipelineMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
-            PipelineRequest request = message.Request;
-            request.Method = "POST";
-            ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/admin/addsanitizer", false);
-            request.Uri = uri.ToUri();
-            request.Headers.Set("x-abstraction-identifier", sanitizerType);
-            if (recordingId != null)
-            {
-                request.Headers.Set("x-recording-id", recordingId);
-            }
-            request.Headers.Set("Content-Type", "application/json");
-            request.Content = content;
-            message.Apply(options);
-            return message;
-        }
-
-        internal PipelineMessage CreateAddBodyKeySanitizerRequest(string sanitizerType, BinaryContent content, string recordingId, RequestOptions options)
-        {
-            PipelineMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
-            PipelineRequest request = message.Request;
-            request.Method = "POST";
-            ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/admin/addsanitizer", false);
-            request.Uri = uri.ToUri();
-            request.Headers.Set("x-abstraction-identifier", sanitizerType);
-            if (recordingId != null)
-            {
-                request.Headers.Set("x-recording-id", recordingId);
-            }
-            request.Headers.Set("Content-Type", "application/json");
-            request.Content = content;
-            message.Apply(options);
-            return message;
-        }
-
-        internal PipelineMessage CreateAddHeaderSanitizerRequest(string sanitizerType, BinaryContent content, string recordingId, RequestOptions options)
-        {
-            PipelineMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
-            PipelineRequest request = message.Request;
-            request.Method = "POST";
-            ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/admin/addsanitizer", false);
-            request.Uri = uri.ToUri();
-            request.Headers.Set("x-abstraction-identifier", sanitizerType);
-            if (recordingId != null)
-            {
-                request.Headers.Set("x-recording-id", recordingId);
-            }
-            request.Headers.Set("Content-Type", "application/json");
-            request.Content = content;
-            message.Apply(options);
-            return message;
-        }
-
-        internal PipelineMessage CreateAddUriSanitizerRequest(string sanitizerType, BinaryContent content, string recordingId, RequestOptions options)
-        {
-            PipelineMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
-            PipelineRequest request = message.Request;
-            request.Method = "POST";
-            ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/admin/addsanitizer", false);
-            request.Uri = uri.ToUri();
-            request.Headers.Set("x-abstraction-identifier", sanitizerType);
-            if (recordingId != null)
-            {
-                request.Headers.Set("x-recording-id", recordingId);
-            }
-            request.Headers.Set("Content-Type", "application/json");
-            request.Content = content;
-            message.Apply(options);
-            return message;
-        }
-
-        internal PipelineMessage CreateAddBodyRegexSanitizerRequest(string sanitizerType, BinaryContent content, string recordingId, RequestOptions options)
-        {
-            PipelineMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
-            PipelineRequest request = message.Request;
-            request.Method = "POST";
-            ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/admin/addsanitizer", false);
-            request.Uri = uri.ToUri();
-            request.Headers.Set("x-abstraction-identifier", sanitizerType);
-            if (recordingId != null)
-            {
-                request.Headers.Set("x-recording-id", recordingId);
-            }
-            request.Headers.Set("Content-Type", "application/json");
-            request.Content = content;
-            message.Apply(options);
-            return message;
-        }
-
-        internal PipelineMessage CreateSetMatcherRequest(string matcherType, BinaryContent content, string recordingId, RequestOptions options)
-        {
-            PipelineMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
-            PipelineRequest request = message.Request;
-            request.Method = "POST";
-            ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/admin/setmatcher", false);
-            request.Uri = uri.ToUri();
-            request.Headers.Set("x-abstraction-identifier", matcherType);
-            if (recordingId != null)
-            {
-                request.Headers.Set("x-recording-id", recordingId);
-            }
-            if ("application/json" != null)
-            {
-                request.Headers.Set("Content-Type", "application/json");
-            }
-            request.Content = content;
-            message.Apply(options);
-            return message;
-        }
-
-        internal PipelineMessage CreateAddTransformRequest(string transformType, BinaryContent content, string recordingId, RequestOptions options)
-        {
-            PipelineMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
-            PipelineRequest request = message.Request;
-            request.Method = "POST";
-            ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/admin/addtransform", false);
-            request.Uri = uri.ToUri();
-            request.Headers.Set("x-abstraction-identifier", transformType);
-            if (recordingId != null)
-            {
-                request.Headers.Set("x-recording-id", recordingId);
-            }
-            request.Headers.Set("Content-Type", "application/json");
-            request.Content = content;
-            message.Apply(options);
-            return message;
-        }
-
-        internal PipelineMessage CreateAddHeaderTransformRequest(string transformType, BinaryContent content, string recordingId, RequestOptions options)
-        {
-            PipelineMessage message = Pipeline.CreateMessage();
-            message.ResponseClassifier = PipelineMessageClassifier200;
-            PipelineRequest request = message.Request;
-            request.Method = "POST";
-            ClientUriBuilder uri = new ClientUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/admin/addtransform", false);
-            request.Uri = uri.ToUri();
-            request.Headers.Set("x-abstraction-identifier", transformType);
-            if (recordingId != null)
-            {
-                request.Headers.Set("x-recording-id", recordingId);
-            }
-            request.Headers.Set("Content-Type", "application/json");
-            request.Content = content;
+            request.Headers.Set("Accept", "application/json");
             message.Apply(options);
             return message;
         }

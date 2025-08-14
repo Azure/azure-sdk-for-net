@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Security.Cryptography;
 using Microsoft.ClientModel.TestFramework.TestProxy;
 using System.ClientModel;
+using Microsoft.ClientModel.TestFramework.TestProxy.Admin;
 
 namespace Microsoft.ClientModel.TestFramework;
 
@@ -428,7 +429,7 @@ public class TestRecording : IAsyncDisposable
                 ClientResult<IReadOnlyDictionary<string, string>>? playbackResult;
                 try
                 {
-                    playbackResult = await _proxy.ProxyClient.StartPlaybackAsync(new TestProxyStartInformation(_sessionFile, assetsJson, null), cancellationToken).ConfigureAwait(false);
+                    playbackResult = await _proxy.ProxyClient.StartPlaybackAsync(new TestProxyStartInformation(_sessionFile, assetsJson, null), null, cancellationToken).ConfigureAwait(false);
                 }
                 catch (ClientResultException ex)
                     when (ex.Status == 404)
@@ -458,12 +459,12 @@ public class TestRecording : IAsyncDisposable
                     IgnoredQueryParameters = _recordedTestBase.IgnoredQueryParameters.Count > 0 ? string.Join(",", _recordedTestBase.IgnoredQueryParameters) : null,
                     CompareBodies = _recordedTestBase.CompareBodies
                 };
-                await _proxy.ProxyClient.SetMatcherAsync(MatcherType.CustomDefaultMatcher, defaultMatcher).ConfigureAwait(false);
+                await _proxy.AdminClient.SetMatcherAsync(MatcherType.CustomDefaultMatcher, defaultMatcher).ConfigureAwait(false);
 
-                foreach (HeaderTransform transform in _recordedTestBase.HeaderTransforms)
-                {
-                    await _proxy.ProxyClient.AddHeaderTransformAsync("HeaderTransform", transform).ConfigureAwait(false);
-                }
+                //foreach (HeaderTransform transform in _recordedTestBase.HeaderTransforms)
+                //{
+                //    await _proxy.ProxyClient.AddHeaderTransformAsync("HeaderTransform", transform).ConfigureAwait(false);
+                //}
                 break;
         }
     }
@@ -479,60 +480,48 @@ public class TestRecording : IAsyncDisposable
             throw new InvalidOperationException("TestProxyProcess.ProxyClient is null. Ensure that the TestProxyProcess is started before attempting to create a TestRecording.");
         }
 
+        List<SanitizerAddition> sanitizers = new();
+
         foreach (string header in _recordedTestBase.SanitizedHeaders)
         {
-            await _proxy.ProxyClient.AddHeaderSanitizerAsync(SanitizerType.HeaderRegexSanitizer, new HeaderRegexSanitizer(header), RecordingId, cancellationToken).ConfigureAwait(false);
+            sanitizers.Add(new HeaderRegexSanitizer(new HeaderRegexSanitizerBody(header)));
         }
 
-        foreach (var header in _recordedTestBase.HeaderRegexSanitizers)
+        sanitizers.AddRange(_recordedTestBase.HeaderRegexSanitizers);
+
+        foreach ((string header, string queryParameter) in _recordedTestBase.SanitizedQueryParametersInHeaders)
         {
-            await _proxy.ProxyClient.AddHeaderSanitizerAsync(SanitizerType.HeaderRegexSanitizer, header, RecordingId, cancellationToken).ConfigureAwait(false);
+            sanitizers.Add(HeaderRegexSanitizer.CreateWithQueryParameter(header, queryParameter, Sanitized));
         }
 
-        foreach (var (header, queryParameter) in _recordedTestBase.SanitizedQueryParametersInHeaders)
-        {
-            await _proxy.ProxyClient.AddHeaderSanitizerAsync(SanitizerType.HeaderRegexSanitizer,
-                HeaderRegexSanitizer.CreateWithQueryParameter(header, queryParameter, Sanitized),
-                RecordingId,
-                cancellationToken).ConfigureAwait(false);
-        }
-
-        foreach (UriRegexSanitizer sanitizer in _recordedTestBase.UriRegexSanitizers)
-        {
-            await _proxy.ProxyClient.AddUriSanitizerAsync(SanitizerType.UriRegexSanitizer, sanitizer, RecordingId, cancellationToken).ConfigureAwait(false);
-        }
+        sanitizers.AddRange(_recordedTestBase.UriRegexSanitizers);
 
         foreach (string queryParameter in _recordedTestBase.SanitizedQueryParameters)
         {
-            await _proxy.ProxyClient.AddUriSanitizerAsync(SanitizerType.UriRegexSanitizer,
-                UriRegexSanitizer.CreateWithQueryParameter(queryParameter, Sanitized),
-                RecordingId,
-                cancellationToken).ConfigureAwait(false);
+            sanitizers.Add(UriRegexSanitizer.CreateWithQueryParameter(queryParameter, Sanitized));
         }
 
         foreach (string path in _recordedTestBase.JsonPathSanitizers)
         {
-            await _proxy.ProxyClient.AddBodyKeySanitizerAsync(SanitizerType.BodyKeySanitizer, new BodyKeySanitizer(path), RecordingId).ConfigureAwait(false);
+            sanitizers.Add(new BodyKeySanitizer(new BodyKeySanitizerBody(path)));
         }
 
-        foreach (BodyKeySanitizer sanitizer in _recordedTestBase.BodyKeySanitizers)
-        {
-            await _proxy.ProxyClient.AddBodyKeySanitizerAsync(SanitizerType.BodyKeySanitizer, sanitizer, RecordingId).ConfigureAwait(false);
-        }
+        sanitizers.AddRange(_recordedTestBase.BodyKeySanitizers);
+        sanitizers.AddRange(_recordedTestBase.BodyRegexSanitizers);
 
-        foreach (BodyRegexSanitizer sanitizer in _recordedTestBase.BodyRegexSanitizers)
+        if (sanitizers.Count > 0)
         {
-            await _proxy.ProxyClient.AddBodyRegexSanitizerAsync(SanitizerType.BodyRegexSanitizer, sanitizer, RecordingId).ConfigureAwait(false);
+            await _proxy.AdminClient.AddSanitizersAsync(RecordingId, sanitizers, cancellationToken).ConfigureAwait(false);
         }
 
         if (_recordedTestBase.SanitizersToRemove.Count > 0)
         {
-            var toRemove = new SanitizersToRemove(new List<string>());
+            var toRemove = new SanitizerList(new List<string>());
             foreach (var sanitizer in _recordedTestBase.SanitizersToRemove)
             {
                 toRemove.Sanitizers.Add(sanitizer);
             }
-            await _proxy.ProxyClient.RemoveSanitizersAsync(RecordingId, toRemove, cancellationToken).ConfigureAwait(false);
+            await _proxy.AdminClient.RemoveSanitizersAsync(RecordingId, toRemove, cancellationToken).ConfigureAwait(false);
         }
     }
 }

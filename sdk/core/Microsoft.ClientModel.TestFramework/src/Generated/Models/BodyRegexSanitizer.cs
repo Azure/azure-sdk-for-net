@@ -9,49 +9,31 @@ using System;
 using System.Collections.Generic;
 using Microsoft.ClientModel.TestFramework;
 
-namespace Microsoft.ClientModel.TestFramework.TestProxy
+namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
 {
     /// <summary> The BodyRegexSanitizer. </summary>
-    public partial class BodyRegexSanitizer
+    public partial class BodyRegexSanitizer : SanitizerAddition
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="BodyRegexSanitizer"/>. </summary>
-        /// <param name="regex"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="regex"/> is null. </exception>
-        public BodyRegexSanitizer(string regex)
+        /// <param name="body"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public BodyRegexSanitizer(BodyRegexSanitizerBody body) : base(SanitizerType.BodyRegexSanitizer)
         {
-            Argument.AssertNotNull(regex, nameof(regex));
+            Argument.AssertNotNull(body, nameof(body));
 
-            Regex = regex;
+            Body = body;
         }
 
         /// <summary> Initializes a new instance of <see cref="BodyRegexSanitizer"/>. </summary>
-        /// <param name="regex"></param>
-        /// <param name="value"></param>
-        /// <param name="groupForReplace"></param>
-        /// <param name="condition"></param>
+        /// <param name="name"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BodyRegexSanitizer(string regex, string value, string groupForReplace, SanitizerCondition condition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="body"></param>
+        internal BodyRegexSanitizer(SanitizerType name, IDictionary<string, BinaryData> additionalBinaryDataProperties, BodyRegexSanitizerBody body) : base(name, additionalBinaryDataProperties)
         {
-            Regex = regex;
-            Value = value;
-            GroupForReplace = groupForReplace;
-            Condition = condition;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Body = body;
         }
 
-        /// <summary> Gets the Regex. </summary>
-        public string Regex { get; }
-
-        /// <summary> Gets or sets the Value. </summary>
-        public string Value { get; set; }
-
-        /// <summary> Gets or sets the GroupForReplace. </summary>
-        public string GroupForReplace { get; set; }
-
-        /// <summary> Gets or sets the Condition. </summary>
-        public SanitizerCondition Condition { get; set; }
+        /// <summary> Gets the Body. </summary>
+        public BodyRegexSanitizerBody Body { get; }
     }
 }

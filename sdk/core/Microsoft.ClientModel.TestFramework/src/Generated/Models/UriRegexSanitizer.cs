@@ -9,44 +9,31 @@ using System;
 using System.Collections.Generic;
 using Microsoft.ClientModel.TestFramework;
 
-namespace Microsoft.ClientModel.TestFramework.TestProxy
+namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
 {
     /// <summary> The UriRegexSanitizer. </summary>
-    public partial class UriRegexSanitizer
+    public partial class UriRegexSanitizer : SanitizerAddition
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="UriRegexSanitizer"/>. </summary>
-        /// <param name="regex"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="regex"/> is null. </exception>
-        public UriRegexSanitizer(string regex)
+        /// <param name="body"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        public UriRegexSanitizer(UriRegexSanitizerBody body) : base(SanitizerType.UriRegexSanitizer)
         {
-            Argument.AssertNotNull(regex, nameof(regex));
+            Argument.AssertNotNull(body, nameof(body));
 
-            Regex = regex;
+            Body = body;
         }
 
         /// <summary> Initializes a new instance of <see cref="UriRegexSanitizer"/>. </summary>
-        /// <param name="regex"></param>
-        /// <param name="value"></param>
-        /// <param name="groupForReplace"></param>
+        /// <param name="name"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UriRegexSanitizer(string regex, string value, string groupForReplace, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="body"></param>
+        internal UriRegexSanitizer(SanitizerType name, IDictionary<string, BinaryData> additionalBinaryDataProperties, UriRegexSanitizerBody body) : base(name, additionalBinaryDataProperties)
         {
-            Regex = regex;
-            Value = value;
-            GroupForReplace = groupForReplace;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Body = body;
         }
 
-        /// <summary> Gets the Regex. </summary>
-        public string Regex { get; }
-
-        /// <summary> Gets or sets the Value. </summary>
-        public string Value { get; set; }
-
-        /// <summary> Gets or sets the GroupForReplace. </summary>
-        public string GroupForReplace { get; set; }
+        /// <summary> Gets the Body. </summary>
+        public UriRegexSanitizerBody Body { get; }
     }
 }

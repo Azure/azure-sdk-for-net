@@ -5,18 +5,36 @@
 
 #nullable disable
 
-namespace Microsoft.ClientModel.TestFramework.TestProxy
+namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
 {
     /// <summary></summary>
     internal enum SanitizerType
     {
         /// <summary> BodyKeySanitizer. </summary>
         BodyKeySanitizer,
+        /// <summary> BodyRegexSanitizer. </summary>
+        BodyRegexSanitizer,
+        /// <summary> BodyStringSanitizer. </summary>
+        BodyStringSanitizer,
+        /// <summary> GeneralRegexSanitizer. </summary>
+        GeneralRegexSanitizer,
+        /// <summary> GeneralStringSanitizer. </summary>
+        GeneralStringSanitizer,
         /// <summary> HeaderRegexSanitizer. </summary>
         HeaderRegexSanitizer,
+        /// <summary> HeaderStringSanitizer. </summary>
+        HeaderStringSanitizer,
+        /// <summary> OAuthResponseSanitizer. </summary>
+        OAuthResponseSanitizer,
+        /// <summary> RegexEntrySanitizer. </summary>
+        RegexEntrySanitizer,
+        /// <summary> RemoveHeaderSanitizer. </summary>
+        RemoveHeaderSanitizer,
         /// <summary> UriRegexSanitizer. </summary>
         UriRegexSanitizer,
-        /// <summary> BodyRegexSanitizer. </summary>
-        BodyRegexSanitizer
+        /// <summary> UriStringSanitizer. </summary>
+        UriStringSanitizer,
+        /// <summary> UriSubscriptionIdSanitizer. </summary>
+        UriSubscriptionIdSanitizer
     }
 }

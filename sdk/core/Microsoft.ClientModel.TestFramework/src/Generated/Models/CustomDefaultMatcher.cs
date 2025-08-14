@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace Microsoft.ClientModel.TestFramework.TestProxy
+namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
 {
     /// <summary> The CustomDefaultMatcher. </summary>
-    internal partial class CustomDefaultMatcher
+    public partial class CustomDefaultMatcher
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -22,28 +22,33 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomDefaultMatcher"/>. </summary>
-        /// <param name="excludedHeaders"></param>
         /// <param name="compareBodies"></param>
+        /// <param name="excludedHeaders"></param>
         /// <param name="ignoredHeaders"></param>
+        /// <param name="ignoreQueryOrdering"></param>
         /// <param name="ignoredQueryParameters"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomDefaultMatcher(string excludedHeaders, bool? compareBodies, string ignoredHeaders, string ignoredQueryParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomDefaultMatcher(bool? compareBodies, string excludedHeaders, string ignoredHeaders, bool? ignoreQueryOrdering, string ignoredQueryParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ExcludedHeaders = excludedHeaders;
             CompareBodies = compareBodies;
+            ExcludedHeaders = excludedHeaders;
             IgnoredHeaders = ignoredHeaders;
+            IgnoreQueryOrdering = ignoreQueryOrdering;
             IgnoredQueryParameters = ignoredQueryParameters;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the ExcludedHeaders. </summary>
-        public string ExcludedHeaders { get; set; }
-
         /// <summary> Gets or sets the CompareBodies. </summary>
         public bool? CompareBodies { get; set; }
 
+        /// <summary> Gets or sets the ExcludedHeaders. </summary>
+        public string ExcludedHeaders { get; set; }
+
         /// <summary> Gets or sets the IgnoredHeaders. </summary>
         public string IgnoredHeaders { get; set; }
+
+        /// <summary> Gets or sets the IgnoreQueryOrdering. </summary>
+        public bool? IgnoreQueryOrdering { get; set; }
 
         /// <summary> Gets or sets the IgnoredQueryParameters. </summary>
         public string IgnoredQueryParameters { get; set; }

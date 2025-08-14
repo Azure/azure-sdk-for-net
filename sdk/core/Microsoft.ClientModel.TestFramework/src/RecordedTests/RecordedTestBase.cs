@@ -3,6 +3,7 @@
 
 using Castle.DynamicProxy;
 using Microsoft.ClientModel.TestFramework.TestProxy;
+using Microsoft.ClientModel.TestFramework.TestProxy.Admin;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using System;
@@ -137,10 +138,10 @@ public abstract class RecordedTestBase : ClientTestBase
             UriRegexSanitizer.CreateWithQueryParameter("sktid", EmptyGuid),
         };
 
-    /// <summary>
-    /// The list of <see cref="HeaderTransform"/> to apply in Playback mode to the response headers.
-    /// </summary>
-    public List<HeaderTransform> HeaderTransforms = new();
+    ///// <summary>
+    ///// The list of <see cref="HeaderTransform"/> to apply in Playback mode to the response headers.
+    ///// </summary>
+    //public List<HeaderTransform> HeaderTransforms = new();
 
     /// <summary>
     /// The list of <see cref="HeaderRegexSanitizer"/> to apply to the request and response headers. This allows you to specify
@@ -577,15 +578,15 @@ public abstract class RecordedTestBase : ClientTestBase
     /// This method only applies options during Record mode. Options are ignored in Live and Playback modes.
     /// The proxy must be running and a recording session must be active before calling this method.
     /// </remarks>
-    protected async Task SetProxyOptionsAsync(ProxyOptions options)
+    protected async Task SetProxyOptionsAsync(RecordingOptions options)
     {
         if (Mode == RecordedTestMode.Record && options != null)
         {
-            if (_proxy?.Client is null)
+            if (_proxy?.AdminClient is null)
             {
-                throw new InvalidOperationException("proxy options cannot be set because the test proxy has not been started.");
+                throw new InvalidOperationException("Proxy options cannot be set because the test proxy has not been started.");
             }
-            await _proxy.ProxyClient.SetRecordingTransportOptionsAsync(Recording?.RecordingId, options).ConfigureAwait(false);
+            await _proxy.AdminClient.SetRecordingOptionsAsync(Recording?.RecordingId, options).ConfigureAwait(false);
         }
     }
 
