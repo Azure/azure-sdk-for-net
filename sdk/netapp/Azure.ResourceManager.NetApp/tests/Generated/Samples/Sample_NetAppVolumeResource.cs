@@ -227,9 +227,14 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppVolumeResource netAppVolume = client.GetNetAppVolumeResource(netAppVolumeResourceId);
 
             // invoke the operation
-            await netAppVolume.SplitCloneFromParentAsync(WaitUntil.Completed);
+            ArmOperation<NetAppVolumeResource> lro = await netAppVolume.SplitCloneFromParentAsync(WaitUntil.Completed);
+            NetAppVolumeResource result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            NetAppVolumeData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
