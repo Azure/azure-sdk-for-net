@@ -256,50 +256,25 @@ namespace Azure.Security.ConfidentialLedger
             scope.Start();
             try
             {
-                Console.WriteLine("[GetLedgerEntryAsync] Starting request. txn={0} collection={1}", transactionId, collectionId);
-                // Primary attempt with fallback to current entry before invoking failover service.
                 try
                 {
                     using HttpMessage primaryMessage = CreateGetLedgerEntryRequest(_ledgerEndpoint, transactionId, collectionId, context);
-                    Response primaryResponse = await _pipeline.ProcessMessageAsync(primaryMessage, context).ConfigureAwait(false);
-                    // Success on primary; return immediately.
-                    return primaryResponse;
+                    return await _pipeline.ProcessMessageAsync(primaryMessage, context).ConfigureAwait(false);
                 }
-                catch (RequestFailedException ex) when (ShouldFallbackToCurrent(ex) && !string.IsNullOrEmpty(collectionId))
+                catch (Exception)
                 {
-                    Console.WriteLine("[GetLedgerEntryAsync] Primary returned not-found/unknown for txn {0}. Attempting GetCurrentLedgerEntry across failover endpoints for collection {1}.", transactionId, collectionId);
-                    try
-                    {
-                        Response currentResponse = await _failoverService.ExecuteOnFailoversOnlyAsync(
-                            _ledgerEndpoint,
-                            async (endpoint) =>
-                            {
-                                using HttpMessage msg = CreateGetCurrentLedgerEntryRequest(endpoint, collectionId, context);
-                                return await _pipeline.ProcessMessageAsync(msg, context).ConfigureAwait(false);
-                            },
-                            nameof(GetCurrentLedgerEntryAsync),
-                            context?.CancellationToken ?? default).ConfigureAwait(false);
-                        Response synthesized = SynthesizeLedgerEntryFromCurrent(currentResponse);
-                        Console.WriteLine("[GetLedgerEntryAsync] Failover current-entry fallback succeeded.");
-                        return synthesized;
-                    }
-                    catch (Exception fallbackFailoverEx)
-                    {
-                        Console.WriteLine("[GetLedgerEntryAsync] Failover current-entry fallback failed: {0}. Proceeding to full failover attempts with original txn.", fallbackFailoverEx.Message);
-                    }
+                    Response failoverCurrent = await _failoverService.ExecuteOnFailoversAsync(
+                        _ledgerEndpoint,
+                        async (endpoint) =>
+                        {
+                            using HttpMessage message = CreateGetCurrentLedgerEntryRequest(endpoint, collectionId, context);
+                            return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                        },
+                        nameof(GetCurrentLedgerEntryAsync),
+                        collectionId,
+                        context?.CancellationToken ?? default).ConfigureAwait(false);
+                    return FormatLedgerEntry(failoverCurrent);
                 }
-
-                // If we got here, either primary failed with retriable condition (without fallback) or fallback failed; use failover service.
-                return await _failoverService.ExecuteWithFailoverAsync(
-                    _ledgerEndpoint,
-                    async (endpoint) =>
-                    {
-                        using HttpMessage message = CreateGetLedgerEntryRequest(endpoint, transactionId, collectionId, context);
-                        return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    },
-                    nameof(GetLedgerEntryAsync),
-                    collectionId,
-                    context?.CancellationToken ?? default).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -334,47 +309,25 @@ namespace Azure.Security.ConfidentialLedger
             scope.Start();
             try
             {
-                Console.WriteLine("[GetLedgerEntry] Starting request. txn={0} collection={1}", transactionId, collectionId);
-                // Primary attempt with fallback
                 try
                 {
                     using HttpMessage primaryMessage = CreateGetLedgerEntryRequest(_ledgerEndpoint, transactionId, collectionId, context);
-                    Response primaryResponse = _pipeline.ProcessMessage(primaryMessage, context);
-                    return primaryResponse;
+                    return _pipeline.ProcessMessage(primaryMessage, context);
                 }
-                catch (RequestFailedException ex) when (ShouldFallbackToCurrent(ex) && !string.IsNullOrEmpty(collectionId))
+                catch (Exception)
                 {
-                    Console.WriteLine("[GetLedgerEntry] Primary returned not-found/unknown for txn {0}. Attempting GetCurrentLedgerEntry across failover endpoints for collection {1}.", transactionId, collectionId);
-                    try
-                    {
-                        Response currentResponse = _failoverService.ExecuteOnFailoversOnly(
-                            _ledgerEndpoint,
-                            (endpoint) =>
-                            {
-                                using HttpMessage msg = CreateGetCurrentLedgerEntryRequest(endpoint, collectionId, context);
-                                return _pipeline.ProcessMessage(msg, context);
-                            },
-                            nameof(GetCurrentLedgerEntry),
-                            context?.CancellationToken ?? default);
-                        Response synthesized = SynthesizeLedgerEntryFromCurrent(currentResponse);
-                        Console.WriteLine("[GetLedgerEntry] Failover current-entry fallback succeeded.");
-                        return synthesized;
-                    }
-                    catch (Exception fallbackFailoverEx)
-                    {
-                        Console.WriteLine("[GetLedgerEntry] Failover current-entry fallback failed: {0}. Proceeding to full failover attempts with original txn.", fallbackFailoverEx.Message);
-                    }
+                    Response failoverCurrent = _failoverService.ExecuteOnFailovers(
+                        _ledgerEndpoint,
+                        (endpoint) =>
+                        {
+                            using HttpMessage message = CreateGetCurrentLedgerEntryRequest(endpoint, collectionId, context);
+                            return _pipeline.ProcessMessage(message, context);
+                        },
+                        nameof(GetCurrentLedgerEntry),
+                        collectionId,
+                        context?.CancellationToken ?? default);
+                    return FormatLedgerEntry(failoverCurrent);
                 }
-                return _failoverService.ExecuteWithFailover(
-                    _ledgerEndpoint,
-                    (endpoint) =>
-                    {
-                        using HttpMessage message = CreateGetLedgerEntryRequest(endpoint, transactionId, collectionId, context);
-                        return _pipeline.ProcessMessage(message, context);
-                    },
-                    nameof(GetLedgerEntry),
-                    collectionId,
-                    context?.CancellationToken ?? default);
             }
             catch (Exception e)
             {
@@ -544,17 +497,24 @@ namespace Azure.Security.ConfidentialLedger
             scope.Start();
             try
             {
-                Console.WriteLine("[GetCurrentLedgerEntryAsync] Starting request. collection={0}", collectionId);
-                return await _failoverService.ExecuteWithFailoverAsync(
-                    _ledgerEndpoint,
-                    async (endpoint) =>
-                    {
-                        using HttpMessage message = CreateGetCurrentLedgerEntryRequest(endpoint, collectionId, context);
-                        return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    },
-                    nameof(GetCurrentLedgerEntryAsync),
-                    collectionId,
-                    context?.CancellationToken ?? default).ConfigureAwait(false);
+                try
+                {
+                    using HttpMessage primaryMessage = CreateGetCurrentLedgerEntryRequest(_ledgerEndpoint, collectionId, context);
+                    return await _pipeline.ProcessMessageAsync(primaryMessage, context).ConfigureAwait(false);
+                }
+                catch (Exception)
+                {
+                    return await _failoverService.ExecuteOnFailoversAsync(
+                        _ledgerEndpoint,
+                        async (endpoint) =>
+                        {
+                            using HttpMessage message = CreateGetCurrentLedgerEntryRequest(endpoint, collectionId, context);
+                            return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                        },
+                        nameof(GetCurrentLedgerEntryAsync),
+                        collectionId,
+                        context?.CancellationToken ?? default).ConfigureAwait(false);
+                }
             }
             catch (Exception e)
             {
@@ -584,17 +544,24 @@ namespace Azure.Security.ConfidentialLedger
             scope.Start();
             try
             {
-                Console.WriteLine("[GetCurrentLedgerEntry] Starting request. collection={0}", collectionId);
-                return _failoverService.ExecuteWithFailover(
-                    _ledgerEndpoint,
-                    (endpoint) =>
-                    {
-                        using HttpMessage message = CreateGetCurrentLedgerEntryRequest(endpoint, collectionId, context);
-                        return _pipeline.ProcessMessage(message, context);
-                    },
-                    nameof(GetCurrentLedgerEntry),
-                    collectionId,
-                    context?.CancellationToken ?? default);
+                try
+                {
+                    using HttpMessage primaryMessage = CreateGetCurrentLedgerEntryRequest(_ledgerEndpoint, collectionId, context);
+                    return _pipeline.ProcessMessage(primaryMessage, context);
+                }
+                catch (Exception)
+                {
+                    return _failoverService.ExecuteOnFailovers(
+                        _ledgerEndpoint,
+                        (endpoint) =>
+                        {
+                            using HttpMessage message = CreateGetCurrentLedgerEntryRequest(endpoint, collectionId, context);
+                            return _pipeline.ProcessMessage(message, context);
+                        },
+                        nameof(GetCurrentLedgerEntry),
+                        collectionId,
+                        context?.CancellationToken ?? default);
+                }
             }
             catch (Exception e)
             {
@@ -2804,18 +2771,10 @@ namespace Azure.Security.ConfidentialLedger
         private static ResponseClassifier _responseClassifier200201;
         private static ResponseClassifier ResponseClassifier200201 => _responseClassifier200201 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
 
-        private static bool ShouldFallbackToCurrent(RequestFailedException ex)
-        {
-            if (ex == null) return false;
-            if (ex.Status == 404) return true;
-            if (string.Equals(ex.ErrorCode, "UnknownLedgerEntry", StringComparison.OrdinalIgnoreCase)) return true;
-            return false;
-        }
-
-        // Synthesize a GetLedgerEntry-shaped response from a GetCurrentLedgerEntry response body.
+        // Format a GetLedgerEntry-shaped response from a GetCurrentLedgerEntry response body.
         // Expected current entry body: { "collectionId":"...", "contents":"...", "transactionId":"..." }
         // Desired ledger entry body: { "entry": { same fields }, "state": "Ready" }
-        private Response SynthesizeLedgerEntryFromCurrent(Response currentResponse)
+        private Response FormatLedgerEntry(Response currentResponse)
         {
             try
             {
@@ -2828,7 +2787,12 @@ namespace Azure.Security.ConfidentialLedger
                 {
                     var root = doc.RootElement;
                     using var ms = new System.IO.MemoryStream();
-                    using (var writer = new System.Text.Json.Utf8JsonWriter(ms))
+                    var jsonWriterOptions = new System.Text.Json.JsonWriterOptions
+                    {
+                        Indented = true,
+                        Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+                    };
+                    using (var writer = new System.Text.Json.Utf8JsonWriter(ms, jsonWriterOptions))
                     {
                         writer.WriteStartObject();
                         writer.WritePropertyName("entry");
@@ -2845,9 +2809,8 @@ namespace Azure.Security.ConfidentialLedger
                     return new SyntheticResponse(currentResponse, ms.ToArray());
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.WriteLine($"[GetLedgerEntry] Failed to synthesize response from current entry: {ex.Message}");
                 return currentResponse; // fall back to original
             }
         }

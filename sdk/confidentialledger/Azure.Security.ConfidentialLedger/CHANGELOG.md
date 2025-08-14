@@ -3,7 +3,7 @@
 ## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
-- Added support for routing to failover ledgers.
+- Added support to route to failover ledgers for the `GetLedgerEntry`, `GetLedgerEntryAsync`, `GetCurrentLedgerEntry`, and `GetCurrentLedgerEntryAsync` methods.
 
 ## 1.4.1-beta.3 (Unreleased)
 
