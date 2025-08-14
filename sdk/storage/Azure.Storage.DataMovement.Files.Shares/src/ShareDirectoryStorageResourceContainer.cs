@@ -170,7 +170,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             CancellationToken cancellationToken = default)
         {
             IDictionary<string, string> metadata = ResourceOptions?.GetDirectoryMetadata(sourceProperties?.RawProperties);
-            string filePermission = ResourceOptions?.GetFilePermission(sourceProperties);
+            string directoryPermission = ResourceOptions?.GetDirectoryPermission(sourceProperties);
             FileSmbProperties smbProperties = ResourceOptions?.GetFileSmbProperties(sourceProperties);
             FilePosixProperties filePosixProperties = ResourceOptions?.GetFilePosixProperties(sourceProperties);
 
@@ -178,13 +178,56 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 Metadata = metadata,
                 SmbProperties = smbProperties,
-                FilePermission = new() { Permission = filePermission },
+                FilePermission = new() { Permission = directoryPermission },
                 PosixProperties = filePosixProperties
             };
 
             await ShareDirectoryClient.CreateIfNotExistsAsync(
                 options: options,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        protected override async Task CreateAsync(
+            bool overwrite,
+            StorageResourceContainerProperties sourceProperties,
+            CancellationToken cancellationToken = default)
+        {
+            bool exists = await ShareDirectoryClient.ExistsAsync(cancellationToken).ConfigureAwait(false);
+            if (!overwrite && exists)
+            {
+                throw Errors.ShareDirectoryAlreadyExists(ShareDirectoryClient.Path);
+            }
+
+            IDictionary<string, string> metadata = ResourceOptions?.GetDirectoryMetadata(sourceProperties?.RawProperties);
+            string directoryPermission = ResourceOptions?.GetDirectoryPermission(sourceProperties);
+            FileSmbProperties smbProperties = ResourceOptions?.GetFileSmbProperties(sourceProperties);
+            FilePosixProperties posixProperties = ResourceOptions?.GetFilePosixProperties(sourceProperties);
+
+            // If overwrite mode set and directory exists, then just set Properties, Permissions, and Metadata for preservation.
+            if (overwrite && exists)
+            {
+                await ShareDirectoryClient.SetMetadataAsync(metadata).ConfigureAwait(false);
+                await ShareDirectoryClient.SetHttpHeadersAsync(new()
+                {
+                    FilePermission = new() { Permission = directoryPermission },
+                    SmbProperties = smbProperties,
+                    PosixProperties = posixProperties
+                }, cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                ShareDirectoryCreateOptions options = new ShareDirectoryCreateOptions
+                {
+                    Metadata = metadata,
+                    FilePermission = new() { Permission = directoryPermission },
+                    SmbProperties = smbProperties,
+                    PosixProperties = posixProperties
+                };
+
+                await ShareDirectoryClient.CreateIfNotExistsAsync(
+                    options: options,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
         }
 
         protected override async Task ValidateTransferAsync(
