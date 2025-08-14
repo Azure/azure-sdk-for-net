@@ -11,10 +11,11 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.Identity;
+using Azure.AI.Projects.Tests.Utils;
 
 namespace Azure.AI.Projects.Tests
 {
-    public class IndexesTest : RecordedTestBase<AIProjectsTestEnvironment>
+    public class IndexesTest : ProjectsClientTestBase
     {
         public IndexesTest(bool isAsync) : base(isAsync) //, RecordedTestMode.Record)
         {
@@ -30,7 +31,7 @@ namespace Azure.AI.Projects.Tests
             var aiSearchConnectionName = TestEnvironment.AISEARCHCONNECTIONNAME ?? "my-ai-search-connection-name";
             var aiSearchIndexName = TestEnvironment.AISEARCHINDEXNAME ?? "my-ai-search-index-name";
 
-            AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+            AIProjectClient projectClient = GetTestClient();
 
             BinaryContent content = BinaryContent.Create(BinaryData.FromObjectAsJson(new
             {

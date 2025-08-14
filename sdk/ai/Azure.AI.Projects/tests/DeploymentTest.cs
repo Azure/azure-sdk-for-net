@@ -11,10 +11,11 @@ using NUnit.Framework;
 using System.ClientModel.Primitives;
 using System.Diagnostics;
 using Azure.Identity;
+using Azure.AI.Projects.Tests.Utils;
 
 namespace Azure.AI.Projects.Tests;
 
-public class DeploymentTest : RecordedTestBase<AIProjectsTestEnvironment>
+public class DeploymentTest : ProjectsClientTestBase
 {
     public DeploymentTest(bool isAsync) : base(isAsync) //, RecordedTestMode.Record)
     {
@@ -23,12 +24,10 @@ public class DeploymentTest : RecordedTestBase<AIProjectsTestEnvironment>
     [RecordedTest]
     public async Task AIDeploymentTest()
     {
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
         var modelPublisher = TestEnvironment.MODELPUBLISHER;
 
-        // Create client with debugging enabled
-        AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+        AIProjectClient projectClient = GetTestClient();
 
         Console.WriteLine("List all deployments:");
         await foreach (AssetDeployment deployment in projectClient.Deployments.GetAsync())

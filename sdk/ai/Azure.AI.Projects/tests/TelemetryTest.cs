@@ -9,10 +9,11 @@ using System.Text.RegularExpressions;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
+using Azure.AI.Projects.Tests.Utils;
 
 namespace Azure.AI.Projects.Tests
 {
-    public class TelemetryTest : RecordedTestBase<AIProjectsTestEnvironment>
+    public class TelemetryTest : ProjectsClientTestBase
     {
         public TelemetryTest(bool isAsync) : base(isAsync) //, RecordedTestMode.Record)
         {
@@ -22,8 +23,7 @@ namespace Azure.AI.Projects.Tests
         [RecordedTest]
         public async Task TelemetryTestAsync()
         {
-            var endpoint = TestEnvironment.PROJECTENDPOINT;
-            AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+            AIProjectClient projectClient = GetTestClient();
 
             Console.WriteLine("Get the Application Insights connection string.");
             var connectionString = await projectClient.Telemetry.GetApplicationInsightsConnectionStringAsync();

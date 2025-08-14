@@ -12,23 +12,23 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using Azure.Identity;
 using NUnit.Framework.Internal;
+using Azure.AI.Projects.Tests.Utils;
 
 namespace Azure.AI.Projects.Tests
 {
-    public class ConnectionsTest : RecordedTestBase<AIProjectsTestEnvironment>
+    public class ConnectionsTest : ProjectsClientTestBase
     {
-        public ConnectionsTest(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public ConnectionsTest(bool isAsync) : base(isAsync)
         {
         }
 
         [RecordedTest]
         public async Task ConnectionsBasicTest()
         {
-            var endpoint = TestEnvironment.PROJECTENDPOINT;
             var connectionName = TestEnvironment.CONNECTIONNAME;
             var connectionType = TestEnvironment.CONNECTIONTYPE;
 
-            AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+            AIProjectClient projectClient = GetTestClient();
 
             Console.WriteLine("List the properties of all connections:");
             bool isEmpty = true;
