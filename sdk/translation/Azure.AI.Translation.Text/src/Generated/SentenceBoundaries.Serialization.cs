@@ -36,14 +36,14 @@ namespace Azure.AI.Translation.Text
 
             writer.WritePropertyName("srcSentLen"u8);
             writer.WriteStartArray();
-            foreach (var item in SourceSentencesLengths)
+            foreach (var item in SrcSentLen)
             {
                 writer.WriteNumberValue(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("transSentLen"u8);
             writer.WriteStartArray();
-            foreach (var item in TranslatedSentencesLengths)
+            foreach (var item in TransSentLen)
             {
                 writer.WriteNumberValue(item);
             }

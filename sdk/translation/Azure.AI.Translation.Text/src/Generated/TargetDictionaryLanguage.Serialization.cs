@@ -39,7 +39,7 @@ namespace Azure.AI.Translation.Text
             writer.WritePropertyName("nativeName"u8);
             writer.WriteStringValue(NativeName);
             writer.WritePropertyName("dir"u8);
-            writer.WriteStringValue(Directionality.ToSerialString());
+            writer.WriteStringValue(Dir.ToSerialString());
             writer.WritePropertyName("code"u8);
             writer.WriteStringValue(Code);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

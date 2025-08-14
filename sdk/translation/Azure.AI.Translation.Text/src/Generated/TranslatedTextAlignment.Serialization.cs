@@ -35,7 +35,7 @@ namespace Azure.AI.Translation.Text
             }
 
             writer.WritePropertyName("proj"u8);
-            writer.WriteStringValue(Projections);
+            writer.WriteStringValue(Proj);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

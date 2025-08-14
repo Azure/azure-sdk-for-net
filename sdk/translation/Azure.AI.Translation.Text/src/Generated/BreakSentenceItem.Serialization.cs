@@ -41,7 +41,7 @@ namespace Azure.AI.Translation.Text
             }
             writer.WritePropertyName("sentLen"u8);
             writer.WriteStartArray();
-            foreach (var item in SentencesLengths)
+            foreach (var item in SentLen)
             {
                 writer.WriteNumberValue(item);
             }

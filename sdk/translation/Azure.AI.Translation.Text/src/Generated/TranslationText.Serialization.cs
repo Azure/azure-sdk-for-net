@@ -35,7 +35,7 @@ namespace Azure.AI.Translation.Text
             }
 
             writer.WritePropertyName("to"u8);
-            writer.WriteStringValue(TargetLanguage);
+            writer.WriteStringValue(To);
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
             if (Optional.IsDefined(Transliteration))
@@ -48,10 +48,10 @@ namespace Azure.AI.Translation.Text
                 writer.WritePropertyName("alignment"u8);
                 writer.WriteObjectValue(Alignment, options);
             }
-            if (Optional.IsDefined(SentenceBoundaries))
+            if (Optional.IsDefined(SentLen))
             {
                 writer.WritePropertyName("sentLen"u8);
-                writer.WriteObjectValue(SentenceBoundaries, options);
+                writer.WriteObjectValue(SentLen, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

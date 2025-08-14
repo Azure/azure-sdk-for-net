@@ -252,7 +252,7 @@ namespace Azure.AI.Translation.Text
             return message;
         }
 
-        internal HttpMessage CreateTranslateRequest(IEnumerable<string> targetLanguages, RequestContent content, string clientTraceId, string sourceLanguage, string textType, string category, string profanityAction, string profanityMarker, bool? includeAlignment, bool? includeSentenceLength, string suggestedSourceLanguage, string sourceLanguageScript, string targetLanguageScript, bool? allowFallback, RequestContext context)
+        internal HttpMessage CreateTranslateRequest(IEnumerable<string> to, RequestContent content, string clientTraceId, string @from, string textType, string category, string profanityAction, string profanityMarker, bool? includeAlignment, bool? includeSentenceLength, string suggestedFrom, string fromScript, string toScript, bool? allowFallback, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -260,16 +260,16 @@ namespace Azure.AI.Translation.Text
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/translate", false);
-            if (targetLanguages != null && !(targetLanguages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (to != null && !(to is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                foreach (var param in targetLanguages)
+                foreach (var param in to)
                 {
                     uri.AppendQuery("to", param, true);
                 }
             }
-            if (sourceLanguage != null)
+            if (@from != null)
             {
-                uri.AppendQuery("from", sourceLanguage, true);
+                uri.AppendQuery("from", @from, true);
             }
             if (textType != null)
             {
@@ -295,17 +295,17 @@ namespace Azure.AI.Translation.Text
             {
                 uri.AppendQuery("includeSentenceLength", includeSentenceLength.Value, true);
             }
-            if (suggestedSourceLanguage != null)
+            if (suggestedFrom != null)
             {
-                uri.AppendQuery("suggestedFrom", suggestedSourceLanguage, true);
+                uri.AppendQuery("suggestedFrom", suggestedFrom, true);
             }
-            if (sourceLanguageScript != null)
+            if (fromScript != null)
             {
-                uri.AppendQuery("fromScript", sourceLanguageScript, true);
+                uri.AppendQuery("fromScript", fromScript, true);
             }
-            if (targetLanguageScript != null)
+            if (toScript != null)
             {
-                uri.AppendQuery("toScript", targetLanguageScript, true);
+                uri.AppendQuery("toScript", toScript, true);
             }
             if (allowFallback != null)
             {
@@ -323,7 +323,7 @@ namespace Azure.AI.Translation.Text
             return message;
         }
 
-        internal HttpMessage CreateTransliterateRequest(string language, string sourceLanguageScript, string targetLanguageScript, RequestContent content, string clientTraceId, RequestContext context)
+        internal HttpMessage CreateTransliterateRequest(string language, string fromScript, string toScript, RequestContent content, string clientTraceId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -332,8 +332,8 @@ namespace Azure.AI.Translation.Text
             uri.Reset(_endpoint);
             uri.AppendPath("/transliterate", false);
             uri.AppendQuery("language", language, true);
-            uri.AppendQuery("fromScript", sourceLanguageScript, true);
-            uri.AppendQuery("toScript", targetLanguageScript, true);
+            uri.AppendQuery("fromScript", fromScript, true);
+            uri.AppendQuery("toScript", toScript, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -374,7 +374,7 @@ namespace Azure.AI.Translation.Text
             return message;
         }
 
-        internal HttpMessage CreateLookupDictionaryEntriesRequest(string sourceLanguage, string targetLanguage, RequestContent content, string clientTraceId, RequestContext context)
+        internal HttpMessage CreateLookupDictionaryEntriesRequest(string @from, string to, RequestContent content, string clientTraceId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -382,8 +382,8 @@ namespace Azure.AI.Translation.Text
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/dictionary/lookup", false);
-            uri.AppendQuery("from", sourceLanguage, true);
-            uri.AppendQuery("to", targetLanguage, true);
+            uri.AppendQuery("from", @from, true);
+            uri.AppendQuery("to", to, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -396,7 +396,7 @@ namespace Azure.AI.Translation.Text
             return message;
         }
 
-        internal HttpMessage CreateLookupDictionaryExamplesRequest(string sourceLanguage, string targetLanguage, RequestContent content, string clientTraceId, RequestContext context)
+        internal HttpMessage CreateLookupDictionaryExamplesRequest(string @from, string to, RequestContent content, string clientTraceId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -404,8 +404,8 @@ namespace Azure.AI.Translation.Text
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/dictionary/examples", false);
-            uri.AppendQuery("from", sourceLanguage, true);
-            uri.AppendQuery("to", targetLanguage, true);
+            uri.AppendQuery("from", @from, true);
+            uri.AppendQuery("to", to, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

@@ -47,29 +47,29 @@ namespace Azure.AI.Translation.Text
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BreakSentenceItem"/>. </summary>
-        /// <param name="sentencesLengths">
+        /// <param name="sentLen">
         /// An integer array representing the lengths of the sentences in the input text.
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sentencesLengths"/> is null. </exception>
-        internal BreakSentenceItem(IEnumerable<int> sentencesLengths)
+        /// <exception cref="ArgumentNullException"> <paramref name="sentLen"/> is null. </exception>
+        internal BreakSentenceItem(IEnumerable<int> sentLen)
         {
-            Argument.AssertNotNull(sentencesLengths, nameof(sentencesLengths));
+            Argument.AssertNotNull(sentLen, nameof(sentLen));
 
-            SentencesLengths = sentencesLengths.ToList();
+            SentLen = sentLen.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="BreakSentenceItem"/>. </summary>
         /// <param name="detectedLanguage"> The detectedLanguage property is only present in the result object when language auto-detection is requested. </param>
-        /// <param name="sentencesLengths">
+        /// <param name="sentLen">
         /// An integer array representing the lengths of the sentences in the input text.
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BreakSentenceItem(DetectedLanguage detectedLanguage, IReadOnlyList<int> sentencesLengths, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BreakSentenceItem(DetectedLanguage detectedLanguage, IReadOnlyList<int> sentLen, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DetectedLanguage = detectedLanguage;
-            SentencesLengths = sentencesLengths;
+            SentLen = sentLen;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -84,6 +84,6 @@ namespace Azure.AI.Translation.Text
         /// An integer array representing the lengths of the sentences in the input text.
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
         /// </summary>
-        public IReadOnlyList<int> SentencesLengths { get; }
+        public IReadOnlyList<int> SentLen { get; }
     }
 }
