@@ -1124,7 +1124,11 @@
 # ServiceLabel: %PureStorage %Mgmt
 # ServiceOwners:                                                   @deepakmauryams
 
-# PRLabel: %Quota
+# PRLabel: %PureStorage
+/sdk/purestorageblock/Azure.ResourceManager.*/                     @deepakmauryams @deepakmauryams @ReilleyMilne
+
+# ServiceLabel: %PureStorage
+# ServiceOwners: @deepakmauryams @deepakmauryams @ReilleyMilne
 /sdk/quota/Azure.ResourceManager.*/                                @tejasm-microsoft
 
 # ServiceLabel: %Quota %Mgmt
