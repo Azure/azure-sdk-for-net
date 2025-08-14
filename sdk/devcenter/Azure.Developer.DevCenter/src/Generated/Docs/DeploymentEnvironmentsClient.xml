@@ -1,6 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
+    <member name="GetAllEnvironmentsAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetAllEnvironmentsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+Response<EnvironmentListResult> response = await client.GetAllEnvironmentsAsync("myProject");
+]]></code></example>
+    </member>
+    <member name="GetAllEnvironments(string,CancellationToken)">
+      <example>
+This sample shows how to call GetAllEnvironments.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+Response<EnvironmentListResult> response = client.GetAllEnvironments("myProject");
+]]></code></example>
+    </member>
+    <member name="GetAllEnvironmentsAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetAllEnvironmentsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+Response response = await client.GetAllEnvironmentsAsync("myProject", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("environmentType").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("catalogName").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("environmentDefinitionName").ToString());
+]]></code></example>
+    </member>
+    <member name="GetAllEnvironments(string,RequestContext)">
+      <example>
+This sample shows how to call GetAllEnvironments and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+Response response = client.GetAllEnvironments("myProject", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("environmentType").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("catalogName").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("environmentDefinitionName").ToString());
+]]></code></example>
+    </member>
+    <member name="GetEnvironmentsAsync(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetEnvironmentsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+Response<EnvironmentListResult> response = await client.GetEnvironmentsAsync("myProject", "me");
+]]></code></example>
+    </member>
+    <member name="GetEnvironments(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetEnvironments.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+Response<EnvironmentListResult> response = client.GetEnvironments("myProject", "me");
+]]></code></example>
+    </member>
+    <member name="GetEnvironmentsAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetEnvironmentsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+Response response = await client.GetEnvironmentsAsync("myProject", "me", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("environmentType").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("catalogName").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("environmentDefinitionName").ToString());
+]]></code></example>
+    </member>
+    <member name="GetEnvironments(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetEnvironments and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+Response response = client.GetEnvironments("myProject", "me", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("environmentType").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("catalogName").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("environmentDefinitionName").ToString());
+]]></code></example>
+    </member>
     <member name="GetEnvironmentAsync(string,string,string,CancellationToken)">
       <example>
 This sample shows how to call GetEnvironmentAsync.
@@ -107,6 +219,114 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 ]]></code></example>
     </member>
+    <member name="GetEnvironmentDefinitionsAsync(string,CancellationToken)">
+      <example>
+This sample shows how to call GetEnvironmentDefinitionsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+Response<EnvironmentDefinitionListResult> response = await client.GetEnvironmentDefinitionsAsync("myProject");
+]]></code></example>
+    </member>
+    <member name="GetEnvironmentDefinitions(string,CancellationToken)">
+      <example>
+This sample shows how to call GetEnvironmentDefinitions.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+Response<EnvironmentDefinitionListResult> response = client.GetEnvironmentDefinitions("myProject");
+]]></code></example>
+    </member>
+    <member name="GetEnvironmentDefinitionsAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetEnvironmentDefinitionsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+Response response = await client.GetEnvironmentDefinitionsAsync("myProject", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("catalogName").ToString());
+]]></code></example>
+    </member>
+    <member name="GetEnvironmentDefinitions(string,RequestContext)">
+      <example>
+This sample shows how to call GetEnvironmentDefinitions and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+Response response = client.GetEnvironmentDefinitions("myProject", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("catalogName").ToString());
+]]></code></example>
+    </member>
+    <member name="GetEnvironmentDefinitionsByCatalogAsync(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetEnvironmentDefinitionsByCatalogAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+Response<EnvironmentDefinitionListResult> response = await client.GetEnvironmentDefinitionsByCatalogAsync("myProject", "myCatalog");
+]]></code></example>
+    </member>
+    <member name="GetEnvironmentDefinitionsByCatalog(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetEnvironmentDefinitionsByCatalog.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+Response<EnvironmentDefinitionListResult> response = client.GetEnvironmentDefinitionsByCatalog("myProject", "myCatalog");
+]]></code></example>
+    </member>
+    <member name="GetEnvironmentDefinitionsByCatalogAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetEnvironmentDefinitionsByCatalogAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+Response response = await client.GetEnvironmentDefinitionsByCatalogAsync("myProject", "myCatalog", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("catalogName").ToString());
+]]></code></example>
+    </member>
+    <member name="GetEnvironmentDefinitionsByCatalog(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetEnvironmentDefinitionsByCatalog and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+Response response = client.GetEnvironmentDefinitionsByCatalog("myProject", "myCatalog", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("catalogName").ToString());
+]]></code></example>
+    </member>
     <member name="GetEnvironmentDefinitionAsync(string,string,string,CancellationToken)">
       <example>
 This sample shows how to call GetEnvironmentDefinitionAsync.
@@ -161,128 +381,58 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("catalogName").ToString());
 ]]></code></example>
     </member>
-    <member name="GetAllEnvironmentsAsync(string,CancellationToken)">
+    <member name="GetEnvironmentTypesAsync(string,CancellationToken)">
       <example>
-This sample shows how to call GetAllEnvironmentsAsync.
+This sample shows how to call GetEnvironmentTypesAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-await foreach (DevCenterEnvironment item in client.GetAllEnvironmentsAsync("myProject"))
-{
-}
+Response<EnvironmentTypeListResult> response = await client.GetEnvironmentTypesAsync("myProject");
 ]]></code></example>
     </member>
-    <member name="GetAllEnvironments(string,CancellationToken)">
+    <member name="GetEnvironmentTypes(string,CancellationToken)">
       <example>
-This sample shows how to call GetAllEnvironments.
+This sample shows how to call GetEnvironmentTypes.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-foreach (DevCenterEnvironment item in client.GetAllEnvironments("myProject"))
-{
-}
+Response<EnvironmentTypeListResult> response = client.GetEnvironmentTypes("myProject");
 ]]></code></example>
     </member>
-    <member name="GetAllEnvironmentsAsync(string,RequestContext)">
+    <member name="GetEnvironmentTypesAsync(string,RequestContext)">
       <example>
-This sample shows how to call GetAllEnvironmentsAsync and parse the result.
+This sample shows how to call GetEnvironmentTypesAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetAllEnvironmentsAsync("myProject", null))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("name").ToString());
-    Console.WriteLine(result.GetProperty("environmentType").ToString());
-    Console.WriteLine(result.GetProperty("catalogName").ToString());
-    Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
-}
+Response response = await client.GetEnvironmentTypesAsync("myProject", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("deploymentTargetId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("status").ToString());
 ]]></code></example>
     </member>
-    <member name="GetAllEnvironments(string,RequestContext)">
+    <member name="GetEnvironmentTypes(string,RequestContext)">
       <example>
-This sample shows how to call GetAllEnvironments and parse the result.
+This sample shows how to call GetEnvironmentTypes and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetAllEnvironments("myProject", null))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("name").ToString());
-    Console.WriteLine(result.GetProperty("environmentType").ToString());
-    Console.WriteLine(result.GetProperty("catalogName").ToString());
-    Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
-}
-]]></code></example>
-    </member>
-    <member name="GetEnvironmentsAsync(string,string,CancellationToken)">
-      <example>
-This sample shows how to call GetEnvironmentsAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+Response response = client.GetEnvironmentTypes("myProject", null);
 
-await foreach (DevCenterEnvironment item in client.GetEnvironmentsAsync("myProject", "me"))
-{
-}
-]]></code></example>
-    </member>
-    <member name="GetEnvironments(string,string,CancellationToken)">
-      <example>
-This sample shows how to call GetEnvironments.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-foreach (DevCenterEnvironment item in client.GetEnvironments("myProject", "me"))
-{
-}
-]]></code></example>
-    </member>
-    <member name="GetEnvironmentsAsync(string,string,RequestContext)">
-      <example>
-This sample shows how to call GetEnvironmentsAsync and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-await foreach (BinaryData item in client.GetEnvironmentsAsync("myProject", "me", null))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("name").ToString());
-    Console.WriteLine(result.GetProperty("environmentType").ToString());
-    Console.WriteLine(result.GetProperty("catalogName").ToString());
-    Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
-}
-]]></code></example>
-    </member>
-    <member name="GetEnvironments(string,string,RequestContext)">
-      <example>
-This sample shows how to call GetEnvironments and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-foreach (BinaryData item in client.GetEnvironments("myProject", "me", null))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("name").ToString());
-    Console.WriteLine(result.GetProperty("environmentType").ToString());
-    Console.WriteLine(result.GetProperty("catalogName").ToString());
-    Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
-}
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("deploymentTargetId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("status").ToString());
 ]]></code></example>
     </member>
     <member name="GetCatalogsAsync(string,CancellationToken)">
@@ -338,186 +488,6 @@ foreach (BinaryData item in client.GetCatalogs("myProject", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
-}
-]]></code></example>
-    </member>
-    <member name="GetEnvironmentDefinitionsAsync(string,CancellationToken)">
-      <example>
-This sample shows how to call GetEnvironmentDefinitionsAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-await foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitionsAsync("myProject"))
-{
-}
-]]></code></example>
-    </member>
-    <member name="GetEnvironmentDefinitions(string,CancellationToken)">
-      <example>
-This sample shows how to call GetEnvironmentDefinitions.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitions("myProject"))
-{
-}
-]]></code></example>
-    </member>
-    <member name="GetEnvironmentDefinitionsAsync(string,RequestContext)">
-      <example>
-This sample shows how to call GetEnvironmentDefinitionsAsync and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-await foreach (BinaryData item in client.GetEnvironmentDefinitionsAsync("myProject", null))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("id").ToString());
-    Console.WriteLine(result.GetProperty("name").ToString());
-    Console.WriteLine(result.GetProperty("catalogName").ToString());
-}
-]]></code></example>
-    </member>
-    <member name="GetEnvironmentDefinitions(string,RequestContext)">
-      <example>
-This sample shows how to call GetEnvironmentDefinitions and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-foreach (BinaryData item in client.GetEnvironmentDefinitions("myProject", null))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("id").ToString());
-    Console.WriteLine(result.GetProperty("name").ToString());
-    Console.WriteLine(result.GetProperty("catalogName").ToString());
-}
-]]></code></example>
-    </member>
-    <member name="GetEnvironmentDefinitionsByCatalogAsync(string,string,CancellationToken)">
-      <example>
-This sample shows how to call GetEnvironmentDefinitionsByCatalogAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-await foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitionsByCatalogAsync("myProject", "myCatalog"))
-{
-}
-]]></code></example>
-    </member>
-    <member name="GetEnvironmentDefinitionsByCatalog(string,string,CancellationToken)">
-      <example>
-This sample shows how to call GetEnvironmentDefinitionsByCatalog.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitionsByCatalog("myProject", "myCatalog"))
-{
-}
-]]></code></example>
-    </member>
-    <member name="GetEnvironmentDefinitionsByCatalogAsync(string,string,RequestContext)">
-      <example>
-This sample shows how to call GetEnvironmentDefinitionsByCatalogAsync and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-await foreach (BinaryData item in client.GetEnvironmentDefinitionsByCatalogAsync("myProject", "myCatalog", null))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("id").ToString());
-    Console.WriteLine(result.GetProperty("name").ToString());
-    Console.WriteLine(result.GetProperty("catalogName").ToString());
-}
-]]></code></example>
-    </member>
-    <member name="GetEnvironmentDefinitionsByCatalog(string,string,RequestContext)">
-      <example>
-This sample shows how to call GetEnvironmentDefinitionsByCatalog and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-foreach (BinaryData item in client.GetEnvironmentDefinitionsByCatalog("myProject", "myCatalog", null))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("id").ToString());
-    Console.WriteLine(result.GetProperty("name").ToString());
-    Console.WriteLine(result.GetProperty("catalogName").ToString());
-}
-]]></code></example>
-    </member>
-    <member name="GetEnvironmentTypesAsync(string,CancellationToken)">
-      <example>
-This sample shows how to call GetEnvironmentTypesAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-await foreach (DevCenterEnvironmentType item in client.GetEnvironmentTypesAsync("myProject"))
-{
-}
-]]></code></example>
-    </member>
-    <member name="GetEnvironmentTypes(string,CancellationToken)">
-      <example>
-This sample shows how to call GetEnvironmentTypes.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-foreach (DevCenterEnvironmentType item in client.GetEnvironmentTypes("myProject"))
-{
-}
-]]></code></example>
-    </member>
-    <member name="GetEnvironmentTypesAsync(string,RequestContext)">
-      <example>
-This sample shows how to call GetEnvironmentTypesAsync and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-await foreach (BinaryData item in client.GetEnvironmentTypesAsync("myProject", null))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("name").ToString());
-    Console.WriteLine(result.GetProperty("deploymentTargetId").ToString());
-    Console.WriteLine(result.GetProperty("status").ToString());
-}
-]]></code></example>
-    </member>
-    <member name="GetEnvironmentTypes(string,RequestContext)">
-      <example>
-This sample shows how to call GetEnvironmentTypes and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-foreach (BinaryData item in client.GetEnvironmentTypes("myProject", null))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("name").ToString());
-    Console.WriteLine(result.GetProperty("deploymentTargetId").ToString());
-    Console.WriteLine(result.GetProperty("status").ToString());
 }
 ]]></code></example>
     </member>

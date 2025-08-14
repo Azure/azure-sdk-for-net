@@ -19,6 +19,118 @@ namespace Azure.Developer.DevCenter.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public void Example_EnvironmentClientOperations_GetAllEnvironments_ListsTheEnvironmentsForAProject()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            Response response = client.GetAllEnvironments("myProject", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("environmentType").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("catalogName").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("environmentDefinitionName").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_EnvironmentClientOperations_GetAllEnvironments_ListsTheEnvironmentsForAProject_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            Response response = await client.GetAllEnvironmentsAsync("myProject", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("environmentType").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("catalogName").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("environmentDefinitionName").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_EnvironmentClientOperations_GetAllEnvironments_ListsTheEnvironmentsForAProject_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            Response<EnvironmentListResult> response = client.GetAllEnvironments("myProject");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_EnvironmentClientOperations_GetAllEnvironments_ListsTheEnvironmentsForAProject_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            Response<EnvironmentListResult> response = await client.GetAllEnvironmentsAsync("myProject");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_EnvironmentClientOperations_GetEnvironments_ListsTheEnvironmentsForAProjectAndUser()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            Response response = client.GetEnvironments("myProject", "me", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("environmentType").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("catalogName").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("environmentDefinitionName").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_EnvironmentClientOperations_GetEnvironments_ListsTheEnvironmentsForAProjectAndUser_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            Response response = await client.GetEnvironmentsAsync("myProject", "me", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("environmentType").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("catalogName").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("environmentDefinitionName").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_EnvironmentClientOperations_GetEnvironments_ListsTheEnvironmentsForAProjectAndUser_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            Response<EnvironmentListResult> response = client.GetEnvironments("myProject", "me");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_EnvironmentClientOperations_GetEnvironments_ListsTheEnvironmentsForAProjectAndUser_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            Response<EnvironmentListResult> response = await client.GetEnvironmentsAsync("myProject", "me");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_Environment_GetEnvironment_GetsAnEnvironment()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -125,6 +237,114 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public void Example_EnvironmentClientOperations_GetEnvironmentDefinitions_ListsAllEnvironmentDefinitionsAvailableForAProject()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            Response response = client.GetEnvironmentDefinitions("myProject", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("catalogName").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_EnvironmentClientOperations_GetEnvironmentDefinitions_ListsAllEnvironmentDefinitionsAvailableForAProject_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            Response response = await client.GetEnvironmentDefinitionsAsync("myProject", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("catalogName").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_EnvironmentClientOperations_GetEnvironmentDefinitions_ListsAllEnvironmentDefinitionsAvailableForAProject_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            Response<EnvironmentDefinitionListResult> response = client.GetEnvironmentDefinitions("myProject");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_EnvironmentClientOperations_GetEnvironmentDefinitions_ListsAllEnvironmentDefinitionsAvailableForAProject_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            Response<EnvironmentDefinitionListResult> response = await client.GetEnvironmentDefinitionsAsync("myProject");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_EnvironmentClientOperations_GetEnvironmentDefinitionsByCatalog_ListsAllEnvironmentDefinitionsAvailableWithinACatalog()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            Response response = client.GetEnvironmentDefinitionsByCatalog("myProject", "myCatalog", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("catalogName").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_EnvironmentClientOperations_GetEnvironmentDefinitionsByCatalog_ListsAllEnvironmentDefinitionsAvailableWithinACatalog_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            Response response = await client.GetEnvironmentDefinitionsByCatalogAsync("myProject", "myCatalog", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("catalogName").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_EnvironmentClientOperations_GetEnvironmentDefinitionsByCatalog_ListsAllEnvironmentDefinitionsAvailableWithinACatalog_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            Response<EnvironmentDefinitionListResult> response = client.GetEnvironmentDefinitionsByCatalog("myProject", "myCatalog");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_EnvironmentClientOperations_GetEnvironmentDefinitionsByCatalog_ListsAllEnvironmentDefinitionsAvailableWithinACatalog_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
+
+            Response<EnvironmentDefinitionListResult> response = await client.GetEnvironmentDefinitionsByCatalogAsync("myProject", "myCatalog");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_EnvironmentDefinition_GetEnvironmentDefinition_GetAnEnvironmentDefinitionFromACatalog()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -179,126 +399,56 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_EnvironmentClientOperations_GetAllEnvironments_ListsTheEnvironmentsForAProject()
+        public void Example_EnvironmentClientOperations_GetEnvironmentTypes_ListsAllEnvironmentTypesConfiguredForAProject()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetAllEnvironments("myProject", null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("environmentType").ToString());
-                Console.WriteLine(result.GetProperty("catalogName").ToString());
-                Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
-            }
+            Response response = client.GetEnvironmentTypes("myProject", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("deploymentTargetId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("status").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_EnvironmentClientOperations_GetAllEnvironments_ListsTheEnvironmentsForAProject_Async()
+        public async Task Example_EnvironmentClientOperations_GetEnvironmentTypes_ListsAllEnvironmentTypesConfiguredForAProject_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetAllEnvironmentsAsync("myProject", null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("environmentType").ToString());
-                Console.WriteLine(result.GetProperty("catalogName").ToString());
-                Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
-            }
+            Response response = await client.GetEnvironmentTypesAsync("myProject", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("deploymentTargetId").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("status").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_EnvironmentClientOperations_GetAllEnvironments_ListsTheEnvironmentsForAProject_Convenience()
+        public void Example_EnvironmentClientOperations_GetEnvironmentTypes_ListsAllEnvironmentTypesConfiguredForAProject_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-            foreach (DevCenterEnvironment item in client.GetAllEnvironments("myProject"))
-            {
-            }
+            Response<EnvironmentTypeListResult> response = client.GetEnvironmentTypes("myProject");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_EnvironmentClientOperations_GetAllEnvironments_ListsTheEnvironmentsForAProject_Convenience_Async()
+        public async Task Example_EnvironmentClientOperations_GetEnvironmentTypes_ListsAllEnvironmentTypesConfiguredForAProject_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-            await foreach (DevCenterEnvironment item in client.GetAllEnvironmentsAsync("myProject"))
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_EnvironmentClientOperations_GetEnvironments_ListsTheEnvironmentsForAProjectAndUser()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-            foreach (BinaryData item in client.GetEnvironments("myProject", "me", null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("environmentType").ToString());
-                Console.WriteLine(result.GetProperty("catalogName").ToString());
-                Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_EnvironmentClientOperations_GetEnvironments_ListsTheEnvironmentsForAProjectAndUser_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetEnvironmentsAsync("myProject", "me", null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("environmentType").ToString());
-                Console.WriteLine(result.GetProperty("catalogName").ToString());
-                Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_EnvironmentClientOperations_GetEnvironments_ListsTheEnvironmentsForAProjectAndUser_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-            foreach (DevCenterEnvironment item in client.GetEnvironments("myProject", "me"))
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_EnvironmentClientOperations_GetEnvironments_ListsTheEnvironmentsForAProjectAndUser_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-            await foreach (DevCenterEnvironment item in client.GetEnvironmentsAsync("myProject", "me"))
-            {
-            }
+            Response<EnvironmentTypeListResult> response = await client.GetEnvironmentTypesAsync("myProject");
         }
 
         [Test]
@@ -353,186 +503,6 @@ namespace Azure.Developer.DevCenter.Samples
             DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
             await foreach (DevCenterCatalog item in client.GetCatalogsAsync("myProject"))
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_EnvironmentClientOperations_GetEnvironmentDefinitions_ListsAllEnvironmentDefinitionsAvailableForAProject()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-            foreach (BinaryData item in client.GetEnvironmentDefinitions("myProject", null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("catalogName").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_EnvironmentClientOperations_GetEnvironmentDefinitions_ListsAllEnvironmentDefinitionsAvailableForAProject_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetEnvironmentDefinitionsAsync("myProject", null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("catalogName").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_EnvironmentClientOperations_GetEnvironmentDefinitions_ListsAllEnvironmentDefinitionsAvailableForAProject_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-            foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitions("myProject"))
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_EnvironmentClientOperations_GetEnvironmentDefinitions_ListsAllEnvironmentDefinitionsAvailableForAProject_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-            await foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitionsAsync("myProject"))
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_EnvironmentClientOperations_GetEnvironmentDefinitionsByCatalog_ListsAllEnvironmentDefinitionsAvailableWithinACatalog()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-            foreach (BinaryData item in client.GetEnvironmentDefinitionsByCatalog("myProject", "myCatalog", null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("catalogName").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_EnvironmentClientOperations_GetEnvironmentDefinitionsByCatalog_ListsAllEnvironmentDefinitionsAvailableWithinACatalog_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetEnvironmentDefinitionsByCatalogAsync("myProject", "myCatalog", null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("id").ToString());
-                Console.WriteLine(result.GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("catalogName").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_EnvironmentClientOperations_GetEnvironmentDefinitionsByCatalog_ListsAllEnvironmentDefinitionsAvailableWithinACatalog_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-            foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitionsByCatalog("myProject", "myCatalog"))
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_EnvironmentClientOperations_GetEnvironmentDefinitionsByCatalog_ListsAllEnvironmentDefinitionsAvailableWithinACatalog_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-            await foreach (EnvironmentDefinition item in client.GetEnvironmentDefinitionsByCatalogAsync("myProject", "myCatalog"))
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_EnvironmentClientOperations_GetEnvironmentTypes_ListsAllEnvironmentTypesConfiguredForAProject()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-            foreach (BinaryData item in client.GetEnvironmentTypes("myProject", null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("deploymentTargetId").ToString());
-                Console.WriteLine(result.GetProperty("status").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_EnvironmentClientOperations_GetEnvironmentTypes_ListsAllEnvironmentTypesConfiguredForAProject_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-            await foreach (BinaryData item in client.GetEnvironmentTypesAsync("myProject", null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("name").ToString());
-                Console.WriteLine(result.GetProperty("deploymentTargetId").ToString());
-                Console.WriteLine(result.GetProperty("status").ToString());
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_EnvironmentClientOperations_GetEnvironmentTypes_ListsAllEnvironmentTypesConfiguredForAProject_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-            foreach (DevCenterEnvironmentType item in client.GetEnvironmentTypes("myProject"))
-            {
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_EnvironmentClientOperations_GetEnvironmentTypes_ListsAllEnvironmentTypesConfiguredForAProject_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
-
-            await foreach (DevCenterEnvironmentType item in client.GetEnvironmentTypesAsync("myProject"))
             {
             }
         }

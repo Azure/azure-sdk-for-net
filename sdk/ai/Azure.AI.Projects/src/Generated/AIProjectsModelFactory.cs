@@ -165,6 +165,21 @@ namespace Azure.AI.Projects
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Projects.PagedDatasetVersion"/>. </summary>
+        /// <param name="value">
+        /// The DatasetVersion items on this page
+        /// Please note <see cref="Projects.DatasetVersion"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Projects.FileDatasetVersion"/> and <see cref="Projects.FolderDatasetVersion"/>.
+        /// </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Projects.PagedDatasetVersion"/> instance for mocking. </returns>
+        public static PagedDatasetVersion PagedDatasetVersion(IEnumerable<DatasetVersion> value = null, Uri nextLink = null)
+        {
+            value ??= new List<DatasetVersion>();
+
+            return new PagedDatasetVersion(value?.ToList(), nextLink, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Projects.DatasetVersion"/>. </summary>
         /// <param name="dataUri"> URI of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </param>
         /// <param name="type"> Dataset type. </param>
@@ -293,6 +308,21 @@ namespace Azure.AI.Projects
         public static AssetCredentialResponse AssetCredentialResponse(BlobReference blobReference = null)
         {
             return new AssetCredentialResponse(blobReference, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.PagedIndex"/>. </summary>
+        /// <param name="value">
+        /// The Index items on this page
+        /// Please note <see cref="Projects.DatasetIndex"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Projects.AzureAISearchIndex"/>, <see cref="Projects.CosmosDBIndex"/> and <see cref="Projects.ManagedAzureAISearchIndex"/>.
+        /// </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Projects.PagedIndex"/> instance for mocking. </returns>
+        public static PagedIndex PagedIndex(IEnumerable<DatasetIndex> value = null, Uri nextLink = null)
+        {
+            value ??= new List<DatasetIndex>();
+
+            return new PagedIndex(value?.ToList(), nextLink, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Projects.DatasetIndex"/>. </summary>

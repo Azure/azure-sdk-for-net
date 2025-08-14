@@ -68,6 +68,7 @@ namespace Azure.AI.DocumentIntelligence
     [ModelReaderWriterBuildable(typeof(DocumentTypeDetails))]
     [ModelReaderWriterBuildable(typeof(DocumentWord))]
     [ModelReaderWriterBuildable(typeof(ModelCopyAuthorization))]
+    [ModelReaderWriterBuildable(typeof(PagedAnalyzeBatchOperation))]
     [ModelReaderWriterBuildable(typeof(UnknownDocumentIntelligenceOperationDetails))]
     public partial class AzureAIDocumentIntelligenceContext : ModelReaderWriterContext
     {

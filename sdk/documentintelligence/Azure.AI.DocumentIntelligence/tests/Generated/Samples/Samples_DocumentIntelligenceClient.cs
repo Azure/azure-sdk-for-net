@@ -24,13 +24,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetAnalyzeBatchResults("prebuilt-invoice", null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            }
+            Response response = client.GetAnalyzeBatchResults("prebuilt-invoice", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("lastUpdatedDateTime").ToString());
         }
 
         [Test]
@@ -41,13 +40,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetAnalyzeBatchResultsAsync("prebuilt-invoice", null))
-            {
-                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result.GetProperty("status").ToString());
-                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-                Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            }
+            Response response = await client.GetAnalyzeBatchResultsAsync("prebuilt-invoice", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("lastUpdatedDateTime").ToString());
         }
 
         [Test]
@@ -58,9 +56,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            foreach (AnalyzeBatchOperationDetails item in client.GetAnalyzeBatchResults("prebuilt-invoice"))
-            {
-            }
+            Response<PagedAnalyzeBatchOperation> response = client.GetAnalyzeBatchResults("prebuilt-invoice");
         }
 
         [Test]
@@ -71,9 +67,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            await foreach (AnalyzeBatchOperationDetails item in client.GetAnalyzeBatchResultsAsync("prebuilt-invoice"))
-            {
-            }
+            Response<PagedAnalyzeBatchOperation> response = await client.GetAnalyzeBatchResultsAsync("prebuilt-invoice");
         }
 
         [Test]

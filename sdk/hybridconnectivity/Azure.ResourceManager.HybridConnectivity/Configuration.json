@@ -8,6 +8,6 @@
     "../../TempTypeSpecFiles/node_modules/@autorest/csharp/Generator.Shared",
     "../../TempTypeSpecFiles/node_modules/@autorest/csharp/Azure.Core.Shared"
   ],
-  "examples-dir": "TempTypeSpecFiles/HybridConnectivity.Management/examples",
+  "examples-dir": "TempTypeSpecFiles\\HybridConnectivity.Management\\examples",
   "azure-arm": true
 }

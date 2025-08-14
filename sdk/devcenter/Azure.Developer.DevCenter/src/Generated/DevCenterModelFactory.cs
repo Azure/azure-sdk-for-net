@@ -131,6 +131,17 @@ namespace Azure.Developer.DevCenter.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.DevBoxListResult"/>. </summary>
+        /// <param name="value"> The DevBox items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.DevBoxListResult"/> instance for mocking. </returns>
+        public static DevBoxListResult DevBoxListResult(IEnumerable<DevBox> value = null, Uri nextLink = null)
+        {
+            value ??= new List<DevBox>();
+
+            return new DevBoxListResult(value?.ToList(), nextLink, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.DevBox"/>. </summary>
         /// <param name="name"> Display name for the Dev Box. </param>
         /// <param name="projectName"> Name of the project this Dev Box belongs to. </param>
@@ -217,6 +228,17 @@ namespace Azure.Developer.DevCenter.Models
             return new DevBoxNextAction(scheduledTime, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.DevBoxActionsDelayMultipleResult"/>. </summary>
+        /// <param name="value"> The DevBoxActionDelayResult items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.DevBoxActionsDelayMultipleResult"/> instance for mocking. </returns>
+        public static DevBoxActionsDelayMultipleResult DevBoxActionsDelayMultipleResult(IEnumerable<DevBoxActionDelayResult> value = null, Uri nextLink = null)
+        {
+            value ??= new List<DevBoxActionDelayResult>();
+
+            return new DevBoxActionsDelayMultipleResult(value?.ToList(), nextLink, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.DevBoxActionDelayResult"/>. </summary>
         /// <param name="actionName"> The name of the action. </param>
         /// <param name="delayStatus"> The result of the delay operation on this action. </param>
@@ -226,6 +248,17 @@ namespace Azure.Developer.DevCenter.Models
         public static DevBoxActionDelayResult DevBoxActionDelayResult(string actionName = null, DevBoxActionDelayStatus delayStatus = default, DevBoxAction action = null, ResponseError error = null)
         {
             return new DevBoxActionDelayResult(actionName, delayStatus, action, error, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EnvironmentListResult"/>. </summary>
+        /// <param name="value"> The Environment items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.EnvironmentListResult"/> instance for mocking. </returns>
+        public static EnvironmentListResult EnvironmentListResult(IEnumerable<DevCenterEnvironment> value = null, Uri nextLink = null)
+        {
+            value ??= new List<DevCenterEnvironment>();
+
+            return new EnvironmentListResult(value?.ToList(), nextLink, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevCenterEnvironment"/>. </summary>
@@ -262,6 +295,17 @@ namespace Azure.Developer.DevCenter.Models
         public static DevCenterCatalog DevCenterCatalog(string name = null)
         {
             return new DevCenterCatalog(name, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EnvironmentDefinitionListResult"/>. </summary>
+        /// <param name="value"> The EnvironmentDefinition items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.EnvironmentDefinitionListResult"/> instance for mocking. </returns>
+        public static EnvironmentDefinitionListResult EnvironmentDefinitionListResult(IEnumerable<EnvironmentDefinition> value = null, Uri nextLink = null)
+        {
+            value ??= new List<EnvironmentDefinition>();
+
+            return new EnvironmentDefinitionListResult(value?.ToList(), nextLink, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EnvironmentDefinition"/>. </summary>
@@ -318,6 +362,17 @@ namespace Azure.Developer.DevCenter.Models
                 required,
                 allowed?.ToList(),
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EnvironmentTypeListResult"/>. </summary>
+        /// <param name="value"> The EnvironmentType items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.EnvironmentTypeListResult"/> instance for mocking. </returns>
+        public static EnvironmentTypeListResult EnvironmentTypeListResult(IEnumerable<DevCenterEnvironmentType> value = null, Uri nextLink = null)
+        {
+            value ??= new List<DevCenterEnvironmentType>();
+
+            return new EnvironmentTypeListResult(value?.ToList(), nextLink, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevCenterEnvironmentType"/>. </summary>
