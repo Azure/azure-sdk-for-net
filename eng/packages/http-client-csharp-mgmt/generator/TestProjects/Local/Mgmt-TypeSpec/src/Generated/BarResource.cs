@@ -529,5 +529,12 @@ namespace MgmtTypeSpec
         {
             return new BarSettingsResource(Client, Id.AppendChildResource("settings", "current"));
         }
+
+        /// <summary> Gets a collection of BarQuotaResources in the Bar. </summary>
+        /// <returns> An object representing collection of BarQuotaResources and their operations over a Bar. </returns>
+        public virtual BarQuotaResourceCollection GetBarQuotaResources()
+        {
+            return GetCachedClient(client => new BarQuotaResourceCollection(client, Id));
+        }
     }
 }

@@ -50,10 +50,28 @@ model BarSettingsResource is ProxyResource<BarSettingsProperties> {
   stringArray?: string[];
 }
 
+@parentResource(Bar)
+model BarQuotaResource is ProxyResource<BarQuotaProperties> {
+  ...ResourceNameParameter<BarQuotaResource, SegmentName = "quotas", Type = QuotaName>;
+}
+
+model BarQuotaProperties {
+  /** enabled */
+  left: int16;
+}
+
 model BarSettingsProperties {
   /** enabled */
   @visibility(Lifecycle.Read)
   isEnabled?: boolean;
+}
+
+@doc("Available Playwright quota types.")
+union QuotaName {
+  string,
+
+  @doc("Quota for execution duration in minutes.")
+  ExecutionMinutes: "ExecutionMinutes",
 }
 
 @armResourceOperations
@@ -61,4 +79,10 @@ interface BarSettingsOperations {
   createOrUpdate is ArmResourceCreateOrUpdateAsync<BarSettingsResource>;
   
   get is ArmResourceRead<BarSettingsResource>;
+}
+
+@armResourceOperations
+interface BarQuotaOperations {
+  get is ArmResourceRead<BarQuotaResource>;
+  update is ArmCustomPatchAsync<BarQuotaResource, BarQuotaResource>;
 }
