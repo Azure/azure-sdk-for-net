@@ -52,8 +52,8 @@ namespace Azure.Generator.Management.Utilities
                 }
                 else
                 {
-                    var methodPara = methodParameters.Single(p => p.WireInfo.SerializedName == parameter.WireInfo.SerializedName);
-                    arguments.Add(Convert(methodPara, methodPara.Type, parameter.Type));
+                    var methodParam = methodParameters.Single(p => p.WireInfo.SerializedName == parameter.WireInfo.SerializedName);
+                    arguments.Add(Convert(methodParam, methodParam.Type, parameter.Type));
                 }
             }
             return arguments;
