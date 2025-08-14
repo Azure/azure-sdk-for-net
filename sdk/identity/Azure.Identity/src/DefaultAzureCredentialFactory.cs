@@ -149,6 +149,10 @@ namespace Azure.Identity
         /// <returns>The trimmed and lowercased environment variable value.</returns>
         private static string ValidateAndGetCustomEnvironmentVariable(string environmentVariableName)
         {
+            if (!IsValidEnvironmentVariableName(environmentVariableName))
+            {
+                throw new ArgumentException($"Invalid environment variable name: '{environmentVariableName}'. Only letters, digits, and underscores are allowed.", nameof(environmentVariableName));
+            }
             string credentialSelection = Environment.GetEnvironmentVariable(environmentVariableName);
             if (string.IsNullOrEmpty(credentialSelection))
             {
