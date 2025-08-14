@@ -56,35 +56,6 @@ extends:
       - /sdk/core/Azure.Core.TestFramework/src
     BuildPrereleaseVersion: true
     UseTypeSpecNext: ${{ parameters.UseTypeSpecNext }}
-    # Add automation job to update mgmt package when http-client-csharp is published on main
-    ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-      AdditionalPublishJobs:
-      - ${{ if and(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}:
-        - job: UpdateMgmtPackage
-          displayName: 'Update http-client-csharp-mgmt package'
-          dependsOn: Publish
-          pool:
-            name: $(LINUXPOOL)
-            image: $(LINUXVMIMAGE)
-            os: linux
-          variables:
-            emitterVersion: $[stageDependencies.Build.Build.outputs['initialize.emitterVersion']]
-          steps:
-          - checkout: self
-            persistCredentials: true
-          
-          - template: /eng/pipelines/templates/steps/install-dotnet.yml
-          
-          - task: PowerShell@2
-            displayName: 'Create PR to update http-client-csharp-mgmt'
-            inputs:
-              pwsh: true
-              filePath: $(Build.SourcesDirectory)/eng/scripts/Create-MgmtUpdatePR.ps1
-              arguments: >
-                -NewVersion '$(emitterVersion)'
-                -BuildNumber '$(Build.BuildNumber)'
-                -AuthToken '$(azuresdk-github-pat)'
-                -RepoRoot '$(Build.SourcesDirectory)'
     ${{ if eq(variables['System.TeamProject'], 'internal') }}:
       ${{ if eq(variables['Build.Reason'], 'Manual') }}:
         ShouldPublish: ${{ parameters.ShouldPublish }}
@@ -109,3 +80,35 @@ extends:
       All:
         TestArguments: -UnitTests -GenerationChecks -Filter .NET
         SpectorName: "http-client-csharp"
+
+# Additional stage to update http-client-csharp-mgmt package when http-client-csharp is published on main
+stages:
+- ${{ if and(eq(variables['System.TeamProject'], 'internal'), eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}:
+  - stage: UpdateMgmtPackage
+    displayName: 'Update http-client-csharp-mgmt package'
+    dependsOn: Publish
+    pool:
+      name: $(LINUXPOOL)
+      image: $(LINUXVMIMAGE)
+      os: linux
+    variables:
+      emitterVersion: $[stageDependencies.Build.Build.outputs['initialize.emitterVersion']]
+    jobs:
+    - job: UpdateMgmtPackage
+      displayName: 'Update http-client-csharp-mgmt package'
+      steps:
+      - checkout: self
+        persistCredentials: true
+      
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
+      
+      - task: PowerShell@2
+        displayName: 'Create PR to update http-client-csharp-mgmt'
+        inputs:
+          pwsh: true
+          filePath: $(Build.SourcesDirectory)/eng/scripts/Create-MgmtUpdatePR.ps1
+          arguments: >
+            -NewVersion '$(emitterVersion)'
+            -BuildNumber '$(Build.BuildNumber)'
+            -AuthToken '$(azuresdk-github-pat)'
+            -RepoRoot '$(Build.SourcesDirectory)'
