@@ -157,13 +157,7 @@ internal class PaginationVisitor : ScmLibraryVisitor
     }
 
     private static bool IsResponseToModelCastExpression(CastExpression castExpression)
-    {
-        if (castExpression.Inner is VariableExpression variableExpression &&
-            variableExpression.Type is { IsFrameworkType: true, FrameworkType: { } frameworkType } &&
-            frameworkType == typeof(Response))
-        {
-            return true;
-        }
-        return false;
-    }
+        => castExpression.Inner is VariableExpression variableExpression
+            && variableExpression.Type is { IsFrameworkType: true, FrameworkType: { } frameworkType }
+            && frameworkType == typeof(Response);
 }
