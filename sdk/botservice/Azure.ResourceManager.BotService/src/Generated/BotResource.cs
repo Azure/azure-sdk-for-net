@@ -38,6 +38,8 @@ namespace Azure.ResourceManager.BotService
 
         private readonly ClientDiagnostics _botClientDiagnostics;
         private readonly BotsRestOperations _botRestClient;
+        private readonly ClientDiagnostics _directLineClientDiagnostics;
+        private readonly DirectLineRestOperations _directLineRestClient;
         private readonly ClientDiagnostics _emailClientDiagnostics;
         private readonly EmailRestOperations _emailRestClient;
         private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
@@ -69,6 +71,8 @@ namespace Azure.ResourceManager.BotService
             _botClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string botApiVersion);
             _botRestClient = new BotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, botApiVersion);
+            _directLineClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _directLineRestClient = new DirectLineRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _emailClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _emailRestClient = new EmailRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -615,6 +619,84 @@ namespace Azure.ResourceManager.BotService
             {
                 var response = _botRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
                 return Response.FromValue(new BotResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Regenerates secret keys and returns them for the DirectLine Channel of a particular BotService resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}/regeneratekeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DirectLine_RegenerateKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="channelName"> The name of the Channel resource for which keys are to be regenerated. </param>
+        /// <param name="content"> The parameters to provide for the created bot. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<BotChannelResource>> GetBotChannelWithRegenerateKeysAsync(RegenerateKeysBotChannelName channelName, BotChannelRegenerateKeysContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _directLineClientDiagnostics.CreateScope("BotResource.GetBotChannelWithRegenerateKeys");
+            scope.Start();
+            try
+            {
+                var response = await _directLineRestClient.RegenerateKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, content, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new BotChannelResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Regenerates secret keys and returns them for the DirectLine Channel of a particular BotService resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}/regeneratekeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DirectLine_RegenerateKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="channelName"> The name of the Channel resource for which keys are to be regenerated. </param>
+        /// <param name="content"> The parameters to provide for the created bot. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<BotChannelResource> GetBotChannelWithRegenerateKeys(RegenerateKeysBotChannelName channelName, BotChannelRegenerateKeysContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _directLineClientDiagnostics.CreateScope("BotResource.GetBotChannelWithRegenerateKeys");
+            scope.Start();
+            try
+            {
+                var response = _directLineRestClient.RegenerateKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, content, cancellationToken);
+                return Response.FromValue(new BotChannelResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

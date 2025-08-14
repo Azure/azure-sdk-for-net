@@ -9,7 +9,7 @@ csharp: true
 library-name: BotService
 namespace: Azure.ResourceManager.BotService
 # default tag is now a stable version
-require: https://github.com/Azure/azure-rest-api-specs/blob/54b1fe18641a9af5b2c46a76befef48314a6f008/specification/botservice/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/897f19441a4cc240eba138296f31e50841a6b57f/specification/botservice/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -205,7 +205,7 @@ directive:
         }
       };
   - from: botservice.json
-    where: $.paths..parameters[?(@.name=='channelName')]
+    where: $.paths..parameters[?(@.name=='channelName' && (!@['x-ms-enum'] || @['x-ms-enum'].name!='RegenerateKeysChannelName'))]
     transform: >
       $ = {
         "$ref": "#/parameters/channelNameParameter"
@@ -218,5 +218,9 @@ directive:
     where: $.parameters
     transform: >
       $.channelNameParameter['x-ms-enum']['modelAsString'] = true;
+  - from: botservice.json
+    where: $.definitions
+    transform: >
+      $.PrivateLinkResourceProperties['properties']['requiredZoneNames']['readOnly'] = false;
 
 ```

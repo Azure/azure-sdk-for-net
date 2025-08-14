@@ -37,8 +37,6 @@ namespace Azure.ResourceManager.BotService
 
         private readonly ClientDiagnostics _botChannelChannelsClientDiagnostics;
         private readonly ChannelsRestOperations _botChannelChannelsRestClient;
-        private readonly ClientDiagnostics _directLineClientDiagnostics;
-        private readonly DirectLineRestOperations _directLineRestClient;
         private readonly BotChannelData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -66,8 +64,6 @@ namespace Azure.ResourceManager.BotService
             _botChannelChannelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string botChannelChannelsApiVersion);
             _botChannelChannelsRestClient = new ChannelsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, botChannelChannelsApiVersion);
-            _directLineClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _directLineRestClient = new DirectLineRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -414,82 +410,6 @@ namespace Azure.ResourceManager.BotService
             {
                 var response = _botChannelChannelsRestClient.ListWithKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Regenerates secret keys and returns them for the DirectLine Channel of a particular BotService resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}/regeneratekeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DirectLine_RegenerateKeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The parameters to provide for the created bot. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<BotChannelResource>> GetBotChannelWithRegenerateKeysAsync(BotChannelRegenerateKeysContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _directLineClientDiagnostics.CreateScope("BotChannelResource.GetBotChannelWithRegenerateKeys");
-            scope.Start();
-            try
-            {
-                var response = await _directLineRestClient.RegenerateKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new BotChannelResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Regenerates secret keys and returns them for the DirectLine Channel of a particular BotService resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}/regeneratekeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DirectLine_RegenerateKeys</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The parameters to provide for the created bot. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<BotChannelResource> GetBotChannelWithRegenerateKeys(BotChannelRegenerateKeysContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _directLineClientDiagnostics.CreateScope("BotChannelResource.GetBotChannelWithRegenerateKeys");
-            scope.Start();
-            try
-            {
-                var response = _directLineRestClient.RegenerateKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                return Response.FromValue(new BotChannelResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.BotService
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateRegenerateKeysRequestUri(string subscriptionId, string resourceGroupName, string resourceName, BotChannelName channelName, BotChannelRegenerateKeysContent content)
+        internal RequestUriBuilder CreateRegenerateKeysRequestUri(string subscriptionId, string resourceGroupName, string resourceName, RegenerateKeysBotChannelName channelName, BotChannelRegenerateKeysContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -47,13 +47,13 @@ namespace Azure.ResourceManager.BotService
             uri.AppendPath("/providers/Microsoft.BotService/botServices/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/channels/", false);
-            uri.AppendPath(channelName.ToString(), true);
+            uri.AppendPath(channelName.ToSerialString(), true);
             uri.AppendPath("/regeneratekeys", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateRegenerateKeysRequest(string subscriptionId, string resourceGroupName, string resourceName, BotChannelName channelName, BotChannelRegenerateKeysContent content)
+        internal HttpMessage CreateRegenerateKeysRequest(string subscriptionId, string resourceGroupName, string resourceName, RegenerateKeysBotChannelName channelName, BotChannelRegenerateKeysContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.BotService
             uri.AppendPath("/providers/Microsoft.BotService/botServices/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/channels/", false);
-            uri.AppendPath(channelName.ToString(), true);
+            uri.AppendPath(channelName.ToSerialString(), true);
             uri.AppendPath("/regeneratekeys", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.BotService
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the Bot resource. </param>
-        /// <param name="channelName"> The name of the Channel resource. </param>
+        /// <param name="channelName"> The name of the Channel resource for which keys are to be regenerated. </param>
         /// <param name="content"> The parameters to provide for the created bot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BotChannelData>> RegenerateKeysAsync(string subscriptionId, string resourceGroupName, string resourceName, BotChannelName channelName, BotChannelRegenerateKeysContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<BotChannelData>> RegenerateKeysAsync(string subscriptionId, string resourceGroupName, string resourceName, RegenerateKeysBotChannelName channelName, BotChannelRegenerateKeysContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -116,12 +116,12 @@ namespace Azure.ResourceManager.BotService
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the Bot resource. </param>
-        /// <param name="channelName"> The name of the Channel resource. </param>
+        /// <param name="channelName"> The name of the Channel resource for which keys are to be regenerated. </param>
         /// <param name="content"> The parameters to provide for the created bot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BotChannelData> RegenerateKeys(string subscriptionId, string resourceGroupName, string resourceName, BotChannelName channelName, BotChannelRegenerateKeysContent content, CancellationToken cancellationToken = default)
+        public Response<BotChannelData> RegenerateKeys(string subscriptionId, string resourceGroupName, string resourceName, RegenerateKeysBotChannelName channelName, BotChannelRegenerateKeysContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
