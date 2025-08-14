@@ -16,6 +16,8 @@ namespace Azure.Storage.DataMovement.Tests
         private static TransferStatus InProgressStatus => new TransferStatus(TransferState.InProgress, false, false);
         private static TransferStatus SuccessfulCompletedStatus => new TransferStatus(TransferState.Completed, false, false);
 
+        private TransferInternalState.RemoveTransferDelegate _removeTransferDelegate = (string transferId) => true;
+
         [Test]
         public void Ctor_Default()
         {
@@ -23,7 +25,9 @@ namespace Azure.Storage.DataMovement.Tests
             string transferId = GetNewTransferId();
 
             // Act
-            TransferOperation transfer = new TransferOperation(id: transferId);
+            using TransferOperation transfer = new TransferOperation(
+                removeTransferDelegate: _removeTransferDelegate,
+                id: transferId);
 
             // Assert
             Assert.AreEqual(transferId, transfer.Id);
@@ -44,7 +48,8 @@ namespace Azure.Storage.DataMovement.Tests
             string transferId = GetNewTransferId();
 
             // Act
-            TransferOperation transfer = new TransferOperation(
+            using TransferOperation transfer = new TransferOperation(
+                removeTransferDelegate: _removeTransferDelegate,
                 id: transferId,
                 status: new TransferStatus(status, hasFailedItems, false));
 
@@ -67,7 +72,8 @@ namespace Azure.Storage.DataMovement.Tests
             string transferId = GetNewTransferId();
 
             // Act
-            TransferOperation transfer = new TransferOperation(
+            using TransferOperation transfer = new TransferOperation(
+                removeTransferDelegate: _removeTransferDelegate,
                 id: transferId,
                 status: new TransferStatus(state, hasFailedItems, hasSkippedItems));
 
@@ -83,6 +89,7 @@ namespace Azure.Storage.DataMovement.Tests
             string transferId = GetNewTransferId();
 
             TransferOperation transfer = new TransferOperation(
+                removeTransferDelegate: _removeTransferDelegate,
                 id: transferId,
                 status: SuccessfulCompletedStatus);
 
@@ -101,6 +108,7 @@ namespace Azure.Storage.DataMovement.Tests
             string transferId = GetNewTransferId();
 
             TransferOperation transfer = new TransferOperation(
+                removeTransferDelegate: _removeTransferDelegate,
                 id: transferId,
                 status: QueuedStatus);
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(1));
@@ -117,8 +125,10 @@ namespace Azure.Storage.DataMovement.Tests
             string transferId = GetNewTransferId();
 
             TransferOperation transfer = new TransferOperation(
+                removeTransferDelegate: _removeTransferDelegate,
                 id: transferId,
                 status: InProgressStatus);
+            transfer.TransferManager = new TransferManager();
 
             // Act
             Task pauseTask = transfer.PauseAsync();
@@ -151,6 +161,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferStatus originalStatus = new TransferStatus(state, hasFailedItems, hasSkippedItems);
 
             TransferOperation transfer = new TransferOperation(
+                removeTransferDelegate: _removeTransferDelegate,
                 id: transferId,
                 status: originalStatus);
 
@@ -166,8 +177,10 @@ namespace Azure.Storage.DataMovement.Tests
             string transferId = GetNewTransferId();
 
             TransferOperation transfer = new TransferOperation(
+                removeTransferDelegate: _removeTransferDelegate,
                 id: transferId,
                 status: InProgressStatus);
+            transfer.TransferManager = new TransferManager();
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(1));
 
             try

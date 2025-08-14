@@ -5,8 +5,11 @@
 ### Features Added
 
 ### Breaking Changes
+- [BREAKING CHANGE] Added `IDisposable` to `TransferOperation`. Please ensure the `TransferOperation` object is properly disposed of upon finished usage.
+- [BREAKING BEHAVIOR CHANGE] Transfers that are in a `Paused` or `Completed` state will now throw an `ArgumentException` when attempting to call `PauseAsync` on them. Before transfers in a `Paused` or `Completed` state would not throw an exception when calling `PauseAsync`.
 
 ### Bugs Fixed
+- Resolved memory leak issue with `CancellationTokenSource` in `TransferOperation` that could occur when the transfer was created.
 
 ### Other Changes
 

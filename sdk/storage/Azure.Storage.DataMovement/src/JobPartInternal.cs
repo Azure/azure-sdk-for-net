@@ -236,7 +236,7 @@ namespace Azure.Storage.DataMovement
         public abstract Task ProcessPartToChunkAsync();
 
         /// <summary>
-        /// Diposes of chunk handler.
+        /// Disposes of chunk handler.
         /// </summary>
         public abstract Task DisposeHandlersAsync();
 
