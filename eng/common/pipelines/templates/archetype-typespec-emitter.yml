@@ -22,6 +22,11 @@ parameters:
   type: stepList
   default: []
 
+# Additional jobs to run in the Publish stage
+- name: AdditionalPublishJobs
+  type: jobList
+  default: []
+
 # Indicates the build matrix to use for post-build TypeSpec validation
 - name: TestMatrix
   type: object
@@ -81,10 +86,7 @@ parameters:
 - name: EmitterPackagePath
   type: string
 
-# Whether to enable automatic updates to http-client-csharp-mgmt package when publishing
-- name: EnableMgmtPackageAutomation
-  type: boolean
-  default: false
+
 
 extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml
@@ -237,32 +239,10 @@ extends:
                       Approvers: ${{ coalesce(variables['Build.RequestedForEmail'], 'azuresdk@microsoft.com') }}
                       ServiceEndpointUrl: https://api.esrp.microsoft.com
                       MainPublisher: ESRPRELPACMANTEST
-        
-        # Update http-client-csharp-mgmt package when http-client-csharp is published
-        # Only runs for http-client-csharp emitter on main branch CI builds
-        - ${{ if and(parameters.EnableMgmtPackageAutomation, eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}:
-          - job: UpdateMgmtPackage
-            displayName: 'Update http-client-csharp-mgmt package'
-            dependsOn: Publish
-            pool: ${{ parameters.Pool }}
-            variables:
-              emitterVersion: $[stageDependencies.Build.Build.outputs['initialize.emitterVersion']]
-            steps:
-            - checkout: self
-              persistCredentials: true
-            
-            - ${{ parameters.InitializationSteps }}
-            
-            - task: PowerShell@2
-              displayName: 'Create PR to update http-client-csharp-mgmt'
-              inputs:
-                pwsh: true
-                filePath: $(Build.SourcesDirectory)/eng/scripts/Create-MgmtUpdatePR.ps1
-                arguments: >
-                  -NewVersion '$(emitterVersion)'
-                  -BuildNumber '$(Build.BuildNumber)'
-                  -AuthToken '$(azuresdk-github-pat)'
-                  -RepoRoot '$(Build.SourcesDirectory)'
+
+        # Additional jobs in Publish stage (e.g., for emitter-specific automation)
+        - ${{ each job in parameters.AdditionalPublishJobs }}:
+          - ${{ job }}
 
     # Regenerate stage
     # Responsible for regenerating the SDK code using the emitter package and the generation matrix.
