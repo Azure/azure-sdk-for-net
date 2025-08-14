@@ -52,7 +52,8 @@ namespace Azure.Generator.Management.Utilities
                 }
                 else
                 {
-                    arguments.Add(methodParameters.Single(p => p.WireInfo.SerializedName == parameter.WireInfo.SerializedName));
+                    var methodPara = methodParameters.Single(p => p.WireInfo.SerializedName == parameter.WireInfo.SerializedName);
+                    arguments.Add(Convert(methodPara, methodPara.Type, parameter.Type));
                 }
             }
             return arguments;
@@ -67,6 +68,11 @@ namespace Azure.Generator.Management.Utilities
                 if (toType.IsFrameworkType && toType.FrameworkType == typeof(Guid))
                 {
                     return Static<Guid>().Invoke(nameof(Guid.Parse), expression);
+                }
+
+                if (fromType.IsEnum && toType.FrameworkType == typeof(string))
+                {
+                    return expression.Invoke("ToString");
                 }
 
                 // other unhandled cases, we will add when we need them in the future.
