@@ -4,14 +4,10 @@
 # nullable enable
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs;
 using Azure.Core;
-using Azure.Core.Pipeline;
-using System.Runtime.InteropServices.ComTypes;
-using System.Reflection;
 using System.Text.RegularExpressions;
 using System.ClientModel;
 using System.ClientModel.Primitives;
@@ -31,72 +27,6 @@ namespace Azure.AI.Projects
             : this(pipeline, endpoint, apiVersion)
         {
             _tokenProvider = tokenProvider;
-        }
-
-        /// <summary>
-        /// Internal helper method to create a new dataset and return a BlobContainerClient to the dataset's blob storage.
-        /// </summary>
-        private (BlobContainerClient ContainerClient, string OutputVersion) CreateDatasetAndGetContainerClient(string name, string inputVersion, string? connectionName = null)
-        {
-            var pendingUploadConfiguration = new PendingUploadConfiguration(
-                pendingUploadId: null,
-                connectionName: connectionName,
-                pendingUploadType: PendingUploadType.BlobReference,
-                additionalBinaryDataProperties: null);
-
-            PendingUploadResult pendingUploadResult = PendingUpload(
-                name: name,
-                version: inputVersion,
-                configuration: pendingUploadConfiguration
-            );
-
-            string outputVersion = inputVersion;
-
-            return (GetContainerClientOrRaise(pendingUploadResult), outputVersion);
-        }
-
-        /// <summary>
-        /// The convenience method to get the container client.
-        /// </summary>
-        /// <param name="pendingUploadResult">The pending upload request.</param>
-        /// <returns></returns>
-        private BlobContainerClient GetContainerClientOrRaise(PendingUploadResult pendingUploadResult)
-        {
-            bool isSasEmpty = false;
-
-            if (pendingUploadResult.BlobReference == null)
-            {
-                throw new InvalidOperationException("Blob reference is not present.");
-            }
-            if (pendingUploadResult.BlobReference.Credential == null)
-            {
-                throw new InvalidOperationException("SAS credential is not present.");
-            }
-            if (pendingUploadResult.BlobReference.Credential.SasUri == null)
-            {
-                isSasEmpty = true;
-            }
-
-            BlobContainerClient containerClient;
-            if (isSasEmpty)
-            {
-                if (_tokenProvider is TokenCredential tokenCredential)
-                {
-                    containerClient = new BlobContainerClient(
-                        blobContainerUri: pendingUploadResult.BlobReference.BlobUri,
-                        credential: tokenCredential,
-                        options: null);
-                }
-                else
-                {
-                    throw new InvalidOperationException("SAS URI is empty and no TokenCredential is provided for authentication.");
-                }
-            }
-            else
-            {
-                containerClient = new BlobContainerClient(pendingUploadResult.BlobReference.Credential.SasUri);
-            }
-            return containerClient;
         }
 
         /// <summary>
@@ -176,28 +106,6 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// Internal helper method to create a new dataset and return a BlobContainerClient to the dataset's blob storage.
-        /// </summary>
-        private async Task<(BlobContainerClient ContainerClient, string OutputVersion)> CreateDatasetAndGetContainerClientAsync(string name, string inputVersion, string? connectionName = null)
-        {
-            PendingUploadConfiguration pendingUploadRequest = new(
-                pendingUploadId: null,
-                connectionName: connectionName,
-                pendingUploadType: PendingUploadType.BlobReference,
-                additionalBinaryDataProperties: null);
-
-            PendingUploadResult pendingUploadResult = await PendingUploadAsync(
-                name: name,
-                version: inputVersion,
-                configuration: pendingUploadRequest
-            ).ConfigureAwait(false);
-
-            string outputVersion = inputVersion;
-
-            return (GetContainerClientOrRaise(pendingUploadResult), outputVersion);
-        }
-
-        /// <summary>
         /// Uploads a file to blob storage and creates a dataset that references this file.
         /// </summary>
         public async Task<ClientResult<FileDatasetVersion>> UploadFileAsync(string name, string version, string filePath, string? connectionName = null)
@@ -270,6 +178,94 @@ namespace Azure.AI.Projects
             ClientResult result = await CreateOrUpdateAsync(name, outputVersion, content).ConfigureAwait(false);
 
             return ClientResult.FromValue((FolderDatasetVersion)result, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Internal helper method to create a new dataset and return a BlobContainerClient to the dataset's blob storage.
+        /// </summary>
+        private (BlobContainerClient ContainerClient, string OutputVersion) CreateDatasetAndGetContainerClient(string name, string inputVersion, string? connectionName = null)
+        {
+            var pendingUploadConfiguration = new PendingUploadConfiguration(
+                pendingUploadId: null,
+                connectionName: connectionName,
+                pendingUploadType: PendingUploadType.BlobReference,
+                additionalBinaryDataProperties: null);
+
+            PendingUploadResult pendingUploadResult = PendingUpload(
+                name: name,
+                version: inputVersion,
+                configuration: pendingUploadConfiguration
+            );
+
+            string outputVersion = inputVersion;
+
+            return (GetContainerClientOrRaise(pendingUploadResult), outputVersion);
+        }
+
+        /// <summary>
+        /// The convenience method to get the container client.
+        /// </summary>
+        /// <param name="pendingUploadResult">The pending upload request.</param>
+        /// <returns></returns>
+        private BlobContainerClient GetContainerClientOrRaise(PendingUploadResult pendingUploadResult)
+        {
+            bool isSasEmpty = false;
+
+            if (pendingUploadResult.BlobReference == null)
+            {
+                throw new InvalidOperationException("Blob reference is not present.");
+            }
+            if (pendingUploadResult.BlobReference.Credential == null)
+            {
+                throw new InvalidOperationException("SAS credential is not present.");
+            }
+            if (pendingUploadResult.BlobReference.Credential.SasUri == null)
+            {
+                isSasEmpty = true;
+            }
+
+            BlobContainerClient containerClient;
+            if (isSasEmpty)
+            {
+                if (_tokenProvider is TokenCredential tokenCredential)
+                {
+                    containerClient = new BlobContainerClient(
+                        blobContainerUri: pendingUploadResult.BlobReference.BlobUri,
+                        credential: tokenCredential,
+                        options: null);
+                }
+                else
+                {
+                    throw new InvalidOperationException("SAS URI is empty and no TokenCredential is provided for authentication.");
+                }
+            }
+            else
+            {
+                containerClient = new BlobContainerClient(pendingUploadResult.BlobReference.Credential.SasUri);
+            }
+            return containerClient;
+        }
+
+        /// <summary>
+        /// Internal helper method to create a new dataset and return a BlobContainerClient to the dataset's blob storage.
+        /// </summary>
+        private async Task<(BlobContainerClient ContainerClient, string OutputVersion)> CreateDatasetAndGetContainerClientAsync(string name, string inputVersion, string? connectionName = null)
+        {
+            PendingUploadConfiguration pendingUploadRequest = new(
+                pendingUploadId: null,
+                connectionName: connectionName,
+                pendingUploadType: PendingUploadType.BlobReference,
+                additionalBinaryDataProperties: null);
+
+            PendingUploadResult pendingUploadResult = await PendingUploadAsync(
+                name: name,
+                version: inputVersion,
+                configuration: pendingUploadRequest
+            ).ConfigureAwait(false);
+
+            string outputVersion = inputVersion;
+
+            return (GetContainerClientOrRaise(pendingUploadResult), outputVersion);
         }
     }
 }

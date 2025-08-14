@@ -38,8 +38,4 @@
   <ItemGroup>
     <None Include="..\tsp-location.yaml" Link="tsp-location.yaml" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Custom\Indexes\" />
-  </ItemGroup>
 </Project>
