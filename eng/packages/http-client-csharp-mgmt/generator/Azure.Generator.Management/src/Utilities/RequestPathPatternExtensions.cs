@@ -72,7 +72,7 @@ namespace Azure.Generator.Management.Utilities
 
                 if (fromType.IsEnum && toType.FrameworkType == typeof(string))
                 {
-                    return expression.Invoke("ToString");
+                    return expression.InvokeToString();
                 }
 
                 // other unhandled cases, we will add when we need them in the future.
