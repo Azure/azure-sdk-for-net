@@ -10,5 +10,5 @@ internal interface ISupportsTransportCertificateUpdate
     /// <summary>
     /// Event that is triggered when the transport needs to be updated.
     /// </summary>
-    public event Action<HttpPipelineTransportOptions>? TransportUpdated;
+    public event Action<HttpPipelineTransportOptions>? TransportOptionsChanged;
 }

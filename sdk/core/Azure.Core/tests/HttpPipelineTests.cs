@@ -403,11 +403,11 @@ namespace Azure.Core.Tests
 
         public class TransportUpdatingPolicy : HttpPipelinePolicy, ISupportsTransportCertificateUpdate
         {
-            public event Action<HttpPipelineTransportOptions> TransportUpdated;
+            public event Action<HttpPipelineTransportOptions> TransportOptionsChanged;
 
             public void UpdateTransport(HttpPipelineTransportOptions options)
             {
-                TransportUpdated?.Invoke(options);
+                TransportOptionsChanged?.Invoke(options);
             }
 
             public TransportUpdatingPolicy()

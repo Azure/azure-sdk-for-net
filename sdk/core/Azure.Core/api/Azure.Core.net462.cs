@@ -1121,7 +1121,7 @@ namespace Azure.Core.Pipeline
     {
         public PopTokenAuthenticationPolicy(Azure.Core.TokenCredential credential, System.Collections.Generic.IEnumerable<string> scopes, Azure.Core.Pipeline.HttpPipelineTransportOptions transportOptions) { }
         public PopTokenAuthenticationPolicy(Azure.Core.TokenCredential credential, string scope, Azure.Core.Pipeline.HttpPipelineTransportOptions transportOptions) { }
-        public event System.Action<Azure.Core.Pipeline.HttpPipelineTransportOptions>? TransportUpdated { add { } remove { } }
+        public event System.Action<Azure.Core.Pipeline.HttpPipelineTransportOptions>? TransportOptionsChanged { add { } remove { } }
         protected void AuthenticateAndAuthorizeRequest(Azure.Core.HttpMessage message, Azure.Core.TokenRequestContext context) { }
         protected System.Threading.Tasks.ValueTask AuthenticateAndAuthorizeRequestAsync(Azure.Core.HttpMessage message, Azure.Core.TokenRequestContext context) { throw null; }
         protected virtual void AuthorizeRequest(Azure.Core.HttpMessage message) { }

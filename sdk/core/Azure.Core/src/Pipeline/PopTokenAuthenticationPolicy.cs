@@ -27,7 +27,7 @@ namespace Azure.Core.Pipeline
         /// <summary>
         /// Event that is triggered when the transport needs to be updated.
         /// </summary>
-        public event Action<HttpPipelineTransportOptions>? TransportUpdated;
+        public event Action<HttpPipelineTransportOptions>? TransportOptionsChanged;
 
         /// <summary>
         /// Creates a new instance of <see cref="PopTokenAuthenticationPolicy"/> using provided token credential and scope to authenticate for.
@@ -237,7 +237,7 @@ namespace Azure.Core.Pipeline
                 transportOptions.ClientCertificates.Clear();
                 transportOptions.ClientCertificates.Add(token.BindingCertificate);
                 _transportOptions = transportOptions;
-                TransportUpdated?.Invoke(transportOptions);
+                TransportOptionsChanged?.Invoke(transportOptions);
                 _currentBindingCertThumbprint = token.BindingCertificate.Thumbprint;
             }
             message.Request.Headers.SetValue(HttpHeader.Names.Authorization, $"{token.TokenType} {token.Token}");
