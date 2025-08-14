@@ -37,7 +37,7 @@ interface Bars {
 
   delete is ArmResourceDeleteWithoutOkAsync<Bar>;
 
-  update is ArmCustomPatchAsync<Bar, Bar>;
+  update is ArmCustomPatchSync<Bar, Bar>;
 
   list is ArmResourceListByParent<Bar>;
 }
