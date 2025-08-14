@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<VirtualHardDiskUploadResponse>> UploadAsync(WaitUntil waitUntil, VirtualHardDiskUploadContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<VmVirtualHardDiskUploadResponseResult>> UploadAsync(WaitUntil waitUntil, VirtualHardDiskUploadContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Hci.Vm
             try
             {
                 var response = await _virtualHardDiskRestClient.UploadAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new VmArmOperation<VirtualHardDiskUploadResponse>(new VirtualHardDiskUploadResponseOperationSource(), _virtualHardDiskClientDiagnostics, Pipeline, _virtualHardDiskRestClient.CreateUploadRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new VmArmOperation<VmVirtualHardDiskUploadResponseResult>(new VirtualHardDiskUploadResponseOperationSource(), _virtualHardDiskClientDiagnostics, Pipeline, _virtualHardDiskRestClient.CreateUploadRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Hci.Vm
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<VirtualHardDiskUploadResponse> Upload(WaitUntil waitUntil, VirtualHardDiskUploadContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<VmVirtualHardDiskUploadResponseResult> Upload(WaitUntil waitUntil, VirtualHardDiskUploadContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Hci.Vm
             try
             {
                 var response = _virtualHardDiskRestClient.Upload(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new VmArmOperation<VirtualHardDiskUploadResponse>(new VirtualHardDiskUploadResponseOperationSource(), _virtualHardDiskClientDiagnostics, Pipeline, _virtualHardDiskRestClient.CreateUploadRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new VmArmOperation<VmVirtualHardDiskUploadResponseResult>(new VirtualHardDiskUploadResponseOperationSource(), _virtualHardDiskClientDiagnostics, Pipeline, _virtualHardDiskRestClient.CreateUploadRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

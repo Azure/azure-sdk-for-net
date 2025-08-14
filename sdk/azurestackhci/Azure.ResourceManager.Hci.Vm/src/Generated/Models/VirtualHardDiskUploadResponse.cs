@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
     /// <summary> Response for uploading virtual hard disk. </summary>
-    public partial class VirtualHardDiskUploadResponse
+    public partial class VmVirtualHardDiskUploadResponseResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,16 +46,16 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualHardDiskUploadResponse"/>. </summary>
-        internal VirtualHardDiskUploadResponse()
+        /// <summary> Initializes a new instance of <see cref="VmVirtualHardDiskUploadResponseResult"/>. </summary>
+        internal VmVirtualHardDiskUploadResponseResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualHardDiskUploadResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmVirtualHardDiskUploadResponseResult"/>. </summary>
         /// <param name="virtualHardDiskId"> The ARM ID for a Virtual Hard Disk. </param>
         /// <param name="uploadStatus"> The upload status of the virtual hard disk. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualHardDiskUploadResponse(ResourceIdentifier virtualHardDiskId, VirtualHardDiskUploadStatus uploadStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VmVirtualHardDiskUploadResponseResult(ResourceIdentifier virtualHardDiskId, VirtualHardDiskUploadStatus uploadStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VirtualHardDiskId = virtualHardDiskId;
             UploadStatus = uploadStatus;
