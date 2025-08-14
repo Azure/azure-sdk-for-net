@@ -6,9 +6,13 @@
 
 ### Breaking Changes
 
+- Added `UniformResourceIdentifiers` and `IpAddresses` collection properties in `SubjectAlternativeNames`.
+
 ### Bugs Fixed
 
 ### Other Changes
+
+- The default service version is now "2025-06-01-preview".
 
 ## 4.8.0 (2025-06-16)
 

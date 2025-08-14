@@ -258,6 +258,8 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             CollectionAssert.AreEqual(expected?.DnsNames, actual?.DnsNames, StringComparer.Ordinal);
             CollectionAssert.AreEqual(expected?.Emails, actual?.Emails, StringComparer.Ordinal);
             CollectionAssert.AreEqual(expected?.UserPrincipalNames, actual?.UserPrincipalNames, StringComparer.Ordinal);
+            CollectionAssert.AreEqual(expected?.UniformResourceIdentifiers, actual?.UniformResourceIdentifiers, StringComparer.Ordinal);
+            CollectionAssert.AreEqual(expected?.IpAddresses, actual?.IpAddresses, StringComparer.Ordinal);
         }
 
         private class LifetimeActionComparer : IComparer<LifetimeAction>, IComparer
