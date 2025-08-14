@@ -29,6 +29,7 @@ namespace Azure.Developer.LoadTesting
     [ModelReaderWriterBuildable(typeof(MetricDefinitions))]
     [ModelReaderWriterBuildable(typeof(MetricNamespace))]
     [ModelReaderWriterBuildable(typeof(MetricNamespaces))]
+    [ModelReaderWriterBuildable(typeof(Metrics))]
     [ModelReaderWriterBuildable(typeof(MetricsFilters))]
     [ModelReaderWriterBuildable(typeof(MetricValue))]
     [ModelReaderWriterBuildable(typeof(NameAndDescription))]

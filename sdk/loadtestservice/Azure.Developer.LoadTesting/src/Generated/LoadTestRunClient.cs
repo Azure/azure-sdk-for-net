@@ -1080,6 +1080,60 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
+        /// <summary> List the metric values for a load test run. </summary>
+        /// <param name="testRunId">
+        /// Unique name for the load test run, must contain only lower-case alphabetic,
+        /// numeric, underscore or hyphen characters.
+        /// </param>
+        /// <param name="metricname"> Metric name. </param>
+        /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
+        /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
+        /// <param name="body"> Metric dimension filter. </param>
+        /// <param name="aggregation"> The aggregation. </param>
+        /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="metricname"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<Metrics>> GetMetricsAsync(string testRunId, string metricname, string metricNamespace, string timespan, MetricsFilters body = null, string aggregation = null, TimeGrain? interval = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            Argument.AssertNotNull(metricname, nameof(metricname));
+            Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
+            Argument.AssertNotNull(timespan, nameof(timespan));
+
+            using RequestContent content = body?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetMetricsAsync(testRunId, metricname, metricNamespace, timespan, content, aggregation, interval?.ToString(), context).ConfigureAwait(false);
+            return Response.FromValue(Metrics.FromResponse(response), response);
+        }
+
+        /// <summary> List the metric values for a load test run. </summary>
+        /// <param name="testRunId">
+        /// Unique name for the load test run, must contain only lower-case alphabetic,
+        /// numeric, underscore or hyphen characters.
+        /// </param>
+        /// <param name="metricname"> Metric name. </param>
+        /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
+        /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
+        /// <param name="body"> Metric dimension filter. </param>
+        /// <param name="aggregation"> The aggregation. </param>
+        /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="metricname"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<Metrics> GetMetrics(string testRunId, string metricname, string metricNamespace, string timespan, MetricsFilters body = null, string aggregation = null, TimeGrain? interval = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+            Argument.AssertNotNull(metricname, nameof(metricname));
+            Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
+            Argument.AssertNotNull(timespan, nameof(timespan));
+
+            using RequestContent content = body?.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetMetrics(testRunId, metricname, metricNamespace, timespan, content, aggregation, interval?.ToString(), context);
+            return Response.FromValue(Metrics.FromResponse(response), response);
+        }
+
         /// <summary> Stop test run by test run Id. </summary>
         /// <param name="testRunId"> Unique test run identifier for the load test run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1682,62 +1736,6 @@ namespace Azure.Developer.LoadTesting
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetMetricDimensionValues", "value", "nextLink", context);
         }
 
-        /// <summary> List the metric values for a load test run. </summary>
-        /// <param name="testRunId">
-        /// Unique name for the load test run, must contain only lower-case alphabetic,
-        /// numeric, underscore or hyphen characters.
-        /// </param>
-        /// <param name="metricname"> Metric name. </param>
-        /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
-        /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
-        /// <param name="body"> Metric dimension filter. </param>
-        /// <param name="aggregation"> The aggregation. </param>
-        /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="metricname"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual AsyncPageable<TimeSeriesElement> GetMetricsAsync(string testRunId, string metricname, string metricNamespace, string timespan, MetricsFilters body = null, string aggregation = null, TimeGrain? interval = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-            Argument.AssertNotNull(metricname, nameof(metricname));
-            Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
-            Argument.AssertNotNull(timespan, nameof(timespan));
-
-            RequestContent content = body?.ToRequestContent();
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetricsRequest(testRunId, metricname, metricNamespace, timespan, content, aggregation, interval?.ToString(), context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetricsNextPageRequest(nextLink, testRunId, metricname, metricNamespace, timespan, content, aggregation, interval?.ToString(), context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TimeSeriesElement.DeserializeTimeSeriesElement(e), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetMetrics", "value", "nextLink", context);
-        }
-
-        /// <summary> List the metric values for a load test run. </summary>
-        /// <param name="testRunId">
-        /// Unique name for the load test run, must contain only lower-case alphabetic,
-        /// numeric, underscore or hyphen characters.
-        /// </param>
-        /// <param name="metricname"> Metric name. </param>
-        /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
-        /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
-        /// <param name="body"> Metric dimension filter. </param>
-        /// <param name="aggregation"> The aggregation. </param>
-        /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/>, <paramref name="metricname"/>, <paramref name="metricNamespace"/> or <paramref name="timespan"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Pageable<TimeSeriesElement> GetMetrics(string testRunId, string metricname, string metricNamespace, string timespan, MetricsFilters body = null, string aggregation = null, TimeGrain? interval = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
-            Argument.AssertNotNull(metricname, nameof(metricname));
-            Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
-            Argument.AssertNotNull(timespan, nameof(timespan));
-
-            RequestContent content = body?.ToRequestContent();
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetricsRequest(testRunId, metricname, metricNamespace, timespan, content, aggregation, interval?.ToString(), context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetricsNextPageRequest(nextLink, testRunId, metricname, metricNamespace, timespan, content, aggregation, interval?.ToString(), context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TimeSeriesElement.DeserializeTimeSeriesElement(e), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetMetrics", "value", "nextLink", context);
-        }
-
         internal HttpMessage CreateCreateOrUpdateTestRunRequest(string testRunId, RequestContent content, string oldTestRunId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
@@ -1810,7 +1808,6 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath(testRunId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -2063,7 +2060,6 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath(testProfileRunId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -2156,20 +2152,6 @@ namespace Azure.Developer.LoadTesting
         }
 
         internal HttpMessage CreateGetMetricDimensionValuesNextPageRequest(string nextLink, string testRunId, string name, string metricname, string metricNamespace, string timespan, string interval, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw("https://", false);
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetMetricsNextPageRequest(string nextLink, string testRunId, string metricname, string metricNamespace, string timespan, RequestContent content, string aggregation, string interval, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

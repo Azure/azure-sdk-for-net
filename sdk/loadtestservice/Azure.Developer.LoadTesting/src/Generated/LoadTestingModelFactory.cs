@@ -664,6 +664,17 @@ namespace Azure.Developer.LoadTesting
             return new MetricNamespace(description, name, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="LoadTesting.Metrics"/>. </summary>
+        /// <param name="value"> The TimeSeriesElement items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="LoadTesting.Metrics"/> instance for mocking. </returns>
+        public static Metrics Metrics(IEnumerable<TimeSeriesElement> value = null, Uri nextLink = null)
+        {
+            value ??= new List<TimeSeriesElement>();
+
+            return new Metrics(value?.ToList(), nextLink, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="LoadTesting.TimeSeriesElement"/>. </summary>
         /// <param name="data"> An array of data points representing the metric values. </param>
         /// <param name="dimensionValues"> The dimension values. </param>
