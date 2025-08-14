@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -96,13 +97,14 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='GetAnalyzeBatchResultsAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<PagedAnalyzeBatchOperation>> GetAnalyzeBatchResultsAsync(string modelId, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AnalyzeBatchOperationDetails> GetAnalyzeBatchResultsAsync(string modelId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetAnalyzeBatchResultsAsync(modelId, context).ConfigureAwait(false);
-            return Response.FromValue(PagedAnalyzeBatchOperation.FromResponse(response), response);
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAnalyzeBatchResultsRequest(modelId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAnalyzeBatchResultsNextPageRequest(nextLink, modelId, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AnalyzeBatchOperationDetails.DeserializeAnalyzeBatchOperationDetails(e), ClientDiagnostics, _pipeline, "DocumentIntelligenceClient.GetAnalyzeBatchResults", "value", "nextLink", context);
         }
 
         /// <summary> List batch document analysis results. </summary>
@@ -111,13 +113,14 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='GetAnalyzeBatchResults(string,CancellationToken)']/*" />
-        public virtual Response<PagedAnalyzeBatchOperation> GetAnalyzeBatchResults(string modelId, CancellationToken cancellationToken = default)
+        public virtual Pageable<AnalyzeBatchOperationDetails> GetAnalyzeBatchResults(string modelId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetAnalyzeBatchResults(modelId, context);
-            return Response.FromValue(PagedAnalyzeBatchOperation.FromResponse(response), response);
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAnalyzeBatchResultsRequest(modelId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAnalyzeBatchResultsNextPageRequest(nextLink, modelId, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AnalyzeBatchOperationDetails.DeserializeAnalyzeBatchOperationDetails(e), ClientDiagnostics, _pipeline, "DocumentIntelligenceClient.GetAnalyzeBatchResults", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -140,24 +143,15 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='GetAnalyzeBatchResultsAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetAnalyzeBatchResultsAsync(string modelId, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetAnalyzeBatchResultsAsync(string modelId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceClient.GetAnalyzeBatchResults");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetAnalyzeBatchResultsRequest(modelId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAnalyzeBatchResultsRequest(modelId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAnalyzeBatchResultsNextPageRequest(nextLink, modelId, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentIntelligenceClient.GetAnalyzeBatchResults", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -180,24 +174,15 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='GetAnalyzeBatchResults(string,RequestContext)']/*" />
-        public virtual Response GetAnalyzeBatchResults(string modelId, RequestContext context)
+        public virtual Pageable<BinaryData> GetAnalyzeBatchResults(string modelId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceClient.GetAnalyzeBatchResults");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetAnalyzeBatchResultsRequest(modelId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAnalyzeBatchResultsRequest(modelId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAnalyzeBatchResultsNextPageRequest(nextLink, modelId, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DocumentIntelligenceClient.GetAnalyzeBatchResults", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateAnalyzeDocumentRequest(string modelId, RequestContent content, string pages, string locale, string stringIndexType, IEnumerable<DocumentAnalysisFeature> features, IEnumerable<string> queryFields, string outputContentFormat, IEnumerable<AnalyzeOutputOption> output, RequestContext context)
@@ -427,6 +412,20 @@ namespace Azure.AI.DocumentIntelligence
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetAnalyzeBatchResultsNextPageRequest(string nextLink, string modelId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/documentintelligence", false);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

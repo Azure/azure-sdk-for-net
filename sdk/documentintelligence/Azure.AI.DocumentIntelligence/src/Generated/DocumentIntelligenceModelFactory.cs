@@ -556,17 +556,6 @@ namespace Azure.AI.DocumentIntelligence
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.PagedAnalyzeBatchOperation"/>. </summary>
-        /// <param name="value"> The AnalyzeBatchOperation items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="DocumentIntelligence.PagedAnalyzeBatchOperation"/> instance for mocking. </returns>
-        public static PagedAnalyzeBatchOperation PagedAnalyzeBatchOperation(IEnumerable<AnalyzeBatchOperationDetails> value = null, Uri nextLink = null)
-        {
-            value ??= new List<AnalyzeBatchOperationDetails>();
-
-            return new PagedAnalyzeBatchOperation(value?.ToList(), nextLink, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.BuildDocumentModelOptions"/>. </summary>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="description"> Document model description. </param>
