@@ -61,25 +61,50 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
 #pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+            //TODO: 12% perf hit to call this helper
+            //writer.WriteDictionaryWithPatch(
+            //    options,
+            //    ref Patch,
+            //    ReadOnlySpan<byte>.Empty,
+            //    "$"u8,
+            //    Items,
+            //    static (writer, item, options) => ((IJsonModel<AvailabilitySetData>)item).Write(writer, options),
+            //    static (item) => item.Patch);
+
             writer.WriteStartObject();
+#if NET8_0_OR_GREATER
+            Span<byte> buffer = stackalloc byte[256];
+#endif
             foreach (var item in Items)
             {
-                if (item.Value.Patch.Contains("$"u8))
+                if (item.Value.Patch.TryGetJson("$"u8, out ReadOnlyMemory<byte> patchedJson))
                 {
-                    if (item.Value.Patch.IsRemoved("$"u8))
-                        continue;
-
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteRawValue(item.Value.Patch.GetJson("$"u8));
+                    if (!patchedJson.IsEmpty)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteRawValue(patchedJson.Span);
+                    }
+                    continue;
                 }
-                else if (!Patch.ContainsChildOf("$"u8, Encoding.UTF8.GetBytes(item.Key)))
+
+#if NET8_0_OR_GREATER
+                int bytesWritten = Encoding.UTF8.GetBytes(item.Key.AsSpan(), buffer);
+                bool patchContains = bytesWritten == 256
+                    ? Patch.ContainsChildOf("$"u8, Encoding.UTF8.GetBytes(item.Key))
+                    : Patch.ContainsChildOf("$"u8, buffer.Slice(0, bytesWritten));
+#else
+                bool patchContains = Patch.ContainsChildOf("$"u8, Encoding.UTF8.GetBytes(item.Key));
+#endif
+                if (!patchContains)
                 {
                     writer.WritePropertyName(item.Key);
                     ((IJsonModel<AvailabilitySetData>)item.Value).Write(writer, options);
                 }
             }
+
             Patch.Write(writer, "$"u8);
             writer.WriteEndObject();
+
 #pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         }
 
@@ -158,6 +183,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             }
         }
 
+#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         private bool PropagateGet(ReadOnlySpan<byte> jsonPath, out ReadOnlyMemory<byte> value)
         {
             string key = jsonPath.GetFirstPropertyName(out int i);
@@ -166,27 +192,22 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             if (!Items.TryGetValue(key, out var aset))
                 return false;
 
-#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             return aset.Patch.TryGetJson([.. "$"u8, .. GetRemainder(jsonPath, i)], out value);
-#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         }
 
-#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         private bool PropagateSet(ReadOnlySpan<byte> jsonPath, AdditionalProperties.EncodedValue value)
-#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         {
             string key = jsonPath.GetFirstPropertyName(out int i);
 
             if (!Items.TryGetValue(key, out var aset))
                 return false;
 
-#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             aset.Patch.Set([.. "$"u8, .. GetRemainder(jsonPath, i)], value);
-#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             return true;
         }
 
         private bool IsFlattened(ReadOnlySpan<byte> jsonPath) => false;
+#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 
         private static ReadOnlySpan<byte> GetRemainder(ReadOnlySpan<byte> jsonPath, int i)
         {

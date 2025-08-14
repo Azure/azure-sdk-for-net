@@ -1,12 +1,20 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using System.Text.Json;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests
 {
     internal static class SerializationHelpers
     {
+#if NET8_0_OR_GREATER
+        private static readonly int s_maxPropertyNameLength = 256;
+#endif
+
         public static ReadOnlySpan<byte> SliceToStartOfPropertyName(this ReadOnlySpan<byte> jsonPath)
         {
             ReadOnlySpan<byte> local = jsonPath;
@@ -60,6 +68,55 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             bytesConsumed += jsonPath.Length - local.Length;
             return key;
+        }
+
+        [Experimental("SCM0001")]
+        public static void WriteDictionaryWithPatch<T>(
+            this Utf8JsonWriter writer,
+            ModelReaderWriterOptions options,
+            ref AdditionalProperties patch,
+            ReadOnlySpan<byte> propertyName,
+            ReadOnlySpan<byte> prefix,
+            IDictionary<string, T> dictionary,
+            Action<Utf8JsonWriter, T, ModelReaderWriterOptions> write,
+            Func<T, AdditionalProperties>? getPatchFromItem)
+        {
+            if (!propertyName.IsEmpty)
+                writer.WritePropertyName(propertyName);
+
+            writer.WriteStartObject();
+#if NET8_0_OR_GREATER
+            Span<byte> buffer = stackalloc byte[s_maxPropertyNameLength];
+#endif
+            foreach (var item in dictionary)
+            {
+                if (getPatchFromItem is not null && getPatchFromItem(item.Value).TryGetJson("$"u8, out ReadOnlyMemory<byte> patchedJson))
+                {
+                    if (!patchedJson.IsEmpty)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteRawValue(patchedJson.Span);
+                    }
+                    continue;
+                }
+
+#if NET8_0_OR_GREATER
+                int bytesWritten = Encoding.UTF8.GetBytes(item.Key.AsSpan(), buffer);
+                bool patchContains = bytesWritten == s_maxPropertyNameLength
+                    ? patch.ContainsChildOf(prefix, Encoding.UTF8.GetBytes(item.Key))
+                    : patch.ContainsChildOf(prefix, buffer.Slice(0, bytesWritten));
+#else
+                bool patchContains = patch.ContainsChildOf(prefix, Encoding.UTF8.GetBytes(item.Key));
+#endif
+                if (!patchContains)
+                {
+                    writer.WritePropertyName(item.Key);
+                    write(writer, item.Value, options);
+                }
+            }
+
+            patch.Write(writer, prefix);
+            writer.WriteEndObject();
         }
     }
 }

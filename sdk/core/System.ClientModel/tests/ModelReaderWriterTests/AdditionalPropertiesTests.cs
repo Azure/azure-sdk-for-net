@@ -81,6 +81,18 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("[{\"property\":\"value\"}]", GetJsonString(stream));
         }
 
+        [Test]
+        [Ignore("Not implemented")]
+        public void TryGetJson_RemovedProperty_EntryExists()
+        {
+        }
+
+        [Test]
+        [Ignore("Not implemented")]
+        public void TryGetJson_RemovedProperty_EntryDoesNotExist()
+        {
+        }
+
         private static string GetJsonString(MemoryStream stream)
         {
             return Encoding.UTF8.GetString(stream.GetBuffer().AsSpan().Slice(0, (int)stream.Position).ToArray());

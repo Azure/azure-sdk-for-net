@@ -2,10 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
-using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
-using System.ClientModel.Tests.ModelReaderWriterTests;
-using System.IO;
-using System.Reflection;
+using System.Text;
 using BenchmarkDotNet.Attributes;
 
 namespace System.ClientModel.Tests.Internal.Perf
@@ -13,47 +10,51 @@ namespace System.ClientModel.Tests.Internal.Perf
 #pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
     public class AdditionalPropertiesBenchmarks
     {
-        private AvailabilitySetData _model;
-        private AvailabilitySetData _modelWithPatches;
-        private BinaryData _data;
-        private BinaryData _dataWithPatches;
+        private AdditionalProperties _apMatch;
+        private AdditionalProperties _apMiss;
+#if NET8_0_OR_GREATER
+        private string _property = "child";
+#endif
+
+        [Params(1, 5, 20, 100)]
+        public int ItemsInDictionary;
 
         public AdditionalPropertiesBenchmarks()
         {
-            var json = File.ReadAllText(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName, "TestData", "AvailabilitySetData/AvailabilitySetData.json"));
-            var data = BinaryData.FromString(json);
-            _model = ModelReaderWriter.Read<AvailabilitySetData>(data, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
-            _modelWithPatches = ModelReaderWriter.Read<AvailabilitySetData>(data, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
-            _modelWithPatches.Patch.Set("$.sku.name"u8, "newSkuName");
-            _modelWithPatches.Patch.Set("$.properties.virtualMachines[-]"u8, "{\"id\":\"vmId\"}"u8);
-            _modelWithPatches.Patch.Set("$.foobar"u8, 5);
-            _data = ModelReaderWriter.Write(_model, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
-            _dataWithPatches = ModelReaderWriter.Write(_modelWithPatches, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
+            _apMatch = new AdditionalProperties();
+            _apMatch.Set("$.tags.child"u8, 0);
+            _apMiss = new AdditionalProperties();
+            _apMiss.Set("$.tags.diffChild"u8, 0);
         }
 
         [Benchmark]
-        public BinaryData ModelOnly_Write()
+        public void ContainsChild_Stack_Optimized_Match()
         {
-            return ModelReaderWriter.Write(_model, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
+#if NET8_0_OR_GREATER
+            Span<byte> buffer = stackalloc byte[256];
+            for (int i=0; i< ItemsInDictionary; i++)
+            {
+                int length = Encoding.UTF8.GetBytes(_property.AsSpan(), buffer);
+                _apMatch.ContainsChildOf("$.tags"u8, buffer.Slice(0, length));
+            }
+#endif
         }
 
         [Benchmark]
-        public BinaryData ModelWithPatches_Write()
+        public void ContainsChild_Stack_FullPath_Match()
         {
-            return ModelReaderWriter.Write(_modelWithPatches, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
-        }
-
-        [Benchmark]
-        public AvailabilitySetData ModelOnly_Read()
-        {
-            return ModelReaderWriter.Read<AvailabilitySetData>(_data, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
-        }
-
-        [Benchmark]
-        public AvailabilitySetData ModelWithPatches_Read()
-        {
-            return ModelReaderWriter.Read<AvailabilitySetData>(_dataWithPatches, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
+#if NET8_0_OR_GREATER
+            Span<byte> buffer = stackalloc byte[256];
+            ReadOnlySpan<byte> span = "$.tags."u8;
+            span.CopyTo(buffer);
+            for (int i = 0; i < ItemsInDictionary; i++)
+            {
+                int length = span.Length;
+                length += Encoding.UTF8.GetBytes(_property.AsSpan(), buffer.Slice(length));
+                _apMatch.Contains(buffer.Slice(0, length));
+            }
+#endif
         }
     }
-#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 }
+#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.

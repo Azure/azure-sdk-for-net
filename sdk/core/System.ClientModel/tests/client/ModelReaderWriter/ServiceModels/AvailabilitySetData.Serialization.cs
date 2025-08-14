@@ -52,16 +52,31 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             }
             if (OptionalProperty.IsCollectionDefined(Tags) && !Patch.Contains("$.tags"u8))
             {
+                //TODO: 12% perf hit to call this helper
+                //writer.WriteDictionaryWithPatch(options, ref Patch, "tags"u8, "$.tags"u8, Tags, static (writer, value, _) => writer.WriteStringValue(value), null);
                 writer.WritePropertyName("tags"u8);
+
                 writer.WriteStartObject();
+#if NET8_0_OR_GREATER
+                Span<byte> buffer = stackalloc byte[256];
+#endif
                 foreach (var item in Tags)
                 {
-                    if (!Patch.ContainsChildOf("$.tags"u8, Encoding.UTF8.GetBytes(item.Key)))
+#if NET8_0_OR_GREATER
+                    int bytesWritten = Encoding.UTF8.GetBytes(item.Key.AsSpan(), buffer);
+                    bool patchContains = bytesWritten == 256
+                        ? Patch.ContainsChildOf("$.tags"u8, Encoding.UTF8.GetBytes(item.Key))
+                        : Patch.ContainsChildOf("$.tags"u8, buffer.Slice(0, bytesWritten));
+#else
+                    bool patchContains = Patch.ContainsChildOf("$.tags"u8, Encoding.UTF8.GetBytes(item.Key));
+#endif
+                    if (!patchContains)
                     {
                         writer.WritePropertyName(item.Key);
                         writer.WriteStringValue(item.Value);
                     }
                 }
+
                 Patch.Write(writer, "$.tags"u8);
                 writer.WriteEndObject();
             }
