@@ -1,0 +1,5118 @@
+{
+  "name": "ContentSafety",
+  "apiVersions": [
+    "2023-10-01"
+  ],
+  "enums": [
+    {
+      "$id": "1",
+      "kind": "enum",
+      "name": "TextCategory",
+      "crossLanguageDefinitionId": "ContentSafety.TextCategory",
+      "valueType": {
+        "$id": "2",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "3",
+          "kind": "enumvalue",
+          "name": "Hate",
+          "value": "Hate",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "decorators": []
+        },
+        {
+          "$id": "4",
+          "kind": "enumvalue",
+          "name": "SelfHarm",
+          "value": "SelfHarm",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "decorators": []
+        },
+        {
+          "$id": "5",
+          "kind": "enumvalue",
+          "name": "Sexual",
+          "value": "Sexual",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "decorators": []
+        },
+        {
+          "$id": "6",
+          "kind": "enumvalue",
+          "name": "Violence",
+          "value": "Violence",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "decorators": []
+        }
+      ],
+      "namespace": "Azure.AI.ContentSafety",
+      "doc": "Text analyze category.",
+      "isFixed": false,
+      "isFlags": false,
+      "usage": "Input,Output,Json",
+      "decorators": []
+    },
+    {
+      "$id": "7",
+      "kind": "enum",
+      "name": "AnalyzeTextOutputType",
+      "crossLanguageDefinitionId": "ContentSafety.AnalyzeTextOutputType",
+      "valueType": {
+        "$id": "8",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "9",
+          "kind": "enumvalue",
+          "name": "FourSeverityLevels",
+          "value": "FourSeverityLevels",
+          "valueType": {
+            "$ref": "8"
+          },
+          "enumType": {
+            "$ref": "7"
+          },
+          "doc": "Output severities in four levels, the value could be 0,2,4,6.",
+          "decorators": []
+        },
+        {
+          "$id": "10",
+          "kind": "enumvalue",
+          "name": "EightSeverityLevels",
+          "value": "EightSeverityLevels",
+          "valueType": {
+            "$ref": "8"
+          },
+          "enumType": {
+            "$ref": "7"
+          },
+          "doc": "Output severities in eight levels, the value could be 0,1,2,3,4,5,6,7.",
+          "decorators": []
+        }
+      ],
+      "namespace": "Azure.AI.ContentSafety",
+      "doc": "The type of text analysis output.",
+      "isFixed": false,
+      "isFlags": false,
+      "usage": "Input,Json",
+      "decorators": []
+    },
+    {
+      "$id": "11",
+      "kind": "enum",
+      "name": "ImageCategory",
+      "crossLanguageDefinitionId": "ContentSafety.ImageCategory",
+      "valueType": {
+        "$id": "12",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "13",
+          "kind": "enumvalue",
+          "name": "Hate",
+          "value": "Hate",
+          "valueType": {
+            "$ref": "12"
+          },
+          "enumType": {
+            "$ref": "11"
+          },
+          "decorators": []
+        },
+        {
+          "$id": "14",
+          "kind": "enumvalue",
+          "name": "SelfHarm",
+          "value": "SelfHarm",
+          "valueType": {
+            "$ref": "12"
+          },
+          "enumType": {
+            "$ref": "11"
+          },
+          "decorators": []
+        },
+        {
+          "$id": "15",
+          "kind": "enumvalue",
+          "name": "Sexual",
+          "value": "Sexual",
+          "valueType": {
+            "$ref": "12"
+          },
+          "enumType": {
+            "$ref": "11"
+          },
+          "decorators": []
+        },
+        {
+          "$id": "16",
+          "kind": "enumvalue",
+          "name": "Violence",
+          "value": "Violence",
+          "valueType": {
+            "$ref": "12"
+          },
+          "enumType": {
+            "$ref": "11"
+          },
+          "decorators": []
+        }
+      ],
+      "namespace": "Azure.AI.ContentSafety",
+      "doc": "Image analyze category.",
+      "isFixed": false,
+      "isFlags": false,
+      "usage": "Input,Output,Json",
+      "decorators": []
+    },
+    {
+      "$id": "17",
+      "kind": "enum",
+      "name": "AnalyzeImageOutputType",
+      "crossLanguageDefinitionId": "ContentSafety.AnalyzeImageOutputType",
+      "valueType": {
+        "$id": "18",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "19",
+          "kind": "enumvalue",
+          "name": "FourSeverityLevels",
+          "value": "FourSeverityLevels",
+          "valueType": {
+            "$ref": "18"
+          },
+          "enumType": {
+            "$ref": "17"
+          },
+          "doc": "Output severities in four levels, the value could be 0,2,4,6.",
+          "decorators": []
+        }
+      ],
+      "namespace": "Azure.AI.ContentSafety",
+      "doc": "The type of image analysis output.",
+      "isFixed": false,
+      "isFlags": false,
+      "usage": "Input,Json",
+      "decorators": []
+    },
+    {
+      "$id": "20",
+      "kind": "enum",
+      "name": "Versions",
+      "crossLanguageDefinitionId": "ContentSafety.Versions",
+      "valueType": {
+        "$id": "21",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "22",
+          "kind": "enumvalue",
+          "name": "v2023_10_01",
+          "value": "2023-10-01",
+          "valueType": {
+            "$ref": "21"
+          },
+          "enumType": {
+            "$ref": "20"
+          },
+          "decorators": []
+        }
+      ],
+      "namespace": "Azure.AI.ContentSafety",
+      "isFixed": true,
+      "isFlags": false,
+      "usage": "ApiVersionEnum",
+      "decorators": []
+    }
+  ],
+  "constants": [
+    {
+      "$id": "23",
+      "kind": "constant",
+      "name": "analyzeTextContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "24",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "25",
+      "kind": "constant",
+      "name": "analyzeTextContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "26",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "27",
+      "kind": "constant",
+      "name": "analyzeImageContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "28",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "29",
+      "kind": "constant",
+      "name": "analyzeImageContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "30",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "31",
+      "kind": "constant",
+      "name": "addOrUpdateBlocklistItemsContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "32",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "33",
+      "kind": "constant",
+      "name": "addOrUpdateBlocklistItemsContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "34",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "35",
+      "kind": "constant",
+      "name": "CreateOrUpdateTextBlocklistRequestContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "36",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/merge-patch+json",
+      "decorators": []
+    },
+    {
+      "$id": "37",
+      "kind": "constant",
+      "name": "createOrUpdateTextBlocklistContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "38",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "39",
+      "kind": "constant",
+      "name": "CreateOrUpdateTextBlocklistRequestContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "40",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/merge-patch+json",
+      "decorators": []
+    },
+    {
+      "$id": "41",
+      "kind": "constant",
+      "name": "deleteTextBlocklistContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "42",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "43",
+      "kind": "constant",
+      "name": "getTextBlocklistContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "44",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "45",
+      "kind": "constant",
+      "name": "getTextBlocklistItemContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "46",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "47",
+      "kind": "constant",
+      "name": "listTextBlocklistItemsContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "48",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "49",
+      "kind": "constant",
+      "name": "listTextBlocklistsContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "50",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "51",
+      "kind": "constant",
+      "name": "removeBlocklistItemsContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "52",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "53",
+      "kind": "constant",
+      "name": "removeBlocklistItemsContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "54",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    }
+  ],
+  "models": [
+    {
+      "$id": "55",
+      "kind": "model",
+      "name": "AnalyzeTextOptions",
+      "namespace": "Azure.AI.ContentSafety",
+      "crossLanguageDefinitionId": "ContentSafety.AnalyzeTextOptions",
+      "usage": "Input,Json",
+      "doc": "The text analysis request.",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "56",
+          "kind": "property",
+          "name": "text",
+          "serializedName": "text",
+          "doc": "The text needs to be analyzed. We support a maximum of 10k Unicode characters (Unicode code points) in the text of one request.",
+          "type": {
+            "$id": "57",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "ContentSafety.AnalyzeTextOptions.text",
+          "serializationOptions": {
+            "json": {
+              "name": "text"
+            }
+          }
+        },
+        {
+          "$id": "58",
+          "kind": "property",
+          "name": "categories",
+          "serializedName": "categories",
+          "doc": "The categories will be analyzed. If they are not assigned, a default set of analysis results for the categories will be returned.",
+          "type": {
+            "$id": "59",
+            "kind": "array",
+            "name": "ArrayTextCategory",
+            "valueType": {
+              "$ref": "1"
+            },
+            "crossLanguageDefinitionId": "TypeSpec.Array",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "ContentSafety.AnalyzeTextOptions.categories",
+          "serializationOptions": {
+            "json": {
+              "name": "categories"
+            }
+          }
+        },
+        {
+          "$id": "60",
+          "kind": "property",
+          "name": "blocklistNames",
+          "serializedName": "blocklistNames",
+          "doc": "The names of blocklists.",
+          "type": {
+            "$id": "61",
+            "kind": "array",
+            "name": "Array",
+            "valueType": {
+              "$id": "62",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string",
+              "decorators": []
+            },
+            "crossLanguageDefinitionId": "TypeSpec.Array",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "ContentSafety.AnalyzeTextOptions.blocklistNames",
+          "serializationOptions": {
+            "json": {
+              "name": "blocklistNames"
+            }
+          }
+        },
+        {
+          "$id": "63",
+          "kind": "property",
+          "name": "haltOnBlocklistHit",
+          "serializedName": "haltOnBlocklistHit",
+          "doc": "When set to true, further analyses of harmful content will not be performed in cases where blocklists are hit. When set to false, all analyses of harmful content will be performed, whether or not blocklists are hit.",
+          "type": {
+            "$id": "64",
+            "kind": "boolean",
+            "name": "boolean",
+            "crossLanguageDefinitionId": "TypeSpec.boolean",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "ContentSafety.AnalyzeTextOptions.haltOnBlocklistHit",
+          "serializationOptions": {
+            "json": {
+              "name": "haltOnBlocklistHit"
+            }
+          }
+        },
+        {
+          "$id": "65",
+          "kind": "property",
+          "name": "outputType",
+          "serializedName": "outputType",
+          "doc": "This refers to the type of text analysis output. If no value is assigned, the default value will be \"FourSeverityLevels\".",
+          "type": {
+            "$ref": "7"
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "ContentSafety.AnalyzeTextOptions.outputType",
+          "serializationOptions": {
+            "json": {
+              "name": "outputType"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "$id": "66",
+      "kind": "model",
+      "name": "AnalyzeTextResult",
+      "namespace": "Azure.AI.ContentSafety",
+      "crossLanguageDefinitionId": "ContentSafety.AnalyzeTextResult",
+      "usage": "Output,Json",
+      "doc": "The text analysis response.",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "67",
+          "kind": "property",
+          "name": "blocklistsMatch",
+          "serializedName": "blocklistsMatch",
+          "doc": "The blocklist match details.",
+          "type": {
+            "$id": "68",
+            "kind": "array",
+            "name": "ArrayTextBlocklistMatch",
+            "valueType": {
+              "$id": "69",
+              "kind": "model",
+              "name": "TextBlocklistMatch",
+              "namespace": "Azure.AI.ContentSafety",
+              "crossLanguageDefinitionId": "ContentSafety.TextBlocklistMatch",
+              "usage": "Output,Json",
+              "doc": "The result of blocklist match.",
+              "decorators": [],
+              "properties": [
+                {
+                  "$id": "70",
+                  "kind": "property",
+                  "name": "blocklistName",
+                  "serializedName": "blocklistName",
+                  "doc": "The name of the matched blocklist.",
+                  "type": {
+                    "$id": "71",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "optional": false,
+                  "readOnly": false,
+                  "discriminator": false,
+                  "flatten": false,
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "ContentSafety.TextBlocklistMatch.blocklistName",
+                  "serializationOptions": {
+                    "json": {
+                      "name": "blocklistName"
+                    }
+                  }
+                },
+                {
+                  "$id": "72",
+                  "kind": "property",
+                  "name": "blocklistItemId",
+                  "serializedName": "blocklistItemId",
+                  "doc": "The ID of the matched item.",
+                  "type": {
+                    "$id": "73",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "optional": false,
+                  "readOnly": false,
+                  "discriminator": false,
+                  "flatten": false,
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "ContentSafety.TextBlocklistMatch.blocklistItemId",
+                  "serializationOptions": {
+                    "json": {
+                      "name": "blocklistItemId"
+                    }
+                  }
+                },
+                {
+                  "$id": "74",
+                  "kind": "property",
+                  "name": "blocklistItemText",
+                  "serializedName": "blocklistItemText",
+                  "doc": "The content of the matched item.",
+                  "type": {
+                    "$id": "75",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "optional": false,
+                  "readOnly": false,
+                  "discriminator": false,
+                  "flatten": false,
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "ContentSafety.TextBlocklistMatch.blocklistItemText",
+                  "serializationOptions": {
+                    "json": {
+                      "name": "blocklistItemText"
+                    }
+                  }
+                }
+              ]
+            },
+            "crossLanguageDefinitionId": "TypeSpec.Array",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "ContentSafety.AnalyzeTextResult.blocklistsMatch",
+          "serializationOptions": {
+            "json": {
+              "name": "blocklistsMatch"
+            }
+          }
+        },
+        {
+          "$id": "76",
+          "kind": "property",
+          "name": "categoriesAnalysis",
+          "serializedName": "categoriesAnalysis",
+          "doc": "Analysis result for categories.",
+          "type": {
+            "$id": "77",
+            "kind": "array",
+            "name": "ArrayTextCategoriesAnalysis",
+            "valueType": {
+              "$id": "78",
+              "kind": "model",
+              "name": "TextCategoriesAnalysis",
+              "namespace": "Azure.AI.ContentSafety",
+              "crossLanguageDefinitionId": "ContentSafety.TextCategoriesAnalysis",
+              "usage": "Output,Json",
+              "doc": "Text analysis result.",
+              "decorators": [],
+              "properties": [
+                {
+                  "$id": "79",
+                  "kind": "property",
+                  "name": "category",
+                  "serializedName": "category",
+                  "doc": "The text analysis category.",
+                  "type": {
+                    "$ref": "1"
+                  },
+                  "optional": false,
+                  "readOnly": false,
+                  "discriminator": false,
+                  "flatten": false,
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "ContentSafety.TextCategoriesAnalysis.category",
+                  "serializationOptions": {
+                    "json": {
+                      "name": "category"
+                    }
+                  }
+                },
+                {
+                  "$id": "80",
+                  "kind": "property",
+                  "name": "severity",
+                  "serializedName": "severity",
+                  "doc": "The value increases with the severity of the input content. The value of this field is determined by the output type specified in the request. The output type could be ‘FourSeverityLevels’ or ‘EightSeverity Levels’, and the output value can be 0, 2, 4, 6 or 0, 1, 2, 3, 4, 5, 6, or 7.",
+                  "type": {
+                    "$id": "81",
+                    "kind": "int32",
+                    "name": "int32",
+                    "crossLanguageDefinitionId": "TypeSpec.int32",
+                    "decorators": []
+                  },
+                  "optional": true,
+                  "readOnly": false,
+                  "discriminator": false,
+                  "flatten": false,
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "ContentSafety.TextCategoriesAnalysis.severity",
+                  "serializationOptions": {
+                    "json": {
+                      "name": "severity"
+                    }
+                  }
+                }
+              ]
+            },
+            "crossLanguageDefinitionId": "TypeSpec.Array",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "ContentSafety.AnalyzeTextResult.categoriesAnalysis",
+          "serializationOptions": {
+            "json": {
+              "name": "categoriesAnalysis"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "$ref": "69"
+    },
+    {
+      "$ref": "78"
+    },
+    {
+      "$id": "82",
+      "kind": "model",
+      "name": "ErrorResponse",
+      "namespace": "Azure.AI.ContentSafety",
+      "crossLanguageDefinitionId": "Azure.Core.Foundations.ErrorResponse",
+      "usage": "Json,Exception",
+      "doc": "A response containing error details.",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "83",
+          "kind": "property",
+          "name": "error",
+          "serializedName": "error",
+          "doc": "The error object.",
+          "type": {
+            "$id": "84",
+            "kind": "model",
+            "name": "Error",
+            "namespace": "Azure.AI.ContentSafety",
+            "crossLanguageDefinitionId": "Azure.Core.Foundations.Error",
+            "usage": "Json,Exception",
+            "doc": "The error object.",
+            "decorators": [],
+            "properties": [
+              {
+                "$id": "85",
+                "kind": "property",
+                "name": "code",
+                "serializedName": "code",
+                "doc": "One of a server-defined set of error codes.",
+                "type": {
+                  "$id": "86",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": false,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.Core.Foundations.Error.code",
+                "serializationOptions": {
+                  "json": {
+                    "name": "code"
+                  }
+                }
+              },
+              {
+                "$id": "87",
+                "kind": "property",
+                "name": "message",
+                "serializedName": "message",
+                "doc": "A human-readable representation of the error.",
+                "type": {
+                  "$id": "88",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": false,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.Core.Foundations.Error.message",
+                "serializationOptions": {
+                  "json": {
+                    "name": "message"
+                  }
+                }
+              },
+              {
+                "$id": "89",
+                "kind": "property",
+                "name": "target",
+                "serializedName": "target",
+                "doc": "The target of the error.",
+                "type": {
+                  "$id": "90",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.Core.Foundations.Error.target",
+                "serializationOptions": {
+                  "json": {
+                    "name": "target"
+                  }
+                }
+              },
+              {
+                "$id": "91",
+                "kind": "property",
+                "name": "details",
+                "serializedName": "details",
+                "doc": "An array of details about specific errors that led to this reported error.",
+                "type": {
+                  "$id": "92",
+                  "kind": "array",
+                  "name": "ArrayError",
+                  "valueType": {
+                    "$ref": "84"
+                  },
+                  "crossLanguageDefinitionId": "TypeSpec.Array",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.Core.Foundations.Error.details",
+                "serializationOptions": {
+                  "json": {
+                    "name": "details"
+                  }
+                }
+              },
+              {
+                "$id": "93",
+                "kind": "property",
+                "name": "innererror",
+                "serializedName": "innererror",
+                "doc": "An object containing more specific information than the current object about the error.",
+                "type": {
+                  "$id": "94",
+                  "kind": "model",
+                  "name": "InnerError",
+                  "namespace": "Azure.AI.ContentSafety",
+                  "crossLanguageDefinitionId": "Azure.Core.Foundations.InnerError",
+                  "usage": "Json,Exception",
+                  "doc": "An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#handling-errors.",
+                  "decorators": [],
+                  "properties": [
+                    {
+                      "$id": "95",
+                      "kind": "property",
+                      "name": "code",
+                      "serializedName": "code",
+                      "doc": "One of a server-defined set of error codes.",
+                      "type": {
+                        "$id": "96",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "optional": true,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "Azure.Core.Foundations.InnerError.code",
+                      "serializationOptions": {
+                        "json": {
+                          "name": "code"
+                        }
+                      }
+                    },
+                    {
+                      "$id": "97",
+                      "kind": "property",
+                      "name": "innererror",
+                      "serializedName": "innererror",
+                      "doc": "Inner error.",
+                      "type": {
+                        "$ref": "94"
+                      },
+                      "optional": true,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "Azure.Core.Foundations.InnerError.innererror",
+                      "serializationOptions": {
+                        "json": {
+                          "name": "innererror"
+                        }
+                      }
+                    }
+                  ]
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.Core.Foundations.Error.innererror",
+                "serializationOptions": {
+                  "json": {
+                    "name": "innererror"
+                  }
+                }
+              }
+            ]
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.Core.Foundations.ErrorResponse.error",
+          "serializationOptions": {
+            "json": {
+              "name": "error"
+            }
+          }
+        },
+        {
+          "$id": "98",
+          "kind": "header",
+          "name": "errorCode",
+          "serializedName": "x-ms-error-code",
+          "doc": "String error code indicating what went wrong.",
+          "type": {
+            "$id": "99",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.Core.Foundations.ErrorResponse.errorCode",
+          "correspondingMethodParams": []
+        }
+      ]
+    },
+    {
+      "$ref": "84"
+    },
+    {
+      "$ref": "94"
+    },
+    {
+      "$id": "100",
+      "kind": "model",
+      "name": "AnalyzeImageOptions",
+      "namespace": "Azure.AI.ContentSafety",
+      "crossLanguageDefinitionId": "ContentSafety.AnalyzeImageOptions",
+      "usage": "Input,Json",
+      "doc": "The image analysis request.",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "101",
+          "kind": "property",
+          "name": "image",
+          "serializedName": "image",
+          "doc": "The image needs to be analyzed.",
+          "type": {
+            "$id": "102",
+            "kind": "model",
+            "name": "ContentSafetyImageData",
+            "namespace": "Azure.AI.ContentSafety",
+            "crossLanguageDefinitionId": "ContentSafety.ImageData",
+            "usage": "Input,Json",
+            "doc": "The image can be either base64 encoded bytes or a blob URL. You can choose only one of these options. If both are provided, the request will be refused. The maximum image size is 2048 x 2048 pixels and should not exceed 4 MB, while the minimum image size is 50 x 50 pixels.",
+            "decorators": [],
+            "properties": [
+              {
+                "$id": "103",
+                "kind": "property",
+                "name": "content",
+                "serializedName": "content",
+                "doc": "The Base64 encoding of the image.",
+                "type": {
+                  "$id": "104",
+                  "kind": "bytes",
+                  "name": "bytes",
+                  "encode": "base64",
+                  "crossLanguageDefinitionId": "TypeSpec.bytes",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "ContentSafety.ImageData.content",
+                "serializationOptions": {
+                  "json": {
+                    "name": "content"
+                  }
+                }
+              },
+              {
+                "$id": "105",
+                "kind": "property",
+                "name": "BlobUri",
+                "serializedName": "blobUrl",
+                "doc": "The blob url of the image.",
+                "type": {
+                  "$id": "106",
+                  "kind": "url",
+                  "name": "url",
+                  "crossLanguageDefinitionId": "TypeSpec.url",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "ContentSafety.ImageData.blobUrl",
+                "serializationOptions": {
+                  "json": {
+                    "name": "blobUrl"
+                  }
+                }
+              }
+            ]
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "ContentSafety.AnalyzeImageOptions.image",
+          "serializationOptions": {
+            "json": {
+              "name": "image"
+            }
+          }
+        },
+        {
+          "$id": "107",
+          "kind": "property",
+          "name": "categories",
+          "serializedName": "categories",
+          "doc": "The categories will be analyzed. If they are not assigned, a default set of analysis results for the categories will be returned.",
+          "type": {
+            "$id": "108",
+            "kind": "array",
+            "name": "ArrayImageCategory",
+            "valueType": {
+              "$ref": "11"
+            },
+            "crossLanguageDefinitionId": "TypeSpec.Array",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "ContentSafety.AnalyzeImageOptions.categories",
+          "serializationOptions": {
+            "json": {
+              "name": "categories"
+            }
+          }
+        },
+        {
+          "$id": "109",
+          "kind": "property",
+          "name": "outputType",
+          "serializedName": "outputType",
+          "doc": "This refers to the type of image analysis output. If no value is assigned, the default value will be \"FourSeverityLevels\".",
+          "type": {
+            "$ref": "17"
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "ContentSafety.AnalyzeImageOptions.outputType",
+          "serializationOptions": {
+            "json": {
+              "name": "outputType"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "$ref": "102"
+    },
+    {
+      "$id": "110",
+      "kind": "model",
+      "name": "AnalyzeImageResult",
+      "namespace": "Azure.AI.ContentSafety",
+      "crossLanguageDefinitionId": "ContentSafety.AnalyzeImageResult",
+      "usage": "Output,Json",
+      "doc": "The image analysis response.",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "111",
+          "kind": "property",
+          "name": "categoriesAnalysis",
+          "serializedName": "categoriesAnalysis",
+          "doc": "Analysis result for categories.",
+          "type": {
+            "$id": "112",
+            "kind": "array",
+            "name": "ArrayImageCategoriesAnalysis",
+            "valueType": {
+              "$id": "113",
+              "kind": "model",
+              "name": "ImageCategoriesAnalysis",
+              "namespace": "Azure.AI.ContentSafety",
+              "crossLanguageDefinitionId": "ContentSafety.ImageCategoriesAnalysis",
+              "usage": "Output,Json",
+              "doc": "Image analysis result.",
+              "decorators": [],
+              "properties": [
+                {
+                  "$id": "114",
+                  "kind": "property",
+                  "name": "category",
+                  "serializedName": "category",
+                  "doc": "The image analysis category.",
+                  "type": {
+                    "$ref": "11"
+                  },
+                  "optional": false,
+                  "readOnly": false,
+                  "discriminator": false,
+                  "flatten": false,
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "ContentSafety.ImageCategoriesAnalysis.category",
+                  "serializationOptions": {
+                    "json": {
+                      "name": "category"
+                    }
+                  }
+                },
+                {
+                  "$id": "115",
+                  "kind": "property",
+                  "name": "severity",
+                  "serializedName": "severity",
+                  "doc": "The value increases with the severity of the input content. The value of this field is determined by the output type specified in the request. The output type could be ‘FourSeverityLevels’, and the output value can be 0, 2, 4, 6.",
+                  "type": {
+                    "$id": "116",
+                    "kind": "int32",
+                    "name": "int32",
+                    "crossLanguageDefinitionId": "TypeSpec.int32",
+                    "decorators": []
+                  },
+                  "optional": true,
+                  "readOnly": false,
+                  "discriminator": false,
+                  "flatten": false,
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "ContentSafety.ImageCategoriesAnalysis.severity",
+                  "serializationOptions": {
+                    "json": {
+                      "name": "severity"
+                    }
+                  }
+                }
+              ]
+            },
+            "crossLanguageDefinitionId": "TypeSpec.Array",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "ContentSafety.AnalyzeImageResult.categoriesAnalysis",
+          "serializationOptions": {
+            "json": {
+              "name": "categoriesAnalysis"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "$ref": "113"
+    },
+    {
+      "$id": "117",
+      "kind": "model",
+      "name": "AddOrUpdateTextBlocklistItemsOptions",
+      "namespace": "Azure.AI.ContentSafety",
+      "crossLanguageDefinitionId": "ContentSafety.AddOrUpdateTextBlocklistItemsOptions",
+      "usage": "Input,Json",
+      "doc": "The request to add blocklistItems to a text blocklist.",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "118",
+          "kind": "property",
+          "name": "blocklistItems",
+          "serializedName": "blocklistItems",
+          "doc": "Array of blocklistItems to add.",
+          "type": {
+            "$id": "119",
+            "kind": "array",
+            "name": "ArrayTextBlocklistItem",
+            "valueType": {
+              "$id": "120",
+              "kind": "model",
+              "name": "TextBlocklistItem",
+              "namespace": "Azure.AI.ContentSafety",
+              "crossLanguageDefinitionId": "ContentSafety.TextBlocklistItem",
+              "usage": "Input,Output,Json",
+              "doc": "Item in a TextBlocklist.",
+              "decorators": [],
+              "properties": [
+                {
+                  "$id": "121",
+                  "kind": "property",
+                  "name": "blocklistItemId",
+                  "serializedName": "blocklistItemId",
+                  "doc": "The service will generate a BlocklistItemId, which will be a UUID.",
+                  "type": {
+                    "$id": "122",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "optional": false,
+                  "readOnly": true,
+                  "discriminator": false,
+                  "flatten": false,
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "ContentSafety.TextBlocklistItem.blocklistItemId",
+                  "serializationOptions": {
+                    "json": {
+                      "name": "blocklistItemId"
+                    }
+                  }
+                },
+                {
+                  "$id": "123",
+                  "kind": "property",
+                  "name": "description",
+                  "serializedName": "description",
+                  "doc": "BlocklistItem description.",
+                  "type": {
+                    "$id": "124",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "optional": true,
+                  "readOnly": false,
+                  "discriminator": false,
+                  "flatten": false,
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "ContentSafety.TextBlocklistItem.description",
+                  "serializationOptions": {
+                    "json": {
+                      "name": "description"
+                    }
+                  }
+                },
+                {
+                  "$id": "125",
+                  "kind": "property",
+                  "name": "text",
+                  "serializedName": "text",
+                  "doc": "BlocklistItem content.",
+                  "type": {
+                    "$id": "126",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "optional": false,
+                  "readOnly": false,
+                  "discriminator": false,
+                  "flatten": false,
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "ContentSafety.TextBlocklistItem.text",
+                  "serializationOptions": {
+                    "json": {
+                      "name": "text"
+                    }
+                  }
+                }
+              ]
+            },
+            "crossLanguageDefinitionId": "TypeSpec.Array",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "ContentSafety.AddOrUpdateTextBlocklistItemsOptions.blocklistItems",
+          "serializationOptions": {
+            "json": {
+              "name": "blocklistItems"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "$ref": "120"
+    },
+    {
+      "$id": "127",
+      "kind": "model",
+      "name": "AddOrUpdateTextBlocklistItemsResult",
+      "namespace": "Azure.AI.ContentSafety",
+      "crossLanguageDefinitionId": "ContentSafety.AddOrUpdateTextBlocklistItemsResult",
+      "usage": "Output,Json",
+      "doc": "The response of adding blocklistItems to the text blocklist.",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "128",
+          "kind": "property",
+          "name": "blocklistItems",
+          "serializedName": "blocklistItems",
+          "doc": "Array of blocklistItems have been added.",
+          "type": {
+            "$ref": "119"
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "ContentSafety.AddOrUpdateTextBlocklistItemsResult.blocklistItems",
+          "serializationOptions": {
+            "json": {
+              "name": "blocklistItems"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "$id": "129",
+      "kind": "model",
+      "name": "TextBlocklist",
+      "namespace": "Azure.AI.ContentSafety",
+      "crossLanguageDefinitionId": "ContentSafety.TextBlocklist",
+      "usage": "Output,Json",
+      "doc": "Text Blocklist.",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "130",
+          "kind": "property",
+          "name": "Name",
+          "serializedName": "blocklistName",
+          "doc": "Text blocklist name.",
+          "type": {
+            "$id": "131",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "ContentSafety.TextBlocklist.blocklistName",
+          "serializationOptions": {
+            "json": {
+              "name": "blocklistName"
+            }
+          }
+        },
+        {
+          "$id": "132",
+          "kind": "property",
+          "name": "description",
+          "serializedName": "description",
+          "doc": "Text blocklist description.",
+          "type": {
+            "$id": "133",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "ContentSafety.TextBlocklist.description",
+          "serializationOptions": {
+            "json": {
+              "name": "description"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "$id": "134",
+      "kind": "model",
+      "name": "PagedTextBlocklistItem",
+      "namespace": "Azure.AI.ContentSafety",
+      "crossLanguageDefinitionId": "Azure.Core.Foundations.CustomPage",
+      "usage": "Output,Json",
+      "doc": "Paged collection of TextBlocklistItem items",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "135",
+          "kind": "property",
+          "name": "value",
+          "serializedName": "value",
+          "doc": "The TextBlocklistItem items on this page",
+          "type": {
+            "$ref": "119"
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.Core.Foundations.CustomPage.value",
+          "serializationOptions": {
+            "json": {
+              "name": "value"
+            }
+          }
+        },
+        {
+          "$id": "136",
+          "kind": "property",
+          "name": "nextLink",
+          "serializedName": "nextLink",
+          "doc": "The link to the next page of items",
+          "type": {
+            "$id": "137",
+            "kind": "url",
+            "name": "ResourceLocation",
+            "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+            "baseType": {
+              "$id": "138",
+              "kind": "url",
+              "name": "url",
+              "crossLanguageDefinitionId": "TypeSpec.url",
+              "decorators": []
+            },
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.Core.Foundations.CustomPage.nextLink",
+          "serializationOptions": {
+            "json": {
+              "name": "nextLink"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "$id": "139",
+      "kind": "model",
+      "name": "PagedTextBlocklist",
+      "namespace": "Azure.AI.ContentSafety",
+      "crossLanguageDefinitionId": "Azure.Core.Foundations.CustomPage",
+      "usage": "Output,Json",
+      "doc": "Paged collection of TextBlocklist items",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "140",
+          "kind": "property",
+          "name": "value",
+          "serializedName": "value",
+          "doc": "The TextBlocklist items on this page",
+          "type": {
+            "$id": "141",
+            "kind": "array",
+            "name": "ArrayTextBlocklist",
+            "valueType": {
+              "$ref": "129"
+            },
+            "crossLanguageDefinitionId": "TypeSpec.Array",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.Core.Foundations.CustomPage.value",
+          "serializationOptions": {
+            "json": {
+              "name": "value"
+            }
+          }
+        },
+        {
+          "$id": "142",
+          "kind": "property",
+          "name": "nextLink",
+          "serializedName": "nextLink",
+          "doc": "The link to the next page of items",
+          "type": {
+            "$id": "143",
+            "kind": "url",
+            "name": "ResourceLocation",
+            "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+            "baseType": {
+              "$id": "144",
+              "kind": "url",
+              "name": "url",
+              "crossLanguageDefinitionId": "TypeSpec.url",
+              "decorators": []
+            },
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.Core.Foundations.CustomPage.nextLink",
+          "serializationOptions": {
+            "json": {
+              "name": "nextLink"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "$id": "145",
+      "kind": "model",
+      "name": "RemoveTextBlocklistItemsOptions",
+      "namespace": "Azure.AI.ContentSafety",
+      "crossLanguageDefinitionId": "ContentSafety.RemoveTextBlocklistItemsOptions",
+      "usage": "Input,Json",
+      "doc": "The request to remove blocklistItems from a text blocklist.",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "146",
+          "kind": "property",
+          "name": "blocklistItemIds",
+          "serializedName": "blocklistItemIds",
+          "doc": "Array of blocklistItemIds to remove.",
+          "type": {
+            "$ref": "61"
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "ContentSafety.RemoveTextBlocklistItemsOptions.blocklistItemIds",
+          "serializationOptions": {
+            "json": {
+              "name": "blocklistItemIds"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "clients": [
+    {
+      "$id": "147",
+      "kind": "client",
+      "name": "ContentSafetyClient",
+      "namespace": "Azure.AI.ContentSafety",
+      "methods": [
+        {
+          "$id": "148",
+          "kind": "basic",
+          "name": "analyzeText",
+          "accessibility": "public",
+          "apiVersions": [
+            "2023-10-01"
+          ],
+          "doc": "A synchronous API for the analysis of potentially harmful text content. Currently, it supports four categories: Hate, SelfHarm, Sexual, and Violence.",
+          "summary": "Analyze Text",
+          "operation": {
+            "$id": "149",
+            "name": "analyzeText",
+            "resourceName": "ContentSafetyClient",
+            "summary": "Analyze Text",
+            "doc": "A synchronous API for the analysis of potentially harmful text content. Currently, it supports four categories: Hate, SelfHarm, Sexual, and Violence.",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "150",
+                "name": "apiVersion",
+                "nameInRequest": "api-version",
+                "doc": "The API version to use for this operation.",
+                "type": {
+                  "$id": "151",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Query",
+                "isApiVersion": true,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Client",
+                "defaultValue": {
+                  "type": {
+                    "$id": "152",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string"
+                  },
+                  "value": "2023-10-01"
+                },
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "153",
+                "name": "contentType",
+                "nameInRequest": "Content-Type",
+                "doc": "Body parameter's content type. Known values are application/json",
+                "type": {
+                  "$ref": "23"
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": true,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Constant",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "154",
+                "name": "accept",
+                "nameInRequest": "Accept",
+                "type": {
+                  "$ref": "25"
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Constant",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "155",
+                "name": "options",
+                "nameInRequest": "options",
+                "doc": "The text analysis request.",
+                "type": {
+                  "$ref": "55"
+                },
+                "location": "Body",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "66"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ]
+              }
+            ],
+            "httpMethod": "POST",
+            "uri": "{endpoint}/contentsafety",
+            "path": "/text:analyze",
+            "requestMediaTypes": [
+              "application/json"
+            ],
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Customizations.ContentSafetyClient.analyzeText",
+            "decorators": [],
+            "examples": [
+              {
+                "$id": "156",
+                "kind": "http",
+                "name": "Analyze Text",
+                "description": "Analyze Text",
+                "filePath": "2023-10-01/AnalyzeText.json",
+                "parameters": [
+                  {
+                    "parameter": {
+                      "$ref": "150"
+                    },
+                    "value": {
+                      "$id": "157",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "151"
+                      },
+                      "value": "2023-10-01"
+                    }
+                  },
+                  {
+                    "parameter": {
+                      "$ref": "155"
+                    },
+                    "value": {
+                      "$id": "158",
+                      "kind": "model",
+                      "type": {
+                        "$ref": "55"
+                      },
+                      "value": {
+                        "text": {
+                          "$id": "159",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "57"
+                          },
+                          "value": "This is text example"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "responses": [
+                  {
+                    "response": {
+                      "statusCodes": [
+                        200
+                      ],
+                      "bodyType": {
+                        "$ref": "66"
+                      },
+                      "headers": [],
+                      "isErrorResponse": false,
+                      "contentTypes": [
+                        "application/json"
+                      ]
+                    },
+                    "statusCode": 200,
+                    "bodyValue": {
+                      "$id": "160",
+                      "kind": "model",
+                      "type": {
+                        "$ref": "66"
+                      },
+                      "value": {
+                        "blocklistsMatch": {
+                          "$id": "161",
+                          "kind": "array",
+                          "type": {
+                            "$ref": "68"
+                          },
+                          "value": []
+                        },
+                        "categoriesAnalysis": {
+                          "$id": "162",
+                          "kind": "array",
+                          "type": {
+                            "$ref": "77"
+                          },
+                          "value": [
+                            {
+                              "$id": "163",
+                              "kind": "model",
+                              "type": {
+                                "$ref": "78"
+                              },
+                              "value": {
+                                "category": {
+                                  "$id": "164",
+                                  "kind": "string",
+                                  "type": {
+                                    "$ref": "1"
+                                  },
+                                  "value": "Hate"
+                                },
+                                "severity": {
+                                  "$id": "165",
+                                  "kind": "number",
+                                  "type": {
+                                    "$ref": "81"
+                                  },
+                                  "value": 0
+                                }
+                              }
+                            },
+                            {
+                              "$id": "166",
+                              "kind": "model",
+                              "type": {
+                                "$ref": "78"
+                              },
+                              "value": {
+                                "category": {
+                                  "$id": "167",
+                                  "kind": "string",
+                                  "type": {
+                                    "$ref": "1"
+                                  },
+                                  "value": "SelfHarm"
+                                },
+                                "severity": {
+                                  "$id": "168",
+                                  "kind": "number",
+                                  "type": {
+                                    "$ref": "81"
+                                  },
+                                  "value": 0
+                                }
+                              }
+                            },
+                            {
+                              "$id": "169",
+                              "kind": "model",
+                              "type": {
+                                "$ref": "78"
+                              },
+                              "value": {
+                                "category": {
+                                  "$id": "170",
+                                  "kind": "string",
+                                  "type": {
+                                    "$ref": "1"
+                                  },
+                                  "value": "Sexual"
+                                },
+                                "severity": {
+                                  "$id": "171",
+                                  "kind": "number",
+                                  "type": {
+                                    "$ref": "81"
+                                  },
+                                  "value": 0
+                                }
+                              }
+                            },
+                            {
+                              "$id": "172",
+                              "kind": "model",
+                              "type": {
+                                "$ref": "78"
+                              },
+                              "value": {
+                                "category": {
+                                  "$id": "173",
+                                  "kind": "string",
+                                  "type": {
+                                    "$ref": "1"
+                                  },
+                                  "value": "Violence"
+                                },
+                                "severity": {
+                                  "$id": "174",
+                                  "kind": "number",
+                                  "type": {
+                                    "$ref": "81"
+                                  },
+                                  "value": 0
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "$id": "175",
+              "name": "options",
+              "nameInRequest": "body",
+              "doc": "The text analysis request.",
+              "type": {
+                "$ref": "55"
+              },
+              "location": "Body",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "176",
+              "name": "contentType",
+              "nameInRequest": "contentType",
+              "doc": "Body parameter's content type. Known values are application/json",
+              "type": {
+                "$ref": "23"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Constant",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "177",
+              "name": "accept",
+              "nameInRequest": "accept",
+              "type": {
+                "$ref": "25"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Constant",
+              "decorators": [],
+              "skipUrlEncoding": false
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "66"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Customizations.ContentSafetyClient.analyzeText"
+        },
+        {
+          "$id": "178",
+          "kind": "basic",
+          "name": "analyzeImage",
+          "accessibility": "public",
+          "apiVersions": [
+            "2023-10-01"
+          ],
+          "doc": "A synchronous API for the analysis of potentially harmful image content. Currently, it supports four categories: Hate, SelfHarm, Sexual, and Violence.",
+          "summary": "Analyze Image",
+          "operation": {
+            "$id": "179",
+            "name": "analyzeImage",
+            "resourceName": "ContentSafetyClient",
+            "summary": "Analyze Image",
+            "doc": "A synchronous API for the analysis of potentially harmful image content. Currently, it supports four categories: Hate, SelfHarm, Sexual, and Violence.",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "180",
+                "name": "apiVersion",
+                "nameInRequest": "api-version",
+                "doc": "The API version to use for this operation.",
+                "type": {
+                  "$id": "181",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Query",
+                "isApiVersion": true,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Client",
+                "defaultValue": {
+                  "type": {
+                    "$id": "182",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string"
+                  },
+                  "value": "2023-10-01"
+                },
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "183",
+                "name": "contentType",
+                "nameInRequest": "Content-Type",
+                "doc": "Body parameter's content type. Known values are application/json",
+                "type": {
+                  "$ref": "27"
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": true,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Constant",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "184",
+                "name": "accept",
+                "nameInRequest": "Accept",
+                "type": {
+                  "$ref": "29"
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Constant",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "185",
+                "name": "options",
+                "nameInRequest": "options",
+                "doc": "The image analysis request.",
+                "type": {
+                  "$ref": "100"
+                },
+                "location": "Body",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "110"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ]
+              }
+            ],
+            "httpMethod": "POST",
+            "uri": "{endpoint}/contentsafety",
+            "path": "/image:analyze",
+            "requestMediaTypes": [
+              "application/json"
+            ],
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Customizations.ContentSafetyClient.analyzeImage",
+            "decorators": [],
+            "examples": [
+              {
+                "$id": "186",
+                "kind": "http",
+                "name": "Analyze Image",
+                "description": "Analyze Image",
+                "filePath": "2023-10-01/AnalyzeImage.json",
+                "parameters": [
+                  {
+                    "parameter": {
+                      "$ref": "180"
+                    },
+                    "value": {
+                      "$id": "187",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "181"
+                      },
+                      "value": "2023-10-01"
+                    }
+                  },
+                  {
+                    "parameter": {
+                      "$ref": "185"
+                    },
+                    "value": {
+                      "$id": "188",
+                      "kind": "model",
+                      "type": {
+                        "$ref": "100"
+                      },
+                      "value": {
+                        "image": {
+                          "$id": "189",
+                          "kind": "model",
+                          "type": {
+                            "$ref": "102"
+                          },
+                          "value": {
+                            "content": {
+                              "$id": "190",
+                              "kind": "string",
+                              "type": {
+                                "$ref": "104"
+                              },
+                              "value": "Y29udGVudDE="
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                ],
+                "responses": [
+                  {
+                    "response": {
+                      "statusCodes": [
+                        200
+                      ],
+                      "bodyType": {
+                        "$ref": "110"
+                      },
+                      "headers": [],
+                      "isErrorResponse": false,
+                      "contentTypes": [
+                        "application/json"
+                      ]
+                    },
+                    "statusCode": 200,
+                    "bodyValue": {
+                      "$id": "191",
+                      "kind": "model",
+                      "type": {
+                        "$ref": "110"
+                      },
+                      "value": {
+                        "categoriesAnalysis": {
+                          "$id": "192",
+                          "kind": "array",
+                          "type": {
+                            "$ref": "112"
+                          },
+                          "value": [
+                            {
+                              "$id": "193",
+                              "kind": "model",
+                              "type": {
+                                "$ref": "113"
+                              },
+                              "value": {
+                                "category": {
+                                  "$id": "194",
+                                  "kind": "string",
+                                  "type": {
+                                    "$ref": "11"
+                                  },
+                                  "value": "Hate"
+                                },
+                                "severity": {
+                                  "$id": "195",
+                                  "kind": "number",
+                                  "type": {
+                                    "$ref": "116"
+                                  },
+                                  "value": 0
+                                }
+                              }
+                            },
+                            {
+                              "$id": "196",
+                              "kind": "model",
+                              "type": {
+                                "$ref": "113"
+                              },
+                              "value": {
+                                "category": {
+                                  "$id": "197",
+                                  "kind": "string",
+                                  "type": {
+                                    "$ref": "11"
+                                  },
+                                  "value": "SelfHarm"
+                                },
+                                "severity": {
+                                  "$id": "198",
+                                  "kind": "number",
+                                  "type": {
+                                    "$ref": "116"
+                                  },
+                                  "value": 0
+                                }
+                              }
+                            },
+                            {
+                              "$id": "199",
+                              "kind": "model",
+                              "type": {
+                                "$ref": "113"
+                              },
+                              "value": {
+                                "category": {
+                                  "$id": "200",
+                                  "kind": "string",
+                                  "type": {
+                                    "$ref": "11"
+                                  },
+                                  "value": "Sexual"
+                                },
+                                "severity": {
+                                  "$id": "201",
+                                  "kind": "number",
+                                  "type": {
+                                    "$ref": "116"
+                                  },
+                                  "value": 0
+                                }
+                              }
+                            },
+                            {
+                              "$id": "202",
+                              "kind": "model",
+                              "type": {
+                                "$ref": "113"
+                              },
+                              "value": {
+                                "category": {
+                                  "$id": "203",
+                                  "kind": "string",
+                                  "type": {
+                                    "$ref": "11"
+                                  },
+                                  "value": "Violence"
+                                },
+                                "severity": {
+                                  "$id": "204",
+                                  "kind": "number",
+                                  "type": {
+                                    "$ref": "116"
+                                  },
+                                  "value": 2
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "$id": "205",
+              "name": "options",
+              "nameInRequest": "body",
+              "doc": "The image analysis request.",
+              "type": {
+                "$ref": "100"
+              },
+              "location": "Body",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "206",
+              "name": "contentType",
+              "nameInRequest": "contentType",
+              "doc": "Body parameter's content type. Known values are application/json",
+              "type": {
+                "$ref": "27"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Constant",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "207",
+              "name": "accept",
+              "nameInRequest": "accept",
+              "type": {
+                "$ref": "29"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Constant",
+              "decorators": [],
+              "skipUrlEncoding": false
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "110"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Customizations.ContentSafetyClient.analyzeImage"
+        }
+      ],
+      "parameters": [
+        {
+          "$id": "208",
+          "name": "endpoint",
+          "nameInRequest": "endpoint",
+          "doc": "Supported Cognitive Services endpoints (protocol and hostname, for example:\nhttps://<resource-name>.cognitiveservices.azure.com).",
+          "type": {
+            "$id": "209",
+            "kind": "url",
+            "name": "url",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "location": "Uri",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isRequired": true,
+          "isEndpoint": true,
+          "skipUrlEncoding": false,
+          "explode": false,
+          "kind": "Client",
+          "serverUrlTemplate": "{endpoint}/contentsafety"
+        }
+      ],
+      "decorators": [],
+      "crossLanguageDefinitionId": "Customizations.ContentSafetyClient",
+      "apiVersions": [
+        "2023-10-01"
+      ]
+    },
+    {
+      "$id": "210",
+      "kind": "client",
+      "name": "BlocklistClient",
+      "namespace": "Azure.AI.ContentSafety",
+      "methods": [
+        {
+          "$id": "211",
+          "kind": "basic",
+          "name": "addOrUpdateBlocklistItems",
+          "accessibility": "public",
+          "apiVersions": [
+            "2023-10-01"
+          ],
+          "doc": "Add or update blocklistItems to a text blocklist. You can add or update at most 100 blocklistItems in one request.",
+          "summary": "Add or update BlocklistItems To Text Blocklist",
+          "operation": {
+            "$id": "212",
+            "name": "addOrUpdateBlocklistItems",
+            "resourceName": "BlocklistClient",
+            "summary": "Add or update BlocklistItems To Text Blocklist",
+            "doc": "Add or update blocklistItems to a text blocklist. You can add or update at most 100 blocklistItems in one request.",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "213",
+                "name": "apiVersion",
+                "nameInRequest": "api-version",
+                "doc": "The API version to use for this operation.",
+                "type": {
+                  "$id": "214",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Query",
+                "isApiVersion": true,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Client",
+                "defaultValue": {
+                  "type": {
+                    "$id": "215",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string"
+                  },
+                  "value": "2023-10-01"
+                },
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "216",
+                "name": "Name",
+                "nameInRequest": "blocklistName",
+                "doc": "Text blocklist name.",
+                "type": {
+                  "$id": "217",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Path",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "218",
+                "name": "contentType",
+                "nameInRequest": "Content-Type",
+                "doc": "Body parameter's content type. Known values are application/json",
+                "type": {
+                  "$ref": "31"
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": true,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Constant",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "219",
+                "name": "accept",
+                "nameInRequest": "Accept",
+                "type": {
+                  "$ref": "33"
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Constant",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "220",
+                "name": "options",
+                "nameInRequest": "options",
+                "doc": "Options for adding or updating blocklist items.",
+                "type": {
+                  "$ref": "117"
+                },
+                "location": "Body",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "127"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ]
+              }
+            ],
+            "httpMethod": "POST",
+            "uri": "{endpoint}/contentsafety",
+            "path": "/text/blocklists/{blocklistName}:addOrUpdateBlocklistItems",
+            "requestMediaTypes": [
+              "application/json"
+            ],
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Customizations.BlocklistClient.addOrUpdateBlocklistItems",
+            "decorators": [],
+            "examples": [
+              {
+                "$id": "221",
+                "kind": "http",
+                "name": "Add or Update BlocklistItems To Text Blocklist",
+                "description": "Add or Update BlocklistItems To Text Blocklist",
+                "filePath": "2023-10-01/AddOrUpdateBlocklistItems.json",
+                "parameters": [
+                  {
+                    "parameter": {
+                      "$ref": "213"
+                    },
+                    "value": {
+                      "$id": "222",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "214"
+                      },
+                      "value": "2023-10-01"
+                    }
+                  },
+                  {
+                    "parameter": {
+                      "$ref": "216"
+                    },
+                    "value": {
+                      "$id": "223",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "217"
+                      },
+                      "value": "TestBlocklist"
+                    }
+                  },
+                  {
+                    "parameter": {
+                      "$ref": "220"
+                    },
+                    "value": {
+                      "$id": "224",
+                      "kind": "model",
+                      "type": {
+                        "$ref": "117"
+                      },
+                      "value": {
+                        "blocklistItems": {
+                          "$id": "225",
+                          "kind": "array",
+                          "type": {
+                            "$ref": "119"
+                          },
+                          "value": [
+                            {
+                              "$id": "226",
+                              "kind": "model",
+                              "type": {
+                                "$ref": "120"
+                              },
+                              "value": {
+                                "description": {
+                                  "$id": "227",
+                                  "kind": "string",
+                                  "type": {
+                                    "$ref": "124"
+                                  },
+                                  "value": "Hate word"
+                                },
+                                "text": {
+                                  "$id": "228",
+                                  "kind": "string",
+                                  "type": {
+                                    "$ref": "126"
+                                  },
+                                  "value": "hate"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                ],
+                "responses": [
+                  {
+                    "response": {
+                      "statusCodes": [
+                        200
+                      ],
+                      "bodyType": {
+                        "$ref": "127"
+                      },
+                      "headers": [],
+                      "isErrorResponse": false,
+                      "contentTypes": [
+                        "application/json"
+                      ]
+                    },
+                    "statusCode": 200,
+                    "bodyValue": {
+                      "$id": "229",
+                      "kind": "model",
+                      "type": {
+                        "$ref": "127"
+                      },
+                      "value": {
+                        "blocklistItems": {
+                          "$id": "230",
+                          "kind": "array",
+                          "type": {
+                            "$ref": "119"
+                          },
+                          "value": [
+                            {
+                              "$id": "231",
+                              "kind": "model",
+                              "type": {
+                                "$ref": "120"
+                              },
+                              "value": {
+                                "blocklistItemId": {
+                                  "$id": "232",
+                                  "kind": "string",
+                                  "type": {
+                                    "$ref": "122"
+                                  },
+                                  "value": "9511969e-f1e3-4604-9127-05ee16c509ec"
+                                },
+                                "description": {
+                                  "$id": "233",
+                                  "kind": "string",
+                                  "type": {
+                                    "$ref": "124"
+                                  },
+                                  "value": "Hate word"
+                                },
+                                "text": {
+                                  "$id": "234",
+                                  "kind": "string",
+                                  "type": {
+                                    "$ref": "126"
+                                  },
+                                  "value": "hate"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "$id": "235",
+              "name": "Name",
+              "nameInRequest": "blocklistName",
+              "doc": "Text blocklist name.",
+              "type": {
+                "$id": "236",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Path",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "237",
+              "name": "options",
+              "nameInRequest": "body",
+              "doc": "Options for adding or updating blocklist items.",
+              "type": {
+                "$ref": "117"
+              },
+              "location": "Body",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "238",
+              "name": "contentType",
+              "nameInRequest": "contentType",
+              "doc": "Body parameter's content type. Known values are application/json",
+              "type": {
+                "$ref": "31"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Constant",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "239",
+              "name": "accept",
+              "nameInRequest": "accept",
+              "type": {
+                "$ref": "33"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Constant",
+              "decorators": [],
+              "skipUrlEncoding": false
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "127"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Customizations.BlocklistClient.addOrUpdateBlocklistItems"
+        },
+        {
+          "$id": "240",
+          "kind": "basic",
+          "name": "createOrUpdateTextBlocklist",
+          "accessibility": "public",
+          "apiVersions": [
+            "2023-10-01"
+          ],
+          "doc": "Updates a text blocklist. If the blocklistName does not exist, a new blocklist will be created.",
+          "summary": "Create Or Update Text Blocklist",
+          "operation": {
+            "$id": "241",
+            "name": "createOrUpdateTextBlocklist",
+            "resourceName": "TextBlocklist",
+            "summary": "Create Or Update Text Blocklist",
+            "doc": "Updates a text blocklist. If the blocklistName does not exist, a new blocklist will be created.",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "242",
+                "name": "apiVersion",
+                "nameInRequest": "api-version",
+                "doc": "The API version to use for this operation.",
+                "type": {
+                  "$id": "243",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Query",
+                "isApiVersion": true,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Client",
+                "defaultValue": {
+                  "type": {
+                    "$id": "244",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string"
+                  },
+                  "value": "2023-10-01"
+                },
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "245",
+                "name": "Name",
+                "nameInRequest": "blocklistName",
+                "doc": "Text blocklist name.",
+                "type": {
+                  "$id": "246",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Path",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "247",
+                "name": "contentType",
+                "nameInRequest": "Content-Type",
+                "doc": "This request has a JSON Merge Patch body.",
+                "type": {
+                  "$ref": "35"
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": true,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Constant",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "248",
+                "name": "accept",
+                "nameInRequest": "Accept",
+                "type": {
+                  "$ref": "37"
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Constant",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "249",
+                "name": "options",
+                "nameInRequest": "options",
+                "doc": "The resource instance.",
+                "type": {
+                  "$ref": "129"
+                },
+                "location": "Body",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  201
+                ],
+                "bodyType": {
+                  "$ref": "129"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ]
+              },
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "129"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ]
+              }
+            ],
+            "httpMethod": "PATCH",
+            "uri": "{endpoint}/contentsafety",
+            "path": "/text/blocklists/{blocklistName}",
+            "requestMediaTypes": [
+              "application/merge-patch+json"
+            ],
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": false,
+            "crossLanguageDefinitionId": "Customizations.BlocklistClient.createOrUpdateTextBlocklist",
+            "decorators": [],
+            "examples": [
+              {
+                "$id": "250",
+                "kind": "http",
+                "name": "Create Or Update Text Blocklist",
+                "description": "Create Or Update Text Blocklist",
+                "filePath": "2023-10-01/CreateOrUpdateTextBlocklist.json",
+                "parameters": [
+                  {
+                    "parameter": {
+                      "$ref": "242"
+                    },
+                    "value": {
+                      "$id": "251",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "243"
+                      },
+                      "value": "2023-10-01"
+                    }
+                  },
+                  {
+                    "parameter": {
+                      "$ref": "245"
+                    },
+                    "value": {
+                      "$id": "252",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "246"
+                      },
+                      "value": "TestBlocklist"
+                    }
+                  },
+                  {
+                    "parameter": {
+                      "$ref": "249"
+                    },
+                    "value": {
+                      "$id": "253",
+                      "kind": "model",
+                      "type": {
+                        "$ref": "129"
+                      },
+                      "value": {
+                        "description": {
+                          "$id": "254",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "133"
+                          },
+                          "value": "Test Blocklist"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "responses": [
+                  {
+                    "response": {
+                      "statusCodes": [
+                        200
+                      ],
+                      "bodyType": {
+                        "$ref": "129"
+                      },
+                      "headers": [],
+                      "isErrorResponse": false,
+                      "contentTypes": [
+                        "application/json"
+                      ]
+                    },
+                    "statusCode": 200,
+                    "bodyValue": {
+                      "$id": "255",
+                      "kind": "model",
+                      "type": {
+                        "$ref": "129"
+                      },
+                      "value": {
+                        "blocklistName": {
+                          "$id": "256",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "131"
+                          },
+                          "value": "TestBlocklist"
+                        },
+                        "description": {
+                          "$id": "257",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "133"
+                          },
+                          "value": "Test Blocklist"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "response": {
+                      "statusCodes": [
+                        201
+                      ],
+                      "bodyType": {
+                        "$ref": "129"
+                      },
+                      "headers": [],
+                      "isErrorResponse": false,
+                      "contentTypes": [
+                        "application/json"
+                      ]
+                    },
+                    "statusCode": 201,
+                    "bodyValue": {
+                      "$id": "258",
+                      "kind": "model",
+                      "type": {
+                        "$ref": "129"
+                      },
+                      "value": {
+                        "blocklistName": {
+                          "$id": "259",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "131"
+                          },
+                          "value": "TestBlocklist"
+                        },
+                        "description": {
+                          "$id": "260",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "133"
+                          },
+                          "value": "Test Blocklist"
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "$id": "261",
+              "name": "Name",
+              "nameInRequest": "blocklistName",
+              "doc": "Text blocklist name.",
+              "type": {
+                "$id": "262",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Path",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "263",
+              "name": "contentType",
+              "nameInRequest": "Content-Type",
+              "doc": "This request has a JSON Merge Patch body.",
+              "type": {
+                "$ref": "39"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Constant",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "264",
+              "name": "options",
+              "nameInRequest": "resource",
+              "doc": "The resource instance.",
+              "type": {
+                "$ref": "129"
+              },
+              "location": "Body",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "265",
+              "name": "accept",
+              "nameInRequest": "accept",
+              "type": {
+                "$ref": "37"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Constant",
+              "decorators": [],
+              "skipUrlEncoding": false
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "129"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": false,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Customizations.BlocklistClient.createOrUpdateTextBlocklist"
+        },
+        {
+          "$id": "266",
+          "kind": "basic",
+          "name": "deleteTextBlocklist",
+          "accessibility": "public",
+          "apiVersions": [
+            "2023-10-01"
+          ],
+          "doc": "Deletes a text blocklist.",
+          "summary": "Delete Text Blocklist By blocklistName",
+          "operation": {
+            "$id": "267",
+            "name": "deleteTextBlocklist",
+            "resourceName": "TextBlocklist",
+            "summary": "Delete Text Blocklist By blocklistName",
+            "doc": "Deletes a text blocklist.",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "268",
+                "name": "apiVersion",
+                "nameInRequest": "api-version",
+                "doc": "The API version to use for this operation.",
+                "type": {
+                  "$id": "269",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Query",
+                "isApiVersion": true,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Client",
+                "defaultValue": {
+                  "type": {
+                    "$id": "270",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string"
+                  },
+                  "value": "2023-10-01"
+                },
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "271",
+                "name": "Name",
+                "nameInRequest": "blocklistName",
+                "doc": "Text blocklist name.",
+                "type": {
+                  "$id": "272",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Path",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "273",
+                "name": "accept",
+                "nameInRequest": "Accept",
+                "type": {
+                  "$ref": "41"
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Constant",
+                "decorators": [],
+                "skipUrlEncoding": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  204
+                ],
+                "headers": [],
+                "isErrorResponse": false
+              }
+            ],
+            "httpMethod": "DELETE",
+            "uri": "{endpoint}/contentsafety",
+            "path": "/text/blocklists/{blocklistName}",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Customizations.BlocklistClient.deleteTextBlocklist",
+            "decorators": [],
+            "examples": [
+              {
+                "$id": "274",
+                "kind": "http",
+                "name": "Delete Text Blocklist By blocklistName",
+                "description": "Delete Text Blocklist By blocklistName",
+                "filePath": "2023-10-01/DeleteTextBlocklist.json",
+                "parameters": [
+                  {
+                    "parameter": {
+                      "$ref": "268"
+                    },
+                    "value": {
+                      "$id": "275",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "269"
+                      },
+                      "value": "2023-10-01"
+                    }
+                  },
+                  {
+                    "parameter": {
+                      "$ref": "271"
+                    },
+                    "value": {
+                      "$id": "276",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "272"
+                      },
+                      "value": "TestBlocklist"
+                    }
+                  }
+                ],
+                "responses": [
+                  {
+                    "response": {
+                      "statusCodes": [
+                        204
+                      ],
+                      "headers": [],
+                      "isErrorResponse": false
+                    },
+                    "statusCode": 204
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "$id": "277",
+              "name": "Name",
+              "nameInRequest": "blocklistName",
+              "doc": "Text blocklist name.",
+              "type": {
+                "$id": "278",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Path",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "279",
+              "name": "accept",
+              "nameInRequest": "accept",
+              "type": {
+                "$ref": "41"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Constant",
+              "decorators": [],
+              "skipUrlEncoding": false
+            }
+          ],
+          "response": {},
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Customizations.BlocklistClient.deleteTextBlocklist"
+        },
+        {
+          "$id": "280",
+          "kind": "basic",
+          "name": "getTextBlocklist",
+          "accessibility": "public",
+          "apiVersions": [
+            "2023-10-01"
+          ],
+          "doc": "Returns text blocklist details.",
+          "summary": "Get Text Blocklist By blocklistName",
+          "operation": {
+            "$id": "281",
+            "name": "getTextBlocklist",
+            "resourceName": "TextBlocklist",
+            "summary": "Get Text Blocklist By blocklistName",
+            "doc": "Returns text blocklist details.",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "282",
+                "name": "apiVersion",
+                "nameInRequest": "api-version",
+                "doc": "The API version to use for this operation.",
+                "type": {
+                  "$id": "283",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Query",
+                "isApiVersion": true,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Client",
+                "defaultValue": {
+                  "type": {
+                    "$id": "284",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string"
+                  },
+                  "value": "2023-10-01"
+                },
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "285",
+                "name": "Name",
+                "nameInRequest": "blocklistName",
+                "doc": "Text blocklist name.",
+                "type": {
+                  "$id": "286",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Path",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "287",
+                "name": "accept",
+                "nameInRequest": "Accept",
+                "type": {
+                  "$ref": "43"
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Constant",
+                "decorators": [],
+                "skipUrlEncoding": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "129"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ]
+              }
+            ],
+            "httpMethod": "GET",
+            "uri": "{endpoint}/contentsafety",
+            "path": "/text/blocklists/{blocklistName}",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Customizations.BlocklistClient.getTextBlocklist",
+            "decorators": [],
+            "examples": [
+              {
+                "$id": "288",
+                "kind": "http",
+                "name": "Get Text Blocklist By blocklistName",
+                "description": "Get Text Blocklist By blocklistName",
+                "filePath": "2023-10-01/GetTextBlocklist.json",
+                "parameters": [
+                  {
+                    "parameter": {
+                      "$ref": "282"
+                    },
+                    "value": {
+                      "$id": "289",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "283"
+                      },
+                      "value": "2023-10-01"
+                    }
+                  },
+                  {
+                    "parameter": {
+                      "$ref": "285"
+                    },
+                    "value": {
+                      "$id": "290",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "286"
+                      },
+                      "value": "TestBlocklist"
+                    }
+                  }
+                ],
+                "responses": [
+                  {
+                    "response": {
+                      "statusCodes": [
+                        200
+                      ],
+                      "bodyType": {
+                        "$ref": "129"
+                      },
+                      "headers": [],
+                      "isErrorResponse": false,
+                      "contentTypes": [
+                        "application/json"
+                      ]
+                    },
+                    "statusCode": 200,
+                    "bodyValue": {
+                      "$id": "291",
+                      "kind": "model",
+                      "type": {
+                        "$ref": "129"
+                      },
+                      "value": {
+                        "blocklistName": {
+                          "$id": "292",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "131"
+                          },
+                          "value": "TestBlocklist"
+                        },
+                        "description": {
+                          "$id": "293",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "133"
+                          },
+                          "value": "Test Blocklist"
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "$id": "294",
+              "name": "Name",
+              "nameInRequest": "blocklistName",
+              "doc": "Text blocklist name.",
+              "type": {
+                "$id": "295",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Path",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "296",
+              "name": "accept",
+              "nameInRequest": "accept",
+              "type": {
+                "$ref": "43"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Constant",
+              "decorators": [],
+              "skipUrlEncoding": false
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "129"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Customizations.BlocklistClient.getTextBlocklist"
+        },
+        {
+          "$id": "297",
+          "kind": "basic",
+          "name": "getTextBlocklistItem",
+          "accessibility": "public",
+          "apiVersions": [
+            "2023-10-01"
+          ],
+          "doc": "Get blocklistItem by blocklistName and blocklistItemId from a text blocklist.",
+          "summary": "Get BlocklistItem By blocklistName And blocklistItemId",
+          "operation": {
+            "$id": "298",
+            "name": "getTextBlocklistItem",
+            "resourceName": "TextBlocklistItem",
+            "summary": "Get BlocklistItem By blocklistName And blocklistItemId",
+            "doc": "Get blocklistItem by blocklistName and blocklistItemId from a text blocklist.",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "299",
+                "name": "apiVersion",
+                "nameInRequest": "api-version",
+                "doc": "The API version to use for this operation.",
+                "type": {
+                  "$id": "300",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Query",
+                "isApiVersion": true,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Client",
+                "defaultValue": {
+                  "type": {
+                    "$id": "301",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string"
+                  },
+                  "value": "2023-10-01"
+                },
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "302",
+                "name": "Name",
+                "nameInRequest": "blocklistName",
+                "doc": "Text blocklist name.",
+                "type": {
+                  "$id": "303",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Path",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "304",
+                "name": "blocklistItemId",
+                "nameInRequest": "blocklistItemId",
+                "doc": "The service will generate a BlocklistItemId, which will be a UUID.",
+                "type": {
+                  "$id": "305",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Path",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "306",
+                "name": "accept",
+                "nameInRequest": "Accept",
+                "type": {
+                  "$ref": "45"
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Constant",
+                "decorators": [],
+                "skipUrlEncoding": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "120"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ]
+              }
+            ],
+            "httpMethod": "GET",
+            "uri": "{endpoint}/contentsafety",
+            "path": "/text/blocklists/{blocklistName}/blocklistItems/{blocklistItemId}",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Customizations.BlocklistClient.getTextBlocklistItem",
+            "decorators": [],
+            "examples": [
+              {
+                "$id": "307",
+                "kind": "http",
+                "name": "Get BlockItem By blocklistName And blocklistItemId",
+                "description": "Get BlockItem By blocklistName And blocklistItemId",
+                "filePath": "2023-10-01/GetTextBlocklistItem.json",
+                "parameters": [
+                  {
+                    "parameter": {
+                      "$ref": "299"
+                    },
+                    "value": {
+                      "$id": "308",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "300"
+                      },
+                      "value": "2023-10-01"
+                    }
+                  },
+                  {
+                    "parameter": {
+                      "$ref": "302"
+                    },
+                    "value": {
+                      "$id": "309",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "303"
+                      },
+                      "value": "TestBlocklist"
+                    }
+                  },
+                  {
+                    "parameter": {
+                      "$ref": "304"
+                    },
+                    "value": {
+                      "$id": "310",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "305"
+                      },
+                      "value": "9511969e-f1e3-4604-9127-05ee16c509ec"
+                    }
+                  }
+                ],
+                "responses": [
+                  {
+                    "response": {
+                      "statusCodes": [
+                        200
+                      ],
+                      "bodyType": {
+                        "$ref": "120"
+                      },
+                      "headers": [],
+                      "isErrorResponse": false,
+                      "contentTypes": [
+                        "application/json"
+                      ]
+                    },
+                    "statusCode": 200,
+                    "bodyValue": {
+                      "$id": "311",
+                      "kind": "model",
+                      "type": {
+                        "$ref": "120"
+                      },
+                      "value": {
+                        "blocklistItemId": {
+                          "$id": "312",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "122"
+                          },
+                          "value": "9511969e-f1e3-4604-9127-05ee16c509ec"
+                        },
+                        "description": {
+                          "$id": "313",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "124"
+                          },
+                          "value": "Hate word"
+                        },
+                        "text": {
+                          "$id": "314",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "126"
+                          },
+                          "value": "hate"
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "$id": "315",
+              "name": "Name",
+              "nameInRequest": "blocklistName",
+              "doc": "Text blocklist name.",
+              "type": {
+                "$id": "316",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Path",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "317",
+              "name": "blocklistItemId",
+              "nameInRequest": "blocklistItemId",
+              "doc": "The service will generate a BlocklistItemId, which will be a UUID.",
+              "type": {
+                "$id": "318",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Path",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "319",
+              "name": "accept",
+              "nameInRequest": "accept",
+              "type": {
+                "$ref": "45"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Constant",
+              "decorators": [],
+              "skipUrlEncoding": false
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "120"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Customizations.BlocklistClient.getTextBlocklistItem"
+        },
+        {
+          "$id": "320",
+          "kind": "paging",
+          "name": "listTextBlocklistItems",
+          "accessibility": "public",
+          "apiVersions": [
+            "2023-10-01"
+          ],
+          "doc": "Get all blocklistItems in a text blocklist.",
+          "summary": "Get All BlocklistItems By blocklistName",
+          "operation": {
+            "$id": "321",
+            "name": "listTextBlocklistItems",
+            "resourceName": "TextBlocklistItem",
+            "summary": "Get All BlocklistItems By blocklistName",
+            "doc": "Get all blocklistItems in a text blocklist.",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "322",
+                "name": "apiVersion",
+                "nameInRequest": "api-version",
+                "doc": "The API version to use for this operation.",
+                "type": {
+                  "$id": "323",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Query",
+                "isApiVersion": true,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Client",
+                "defaultValue": {
+                  "type": {
+                    "$id": "324",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string"
+                  },
+                  "value": "2023-10-01"
+                },
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "325",
+                "name": "Name",
+                "nameInRequest": "blocklistName",
+                "doc": "Text blocklist name.",
+                "type": {
+                  "$id": "326",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Path",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "327",
+                "name": "top",
+                "nameInRequest": "top",
+                "doc": "The number of result items to return.",
+                "type": {
+                  "$id": "328",
+                  "kind": "int32",
+                  "name": "int32",
+                  "crossLanguageDefinitionId": "TypeSpec.int32",
+                  "decorators": []
+                },
+                "location": "Query",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": false,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "329",
+                "name": "skip",
+                "nameInRequest": "skip",
+                "doc": "The number of result items to skip.",
+                "type": {
+                  "$id": "330",
+                  "kind": "int32",
+                  "name": "int32",
+                  "crossLanguageDefinitionId": "TypeSpec.int32",
+                  "decorators": []
+                },
+                "location": "Query",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": false,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "331",
+                "name": "maxpagesize",
+                "nameInRequest": "maxpagesize",
+                "doc": "The maximum number of result items per page.",
+                "type": {
+                  "$id": "332",
+                  "kind": "int32",
+                  "name": "int32",
+                  "crossLanguageDefinitionId": "TypeSpec.int32",
+                  "decorators": []
+                },
+                "location": "Query",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": false,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "333",
+                "name": "accept",
+                "nameInRequest": "Accept",
+                "type": {
+                  "$ref": "47"
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Constant",
+                "decorators": [],
+                "skipUrlEncoding": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "134"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ]
+              }
+            ],
+            "httpMethod": "GET",
+            "uri": "{endpoint}/contentsafety",
+            "path": "/text/blocklists/{blocklistName}/blocklistItems",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Customizations.BlocklistClient.listTextBlocklistItems",
+            "decorators": [],
+            "examples": [
+              {
+                "$id": "334",
+                "kind": "http",
+                "name": "Get All BlockItems By blocklistName",
+                "description": "Get All BlockItems By blocklistName",
+                "filePath": "2023-10-01/ListTextBlocklistItems.json",
+                "parameters": [
+                  {
+                    "parameter": {
+                      "$ref": "322"
+                    },
+                    "value": {
+                      "$id": "335",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "323"
+                      },
+                      "value": "2023-10-01"
+                    }
+                  },
+                  {
+                    "parameter": {
+                      "$ref": "325"
+                    },
+                    "value": {
+                      "$id": "336",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "326"
+                      },
+                      "value": "TestBlocklist"
+                    }
+                  }
+                ],
+                "responses": [
+                  {
+                    "response": {
+                      "statusCodes": [
+                        200
+                      ],
+                      "bodyType": {
+                        "$ref": "134"
+                      },
+                      "headers": [],
+                      "isErrorResponse": false,
+                      "contentTypes": [
+                        "application/json"
+                      ]
+                    },
+                    "statusCode": 200,
+                    "bodyValue": {
+                      "$id": "337",
+                      "kind": "model",
+                      "type": {
+                        "$ref": "134"
+                      },
+                      "value": {
+                        "value": {
+                          "$id": "338",
+                          "kind": "array",
+                          "type": {
+                            "$ref": "119"
+                          },
+                          "value": [
+                            {
+                              "$id": "339",
+                              "kind": "model",
+                              "type": {
+                                "$ref": "120"
+                              },
+                              "value": {
+                                "blocklistItemId": {
+                                  "$id": "340",
+                                  "kind": "string",
+                                  "type": {
+                                    "$ref": "122"
+                                  },
+                                  "value": "9511969e-f1e3-4604-9127-05ee16c509ec"
+                                },
+                                "description": {
+                                  "$id": "341",
+                                  "kind": "string",
+                                  "type": {
+                                    "$ref": "124"
+                                  },
+                                  "value": "Hate word"
+                                },
+                                "text": {
+                                  "$id": "342",
+                                  "kind": "string",
+                                  "type": {
+                                    "$ref": "126"
+                                  },
+                                  "value": "hate"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "$id": "343",
+              "name": "Name",
+              "nameInRequest": "blocklistName",
+              "doc": "Text blocklist name.",
+              "type": {
+                "$id": "344",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Path",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "345",
+              "name": "top",
+              "nameInRequest": "top",
+              "doc": "The number of result items to return.",
+              "type": {
+                "$id": "346",
+                "kind": "int32",
+                "name": "int32",
+                "crossLanguageDefinitionId": "TypeSpec.int32",
+                "decorators": []
+              },
+              "location": "Query",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": false,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "347",
+              "name": "skip",
+              "nameInRequest": "skip",
+              "doc": "The number of result items to skip.",
+              "type": {
+                "$id": "348",
+                "kind": "int32",
+                "name": "int32",
+                "crossLanguageDefinitionId": "TypeSpec.int32",
+                "decorators": []
+              },
+              "location": "Query",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": false,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "349",
+              "name": "maxpagesize",
+              "nameInRequest": "maxpagesize",
+              "doc": "The maximum number of result items per page.",
+              "type": {
+                "$id": "350",
+                "kind": "int32",
+                "name": "int32",
+                "crossLanguageDefinitionId": "TypeSpec.int32",
+                "decorators": []
+              },
+              "location": "Query",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": false,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "351",
+              "name": "accept",
+              "nameInRequest": "accept",
+              "type": {
+                "$ref": "47"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Constant",
+              "decorators": [],
+              "skipUrlEncoding": false
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "119"
+            },
+            "resultSegments": [
+              "value"
+            ]
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Customizations.BlocklistClient.listTextBlocklistItems",
+          "pagingMetadata": {
+            "itemPropertySegments": [
+              "value"
+            ],
+            "nextLink": {
+              "responseSegments": [
+                "nextLink"
+              ],
+              "responseLocation": "Body"
+            }
+          }
+        },
+        {
+          "$id": "352",
+          "kind": "paging",
+          "name": "listTextBlocklists",
+          "accessibility": "public",
+          "apiVersions": [
+            "2023-10-01"
+          ],
+          "doc": "Get all text blocklists details.",
+          "summary": "Get All Text Blocklists",
+          "operation": {
+            "$id": "353",
+            "name": "listTextBlocklists",
+            "resourceName": "TextBlocklist",
+            "summary": "Get All Text Blocklists",
+            "doc": "Get all text blocklists details.",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "354",
+                "name": "apiVersion",
+                "nameInRequest": "api-version",
+                "doc": "The API version to use for this operation.",
+                "type": {
+                  "$id": "355",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Query",
+                "isApiVersion": true,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Client",
+                "defaultValue": {
+                  "type": {
+                    "$id": "356",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string"
+                  },
+                  "value": "2023-10-01"
+                },
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "357",
+                "name": "accept",
+                "nameInRequest": "Accept",
+                "type": {
+                  "$ref": "49"
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Constant",
+                "decorators": [],
+                "skipUrlEncoding": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "139"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ]
+              }
+            ],
+            "httpMethod": "GET",
+            "uri": "{endpoint}/contentsafety",
+            "path": "/text/blocklists",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Customizations.BlocklistClient.listTextBlocklists",
+            "decorators": [],
+            "examples": [
+              {
+                "$id": "358",
+                "kind": "http",
+                "name": "Get All Text Blocklists",
+                "description": "Get All Text Blocklists",
+                "filePath": "2023-10-01/ListTextBlocklists.json",
+                "parameters": [
+                  {
+                    "parameter": {
+                      "$ref": "354"
+                    },
+                    "value": {
+                      "$id": "359",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "355"
+                      },
+                      "value": "2023-10-01"
+                    }
+                  }
+                ],
+                "responses": [
+                  {
+                    "response": {
+                      "statusCodes": [
+                        200
+                      ],
+                      "bodyType": {
+                        "$ref": "139"
+                      },
+                      "headers": [],
+                      "isErrorResponse": false,
+                      "contentTypes": [
+                        "application/json"
+                      ]
+                    },
+                    "statusCode": 200,
+                    "bodyValue": {
+                      "$id": "360",
+                      "kind": "model",
+                      "type": {
+                        "$ref": "139"
+                      },
+                      "value": {
+                        "value": {
+                          "$id": "361",
+                          "kind": "array",
+                          "type": {
+                            "$ref": "141"
+                          },
+                          "value": [
+                            {
+                              "$id": "362",
+                              "kind": "model",
+                              "type": {
+                                "$ref": "129"
+                              },
+                              "value": {
+                                "blocklistName": {
+                                  "$id": "363",
+                                  "kind": "string",
+                                  "type": {
+                                    "$ref": "131"
+                                  },
+                                  "value": "TestBlocklist"
+                                },
+                                "description": {
+                                  "$id": "364",
+                                  "kind": "string",
+                                  "type": {
+                                    "$ref": "133"
+                                  },
+                                  "value": "Test Blocklist"
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "$id": "365",
+              "name": "accept",
+              "nameInRequest": "accept",
+              "type": {
+                "$ref": "49"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Constant",
+              "decorators": [],
+              "skipUrlEncoding": false
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "141"
+            },
+            "resultSegments": [
+              "value"
+            ]
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Customizations.BlocklistClient.listTextBlocklists",
+          "pagingMetadata": {
+            "itemPropertySegments": [
+              "value"
+            ],
+            "nextLink": {
+              "responseSegments": [
+                "nextLink"
+              ],
+              "responseLocation": "Body"
+            }
+          }
+        },
+        {
+          "$id": "366",
+          "kind": "basic",
+          "name": "removeBlocklistItems",
+          "accessibility": "public",
+          "apiVersions": [
+            "2023-10-01"
+          ],
+          "doc": "Remove blocklistItems from a text blocklist. You can remove at most 100 BlocklistItems in one request.",
+          "summary": "Remove BlocklistItems From Text Blocklist",
+          "operation": {
+            "$id": "367",
+            "name": "removeBlocklistItems",
+            "resourceName": "BlocklistClient",
+            "summary": "Remove BlocklistItems From Text Blocklist",
+            "doc": "Remove blocklistItems from a text blocklist. You can remove at most 100 BlocklistItems in one request.",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "368",
+                "name": "apiVersion",
+                "nameInRequest": "api-version",
+                "doc": "The API version to use for this operation.",
+                "type": {
+                  "$id": "369",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Query",
+                "isApiVersion": true,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Client",
+                "defaultValue": {
+                  "type": {
+                    "$id": "370",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string"
+                  },
+                  "value": "2023-10-01"
+                },
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "371",
+                "name": "Name",
+                "nameInRequest": "blocklistName",
+                "doc": "Text blocklist name.",
+                "type": {
+                  "$id": "372",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "location": "Path",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "373",
+                "name": "contentType",
+                "nameInRequest": "Content-Type",
+                "doc": "Body parameter's content type. Known values are application/json",
+                "type": {
+                  "$ref": "51"
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": true,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Constant",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "374",
+                "name": "accept",
+                "nameInRequest": "Accept",
+                "type": {
+                  "$ref": "53"
+                },
+                "location": "Header",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Constant",
+                "decorators": [],
+                "skipUrlEncoding": false
+              },
+              {
+                "$id": "375",
+                "name": "options",
+                "nameInRequest": "options",
+                "doc": "Options for removing blocklist items.",
+                "type": {
+                  "$ref": "145"
+                },
+                "location": "Body",
+                "isApiVersion": false,
+                "isContentType": false,
+                "isEndpoint": false,
+                "explode": false,
+                "isRequired": true,
+                "kind": "Method",
+                "decorators": [],
+                "skipUrlEncoding": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  204
+                ],
+                "headers": [],
+                "isErrorResponse": false
+              }
+            ],
+            "httpMethod": "POST",
+            "uri": "{endpoint}/contentsafety",
+            "path": "/text/blocklists/{blocklistName}:removeBlocklistItems",
+            "requestMediaTypes": [
+              "application/json"
+            ],
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Customizations.BlocklistClient.removeBlocklistItems",
+            "decorators": [],
+            "examples": [
+              {
+                "$id": "376",
+                "kind": "http",
+                "name": "Remove BlockItems From Text Blocklist",
+                "description": "Remove BlockItems From Text Blocklist",
+                "filePath": "2023-10-01/RemoveBlocklistItems.json",
+                "parameters": [
+                  {
+                    "parameter": {
+                      "$ref": "368"
+                    },
+                    "value": {
+                      "$id": "377",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "369"
+                      },
+                      "value": "2023-10-01"
+                    }
+                  },
+                  {
+                    "parameter": {
+                      "$ref": "371"
+                    },
+                    "value": {
+                      "$id": "378",
+                      "kind": "string",
+                      "type": {
+                        "$ref": "372"
+                      },
+                      "value": "TestBlocklist"
+                    }
+                  },
+                  {
+                    "parameter": {
+                      "$ref": "375"
+                    },
+                    "value": {
+                      "$id": "379",
+                      "kind": "model",
+                      "type": {
+                        "$ref": "145"
+                      },
+                      "value": {
+                        "blocklistItemIds": {
+                          "$id": "380",
+                          "kind": "array",
+                          "type": {
+                            "$ref": "61"
+                          },
+                          "value": [
+                            {
+                              "$id": "381",
+                              "kind": "string",
+                              "type": {
+                                "$ref": "62"
+                              },
+                              "value": "9511969e-f1e3-4604-9127-05ee16c509ec"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                ],
+                "responses": [
+                  {
+                    "response": {
+                      "statusCodes": [
+                        204
+                      ],
+                      "headers": [],
+                      "isErrorResponse": false
+                    },
+                    "statusCode": 204
+                  }
+                ]
+              }
+            ]
+          },
+          "parameters": [
+            {
+              "$id": "382",
+              "name": "Name",
+              "nameInRequest": "blocklistName",
+              "doc": "Text blocklist name.",
+              "type": {
+                "$id": "383",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Path",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "384",
+              "name": "options",
+              "nameInRequest": "body",
+              "doc": "Options for removing blocklist items.",
+              "type": {
+                "$ref": "145"
+              },
+              "location": "Body",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Method",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "385",
+              "name": "contentType",
+              "nameInRequest": "contentType",
+              "doc": "Body parameter's content type. Known values are application/json",
+              "type": {
+                "$ref": "51"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Constant",
+              "decorators": [],
+              "skipUrlEncoding": false
+            },
+            {
+              "$id": "386",
+              "name": "accept",
+              "nameInRequest": "accept",
+              "type": {
+                "$ref": "53"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "isContentType": false,
+              "isEndpoint": false,
+              "explode": false,
+              "isRequired": true,
+              "kind": "Constant",
+              "decorators": [],
+              "skipUrlEncoding": false
+            }
+          ],
+          "response": {},
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Customizations.BlocklistClient.removeBlocklistItems"
+        }
+      ],
+      "parameters": [
+        {
+          "$id": "387",
+          "name": "endpoint",
+          "nameInRequest": "endpoint",
+          "doc": "Supported Cognitive Services endpoints (protocol and hostname, for example:\nhttps://<resource-name>.cognitiveservices.azure.com).",
+          "type": {
+            "$id": "388",
+            "kind": "url",
+            "name": "url",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "location": "Uri",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isRequired": true,
+          "isEndpoint": true,
+          "skipUrlEncoding": false,
+          "explode": false,
+          "kind": "Client",
+          "serverUrlTemplate": "{endpoint}/contentsafety"
+        }
+      ],
+      "decorators": [],
+      "crossLanguageDefinitionId": "Customizations.BlocklistClient",
+      "apiVersions": [
+        "2023-10-01"
+      ]
+    }
+  ],
+  "auth": {
+    "apiKey": {
+      "name": "Ocp-Apim-Subscription-Key",
+      "in": "header"
+    },
+    "oAuth2": {
+      "flows": [
+        {
+          "scopes": [
+            "https://cognitiveservices.azure.com/.default"
+          ],
+          "refreshUrl": "https://login.microsoftonline.com/common/oauth2/v2.0/token",
+          "tokenUrl": "https://login.microsoftonline.com/common/oauth2/v2.0/token"
+        }
+      ]
+    }
+  }
+}
