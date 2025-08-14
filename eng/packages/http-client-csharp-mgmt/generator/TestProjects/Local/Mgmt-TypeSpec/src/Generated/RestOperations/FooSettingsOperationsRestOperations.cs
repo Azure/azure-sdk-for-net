@@ -113,6 +113,7 @@ namespace MgmtTypeSpec
             uri.AppendPath("/providers/MgmtTypeSpec/FooSettings/default", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
     }

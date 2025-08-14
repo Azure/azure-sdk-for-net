@@ -15,6 +15,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using MgmtTypeSpec.Models;
 
 namespace MgmtTypeSpec
@@ -292,59 +293,39 @@ namespace MgmtTypeSpec
         /// <summary> A synchronous resource action. </summary>
         /// <param name="maxpagesize"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ZooAddressListListResult>> ZooAddressListAsync(int? maxpagesize = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SubResource> ZooAddressListAsync(int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooResource.ZooAddressList");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _zoosRestClient.CreateZooAddressListRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, maxpagesize, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ZooAddressListListResult> response = Response.FromValue(ZooAddressListListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new ZoosZooAddressListAsyncCollectionResultOfT(
+                _zoosRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                maxpagesize,
+                context);
         }
 
         /// <summary> A synchronous resource action. </summary>
         /// <param name="maxpagesize"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ZooAddressListListResult> ZooAddressList(int? maxpagesize = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SubResource> ZooAddressList(int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _zoosClientDiagnostics.CreateScope("ZooResource.ZooAddressList");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _zoosRestClient.CreateZooAddressListRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, maxpagesize, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ZooAddressListListResult> response = Response.FromValue(ZooAddressListListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new ZoosZooAddressListCollectionResultOfT(
+                _zoosRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                maxpagesize,
+                context);
         }
 
         /// <summary> A synchronous resource action. </summary>

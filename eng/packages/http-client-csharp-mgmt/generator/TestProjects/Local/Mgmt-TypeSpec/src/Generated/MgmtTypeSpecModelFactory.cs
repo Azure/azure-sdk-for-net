@@ -152,17 +152,6 @@ namespace MgmtTypeSpec.Models
             return new ZooPatch(tags, zooUpdateSomething is null ? default : new ZooUpdateProperties(zooUpdateSomething, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Paged collection of ZooAddress items. </summary>
-        /// <param name="value"> The ZooAddress items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.ZooAddressListListResult"/> instance for mocking. </returns>
-        public static ZooAddressListListResult ZooAddressListListResult(IEnumerable<SubResource> value = default, Uri nextLink = default)
-        {
-            value ??= new ChangeTrackingList<SubResource>();
-
-            return new ZooAddressListListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> The FooPreviewAction. </summary>
         /// <param name="action"> The action to be performed. </param>
         /// <param name="result"></param>
