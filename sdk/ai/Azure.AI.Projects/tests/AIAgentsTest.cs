@@ -12,10 +12,11 @@ using Azure.AI.Agents.Persistent;
 using Azure.Identity;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using Azure.AI.Projects.Tests.Utils;
 
 namespace Azure.AI.Projects.Tests;
 
-public class AIAgentsTest : RecordedTestBase<AIProjectsTestEnvironment>
+public class AIAgentsTest : ProjectsClientTestBase
 {
     public AIAgentsTest(bool isAsync) : base(isAsync) //, RecordedTestMode.Record)
     {
@@ -25,10 +26,9 @@ public class AIAgentsTest : RecordedTestBase<AIProjectsTestEnvironment>
     [RecordedTest]
     public async Task AgentsTest()
     {
-        var endpoint = TestEnvironment.PROJECTENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 
-        AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+        AIProjectClient projectClient = GetTestClient();
         PersistentAgentsClient agentsClient = projectClient.GetPersistentAgentsClient();
 
         Console.WriteLine("Create an agent with a model deployment");

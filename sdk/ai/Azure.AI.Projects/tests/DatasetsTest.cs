@@ -14,11 +14,12 @@ using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Azure.Identity;
 using NUnit.Framework.Internal;
+using Azure.AI.Projects.Tests.Utils;
 
 namespace Azure.AI.Projects.Tests
 {
     // TODO: all tests as async by default
-    public class DatasetsTest : RecordedTestBase<AIProjectsTestEnvironment>
+    public class DatasetsTest : ProjectsClientTestBase
     {
         public DatasetsTest(bool isAsync) : base(isAsync)
         {
@@ -31,14 +32,13 @@ namespace Azure.AI.Projects.Tests
         [RecordedTest]
         public void DatasetsFileTest()
         {
-            var endpoint = TestEnvironment.PROJECTENDPOINT;
             var connectionName = TestEnvironment.CONNECTIONNAME;
             var datasetName = string.Concat(TestEnvironment.DATASETNAME, "-", Guid.NewGuid().ToString("N").Substring(0, 8));
             var filePath = TestEnvironment.SAMPLEFILEPATH;
             // var folderPath = TestEnvironment.SAMPLEFOLDERPATH;
             var datasetVersion = TestEnvironment.DATASETVERSION1;
 
-            AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+            AIProjectClient projectClient = GetTestClient();
 
             Console.WriteLine($"Uploading a single file to create Dataset with name {datasetName} and version {datasetVersion}:");
             FileDatasetVersion fileDataset = projectClient.Datasets.UploadFile(
@@ -117,95 +117,5 @@ namespace Azure.AI.Projects.Tests
             }
             Assert.IsTrue(exceptionThrown, "Expected an exception when retrieving a deleted dataset version.");
         }
-
-        // [RecordedTest]
-        // [AsyncOnly]
-        // public async Task DatasetsExampleAsync()
-        // {
-        //     var endpoint = TestEnvironment.PROJECTENDPOINT;
-        //     var connectionName = TestEnvironment.CONNECTIONNAME;
-        //     var datasetName = String.Concat(TestEnvironment.DATASETNAME, "-", Guid.NewGuid().ToString("N").Substring(0, 8));
-        //     var filePath = TestEnvironment.SAMPLEFILEPATH;
-        //     var folderPath = TestEnvironment.SAMPLEFOLDERPATH;
-        //     var datasetVersion = "1.0";
-        //     var datasetVersion + 1 = "2.0";
-        //     try
-        //     {
-        //         datasetVersion = TestEnvironment.datasetVersion;
-        //         datasetVersion + 1 = TestEnvironment.datasetVersion + 1;
-        //     }
-        //     catch
-        //     {
-        //         datasetVersion = "1.0";
-        //         datasetVersion + 1 = "2.0";
-        //     }
-
-        //     AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-
-        //     Console.WriteLine($"Uploading a single file to create Dataset with name {datasetName} and version {datasetVersion}:");
-        //     FileDatasetVersion fileDataset = await projectClient.Datasets.UploadFileAsync(
-        //         name: datasetName,
-        //         version: datasetVersion,
-        //         filePath: filePath,
-        //         connectionName: connectionName
-        //         );
-        //     Console.WriteLine(fileDataset);
-
-        //     Console.WriteLine($"Uploading folder to create Dataset version {datasetVersion + 1}:");
-        //     FolderDatasetVersion folderDataset = await projectClient.Datasets.UploadFolderAsync(
-        //         name: datasetName,
-        //         version: datasetVersion + 1,
-        //         folderPath: folderPath,
-        //         connectionName: connectionName,
-        //         filePattern: new Regex(".*\\.txt")
-        //     );
-        //     Console.WriteLine(folderDataset);
-
-        //     Console.WriteLine($"Retrieving Dataset version {datasetVersion}:");
-        //     DatasetVersion dataset = await projectClient.Datasets.GetAsync(datasetName, datasetVersion);
-        //     Console.WriteLine(dataset.Id);
-
-        //     Console.WriteLine($"Retrieving credentials of Dataset {datasetName} version {datasetVersion}:");
-        //     DatasetCredential credentials = await projectClient.Datasets.GetCredentialsAsync(datasetName, datasetVersion);
-        //     Console.WriteLine(credentials);
-
-        //     Console.WriteLine($"Listing all versions for Dataset '{datasetName}':");
-        //     await foreach (DatasetVersion ds in projectClient.Datasets.GetVersionsAsync(datasetName))
-        //     {
-        //         Console.WriteLine(ds);
-        //         Console.WriteLine(ds.Version);
-        //     }
-
-        //     Console.WriteLine($"Listing latest versions for all datasets:");
-        //     await foreach (DatasetVersion ds in projectClient.Datasets.GetAsync())
-        //     {
-        //         Console.WriteLine($"{ds.Name}, {ds.Version}, {ds.Id}");
-        //     }
-
-        //     Console.WriteLine($"Deleting Dataset versions {datasetVersion} and {datasetVersion + 1}:");
-        //     await projectClient.Datasets.DeleteAsync(datasetName, datasetVersion);
-
-        //     try
-        //     {
-        //         await projectClient.Datasets.GetAsync(datasetName, datasetVersion);
-        //         Console.WriteLine($"Dataset version {datasetVersion} should not exist, but was retrieved successfully.");
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         Console.WriteLine($"Expected exception when retrieving deleted dataset version 1: {ex.Message}");
-        //     }
-
-        //     await projectClient.Datasets.DeleteAsync(datasetName, datasetVersion + 1);
-
-        //     try
-        //     {
-        //         await projectClient.Datasets.GetAsync(datasetName, datasetVersion + 1);
-        //         Console.WriteLine($"Dataset version {datasetVersion + 1} should not exist, but was retrieved successfully.");
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         Console.WriteLine($"Expected exception when retrieving deleted dataset version 2: {ex.Message}");
-        //     }
-        // }
     }
 };

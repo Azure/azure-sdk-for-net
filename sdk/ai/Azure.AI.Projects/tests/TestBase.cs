@@ -7,16 +7,53 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
+using Azure.AI.Projects.Tests.Utils;
 
 namespace Azure.AI.Projects.Tests
 {
-    public class TestBase : RecordedTestBase<AIProjectsTestEnvironment>
+    /// <summary>
+    /// Base test class that supports both Azure.Core and System.ClientModel recording scenarios.
+    /// This class provides the foundation for testing Azure.AI.Projects with recording/playback capabilities.
+    /// </summary>
+    public class TestBase : RecordedProjectsTestBase<AIProjectsTestEnvironment>
     {
-        public TestBase(bool isAsync) : base(isAsync)
+    public TestBase(bool isAsync) : base(isAsync)
+    {
+        TestDiagnostics = false;
+        // Apply sanitizers to protect sensitive information in recordings
+        ProjectsTestSanitizers.ApplySanitizers(this);
+    }
+
+        /// <summary>
+        /// Creates a test client with proper configuration for recording/playback.
+        /// This method handles both Azure.Core and System.ClientModel scenarios.
+        /// </summary>
+        internal virtual AIProjectClient GetTestClient(AIProjectClientOptions options = null)
         {
-            TestDiagnostics = false;
+            options ??= new AIProjectClientOptions();
+
+            // If we have access to System.ClientModel recording capabilities, configure them
+            ConfigureClientOptionsForRecording(options);
+
+            var endpoint = TestEnvironment.PROJECTENDPOINT;
+            var credential = new DefaultAzureCredential();
+
+            return InstrumentClient(new AIProjectClient(new Uri(endpoint), credential, options));
+        }
+
+        /// <summary>
+        /// Configures client options for recording/playback scenarios.
+        /// This method configures System.ClientModel recording support by injecting the appropriate transport.
+        /// </summary>
+        protected virtual void ConfigureClientOptionsForRecording(AIProjectClientOptions options)
+        {
+            // Use the base class method to configure recording transport
+            ConfigureClientOptionsForRecording<AIProjectClientOptions>(options);
         }
 
         // Test parameters for connections

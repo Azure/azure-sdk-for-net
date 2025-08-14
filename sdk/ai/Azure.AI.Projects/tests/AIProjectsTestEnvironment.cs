@@ -7,7 +7,7 @@ namespace Azure.AI.Projects.Tests
 {
     public class AIProjectsTestEnvironment : TestEnvironment
     {
-        public string PROJECTENDPOINT => GetRecordedVariable("PROJECT_ENDPOINT");
+        public string PROJECTENDPOINT => GetRecordedVariable("PROJECT_ENDPOINT", options => options.IsSecret("https://sanitized-host.services.ai.azure.com/api/projects/sanitized-project"));
         public string DATASETNAME => GetRecordedVariable("DATASET_NAME");
         public string DATASETVERSION1 => GetRecordedVariable("DATASET_VERSION_1");
         public string DATASETVERSION2 => GetRecordedVariable("DATASET_VERSION_2");
