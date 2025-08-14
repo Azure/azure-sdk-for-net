@@ -81,6 +81,11 @@ parameters:
 - name: EmitterPackagePath
   type: string
 
+# Whether to enable automatic updates to http-client-csharp-mgmt package when publishing
+- name: EnableMgmtPackageAutomation
+  type: boolean
+  default: false
+
 extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml
   parameters:
@@ -233,6 +238,32 @@ extends:
                       ServiceEndpointUrl: https://api.esrp.microsoft.com
                       MainPublisher: ESRPRELPACMANTEST
         
+        # Update http-client-csharp-mgmt package when http-client-csharp is published
+        # Only runs for http-client-csharp emitter on main branch CI builds
+        - ${{ if and(parameters.EnableMgmtPackageAutomation, eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}:
+          - job: UpdateMgmtPackage
+            displayName: 'Update http-client-csharp-mgmt package'
+            dependsOn: Publish
+            pool: ${{ parameters.Pool }}
+            variables:
+              emitterVersion: $[stageDependencies.Build.Build.outputs['initialize.emitterVersion']]
+            steps:
+            - checkout: self
+              persistCredentials: true
+            
+            - ${{ parameters.InitializationSteps }}
+            
+            - task: PowerShell@2
+              displayName: 'Create PR to update http-client-csharp-mgmt'
+              inputs:
+                pwsh: true
+                filePath: $(Build.SourcesDirectory)/eng/scripts/Create-MgmtUpdatePR.ps1
+                arguments: >
+                  -NewVersion '$(emitterVersion)'
+                  -BuildNumber '$(Build.BuildNumber)'
+                  -AuthToken '$(azuresdk-github-pat)'
+                  -RepoRoot '$(Build.SourcesDirectory)'
+
     # Regenerate stage
     # Responsible for regenerating the SDK code using the emitter package and the generation matrix.
     - ${{ if and(parameters.ShouldPublish, parameters.ShouldRegenerate) }}:
@@ -452,30 +483,6 @@ extends:
                 -OpenAsDraft $$(OpenAsDraft)
                 -PRLabels '$(PRLabels)'
               workingDirectory: $(Build.SourcesDirectory)
-
-        # Custom job to update http-client-csharp-mgmt package when http-client-csharp is published
-        # Only runs for http-client-csharp emitter on main branch CI builds
-        - ${{ if and(eq(parameters.EmitterPackagePath, 'eng/packages/http-client-csharp'), eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}:
-          - job: UpdateMgmtPackage
-            displayName: 'Update http-client-csharp-mgmt package'
-            variables:
-              emitterVersion: $[stageDependencies.Build.Build.outputs['initialize.emitterVersion']]
-            steps:
-            - checkout: self
-              persistCredentials: true
-            
-            - ${{ parameters.InitializationSteps }}
-            
-            - task: PowerShell@2
-              displayName: 'Create PR to update http-client-csharp-mgmt'
-              inputs:
-                pwsh: true
-                filePath: $(Build.SourcesDirectory)/eng/scripts/Create-MgmtUpdatePR.ps1
-                arguments: >
-                  -NewVersion '$(emitterVersion)'
-                  -BuildNumber '$(Build.BuildNumber)'
-                  -AuthToken '$(azuresdk-github-pat)'
-                  -RepoRoot '$(Build.SourcesDirectory)'
 
     # Test stage
     # Responsible for running unit and functional tests using a matrix passed in as the parameter `TestMatrix`.

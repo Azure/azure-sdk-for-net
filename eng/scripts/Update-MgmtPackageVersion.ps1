@@ -92,4 +92,14 @@ try {
     Pop-Location
 }
 
+# Run the Generate.ps1 script to regenerate the tests
+$generateScriptPath = Join-Path $RepoRoot "eng/packages/http-client-csharp-mgmt/eng/scripts/Generate.ps1"
+if (Test-Path $generateScriptPath) {
+    Write-Host "Running Generate.ps1 to regenerate tests"
+    & $generateScriptPath
+    Write-Host "Successfully regenerated tests"
+} else {
+    Write-Warning "Generate.ps1 script not found at $generateScriptPath"
+}
+
 Write-Host "Successfully updated http-client-csharp-mgmt package to version $NewVersion"

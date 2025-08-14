@@ -51,6 +51,7 @@ extends:
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
     EmitterPackageJsonOutputPath: eng/azure-typespec-http-client-csharp-emitter-package.json
     EmitterPackagePath: eng/packages/http-client-csharp
+    EnableMgmtPackageAutomation: true
     SparseCheckoutPaths:
       - /sdk/core/Azure.Core/src/Shared
       - /sdk/core/Azure.Core.TestFramework/src
