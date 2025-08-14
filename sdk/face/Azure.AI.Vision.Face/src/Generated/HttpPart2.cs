@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Vision.Face
 {
-    /// <summary> The face verification output. </summary>
-    public partial class LivenessWithVerifyOutputs
+    /// <summary> The HttpPart2. </summary>
+    public partial class HttpPart2
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,34 +45,16 @@ namespace Azure.AI.Vision.Face
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="LivenessWithVerifyOutputs"/>. </summary>
-        /// <param name="matchConfidence"> The target face liveness face and comparison image face verification confidence. </param>
-        /// <param name="isIdentical"> Whether the target liveness face and comparison image face match. </param>
-        internal LivenessWithVerifyOutputs(float matchConfidence, bool isIdentical)
+        /// <summary> Initializes a new instance of <see cref="HttpPart2"/>. </summary>
+        internal HttpPart2()
         {
-            MatchConfidence = matchConfidence;
-            IsIdentical = isIdentical;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LivenessWithVerifyOutputs"/>. </summary>
-        /// <param name="matchConfidence"> The target face liveness face and comparison image face verification confidence. </param>
-        /// <param name="isIdentical"> Whether the target liveness face and comparison image face match. </param>
+        /// <summary> Initializes a new instance of <see cref="HttpPart2"/>. </summary>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LivenessWithVerifyOutputs(float matchConfidence, bool isIdentical, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HttpPart2(IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            MatchConfidence = matchConfidence;
-            IsIdentical = isIdentical;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
-        /// <summary> Initializes a new instance of <see cref="LivenessWithVerifyOutputs"/> for deserialization. </summary>
-        internal LivenessWithVerifyOutputs()
-        {
-        }
-
-        /// <summary> The target face liveness face and comparison image face verification confidence. </summary>
-        public float MatchConfidence { get; }
-        /// <summary> Whether the target liveness face and comparison image face match. </summary>
-        public bool IsIdentical { get; }
     }
 }

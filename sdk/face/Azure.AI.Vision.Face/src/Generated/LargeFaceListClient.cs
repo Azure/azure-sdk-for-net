@@ -49,7 +49,7 @@ namespace Azure.AI.Vision.Face
         /// https://{resource-name}.cognitiveservices.azure.com).
         /// </param>
         /// <param name="largeFaceListId"> Valid character is letter in lower case or digit or '-' or '_', maximum length is 64. </param>
-        /// <param name="apiVersion"> API Version. Allowed values: "v1.1-preview.1" | "v1.2-preview.1". </param>
+        /// <param name="apiVersion"> API Version. Allowed values: "v1.1-preview.1" | "v1.2-preview.1" | "v1.2" | "v1.3-preview.1". </param>
         internal LargeFaceListClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string largeFaceListId, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
@@ -1265,7 +1265,6 @@ namespace Azure.AI.Vision.Face
             uri.AppendPath("/largefacelists/", false);
             uri.AppendPath(_largeFaceListId, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -1283,7 +1282,6 @@ namespace Azure.AI.Vision.Face
             uri.AppendPath("/largefacelists/", false);
             uri.AppendPath(_largeFaceListId, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1319,7 +1317,6 @@ namespace Azure.AI.Vision.Face
             uri.AppendPath("/largefacelists/", false);
             uri.AppendPath(_largeFaceListId, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -1382,7 +1379,6 @@ namespace Azure.AI.Vision.Face
             uri.AppendPath(_largeFaceListId, true);
             uri.AppendPath("/train", false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1462,7 +1458,6 @@ namespace Azure.AI.Vision.Face
             uri.AppendPath("/persistedfaces/", false);
             uri.AppendPath(persistedFaceId, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1498,7 +1493,6 @@ namespace Azure.AI.Vision.Face
             uri.AppendPath("/persistedfaces/", false);
             uri.AppendPath(persistedFaceId, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
