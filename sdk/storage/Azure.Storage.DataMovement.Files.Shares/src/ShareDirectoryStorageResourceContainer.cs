@@ -206,7 +206,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             // If overwrite mode set and directory exists, then just set Properties, Permissions, and Metadata for preservation.
             if (overwrite && exists)
             {
-                await ShareDirectoryClient.SetMetadataAsync(metadata).ConfigureAwait(false);
+                await ShareDirectoryClient.SetMetadataAsync(metadata: metadata, cancellationToken: cancellationToken).ConfigureAwait(false);
                 await ShareDirectoryClient.SetHttpHeadersAsync(new()
                 {
                     FilePermission = new() { Permission = directoryPermission },
