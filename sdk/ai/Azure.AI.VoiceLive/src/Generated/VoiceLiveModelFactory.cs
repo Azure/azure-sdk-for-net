@@ -31,7 +31,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ClientEventSessionUpdate"/> instance for mocking. </returns>
         public static ClientEventSessionUpdate ClientEventSessionUpdate(string eventId = default, RequestSession session = default)
         {
-            return new ClientEventSessionUpdate(ClientEventType.SessionUpdate, eventId, additionalBinaryDataProperties: null, session);
+            return new ClientEventSessionUpdate("session.update", eventId, additionalBinaryDataProperties: null, session);
         }
 
         /// <summary> The RequestSession. </summary>
@@ -302,7 +302,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ToolCall"/> instance for mocking. </returns>
         public static ToolCall ToolCall(string @type = default)
         {
-            return new UnknownToolCall(new ToolType(@type), additionalBinaryDataProperties: null);
+            return new UnknownToolCall(@type, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The definition of a function tool as used by the voicelive endpoint. </summary>
@@ -312,7 +312,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.FunctionTool"/> instance for mocking. </returns>
         public static FunctionTool FunctionTool(string name = default, string description = default, BinaryData parameters = default)
         {
-            return new FunctionTool(ToolType.Function, additionalBinaryDataProperties: null, name, description, parameters);
+            return new FunctionTool("function", additionalBinaryDataProperties: null, name, description, parameters);
         }
 
         /// <summary>
@@ -323,7 +323,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ToolChoiceObject"/> instance for mocking. </returns>
         public static ToolChoiceObject ToolChoiceObject(string @type = default)
         {
-            return new UnknownToolChoiceObject(new ToolType(@type), additionalBinaryDataProperties: null);
+            return new UnknownToolChoiceObject(@type, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The representation of a voicelive tool_choice selecting a named function tool. </summary>
@@ -331,7 +331,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ToolChoiceFunctionObject"/> instance for mocking. </returns>
         public static ToolChoiceFunctionObject ToolChoiceFunctionObject(ToolChoiceFunctionObjectFunction function = default)
         {
-            return new ToolChoiceFunctionObject(ToolType.Function, additionalBinaryDataProperties: null, function);
+            return new ToolChoiceFunctionObject("function", additionalBinaryDataProperties: null, function);
         }
 
         /// <summary> The ToolChoiceFunctionObjectFunction. </summary>
@@ -351,7 +351,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ClientEvent"/> instance for mocking. </returns>
         public static ClientEvent ClientEvent(string @type = default, string eventId = default)
         {
-            return new UnknownClientEvent(new ClientEventType(@type), eventId, additionalBinaryDataProperties: null);
+            return new UnknownClientEvent(@type, eventId, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -374,7 +374,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ClientEventInputAudioBufferAppend"/> instance for mocking. </returns>
         public static ClientEventInputAudioBufferAppend ClientEventInputAudioBufferAppend(string eventId = default, string audio = default)
         {
-            return new ClientEventInputAudioBufferAppend(ClientEventType.InputAudioBufferAppend, eventId, additionalBinaryDataProperties: null, audio);
+            return new ClientEventInputAudioBufferAppend("input_audio_buffer.append", eventId, additionalBinaryDataProperties: null, audio);
         }
 
         /// <summary>
@@ -393,7 +393,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ClientEventInputAudioBufferCommit"/> instance for mocking. </returns>
         public static ClientEventInputAudioBufferCommit ClientEventInputAudioBufferCommit(string eventId = default)
         {
-            return new ClientEventInputAudioBufferCommit(ClientEventType.InputAudioBufferCommit, eventId, additionalBinaryDataProperties: null);
+            return new ClientEventInputAudioBufferCommit("input_audio_buffer.commit", eventId, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -404,7 +404,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ClientEventInputAudioBufferClear"/> instance for mocking. </returns>
         public static ClientEventInputAudioBufferClear ClientEventInputAudioBufferClear(string eventId = default)
         {
-            return new ClientEventInputAudioBufferClear(ClientEventType.InputAudioBufferClear, eventId, additionalBinaryDataProperties: null);
+            return new ClientEventInputAudioBufferClear("input_audio_buffer.clear", eventId, additionalBinaryDataProperties: null);
         }
 
         /// <summary>   Indicates the start of a new audio input turn. </summary>
@@ -413,7 +413,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ClientEventInputAudioTurnStart"/> instance for mocking. </returns>
         public static ClientEventInputAudioTurnStart ClientEventInputAudioTurnStart(string eventId = default, string turnId = default)
         {
-            return new ClientEventInputAudioTurnStart(ClientEventType.InputAudioTurnStart, eventId, additionalBinaryDataProperties: null, turnId);
+            return new ClientEventInputAudioTurnStart("input_audio.turn.start", eventId, additionalBinaryDataProperties: null, turnId);
         }
 
         /// <summary>   Appends audio data to an ongoing input turn. </summary>
@@ -423,7 +423,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ClientEventInputAudioTurnAppend"/> instance for mocking. </returns>
         public static ClientEventInputAudioTurnAppend ClientEventInputAudioTurnAppend(string eventId = default, string turnId = default, string audio = default)
         {
-            return new ClientEventInputAudioTurnAppend(ClientEventType.InputAudioTurnAppend, eventId, additionalBinaryDataProperties: null, turnId, audio);
+            return new ClientEventInputAudioTurnAppend("input_audio.turn.append", eventId, additionalBinaryDataProperties: null, turnId, audio);
         }
 
         /// <summary>   Marks the end of an audio input turn. </summary>
@@ -432,7 +432,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ClientEventInputAudioTurnEnd"/> instance for mocking. </returns>
         public static ClientEventInputAudioTurnEnd ClientEventInputAudioTurnEnd(string eventId = default, string turnId = default)
         {
-            return new ClientEventInputAudioTurnEnd(ClientEventType.InputAudioTurnEnd, eventId, additionalBinaryDataProperties: null, turnId);
+            return new ClientEventInputAudioTurnEnd("input_audio.turn.end", eventId, additionalBinaryDataProperties: null, turnId);
         }
 
         /// <summary>   Cancels an in-progress input audio turn. </summary>
@@ -441,7 +441,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ClientEventInputAudioTurnCancel"/> instance for mocking. </returns>
         public static ClientEventInputAudioTurnCancel ClientEventInputAudioTurnCancel(string eventId = default, string turnId = default)
         {
-            return new ClientEventInputAudioTurnCancel(ClientEventType.InputAudioTurnCancel, eventId, additionalBinaryDataProperties: null, turnId);
+            return new ClientEventInputAudioTurnCancel("input_audio.turn.cancel", eventId, additionalBinaryDataProperties: null, turnId);
         }
 
         /// <summary>   Clears all input audio currently being streamed. </summary>
@@ -449,7 +449,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ClientEventInputAudioClear"/> instance for mocking. </returns>
         public static ClientEventInputAudioClear ClientEventInputAudioClear(string eventId = default)
         {
-            return new ClientEventInputAudioClear(ClientEventType.InputAudioClear, eventId, additionalBinaryDataProperties: null);
+            return new ClientEventInputAudioClear("input_audio.clear", eventId, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -473,7 +473,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ClientEventConversationItemCreate"/> instance for mocking. </returns>
         public static ClientEventConversationItemCreate ClientEventConversationItemCreate(string eventId = default, string previousItemId = default, ConversationItemWithReference item = default)
         {
-            return new ClientEventConversationItemCreate(ClientEventType.ConversationItemCreate, additionalBinaryDataProperties: null, eventId, previousItemId, item);
+            return new ClientEventConversationItemCreate("conversation.item.create", additionalBinaryDataProperties: null, eventId, previousItemId, item);
         }
 
         /// <summary> The item to add to the conversation. </summary>
@@ -564,7 +564,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ClientEventConversationItemRetrieve"/> instance for mocking. </returns>
         public static ClientEventConversationItemRetrieve ClientEventConversationItemRetrieve(string eventId = default, string itemId = default)
         {
-            return new ClientEventConversationItemRetrieve(ClientEventType.ConversationItemRetrieve, eventId, additionalBinaryDataProperties: null, itemId);
+            return new ClientEventConversationItemRetrieve("conversation.item.retrieve", eventId, additionalBinaryDataProperties: null, itemId);
         }
 
         /// <summary>
@@ -595,7 +595,7 @@ namespace Azure.AI.VoiceLive
         public static ClientEventConversationItemTruncate ClientEventConversationItemTruncate(string eventId = default, string itemId = default, int contentIndex = default, int audioEndMs = default)
         {
             return new ClientEventConversationItemTruncate(
-                ClientEventType.ConversationItemTruncate,
+                "conversation.item.truncate",
                 eventId,
                 additionalBinaryDataProperties: null,
                 itemId,
@@ -614,7 +614,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ClientEventConversationItemDelete"/> instance for mocking. </returns>
         public static ClientEventConversationItemDelete ClientEventConversationItemDelete(string eventId = default, string itemId = default)
         {
-            return new ClientEventConversationItemDelete(ClientEventType.ConversationItemDelete, eventId, additionalBinaryDataProperties: null, itemId);
+            return new ClientEventConversationItemDelete("conversation.item.delete", eventId, additionalBinaryDataProperties: null, itemId);
         }
 
         /// <summary>
@@ -640,7 +640,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ClientEventResponseCreate"/> instance for mocking. </returns>
         public static ClientEventResponseCreate ClientEventResponseCreate(string eventId = default, ResponseCreateParams response = default, string additionalInstructions = default)
         {
-            return new ClientEventResponseCreate(ClientEventType.ResponseCreate, eventId, additionalBinaryDataProperties: null, response, additionalInstructions);
+            return new ClientEventResponseCreate("response.create", eventId, additionalBinaryDataProperties: null, response, additionalInstructions);
         }
 
         /// <summary> Create a new VoiceLive response with these parameters. </summary>
@@ -716,7 +716,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ConversationRequestItem"/> instance for mocking. </returns>
         public static ConversationRequestItem ConversationRequestItem(string @type = default, string id = default)
         {
-            return new UnknownConversationRequestItem(new ItemType(@type), id, additionalBinaryDataProperties: null);
+            return new UnknownConversationRequestItem(@type, id, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The RequestMessageItem. </summary>
@@ -725,7 +725,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.RequestMessageItem"/> instance for mocking. </returns>
         public static RequestMessageItem RequestMessageItem(string id = default, ItemStatus? status = default)
         {
-            return new RequestMessageItem(ItemType.Message, id, additionalBinaryDataProperties: null, ItemType.Message, status);
+            return new RequestMessageItem("message", id, additionalBinaryDataProperties: null, "message", status);
         }
 
         /// <summary> The RequestSystemMessageItem. </summary>
@@ -738,10 +738,10 @@ namespace Azure.AI.VoiceLive
             content ??= new ChangeTrackingList<RequestTextContentPart>();
 
             return new RequestSystemMessageItem(
-                MessageRole.System,
+                "system",
                 id,
                 additionalBinaryDataProperties: null,
-                MessageRole.System,
+                "system",
                 status,
                 content.ToList());
         }
@@ -751,7 +751,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.RequestTextContentPart"/> instance for mocking. </returns>
         public static RequestTextContentPart RequestTextContentPart(string text = default)
         {
-            return new RequestTextContentPart(ContentPartType.InputText, additionalBinaryDataProperties: null, text);
+            return new RequestTextContentPart("input_text", additionalBinaryDataProperties: null, text);
         }
 
         /// <summary>
@@ -762,7 +762,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ContentPart"/> instance for mocking. </returns>
         public static ContentPart ContentPart(string @type = default)
         {
-            return new UnknownContentPart(new ContentPartType(@type), additionalBinaryDataProperties: null);
+            return new UnknownContentPart(@type, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The RequestAudioContentPart. </summary>
@@ -770,7 +770,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.RequestAudioContentPart"/> instance for mocking. </returns>
         public static RequestAudioContentPart RequestAudioContentPart(string transcript = default)
         {
-            return new RequestAudioContentPart(ContentPartType.InputAudio, additionalBinaryDataProperties: null, transcript);
+            return new RequestAudioContentPart("input_audio", additionalBinaryDataProperties: null, transcript);
         }
 
         /// <summary> The ResponseTextContentPart. </summary>
@@ -778,7 +778,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ResponseTextContentPart"/> instance for mocking. </returns>
         public static ResponseTextContentPart ResponseTextContentPart(string text = default)
         {
-            return new ResponseTextContentPart(ContentPartType.Text, additionalBinaryDataProperties: null, text);
+            return new ResponseTextContentPart("text", additionalBinaryDataProperties: null, text);
         }
 
         /// <summary> The ResponseAudioContentPart. </summary>
@@ -786,7 +786,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ResponseAudioContentPart"/> instance for mocking. </returns>
         public static ResponseAudioContentPart ResponseAudioContentPart(string transcript = default)
         {
-            return new ResponseAudioContentPart(ContentPartType.Audio, additionalBinaryDataProperties: null, transcript);
+            return new ResponseAudioContentPart("audio", additionalBinaryDataProperties: null, transcript);
         }
 
         /// <summary> The RequestUserMessageItem. </summary>
@@ -799,10 +799,10 @@ namespace Azure.AI.VoiceLive
             content ??= new ChangeTrackingList<BinaryData>();
 
             return new RequestUserMessageItem(
-                MessageRole.User,
+                "user",
                 id,
                 additionalBinaryDataProperties: null,
-                MessageRole.User,
+                "user",
                 status,
                 content.ToList());
         }
@@ -817,10 +817,10 @@ namespace Azure.AI.VoiceLive
             content ??= new ChangeTrackingList<RequestTextContentPart>();
 
             return new RequestAssistantMessageItem(
-                MessageRole.Assistant,
+                "assistant",
                 id,
                 additionalBinaryDataProperties: null,
-                MessageRole.Assistant,
+                "assistant",
                 status,
                 content.ToList());
         }
@@ -835,7 +835,7 @@ namespace Azure.AI.VoiceLive
         public static RequestFunctionCallItem RequestFunctionCallItem(string id = default, string name = default, string callId = default, string arguments = default, ItemStatus? status = default)
         {
             return new RequestFunctionCallItem(
-                ItemType.FunctionCall,
+                "function_call",
                 id,
                 additionalBinaryDataProperties: null,
                 name,
@@ -851,7 +851,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.RequestFunctionCallOutputItem"/> instance for mocking. </returns>
         public static RequestFunctionCallOutputItem RequestFunctionCallOutputItem(string id = default, string callId = default, string output = default)
         {
-            return new RequestFunctionCallOutputItem(ItemType.FunctionCallOutput, id, additionalBinaryDataProperties: null, callId, output);
+            return new RequestFunctionCallOutputItem("function_call_output", id, additionalBinaryDataProperties: null, callId, output);
         }
 
         /// <summary>
@@ -867,7 +867,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ClientEventResponseCancel"/> instance for mocking. </returns>
         public static ClientEventResponseCancel ClientEventResponseCancel(string eventId = default, string responseId = default)
         {
-            return new ClientEventResponseCancel(ClientEventType.ResponseCancel, eventId, additionalBinaryDataProperties: null, responseId);
+            return new ClientEventResponseCancel("response.cancel", eventId, additionalBinaryDataProperties: null, responseId);
         }
 
         /// <summary>
@@ -879,7 +879,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ClientEventSessionAvatarConnect"/> instance for mocking. </returns>
         public static ClientEventSessionAvatarConnect ClientEventSessionAvatarConnect(string eventId = default, string clientSdp = default)
         {
-            return new ClientEventSessionAvatarConnect(ClientEventType.SessionAvatarConnect, eventId, additionalBinaryDataProperties: null, clientSdp);
+            return new ClientEventSessionAvatarConnect("session.avatar.connect", eventId, additionalBinaryDataProperties: null, clientSdp);
         }
 
         /// <summary> Sent when the server is in the process of establishing an avatar media connection and provides its SDP answer. </summary>
@@ -888,7 +888,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ServerEventSessionAvatarConnecting"/> instance for mocking. </returns>
         public static ServerEventSessionAvatarConnecting ServerEventSessionAvatarConnecting(string eventId = default, string serverSdp = default)
         {
-            return new ServerEventSessionAvatarConnecting(ServerEventType.SessionAvatarConnecting, eventId, additionalBinaryDataProperties: null, serverSdp);
+            return new ServerEventSessionAvatarConnecting("session.avatar.connecting", eventId, additionalBinaryDataProperties: null, serverSdp);
         }
 
         /// <summary>
@@ -900,7 +900,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ServerEvent"/> instance for mocking. </returns>
         public static ServerEvent ServerEvent(string @type = default, string eventId = default)
         {
-            return new UnknownServerEvent(new ServerEventType(@type), eventId, additionalBinaryDataProperties: null);
+            return new UnknownServerEvent(@type, eventId, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -913,7 +913,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ServerEventSessionCreated"/> instance for mocking. </returns>
         public static ServerEventSessionCreated ServerEventSessionCreated(string eventId = default, ResponseSession session = default)
         {
-            return new ServerEventSessionCreated(ServerEventType.SessionCreated, eventId, additionalBinaryDataProperties: null, session);
+            return new ServerEventSessionCreated("session.created", eventId, additionalBinaryDataProperties: null, session);
         }
 
         /// <summary> The ResponseSession. </summary>
@@ -997,7 +997,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ServerEventSessionUpdated"/> instance for mocking. </returns>
         public static ServerEventSessionUpdated ServerEventSessionUpdated(string eventId = default, ResponseSession session = default)
         {
-            return new ServerEventSessionUpdated(ServerEventType.SessionUpdated, eventId, additionalBinaryDataProperties: null, session);
+            return new ServerEventSessionUpdated("session.updated", eventId, additionalBinaryDataProperties: null, session);
         }
 
         /// <summary>
@@ -1010,7 +1010,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ServerEventError"/> instance for mocking. </returns>
         public static ServerEventError ServerEventError(string eventId = default, ServerEventErrorError error = default)
         {
-            return new ServerEventError(ServerEventType.Error, eventId, additionalBinaryDataProperties: null, error);
+            return new ServerEventError("error", eventId, additionalBinaryDataProperties: null, error);
         }
 
         /// <summary> The ServerEventErrorError. </summary>
@@ -1042,7 +1042,7 @@ namespace Azure.AI.VoiceLive
         public static ServerEventResponseTextDelta ServerEventResponseTextDelta(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default, string delta = default)
         {
             return new ServerEventResponseTextDelta(
-                ServerEventType.ResponseTextDelta,
+                "response.text.delta",
                 eventId,
                 additionalBinaryDataProperties: null,
                 responseId,
@@ -1063,7 +1063,7 @@ namespace Azure.AI.VoiceLive
         public static ServerEventResponseAudioDelta ServerEventResponseAudioDelta(string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default, BinaryData delta = default, string eventId = default)
         {
             return new ServerEventResponseAudioDelta(
-                ServerEventType.ResponseAudioDelta,
+                "response.audio.delta",
                 additionalBinaryDataProperties: null,
                 responseId,
                 itemId,
@@ -1093,7 +1093,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ServerEventConversationItemCreated"/> instance for mocking. </returns>
         public static ServerEventConversationItemCreated ServerEventConversationItemCreated(string eventId = default, string previousItemId = default, ConversationItemWithReference item = default)
         {
-            return new ServerEventConversationItemCreated(ServerEventType.ConversationItemCreated, eventId, additionalBinaryDataProperties: null, previousItemId, item);
+            return new ServerEventConversationItemCreated("conversation.item.created", eventId, additionalBinaryDataProperties: null, previousItemId, item);
         }
 
         /// <summary>
@@ -1106,7 +1106,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ServerEventConversationItemDeleted"/> instance for mocking. </returns>
         public static ServerEventConversationItemDeleted ServerEventConversationItemDeleted(string itemId = default, string eventId = default)
         {
-            return new ServerEventConversationItemDeleted(ServerEventType.ConversationItemDeleted, additionalBinaryDataProperties: null, itemId, eventId);
+            return new ServerEventConversationItemDeleted("conversation.item.deleted", additionalBinaryDataProperties: null, itemId, eventId);
         }
 
         /// <summary> Returned when a conversation item is retrieved with `conversation.item.retrieve`. </summary>
@@ -1115,7 +1115,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ServerEventConversationItemRetrieved"/> instance for mocking. </returns>
         public static ServerEventConversationItemRetrieved ServerEventConversationItemRetrieved(string itemId = default, string eventId = default)
         {
-            return new ServerEventConversationItemRetrieved(ServerEventType.ConversationItemRetrieved, additionalBinaryDataProperties: null, itemId, eventId);
+            return new ServerEventConversationItemRetrieved("conversation.item.retrieved", additionalBinaryDataProperties: null, itemId, eventId);
         }
 
         /// <summary>
@@ -1134,7 +1134,7 @@ namespace Azure.AI.VoiceLive
         public static ServerEventConversationItemTruncated ServerEventConversationItemTruncated(string itemId = default, int contentIndex = default, int audioEndMs = default, string eventId = default)
         {
             return new ServerEventConversationItemTruncated(
-                ServerEventType.ConversationItemTruncated,
+                "conversation.item.truncated",
                 additionalBinaryDataProperties: null,
                 itemId,
                 contentIndex,
@@ -1162,7 +1162,7 @@ namespace Azure.AI.VoiceLive
         public static ServerEventConversationItemInputAudioTranscriptionCompleted ServerEventConversationItemInputAudioTranscriptionCompleted(string eventId = default, string itemId = default, int contentIndex = default, string transcript = default)
         {
             return new ServerEventConversationItemInputAudioTranscriptionCompleted(
-                ServerEventType.ConversationItemInputAudioTranscriptionCompleted,
+                "conversation.item.input_audio_transcription.completed",
                 eventId,
                 additionalBinaryDataProperties: null,
                 itemId,
@@ -1182,7 +1182,7 @@ namespace Azure.AI.VoiceLive
             logprobs ??= new ChangeTrackingList<LogProbProperties>();
 
             return new ServerEventConversationItemInputAudioTranscriptionDelta(
-                ServerEventType.ConversationItemInputAudioTranscriptionDelta,
+                "conversation.item.input_audio_transcription.delta",
                 eventId,
                 additionalBinaryDataProperties: null,
                 itemId,
@@ -1216,7 +1216,7 @@ namespace Azure.AI.VoiceLive
         public static ServerEventConversationItemInputAudioTranscriptionFailed ServerEventConversationItemInputAudioTranscriptionFailed(string eventId = default, string itemId = default, int contentIndex = default, VoiceLiveErrorDetails error = default)
         {
             return new ServerEventConversationItemInputAudioTranscriptionFailed(
-                ServerEventType.ConversationItemInputAudioTranscriptionFailed,
+                "conversation.item.input_audio_transcription.failed",
                 eventId,
                 additionalBinaryDataProperties: null,
                 itemId,
@@ -1254,7 +1254,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ServerEventInputAudioBufferCommitted"/> instance for mocking. </returns>
         public static ServerEventInputAudioBufferCommitted ServerEventInputAudioBufferCommitted(string eventId = default, string previousItemId = default, string itemId = default)
         {
-            return new ServerEventInputAudioBufferCommitted(ServerEventType.InputAudioBufferCommitted, eventId, additionalBinaryDataProperties: null, previousItemId, itemId);
+            return new ServerEventInputAudioBufferCommitted("input_audio_buffer.committed", eventId, additionalBinaryDataProperties: null, previousItemId, itemId);
         }
 
         /// <summary>
@@ -1265,7 +1265,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ServerEventInputAudioBufferCleared"/> instance for mocking. </returns>
         public static ServerEventInputAudioBufferCleared ServerEventInputAudioBufferCleared(string eventId = default)
         {
-            return new ServerEventInputAudioBufferCleared(ServerEventType.InputAudioBufferCleared, eventId, additionalBinaryDataProperties: null);
+            return new ServerEventInputAudioBufferCleared("input_audio_buffer.cleared", eventId, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -1291,7 +1291,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ServerEventInputAudioBufferSpeechStarted"/> instance for mocking. </returns>
         public static ServerEventInputAudioBufferSpeechStarted ServerEventInputAudioBufferSpeechStarted(string eventId = default, int audioStartMs = default, string itemId = default)
         {
-            return new ServerEventInputAudioBufferSpeechStarted(ServerEventType.InputAudioBufferSpeechStarted, eventId, additionalBinaryDataProperties: null, audioStartMs, itemId);
+            return new ServerEventInputAudioBufferSpeechStarted("input_audio_buffer.speech_started", eventId, additionalBinaryDataProperties: null, audioStartMs, itemId);
         }
 
         /// <summary>
@@ -1309,7 +1309,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ServerEventInputAudioBufferSpeechStopped"/> instance for mocking. </returns>
         public static ServerEventInputAudioBufferSpeechStopped ServerEventInputAudioBufferSpeechStopped(string eventId = default, int audioEndMs = default, string itemId = default)
         {
-            return new ServerEventInputAudioBufferSpeechStopped(ServerEventType.InputAudioBufferSpeechStopped, eventId, additionalBinaryDataProperties: null, audioEndMs, itemId);
+            return new ServerEventInputAudioBufferSpeechStopped("input_audio_buffer.speech_stopped", eventId, additionalBinaryDataProperties: null, audioEndMs, itemId);
         }
 
         /// <summary>
@@ -1321,7 +1321,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ServerEventResponseCreated"/> instance for mocking. </returns>
         public static ServerEventResponseCreated ServerEventResponseCreated(string eventId = default, VoiceLiveResponse response = default)
         {
-            return new ServerEventResponseCreated(ServerEventType.ResponseCreated, eventId, additionalBinaryDataProperties: null, response);
+            return new ServerEventResponseCreated("response.created", eventId, additionalBinaryDataProperties: null, response);
         }
 
         /// <summary> The response resource. </summary>
@@ -1424,7 +1424,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ConversationResponseItem"/> instance for mocking. </returns>
         public static ConversationResponseItem ConversationResponseItem(string @object = default, string @type = default, string id = default)
         {
-            return new UnknownConversationResponseItem(@object, new ItemType(@type), id, additionalBinaryDataProperties: null);
+            return new UnknownConversationResponseItem(@object, @type, id, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ResponseMessageItem. </summary>
@@ -1440,7 +1440,7 @@ namespace Azure.AI.VoiceLive
 
             return new ResponseMessageItem(
                 @object,
-                ItemType.Message,
+                "message",
                 id,
                 additionalBinaryDataProperties: null,
                 role,
@@ -1460,7 +1460,7 @@ namespace Azure.AI.VoiceLive
         {
             return new ResponseFunctionCallItem(
                 @object,
-                ItemType.FunctionCall,
+                "function_call",
                 id,
                 additionalBinaryDataProperties: null,
                 name,
@@ -1479,7 +1479,7 @@ namespace Azure.AI.VoiceLive
         {
             return new ResponseFunctionCallOutputItem(
                 @object,
-                ItemType.FunctionCallOutput,
+                "function_call_output",
                 id,
                 additionalBinaryDataProperties: null,
                 callId,
@@ -1542,7 +1542,7 @@ namespace Azure.AI.VoiceLive
         /// <returns> A new <see cref="VoiceLive.ServerEventResponseDone"/> instance for mocking. </returns>
         public static ServerEventResponseDone ServerEventResponseDone(string eventId = default, VoiceLiveResponse response = default)
         {
-            return new ServerEventResponseDone(ServerEventType.ResponseDone, eventId, additionalBinaryDataProperties: null, response);
+            return new ServerEventResponseDone("response.done", eventId, additionalBinaryDataProperties: null, response);
         }
 
         /// <summary> Returned when a new Item is created during Response generation. </summary>
@@ -1554,7 +1554,7 @@ namespace Azure.AI.VoiceLive
         public static ServerEventResponseOutputItemAdded ServerEventResponseOutputItemAdded(string eventId = default, string responseId = default, int outputIndex = default, ConversationItemWithReference item = default)
         {
             return new ServerEventResponseOutputItemAdded(
-                ServerEventType.ResponseOutputItemAdded,
+                "response.output_item.added",
                 eventId,
                 additionalBinaryDataProperties: null,
                 responseId,
@@ -1574,7 +1574,7 @@ namespace Azure.AI.VoiceLive
         public static ServerEventResponseOutputItemDone ServerEventResponseOutputItemDone(string eventId = default, string responseId = default, int outputIndex = default, ConversationResponseItem item = default)
         {
             return new ServerEventResponseOutputItemDone(
-                ServerEventType.ResponseOutputItemDone,
+                "response.output_item.done",
                 eventId,
                 additionalBinaryDataProperties: null,
                 responseId,
@@ -1596,7 +1596,7 @@ namespace Azure.AI.VoiceLive
         public static ServerEventResponseContentPartAdded ServerEventResponseContentPartAdded(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default, ContentPart part = default)
         {
             return new ServerEventResponseContentPartAdded(
-                ServerEventType.ResponseContentPartAdded,
+                "response.content_part.added",
                 eventId,
                 additionalBinaryDataProperties: null,
                 responseId,
@@ -1620,7 +1620,7 @@ namespace Azure.AI.VoiceLive
         public static ServerEventResponseContentPartDone ServerEventResponseContentPartDone(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default, ContentPart part = default)
         {
             return new ServerEventResponseContentPartDone(
-                ServerEventType.ResponseContentPartDone,
+                "response.content_part.done",
                 eventId,
                 additionalBinaryDataProperties: null,
                 responseId,
@@ -1644,7 +1644,7 @@ namespace Azure.AI.VoiceLive
         public static ServerEventResponseTextDone ServerEventResponseTextDone(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default, string text = default)
         {
             return new ServerEventResponseTextDone(
-                ServerEventType.ResponseTextDone,
+                "response.text.done",
                 eventId,
                 additionalBinaryDataProperties: null,
                 responseId,
@@ -1665,7 +1665,7 @@ namespace Azure.AI.VoiceLive
         public static ServerEventResponseAudioTranscriptDelta ServerEventResponseAudioTranscriptDelta(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default, string delta = default)
         {
             return new ServerEventResponseAudioTranscriptDelta(
-                ServerEventType.ResponseAudioTranscriptDelta,
+                "response.audio_transcript.delta",
                 eventId,
                 additionalBinaryDataProperties: null,
                 responseId,
@@ -1690,7 +1690,7 @@ namespace Azure.AI.VoiceLive
         public static ServerEventResponseAudioTranscriptDone ServerEventResponseAudioTranscriptDone(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default, string transcript = default)
         {
             return new ServerEventResponseAudioTranscriptDone(
-                ServerEventType.ResponseAudioTranscriptDone,
+                "response.audio_transcript.done",
                 eventId,
                 additionalBinaryDataProperties: null,
                 responseId,
@@ -1713,7 +1713,7 @@ namespace Azure.AI.VoiceLive
         public static ServerEventResponseAudioDone ServerEventResponseAudioDone(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default)
         {
             return new ServerEventResponseAudioDone(
-                ServerEventType.ResponseAudioDone,
+                "response.audio.done",
                 eventId,
                 additionalBinaryDataProperties: null,
                 responseId,
@@ -1733,7 +1733,7 @@ namespace Azure.AI.VoiceLive
         public static ServerEventResponseFunctionCallArgumentsDelta ServerEventResponseFunctionCallArgumentsDelta(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, string callId = default, string delta = default)
         {
             return new ServerEventResponseFunctionCallArgumentsDelta(
-                ServerEventType.ResponseFunctionCallArgumentsDelta,
+                "response.function_call_arguments.delta",
                 eventId,
                 additionalBinaryDataProperties: null,
                 responseId,
@@ -1758,7 +1758,7 @@ namespace Azure.AI.VoiceLive
         public static ServerEventResponseFunctionCallArgumentsDone ServerEventResponseFunctionCallArgumentsDone(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, string callId = default, string arguments = default, string name = default)
         {
             return new ServerEventResponseFunctionCallArgumentsDone(
-                ServerEventType.ResponseFunctionCallArgumentsDone,
+                "response.function_call_arguments.done",
                 eventId,
                 additionalBinaryDataProperties: null,
                 responseId,
@@ -1781,7 +1781,7 @@ namespace Azure.AI.VoiceLive
         public static ResponseAnimationBlendshapeDeltaEvent ResponseAnimationBlendshapeDeltaEvent(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default, BinaryData frames = default, int frameIndex = default)
         {
             return new ResponseAnimationBlendshapeDeltaEvent(
-                ServerEventType.ResponseAnimationBlendshapesDelta,
+                "response.animation_blendshapes.delta",
                 eventId,
                 additionalBinaryDataProperties: null,
                 responseId,
@@ -1801,7 +1801,7 @@ namespace Azure.AI.VoiceLive
         public static ResponseAnimationBlendshapeDoneEvent ResponseAnimationBlendshapeDoneEvent(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default)
         {
             return new ResponseAnimationBlendshapeDoneEvent(
-                ServerEventType.ResponseAnimationBlendshapesDone,
+                "response.animation_blendshapes.done",
                 eventId,
                 additionalBinaryDataProperties: null,
                 responseId,
@@ -1823,7 +1823,7 @@ namespace Azure.AI.VoiceLive
             candidates ??= new ChangeTrackingList<EmotionCandidate>();
 
             return new ResponseEmotionHypothesis(
-                ServerEventType.ResponseEmotionHypothesis,
+                "response.emotion_hypothesis",
                 eventId,
                 additionalBinaryDataProperties: null,
                 emotion,
@@ -1857,7 +1857,7 @@ namespace Azure.AI.VoiceLive
         public static ResponseAudioTimestampDeltaEvent ResponseAudioTimestampDeltaEvent(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default, int audioOffsetMs = default, int audioDurationMs = default, string text = default, string timestampType = default)
         {
             return new ResponseAudioTimestampDeltaEvent(
-                ServerEventType.ResponseAudioTimestampDelta,
+                "response.audio_timestamp.delta",
                 eventId,
                 additionalBinaryDataProperties: null,
                 responseId,
@@ -1880,7 +1880,7 @@ namespace Azure.AI.VoiceLive
         public static ResponseAudioTimestampDoneEvent ResponseAudioTimestampDoneEvent(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default)
         {
             return new ResponseAudioTimestampDoneEvent(
-                ServerEventType.ResponseAudioTimestampDone,
+                "response.audio_timestamp.done",
                 eventId,
                 additionalBinaryDataProperties: null,
                 responseId,
@@ -1901,7 +1901,7 @@ namespace Azure.AI.VoiceLive
         public static ResponseAnimationVisemeDeltaEvent ResponseAnimationVisemeDeltaEvent(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default, int audioOffsetMs = default, int visemeId = default)
         {
             return new ResponseAnimationVisemeDeltaEvent(
-                ServerEventType.ResponseAnimationVisemeDelta,
+                "response.animation_viseme.delta",
                 eventId,
                 additionalBinaryDataProperties: null,
                 responseId,
@@ -1922,7 +1922,7 @@ namespace Azure.AI.VoiceLive
         public static ResponseAnimationVisemeDoneEvent ResponseAnimationVisemeDoneEvent(string eventId = default, string responseId = default, string itemId = default, int outputIndex = default, int contentIndex = default)
         {
             return new ResponseAnimationVisemeDoneEvent(
-                ServerEventType.ResponseAnimationVisemeDone,
+                "response.animation_viseme.done",
                 eventId,
                 additionalBinaryDataProperties: null,
                 responseId,

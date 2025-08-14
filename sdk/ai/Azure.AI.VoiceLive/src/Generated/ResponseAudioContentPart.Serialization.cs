@@ -66,14 +66,14 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            ContentPartType @type = default;
+            string @type = "audio";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string transcript = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ContentPartType(prop.Value.GetString());
+                    @type = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("transcript"u8))

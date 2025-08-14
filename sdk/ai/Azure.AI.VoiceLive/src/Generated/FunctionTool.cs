@@ -17,7 +17,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="FunctionTool"/>. </summary>
         /// <param name="name"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public FunctionTool(string name) : base(ToolType.Function)
+        public FunctionTool(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
@@ -30,7 +30,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="name"></param>
         /// <param name="description"></param>
         /// <param name="parameters"></param>
-        internal FunctionTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, BinaryData parameters) : base(@type, additionalBinaryDataProperties)
+        internal FunctionTool(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, BinaryData parameters) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;

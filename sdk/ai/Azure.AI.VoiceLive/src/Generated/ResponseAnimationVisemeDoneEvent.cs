@@ -18,7 +18,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="itemId"></param>
         /// <param name="outputIndex"></param>
         /// <param name="contentIndex"></param>
-        internal ResponseAnimationVisemeDoneEvent(string responseId, string itemId, int outputIndex, int contentIndex) : base(ServerEventType.ResponseAnimationVisemeDone)
+        internal ResponseAnimationVisemeDoneEvent(string responseId, string itemId, int outputIndex, int contentIndex) : base("response.animation_viseme.done")
         {
             ResponseId = responseId;
             ItemId = itemId;
@@ -34,7 +34,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="itemId"></param>
         /// <param name="outputIndex"></param>
         /// <param name="contentIndex"></param>
-        internal ResponseAnimationVisemeDoneEvent(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ResponseAnimationVisemeDoneEvent(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             ItemId = itemId;

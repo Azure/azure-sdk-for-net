@@ -14,7 +14,7 @@ namespace Azure.AI.VoiceLive
     public partial class RequestAudioContentPart : ContentPart
     {
         /// <summary> Initializes a new instance of <see cref="RequestAudioContentPart"/>. </summary>
-        public RequestAudioContentPart() : base(ContentPartType.InputAudio)
+        public RequestAudioContentPart() : base("input_audio")
         {
         }
 
@@ -22,7 +22,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="transcript"></param>
-        internal RequestAudioContentPart(ContentPartType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string transcript) : base(@type, additionalBinaryDataProperties)
+        internal RequestAudioContentPart(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string transcript) : base(@type, additionalBinaryDataProperties)
         {
             Transcript = transcript;
         }

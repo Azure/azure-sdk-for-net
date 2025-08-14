@@ -16,7 +16,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ResponseFunctionCallOutputItem"/>. </summary>
         /// <param name="callId"></param>
         /// <param name="output"></param>
-        internal ResponseFunctionCallOutputItem(string callId, string output) : base(ItemType.FunctionCallOutput)
+        internal ResponseFunctionCallOutputItem(string callId, string output) : base("function_call_output")
         {
             CallId = callId;
             Output = output;
@@ -29,7 +29,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="callId"></param>
         /// <param name="output"></param>
-        internal ResponseFunctionCallOutputItem(string @object, ItemType @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, string output) : base(@object, @type, id, additionalBinaryDataProperties)
+        internal ResponseFunctionCallOutputItem(string @object, string @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, string output) : base(@object, @type, id, additionalBinaryDataProperties)
         {
             CallId = callId;
             Output = output;

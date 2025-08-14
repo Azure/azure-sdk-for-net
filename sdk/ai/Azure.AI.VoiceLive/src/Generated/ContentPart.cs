@@ -21,7 +21,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Initializes a new instance of <see cref="ContentPart"/>. </summary>
         /// <param name="type"></param>
-        private protected ContentPart(ContentPartType @type)
+        private protected ContentPart(string @type)
         {
             Type = @type;
         }
@@ -29,13 +29,13 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ContentPart"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContentPart(ContentPartType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContentPart(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the Type. </summary>
-        internal ContentPartType Type { get; set; }
+        internal string Type { get; set; }
     }
 }

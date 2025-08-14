@@ -20,7 +20,7 @@ namespace Azure.AI.VoiceLive
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventInputAudioBufferCommitted"/>. </summary>
         /// <param name="itemId"> The ID of the user message item that will be created. </param>
-        internal ServerEventInputAudioBufferCommitted(string itemId) : base(ServerEventType.InputAudioBufferCommitted)
+        internal ServerEventInputAudioBufferCommitted(string itemId) : base("input_audio_buffer.committed")
         {
             ItemId = itemId;
         }
@@ -31,7 +31,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="previousItemId"> The ID of the preceding item after which the new item will be inserted. </param>
         /// <param name="itemId"> The ID of the user message item that will be created. </param>
-        internal ServerEventInputAudioBufferCommitted(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string previousItemId, string itemId) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ServerEventInputAudioBufferCommitted(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string previousItemId, string itemId) : base(@type, eventId, additionalBinaryDataProperties)
         {
             PreviousItemId = previousItemId;
             ItemId = itemId;

@@ -23,7 +23,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="callId"> The ID of the function call. </param>
         /// <param name="arguments"> The final arguments as a JSON string. </param>
         /// <param name="name"> The name of the function call. </param>
-        internal ServerEventResponseFunctionCallArgumentsDone(string responseId, string itemId, int outputIndex, string callId, string arguments, string name) : base(ServerEventType.ResponseFunctionCallArgumentsDone)
+        internal ServerEventResponseFunctionCallArgumentsDone(string responseId, string itemId, int outputIndex, string callId, string arguments, string name) : base("response.function_call_arguments.done")
         {
             ResponseId = responseId;
             ItemId = itemId;
@@ -43,7 +43,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="callId"> The ID of the function call. </param>
         /// <param name="arguments"> The final arguments as a JSON string. </param>
         /// <param name="name"> The name of the function call. </param>
-        internal ServerEventResponseFunctionCallArgumentsDone(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, string callId, string arguments, string name) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ServerEventResponseFunctionCallArgumentsDone(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, string callId, string arguments, string name) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             ItemId = itemId;

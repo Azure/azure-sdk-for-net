@@ -20,7 +20,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="contentIndex"></param>
         /// <param name="audioOffsetMs"></param>
         /// <param name="visemeId"></param>
-        internal ResponseAnimationVisemeDeltaEvent(string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int visemeId) : base(ServerEventType.ResponseAnimationVisemeDelta)
+        internal ResponseAnimationVisemeDeltaEvent(string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int visemeId) : base("response.animation_viseme.delta")
         {
             ResponseId = responseId;
             ItemId = itemId;
@@ -40,7 +40,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="contentIndex"></param>
         /// <param name="audioOffsetMs"></param>
         /// <param name="visemeId"></param>
-        internal ResponseAnimationVisemeDeltaEvent(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int visemeId) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ResponseAnimationVisemeDeltaEvent(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int visemeId) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             ItemId = itemId;

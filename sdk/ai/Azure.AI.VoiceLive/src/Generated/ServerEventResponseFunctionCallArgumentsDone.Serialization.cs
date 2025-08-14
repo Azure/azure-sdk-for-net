@@ -81,7 +81,7 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            ServerEventType @type = default;
+            string @type = "response.function_call_arguments.done";
             string eventId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string responseId = default;
@@ -94,7 +94,7 @@ namespace Azure.AI.VoiceLive
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ServerEventType(prop.Value.GetString());
+                    @type = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("event_id"u8))

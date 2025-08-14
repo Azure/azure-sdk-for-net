@@ -18,11 +18,6 @@ namespace Azure.AI.VoiceLive
     [PersistableModelProxy(typeof(UnknownToolCall))]
     public abstract partial class ToolCall : IJsonModel<ToolCall>
     {
-        /// <summary> Initializes a new instance of <see cref="ToolCall"/> for deserialization. </summary>
-        internal ToolCall()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ToolCall>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -42,7 +37,7 @@ namespace Azure.AI.VoiceLive
                 throw new FormatException($"The model {nameof(ToolCall)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(Type);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

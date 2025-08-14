@@ -16,7 +16,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioTurnEnd"/>. </summary>
         /// <param name="turnId"> The ID of the audio turn being ended. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="turnId"/> is null. </exception>
-        public ClientEventInputAudioTurnEnd(string turnId) : base(ClientEventType.InputAudioTurnEnd)
+        public ClientEventInputAudioTurnEnd(string turnId) : base("input_audio.turn.end")
         {
             Argument.AssertNotNull(turnId, nameof(turnId));
 
@@ -28,7 +28,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="turnId"> The ID of the audio turn being ended. </param>
-        internal ClientEventInputAudioTurnEnd(ClientEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string turnId) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ClientEventInputAudioTurnEnd(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string turnId) : base(@type, eventId, additionalBinaryDataProperties)
         {
             TurnId = turnId;
         }

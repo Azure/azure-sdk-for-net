@@ -22,7 +22,7 @@ namespace Azure.AI.VoiceLive
     public partial class ClientEventConversationItemCreate : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventConversationItemCreate"/>. </summary>
-        public ClientEventConversationItemCreate() : base(ClientEventType.ConversationItemCreate)
+        public ClientEventConversationItemCreate() : base("conversation.item.create")
         {
         }
 
@@ -38,7 +38,7 @@ namespace Azure.AI.VoiceLive
         /// ID cannot be found, an error will be returned and the item will not be added.
         /// </param>
         /// <param name="item"></param>
-        internal ClientEventConversationItemCreate(ClientEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string eventId, string previousItemId, ConversationItemWithReference item) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ClientEventConversationItemCreate(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string eventId, string previousItemId, ConversationItemWithReference item) : base(@type, eventId, additionalBinaryDataProperties)
         {
             PreviousItemId = previousItemId;
             Item = item;

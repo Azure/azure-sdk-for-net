@@ -17,7 +17,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="responseId"></param>
         /// <param name="itemId"></param>
         /// <param name="outputIndex"></param>
-        internal ResponseAnimationBlendshapeDoneEvent(string responseId, string itemId, int outputIndex) : base(ServerEventType.ResponseAnimationBlendshapesDone)
+        internal ResponseAnimationBlendshapeDoneEvent(string responseId, string itemId, int outputIndex) : base("response.animation_blendshapes.done")
         {
             ResponseId = responseId;
             ItemId = itemId;
@@ -31,7 +31,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="responseId"></param>
         /// <param name="itemId"></param>
         /// <param name="outputIndex"></param>
-        internal ResponseAnimationBlendshapeDoneEvent(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ResponseAnimationBlendshapeDoneEvent(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             ItemId = itemId;

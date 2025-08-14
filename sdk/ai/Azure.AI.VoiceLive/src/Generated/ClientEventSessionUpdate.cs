@@ -27,7 +27,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ClientEventSessionUpdate"/>. </summary>
         /// <param name="session"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="session"/> is null. </exception>
-        public ClientEventSessionUpdate(RequestSession session) : base(ClientEventType.SessionUpdate)
+        public ClientEventSessionUpdate(RequestSession session) : base("session.update")
         {
             Argument.AssertNotNull(session, nameof(session));
 
@@ -39,7 +39,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="session"></param>
-        internal ClientEventSessionUpdate(ClientEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, RequestSession session) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ClientEventSessionUpdate(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, RequestSession session) : base(@type, eventId, additionalBinaryDataProperties)
         {
             Session = session;
         }

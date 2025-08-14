@@ -30,7 +30,7 @@ namespace Azure.AI.VoiceLive
         /// `input_audio_format` field in the session configuration.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="audio"/> is null. </exception>
-        public ClientEventInputAudioBufferAppend(string audio) : base(ClientEventType.InputAudioBufferAppend)
+        public ClientEventInputAudioBufferAppend(string audio) : base("input_audio_buffer.append")
         {
             Argument.AssertNotNull(audio, nameof(audio));
 
@@ -45,7 +45,7 @@ namespace Azure.AI.VoiceLive
         /// Base64-encoded audio. This must be in the format specified by the
         /// `input_audio_format` field in the session configuration.
         /// </param>
-        internal ClientEventInputAudioBufferAppend(ClientEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string audio) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ClientEventInputAudioBufferAppend(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string audio) : base(@type, eventId, additionalBinaryDataProperties)
         {
             Audio = audio;
         }

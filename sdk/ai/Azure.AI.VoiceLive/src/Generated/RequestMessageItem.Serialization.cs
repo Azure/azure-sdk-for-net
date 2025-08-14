@@ -39,7 +39,7 @@ namespace Azure.AI.VoiceLive
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("role"u8);
-            writer.WriteStringValue(Role.ToString());
+            writer.WriteStringValue(Role);
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);

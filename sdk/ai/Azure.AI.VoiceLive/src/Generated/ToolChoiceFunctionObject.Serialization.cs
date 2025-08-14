@@ -68,14 +68,14 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            ToolType @type = default;
+            string @type = "function";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ToolChoiceFunctionObjectFunction function = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ToolType(prop.Value.GetString());
+                    @type = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("function"u8))

@@ -20,7 +20,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="audioOffsetMs"></param>
         /// <param name="audioDurationMs"></param>
         /// <param name="itemId"></param>
-        internal ResponseEmotionHypothesis(string emotion, IEnumerable<EmotionCandidate> candidates, int audioOffsetMs, int audioDurationMs, string itemId) : base(ServerEventType.ResponseEmotionHypothesis)
+        internal ResponseEmotionHypothesis(string emotion, IEnumerable<EmotionCandidate> candidates, int audioOffsetMs, int audioDurationMs, string itemId) : base("response.emotion_hypothesis")
         {
             Emotion = emotion;
             Candidates = candidates.ToList();
@@ -39,7 +39,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="audioDurationMs"></param>
         /// <param name="responseId"></param>
         /// <param name="itemId"></param>
-        internal ResponseEmotionHypothesis(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string emotion, IList<EmotionCandidate> candidates, int audioOffsetMs, int audioDurationMs, string responseId, string itemId) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ResponseEmotionHypothesis(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string emotion, IList<EmotionCandidate> candidates, int audioOffsetMs, int audioDurationMs, string responseId, string itemId) : base(@type, eventId, additionalBinaryDataProperties)
         {
             Emotion = emotion;
             Candidates = candidates;

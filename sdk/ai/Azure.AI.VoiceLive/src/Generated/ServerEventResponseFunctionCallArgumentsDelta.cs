@@ -19,7 +19,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputIndex"> The index of the output item in the response. </param>
         /// <param name="callId"> The ID of the function call. </param>
         /// <param name="delta"> The arguments delta as a JSON string. </param>
-        internal ServerEventResponseFunctionCallArgumentsDelta(string responseId, string itemId, int outputIndex, string callId, string delta) : base(ServerEventType.ResponseFunctionCallArgumentsDelta)
+        internal ServerEventResponseFunctionCallArgumentsDelta(string responseId, string itemId, int outputIndex, string callId, string delta) : base("response.function_call_arguments.delta")
         {
             ResponseId = responseId;
             ItemId = itemId;
@@ -37,7 +37,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputIndex"> The index of the output item in the response. </param>
         /// <param name="callId"> The ID of the function call. </param>
         /// <param name="delta"> The arguments delta as a JSON string. </param>
-        internal ServerEventResponseFunctionCallArgumentsDelta(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, string callId, string delta) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ServerEventResponseFunctionCallArgumentsDelta(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, string callId, string delta) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             ItemId = itemId;

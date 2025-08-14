@@ -18,7 +18,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="role"></param>
         /// <param name="status"></param>
-        internal UnknownRequestMessageItem(ItemType @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, MessageRole role, ItemStatus? status) : base(@type != default ? @type : "unknown", id, additionalBinaryDataProperties, role != default ? role : "unknown", status)
+        internal UnknownRequestMessageItem(string @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string role, ItemStatus? status) : base(@type ?? "unknown", id, additionalBinaryDataProperties, role ?? "unknown", status)
         {
         }
     }

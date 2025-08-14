@@ -65,13 +65,13 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            ToolType @type = default;
+            string @type = "unknown";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ToolType(prop.Value.GetString());
+                    @type = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

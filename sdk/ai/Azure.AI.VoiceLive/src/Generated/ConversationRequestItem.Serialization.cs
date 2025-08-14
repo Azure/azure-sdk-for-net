@@ -42,7 +42,7 @@ namespace Azure.AI.VoiceLive
                 throw new FormatException($"The model {nameof(ConversationRequestItem)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(Type);
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);

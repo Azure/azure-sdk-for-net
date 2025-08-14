@@ -21,7 +21,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="contentIndex"></param>
         /// <param name="frames"></param>
         /// <param name="frameIndex"></param>
-        internal ResponseAnimationBlendshapeDeltaEvent(string responseId, string itemId, int outputIndex, int contentIndex, BinaryData frames, int frameIndex) : base(ServerEventType.ResponseAnimationBlendshapesDelta)
+        internal ResponseAnimationBlendshapeDeltaEvent(string responseId, string itemId, int outputIndex, int contentIndex, BinaryData frames, int frameIndex) : base("response.animation_blendshapes.delta")
         {
             ResponseId = responseId;
             ItemId = itemId;
@@ -41,7 +41,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="contentIndex"></param>
         /// <param name="frames"></param>
         /// <param name="frameIndex"></param>
-        internal ResponseAnimationBlendshapeDeltaEvent(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, BinaryData frames, int frameIndex) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ResponseAnimationBlendshapeDeltaEvent(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, BinaryData frames, int frameIndex) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             ItemId = itemId;

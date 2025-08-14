@@ -37,7 +37,7 @@ namespace Azure.AI.VoiceLive
         /// will respond with an error.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="itemId"/> is null. </exception>
-        public ClientEventConversationItemTruncate(string itemId, int contentIndex, int audioEndMs) : base(ClientEventType.ConversationItemTruncate)
+        public ClientEventConversationItemTruncate(string itemId, int contentIndex, int audioEndMs) : base("conversation.item.truncate")
         {
             Argument.AssertNotNull(itemId, nameof(itemId));
 
@@ -60,7 +60,7 @@ namespace Azure.AI.VoiceLive
         /// the audio_end_ms is greater than the actual audio duration, the server
         /// will respond with an error.
         /// </param>
-        internal ClientEventConversationItemTruncate(ClientEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, int contentIndex, int audioEndMs) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ClientEventConversationItemTruncate(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, int contentIndex, int audioEndMs) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ItemId = itemId;
             ContentIndex = contentIndex;

@@ -85,7 +85,7 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            ToolType @type = default;
+            string @type = "function";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
             string description = default;
@@ -94,7 +94,7 @@ namespace Azure.AI.VoiceLive
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ToolType(prop.Value.GetString());
+                    @type = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("name"u8))

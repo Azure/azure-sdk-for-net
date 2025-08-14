@@ -24,7 +24,7 @@ namespace Azure.AI.VoiceLive
         /// `min_silence_duration_ms` configured in the Session.
         /// </param>
         /// <param name="itemId"> The ID of the user message item that will be created. </param>
-        internal ServerEventInputAudioBufferSpeechStopped(int audioEndMs, string itemId) : base(ServerEventType.InputAudioBufferSpeechStopped)
+        internal ServerEventInputAudioBufferSpeechStopped(int audioEndMs, string itemId) : base("input_audio_buffer.speech_stopped")
         {
             AudioEndMs = audioEndMs;
             ItemId = itemId;
@@ -40,7 +40,7 @@ namespace Azure.AI.VoiceLive
         /// `min_silence_duration_ms` configured in the Session.
         /// </param>
         /// <param name="itemId"> The ID of the user message item that will be created. </param>
-        internal ServerEventInputAudioBufferSpeechStopped(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, int audioEndMs, string itemId) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ServerEventInputAudioBufferSpeechStopped(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, int audioEndMs, string itemId) : base(@type, eventId, additionalBinaryDataProperties)
         {
             AudioEndMs = audioEndMs;
             ItemId = itemId;

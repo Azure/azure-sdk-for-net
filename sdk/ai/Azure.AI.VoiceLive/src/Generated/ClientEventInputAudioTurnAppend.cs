@@ -17,7 +17,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="turnId"> The ID of the turn this audio is part of. </param>
         /// <param name="audio"> Base64-encoded audio chunk. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="turnId"/> or <paramref name="audio"/> is null. </exception>
-        public ClientEventInputAudioTurnAppend(string turnId, string audio) : base(ClientEventType.InputAudioTurnAppend)
+        public ClientEventInputAudioTurnAppend(string turnId, string audio) : base("input_audio.turn.append")
         {
             Argument.AssertNotNull(turnId, nameof(turnId));
             Argument.AssertNotNull(audio, nameof(audio));
@@ -32,7 +32,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="turnId"> The ID of the turn this audio is part of. </param>
         /// <param name="audio"> Base64-encoded audio chunk. </param>
-        internal ClientEventInputAudioTurnAppend(ClientEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string turnId, string audio) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ClientEventInputAudioTurnAppend(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string turnId, string audio) : base(@type, eventId, additionalBinaryDataProperties)
         {
             TurnId = turnId;
             Audio = audio;

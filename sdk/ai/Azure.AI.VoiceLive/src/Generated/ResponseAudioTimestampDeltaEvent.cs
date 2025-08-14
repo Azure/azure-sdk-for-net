@@ -21,7 +21,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="audioOffsetMs"></param>
         /// <param name="audioDurationMs"></param>
         /// <param name="text"></param>
-        internal ResponseAudioTimestampDeltaEvent(string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int audioDurationMs, string text) : base(ServerEventType.ResponseAudioTimestampDelta)
+        internal ResponseAudioTimestampDeltaEvent(string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int audioDurationMs, string text) : base("response.audio_timestamp.delta")
         {
             ResponseId = responseId;
             ItemId = itemId;
@@ -44,7 +44,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="audioDurationMs"></param>
         /// <param name="text"></param>
         /// <param name="timestampType"></param>
-        internal ResponseAudioTimestampDeltaEvent(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int audioDurationMs, string text, string timestampType) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ResponseAudioTimestampDeltaEvent(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int audioDurationMs, string text, string timestampType) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             ItemId = itemId;

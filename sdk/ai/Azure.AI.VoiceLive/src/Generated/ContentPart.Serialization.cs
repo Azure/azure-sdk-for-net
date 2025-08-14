@@ -42,7 +42,7 @@ namespace Azure.AI.VoiceLive
                 throw new FormatException($"The model {nameof(ContentPart)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(Type);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

@@ -21,7 +21,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Initializes a new instance of <see cref="ConversationRequestItem"/>. </summary>
         /// <param name="type"></param>
-        private protected ConversationRequestItem(ItemType @type)
+        private protected ConversationRequestItem(string @type)
         {
             Type = @type;
         }
@@ -30,7 +30,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="type"></param>
         /// <param name="id"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationRequestItem(ItemType @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationRequestItem(string @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Id = id;
@@ -38,7 +38,7 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> Gets or sets the Type. </summary>
-        internal ItemType Type { get; set; }
+        internal string Type { get; set; }
 
         /// <summary> Gets or sets the Id. </summary>
         public string Id { get; set; }

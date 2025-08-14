@@ -32,7 +32,7 @@ namespace Azure.AI.VoiceLive
         /// `prefix_padding_ms` configured in the Session.
         /// </param>
         /// <param name="itemId"> The ID of the user message item that will be created when speech stops. </param>
-        internal ServerEventInputAudioBufferSpeechStarted(int audioStartMs, string itemId) : base(ServerEventType.InputAudioBufferSpeechStarted)
+        internal ServerEventInputAudioBufferSpeechStarted(int audioStartMs, string itemId) : base("input_audio_buffer.speech_started")
         {
             AudioStartMs = audioStartMs;
             ItemId = itemId;
@@ -49,7 +49,7 @@ namespace Azure.AI.VoiceLive
         /// `prefix_padding_ms` configured in the Session.
         /// </param>
         /// <param name="itemId"> The ID of the user message item that will be created when speech stops. </param>
-        internal ServerEventInputAudioBufferSpeechStarted(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, int audioStartMs, string itemId) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ServerEventInputAudioBufferSpeechStarted(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, int audioStartMs, string itemId) : base(@type, eventId, additionalBinaryDataProperties)
         {
             AudioStartMs = audioStartMs;
             ItemId = itemId;

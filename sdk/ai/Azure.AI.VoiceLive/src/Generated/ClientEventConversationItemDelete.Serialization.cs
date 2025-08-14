@@ -73,7 +73,7 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            ClientEventType @type = default;
+            string @type = "conversation.item.delete";
             string eventId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string itemId = default;
@@ -81,7 +81,7 @@ namespace Azure.AI.VoiceLive
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ClientEventType(prop.Value.GetString());
+                    @type = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("event_id"u8))

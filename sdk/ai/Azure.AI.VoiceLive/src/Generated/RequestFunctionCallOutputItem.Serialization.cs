@@ -70,7 +70,7 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            ItemType @type = default;
+            string @type = "function_call_output";
             string id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string callId = default;
@@ -79,7 +79,7 @@ namespace Azure.AI.VoiceLive
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ItemType(prop.Value.GetString());
+                    @type = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("id"u8))

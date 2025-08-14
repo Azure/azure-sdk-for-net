@@ -21,7 +21,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Initializes a new instance of <see cref="ClientEvent"/>. </summary>
         /// <param name="type"> The type of event. </param>
-        private protected ClientEvent(ClientEventType @type)
+        private protected ClientEvent(string @type)
         {
             Type = @type;
         }
@@ -30,7 +30,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClientEvent(ClientEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClientEvent(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             EventId = eventId;
@@ -38,7 +38,7 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> The type of event. </summary>
-        internal ClientEventType Type { get; set; }
+        internal string Type { get; set; }
 
         /// <summary> Gets or sets the EventId. </summary>
         public virtual string EventId { get; set; }

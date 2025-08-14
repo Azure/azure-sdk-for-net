@@ -23,7 +23,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputIndex"> The index of the output item in the response. </param>
         /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
         /// <param name="transcript"> The final transcript of the audio. </param>
-        internal ServerEventResponseAudioTranscriptDone(string responseId, string itemId, int outputIndex, int contentIndex, string transcript) : base(ServerEventType.ResponseAudioTranscriptDone)
+        internal ServerEventResponseAudioTranscriptDone(string responseId, string itemId, int outputIndex, int contentIndex, string transcript) : base("response.audio_transcript.done")
         {
             ResponseId = responseId;
             ItemId = itemId;
@@ -41,7 +41,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputIndex"> The index of the output item in the response. </param>
         /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
         /// <param name="transcript"> The final transcript of the audio. </param>
-        internal ServerEventResponseAudioTranscriptDone(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, string transcript) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ServerEventResponseAudioTranscriptDone(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, string transcript) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             ItemId = itemId;

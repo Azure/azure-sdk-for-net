@@ -18,7 +18,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="role"></param>
         /// <param name="content"></param>
         /// <param name="status"></param>
-        internal ResponseMessageItem(MessageRole role, IEnumerable<ContentPart> content, ItemStatus status) : base(ItemType.Message)
+        internal ResponseMessageItem(MessageRole role, IEnumerable<ContentPart> content, ItemStatus status) : base("message")
         {
             Role = role;
             Content = content.ToList();
@@ -33,7 +33,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="role"></param>
         /// <param name="content"></param>
         /// <param name="status"></param>
-        internal ResponseMessageItem(string @object, ItemType @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, MessageRole role, IList<ContentPart> content, ItemStatus status) : base(@object, @type, id, additionalBinaryDataProperties)
+        internal ResponseMessageItem(string @object, string @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, MessageRole role, IList<ContentPart> content, ItemStatus status) : base(@object, @type, id, additionalBinaryDataProperties)
         {
             Role = role;
             Content = content;
