@@ -64,12 +64,148 @@ namespace Azure.Data.AppConfiguration
             return new ConfigurationSettingsFilter(key, label, tags.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Labels are used to group key-values. </summary>
+        /// <summary> Labels are used to group key values or feature flags. </summary>
         /// <param name="name"> The name of the label. </param>
         /// <returns> A new <see cref="AppConfiguration.SettingLabel"/> instance for mocking. </returns>
         public static SettingLabel SettingLabel(string name = default)
         {
             return new SettingLabel(name, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A feature flag. </summary>
+        /// <param name="name"> The name of the feature flag. </param>
+        /// <param name="alias"> The alias of the feature flag. </param>
+        /// <param name="label"> The label the feature flag belongs to. </param>
+        /// <param name="description"> The description of the feature flag. </param>
+        /// <param name="enabled"> The enabled state of the feature flag. </param>
+        /// <param name="conditions"> The conditions of the feature flag. </param>
+        /// <param name="variants"> The variants of the feature flag. </param>
+        /// <param name="allocation"> The allocation of the feature flag. </param>
+        /// <param name="telemetry"> The telemetry settings of the feature flag. </param>
+        /// <param name="tags"> The tags of the feature flag. </param>
+        /// <param name="locked"> Indicates whether the feature flag is locked. </param>
+        /// <param name="lastModified"> A date representing the last time the feature flag was modified. </param>
+        /// <param name="etag"> A value representing the current state of the resource. </param>
+        /// <returns> A new <see cref="AppConfiguration.FeatureFlag"/> instance for mocking. </returns>
+        public static FeatureFlag FeatureFlag(string name = default, string @alias = default, string label = default, string description = default, bool? enabled = default, Conditions conditions = default, IEnumerable<Variant> variants = default, Allocation allocation = default, Telemetry telemetry = default, IDictionary<string, string> tags = default, bool? locked = default, DateTimeOffset? lastModified = default, string etag = default)
+        {
+            variants ??= new ChangeTrackingList<Variant>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new FeatureFlag(
+                name,
+                @alias,
+                label,
+                description,
+                enabled,
+                conditions,
+                variants.ToList(),
+                allocation,
+                telemetry,
+                tags,
+                locked,
+                lastModified,
+                etag,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The conditions that must be met for the feature flag to be enabled. </summary>
+        /// <param name="requirementType"> The requirement type for the conditions. </param>
+        /// <param name="filters"> The filters that will conditionally enable or disable the flag. </param>
+        /// <returns> A new <see cref="AppConfiguration.Conditions"/> instance for mocking. </returns>
+        public static Conditions Conditions(RequirementType? requirementType = default, IEnumerable<FeatureFlagFilter> filters = default)
+        {
+            filters ??= new ChangeTrackingList<FeatureFlagFilter>();
+
+            return new Conditions(requirementType, filters.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Feature Flag Filter object. </summary>
+        /// <param name="name"> Gets the name of the feature filter. </param>
+        /// <param name="parameters"> Gets the parameters of the feature filter. </param>
+        /// <returns> A new <see cref="AppConfiguration.FeatureFlagFilter"/> instance for mocking. </returns>
+        public static FeatureFlagFilter FeatureFlagFilter(string name = default, IDictionary<string, object> parameters = default)
+        {
+            parameters ??= new ChangeTrackingDictionary<string, object>();
+
+            return new FeatureFlagFilter(name, parameters, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Feature Flag Variants object. </summary>
+        /// <param name="name"> The name of the variant. </param>
+        /// <param name="configurationValue"> The value of the variant. </param>
+        /// <param name="statusOverride"> Determines if the variant should override the status of the flag. </param>
+        /// <returns> A new <see cref="AppConfiguration.Variant"/> instance for mocking. </returns>
+        public static Variant Variant(string name = default, string configurationValue = default, StatusOverride? statusOverride = default)
+        {
+            return new Variant(name, configurationValue, statusOverride, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Defines how to allocate variants based on context. </summary>
+        /// <param name="defaultWhenDisabled"> The default variant to use when disabled. </param>
+        /// <param name="defaultWhenEnabled"> The default variant to use when enabled but not allocated. </param>
+        /// <param name="percentile"> Allocates percentiles to variants. </param>
+        /// <param name="user"> Allocates users to variants. </param>
+        /// <param name="group"> Allocates groups to variants. </param>
+        /// <param name="seed"> The seed used for random allocation. </param>
+        /// <returns> A new <see cref="AppConfiguration.Allocation"/> instance for mocking. </returns>
+        public static Allocation Allocation(string defaultWhenDisabled = default, string defaultWhenEnabled = default, IEnumerable<PercentileAllocation> percentile = default, IEnumerable<UserAllocation> user = default, IEnumerable<GroupAllocation> @group = default, string seed = default)
+        {
+            percentile ??= new ChangeTrackingList<PercentileAllocation>();
+            user ??= new ChangeTrackingList<UserAllocation>();
+            @group ??= new ChangeTrackingList<GroupAllocation>();
+
+            return new Allocation(
+                defaultWhenDisabled,
+                defaultWhenEnabled,
+                percentile.ToList(),
+                user.ToList(),
+                @group.ToList(),
+                seed,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Feature Flag PercentileAllocation object. </summary>
+        /// <param name="variant"> The variant to allocate these percentiles to. </param>
+        /// <param name="from"> The lower bounds for this percentile allocation. </param>
+        /// <param name="to"> The upper bounds for this percentile allocation. </param>
+        /// <returns> A new <see cref="AppConfiguration.PercentileAllocation"/> instance for mocking. </returns>
+        public static PercentileAllocation PercentileAllocation(string variant = default, int @from = default, int to = default)
+        {
+            return new PercentileAllocation(variant, @from, to, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Feature Flag UserAllocation object. </summary>
+        /// <param name="variant"> The variant to allocate these percentiles to. </param>
+        /// <param name="users"> The users to get this variant. </param>
+        /// <returns> A new <see cref="AppConfiguration.UserAllocation"/> instance for mocking. </returns>
+        public static UserAllocation UserAllocation(string variant = default, IEnumerable<string> users = default)
+        {
+            users ??= new ChangeTrackingList<string>();
+
+            return new UserAllocation(variant, users.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Feature Flag GroupAllocation object. </summary>
+        /// <param name="variant"> The variant to allocate these percentiles to. </param>
+        /// <param name="groups"> The groups to get this variant. </param>
+        /// <returns> A new <see cref="AppConfiguration.GroupAllocation"/> instance for mocking. </returns>
+        public static GroupAllocation GroupAllocation(string variant = default, IEnumerable<string> groups = default)
+        {
+            groups ??= new ChangeTrackingList<string>();
+
+            return new GroupAllocation(variant, groups.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Feature Flag Telemetry object. </summary>
+        /// <param name="enabled"> The enabled state of the telemetry. </param>
+        /// <param name="metadata"> The metadata to include on outbound telemetry. </param>
+        /// <returns> A new <see cref="AppConfiguration.Telemetry"/> instance for mocking. </returns>
+        public static Telemetry Telemetry(bool enabled = default, IDictionary<string, string> metadata = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+
+            return new Telemetry(enabled, metadata, additionalBinaryDataProperties: null);
         }
     }
 }

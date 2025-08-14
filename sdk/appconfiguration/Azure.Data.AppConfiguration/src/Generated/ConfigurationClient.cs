@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -25,6 +26,7 @@ namespace Azure.Data.AppConfiguration
         private readonly TokenCredential _tokenCredential;
         private static readonly string[] AuthorizationScopes = new string[] { "https://azconfig.io/.default" };
         private readonly string _apiVersion;
+        private FeatureManagement _cachedFeatureManagement;
 
         /// <summary> Initializes a new instance of ConfigurationClient for mocking. </summary>
         protected ConfigurationClient()
@@ -555,6 +557,12 @@ namespace Azure.Data.AppConfiguration
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Initializes a new instance of FeatureManagement. </summary>
+        public virtual FeatureManagement GetFeatureManagementClient()
+        {
+            return Volatile.Read(ref _cachedFeatureManagement) ?? Interlocked.CompareExchange(ref _cachedFeatureManagement, new FeatureManagement(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedFeatureManagement;
         }
     }
 }

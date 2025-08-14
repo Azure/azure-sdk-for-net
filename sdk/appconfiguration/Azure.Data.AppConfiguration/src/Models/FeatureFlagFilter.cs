@@ -8,7 +8,7 @@ namespace Azure.Data.AppConfiguration
     /// <summary>
     /// A Feature filter represents a filter definition that should be evaluated by the consumer to determine if the feature is enabled.
     /// </summary>
-    public class FeatureFlagFilter
+    public partial class FeatureFlagFilter
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FeatureFlagFilter"/>.
