@@ -85,7 +85,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="version"> The version of the image. </param>
         /// <param name="operatingSystem"> The operating system of the image. </param>
         /// <param name="osBuildNumber"> The operating system build number of the image. </param>
-        /// <param name="publishedDate"> The datetime that the backing image version was published. </param>
+        /// <param name="publishedDate"> The datetime that the backing image version was published, in RFC3339 format. </param>
         /// <returns> A new <see cref="Models.DevBoxImageReference"/> instance for mocking. </returns>
         public static DevBoxImageReference DevBoxImageReference(string name = null, string version = null, string operatingSystem = null, string osBuildNumber = null, DateTimeOffset? publishedDate = null)
         {
@@ -131,17 +131,6 @@ namespace Azure.Developer.DevCenter.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DevBoxListResult"/>. </summary>
-        /// <param name="value"> The DevBox items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.DevBoxListResult"/> instance for mocking. </returns>
-        public static DevBoxListResult DevBoxListResult(IEnumerable<DevBox> value = null, Uri nextLink = null)
-        {
-            value ??= new List<DevBox>();
-
-            return new DevBoxListResult(value?.ToList(), nextLink, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.DevBox"/>. </summary>
         /// <param name="name"> Display name for the Dev Box. </param>
         /// <param name="projectName"> Name of the project this Dev Box belongs to. </param>
@@ -167,7 +156,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="hardwareProfile"> Information about the Dev Box's hardware resources. </param>
         /// <param name="storageProfile"> Storage settings for this Dev Box. </param>
         /// <param name="imageReference"> Information about the image used for this Dev Box. </param>
-        /// <param name="createdTime"> Creation time of this Dev Box. </param>
+        /// <param name="createdTime"> Creation time of this Dev Box, in RFC3339 format. </param>
         /// <param name="localAdministratorStatus"> Indicates whether the owner of the Dev Box is a local administrator. </param>
         /// <returns> A new <see cref="Models.DevBox"/> instance for mocking. </returns>
         public static DevBox DevBox(string name = null, string projectName = null, string poolName = null, HibernateSupport? hibernateSupport = null, DevBoxProvisioningState? provisioningState = null, string actionState = null, PowerState? powerState = null, Guid? uniqueId = null, ResponseError error = null, AzureLocation? location = null, DevBoxOSType? osType = null, Guid? userId = null, DevBoxHardwareProfile hardwareProfile = null, DevBoxStorageProfile storageProfile = null, DevBoxImageReference imageReference = null, DateTimeOffset? createdTime = null, LocalAdministratorStatus? localAdministratorStatus = null)
@@ -206,7 +195,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="name"> The name of the action. </param>
         /// <param name="actionType"> The action that will be taken. </param>
         /// <param name="sourceId"> The id of the resource which triggered this action. </param>
-        /// <param name="suspendedUntil"> The earliest time that the action could occur (UTC). </param>
+        /// <param name="suspendedUntil"> The earliest time that the action could occur (UTC), in RFC3339 format. </param>
         /// <param name="nextAction"> Details about the next run of this action. </param>
         /// <returns> A new <see cref="Models.DevBoxAction"/> instance for mocking. </returns>
         public static DevBoxAction DevBoxAction(string name = null, DevBoxActionType actionType = default, string sourceId = null, DateTimeOffset? suspendedUntil = null, DevBoxNextAction nextAction = null)
@@ -221,22 +210,11 @@ namespace Azure.Developer.DevCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevBoxNextAction"/>. </summary>
-        /// <param name="scheduledTime"> The time the action will be triggered (UTC). </param>
+        /// <param name="scheduledTime"> The time the action will be triggered (UTC), in RFC3339 format. </param>
         /// <returns> A new <see cref="Models.DevBoxNextAction"/> instance for mocking. </returns>
         public static DevBoxNextAction DevBoxNextAction(DateTimeOffset scheduledTime = default)
         {
             return new DevBoxNextAction(scheduledTime, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DevBoxActionsDelayMultipleResult"/>. </summary>
-        /// <param name="value"> The DevBoxActionDelayResult items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.DevBoxActionsDelayMultipleResult"/> instance for mocking. </returns>
-        public static DevBoxActionsDelayMultipleResult DevBoxActionsDelayMultipleResult(IEnumerable<DevBoxActionDelayResult> value = null, Uri nextLink = null)
-        {
-            value ??= new List<DevBoxActionDelayResult>();
-
-            return new DevBoxActionsDelayMultipleResult(value?.ToList(), nextLink, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevBoxActionDelayResult"/>. </summary>
@@ -248,17 +226,6 @@ namespace Azure.Developer.DevCenter.Models
         public static DevBoxActionDelayResult DevBoxActionDelayResult(string actionName = null, DevBoxActionDelayStatus delayStatus = default, DevBoxAction action = null, ResponseError error = null)
         {
             return new DevBoxActionDelayResult(actionName, delayStatus, action, error, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.EnvironmentListResult"/>. </summary>
-        /// <param name="value"> The Environment items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.EnvironmentListResult"/> instance for mocking. </returns>
-        public static EnvironmentListResult EnvironmentListResult(IEnumerable<DevCenterEnvironment> value = null, Uri nextLink = null)
-        {
-            value ??= new List<DevCenterEnvironment>();
-
-            return new EnvironmentListResult(value?.ToList(), nextLink, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevCenterEnvironment"/>. </summary>
@@ -297,17 +264,6 @@ namespace Azure.Developer.DevCenter.Models
             return new DevCenterCatalog(name, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EnvironmentDefinitionListResult"/>. </summary>
-        /// <param name="value"> The EnvironmentDefinition items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.EnvironmentDefinitionListResult"/> instance for mocking. </returns>
-        public static EnvironmentDefinitionListResult EnvironmentDefinitionListResult(IEnumerable<EnvironmentDefinition> value = null, Uri nextLink = null)
-        {
-            value ??= new List<EnvironmentDefinition>();
-
-            return new EnvironmentDefinitionListResult(value?.ToList(), nextLink, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.EnvironmentDefinition"/>. </summary>
         /// <param name="id"> The ID of the environment definition. </param>
         /// <param name="name"> Name of the environment definition. </param>
@@ -339,7 +295,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="defaultValue"> Default value of the parameter. </param>
         /// <param name="parameterType">
         /// A string of one of the basic JSON types (number, integer, array, object,
-        /// boolean, string)
+        /// boolean, string).
         /// </param>
         /// <param name="readOnly">
         /// Whether or not this parameter is read-only.  If true, default should have a
@@ -362,17 +318,6 @@ namespace Azure.Developer.DevCenter.Models
                 required,
                 allowed?.ToList(),
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.EnvironmentTypeListResult"/>. </summary>
-        /// <param name="value"> The EnvironmentType items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.EnvironmentTypeListResult"/> instance for mocking. </returns>
-        public static EnvironmentTypeListResult EnvironmentTypeListResult(IEnumerable<DevCenterEnvironmentType> value = null, Uri nextLink = null)
-        {
-            value ??= new List<DevCenterEnvironmentType>();
-
-            return new EnvironmentTypeListResult(value?.ToList(), nextLink, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevCenterEnvironmentType"/>. </summary>

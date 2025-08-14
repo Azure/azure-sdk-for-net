@@ -131,162 +131,6 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DevBoxesClientOperations_GetAllDevBoxes_ListsDevBoxesThatTheCallerHasAccessToInTheDevCenter()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
-
-            Response response = client.GetAllDevBoxes(null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("poolName").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DevBoxesClientOperations_GetAllDevBoxes_ListsDevBoxesThatTheCallerHasAccessToInTheDevCenter_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
-
-            Response response = await client.GetAllDevBoxesAsync(null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("poolName").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DevBoxesClientOperations_GetAllDevBoxes_ListsDevBoxesThatTheCallerHasAccessToInTheDevCenter_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
-
-            Response<DevBoxListResult> response = client.GetAllDevBoxes();
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DevBoxesClientOperations_GetAllDevBoxes_ListsDevBoxesThatTheCallerHasAccessToInTheDevCenter_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
-
-            Response<DevBoxListResult> response = await client.GetAllDevBoxesAsync();
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DevBoxesClientOperations_GetAllDevBoxesByUser_ListsDevBoxesInTheDevCenterForAParticularUser()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
-
-            Response response = client.GetAllDevBoxesByUser("me", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("poolName").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DevBoxesClientOperations_GetAllDevBoxesByUser_ListsDevBoxesInTheDevCenterForAParticularUser_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
-
-            Response response = await client.GetAllDevBoxesByUserAsync("me", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("poolName").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DevBoxesClientOperations_GetAllDevBoxesByUser_ListsDevBoxesInTheDevCenterForAParticularUser_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
-
-            Response<DevBoxListResult> response = client.GetAllDevBoxesByUser("me");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DevBoxesClientOperations_GetAllDevBoxesByUser_ListsDevBoxesInTheDevCenterForAParticularUser_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
-
-            Response<DevBoxListResult> response = await client.GetAllDevBoxesByUserAsync("me");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DevBoxesClientOperations_GetDevBoxes_ListsDevBoxesInTheProjectForAParticularUser()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
-
-            Response response = client.GetDevBoxes("myProject", "me", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("poolName").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DevBoxesClientOperations_GetDevBoxes_ListsDevBoxesInTheProjectForAParticularUser_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
-
-            Response response = await client.GetDevBoxesAsync("myProject", "me", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("poolName").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DevBoxesClientOperations_GetDevBoxes_ListsDevBoxesInTheProjectForAParticularUser_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
-
-            Response<DevBoxListResult> response = client.GetDevBoxes("myProject", "me");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DevBoxesClientOperations_GetDevBoxes_ListsDevBoxesInTheProjectForAParticularUser_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
-
-            Response<DevBoxListResult> response = await client.GetDevBoxesAsync("myProject", "me");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_DevBox_GetDevBox_GetsADevBox()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -523,58 +367,6 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DevBoxesClientOperations_DelayAllActions_DelaysAllActions()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
-
-            Response response = client.DelayAllActions("myProject", "me", "myDevBox", DateTimeOffset.Parse("2022-09-30T17:00:00Z"), null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("result").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DevBoxesClientOperations_DelayAllActions_DelaysAllActions_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
-
-            Response response = await client.DelayAllActionsAsync("myProject", "me", "myDevBox", DateTimeOffset.Parse("2022-09-30T17:00:00Z"), null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("result").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DevBoxesClientOperations_DelayAllActions_DelaysAllActions_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
-
-            Response<DevBoxActionsDelayMultipleResult> response = client.DelayAllActions("myProject", "me", "myDevBox", DateTimeOffset.Parse("2022-09-30T17:00:00Z"));
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DevBoxesClientOperations_DelayAllActions_DelaysAllActions_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
-
-            Response<DevBoxActionsDelayMultipleResult> response = await client.DelayAllActionsAsync("myProject", "me", "myDevBox", DateTimeOffset.Parse("2022-09-30T17:00:00Z"));
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_Pool_GetPools_ListsAvailablePools()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -635,7 +427,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Schedule_GetSchedules_ListsAvailableSchedulesForAPool()
+        public void Example_DevBoxesClientOperations_GetSchedules_ListsAvailableSchedulesForAPool()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -654,7 +446,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Schedule_GetSchedules_ListsAvailableSchedulesForAPool_Async()
+        public async Task Example_DevBoxesClientOperations_GetSchedules_ListsAvailableSchedulesForAPool_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -673,7 +465,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Schedule_GetSchedules_ListsAvailableSchedulesForAPool_Convenience()
+        public void Example_DevBoxesClientOperations_GetSchedules_ListsAvailableSchedulesForAPool_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -686,13 +478,187 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Schedule_GetSchedules_ListsAvailableSchedulesForAPool_Convenience_Async()
+        public async Task Example_DevBoxesClientOperations_GetSchedules_ListsAvailableSchedulesForAPool_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
             await foreach (DevBoxSchedule item in client.GetSchedulesAsync("myProject", "DevPool"))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DevBoxesClientOperations_GetAllDevBoxes_ListsDevBoxesThatTheCallerHasAccessToInTheDevCenter()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
+
+            foreach (BinaryData item in client.GetAllDevBoxes(null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("poolName").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DevBoxesClientOperations_GetAllDevBoxes_ListsDevBoxesThatTheCallerHasAccessToInTheDevCenter_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
+
+            await foreach (BinaryData item in client.GetAllDevBoxesAsync(null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("poolName").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DevBoxesClientOperations_GetAllDevBoxes_ListsDevBoxesThatTheCallerHasAccessToInTheDevCenter_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
+
+            foreach (DevBox item in client.GetAllDevBoxes())
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DevBoxesClientOperations_GetAllDevBoxes_ListsDevBoxesThatTheCallerHasAccessToInTheDevCenter_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
+
+            await foreach (DevBox item in client.GetAllDevBoxesAsync())
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DevBoxesClientOperations_GetAllDevBoxesByUser_ListsDevBoxesInTheDevCenterForAParticularUser()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
+
+            foreach (BinaryData item in client.GetAllDevBoxesByUser("me", null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("poolName").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DevBoxesClientOperations_GetAllDevBoxesByUser_ListsDevBoxesInTheDevCenterForAParticularUser_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
+
+            await foreach (BinaryData item in client.GetAllDevBoxesByUserAsync("me", null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("poolName").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DevBoxesClientOperations_GetAllDevBoxesByUser_ListsDevBoxesInTheDevCenterForAParticularUser_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
+
+            foreach (DevBox item in client.GetAllDevBoxesByUser("me"))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DevBoxesClientOperations_GetAllDevBoxesByUser_ListsDevBoxesInTheDevCenterForAParticularUser_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
+
+            await foreach (DevBox item in client.GetAllDevBoxesByUserAsync("me"))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DevBoxesClientOperations_GetDevBoxes_ListsDevBoxesInTheProjectForAParticularUser()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
+
+            foreach (BinaryData item in client.GetDevBoxes("myProject", "me", null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("poolName").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DevBoxesClientOperations_GetDevBoxes_ListsDevBoxesInTheProjectForAParticularUser_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
+
+            await foreach (BinaryData item in client.GetDevBoxesAsync("myProject", "me", null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("poolName").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DevBoxesClientOperations_GetDevBoxes_ListsDevBoxesInTheProjectForAParticularUser_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
+
+            foreach (DevBox item in client.GetDevBoxes("myProject", "me"))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DevBoxesClientOperations_GetDevBoxes_ListsDevBoxesInTheProjectForAParticularUser_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
+
+            await foreach (DevBox item in client.GetDevBoxesAsync("myProject", "me"))
             {
             }
         }
@@ -753,6 +719,64 @@ namespace Azure.Developer.DevCenter.Samples
             DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
             await foreach (DevBoxAction item in client.GetDevBoxActionsAsync("myProject", "me", "myDevBox"))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DevBoxesClientOperations_DelayAllActions_DelaysAllActions()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
+
+            foreach (BinaryData item in client.DelayAllActions("myProject", "me", "myDevBox", DateTimeOffset.Parse("2022-09-30T17:00:00Z"), null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("result").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DevBoxesClientOperations_DelayAllActions_DelaysAllActions_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
+
+            await foreach (BinaryData item in client.DelayAllActionsAsync("myProject", "me", "myDevBox", DateTimeOffset.Parse("2022-09-30T17:00:00Z"), null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("result").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DevBoxesClientOperations_DelayAllActions_DelaysAllActions_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
+
+            foreach (DevBoxActionDelayResult item in client.DelayAllActions("myProject", "me", "myDevBox", DateTimeOffset.Parse("2022-09-30T17:00:00Z")))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DevBoxesClientOperations_DelayAllActions_DelaysAllActions_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
+
+            await foreach (DevBoxActionDelayResult item in client.DelayAllActionsAsync("myProject", "me", "myDevBox", DateTimeOffset.Parse("2022-09-30T17:00:00Z")))
             {
             }
         }
