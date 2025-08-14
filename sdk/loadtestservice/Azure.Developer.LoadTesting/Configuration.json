@@ -1,0 +1,13 @@
+{
+  "output-folder": ".",
+  "namespace": "Azure.Developer.LoadTesting",
+  "library-name": "Azure.Developer.LoadTesting",
+  "flavor": "azure",
+  "generate-sample-project": false,
+  "use-model-reader-writer": true,
+  "shared-source-folders": [
+    "../../TempTypeSpecFiles/node_modules/@autorest/csharp/Generator.Shared",
+    "../../TempTypeSpecFiles/node_modules/@autorest/csharp/Azure.Core.Shared"
+  ],
+  "model-namespace": false
+}
