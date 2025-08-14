@@ -27799,7 +27799,7 @@
         },
         {
           "$id": "2460",
-          "kind": "basic",
+          "kind": "paging",
           "name": "listMetrics",
           "accessibility": "public",
           "apiVersions": [
@@ -31142,13 +31142,27 @@
           ],
           "response": {
             "type": {
-              "$ref": "751"
-            }
+              "$ref": "753"
+            },
+            "resultSegments": [
+              "value"
+            ]
           },
           "isOverride": false,
           "generateConvenient": true,
           "generateProtocol": true,
-          "crossLanguageDefinitionId": "Customizations.TestRunOperations.listMetrics"
+          "crossLanguageDefinitionId": "Customizations.TestRunOperations.listMetrics",
+          "pagingMetadata": {
+            "itemPropertySegments": [
+              "value"
+            ],
+            "nextLink": {
+              "responseSegments": [
+                "nextLink"
+              ],
+              "responseLocation": "Body"
+            }
+          }
         },
         {
           "$id": "2833",
