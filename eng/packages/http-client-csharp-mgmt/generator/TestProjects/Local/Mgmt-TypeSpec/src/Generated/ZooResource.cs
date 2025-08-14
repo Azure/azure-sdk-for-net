@@ -293,6 +293,7 @@ namespace MgmtTypeSpec
         /// <summary> A synchronous resource action. </summary>
         /// <param name="maxpagesize"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SubResource> ZooAddressListAsync(int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
@@ -311,6 +312,7 @@ namespace MgmtTypeSpec
         /// <summary> A synchronous resource action. </summary>
         /// <param name="maxpagesize"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SubResource> ZooAddressList(int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext

@@ -211,6 +211,7 @@ namespace MgmtTypeSpec
 
         /// <summary> List Zoo resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ZooResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ZooResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
@@ -222,6 +223,7 @@ namespace MgmtTypeSpec
 
         /// <summary> List Zoo resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ZooResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ZooResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
