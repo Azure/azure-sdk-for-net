@@ -17,6 +17,39 @@ namespace Azure.AI.Projects.Tests
 {
     public class Sample_Indexes : SamplesBase<AIProjectsTestEnvironment>
     {
+        private AIProjectClient CreateDebugClient(string endpoint)
+        {
+            var options = new AIProjectClientOptions();
+
+            // Add custom pipeline policy for debugging
+            options.AddPolicy(new DebugPipelinePolicy(), PipelinePosition.PerCall);
+
+            return new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential(), options);
+        }
+
+        // Custom pipeline policy for debugging System.ClientModel requests
+        private class DebugPipelinePolicy : PipelinePolicy
+        {
+            public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int index)
+            {
+                Console.WriteLine($"Request: {message.Request.Method} {message.Request.Uri}");
+
+                ProcessNext(message, pipeline, index);
+
+                Console.WriteLine($"Response: {message.Response?.Status} {message.Response?.ReasonPhrase}");
+            }
+
+            public override ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int index)
+            {
+                Console.WriteLine($"Async Request: {message.Request.Method} {message.Request.Uri}");
+
+                var result = ProcessNextAsync(message, pipeline, index);
+
+                Console.WriteLine($"Async Response: {message.Response?.Status} {message.Response?.ReasonPhrase}");
+                return result;
+            }
+        }
+
         [Test]
         [SyncOnly]
         public void IndexesExample()
@@ -28,14 +61,17 @@ namespace Azure.AI.Projects.Tests
             var indexVersion = Environment.GetEnvironmentVariable("INDEX_VERSION") ?? "1.0";
             var aiSearchConnectionName = Environment.GetEnvironmentVariable("AI_SEARCH_CONNECTION_NAME") ?? "my-ai-search-connection-name";
             var aiSearchIndexName = Environment.GetEnvironmentVariable("AI_SEARCH_INDEX_NAME") ?? "my-ai-search-index-name";
+
+            AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 #else
             var endpoint = TestEnvironment.PROJECTENDPOINT;
             var indexName = TestEnvironment.INDEXNAME ?? "my-index";
             var indexVersion = TestEnvironment.INDEXVERSION ?? "1.0";
             var aiSearchConnectionName = TestEnvironment.AISEARCHCONNECTIONNAME ?? "my-ai-search-connection-name";
             var aiSearchIndexName = TestEnvironment.AISEARCHINDEXNAME ?? "my-ai-search-index-name";
+
+            AIProjectClient projectClient = CreateDebugClient(endpoint);
 #endif
-            AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 
             BinaryContent content = BinaryContent.Create(BinaryData.FromObjectAsJson(new
             {
@@ -86,14 +122,17 @@ namespace Azure.AI.Projects.Tests
             var indexVersion = Environment.GetEnvironmentVariable("INDEX_VERSION") ?? "1.0";
             var aiSearchConnectionName = Environment.GetEnvironmentVariable("AI_SEARCH_CONNECTION_NAME") ?? "my-ai-search-connection-name";
             var aiSearchIndexName = Environment.GetEnvironmentVariable("AI_SEARCH_INDEX_NAME") ?? "my-ai-search-index-name";
+            
+            AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 #else
             var endpoint = TestEnvironment.PROJECTENDPOINT;
             var indexName = TestEnvironment.INDEXNAME ?? "my-index";
             var indexVersion = TestEnvironment.INDEXVERSION ?? "1.0";
             var aiSearchConnectionName = TestEnvironment.AISEARCHCONNECTIONNAME ?? "my-ai-search-connection-name";
             var aiSearchIndexName = TestEnvironment.AISEARCHINDEXNAME ?? "my-ai-search-index-name";
+
+            AIProjectClient projectClient = CreateDebugClient(endpoint);
 #endif
-            AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 
             BinaryContent content = BinaryContent.Create(BinaryData.FromObjectAsJson(new
             {

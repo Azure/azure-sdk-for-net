@@ -214,11 +214,7 @@ var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var modelPublisher = System.Environment.GetEnvironmentVariable("MODEL_PUBLISHER");
 
-// Enable debugging for System.ClientModel
-EnableSystemClientModelDebugging();
-
-// Create client with debugging enabled
-AIProjectClient projectClient = CreateDebugClient(endpoint);
+AiProjectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
 Console.WriteLine("List all deployments:");
 foreach (AssetDeployment deployment in projectClient.Deployments.GetDeployments())
@@ -233,7 +229,7 @@ foreach (AssetDeployment deployment in projectClient.Deployments.GetDeployments(
 }
 
 Console.WriteLine($"Get a single model deployment named `{modelDeploymentName}`:");
-ModelDeployment deploymentDetails = projectClient.Deployments.GetModelDeployment(modelDeploymentName);
+ModelDeployment deploymentDetails = (ModelDeployment)projectClient.Deployments.GetDeployment(modelDeploymentName);
 Console.WriteLine(deploymentDetails);
 ```
 
@@ -347,6 +343,7 @@ var indexName = Environment.GetEnvironmentVariable("INDEX_NAME") ?? "my-index";
 var indexVersion = Environment.GetEnvironmentVariable("INDEX_VERSION") ?? "1.0";
 var aiSearchConnectionName = Environment.GetEnvironmentVariable("AI_SEARCH_CONNECTION_NAME") ?? "my-ai-search-connection-name";
 var aiSearchIndexName = Environment.GetEnvironmentVariable("AI_SEARCH_INDEX_NAME") ?? "my-ai-search-index-name";
+
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 
 BinaryContent content = BinaryContent.Create(BinaryData.FromObjectAsJson(new
