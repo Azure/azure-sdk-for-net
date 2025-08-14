@@ -47,38 +47,38 @@ namespace Azure.AI.Translation.Text
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SentenceBoundaries"/>. </summary>
-        /// <param name="srcSentLen">
+        /// <param name="sourceSentencesLengths">
         /// An integer array representing the lengths of the sentences in the input text.
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
         /// </param>
-        /// <param name="transSentLen">
+        /// <param name="translatedSentencesLengths">
         /// An integer array representing the lengths of the sentences in the translated text.
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="srcSentLen"/> or <paramref name="transSentLen"/> is null. </exception>
-        internal SentenceBoundaries(IEnumerable<int> srcSentLen, IEnumerable<int> transSentLen)
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceSentencesLengths"/> or <paramref name="translatedSentencesLengths"/> is null. </exception>
+        internal SentenceBoundaries(IEnumerable<int> sourceSentencesLengths, IEnumerable<int> translatedSentencesLengths)
         {
-            Argument.AssertNotNull(srcSentLen, nameof(srcSentLen));
-            Argument.AssertNotNull(transSentLen, nameof(transSentLen));
+            Argument.AssertNotNull(sourceSentencesLengths, nameof(sourceSentencesLengths));
+            Argument.AssertNotNull(translatedSentencesLengths, nameof(translatedSentencesLengths));
 
-            SrcSentLen = srcSentLen.ToList();
-            TransSentLen = transSentLen.ToList();
+            SourceSentencesLengths = sourceSentencesLengths.ToList();
+            TranslatedSentencesLengths = translatedSentencesLengths.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="SentenceBoundaries"/>. </summary>
-        /// <param name="srcSentLen">
+        /// <param name="sourceSentencesLengths">
         /// An integer array representing the lengths of the sentences in the input text.
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
         /// </param>
-        /// <param name="transSentLen">
+        /// <param name="translatedSentencesLengths">
         /// An integer array representing the lengths of the sentences in the translated text.
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SentenceBoundaries(IReadOnlyList<int> srcSentLen, IReadOnlyList<int> transSentLen, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SentenceBoundaries(IReadOnlyList<int> sourceSentencesLengths, IReadOnlyList<int> translatedSentencesLengths, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SrcSentLen = srcSentLen;
-            TransSentLen = transSentLen;
+            SourceSentencesLengths = sourceSentencesLengths;
+            TranslatedSentencesLengths = translatedSentencesLengths;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -91,11 +91,11 @@ namespace Azure.AI.Translation.Text
         /// An integer array representing the lengths of the sentences in the input text.
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
         /// </summary>
-        public IReadOnlyList<int> SrcSentLen { get; }
+        public IReadOnlyList<int> SourceSentencesLengths { get; }
         /// <summary>
         /// An integer array representing the lengths of the sentences in the translated text.
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
         /// </summary>
-        public IReadOnlyList<int> TransSentLen { get; }
+        public IReadOnlyList<int> TranslatedSentencesLengths { get; }
     }
 }
