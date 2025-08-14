@@ -13,9 +13,14 @@ namespace Azure.Identity
     {
         private static readonly TokenCredential[] s_defaultCredentialChain = new DefaultAzureCredentialFactory(new DefaultAzureCredentialOptions()).CreateCredentialChain();
         private bool _useDefaultCredentialChain;
+        private readonly string _customEnvironmentVariableName;
 
         public DefaultAzureCredentialFactory(DefaultAzureCredentialOptions options)
             : this(options, CredentialPipeline.GetInstance(options))
+        { }
+
+        public DefaultAzureCredentialFactory(DefaultAzureCredentialOptions options, string customEnvironmentVariableName)
+            : this(options, CredentialPipeline.GetInstance(options), customEnvironmentVariableName)
         { }
 
         protected DefaultAzureCredentialFactory(DefaultAzureCredentialOptions options, CredentialPipeline pipeline)
@@ -25,12 +30,82 @@ namespace Azure.Identity
             Options = options?.Clone<DefaultAzureCredentialOptions>() ?? new DefaultAzureCredentialOptions();
         }
 
+        protected DefaultAzureCredentialFactory(DefaultAzureCredentialOptions options, CredentialPipeline pipeline, string customEnvironmentVariableName)
+        {
+            Argument.AssertNotNullOrEmpty(customEnvironmentVariableName, nameof(customEnvironmentVariableName));
+
+            Pipeline = pipeline;
+            _useDefaultCredentialChain = options == null;
+            Options = options?.Clone<DefaultAzureCredentialOptions>() ?? new DefaultAzureCredentialOptions();
+            _customEnvironmentVariableName = customEnvironmentVariableName;
+        }
+
         public DefaultAzureCredentialOptions Options { get; }
         public CredentialPipeline Pipeline { get; }
 
         public TokenCredential[] CreateCredentialChain()
         {
-            string credentialSelection = EnvironmentVariables.CredentialSelection?.Trim().ToLower();
+            string credentialSelection;
+
+            if (_customEnvironmentVariableName != null)
+            {
+                // When using custom environment variable, read from that variable and validate it's set
+                credentialSelection = Environment.GetEnvironmentVariable(_customEnvironmentVariableName);
+                if (string.IsNullOrEmpty(credentialSelection))
+                {
+                    throw new InvalidOperationException($"Environment variable '{_customEnvironmentVariableName}' is not set or is empty.");
+                }
+                credentialSelection = credentialSelection.Trim().ToLower();
+
+                // For custom environment variables, always use the token credentials logic
+                bool useDevCredentials = Constants.DevCredentials.Equals(credentialSelection, StringComparison.OrdinalIgnoreCase);
+                bool useProdCredentials = Constants.ProdCredentials.Equals(credentialSelection, StringComparison.OrdinalIgnoreCase);
+
+                if (useDevCredentials)
+                {
+                    return
+                    [
+                        CreateVisualStudioCredential(),
+                        CreateVisualStudioCodeCredential(),
+                        CreateAzureCliCredential(),
+                        CreateAzurePowerShellCredential(),
+                        CreateAzureDeveloperCliCredential()
+                    ];
+                }
+                else if (useProdCredentials)
+                {
+                    return
+                    [
+                        CreateEnvironmentCredential(),
+                        CreateWorkloadIdentityCredential(),
+                        CreateManagedIdentityCredential()
+                    ];
+                }
+                else
+                {
+                    string validCredentials = $"'{Constants.DevCredentials}', '{Constants.ProdCredentials}', '{Constants.VisualStudioCredential}', '{Constants.VisualStudioCodeCredential}', '{Constants.AzureCliCredential}', '{Constants.AzurePowerShellCredential}', '{Constants.AzureDeveloperCliCredential}', '{Constants.EnvironmentCredential}', '{Constants.WorkloadIdentityCredential}', '{Constants.ManagedIdentityCredential}', '{Constants.InteractiveBrowserCredential}', '{Constants.BrokerCredential}'";
+                    return credentialSelection switch
+                    {
+                        Constants.VisualStudioCredential => [CreateVisualStudioCredential()],
+                        Constants.VisualStudioCodeCredential => [CreateVisualStudioCodeCredential()],
+                        Constants.AzureCliCredential => [CreateAzureCliCredential()],
+                        Constants.AzurePowerShellCredential => [CreateAzurePowerShellCredential()],
+                        Constants.AzureDeveloperCliCredential => [CreateAzureDeveloperCliCredential()],
+                        Constants.EnvironmentCredential => [CreateEnvironmentCredential()],
+                        Constants.WorkloadIdentityCredential => [CreateWorkloadIdentityCredential()],
+                        Constants.ManagedIdentityCredential => [CreateManagedIdentityCredential()],
+                        Constants.InteractiveBrowserCredential => [CreateInteractiveBrowserCredential()],
+                        Constants.BrokerCredential =>
+                            TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions brokerOptions)
+                                ? [CreateBrokerCredential(brokerOptions)]
+                                : throw new CredentialUnavailableException("BrokerCredential is not available without a reference to Azure.Identity.Broker."),
+                        _ => throw new InvalidOperationException($"Invalid value for environment variable {_customEnvironmentVariableName}: {credentialSelection}. Valid values are {validCredentials}. See https://aka.ms/azsdk/net/identity/defaultazurecredential/troubleshoot for more information.")
+                    };
+                }
+            }
+
+            // Use the default environment variable and existing logic
+            credentialSelection = EnvironmentVariables.CredentialSelection?.Trim().ToLower();
             bool _useDevCredentials = Constants.DevCredentials.Equals(credentialSelection, StringComparison.OrdinalIgnoreCase);
             bool _useProdCredentials = Constants.ProdCredentials.Equals(credentialSelection, StringComparison.OrdinalIgnoreCase);
 
