@@ -26,6 +26,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
     /// </summary>
     internal class ResourceOperationMethodProvider
     {
+        public bool IsLongRunningOperation => _isLongRunningOperation;
+
         protected readonly TypeProvider _enclosingType;
         protected readonly RequestPathPattern _contextualPath;
         protected readonly ClientProvider _restClient;

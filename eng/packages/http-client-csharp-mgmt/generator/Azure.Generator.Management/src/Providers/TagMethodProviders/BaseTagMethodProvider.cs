@@ -3,6 +3,7 @@
 
 using Azure.Generator.Management.Extensions;
 using Azure.Generator.Management.Models;
+using Azure.Generator.Management.Providers.OperationMethodProviders;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
@@ -31,13 +32,14 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         protected readonly FieldProvider _clientDiagnosticsField;
         protected readonly FieldProvider _restClientField;
         protected readonly bool _isAsync;
+        protected readonly bool _isLongRunningUpdateOperation;
         protected static readonly ParameterProvider _keyParameter = new ParameterProvider("key", $"The key for the tag.", typeof(string), validation: ParameterValidationType.AssertNotNull);
         protected static readonly ParameterProvider _valueParameter = new ParameterProvider("value", $"The value for the tag.", typeof(string), validation: ParameterValidationType.AssertNotNull);
 
         protected BaseTagMethodProvider(
             ResourceClientProvider resource,
             RequestPathPattern contextualPath,
-            MethodProvider updateMethodProvider,
+            ResourceOperationMethodProvider updateMethodProvider,
             RestClientInfo restClientInfo,
             bool isAsync,
             string methodName,
@@ -49,6 +51,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             _enclosingType = resource;
             _restClient = restClientInfo.RestClientProvider;
             _isAsync = isAsync;
+            _isLongRunningUpdateOperation = updateMethodProvider.IsLongRunningOperation;
             _clientDiagnosticsField = restClientInfo.DiagnosticsField;
             _restClientField = restClientInfo.RestClientField;
 
@@ -194,8 +197,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         {
             var updateMethodName = _isAsync ? "UpdateAsync" : "Update";
             var parameters = new List<ValueExpression>();
-            var isLro = updateMethod.Signature.ReturnType?.FrameworkType == typeof(ArmOperation<>);
-            if (isLro)
+            if (_isLongRunningUpdateOperation)
             {
                 parameters.Add(Static(typeof(WaitUntil)).Property("Completed"));
             }
