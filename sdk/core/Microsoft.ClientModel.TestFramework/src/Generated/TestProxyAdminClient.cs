@@ -112,17 +112,17 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="recordingId"></param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="recordingId"></param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult AddSanitizers(string recordingId, BinaryContent content, RequestOptions options = null)
+        public virtual ClientResult AddSanitizers(BinaryContent content, string recordingId = default, RequestOptions options = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateAddSanitizersRequest(recordingId, content, options);
+            using PipelineMessage message = CreateAddSanitizersRequest(content, recordingId, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -135,17 +135,17 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="recordingId"></param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="recordingId"></param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> AddSanitizersAsync(string recordingId, BinaryContent content, RequestOptions options = null)
+        public virtual async Task<ClientResult> AddSanitizersAsync(BinaryContent content, string recordingId = default, RequestOptions options = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateAddSanitizersRequest(recordingId, content, options);
+            using PipelineMessage message = CreateAddSanitizersRequest(content, recordingId, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
@@ -153,34 +153,34 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
         /// Add sanitizers to the test proxy. If a recording ID is provided in the header,
         /// the sanitizers will be added only for that session. Otherwise, they will be added globally.
         /// </summary>
-        /// <param name="recordingId"></param>
         /// <param name="sanitizers"></param>
+        /// <param name="recordingId"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sanitizers"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult AddSanitizers(string recordingId, IEnumerable<SanitizerAddition> sanitizers, CancellationToken cancellationToken = default)
+        public virtual ClientResult AddSanitizers(IEnumerable<SanitizerAddition> sanitizers, string recordingId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(sanitizers, nameof(sanitizers));
 
             using BinaryContent content = BinaryContentHelper.FromEnumerable(sanitizers);
-            return AddSanitizers(recordingId, content, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return AddSanitizers(content, recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary>
         /// Add sanitizers to the test proxy. If a recording ID is provided in the header,
         /// the sanitizers will be added only for that session. Otherwise, they will be added globally.
         /// </summary>
-        /// <param name="recordingId"></param>
         /// <param name="sanitizers"></param>
+        /// <param name="recordingId"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sanitizers"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult> AddSanitizersAsync(string recordingId, IEnumerable<SanitizerAddition> sanitizers, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult> AddSanitizersAsync(IEnumerable<SanitizerAddition> sanitizers, string recordingId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(sanitizers, nameof(sanitizers));
 
             using BinaryContent content = BinaryContentHelper.FromEnumerable(sanitizers);
-            return await AddSanitizersAsync(recordingId, content, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await AddSanitizersAsync(content, recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -192,17 +192,17 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="recordingId"></param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="recordingId"></param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult RemoveSanitizers(string recordingId, BinaryContent content, RequestOptions options = null)
+        public virtual ClientResult RemoveSanitizers(BinaryContent content, string recordingId = default, RequestOptions options = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateRemoveSanitizersRequest(recordingId, content, options);
+            using PipelineMessage message = CreateRemoveSanitizersRequest(content, recordingId, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -215,17 +215,17 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="recordingId"></param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="recordingId"></param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> RemoveSanitizersAsync(string recordingId, BinaryContent content, RequestOptions options = null)
+        public virtual async Task<ClientResult> RemoveSanitizersAsync(BinaryContent content, string recordingId = default, RequestOptions options = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateRemoveSanitizersRequest(recordingId, content, options);
+            using PipelineMessage message = CreateRemoveSanitizersRequest(content, recordingId, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
@@ -233,16 +233,16 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
         /// Remove sanitizers from the test proxy. If a recording ID is provided in the header,
         /// the sanitizers will be removed only for that session. Otherwise, they will be removed globally.
         /// </summary>
-        /// <param name="recordingId"></param>
         /// <param name="sanitizers"></param>
+        /// <param name="recordingId"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sanitizers"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<RemovedSanitizers> RemoveSanitizers(string recordingId, SanitizerList sanitizers, CancellationToken cancellationToken = default)
+        public virtual ClientResult<RemovedSanitizers> RemoveSanitizers(SanitizerList sanitizers, string recordingId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(sanitizers, nameof(sanitizers));
 
-            ClientResult result = RemoveSanitizers(recordingId, sanitizers, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = RemoveSanitizers(sanitizers, recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
             return ClientResult.FromValue((RemovedSanitizers)result, result.GetRawResponse());
         }
 
@@ -250,16 +250,16 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
         /// Remove sanitizers from the test proxy. If a recording ID is provided in the header,
         /// the sanitizers will be removed only for that session. Otherwise, they will be removed globally.
         /// </summary>
-        /// <param name="recordingId"></param>
         /// <param name="sanitizers"></param>
+        /// <param name="recordingId"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sanitizers"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<RemovedSanitizers>> RemoveSanitizersAsync(string recordingId, SanitizerList sanitizers, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<RemovedSanitizers>> RemoveSanitizersAsync(SanitizerList sanitizers, string recordingId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(sanitizers, nameof(sanitizers));
 
-            ClientResult result = await RemoveSanitizersAsync(recordingId, sanitizers, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await RemoveSanitizersAsync(sanitizers, recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return ClientResult.FromValue((RemovedSanitizers)result, result.GetRawResponse());
         }
 
@@ -272,17 +272,17 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="recordingId"></param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="recordingId"></param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult SetRecordingOptions(string recordingId, BinaryContent content, RequestOptions options = null)
+        public virtual ClientResult SetRecordingOptions(BinaryContent content, string recordingId = default, RequestOptions options = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateSetRecordingOptionsRequest(recordingId, content, options);
+            using PipelineMessage message = CreateSetRecordingOptionsRequest(content, recordingId, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -295,17 +295,17 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="recordingId"></param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="recordingId"></param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> SetRecordingOptionsAsync(string recordingId, BinaryContent content, RequestOptions options = null)
+        public virtual async Task<ClientResult> SetRecordingOptionsAsync(BinaryContent content, string recordingId = default, RequestOptions options = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using PipelineMessage message = CreateSetRecordingOptionsRequest(recordingId, content, options);
+            using PipelineMessage message = CreateSetRecordingOptionsRequest(content, recordingId, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
@@ -313,32 +313,32 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
         /// Set recording options for the test proxy. If a recording ID is provided in the header,
         /// the options will be set only for that session. Otherwise, they will be set globally.
         /// </summary>
-        /// <param name="recordingId"></param>
         /// <param name="body"></param>
+        /// <param name="recordingId"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult SetRecordingOptions(string recordingId, RecordingOptions body, CancellationToken cancellationToken = default)
+        public virtual ClientResult SetRecordingOptions(RecordingOptions body, string recordingId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            return SetRecordingOptions(recordingId, body, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return SetRecordingOptions(body, recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary>
         /// Set recording options for the test proxy. If a recording ID is provided in the header,
         /// the options will be set only for that session. Otherwise, they will be set globally.
         /// </summary>
-        /// <param name="recordingId"></param>
         /// <param name="body"></param>
+        /// <param name="recordingId"></param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult> SetRecordingOptionsAsync(string recordingId, RecordingOptions body, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult> SetRecordingOptionsAsync(RecordingOptions body, string recordingId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            return await SetRecordingOptionsAsync(recordingId, body, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await SetRecordingOptionsAsync(body, recordingId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
         }
     }
 }

@@ -3,6 +3,7 @@
 
 using Microsoft.ClientModel.TestFramework.Mocks;
 using Microsoft.ClientModel.TestFramework.TestProxy;
+using Microsoft.ClientModel.TestFramework.TestProxy.Admin;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -126,8 +127,8 @@ public class RecordedTestBaseTests
         Assert.That(testBase.UriRegexSanitizers.Count, Is.EqualTo(2));
         using (Assert.EnterMultipleScope())
         {
-            Assert.That(testBase.UriRegexSanitizers.Any(s => s.Regex.Contains("skoid")), Is.True);
-            Assert.That(testBase.UriRegexSanitizers.Any(s => s.Regex.Contains("sktid")), Is.True);
+            Assert.That(testBase.UriRegexSanitizers.Any(s => s.Body.Regex.Contains("skoid")), Is.True);
+            Assert.That(testBase.UriRegexSanitizers.Any(s => s.Body.Regex.Contains("sktid")), Is.True);
 
             Assert.That(testBase.HeaderRegexSanitizers, Is.Not.Null);
         }
@@ -221,7 +222,7 @@ public class RecordedTestBaseTests
         {
             ExpectSyncPipeline = false
         };
-        var client = new TestProxyClient(ClientPipeline.Create(new ClientPipelineOptions { Transport = mockTransport }), new Uri($"http://127.0.0.1:5000"));
+        var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
 
         // Inject the mock proxy using the internal property
@@ -272,7 +273,7 @@ public class RecordedTestBaseTests
         {
             ExpectSyncPipeline = false
         };
-        var client = new TestProxyClient(ClientPipeline.Create(new ClientPipelineOptions { Transport = mockTransport }), new Uri($"http://127.0.0.1:5000"));
+        var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
 
         testBase.TestProxy = mockProxy.Object;
@@ -306,7 +307,7 @@ public class RecordedTestBaseTests
         {
             ExpectSyncPipeline = false
         };
-        var client = new TestProxyClient(ClientPipeline.Create(new ClientPipelineOptions { Transport = mockTransport }), new Uri($"http://127.0.0.1:5000"));
+        var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
 
         testBase.TestProxy = mockProxy.Object;
@@ -330,7 +331,7 @@ public class RecordedTestBaseTests
         {
             ExpectSyncPipeline = false
         };
-        var client = new TestProxyClient(ClientPipeline.Create(new ClientPipelineOptions { Transport = mockTransport }), new Uri($"http://127.0.0.1:5000"));
+        var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
 
         testBase.TestProxy = mockProxy.Object;
@@ -371,7 +372,7 @@ public class RecordedTestBaseTests
             ExpectSyncPipeline = false
         };
 
-        var client = new TestProxyClient(ClientPipeline.Create(new ClientPipelineOptions { Transport = mockTransport }), new Uri($"http://127.0.0.1:5000"));
+        var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
 
         testBase.TestProxy = mockProxy.Object;
@@ -426,7 +427,7 @@ public class RecordedTestBaseTests
         {
             ExpectSyncPipeline = false
         };
-        var client = new TestProxyClient(ClientPipeline.Create(new ClientPipelineOptions { Transport = mockTransport }), new Uri($"http://127.0.0.1:5000"));
+        var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
 
         testBase.TestProxy = mockProxy.Object;
@@ -455,7 +456,7 @@ public class RecordedTestBaseTests
         {
             ExpectSyncPipeline = false
         };
-        var client = new TestProxyClient(ClientPipeline.Create(new ClientPipelineOptions { Transport = mockTransport }), new Uri($"http://127.0.0.1:5000"));
+        var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
 
         testBase.TestProxy = mockProxy.Object;
@@ -478,7 +479,7 @@ public class RecordedTestBaseTests
         {
             ExpectSyncPipeline = false
         };
-        var client = new TestProxyClient(ClientPipeline.Create(new ClientPipelineOptions { Transport = mockTransport }), new Uri($"http://127.0.0.1:5000"));
+        var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
 
         testBase.TestProxy = mockProxy.Object;
@@ -507,7 +508,7 @@ public class RecordedTestBaseTests
         {
             ExpectSyncPipeline = false
         };
-        var client = new TestProxyClient(ClientPipeline.Create(new ClientPipelineOptions { Transport = mockTransport }), new Uri($"http://127.0.0.1:5000"));
+        var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
         mockProxy.Setup(p => p.CheckProxyOutputAsync()).Returns(Task.CompletedTask);
 
@@ -588,7 +589,7 @@ public class RecordedTestBaseTests
         {
             ExpectSyncPipeline = false
         };
-        var client = new TestProxyClient(ClientPipeline.Create(new ClientPipelineOptions { Transport = mockTransport }), new Uri($"http://127.0.0.1:5000"));
+        var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
         mockProxy.Setup(p => p.CheckProxyOutputAsync()).Returns(Task.CompletedTask);
 
@@ -713,7 +714,7 @@ public class RecordedTestBaseTests
             ExpectSyncPipeline = false
         };
 
-        var client = new TestProxyClient(ClientPipeline.Create(new ClientPipelineOptions { Transport = mockTransport }), new Uri($"http://127.0.0.1:5000"));
+        var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
 
         testBase.TestProxy = mockProxy.Object;
@@ -738,8 +739,8 @@ public class RecordedTestBaseTests
         var testBase = new TestableRecordedTestBase(isAsync: true, RecordedTestMode.Record);
 
         // Add body key sanitizers
-        var sanitizer1 = new BodyKeySanitizer("$.api.key") { Value = "REDACTED_KEY" };
-        var sanitizer2 = new BodyKeySanitizer("$.credentials.secret") { Value = "REDACTED_SECRET" };
+        var sanitizer1 = new BodyKeySanitizer(new BodyKeySanitizerBody("$.api.key") { Value = "REDACTED_KEY" });
+        var sanitizer2 = new BodyKeySanitizer(new BodyKeySanitizerBody("$.credentials.secret") { Value = "REDACTED_SECRET" });
         testBase.BodyKeySanitizers.Add(sanitizer1);
         testBase.BodyKeySanitizers.Add(sanitizer2);
 
@@ -758,7 +759,7 @@ public class RecordedTestBaseTests
             ExpectSyncPipeline = false
         };
 
-        var client = new TestProxyClient(ClientPipeline.Create(new ClientPipelineOptions { Transport = mockTransport }), new Uri($"http://127.0.0.1:5000"));
+        var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
 
         testBase.TestProxy = mockProxy.Object;
@@ -769,10 +770,10 @@ public class RecordedTestBaseTests
         Assert.That(testBase.BodyKeySanitizers.Count, Is.EqualTo(2));
         using (Assert.EnterMultipleScope())
         {
-            Assert.That(testBase.BodyKeySanitizers[0].JsonPath, Is.EqualTo("$.api.key"));
-            Assert.That(testBase.BodyKeySanitizers[0].Value, Is.EqualTo("REDACTED_KEY"));
-            Assert.That(testBase.BodyKeySanitizers[1].JsonPath, Is.EqualTo("$.credentials.secret"));
-            Assert.That(testBase.BodyKeySanitizers[1].Value, Is.EqualTo("REDACTED_SECRET"));
+            Assert.That(testBase.BodyKeySanitizers[0].Body.JsonPath, Is.EqualTo("$.api.key"));
+            Assert.That(testBase.BodyKeySanitizers[0].Body.Value, Is.EqualTo("REDACTED_KEY"));
+            Assert.That(testBase.BodyKeySanitizers[1].Body.JsonPath, Is.EqualTo("$.credentials.secret"));
+            Assert.That(testBase.BodyKeySanitizers[1].Body.Value, Is.EqualTo("REDACTED_SECRET"));
         }
 
         // Verify sanitizer calls were made
@@ -786,8 +787,8 @@ public class RecordedTestBaseTests
         var testBase = new TestableRecordedTestBase(isAsync: true, RecordedTestMode.Record);
 
         // Add body regex sanitizers
-        var sanitizer1 = new BodyRegexSanitizer("password\\\":\\s*\\\"[^\\\"]*") { Value = "password\":\"REDACTED" };
-        var sanitizer2 = new BodyRegexSanitizer("token\\\":\\s*\\\"[^\\\"]*") { Value = "token\":\"REDACTED" };
+        var sanitizer1 = new BodyRegexSanitizer(new BodyRegexSanitizerBody("password\":\"REDACTED", "password\\\":\\s*\\\"[^\\\"]*", null, null, null));
+        var sanitizer2 = new BodyRegexSanitizer(new BodyRegexSanitizerBody("token\":\"REDACTED", "token\\\":\\s*\\\"[^\\\"]*", null, null, null));
         testBase.BodyRegexSanitizers.Add(sanitizer1);
         testBase.BodyRegexSanitizers.Add(sanitizer2);
 
@@ -806,7 +807,8 @@ public class RecordedTestBaseTests
             ExpectSyncPipeline = false
         };
 
-        var client = new TestProxyClient(ClientPipeline.Create(new ClientPipelineOptions { Transport = mockTransport }), new Uri($"http://127.0.0.1:5000"));
+        ;
+        var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
 
         testBase.TestProxy = mockProxy.Object;
@@ -817,10 +819,10 @@ public class RecordedTestBaseTests
         Assert.That(testBase.BodyRegexSanitizers.Count, Is.EqualTo(2));
         using (Assert.EnterMultipleScope())
         {
-            Assert.That(testBase.BodyRegexSanitizers[0].Regex, Is.EqualTo("password\\\":\\s*\\\"[^\\\"]*"));
-            Assert.That(testBase.BodyRegexSanitizers[0].Value, Is.EqualTo("password\":\"REDACTED"));
-            Assert.That(testBase.BodyRegexSanitizers[1].Regex, Is.EqualTo("token\\\":\\s*\\\"[^\\\"]*"));
-            Assert.That(testBase.BodyRegexSanitizers[1].Value, Is.EqualTo("token\":\"REDACTED"));
+            Assert.That(testBase.BodyRegexSanitizers[0].Body.Regex, Is.EqualTo("password\\\":\\s*\\\"[^\\\"]*"));
+            Assert.That(testBase.BodyRegexSanitizers[0].Body.Value, Is.EqualTo("password\":\"REDACTED"));
+            Assert.That(testBase.BodyRegexSanitizers[1].Body.Regex, Is.EqualTo("token\\\":\\s*\\\"[^\\\"]*"));
+            Assert.That(testBase.BodyRegexSanitizers[1].Body.Value, Is.EqualTo("token\":\"REDACTED"));
         }
 
         // Verify sanitizer calls were made
@@ -834,7 +836,7 @@ public class RecordedTestBaseTests
         var testBase = new TestableRecordedTestBase(isAsync: true, RecordedTestMode.Record);
 
         // Add custom URI regex sanitizers (in addition to default ones)
-        var customSanitizer = new UriRegexSanitizer("subscriptionId=[^&]+") { Value = "subscriptionId=00000000-0000-0000-0000-000000000000" };
+        var customSanitizer = new UriRegexSanitizer(new UriRegexSanitizerBody("subscriptionId=00000000-0000-0000-0000-000000000000", "subscriptionId=[^&]+", null, null, null));
         testBase.UriRegexSanitizers.Add(customSanitizer);
 
         var requestCalls = new List<PipelineRequest>();
@@ -852,7 +854,7 @@ public class RecordedTestBaseTests
             ExpectSyncPipeline = false
         };
 
-        var client = new TestProxyClient(ClientPipeline.Create(new ClientPipelineOptions { Transport = mockTransport }), new Uri($"http://127.0.0.1:5000"));
+        var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
 
         testBase.TestProxy = mockProxy.Object;
@@ -861,12 +863,12 @@ public class RecordedTestBaseTests
 
         // Verify the custom sanitizer was added (plus the 2 default ones)
         Assert.That(testBase.UriRegexSanitizers.Count, Is.EqualTo(3));
-        var customAdded = testBase.UriRegexSanitizers.FirstOrDefault(s => s.Regex.Contains("subscriptionId"));
+        var customAdded = testBase.UriRegexSanitizers.FirstOrDefault(s => s.Body.Regex.Contains("subscriptionId"));
         Assert.That(customAdded, Is.Not.Null, "Custom URI regex sanitizer should be added");
         using (Assert.EnterMultipleScope())
         {
-            Assert.That(customAdded.Regex, Is.EqualTo("subscriptionId=[^&]+"));
-            Assert.That(customAdded.Value, Is.EqualTo("subscriptionId=00000000-0000-0000-0000-000000000000"));
+            Assert.That(customAdded.Body.Regex, Is.EqualTo("subscriptionId=[^&]+"));
+            Assert.That(customAdded.Body.Value, Is.EqualTo("subscriptionId=00000000-0000-0000-0000-000000000000"));
         }
 
         // Verify sanitizer calls were made
@@ -880,8 +882,8 @@ public class RecordedTestBaseTests
         var testBase = new TestableRecordedTestBase(isAsync: true, RecordedTestMode.Record);
 
         // Add header regex sanitizers
-        var sanitizer1 = new HeaderRegexSanitizer("Authorization") { Value = "REDACTED" };
-        var sanitizer2 = new HeaderRegexSanitizer("x-api-key") { Value = "REDACTED_API_KEY" };
+        var sanitizer1 = new HeaderRegexSanitizer(new HeaderRegexSanitizerBody("Authorization") { Value = "REDACTED" });
+        var sanitizer2 = new HeaderRegexSanitizer(new HeaderRegexSanitizerBody("x-api-key") { Value = "REDACTED_API_KEY" });
         testBase.HeaderRegexSanitizers.Add(sanitizer1);
         testBase.HeaderRegexSanitizers.Add(sanitizer2);
 
@@ -900,7 +902,7 @@ public class RecordedTestBaseTests
             ExpectSyncPipeline = false
         };
 
-        var client = new TestProxyClient(ClientPipeline.Create(new ClientPipelineOptions { Transport = mockTransport }), new Uri($"http://127.0.0.1:5000"));
+        var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
 
         testBase.TestProxy = mockProxy.Object;
@@ -911,10 +913,10 @@ public class RecordedTestBaseTests
         Assert.That(testBase.HeaderRegexSanitizers.Count, Is.EqualTo(2));
         using (Assert.EnterMultipleScope())
         {
-            Assert.That(testBase.HeaderRegexSanitizers[0].Key, Is.EqualTo("Authorization"));
-            Assert.That(testBase.HeaderRegexSanitizers[0].Value, Is.EqualTo("REDACTED"));
-            Assert.That(testBase.HeaderRegexSanitizers[1].Key, Is.EqualTo("x-api-key"));
-            Assert.That(testBase.HeaderRegexSanitizers[1].Value, Is.EqualTo("REDACTED_API_KEY"));
+            Assert.That(testBase.HeaderRegexSanitizers[0].Body.Key, Is.EqualTo("Authorization"));
+            Assert.That(testBase.HeaderRegexSanitizers[0].Body.Value, Is.EqualTo("REDACTED"));
+            Assert.That(testBase.HeaderRegexSanitizers[1].Body.Key, Is.EqualTo("x-api-key"));
+            Assert.That(testBase.HeaderRegexSanitizers[1].Body.Value, Is.EqualTo("REDACTED_API_KEY"));
         }
 
         // Verify sanitizer calls were made
@@ -946,7 +948,7 @@ public class RecordedTestBaseTests
             ExpectSyncPipeline = false
         };
 
-        var client = new TestProxyClient(ClientPipeline.Create(new ClientPipelineOptions { Transport = mockTransport }), new Uri($"http://127.0.0.1:5000"));
+        var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
 
         testBase.TestProxy = mockProxy.Object;
@@ -986,7 +988,7 @@ public class RecordedTestBaseTests
             ExpectSyncPipeline = false
         };
 
-        var client = new TestProxyClient(ClientPipeline.Create(new ClientPipelineOptions { Transport = mockTransport }), new Uri($"http://127.0.0.1:5000"));
+        var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
 
         testBase.TestProxy = mockProxy.Object;
@@ -1021,7 +1023,7 @@ public class RecordedTestBaseTests
         // Mock the static proxy manager behavior
         var mockProxy = new Mock<TestProxyProcess>();
         mockProxy.Setup(p => p.ProxyClient).Returns(
-            new TestProxyClient(ClientPipeline.Create(new ClientPipelineOptions()), new Uri("http://127.0.0.1:5000")));
+            new TestProxyClient(new Uri("http://127.0.0.1:5000"), new TestProxyClientOptions()));
 
         // Before initialization, TestProxy should be null
         Assert.That(testBase.TestProxy, Is.Null, "TestProxy should be null before initialization");

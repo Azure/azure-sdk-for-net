@@ -9,7 +9,6 @@
     <LangVersion>latest</LangVersion>
     <NoWarn>AZC0015;AZC0007</NoWarn>
 		<IsTestProject>false</IsTestProject>
-    <IsTestSupportProject>true</IsTestSupportProject>
     <IncludeAutorestDependency>false</IncludeAutorestDependency>
   </PropertyGroup>
 

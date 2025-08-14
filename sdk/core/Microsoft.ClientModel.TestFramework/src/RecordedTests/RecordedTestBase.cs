@@ -586,7 +586,7 @@ public abstract class RecordedTestBase : ClientTestBase
             {
                 throw new InvalidOperationException("Proxy options cannot be set because the test proxy has not been started.");
             }
-            await _proxy.AdminClient.SetRecordingOptionsAsync(Recording?.RecordingId, options).ConfigureAwait(false);
+            await _proxy.AdminClient.SetRecordingOptionsAsync(options, Recording?.RecordingId).ConfigureAwait(false);
         }
     }
 
@@ -845,10 +845,7 @@ public abstract class RecordedTestBase : ClientTestBase
         var process = Process.Start(processInfo);
         var output = process?.StandardOutput.ReadToEnd();
 
-        if (process != null)
-        {
-            process.WaitForExit();
-        }
+        process?.WaitForExit();
 
         return output != null && output.Contains("azure.sdk.tools.testproxy");
     }

@@ -41,7 +41,7 @@ public class ProxyTransportTests
             };
         }
 
-        var client = new TestProxyClient(ClientPipeline.Create(new ClientPipelineOptions { Transport = mockTransport }), new Uri($"http://127.0.0.1:5000"));
+        var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
         var testBase = new TestRecordedTestBase();
 

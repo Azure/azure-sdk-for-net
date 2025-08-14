@@ -475,7 +475,7 @@ public class TestRecording : IAsyncDisposable
         {
             throw new InvalidOperationException("A test recording cannot be created because the test proxy has not been started.");
         }
-        if (_proxy.ProxyClient == null)
+        if (_proxy.AdminClient == null)
         {
             throw new InvalidOperationException("TestProxyProcess.ProxyClient is null. Ensure that the TestProxyProcess is started before attempting to create a TestRecording.");
         }
@@ -511,7 +511,7 @@ public class TestRecording : IAsyncDisposable
 
         if (sanitizers.Count > 0)
         {
-            await _proxy.AdminClient.AddSanitizersAsync(RecordingId, sanitizers, cancellationToken).ConfigureAwait(false);
+            await _proxy.AdminClient.AddSanitizersAsync(sanitizers, RecordingId, cancellationToken).ConfigureAwait(false);
         }
 
         if (_recordedTestBase.SanitizersToRemove.Count > 0)
@@ -521,7 +521,7 @@ public class TestRecording : IAsyncDisposable
             {
                 toRemove.Sanitizers.Add(sanitizer);
             }
-            await _proxy.AdminClient.RemoveSanitizersAsync(RecordingId, toRemove, cancellationToken).ConfigureAwait(false);
+            await _proxy.AdminClient.RemoveSanitizersAsync(toRemove, RecordingId, cancellationToken).ConfigureAwait(false);
         }
     }
 }

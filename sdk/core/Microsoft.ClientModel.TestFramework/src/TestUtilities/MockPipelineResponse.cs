@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.IO;
 using System.Text;
@@ -62,6 +63,20 @@ public class MockPipelineResponse : PipelineResponse
     public MockPipelineResponse WithHeader(string name, string value)
     {
         _headers.SetHeader(name, value);
+        return this;
+    }
+
+    /// <summary>
+    /// Sets the content of the <see cref="MockPipelineResponse"/>.
+    /// </summary>
+    /// <param name="content">The byte array content to add.</param>
+    /// <returns>The modified <see cref="MockPipelineResponse"/>.</returns>
+    public MockPipelineResponse WithContent(BinaryContent content)
+    {
+        MemoryStream contentStream = new();
+        content.WriteTo(contentStream);
+        contentStream.Position = 0;
+        ContentStream = contentStream;
         return this;
     }
 

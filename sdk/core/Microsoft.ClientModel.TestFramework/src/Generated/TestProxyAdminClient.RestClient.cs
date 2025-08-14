@@ -39,7 +39,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
             return message;
         }
 
-        internal PipelineMessage CreateAddSanitizersRequest(string recordingId, BinaryContent content, RequestOptions options)
+        internal PipelineMessage CreateAddSanitizersRequest(BinaryContent content, string recordingId, RequestOptions options)
         {
             PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -60,7 +60,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
             return message;
         }
 
-        internal PipelineMessage CreateRemoveSanitizersRequest(string recordingId, BinaryContent content, RequestOptions options)
+        internal PipelineMessage CreateRemoveSanitizersRequest(BinaryContent content, string recordingId, RequestOptions options)
         {
             PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -81,7 +81,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
             return message;
         }
 
-        internal PipelineMessage CreateSetRecordingOptionsRequest(string recordingId, BinaryContent content, RequestOptions options)
+        internal PipelineMessage CreateSetRecordingOptionsRequest(BinaryContent content, string recordingId, RequestOptions options)
         {
             PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
