@@ -35,7 +35,7 @@ public class ProxyTransportTests
         }
         else
         {
-            mockTransport = new MockPipelineTransport(_ => new MockPipelineResponse(200).WithHeader("x-recording-id", recordingId))
+            mockTransport = new MockPipelineTransport(p => new MockPipelineResponse(200).WithHeader("x-recording-id", recordingId).WithContent(p.Request.Content))
             {
                 ExpectSyncPipeline = false
             };
@@ -43,6 +43,8 @@ public class ProxyTransportTests
 
         var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
+        var adminClient = client.GetTestProxyAdminClient();
+        mockProxy.Setup(p => p.AdminClient).Returns(adminClient);
         var testBase = new TestRecordedTestBase();
 
         return await TestRecording.CreateAsync(mode, "test-session.json", mockProxy.Object, testBase);

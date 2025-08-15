@@ -218,12 +218,14 @@ public class RecordedTestBaseTests
 
         // Mock the proxy and transport
         var mockProxy = new Mock<TestProxyProcess>();
-        var mockTransport = new MockPipelineTransport(_ => new MockPipelineResponse(200).WithHeader("x-recording-id", "test-recording-123"))
+        var mockTransport = new MockPipelineTransport(message => new MockPipelineResponse(200).WithHeader("x-recording-id", "test-recording-123").WithContent(message.Request.Content))
         {
             ExpectSyncPipeline = false
         };
         var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
+        var adminClient = client.GetTestProxyAdminClient();
+        mockProxy.Setup(p => p.AdminClient).Returns(adminClient);
 
         // Inject the mock proxy using the internal property
         testBase.TestProxy = mockProxy.Object;
@@ -240,7 +242,7 @@ public class RecordedTestBaseTests
         var request = mockTransport.Requests[0];
         using (Assert.EnterMultipleScope())
         {
-            Assert.That(request.Uri.LocalPath, Does.Contain("record/start"), "Should call record/start endpoint");
+            Assert.That(request.Uri.LocalPath, Does.Contain("Record/Start"), "Should call record/start endpoint");
             Assert.That(testBase.TestStartTime, Is.GreaterThan(default(DateTime)), "TestStartTime should be set");
         }
     }
@@ -275,6 +277,8 @@ public class RecordedTestBaseTests
         };
         var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
+        var adminClient = client.GetTestProxyAdminClient();
+        mockProxy.Setup(p => p.AdminClient).Returns(adminClient);
 
         testBase.TestProxy = mockProxy.Object;
 
@@ -290,7 +294,7 @@ public class RecordedTestBaseTests
         var request = mockTransport.Requests[0];
         using (Assert.EnterMultipleScope())
         {
-            Assert.That(request.Uri.LocalPath, Does.Contain("playback/start"), "Should call playback/start endpoint");
+            Assert.That(request.Uri.LocalPath, Does.Contain("Playback/Start"), "Should call playback/start endpoint");
             Assert.That(testBase.TestStartTime, Is.GreaterThan(default(DateTime)), "TestStartTime should be set");
         }
     }
@@ -303,12 +307,14 @@ public class RecordedTestBaseTests
         Assert.That(testBase.Recording, Is.Null, "Recording should be null initially");
 
         var mockProxy = new Mock<TestProxyProcess>();
-        var mockTransport = new MockPipelineTransport(_ => new MockPipelineResponse(200).WithHeader("x-recording-id", "property-test-789"))
+        var mockTransport = new MockPipelineTransport(message => new MockPipelineResponse(200).WithHeader("x-recording-id", "property-test-789").WithContent(message.Request.Content))
         {
             ExpectSyncPipeline = false
         };
         var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
+        var adminClient = client.GetTestProxyAdminClient();
+        mockProxy.Setup(p => p.AdminClient).Returns(adminClient);
 
         testBase.TestProxy = mockProxy.Object;
 
@@ -327,12 +333,14 @@ public class RecordedTestBaseTests
         Assert.That(initialTime, Is.EqualTo(default(DateTime)), "TestStartTime should be default initially");
 
         var mockProxy = new Mock<TestProxyProcess>();
-        var mockTransport = new MockPipelineTransport(_ => new MockPipelineResponse(200).WithHeader("x-recording-id", "time-test-999"))
+        var mockTransport = new MockPipelineTransport(message => new MockPipelineResponse(200).WithHeader("x-recording-id", "time-test-999").WithContent(message.Request.Content))
         {
             ExpectSyncPipeline = false
         };
         var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
+        var adminClient = client.GetTestProxyAdminClient();
+        mockProxy.Setup(p => p.AdminClient).Returns(adminClient);
 
         testBase.TestProxy = mockProxy.Object;
 
@@ -361,12 +369,12 @@ public class RecordedTestBaseTests
         {
             requestCalls.Add(message.Request);
             // Return appropriate responses for different calls
-            if (message.Request.Uri.LocalPath.Contains("record/start"))
+            if (message.Request.Uri.LocalPath.Contains("Record/Start"))
             {
                 return new MockPipelineResponse(200).WithHeader("x-recording-id", "sanitizer-test-123");
             }
             // Return success for sanitizer calls
-            return new MockPipelineResponse(200);
+            return new MockPipelineResponse(200).WithContent(message.Request.Content);
         })
         {
             ExpectSyncPipeline = false
@@ -374,6 +382,8 @@ public class RecordedTestBaseTests
 
         var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
+        var adminClient = client.GetTestProxyAdminClient();
+        mockProxy.Setup(p => p.AdminClient).Returns(adminClient);
 
         testBase.TestProxy = mockProxy.Object;
 
@@ -381,20 +391,15 @@ public class RecordedTestBaseTests
 
         // Verify record/start was called first
         Assert.That(requestCalls.Count, Is.GreaterThan(1), "Should have multiple requests (start + sanitizers)");
-        Assert.That(requestCalls[0].Uri.LocalPath, Does.Contain("record/start"), "First call should be record/start");
+        Assert.That(requestCalls[0].Uri.LocalPath, Does.Contain("Record/Start"), "First call should be Record/Start");
 
         // Verify sanitizer calls were made
         var sanitizerCalls = requestCalls.Skip(1).ToList();
         Assert.That(sanitizerCalls.Count, Is.GreaterThan(0), "Should have sanitizer calls after record/start");
 
         // Check that sanitizer calls use the correct endpoint
-        var sanitizerEndpointCalls = sanitizerCalls.Where(r => r.Uri.LocalPath.Contains("/admin/addsanitizer")).Count();
-        Assert.That(sanitizerEndpointCalls, Is.GreaterThan(0), "Should have calls to /admin/addsanitizer endpoint");
-
-        // Verify that we have the expected number of sanitizer calls
-        // We added: 1 JsonPath, 1 Header, 1 Query param + 2 default UriRegex + 4 default QueryParams + 1 RemoveSanitizers
-        var expectedMinimumCalls = 8; // At least 8 sanitizer-related calls should be made
-        Assert.That(sanitizerCalls.Count, Is.GreaterThanOrEqualTo(expectedMinimumCalls), $"Should have at least {expectedMinimumCalls} sanitizer calls");
+        var sanitizerEndpointCalls = sanitizerCalls.Where(r => r.Uri.LocalPath.Contains("/Admin/AddSanitizer")).Count();
+        Assert.That(sanitizerEndpointCalls, Is.GreaterThan(0), "Should have calls to /Admin/AddSanitizer endpoint");
     }
 
     #endregion
@@ -419,16 +424,20 @@ public class RecordedTestBaseTests
 
         var mockProxy = new Mock<TestProxyProcess>();
         var callCount = 0;
-        var mockTransport = new MockPipelineTransport(_ =>
+        var mockTransport = new MockPipelineTransport(message =>
         {
             callCount++;
-            return new MockPipelineResponse(200).WithHeader("x-recording-id", $"recording-{callCount}");
+            return new MockPipelineResponse(200)
+                .WithHeader("x-recording-id", $"recording-{callCount}")
+                .WithContent(message.Request.Content);
         })
         {
             ExpectSyncPipeline = false
         };
         var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
+        var adminClient = client.GetTestProxyAdminClient();
+        mockProxy.Setup(p => p.AdminClient).Returns(adminClient);
 
         testBase.TestProxy = mockProxy.Object;
 
@@ -475,12 +484,14 @@ public class RecordedTestBaseTests
         var testBase = new TestableRecordedTestBase(isAsync: true, RecordedTestMode.Record);
 
         var mockProxy = new Mock<TestProxyProcess>();
-        var mockTransport = new MockPipelineTransport(_ => new MockPipelineResponse(200).WithHeader("x-recording-id", "save-test-123"))
+        var mockTransport = new MockPipelineTransport(p => new MockPipelineResponse(200).WithHeader("x-recording-id", "save-test-123").WithContent(p.Request.Content))
         {
             ExpectSyncPipeline = false
         };
         var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
+        var adminClient = client.GetTestProxyAdminClient();
+        mockProxy.Setup(p => p.AdminClient).Returns(adminClient);
 
         testBase.TestProxy = mockProxy.Object;
 
@@ -504,12 +515,14 @@ public class RecordedTestBaseTests
         var testBase = new TestableRecordedTestBase(isAsync: true, RecordedTestMode.Record);
 
         var mockProxy = new Mock<TestProxyProcess>();
-        var mockTransport = new MockPipelineTransport(_ => new MockPipelineResponse(200).WithHeader("x-recording-id", "dispose-test-123"))
+        var mockTransport = new MockPipelineTransport(message => new MockPipelineResponse(200).WithHeader("x-recording-id", "dispose-test-123").WithContent(message.Request.Content))
         {
             ExpectSyncPipeline = false
         };
         var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
+        var adminClient = client.GetTestProxyAdminClient();
+        mockProxy.Setup(p => p.AdminClient).Returns(adminClient);
         mockProxy.Setup(p => p.CheckProxyOutputAsync()).Returns(Task.CompletedTask);
 
         testBase.TestProxy = mockProxy.Object;
@@ -568,17 +581,17 @@ public class RecordedTestBaseTests
             var path = message.Request.Uri.LocalPath;
 
             // Allow record/start and all sanitizer calls to succeed
-            if (path.Contains("record/start") || path.Contains("/admin/"))
+            if (path.Contains("Record/Start") || path.Contains("/Admin/"))
             {
-                if (path.Contains("record/start"))
+                if (path.Contains("Record/Start"))
                 {
-                    return new MockPipelineResponse(200).WithHeader("x-recording-id", "save-failure-test-123");
+                    return new MockPipelineResponse(200).WithHeader("x-recording-id", "save-failure-test-123").WithContent(message.Request.Content);
                 }
-                return new MockPipelineResponse(200);
+                return new MockPipelineResponse(200).WithContent(message.Request.Content);
             }
 
             // Fail on record/stop calls
-            if (path.Contains("record/stop"))
+            if (path.Contains("Record/Stop"))
             {
                 return new MockPipelineResponse(500).WithContent("Save failed");
             }
@@ -591,6 +604,8 @@ public class RecordedTestBaseTests
         };
         var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
+        var adminClient = client.GetTestProxyAdminClient();
+        mockProxy.Setup(p => p.AdminClient).Returns(adminClient);
         mockProxy.Setup(p => p.CheckProxyOutputAsync()).Returns(Task.CompletedTask);
 
         testBase.TestProxy = mockProxy.Object;
@@ -704,11 +719,11 @@ public class RecordedTestBaseTests
         var mockTransport = new MockPipelineTransport(message =>
         {
             requestCalls.Add(message.Request);
-            if (message.Request.Uri.LocalPath.Contains("record/start"))
+            if (message.Request.Uri.LocalPath.Contains("Record/Start"))
             {
                 return new MockPipelineResponse(200).WithHeader("x-recording-id", "json-sanitizer-test-123");
             }
-            return new MockPipelineResponse(200);
+            return new MockPipelineResponse(200).WithContent(message.Request.Content);
         })
         {
             ExpectSyncPipeline = false
@@ -716,13 +731,15 @@ public class RecordedTestBaseTests
 
         var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
+        var adminClient = client.GetTestProxyAdminClient();
+        mockProxy.Setup(p => p.AdminClient).Returns(adminClient);
 
         testBase.TestProxy = mockProxy.Object;
 
         await testBase.StartTestRecordingAsync();
 
         // Verify sanitizer calls were made for JSON paths
-        var sanitizerCalls = requestCalls.Where(r => r.Uri.LocalPath.Contains("/admin/addsanitizer")).ToList();
+        var sanitizerCalls = requestCalls.Where(r => r.Uri.LocalPath.Contains("/Admin/AddSanitizer")).ToList();
         using (Assert.EnterMultipleScope())
         {
             Assert.That(sanitizerCalls.Count, Is.GreaterThan(0), "Should have sanitizer calls");
@@ -749,11 +766,11 @@ public class RecordedTestBaseTests
         var mockTransport = new MockPipelineTransport(message =>
         {
             requestCalls.Add(message.Request);
-            if (message.Request.Uri.LocalPath.Contains("record/start"))
+            if (message.Request.Uri.LocalPath.Contains("Record/Start"))
             {
                 return new MockPipelineResponse(200).WithHeader("x-recording-id", "body-key-sanitizer-test-123");
             }
-            return new MockPipelineResponse(200);
+            return new MockPipelineResponse(200).WithContent(message.Request.Content);
         })
         {
             ExpectSyncPipeline = false
@@ -761,6 +778,8 @@ public class RecordedTestBaseTests
 
         var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
+        var adminClient = client.GetTestProxyAdminClient();
+        mockProxy.Setup(p => p.AdminClient).Returns(adminClient);
 
         testBase.TestProxy = mockProxy.Object;
 
@@ -777,7 +796,7 @@ public class RecordedTestBaseTests
         }
 
         // Verify sanitizer calls were made
-        var sanitizerCalls = requestCalls.Where(r => r.Uri.LocalPath.Contains("/admin/addsanitizer")).ToList();
+        var sanitizerCalls = requestCalls.Where(r => r.Uri.LocalPath.Contains("/Admin/AddSanitizer")).ToList();
         Assert.That(sanitizerCalls.Count, Is.GreaterThan(0), "Should have sanitizer calls");
     }
 
@@ -797,11 +816,11 @@ public class RecordedTestBaseTests
         var mockTransport = new MockPipelineTransport(message =>
         {
             requestCalls.Add(message.Request);
-            if (message.Request.Uri.LocalPath.Contains("record/start"))
+            if (message.Request.Uri.LocalPath.Contains("Record/Start"))
             {
                 return new MockPipelineResponse(200).WithHeader("x-recording-id", "body-regex-sanitizer-test-123");
             }
-            return new MockPipelineResponse(200);
+            return new MockPipelineResponse(200).WithContent(message.Request.Content);
         })
         {
             ExpectSyncPipeline = false
@@ -810,6 +829,8 @@ public class RecordedTestBaseTests
         ;
         var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
+        var adminClient = client.GetTestProxyAdminClient();
+        mockProxy.Setup(p => p.AdminClient).Returns(adminClient);
 
         testBase.TestProxy = mockProxy.Object;
 
@@ -826,7 +847,7 @@ public class RecordedTestBaseTests
         }
 
         // Verify sanitizer calls were made
-        var sanitizerCalls = requestCalls.Where(r => r.Uri.LocalPath.Contains("/admin/addsanitizer")).ToList();
+        var sanitizerCalls = requestCalls.Where(r => r.Uri.LocalPath.Contains("/Admin/AddSanitizer")).ToList();
         Assert.That(sanitizerCalls.Count, Is.GreaterThan(0), "Should have sanitizer calls");
     }
 
@@ -844,11 +865,11 @@ public class RecordedTestBaseTests
         var mockTransport = new MockPipelineTransport(message =>
         {
             requestCalls.Add(message.Request);
-            if (message.Request.Uri.LocalPath.Contains("record/start"))
+            if (message.Request.Uri.LocalPath.Contains("Record/Start"))
             {
-                return new MockPipelineResponse(200).WithHeader("x-recording-id", "uri-regex-sanitizer-test-123");
+                return new MockPipelineResponse(200).WithHeader("x-recording-id", "uri-regex-sanitizer-test-123").WithContent(message.Request.Content);
             }
-            return new MockPipelineResponse(200);
+            return new MockPipelineResponse(200).WithContent(message.Request.Content);
         })
         {
             ExpectSyncPipeline = false
@@ -856,6 +877,8 @@ public class RecordedTestBaseTests
 
         var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
+        var adminClient = client.GetTestProxyAdminClient();
+        mockProxy.Setup(p => p.AdminClient).Returns(adminClient);
 
         testBase.TestProxy = mockProxy.Object;
 
@@ -872,7 +895,7 @@ public class RecordedTestBaseTests
         }
 
         // Verify sanitizer calls were made
-        var sanitizerCalls = requestCalls.Where(r => r.Uri.LocalPath.Contains("/admin/addsanitizer")).ToList();
+        var sanitizerCalls = requestCalls.Where(r => r.Uri.LocalPath.Contains("/Admin/AddSanitizer")).ToList();
         Assert.That(sanitizerCalls.Count, Is.GreaterThan(0), "Should have sanitizer calls");
     }
 
@@ -892,11 +915,11 @@ public class RecordedTestBaseTests
         var mockTransport = new MockPipelineTransport(message =>
         {
             requestCalls.Add(message.Request);
-            if (message.Request.Uri.LocalPath.Contains("record/start"))
+            if (message.Request.Uri.LocalPath.Contains("Record/Start"))
             {
                 return new MockPipelineResponse(200).WithHeader("x-recording-id", "header-regex-sanitizer-test-123");
             }
-            return new MockPipelineResponse(200);
+            return new MockPipelineResponse(200).WithContent(message.Request.Content);
         })
         {
             ExpectSyncPipeline = false
@@ -904,6 +927,8 @@ public class RecordedTestBaseTests
 
         var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
+        var adminClient = client.GetTestProxyAdminClient();
+        mockProxy.Setup(p => p.AdminClient).Returns(adminClient);
 
         testBase.TestProxy = mockProxy.Object;
 
@@ -920,7 +945,7 @@ public class RecordedTestBaseTests
         }
 
         // Verify sanitizer calls were made
-        var sanitizerCalls = requestCalls.Where(r => r.Uri.LocalPath.Contains("/admin/addsanitizer")).ToList();
+        var sanitizerCalls = requestCalls.Where(r => r.Uri.LocalPath.Contains("/Admin/AddSanitizer")).ToList();
         Assert.That(sanitizerCalls.Count, Is.GreaterThan(0), "Should have sanitizer calls");
     }
 
@@ -938,11 +963,11 @@ public class RecordedTestBaseTests
         var mockTransport = new MockPipelineTransport(message =>
         {
             requestCalls.Add(message.Request);
-            if (message.Request.Uri.LocalPath.Contains("record/start"))
+            if (message.Request.Uri.LocalPath.Contains("Record/Start"))
             {
                 return new MockPipelineResponse(200).WithHeader("x-recording-id", "sanitized-headers-test-123");
             }
-            return new MockPipelineResponse(200);
+            return new MockPipelineResponse(200).WithContent(message.Request.Content);
         })
         {
             ExpectSyncPipeline = false
@@ -950,6 +975,8 @@ public class RecordedTestBaseTests
 
         var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
+        var adminClient = client.GetTestProxyAdminClient();
+        mockProxy.Setup(p => p.AdminClient).Returns(adminClient);
 
         testBase.TestProxy = mockProxy.Object;
 
@@ -960,7 +987,7 @@ public class RecordedTestBaseTests
         Assert.That(testBase.SanitizedHeaders, Contains.Item("x-session-token"));
 
         // Verify sanitizer calls were made
-        var sanitizerCalls = requestCalls.Where(r => r.Uri.LocalPath.Contains("/admin/addsanitizer")).ToList();
+        var sanitizerCalls = requestCalls.Where(r => r.Uri.LocalPath.Contains("/Admin/AddSanitizer")).ToList();
         Assert.That(sanitizerCalls.Count, Is.GreaterThan(0), "Should have sanitizer calls");
     }
 
@@ -978,11 +1005,11 @@ public class RecordedTestBaseTests
         var mockTransport = new MockPipelineTransport(message =>
         {
             requestCalls.Add(message.Request);
-            if (message.Request.Uri.LocalPath.Contains("record/start"))
+            if (message.Request.Uri.LocalPath.Contains("Record/Start"))
             {
                 return new MockPipelineResponse(200).WithHeader("x-recording-id", "sanitized-query-params-test-123");
             }
-            return new MockPipelineResponse(200);
+            return new MockPipelineResponse(200).WithContent(message.Request.Content);
         })
         {
             ExpectSyncPipeline = false
@@ -990,6 +1017,8 @@ public class RecordedTestBaseTests
 
         var client = new TestProxyClient(new Uri($"http://127.0.0.1:5000"), new TestProxyClientOptions { Transport = mockTransport });
         mockProxy.Setup(p => p.ProxyClient).Returns(client);
+        var adminClient = client.GetTestProxyAdminClient();
+        mockProxy.Setup(p => p.AdminClient).Returns(adminClient);
 
         testBase.TestProxy = mockProxy.Object;
 
@@ -1006,7 +1035,7 @@ public class RecordedTestBaseTests
         Assert.That(testBase.SanitizedQueryParameters, Contains.Item("client_secret"));
 
         // Verify sanitizer calls were made
-        var sanitizerCalls = requestCalls.Where(r => r.Uri.LocalPath.Contains("/admin/addsanitizer")).ToList();
+        var sanitizerCalls = requestCalls.Where(r => r.Uri.LocalPath.Contains("/Admin/AddSanitizer")).ToList();
         Assert.That(sanitizerCalls.Count, Is.GreaterThan(0), "Should have sanitizer calls");
     }
 

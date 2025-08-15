@@ -477,7 +477,7 @@ public class TestRecording : IAsyncDisposable
         }
         if (_proxy.AdminClient == null)
         {
-            throw new InvalidOperationException("TestProxyProcess.ProxyClient is null. Ensure that the TestProxyProcess is started before attempting to create a TestRecording.");
+            throw new InvalidOperationException("TestProxyProcess.AdminClient is null. Ensure that the TestProxyProcess is started before attempting to create a TestRecording.");
         }
 
         List<SanitizerAddition> sanitizers = new();
