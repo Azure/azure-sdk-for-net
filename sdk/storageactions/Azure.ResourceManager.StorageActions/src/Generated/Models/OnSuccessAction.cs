@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageActions;
 
 namespace Azure.ResourceManager.StorageActions.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.StorageActions.Models
     public readonly partial struct OnSuccessAction : IEquatable<OnSuccessAction>
     {
         private readonly string _value;
+        private const string ContinueValue = "continue";
 
         /// <summary> Initializes a new instance of <see cref="OnSuccessAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OnSuccessAction(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string ContinueValue = "continue";
-
-        /// <summary> continue. </summary>
+        /// <summary> Gets the Continue. </summary>
         public static OnSuccessAction Continue { get; } = new OnSuccessAction(ContinueValue);
+
         /// <summary> Determines if two <see cref="OnSuccessAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OnSuccessAction left, OnSuccessAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OnSuccessAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OnSuccessAction left, OnSuccessAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OnSuccessAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OnSuccessAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OnSuccessAction(string value) => new OnSuccessAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OnSuccessAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OnSuccessAction?(string value) => value == null ? null : new OnSuccessAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OnSuccessAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OnSuccessAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

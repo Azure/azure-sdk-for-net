@@ -9,8 +9,9 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.StorageActions
 {
-    internal static class ProviderConstants
+    internal static partial class ProviderConstants
     {
-        public static string DefaultProviderNamespace { get; } = ClientDiagnostics.GetResourceProviderNamespace(typeof(ProviderConstants).Assembly);
+        /// <summary> Gets the DefaultProviderNamespace. </summary>
+        public static string DefaultProviderNamespace => ClientDiagnostics.GetResourceProviderNamespace(typeof(ProviderConstants).Assembly);
     }
 }
