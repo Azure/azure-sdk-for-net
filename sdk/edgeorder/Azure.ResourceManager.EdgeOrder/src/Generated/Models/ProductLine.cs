@@ -48,23 +48,24 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Initializes a new instance of <see cref="ProductLine"/>. </summary>
         internal ProductLine()
         {
+            Products = new ChangeTrackingList<EdgeOrderProduct>();
             ImageInformation = new ChangeTrackingList<EdgeOrderProductImageInformation>();
             FilterableProperties = new ChangeTrackingList<FilterableProperty>();
-            Products = new ChangeTrackingList<EdgeOrderProduct>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProductLine"/>. </summary>
-        /// <param name="displayName"> Display Name for the product system. </param>
-        /// <param name="description"> Description related to the product system. </param>
-        /// <param name="imageInformation"> Image information for the product system. </param>
-        /// <param name="costInformation"> Cost information for the product system. </param>
-        /// <param name="availabilityInformation"> Availability information of the product system. </param>
-        /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
-        /// <param name="filterableProperties"> list of filters supported for a product. </param>
         /// <param name="products"> List of products in the product line. </param>
+        /// <param name="displayName"></param>
+        /// <param name="description"></param>
+        /// <param name="imageInformation"></param>
+        /// <param name="costInformation"></param>
+        /// <param name="availabilityInformation"></param>
+        /// <param name="hierarchyInformation"></param>
+        /// <param name="filterableProperties"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProductLine(string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IReadOnlyList<FilterableProperty> filterableProperties, IReadOnlyList<EdgeOrderProduct> products, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProductLine(IReadOnlyList<EdgeOrderProduct> products, string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IReadOnlyList<FilterableProperty> filterableProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Products = products;
             DisplayName = displayName;
             Description = description;
             ImageInformation = imageInformation;
@@ -72,24 +73,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             AvailabilityInformation = availabilityInformation;
             HierarchyInformation = hierarchyInformation;
             FilterableProperties = filterableProperties;
-            Products = products;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Display Name for the product system. </summary>
-        public string DisplayName { get; }
-        /// <summary> Description related to the product system. </summary>
-        public ProductDescription Description { get; }
-        /// <summary> Image information for the product system. </summary>
-        public IReadOnlyList<EdgeOrderProductImageInformation> ImageInformation { get; }
-        /// <summary> Cost information for the product system. </summary>
-        public EdgeOrderProductCostInformation CostInformation { get; }
-        /// <summary> Availability information of the product system. </summary>
-        public ProductAvailabilityInformation AvailabilityInformation { get; }
-        /// <summary> Hierarchy information of a product. </summary>
-        public HierarchyInformation HierarchyInformation { get; }
-        /// <summary> list of filters supported for a product. </summary>
-        public IReadOnlyList<FilterableProperty> FilterableProperties { get; }
         /// <summary> List of products in the product line. </summary>
         public IReadOnlyList<EdgeOrderProduct> Products { get; }
     }

@@ -46,38 +46,36 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrderItemAddressProperties"/>. </summary>
-        /// <param name="contactDetails"> Contact details for the address. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="contactDetails"/> is null. </exception>
-        public EdgeOrderItemAddressProperties(EdgeOrderAddressContactDetails contactDetails)
+        public EdgeOrderItemAddressProperties()
         {
-            Argument.AssertNotNull(contactDetails, nameof(contactDetails));
-
-            ContactDetails = contactDetails;
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrderItemAddressProperties"/>. </summary>
+        /// <param name="addressClassification"> Type of address based on its usage context. </param>
         /// <param name="shippingAddress"> Shipping details for the address. </param>
         /// <param name="contactDetails"> Contact details for the address. </param>
         /// <param name="addressValidationStatus"> Status of address validation. </param>
+        /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeOrderItemAddressProperties(EdgeOrderShippingAddress shippingAddress, EdgeOrderAddressContactDetails contactDetails, EdgeOrderAddressValidationStatus? addressValidationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EdgeOrderItemAddressProperties(AddressClassification? addressClassification, EdgeOrderShippingAddress shippingAddress, EdgeOrderAddressContactDetails contactDetails, EdgeOrderAddressValidationStatus? addressValidationStatus, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            AddressClassification = addressClassification;
             ShippingAddress = shippingAddress;
             ContactDetails = contactDetails;
             AddressValidationStatus = addressValidationStatus;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EdgeOrderItemAddressProperties"/> for deserialization. </summary>
-        internal EdgeOrderItemAddressProperties()
-        {
-        }
-
+        /// <summary> Type of address based on its usage context. </summary>
+        public AddressClassification? AddressClassification { get; set; }
         /// <summary> Shipping details for the address. </summary>
         public EdgeOrderShippingAddress ShippingAddress { get; set; }
         /// <summary> Contact details for the address. </summary>
         public EdgeOrderAddressContactDetails ContactDetails { get; set; }
         /// <summary> Status of address validation. </summary>
         public EdgeOrderAddressValidationStatus? AddressValidationStatus { get; }
+        /// <summary> Provisioning state. </summary>
+        public ProvisioningState? ProvisioningState { get; }
     }
 }

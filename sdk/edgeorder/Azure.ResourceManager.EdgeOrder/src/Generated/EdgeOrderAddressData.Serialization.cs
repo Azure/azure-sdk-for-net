@@ -40,17 +40,30 @@ namespace Azure.ResourceManager.EdgeOrder
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(AddressClassification))
+            {
+                writer.WritePropertyName("addressClassification"u8);
+                writer.WriteStringValue(AddressClassification.Value.ToString());
+            }
             if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
                 writer.WriteObjectValue(ShippingAddress, options);
             }
-            writer.WritePropertyName("contactDetails"u8);
-            writer.WriteObjectValue(ContactDetails, options);
+            if (Optional.IsDefined(ContactDetails))
+            {
+                writer.WritePropertyName("contactDetails"u8);
+                writer.WriteObjectValue(ContactDetails, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(AddressValidationStatus))
             {
                 writer.WritePropertyName("addressValidationStatus"u8);
                 writer.WriteStringValue(AddressValidationStatus.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -81,9 +94,11 @@ namespace Azure.ResourceManager.EdgeOrder
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            AddressClassification? addressClassification = default;
             EdgeOrderShippingAddress shippingAddress = default;
             EdgeOrderAddressContactDetails contactDetails = default;
             EdgeOrderAddressValidationStatus? addressValidationStatus = default;
+            ProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,6 +155,15 @@ namespace Azure.ResourceManager.EdgeOrder
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("addressClassification"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            addressClassification = new AddressClassification(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("shippingAddress"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -151,6 +175,10 @@ namespace Azure.ResourceManager.EdgeOrder
                         }
                         if (property0.NameEquals("contactDetails"u8))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
                             contactDetails = EdgeOrderAddressContactDetails.DeserializeEdgeOrderAddressContactDetails(property0.Value, options);
                             continue;
                         }
@@ -161,6 +189,15 @@ namespace Azure.ResourceManager.EdgeOrder
                                 continue;
                             }
                             addressValidationStatus = new EdgeOrderAddressValidationStatus(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -179,9 +216,11 @@ namespace Azure.ResourceManager.EdgeOrder
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                addressClassification,
                 shippingAddress,
                 contactDetails,
                 addressValidationStatus,
+                provisioningState,
                 serializedAdditionalRawData);
         }
 

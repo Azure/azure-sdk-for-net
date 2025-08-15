@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -45,6 +47,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ForwardAddress))
@@ -66,6 +73,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(OrderItemDetails))
+            {
+                writer.WritePropertyName("orderItemDetails"u8);
+                writer.WriteObjectValue(OrderItemDetails, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -106,9 +118,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
+            ManagedServiceIdentity identity = default;
             EdgeOrderItemAddressProperties forwardAddress = default;
             OrderItemPreferences preferences = default;
             IList<string> notificationEmailList = default;
+            EdgeOrderItemDetailsPatch orderItemDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,6 +139,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerEdgeOrderContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -168,6 +191,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             notificationEmailList = array;
                             continue;
                         }
+                        if (property0.NameEquals("orderItemDetails"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            orderItemDetails = EdgeOrderItemDetailsPatch.DeserializeEdgeOrderItemDetailsPatch(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -177,7 +209,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EdgeOrderItemPatch(tags ?? new ChangeTrackingDictionary<string, string>(), forwardAddress, preferences, notificationEmailList ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new EdgeOrderItemPatch(
+                forwardAddress,
+                preferences,
+                notificationEmailList ?? new ChangeTrackingList<string>(),
+                orderItemDetails,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                identity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderItemPatch>.Write(ModelReaderWriterOptions options)

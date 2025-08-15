@@ -34,17 +34,30 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 throw new FormatException($"The model {nameof(EdgeOrderItemAddressProperties)} does not support writing '{format}' format.");
             }
 
+            if (Optional.IsDefined(AddressClassification))
+            {
+                writer.WritePropertyName("addressClassification"u8);
+                writer.WriteStringValue(AddressClassification.Value.ToString());
+            }
             if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
                 writer.WriteObjectValue(ShippingAddress, options);
             }
-            writer.WritePropertyName("contactDetails"u8);
-            writer.WriteObjectValue(ContactDetails, options);
+            if (Optional.IsDefined(ContactDetails))
+            {
+                writer.WritePropertyName("contactDetails"u8);
+                writer.WriteObjectValue(ContactDetails, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(AddressValidationStatus))
             {
                 writer.WritePropertyName("addressValidationStatus"u8);
                 writer.WriteStringValue(AddressValidationStatus.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -83,13 +96,24 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
+            AddressClassification? addressClassification = default;
             EdgeOrderShippingAddress shippingAddress = default;
             EdgeOrderAddressContactDetails contactDetails = default;
             EdgeOrderAddressValidationStatus? addressValidationStatus = default;
+            ProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("addressClassification"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    addressClassification = new AddressClassification(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("shippingAddress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -101,6 +125,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 if (property.NameEquals("contactDetails"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     contactDetails = EdgeOrderAddressContactDetails.DeserializeEdgeOrderAddressContactDetails(property.Value, options);
                     continue;
                 }
@@ -113,13 +141,28 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     addressValidationStatus = new EdgeOrderAddressValidationStatus(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("provisioningState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EdgeOrderItemAddressProperties(shippingAddress, contactDetails, addressValidationStatus, serializedAdditionalRawData);
+            return new EdgeOrderItemAddressProperties(
+                addressClassification,
+                shippingAddress,
+                contactDetails,
+                addressValidationStatus,
+                provisioningState,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeOrderItemAddressProperties>.Write(ModelReaderWriterOptions options)

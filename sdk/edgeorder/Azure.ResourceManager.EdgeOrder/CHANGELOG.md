@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Upgraded api-version from `2021-12-01` to `2024-02-01`.
+
 ## 1.1.1 (2025-03-11)
 
 ### Features Added
