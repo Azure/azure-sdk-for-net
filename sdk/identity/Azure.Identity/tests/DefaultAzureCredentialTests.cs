@@ -608,6 +608,24 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public void ValidateCustomEnvironmentVariableConstructorWithInvalidVariableName()
+        {
+            var ex = Assert.Throws<ArgumentException>(() => new DefaultAzureCredential("INVALID-VAR-NAME"));
+            Assert.True(ex.Message.Contains("Invalid environment variable name: 'INVALID-VAR-NAME'. Only letters, digits, and underscores are allowed."));
+        }
+
+        [Test]
+        public void ValidateCustomEnvironmentVariableConstructorWithValidVariableName()
+        {
+            using (new TestEnvVar("VALID_VAR_NAME_123", "dev"))
+            {
+                // This should not throw and create a valid credential
+                var cred = new DefaultAzureCredential("VALID_VAR_NAME_123");
+                Assert.IsNotNull(cred);
+            }
+        }
+
+        [Test]
         public void ValidateCustomEnvironmentVariableConstructorWithUnsetVariable()
         {
             using (new TestEnvVar("CUSTOM_TOKEN_CREDENTIALS", null))
