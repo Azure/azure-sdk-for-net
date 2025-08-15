@@ -208,11 +208,10 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Update a Bar. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<BarResource>> UpdateAsync(WaitUntil waitUntil, BarData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BarResource>> UpdateAsync(BarData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -225,19 +224,13 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _barsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BarData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MgmtTypeSpecArmOperation<BarResource> operation = new MgmtTypeSpecArmOperation<BarResource>(
-                    new BarOperationSource(Client),
-                    _barsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BarData> response = Response.FromValue(BarData.FromResponse(result), result);
+                if (response.Value == null)
                 {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                    throw new RequestFailedException(response.GetRawResponse());
                 }
-                return operation;
+                return Response.FromValue(new BarResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -247,11 +240,10 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Update a Bar. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<BarResource> Update(WaitUntil waitUntil, BarData data, CancellationToken cancellationToken = default)
+        public virtual Response<BarResource> Update(BarData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -264,19 +256,13 @@ namespace MgmtTypeSpec
                     CancellationToken = cancellationToken
                 };
                 HttpMessage message = _barsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BarData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                MgmtTypeSpecArmOperation<BarResource> operation = new MgmtTypeSpecArmOperation<BarResource>(
-                    new BarOperationSource(Client),
-                    _barsClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BarData> response = Response.FromValue(BarData.FromResponse(result), result);
+                if (response.Value == null)
                 {
-                    operation.WaitForCompletion(cancellationToken);
+                    throw new RequestFailedException(response.GetRawResponse());
                 }
-                return operation;
+                return Response.FromValue(new BarResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -317,7 +303,7 @@ namespace MgmtTypeSpec
                 {
                     BarData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation<BarResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken).ConfigureAwait(false);
+                    Response<BarResource> result = await UpdateAsync(current, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -360,7 +346,7 @@ namespace MgmtTypeSpec
                 {
                     BarData current = Get(cancellationToken).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation<BarResource> result = Update(WaitUntil.Completed, current, cancellationToken);
+                    Response<BarResource> result = Update(current, cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -402,7 +388,7 @@ namespace MgmtTypeSpec
                 {
                     BarData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation<BarResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken).ConfigureAwait(false);
+                    Response<BarResource> result = await UpdateAsync(current, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -444,7 +430,7 @@ namespace MgmtTypeSpec
                 {
                     BarData current = Get(cancellationToken).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation<BarResource> result = Update(WaitUntil.Completed, current, cancellationToken);
+                    Response<BarResource> result = Update(current, cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -485,7 +471,7 @@ namespace MgmtTypeSpec
                 {
                     BarData current = (await GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation<BarResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken).ConfigureAwait(false);
+                    Response<BarResource> result = await UpdateAsync(current, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -526,7 +512,7 @@ namespace MgmtTypeSpec
                 {
                     BarData current = Get(cancellationToken).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation<BarResource> result = Update(WaitUntil.Completed, current, cancellationToken);
+                    Response<BarResource> result = Update(current, cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -542,6 +528,13 @@ namespace MgmtTypeSpec
         public virtual BarSettingsResource GetBarSettingsResource()
         {
             return new BarSettingsResource(Client, Id.AppendChildResource("settings", "current"));
+        }
+
+        /// <summary> Gets a collection of BarQuotaResources in the Bar. </summary>
+        /// <returns> An object representing collection of BarQuotaResources and their operations over a Bar. </returns>
+        public virtual BarQuotaResourceCollection GetBarQuotaResources()
+        {
+            return GetCachedClient(client => new BarQuotaResourceCollection(client, Id));
         }
     }
 }

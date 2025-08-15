@@ -332,55 +332,55 @@
             "parameters": [
               {
                 "$id": "29",
+                "kind": "header",
                 "name": "contentType",
-                "nameInRequest": "Content-Type",
+                "serializedName": "Content-Type",
                 "doc": "Body parameter's content type. Known values are application/json",
                 "type": {
                   "$ref": "5"
                 },
-                "location": "Header",
                 "isApiVersion": false,
+                "optional": false,
                 "isContentType": true,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Constant",
+                "scope": "Constant",
+                "readOnly": false,
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.updatePet.contentType"
               },
               {
                 "$id": "30",
+                "kind": "header",
                 "name": "accept",
-                "nameInRequest": "Accept",
+                "serializedName": "Accept",
                 "type": {
                   "$ref": "7"
                 },
-                "location": "Header",
                 "isApiVersion": false,
+                "optional": false,
                 "isContentType": false,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Constant",
+                "scope": "Constant",
+                "readOnly": false,
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.updatePet.accept"
               },
               {
                 "$id": "31",
+                "kind": "body",
                 "name": "animal",
-                "nameInRequest": "animal",
+                "serializedName": "animal",
                 "type": {
                   "$ref": "13"
                 },
-                "location": "Body",
                 "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Method",
+                "contentTypes": [
+                  "application/json"
+                ],
+                "defaultContentType": "application/json",
+                "optional": false,
+                "scope": "Method",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "readOnly": false,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.updatePet.animal"
               }
             ],
             "responses": [
@@ -413,55 +413,55 @@
           "parameters": [
             {
               "$id": "32",
+              "kind": "method",
               "name": "animal",
-              "nameInRequest": "animal",
+              "serializedName": "animal",
               "type": {
                 "$ref": "13"
               },
               "location": "Body",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.updatePet.animal",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
               "$id": "33",
+              "kind": "method",
               "name": "contentType",
-              "nameInRequest": "Content-Type",
+              "serializedName": "Content-Type",
               "doc": "Body parameter's content type. Known values are application/json",
               "type": {
                 "$ref": "5"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": true,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Constant",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.updatePet.contentType",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
               "$id": "34",
+              "kind": "method",
               "name": "accept",
-              "nameInRequest": "Accept",
+              "serializedName": "Accept",
               "type": {
                 "$ref": "7"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Constant",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.updatePet.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             }
           ],
           "response": {
@@ -490,55 +490,55 @@
             "parameters": [
               {
                 "$id": "37",
+                "kind": "header",
                 "name": "contentType",
-                "nameInRequest": "Content-Type",
+                "serializedName": "Content-Type",
                 "doc": "Body parameter's content type. Known values are application/json",
                 "type": {
                   "$ref": "9"
                 },
-                "location": "Header",
                 "isApiVersion": false,
+                "optional": false,
                 "isContentType": true,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Constant",
+                "scope": "Constant",
+                "readOnly": false,
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.updateDog.contentType"
               },
               {
                 "$id": "38",
+                "kind": "header",
                 "name": "accept",
-                "nameInRequest": "Accept",
+                "serializedName": "Accept",
                 "type": {
                   "$ref": "11"
                 },
-                "location": "Header",
                 "isApiVersion": false,
+                "optional": false,
                 "isContentType": false,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Constant",
+                "scope": "Constant",
+                "readOnly": false,
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.updateDog.accept"
               },
               {
                 "$id": "39",
+                "kind": "body",
                 "name": "animal",
-                "nameInRequest": "animal",
+                "serializedName": "animal",
                 "type": {
                   "$ref": "13"
                 },
-                "location": "Body",
                 "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Method",
+                "contentTypes": [
+                  "application/json"
+                ],
+                "defaultContentType": "application/json",
+                "optional": false,
+                "scope": "Method",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "readOnly": false,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.updateDog.animal"
               }
             ],
             "responses": [
@@ -571,55 +571,55 @@
           "parameters": [
             {
               "$id": "40",
+              "kind": "method",
               "name": "animal",
-              "nameInRequest": "animal",
+              "serializedName": "animal",
               "type": {
                 "$ref": "13"
               },
               "location": "Body",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.updateDog.animal",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
               "$id": "41",
+              "kind": "method",
               "name": "contentType",
-              "nameInRequest": "Content-Type",
+              "serializedName": "Content-Type",
               "doc": "Body parameter's content type. Known values are application/json",
               "type": {
                 "$ref": "9"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": true,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Constant",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.updateDog.contentType",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
               "$id": "42",
+              "kind": "method",
               "name": "accept",
-              "nameInRequest": "Accept",
+              "serializedName": "Accept",
               "type": {
                 "$ref": "11"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Constant",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.updateDog.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             }
           ],
           "response": {
@@ -636,8 +636,9 @@
       "parameters": [
         {
           "$id": "43",
+          "kind": "endpoint",
           "name": "endpoint",
-          "nameInRequest": "endpoint",
+          "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
             "$id": "44",
@@ -645,14 +646,10 @@
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
           },
-          "location": "Uri",
           "isApiVersion": false,
-          "isContentType": false,
-          "isRequired": true,
+          "optional": false,
+          "scope": "Client",
           "isEndpoint": true,
-          "skipUrlEncoding": false,
-          "explode": false,
-          "kind": "Client",
           "defaultValue": {
             "type": {
               "$id": "45",
@@ -662,7 +659,10 @@
             },
             "value": "http://localhost:3000"
           },
-          "serverUrlTemplate": "{endpoint}"
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.endpoint"
         }
       ],
       "decorators": [],

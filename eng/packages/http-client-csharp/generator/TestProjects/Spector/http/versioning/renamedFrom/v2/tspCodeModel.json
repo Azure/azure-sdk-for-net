@@ -286,8 +286,9 @@
             "parameters": [
               {
                 "$id": "28",
+                "kind": "query",
                 "name": "newQuery",
-                "nameInRequest": "newQuery",
+                "serializedName": "newQuery",
                 "type": {
                   "$id": "29",
                   "kind": "string",
@@ -295,67 +296,65 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                 },
-                "location": "Query",
                 "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
                 "explode": false,
-                "isRequired": true,
-                "kind": "Method",
+                "optional": false,
+                "scope": "Method",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "Versioning.RenamedFrom.newOp.newQuery",
+                "readOnly": false
               },
               {
                 "$id": "30",
+                "kind": "header",
                 "name": "contentType",
-                "nameInRequest": "Content-Type",
+                "serializedName": "Content-Type",
                 "doc": "Body parameter's content type. Known values are application/json",
                 "type": {
                   "$ref": "8"
                 },
-                "location": "Header",
                 "isApiVersion": false,
+                "optional": false,
                 "isContentType": true,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Constant",
+                "scope": "Constant",
+                "readOnly": false,
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "Versioning.RenamedFrom.newOp.contentType"
               },
               {
                 "$id": "31",
+                "kind": "header",
                 "name": "accept",
-                "nameInRequest": "Accept",
+                "serializedName": "Accept",
                 "type": {
                   "$ref": "10"
                 },
-                "location": "Header",
                 "isApiVersion": false,
+                "optional": false,
                 "isContentType": false,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Constant",
+                "scope": "Constant",
+                "readOnly": false,
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "Versioning.RenamedFrom.newOp.accept"
               },
               {
                 "$id": "32",
+                "kind": "body",
                 "name": "body",
-                "nameInRequest": "body",
+                "serializedName": "body",
                 "type": {
                   "$ref": "16"
                 },
-                "location": "Body",
                 "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Method",
+                "contentTypes": [
+                  "application/json"
+                ],
+                "defaultContentType": "application/json",
+                "optional": false,
+                "scope": "Method",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "readOnly": false,
+                "crossLanguageDefinitionId": "Versioning.RenamedFrom.newOp.body"
               }
             ],
             "responses": [
@@ -388,25 +387,26 @@
           "parameters": [
             {
               "$id": "33",
+              "kind": "method",
               "name": "body",
-              "nameInRequest": "body",
+              "serializedName": "body",
               "type": {
                 "$ref": "16"
               },
               "location": "Body",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "Versioning.RenamedFrom.newOp.body",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
               "$id": "34",
+              "kind": "method",
               "name": "newQuery",
-              "nameInRequest": "newQuery",
+              "serializedName": "newQuery",
               "type": {
                 "$id": "35",
                 "kind": "string",
@@ -416,48 +416,47 @@
               },
               "location": "Query",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "Versioning.RenamedFrom.newOp.newQuery",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
               "$id": "36",
+              "kind": "method",
               "name": "contentType",
-              "nameInRequest": "Content-Type",
+              "serializedName": "Content-Type",
               "doc": "Body parameter's content type. Known values are application/json",
               "type": {
                 "$ref": "8"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": true,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Constant",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Versioning.RenamedFrom.newOp.contentType",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
               "$id": "37",
+              "kind": "method",
               "name": "accept",
-              "nameInRequest": "Accept",
+              "serializedName": "Accept",
               "type": {
                 "$ref": "10"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Constant",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Versioning.RenamedFrom.newOp.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             }
           ],
           "response": {
@@ -474,8 +473,9 @@
       "parameters": [
         {
           "$id": "38",
+          "kind": "endpoint",
           "name": "endpoint",
-          "nameInRequest": "endpoint",
+          "serializedName": "endpoint",
           "doc": "Need to be set as 'http://localhost:3000' in client.",
           "type": {
             "$id": "39",
@@ -483,32 +483,28 @@
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
           },
-          "location": "Uri",
           "isApiVersion": false,
-          "isContentType": false,
-          "isRequired": true,
+          "optional": false,
+          "scope": "Client",
           "isEndpoint": true,
+          "serverUrlTemplate": "{endpoint}/versioning/renamed-from/api-version:{version}",
           "skipUrlEncoding": false,
-          "explode": false,
-          "kind": "Client",
-          "serverUrlTemplate": "{endpoint}/versioning/renamed-from/api-version:{version}"
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Versioning.RenamedFrom.endpoint"
         },
         {
           "$id": "40",
+          "kind": "endpoint",
           "name": "version",
-          "nameInRequest": "version",
+          "serializedName": "version",
           "doc": "Need to be set as 'v1' or 'v2' in client.",
           "type": {
             "$ref": "4"
           },
-          "location": "Uri",
           "isApiVersion": true,
-          "isContentType": false,
-          "isRequired": true,
+          "optional": false,
+          "scope": "Client",
           "isEndpoint": false,
-          "skipUrlEncoding": false,
-          "explode": false,
-          "kind": "Client",
           "defaultValue": {
             "type": {
               "$id": "41",
@@ -518,7 +514,10 @@
             },
             "value": "v2"
           },
-          "serverUrlTemplate": "{endpoint}/versioning/renamed-from/api-version:{version}"
+          "serverUrlTemplate": "{endpoint}/versioning/renamed-from/api-version:{version}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Versioning.RenamedFrom.version"
         }
       ],
       "decorators": [],
@@ -551,55 +550,55 @@
                 "parameters": [
                   {
                     "$id": "45",
+                    "kind": "header",
                     "name": "contentType",
-                    "nameInRequest": "Content-Type",
+                    "serializedName": "Content-Type",
                     "doc": "Body parameter's content type. Known values are application/json",
                     "type": {
                       "$ref": "12"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": true,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Versioning.RenamedFrom.NewInterface.newOpInNewInterface.contentType"
                   },
                   {
                     "$id": "46",
+                    "kind": "header",
                     "name": "accept",
-                    "nameInRequest": "Accept",
+                    "serializedName": "Accept",
                     "type": {
                       "$ref": "14"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Versioning.RenamedFrom.NewInterface.newOpInNewInterface.accept"
                   },
                   {
                     "$id": "47",
+                    "kind": "body",
                     "name": "body",
-                    "nameInRequest": "body",
+                    "serializedName": "body",
                     "type": {
                       "$ref": "16"
                     },
-                    "location": "Body",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Versioning.RenamedFrom.NewInterface.newOpInNewInterface.body"
                   }
                 ],
                 "responses": [
@@ -632,55 +631,55 @@
               "parameters": [
                 {
                   "$id": "48",
+                  "kind": "method",
                   "name": "body",
-                  "nameInRequest": "body",
+                  "serializedName": "body",
                   "type": {
                     "$ref": "16"
                   },
                   "location": "Body",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Versioning.RenamedFrom.NewInterface.newOpInNewInterface.body",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 },
                 {
                   "$id": "49",
+                  "kind": "method",
                   "name": "contentType",
-                  "nameInRequest": "Content-Type",
+                  "serializedName": "Content-Type",
                   "doc": "Body parameter's content type. Known values are application/json",
                   "type": {
                     "$ref": "12"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": true,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Versioning.RenamedFrom.NewInterface.newOpInNewInterface.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 },
                 {
                   "$id": "50",
+                  "kind": "method",
                   "name": "accept",
-                  "nameInRequest": "Accept",
+                  "serializedName": "Accept",
                   "type": {
                     "$ref": "14"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Versioning.RenamedFrom.NewInterface.newOpInNewInterface.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {
@@ -697,8 +696,9 @@
           "parameters": [
             {
               "$id": "51",
+              "kind": "endpoint",
               "name": "endpoint",
-              "nameInRequest": "endpoint",
+              "serializedName": "endpoint",
               "doc": "Need to be set as 'http://localhost:3000' in client.",
               "type": {
                 "$id": "52",
@@ -706,32 +706,28 @@
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
               },
-              "location": "Uri",
               "isApiVersion": false,
-              "isContentType": false,
-              "isRequired": true,
+              "optional": false,
+              "scope": "Client",
               "isEndpoint": true,
+              "serverUrlTemplate": "{endpoint}/versioning/renamed-from/api-version:{version}",
               "skipUrlEncoding": false,
-              "explode": false,
-              "kind": "Client",
-              "serverUrlTemplate": "{endpoint}/versioning/renamed-from/api-version:{version}"
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Versioning.RenamedFrom.endpoint"
             },
             {
               "$id": "53",
+              "kind": "endpoint",
               "name": "version",
-              "nameInRequest": "version",
+              "serializedName": "version",
               "doc": "Need to be set as 'v1' or 'v2' in client.",
               "type": {
                 "$ref": "4"
               },
-              "location": "Uri",
               "isApiVersion": true,
-              "isContentType": false,
-              "isRequired": true,
+              "optional": false,
+              "scope": "Client",
               "isEndpoint": false,
-              "skipUrlEncoding": false,
-              "explode": false,
-              "kind": "Client",
               "defaultValue": {
                 "type": {
                   "$id": "54",
@@ -741,7 +737,10 @@
                 },
                 "value": "v2"
               },
-              "serverUrlTemplate": "{endpoint}/versioning/renamed-from/api-version:{version}"
+              "serverUrlTemplate": "{endpoint}/versioning/renamed-from/api-version:{version}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Versioning.RenamedFrom.version"
             }
           ],
           "decorators": [],

@@ -355,7 +355,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Initializes a new instance of <see cref="Persistent.RunStepBingGroundingToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
-        /// <param name="bingGrounding"> Reserved for future use. </param>
+        /// <param name="bingGrounding"> The dictionary with request and response from Bing Grounding search tool. </param>
         /// <returns> A new <see cref="Persistent.RunStepBingGroundingToolCall"/> instance for mocking. </returns>
         public static RunStepBingGroundingToolCall RunStepBingGroundingToolCall(string id = null, IReadOnlyDictionary<string, string> bingGrounding = null)
         {
@@ -449,7 +449,7 @@ namespace Azure.AI.Agents.Persistent
 
         /// <summary> Initializes a new instance of <see cref="Persistent.RunStepBingCustomSearchToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
-        /// <param name="bingCustomSearch"> Reserved for future use. </param>
+        /// <param name="bingCustomSearch"> The dictionary with request and response from Custom Bing Grounding search tool. </param>
         /// <returns> A new <see cref="Persistent.RunStepBingCustomSearchToolCall"/> instance for mocking. </returns>
         public static RunStepBingCustomSearchToolCall RunStepBingCustomSearchToolCall(string id = null, IReadOnlyDictionary<string, string> bingCustomSearch = null)
         {
@@ -514,6 +514,61 @@ namespace Azure.AI.Agents.Persistent
                 threadId,
                 agentId,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepActivityDetails"/>. </summary>
+        /// <param name="activities"> A list of activities for this run step. </param>
+        /// <returns> A new <see cref="Persistent.RunStepActivityDetails"/> instance for mocking. </returns>
+        public static RunStepActivityDetails RunStepActivityDetails(IEnumerable<RunStepDetailsActivity> activities = null)
+        {
+            activities ??= new List<RunStepDetailsActivity>();
+
+            return new RunStepActivityDetails(RunStepType.Activities, serializedAdditionalRawData: null, activities?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDetailsActivity"/>. </summary>
+        /// <param name="type"> The activity type, which is always 'mcp_list_tools'. </param>
+        /// <param name="id"> The activity ID. </param>
+        /// <param name="serverLabel"> Server label. </param>
+        /// <param name="tools"> The supported function list. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDetailsActivity"/> instance for mocking. </returns>
+        public static RunStepDetailsActivity RunStepDetailsActivity(RunStepDetailsActivityType type = default, string id = null, string serverLabel = null, IReadOnlyDictionary<string, ActivityFunctionDefinition> tools = null)
+        {
+            tools ??= new Dictionary<string, ActivityFunctionDefinition>();
+
+            return new RunStepDetailsActivity(type, id, serverLabel, tools, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.ActivityFunctionDefinition"/>. </summary>
+        /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
+        /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
+        /// <returns> A new <see cref="Persistent.ActivityFunctionDefinition"/> instance for mocking. </returns>
+        public static ActivityFunctionDefinition ActivityFunctionDefinition(string description = null, ActivityFunctionParameters parameters = null)
+        {
+            return new ActivityFunctionDefinition(description, parameters, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.ActivityFunctionParameters"/>. </summary>
+        /// <param name="type"> The parameter type, it is always object. </param>
+        /// <param name="properties"> The dictionary of function arguments. </param>
+        /// <param name="required"> The list of the required parameters. </param>
+        /// <param name="additionalProperties"> If true the function has additional parameters. </param>
+        /// <returns> A new <see cref="Persistent.ActivityFunctionParameters"/> instance for mocking. </returns>
+        public static ActivityFunctionParameters ActivityFunctionParameters(ActivityFunctionParametersType type = default, IReadOnlyDictionary<string, FunctionArgument> properties = null, IEnumerable<string> required = null, bool? additionalProperties = null)
+        {
+            properties ??= new Dictionary<string, FunctionArgument>();
+            required ??= new List<string>();
+
+            return new ActivityFunctionParameters(type, properties, required?.ToList(), additionalProperties, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.FunctionArgument"/>. </summary>
+        /// <param name="type"> The type of an argument, for example 'string' or 'number'. </param>
+        /// <param name="description"> The argument description. </param>
+        /// <returns> A new <see cref="Persistent.FunctionArgument"/> instance for mocking. </returns>
+        public static FunctionArgument FunctionArgument(string type = null, string description = null)
+        {
+            return new FunctionArgument(type, description, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.RunStepError"/>. </summary>
@@ -868,7 +923,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="toolCalls">
         /// The collection of tool calls for the tool call detail item.
         /// Please note <see cref="Persistent.RunStepDeltaToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Persistent.RunStepDeltaAzureAISearchToolCall"/>, <see cref="Persistent.RunStepDeltaBingGroundingToolCall"/>, <see cref="Persistent.RunStepDeltaCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepDeltaConnectedAgentToolCall"/>, <see cref="Persistent.RunStepDeltaDeepResearchToolCall"/>, <see cref="Persistent.RunStepDeltaFileSearchToolCall"/>, <see cref="Persistent.RunStepDeltaFunctionToolCall"/>, <see cref="Persistent.RunStepDeltaMcpToolCall"/> and <see cref="Persistent.RunStepDeltaOpenAPIToolCall"/>.
+        /// The available derived classes include <see cref="Persistent.RunStepDeltaAzureAISearchToolCall"/>, <see cref="Persistent.RunStepDeltaCustomBingGroundingToolCall"/>, <see cref="Persistent.RunStepDeltaBingGroundingToolCall"/>, <see cref="Persistent.RunStepDeltaCodeInterpreterToolCall"/>, <see cref="Persistent.RunStepDeltaConnectedAgentToolCall"/>, <see cref="Persistent.RunStepDeltaDeepResearchToolCall"/>, <see cref="Persistent.RunStepDeltaFileSearchToolCall"/>, <see cref="Persistent.RunStepDeltaFunctionToolCall"/>, <see cref="Persistent.RunStepDeltaMcpToolCall"/> and <see cref="Persistent.RunStepDeltaOpenAPIToolCall"/>.
         /// </param>
         /// <returns> A new <see cref="Persistent.RunStepDeltaToolCallObject"/> instance for mocking. </returns>
         public static RunStepDeltaToolCallObject RunStepDeltaToolCallObject(IEnumerable<RunStepDeltaToolCall> toolCalls = null)
@@ -1015,13 +1070,25 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaBingGroundingToolCall"/>. </summary>
         /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
         /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
-        /// <param name="bingGrounding"> Reserved for future use. </param>
+        /// <param name="bingGrounding"> The dictionary with request and response from Bing Grounding search tool. </param>
         /// <returns> A new <see cref="Persistent.RunStepDeltaBingGroundingToolCall"/> instance for mocking. </returns>
         public static RunStepDeltaBingGroundingToolCall RunStepDeltaBingGroundingToolCall(int index = default, string id = null, IReadOnlyDictionary<string, string> bingGrounding = null)
         {
             bingGrounding ??= new Dictionary<string, string>();
 
             return new RunStepDeltaBingGroundingToolCall(index, id, "bing_grounding", serializedAdditionalRawData: null, bingGrounding);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaCustomBingGroundingToolCall"/>. </summary>
+        /// <param name="index"> The index of the tool call detail in the run step's tool_calls array. </param>
+        /// <param name="id"> The ID of the tool call, used when submitting outputs to the run. </param>
+        /// <param name="bingCustomSearch"> The dictionary with request and response from Custom Bing Grounding search tool. </param>
+        /// <returns> A new <see cref="Persistent.RunStepDeltaCustomBingGroundingToolCall"/> instance for mocking. </returns>
+        public static RunStepDeltaCustomBingGroundingToolCall RunStepDeltaCustomBingGroundingToolCall(int index = default, string id = null, IReadOnlyDictionary<string, string> bingCustomSearch = null)
+        {
+            bingCustomSearch ??= new Dictionary<string, string>();
+
+            return new RunStepDeltaCustomBingGroundingToolCall(index, id, "bing_custom_search", serializedAdditionalRawData: null, bingCustomSearch);
         }
 
         /// <summary> Initializes a new instance of <see cref="Persistent.RunStepDeltaDeepResearchToolCall"/>. </summary>

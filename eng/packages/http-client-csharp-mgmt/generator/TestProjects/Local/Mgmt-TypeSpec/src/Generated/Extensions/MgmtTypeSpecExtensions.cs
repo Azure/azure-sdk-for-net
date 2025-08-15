@@ -90,6 +90,19 @@ namespace MgmtTypeSpec
             return GetMockableMgmtTypeSpecArmClient(client).GetBarSettingsResource(id);
         }
 
+        /// <summary> Gets an object representing a <see cref="BarQuotaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BarQuotaResource"/> object. </returns>
+        [ForwardsClientCalls]
+        public static BarQuotaResource GetBarQuotaResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMgmtTypeSpecArmClient(client).GetBarQuotaResource(id);
+        }
+
         /// <summary> Gets an object representing a <see cref="ZooResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -195,6 +208,7 @@ namespace MgmtTypeSpec
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ZooResource"/> that may take multiple service requests to iterate over. </returns>
         [ForwardsClientCalls]
         public static AsyncPageable<ZooResource> GetBySubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
@@ -207,6 +221,7 @@ namespace MgmtTypeSpec
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ZooResource"/> that may take multiple service requests to iterate over. </returns>
         [ForwardsClientCalls]
         public static Pageable<ZooResource> GetBySubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {

@@ -221,6 +221,7 @@ namespace Azure.Generator.Management.Tests.Common
                 access: null,
                 isDiscriminator,
                 serializedName ?? wireName ?? name.ToVariableName(),
+                false,
                 new(json: new(wireName ?? name)));
         }
 

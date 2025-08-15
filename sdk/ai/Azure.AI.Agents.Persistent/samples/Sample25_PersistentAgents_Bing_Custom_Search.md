@@ -7,6 +7,7 @@ To enable your Agent to perform search through Bing Custom Search API, you use `
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 var connectionId = System.Environment.GetEnvironmentVariable("BING_CUSTOM_CONNECTION_ID");
+var configurationName = System.Environment.GetEnvironmentVariable("BING_CONFIGURATION_NAME");
 PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
 ```
 
@@ -14,7 +15,7 @@ PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCreden
 
 ```C# Snippet:AgentsBingCustomSearch_GetConnection
 BingCustomSearchToolDefinition bingCustomSearchTool = new(
-    new BingCustomSearchToolParameters(connectionId, "your_config_instance_name") // Replace with your actual configuration instance name
+    new BingCustomSearchToolParameters(connectionId, configurationName) // Replace with your actual configuration instance name
 );
 ```
 
