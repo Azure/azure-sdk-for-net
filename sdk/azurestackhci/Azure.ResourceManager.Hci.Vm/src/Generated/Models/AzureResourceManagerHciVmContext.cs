@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Hci.Vm
     [ModelReaderWriterBuildable(typeof(VirtualHardDiskStatusProvisioningStatus))]
     [ModelReaderWriterBuildable(typeof(VirtualHardDisksUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(VirtualHardDiskUploadContent))]
-    [ModelReaderWriterBuildable(typeof(VmVirtualHardDiskUploadResponseResult))]
+    [ModelReaderWriterBuildable(typeof(VirtualHardDiskUploadResponse))]
     [ModelReaderWriterBuildable(typeof(VirtualHardDiskUploadStatus))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineConfigAgentInstanceView))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineInstanceData))]

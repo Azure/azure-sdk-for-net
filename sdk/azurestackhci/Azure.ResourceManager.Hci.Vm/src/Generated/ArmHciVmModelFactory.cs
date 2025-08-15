@@ -646,13 +646,13 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.VmVirtualHardDiskUploadResponseResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.VirtualHardDiskUploadResponse"/>. </summary>
         /// <param name="virtualHardDiskId"> The ARM ID for a Virtual Hard Disk. </param>
         /// <param name="uploadStatus"> The upload status of the virtual hard disk. </param>
-        /// <returns> A new <see cref="Models.VmVirtualHardDiskUploadResponseResult"/> instance for mocking. </returns>
-        public static VmVirtualHardDiskUploadResponseResult VmVirtualHardDiskUploadResponseResult(ResourceIdentifier virtualHardDiskId = null, VirtualHardDiskUploadStatus uploadStatus = null)
+        /// <returns> A new <see cref="Models.VirtualHardDiskUploadResponse"/> instance for mocking. </returns>
+        public static VirtualHardDiskUploadResponse VirtualHardDiskUploadResponse(ResourceIdentifier virtualHardDiskId = null, VirtualHardDiskUploadStatus uploadStatus = null)
         {
-            return new VmVirtualHardDiskUploadResponseResult(virtualHardDiskId, uploadStatus, serializedAdditionalRawData: null);
+            return new VirtualHardDiskUploadResponse(virtualHardDiskId, uploadStatus, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Vm.VirtualMachineInstanceData"/>. </summary>

@@ -5,7 +5,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.ResourceManager.Hci.Vm.Tests
 {
-    public class Hci.VmManagementTestEnvironment : TestEnvironment
+    public class HciVmManagementTestEnvironment : TestEnvironment
     {
     }
 }

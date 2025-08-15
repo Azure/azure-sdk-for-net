@@ -1,0 +1,13 @@
+{
+  "output-folder": ".",
+  "namespace": "Azure.ResourceManager.Hci.Vm",
+  "library-name": "Azure.ResourceManager.Hci.Vm",
+  "flavor": "azure",
+  "use-model-reader-writer": true,
+  "shared-source-folders": [
+    "../../TempTypeSpecFiles/node_modules/@autorest/csharp/Generator.Shared",
+    "../../TempTypeSpecFiles/node_modules/@autorest/csharp/Azure.Core.Shared"
+  ],
+  "model-namespace": true,
+  "azure-arm": true
+}

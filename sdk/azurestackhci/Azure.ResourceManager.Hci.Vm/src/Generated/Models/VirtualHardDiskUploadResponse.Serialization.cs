@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Vm.Models
 {
-    public partial class VmVirtualHardDiskUploadResponseResult : IUtf8JsonSerializable, IJsonModel<VmVirtualHardDiskUploadResponseResult>
+    public partial class VirtualHardDiskUploadResponse : IUtf8JsonSerializable, IJsonModel<VirtualHardDiskUploadResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmVirtualHardDiskUploadResponseResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualHardDiskUploadResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<VmVirtualHardDiskUploadResponseResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VirtualHardDiskUploadResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VmVirtualHardDiskUploadResponseResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualHardDiskUploadResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmVirtualHardDiskUploadResponseResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualHardDiskUploadResponse)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(VirtualHardDiskId))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             }
         }
 
-        VmVirtualHardDiskUploadResponseResult IJsonModel<VmVirtualHardDiskUploadResponseResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        VirtualHardDiskUploadResponse IJsonModel<VirtualHardDiskUploadResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VmVirtualHardDiskUploadResponseResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualHardDiskUploadResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmVirtualHardDiskUploadResponseResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualHardDiskUploadResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVmVirtualHardDiskUploadResponseResult(document.RootElement, options);
+            return DeserializeVirtualHardDiskUploadResponse(document.RootElement, options);
         }
 
-        internal static VmVirtualHardDiskUploadResponseResult DeserializeVmVirtualHardDiskUploadResponseResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static VirtualHardDiskUploadResponse DeserializeVirtualHardDiskUploadResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -111,38 +111,38 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VmVirtualHardDiskUploadResponseResult(virtualHardDiskId, uploadStatus, serializedAdditionalRawData);
+            return new VirtualHardDiskUploadResponse(virtualHardDiskId, uploadStatus, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<VmVirtualHardDiskUploadResponseResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<VirtualHardDiskUploadResponse>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VmVirtualHardDiskUploadResponseResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualHardDiskUploadResponse>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHciVmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(VmVirtualHardDiskUploadResponseResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualHardDiskUploadResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
-        VmVirtualHardDiskUploadResponseResult IPersistableModel<VmVirtualHardDiskUploadResponseResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        VirtualHardDiskUploadResponse IPersistableModel<VirtualHardDiskUploadResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VmVirtualHardDiskUploadResponseResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualHardDiskUploadResponse>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeVmVirtualHardDiskUploadResponseResult(document.RootElement, options);
+                        return DeserializeVirtualHardDiskUploadResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VmVirtualHardDiskUploadResponseResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualHardDiskUploadResponse)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<VmVirtualHardDiskUploadResponseResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VirtualHardDiskUploadResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

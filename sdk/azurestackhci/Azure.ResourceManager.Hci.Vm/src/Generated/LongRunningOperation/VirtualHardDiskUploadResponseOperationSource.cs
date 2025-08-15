@@ -13,18 +13,18 @@ using Azure.ResourceManager.Hci.Vm.Models;
 
 namespace Azure.ResourceManager.Hci.Vm
 {
-    internal class VirtualHardDiskUploadResponseOperationSource : IOperationSource<VmVirtualHardDiskUploadResponseResult>
+    internal class VirtualHardDiskUploadResponseOperationSource : IOperationSource<VirtualHardDiskUploadResponse>
     {
-        VmVirtualHardDiskUploadResponseResult IOperationSource<VmVirtualHardDiskUploadResponseResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        VirtualHardDiskUploadResponse IOperationSource<VirtualHardDiskUploadResponse>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return VmVirtualHardDiskUploadResponseResult.DeserializeVmVirtualHardDiskUploadResponseResult(document.RootElement);
+            return VirtualHardDiskUploadResponse.DeserializeVirtualHardDiskUploadResponse(document.RootElement);
         }
 
-        async ValueTask<VmVirtualHardDiskUploadResponseResult> IOperationSource<VmVirtualHardDiskUploadResponseResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<VirtualHardDiskUploadResponse> IOperationSource<VirtualHardDiskUploadResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return VmVirtualHardDiskUploadResponseResult.DeserializeVmVirtualHardDiskUploadResponseResult(document.RootElement);
+            return VirtualHardDiskUploadResponse.DeserializeVirtualHardDiskUploadResponse(document.RootElement);
         }
     }
 }
