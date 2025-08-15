@@ -44,8 +44,6 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(ModelDeployment))]
     [ModelReaderWriterBuildable(typeof(ModelDeploymentSku))]
     [ModelReaderWriterBuildable(typeof(NoAuthenticationCredentials))]
-    [ModelReaderWriterBuildable(typeof(PagedDatasetVersion))]
-    [ModelReaderWriterBuildable(typeof(PagedIndex))]
     [ModelReaderWriterBuildable(typeof(PendingUploadRequest))]
     [ModelReaderWriterBuildable(typeof(PendingUploadResponse))]
     [ModelReaderWriterBuildable(typeof(RedTeam))]
