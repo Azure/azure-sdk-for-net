@@ -61,7 +61,7 @@ namespace MgmtTypeSpec
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.GetBySubscription");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableMgmtTypeSpecSubscriptionResource.GetZoos");
             scope.Start();
             try
             {

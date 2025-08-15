@@ -104,7 +104,7 @@ namespace Azure.Generator.Management
             // build mockable resources
             var resourcesAndMethodsPerScope = BuildResourcesAndNonResourceMethods(
                 resourceDict,
-                resourceMethodCategories.Values.SelectMany(c => c.MethodsInExtension),
+                resourceMethodCategories,
                 ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods);
             var mockableArmClientResource = new MockableArmClientProvider(_resourceClients);
             var mockableResources = new List<MockableResourceProvider>(resourcesAndMethodsPerScope.Count)
@@ -126,7 +126,7 @@ namespace Azure.Generator.Management
 
             static Dictionary<ResourceScope, ResourcesAndNonResourceMethodsInScope> BuildResourcesAndNonResourceMethods(
                 IReadOnlyDictionary<ResourceMetadata, ResourceClientProvider> resourceDict,
-                IEnumerable<ResourceMethod> resourceMethods,
+                IReadOnlyDictionary<ResourceMetadata, ResourceMethodCategory> resourceMethods,
                 IEnumerable<NonResourceMethod> nonResourceMethods)
             {
                 // walk through all resources to figure out their scopes
@@ -144,9 +144,22 @@ namespace Azure.Generator.Management
                         resourcesAndMethodsPerScope[metadata.ResourceScope].ResourceClients.Add(resourceClient);
                     }
                 }
-                foreach (var resourceMethod in resourceMethods)
+                foreach (var (metadata, category) in resourceMethods)
                 {
-                    resourcesAndMethodsPerScope[resourceMethod.OperationScope].ResourceMethods.Add(resourceMethod);
+                    // find the resource
+                    var resource = resourceDict[metadata];
+                    // the resource methods
+                    foreach (var resourceMethod in category.MethodsInExtension)
+                    {
+                        var resourcesAndMethodsInThisScope = resourcesAndMethodsPerScope[resourceMethod.OperationScope];
+                        if (!resourcesAndMethodsInThisScope.ResourceMethods.TryGetValue(resource, out var methods))
+                        {
+                            methods = new List<ResourceMethod>();
+                            resourcesAndMethodsInThisScope.ResourceMethods[resource] = methods;
+                        }
+                        // add this method into the list
+                        ((List<ResourceMethod>)methods).Add(resourceMethod);
+                    }
                 }
                 foreach (var nonResourceMethod in nonResourceMethods)
                 {
@@ -251,7 +264,7 @@ namespace Azure.Generator.Management
 
         private record ResourcesAndNonResourceMethodsInScope(
             List<ResourceClientProvider> ResourceClients,
-            List<ResourceMethod> ResourceMethods,
+            Dictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>> ResourceMethods,
             List<NonResourceMethod> NonResourceMethods);
     }
 }

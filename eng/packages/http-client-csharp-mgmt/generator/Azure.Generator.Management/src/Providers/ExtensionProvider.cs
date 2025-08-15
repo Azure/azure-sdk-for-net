@@ -103,7 +103,7 @@ namespace Azure.Generator.Management.Providers
                 target.ReturnType,
                 target.ReturnDescription,
                 parameters,
-                Attributes: [new AttributeStatement(typeof(ForwardsClientCallsAttribute))]);
+                Attributes: target.Attributes);
 
             IReadOnlyList<ValueExpression> arguments = [.. parameters.Skip(1).Select(p => (ValueExpression)p)];
             var body = new MethodBodyStatement[]
