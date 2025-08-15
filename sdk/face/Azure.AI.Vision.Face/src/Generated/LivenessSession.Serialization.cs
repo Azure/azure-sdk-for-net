@@ -36,30 +36,35 @@ namespace Azure.AI.Vision.Face
 
             if (options.Format != "W")
             {
-                writer.WritePropertyName("sessionId"u8);
-                writer.WriteStringValue(SessionId);
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
             }
-            writer.WritePropertyName("authToken"u8);
-            writer.WriteStringValue(AuthToken);
+            writer.WritePropertyName("createdDateTime"u8);
+            writer.WriteStringValue(CreatedDateTime, "O");
+            if (Optional.IsDefined(SessionStartDateTime))
+            {
+                writer.WritePropertyName("sessionStartDateTime"u8);
+                writer.WriteStringValue(SessionStartDateTime.Value, "O");
+            }
+            writer.WritePropertyName("sessionExpired"u8);
+            writer.WriteBooleanValue(SessionExpired);
+            if (Optional.IsDefined(DeviceCorrelationId))
+            {
+                writer.WritePropertyName("deviceCorrelationId"u8);
+                writer.WriteStringValue(DeviceCorrelationId);
+            }
+            if (Optional.IsDefined(AuthTokenTimeToLiveInSeconds))
+            {
+                writer.WritePropertyName("authTokenTimeToLiveInSeconds"u8);
+                writer.WriteNumberValue(AuthTokenTimeToLiveInSeconds.Value);
+            }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (Optional.IsDefined(ModelVersion))
+            if (Optional.IsDefined(Result))
             {
-                writer.WritePropertyName("modelVersion"u8);
-                writer.WriteStringValue(ModelVersion.Value.ToString());
+                writer.WritePropertyName("result"u8);
+                writer.WriteObjectValue(Result, options);
             }
-            if (Optional.IsDefined(IsAbuseMonitoringEnabled))
-            {
-                writer.WritePropertyName("isAbuseMonitoringEnabled"u8);
-                writer.WriteObjectValue(IsAbuseMonitoringEnabled, options);
-            }
-            if (Optional.IsDefined(ExpectedClientIpAddress))
-            {
-                writer.WritePropertyName("expectedClientIpAddress"u8);
-                writer.WriteStringValue(ExpectedClientIpAddress);
-            }
-            writer.WritePropertyName("results"u8);
-            writer.WriteObjectValue(Results, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -97,58 +102,68 @@ namespace Azure.AI.Vision.Face
             {
                 return null;
             }
-            string sessionId = default;
-            string authToken = default;
-            OperationState status = default;
-            LivenessModel? modelVersion = default;
-            HttpPart1 isAbuseMonitoringEnabled = default;
-            string expectedClientIpAddress = default;
-            LivenessSessionResults results = default;
+            string id = default;
+            DateTimeOffset createdDateTime = default;
+            DateTimeOffset? sessionStartDateTime = default;
+            bool sessionExpired = default;
+            string deviceCorrelationId = default;
+            int? authTokenTimeToLiveInSeconds = default;
+            FaceSessionStatus status = default;
+            LivenessSessionAuditEntry result = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sessionId"u8))
+                if (property.NameEquals("id"u8))
                 {
-                    sessionId = property.Value.GetString();
+                    id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authToken"u8))
+                if (property.NameEquals("createdDateTime"u8))
                 {
-                    authToken = property.Value.GetString();
+                    createdDateTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("sessionStartDateTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sessionStartDateTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("sessionExpired"u8))
+                {
+                    sessionExpired = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("deviceCorrelationId"u8))
+                {
+                    deviceCorrelationId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("authTokenTimeToLiveInSeconds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    authTokenTimeToLiveInSeconds = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = new OperationState(property.Value.GetString());
+                    status = new FaceSessionStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("modelVersion"u8))
+                if (property.NameEquals("result"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    modelVersion = new LivenessModel(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("isAbuseMonitoringEnabled"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isAbuseMonitoringEnabled = HttpPart1.DeserializeHttpPart1(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("expectedClientIpAddress"u8))
-                {
-                    expectedClientIpAddress = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("results"u8))
-                {
-                    results = LivenessSessionResults.DeserializeLivenessSessionResults(property.Value, options);
+                    result = LivenessSessionAuditEntry.DeserializeLivenessSessionAuditEntry(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -158,13 +173,14 @@ namespace Azure.AI.Vision.Face
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new LivenessSession(
-                sessionId,
-                authToken,
+                id,
+                createdDateTime,
+                sessionStartDateTime,
+                sessionExpired,
+                deviceCorrelationId,
+                authTokenTimeToLiveInSeconds,
                 status,
-                modelVersion,
-                isAbuseMonitoringEnabled,
-                expectedClientIpAddress,
-                results,
+                result,
                 serializedAdditionalRawData);
         }
 

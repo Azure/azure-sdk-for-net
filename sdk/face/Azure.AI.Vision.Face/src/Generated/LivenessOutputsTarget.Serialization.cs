@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Vision.Face
 {
-    public partial class LivenessWithVerifyReference : IUtf8JsonSerializable, IJsonModel<LivenessWithVerifyReference>
+    public partial class LivenessOutputsTarget : IUtf8JsonSerializable, IJsonModel<LivenessOutputsTarget>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LivenessWithVerifyReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LivenessOutputsTarget>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<LivenessWithVerifyReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LivenessOutputsTarget>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,18 +28,20 @@ namespace Azure.AI.Vision.Face
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LivenessWithVerifyReference>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LivenessOutputsTarget>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LivenessWithVerifyReference)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LivenessOutputsTarget)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("referenceType"u8);
-            writer.WriteStringValue(ReferenceType.ToString());
             writer.WritePropertyName("faceRectangle"u8);
             writer.WriteObjectValue(FaceRectangle, options);
-            writer.WritePropertyName("qualityForRecognition"u8);
-            writer.WriteStringValue(QualityForRecognition.ToString());
+            writer.WritePropertyName("fileName"u8);
+            writer.WriteStringValue(FileName);
+            writer.WritePropertyName("timeOffsetWithinFile"u8);
+            writer.WriteNumberValue(TimeOffsetWithinFile);
+            writer.WritePropertyName("imageType"u8);
+            writer.WriteStringValue(ImageType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -57,19 +59,19 @@ namespace Azure.AI.Vision.Face
             }
         }
 
-        LivenessWithVerifyReference IJsonModel<LivenessWithVerifyReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        LivenessOutputsTarget IJsonModel<LivenessOutputsTarget>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LivenessWithVerifyReference>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LivenessOutputsTarget>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LivenessWithVerifyReference)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LivenessOutputsTarget)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLivenessWithVerifyReference(document.RootElement, options);
+            return DeserializeLivenessOutputsTarget(document.RootElement, options);
         }
 
-        internal static LivenessWithVerifyReference DeserializeLivenessWithVerifyReference(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static LivenessOutputsTarget DeserializeLivenessOutputsTarget(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -77,26 +79,32 @@ namespace Azure.AI.Vision.Face
             {
                 return null;
             }
-            FaceImageType referenceType = default;
             FaceRectangle faceRectangle = default;
-            QualityForRecognition qualityForRecognition = default;
+            string fileName = default;
+            int timeOffsetWithinFile = default;
+            FaceImageType imageType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("referenceType"u8))
-                {
-                    referenceType = new FaceImageType(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("faceRectangle"u8))
                 {
                     faceRectangle = FaceRectangle.DeserializeFaceRectangle(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("qualityForRecognition"u8))
+                if (property.NameEquals("fileName"u8))
                 {
-                    qualityForRecognition = new QualityForRecognition(property.Value.GetString());
+                    fileName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("timeOffsetWithinFile"u8))
+                {
+                    timeOffsetWithinFile = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("imageType"u8))
+                {
+                    imageType = new FaceImageType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -105,46 +113,46 @@ namespace Azure.AI.Vision.Face
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new LivenessWithVerifyReference(referenceType, faceRectangle, qualityForRecognition, serializedAdditionalRawData);
+            return new LivenessOutputsTarget(faceRectangle, fileName, timeOffsetWithinFile, imageType, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<LivenessWithVerifyReference>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<LivenessOutputsTarget>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LivenessWithVerifyReference>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LivenessOutputsTarget>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIVisionFaceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LivenessWithVerifyReference)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LivenessOutputsTarget)} does not support writing '{options.Format}' format.");
             }
         }
 
-        LivenessWithVerifyReference IPersistableModel<LivenessWithVerifyReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        LivenessOutputsTarget IPersistableModel<LivenessOutputsTarget>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LivenessWithVerifyReference>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<LivenessOutputsTarget>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeLivenessWithVerifyReference(document.RootElement, options);
+                        return DeserializeLivenessOutputsTarget(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LivenessWithVerifyReference)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LivenessOutputsTarget)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<LivenessWithVerifyReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LivenessOutputsTarget>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static LivenessWithVerifyReference FromResponse(Response response)
+        internal static LivenessOutputsTarget FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeLivenessWithVerifyReference(document.RootElement);
+            return DeserializeLivenessOutputsTarget(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

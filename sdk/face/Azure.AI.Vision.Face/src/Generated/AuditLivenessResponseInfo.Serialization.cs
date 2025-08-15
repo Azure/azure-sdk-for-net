@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Vision.Face
 {
-    public partial class LivenessError : IUtf8JsonSerializable, IJsonModel<LivenessError>
+    public partial class AuditLivenessResponseInfo : IUtf8JsonSerializable, IJsonModel<AuditLivenessResponseInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LivenessError>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuditLivenessResponseInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<LivenessError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AuditLivenessResponseInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,18 +28,18 @@ namespace Azure.AI.Vision.Face
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LivenessError>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AuditLivenessResponseInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LivenessError)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AuditLivenessResponseInfo)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("code"u8);
-            writer.WriteStringValue(Code);
-            writer.WritePropertyName("message"u8);
-            writer.WriteStringValue(Message);
-            writer.WritePropertyName("targets"u8);
-            writer.WriteObjectValue(Targets, options);
+            writer.WritePropertyName("body"u8);
+            writer.WriteObjectValue(Body, options);
+            writer.WritePropertyName("statusCode"u8);
+            writer.WriteNumberValue(StatusCode);
+            writer.WritePropertyName("latencyInMilliseconds"u8);
+            writer.WriteNumberValue(LatencyInMilliseconds);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -57,19 +57,19 @@ namespace Azure.AI.Vision.Face
             }
         }
 
-        LivenessError IJsonModel<LivenessError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AuditLivenessResponseInfo IJsonModel<AuditLivenessResponseInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LivenessError>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AuditLivenessResponseInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LivenessError)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AuditLivenessResponseInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLivenessError(document.RootElement, options);
+            return DeserializeAuditLivenessResponseInfo(document.RootElement, options);
         }
 
-        internal static LivenessError DeserializeLivenessError(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AuditLivenessResponseInfo DeserializeAuditLivenessResponseInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -77,26 +77,26 @@ namespace Azure.AI.Vision.Face
             {
                 return null;
             }
-            string code = default;
-            string message = default;
-            LivenessDecisionTargets targets = default;
+            LivenessResponseBody body = default;
+            int statusCode = default;
+            long latencyInMilliseconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("code"u8))
+                if (property.NameEquals("body"u8))
                 {
-                    code = property.Value.GetString();
+                    body = LivenessResponseBody.DeserializeLivenessResponseBody(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("message"u8))
+                if (property.NameEquals("statusCode"u8))
                 {
-                    message = property.Value.GetString();
+                    statusCode = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("targets"u8))
+                if (property.NameEquals("latencyInMilliseconds"u8))
                 {
-                    targets = LivenessDecisionTargets.DeserializeLivenessDecisionTargets(property.Value, options);
+                    latencyInMilliseconds = property.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
@@ -105,46 +105,46 @@ namespace Azure.AI.Vision.Face
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new LivenessError(code, message, targets, serializedAdditionalRawData);
+            return new AuditLivenessResponseInfo(body, statusCode, latencyInMilliseconds, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<LivenessError>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AuditLivenessResponseInfo>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LivenessError>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AuditLivenessResponseInfo>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIVisionFaceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LivenessError)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuditLivenessResponseInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
-        LivenessError IPersistableModel<LivenessError>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AuditLivenessResponseInfo IPersistableModel<AuditLivenessResponseInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LivenessError>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AuditLivenessResponseInfo>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeLivenessError(document.RootElement, options);
+                        return DeserializeAuditLivenessResponseInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LivenessError)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuditLivenessResponseInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<LivenessError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AuditLivenessResponseInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static LivenessError FromResponse(Response response)
+        internal static AuditLivenessResponseInfo FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeLivenessError(document.RootElement);
+            return DeserializeAuditLivenessResponseInfo(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
