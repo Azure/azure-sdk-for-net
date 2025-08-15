@@ -388,6 +388,12 @@
 # ServiceLabel: %Container Service
 # ServiceOwners:                                                   @qike-ms @jwilder @thomas1206 @seanmck
 
+# PRLabel: %Contoso Widget Manager
+/sdk/contosowidgetmanager/                                         @ReilleyMilne @Shirelmr
+
+# ServiceLabel: %Contoso Widget Manager
+# ServiceOwners:                                                   @ReilleyMilne @Shirelmr
+
 # ServiceLabel: %Cosmos
 /sdk/cosmosdb/                                                     @pjohari-ms @MehaKaushik @shurd @anfeldma-ms @zfoster @kushagraThapar
 
