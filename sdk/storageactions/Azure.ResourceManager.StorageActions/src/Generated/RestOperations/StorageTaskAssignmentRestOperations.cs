@@ -64,5 +64,17 @@ namespace Azure.ResourceManager.StorageActions
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
+
+        internal HttpMessage CreateNextGetStorageTaskAssignmentsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string storageTaskName, int? maxpagesize, RequestContext context)
+        {
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Method = RequestMethod.Get;
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(nextPage);
+            request.Uri = uri;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
     }
 }

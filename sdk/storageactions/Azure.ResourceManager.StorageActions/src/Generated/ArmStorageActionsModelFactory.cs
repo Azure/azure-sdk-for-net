@@ -166,17 +166,6 @@ namespace Azure.ResourceManager.StorageActions.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Fetch Storage Tasks Run Summary. </summary>
-        /// <param name="value"> Gets storage tasks run result summary. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.StorageTaskReportSummary"/> instance for mocking. </returns>
-        public static StorageTaskReportSummary StorageTaskReportSummary(IEnumerable<StorageTaskReportInstance> value = default, Uri nextLink = default)
-        {
-            value ??= new ChangeTrackingList<StorageTaskReportInstance>();
-
-            return new StorageTaskReportSummary(value.ToList(), nextLink, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Storage Tasks run report instance. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -229,17 +218,6 @@ namespace Azure.ResourceManager.StorageActions.Models
                 taskVersion,
                 runResult,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The response from the List Storage Tasks operation. </summary>
-        /// <param name="value"> List of Storage Task Assignment Resource IDs associated with this Storage Task. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.StorageTaskAssignmentsListResult"/> instance for mocking. </returns>
-        public static StorageTaskAssignmentsListResult StorageTaskAssignmentsListResult(IEnumerable<SubResource> value = default, Uri nextLink = default)
-        {
-            value ??= new ChangeTrackingList<SubResource>();
-
-            return new StorageTaskAssignmentsListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
         }
     }
 }

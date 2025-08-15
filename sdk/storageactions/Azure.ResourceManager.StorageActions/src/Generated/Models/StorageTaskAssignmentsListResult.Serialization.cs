@@ -17,7 +17,7 @@ using Azure.ResourceManager.StorageActions;
 namespace Azure.ResourceManager.StorageActions.Models
 {
     /// <summary> The response from the List Storage Tasks operation. </summary>
-    public partial class StorageTaskAssignmentsListResult : IJsonModel<StorageTaskAssignmentsListResult>
+    internal partial class StorageTaskAssignmentsListResult : IJsonModel<StorageTaskAssignmentsListResult>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

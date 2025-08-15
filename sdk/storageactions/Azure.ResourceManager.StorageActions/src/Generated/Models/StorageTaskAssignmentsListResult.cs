@@ -13,7 +13,7 @@ using Azure.ResourceManager.StorageActions;
 namespace Azure.ResourceManager.StorageActions.Models
 {
     /// <summary> The response from the List Storage Tasks operation. </summary>
-    public partial class StorageTaskAssignmentsListResult
+    internal partial class StorageTaskAssignmentsListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
