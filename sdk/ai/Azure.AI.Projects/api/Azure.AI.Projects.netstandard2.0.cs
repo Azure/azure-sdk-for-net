@@ -134,8 +134,6 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.ManagedAzureAISearchIndex ManagedAzureAISearchIndex(string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null, string vectorStoreId = null) { throw null; }
         public static Azure.AI.Projects.ModelDeployment ModelDeployment(string name = null, string modelName = null, string modelVersion = null, string modelPublisher = null, System.Collections.Generic.IReadOnlyDictionary<string, string> capabilities = null, Azure.AI.Projects.ModelDeploymentSku sku = null, string connectionName = null) { throw null; }
         public static Azure.AI.Projects.ModelDeploymentSku ModelDeploymentSku(long capacity = (long)0, string family = null, string name = null, string size = null, string tier = null) { throw null; }
-        public static Azure.AI.Projects.PagedDatasetVersion PagedDatasetVersion(System.Collections.Generic.IEnumerable<Azure.AI.Projects.DatasetVersion> value = null, System.Uri nextLink = null) { throw null; }
-        public static Azure.AI.Projects.PagedIndex PagedIndex(System.Collections.Generic.IEnumerable<Azure.AI.Projects.DatasetIndex> value = null, System.Uri nextLink = null) { throw null; }
         public static Azure.AI.Projects.PendingUploadRequest PendingUploadRequest(string pendingUploadId = null, string connectionName = null, Azure.AI.Projects.PendingUploadType pendingUploadType = default(Azure.AI.Projects.PendingUploadType)) { throw null; }
         public static Azure.AI.Projects.PendingUploadResponse PendingUploadResponse(Azure.AI.Projects.BlobReference blobReference = null, string pendingUploadId = null, string version = null, Azure.AI.Projects.PendingUploadType pendingUploadType = default(Azure.AI.Projects.PendingUploadType)) { throw null; }
         public static Azure.AI.Projects.RedTeam RedTeam(string name = null, string displayName = null, int? numTurns = default(int?), System.Collections.Generic.IEnumerable<Azure.AI.Projects.AttackStrategy> attackStrategies = null, bool? simulationOnly = default(bool?), System.Collections.Generic.IEnumerable<Azure.AI.Projects.RiskCategory> riskCategories = null, string applicationScenario = null, System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IDictionary<string, string> properties = null, string status = null, Azure.AI.Projects.TargetConfig target = null) { throw null; }
@@ -409,10 +407,10 @@ namespace Azure.AI.Projects
         public virtual Azure.Pageable<Azure.AI.Projects.DatasetVersion> GetDatasetVersions(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetDatasetVersionsAsync(Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<Azure.AI.Projects.DatasetVersion> GetDatasetVersionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response GetVersions(string name, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.AI.Projects.PagedDatasetVersion> GetVersions(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetVersionsAsync(string name, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Projects.PagedDatasetVersion>> GetVersionsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetVersions(string name, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.Projects.DatasetVersion> GetVersions(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetVersionsAsync(string name, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.Projects.DatasetVersion> GetVersionsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.Projects.PendingUploadResponse> PendingUpload(string name, string version, Azure.AI.Projects.PendingUploadRequest pendingUploadRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response PendingUpload(string name, string version, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Projects.PendingUploadResponse>> PendingUploadAsync(string name, string version, Azure.AI.Projects.PendingUploadRequest pendingUploadRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -633,10 +631,10 @@ namespace Azure.AI.Projects
         public virtual Azure.Pageable<Azure.AI.Projects.DatasetIndex> GetIndices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetIndicesAsync(Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<Azure.AI.Projects.DatasetIndex> GetIndicesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response GetVersions(string name, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Response<Azure.AI.Projects.PagedIndex> GetVersions(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetVersionsAsync(string name, Azure.RequestContext context) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Projects.PagedIndex>> GetVersionsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetVersions(string name, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.AI.Projects.DatasetIndex> GetVersions(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetVersionsAsync(string name, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.AI.Projects.DatasetIndex> GetVersionsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public abstract partial class InputData : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.InputData>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.InputData>
     {
@@ -710,30 +708,6 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.NoAuthenticationCredentials System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.NoAuthenticationCredentials>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.NoAuthenticationCredentials>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.NoAuthenticationCredentials>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class PagedDatasetVersion : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.PagedDatasetVersion>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.PagedDatasetVersion>
-    {
-        internal PagedDatasetVersion() { }
-        public System.Uri NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Projects.DatasetVersion> Value { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.PagedDatasetVersion System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.PagedDatasetVersion>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.PagedDatasetVersion>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.PagedDatasetVersion System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.PagedDatasetVersion>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.PagedDatasetVersion>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.PagedDatasetVersion>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class PagedIndex : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.PagedIndex>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.PagedIndex>
-    {
-        internal PagedIndex() { }
-        public System.Uri NextLink { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Projects.DatasetIndex> Value { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.PagedIndex System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.PagedIndex>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.PagedIndex>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.PagedIndex System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.PagedIndex>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.PagedIndex>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.PagedIndex>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class PendingUploadRequest : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.PendingUploadRequest>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.PendingUploadRequest>
     {
