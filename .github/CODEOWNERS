@@ -550,7 +550,8 @@
 /sdk/keyvault/                                                     @cheathamb36 @chen-karen @jackrichins @vickm
 
 # ServiceLabel: %KeyVault
-# ServiceOwners:                                                   @cheathamb36 @chen-karen @jackrichins @vickm
+# ServiceOwners:                                                   @cheathamb36 @chen-karen @jackrichins @vickm @ReilleyMilne
+
 
 # ServiceLabel: %Kubernetes Configuration
 # ServiceOwners:                                                   @NarayanThiru
