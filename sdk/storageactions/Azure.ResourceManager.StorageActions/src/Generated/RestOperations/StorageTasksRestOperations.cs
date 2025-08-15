@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.StorageActions
             return message;
         }
 
-        internal HttpMessage CreateGetStorageTasksRequest(Guid subscriptionId, RequestContext context)
+        internal HttpMessage CreateGetBySubscriptionRequest(Guid subscriptionId, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.StorageActions
             return message;
         }
 
-        internal HttpMessage CreateNextGetStorageTasksRequest(Uri nextPage, Guid subscriptionId, RequestContext context)
+        internal HttpMessage CreateNextGetBySubscriptionRequest(Uri nextPage, Guid subscriptionId, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;

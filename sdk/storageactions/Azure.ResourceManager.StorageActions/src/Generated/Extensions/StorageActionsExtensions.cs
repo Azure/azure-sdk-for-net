@@ -43,7 +43,6 @@ namespace Azure.ResourceManager.StorageActions
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="StorageTaskResource"/> object. </returns>
-        [ForwardsClientCalls]
         public static StorageTaskResource GetStorageTaskResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -55,7 +54,6 @@ namespace Azure.ResourceManager.StorageActions
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of StorageTasks and their operations over a StorageTaskResource. </returns>
-        [ForwardsClientCalls]
         public static StorageTaskCollection GetStorageTasks(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -94,7 +92,6 @@ namespace Azure.ResourceManager.StorageActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="StorageTaskResource"/> that may take multiple service requests to iterate over. </returns>
-        [ForwardsClientCalls]
         public static AsyncPageable<StorageTaskResource> GetStorageTasksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -107,7 +104,6 @@ namespace Azure.ResourceManager.StorageActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="StorageTaskResource"/> that may take multiple service requests to iterate over. </returns>
-        [ForwardsClientCalls]
         public static Pageable<StorageTaskResource> GetStorageTasks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -121,7 +117,6 @@ namespace Azure.ResourceManager.StorageActions
         /// <param name="parameters"> The parameters to preview action condition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        [ForwardsClientCalls]
         public static async Task<Response<StorageTaskPreviewAction>> PreviewActionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, StorageTaskPreviewAction parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -135,7 +130,6 @@ namespace Azure.ResourceManager.StorageActions
         /// <param name="parameters"> The parameters to preview action condition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        [ForwardsClientCalls]
         public static Response<StorageTaskPreviewAction> PreviewActions(this SubscriptionResource subscriptionResource, AzureLocation location, StorageTaskPreviewAction parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
