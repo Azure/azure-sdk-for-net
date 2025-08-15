@@ -1,6 +1,7 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
 trigger: none
+
 pr:
   branches:
     include:
@@ -12,6 +13,7 @@ pr:
     include:
     - sdk/azurestackhci/ci.mgmt.yml
     - sdk/azurestackhci/Azure.ResourceManager.Hci/
+    - sdk/azurestackhci/Azure.ResourceManager.Hci.Vm/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -19,5 +21,5 @@ extends:
     ServiceDirectory: azurestackhci
     LimitForPullRequest: true
     Artifacts:
-    - name: Azure.ResourceManager.Hci
-      safeName: AzureResourceManagerHci
+    - name: Azure.ResourceManager.Hci.Vm
+      safeName: AzureResourceManagerHciVm
