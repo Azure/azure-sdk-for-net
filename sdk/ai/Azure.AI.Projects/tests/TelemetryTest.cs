@@ -28,8 +28,20 @@ namespace Azure.AI.Projects.Tests
             Console.WriteLine("Get the Application Insights connection string.");
             var connectionString = await projectClient.Telemetry.GetApplicationInsightsConnectionStringAsync();
             Console.WriteLine($"Connection string: {connectionString}");
-            Assert.True(TestBase.RegexAppInsightsConnectionString.IsMatch(connectionString), "The connection string should match the expected format.");
-            // TODO: add check for when it's the recording and it'll be sanitized (essentially check that the connection string is <sanitized-value>)
+
+            // Check test mode to determine expected format
+            string testMode = Environment.GetEnvironmentVariable("AZURE_TEST_MODE");
+
+            if (testMode.Equals("Playback", StringComparison.OrdinalIgnoreCase))
+            {
+                // In playback mode, the connection string should be sanitized
+                Assert.AreEqual("Sanitized", connectionString, "In playback mode, the connection string should be 'Sanitized'.");
+            }
+            else
+            {
+                // In record or live mode, the connection string should match the expected format
+                Assert.True(TestBase.RegexAppInsightsConnectionString.IsMatch(connectionString), "The connection string should match the expected format.");
+            }
 
             Assert.AreEqual(connectionString, projectClient.Telemetry.GetApplicationInsightsConnectionString(),
                 "Testing the cached value of the connection string.");
