@@ -71,7 +71,7 @@ namespace Azure.Identity
         /// <summary>
         /// The default environment variable name used for token credential configuration.
         /// </summary>
-        public static readonly string DefaultEnvironmentVariableName = "AZURE_TOKEN_CREDENTIALS";
+        public const string DefaultEnvironmentVariableName = "AZURE_TOKEN_CREDENTIALS";
 
         /// <summary>
         /// Protected constructor for <see href="https://aka.ms/azsdk/net/mocking">mocking</see>.

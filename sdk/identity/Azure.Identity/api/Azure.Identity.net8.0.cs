@@ -186,7 +186,7 @@ namespace Azure.Identity
     }
     public partial class DefaultAzureCredential : Azure.Core.TokenCredential
     {
-        public static readonly string DefaultEnvironmentVariableName;
+        public const string DefaultEnvironmentVariableName = "AZURE_TOKEN_CREDENTIALS";
         protected DefaultAzureCredential() { }
         public DefaultAzureCredential(Azure.Identity.DefaultAzureCredentialOptions options) { }
         public DefaultAzureCredential(bool includeInteractiveCredentials = false) { }
