@@ -51,11 +51,11 @@ namespace Azure.AI.Projects.Tests
             Console.WriteLine(specificConnectionCredentials);
 
             Console.WriteLine($"Get the properties of the default connection:");
-            ConnectionProperties defaultConnection = projectClient.Connections.GetDefault(includeCredentials: false);
+            ConnectionProperties defaultConnection = projectClient.Connections.GetDefaultConnection(includeCredentials: false);
             Console.WriteLine(defaultConnection);
 
             Console.WriteLine($"Get the properties of the default connection with credentials:");
-            ConnectionProperties defaultConnectionCredentials = projectClient.Connections.GetDefault(includeCredentials: true);
+            ConnectionProperties defaultConnectionCredentials = projectClient.Connections.GetDefaultConnection(includeCredentials: true);
             Console.WriteLine(defaultConnectionCredentials);
             #endregion
         }
@@ -96,11 +96,11 @@ namespace Azure.AI.Projects.Tests
             Console.WriteLine(specificConnectionCredentials);
 
             Console.WriteLine($"Get the properties of the default connection:");
-            ConnectionProperties defaultConnection = await projectClient.Connections.GetDefaultAsync(includeCredentials: false);
+            ConnectionProperties defaultConnection = await projectClient.Connections.GetDefaultConnectionAsync(includeCredentials: false);
             Console.WriteLine(defaultConnection);
 
             Console.WriteLine($"Get the properties of the default connection with credentials:");
-            ConnectionProperties defaultConnectionCredentials = await projectClient.Connections.GetDefaultAsync(includeCredentials: true);
+            ConnectionProperties defaultConnectionCredentials = await projectClient.Connections.GetDefaultConnectionAsync(includeCredentials: true);
             Console.WriteLine(defaultConnectionCredentials);
             #endregion
         }

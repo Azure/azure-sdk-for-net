@@ -17,6 +17,39 @@ namespace Azure.AI.Projects.Tests
 {
     public class Sample_Indexes : SamplesBase<AIProjectsTestEnvironment>
     {
+        private AIProjectClient CreateDebugClient(string endpoint)
+        {
+            var options = new AIProjectClientOptions();
+
+            // Add custom pipeline policy for debugging
+            options.AddPolicy(new DebugPipelinePolicy(), PipelinePosition.PerCall);
+
+            return new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential(), options);
+        }
+
+        // Custom pipeline policy for debugging System.ClientModel requests
+        private class DebugPipelinePolicy : PipelinePolicy
+        {
+            public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int index)
+            {
+                Console.WriteLine($"Request: {message.Request.Method} {message.Request.Uri}");
+
+                ProcessNext(message, pipeline, index);
+
+                Console.WriteLine($"Response: {message.Response?.Status} {message.Response?.ReasonPhrase}");
+            }
+
+            public override ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int index)
+            {
+                Console.WriteLine($"Async Request: {message.Request.Method} {message.Request.Uri}");
+
+                var result = ProcessNextAsync(message, pipeline, index);
+
+                Console.WriteLine($"Async Response: {message.Response?.Status} {message.Response?.ReasonPhrase}");
+                return result;
+            }
+        }
+
         [Test]
         [SyncOnly]
         public void IndexesExample()
@@ -28,14 +61,17 @@ namespace Azure.AI.Projects.Tests
             var indexVersion = Environment.GetEnvironmentVariable("INDEX_VERSION") ?? "1.0";
             var aiSearchConnectionName = Environment.GetEnvironmentVariable("AI_SEARCH_CONNECTION_NAME") ?? "my-ai-search-connection-name";
             var aiSearchIndexName = Environment.GetEnvironmentVariable("AI_SEARCH_INDEX_NAME") ?? "my-ai-search-index-name";
+
+            AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 #else
             var endpoint = TestEnvironment.PROJECTENDPOINT;
             var indexName = TestEnvironment.INDEXNAME ?? "my-index";
             var indexVersion = TestEnvironment.INDEXVERSION ?? "1.0";
             var aiSearchConnectionName = TestEnvironment.AISEARCHCONNECTIONNAME ?? "my-ai-search-connection-name";
             var aiSearchIndexName = TestEnvironment.AISEARCHINDEXNAME ?? "my-ai-search-index-name";
+
+            AIProjectClient projectClient = CreateDebugClient(endpoint);
 #endif
-            AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 
             BinaryContent content = BinaryContent.Create(BinaryData.FromObjectAsJson(new
             {
@@ -47,7 +83,7 @@ namespace Azure.AI.Projects.Tests
             }));
 
             Console.WriteLine($"Create an Index named `{indexName}` referencing an existing AI Search resource:");
-            SearchIndex index = projectClient.Indexes.CreateOrUpdate(
+            SearchIndex index = (SearchIndex)projectClient.Indexes.CreateOrUpdate(
                 name: indexName,
                 version: indexVersion,
                 content: content
@@ -55,17 +91,17 @@ namespace Azure.AI.Projects.Tests
             Console.WriteLine(index);
 
             Console.WriteLine($"Get an existing Index named `{indexName}`, version `{indexVersion}`:");
-            SearchIndex retrievedIndex = projectClient.Indexes.Get(name: indexName, version: indexVersion);
+            SearchIndex retrievedIndex = projectClient.Indexes.GetIndex(name: indexName, version: indexVersion);
             Console.WriteLine(retrievedIndex);
 
             Console.WriteLine($"Listing all versions of the Index named `{indexName}`:");
-            foreach (SearchIndex version in projectClient.Indexes.GetVersions(name: indexName))
+            foreach (SearchIndex version in projectClient.Indexes.GetIndexVersions(name: indexName))
             {
                 Console.WriteLine(version);
             }
 
             Console.WriteLine($"Listing all Indices:");
-            foreach (SearchIndex version in projectClient.Indexes.Get())
+            foreach (SearchIndex version in projectClient.Indexes.GetIndexes())
             {
                 Console.WriteLine(version);
             }
@@ -86,14 +122,17 @@ namespace Azure.AI.Projects.Tests
             var indexVersion = Environment.GetEnvironmentVariable("INDEX_VERSION") ?? "1.0";
             var aiSearchConnectionName = Environment.GetEnvironmentVariable("AI_SEARCH_CONNECTION_NAME") ?? "my-ai-search-connection-name";
             var aiSearchIndexName = Environment.GetEnvironmentVariable("AI_SEARCH_INDEX_NAME") ?? "my-ai-search-index-name";
+
+            AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 #else
             var endpoint = TestEnvironment.PROJECTENDPOINT;
             var indexName = TestEnvironment.INDEXNAME ?? "my-index";
             var indexVersion = TestEnvironment.INDEXVERSION ?? "1.0";
             var aiSearchConnectionName = TestEnvironment.AISEARCHCONNECTIONNAME ?? "my-ai-search-connection-name";
             var aiSearchIndexName = TestEnvironment.AISEARCHINDEXNAME ?? "my-ai-search-index-name";
+
+            AIProjectClient projectClient = CreateDebugClient(endpoint);
 #endif
-            AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 
             BinaryContent content = BinaryContent.Create(BinaryData.FromObjectAsJson(new
             {
@@ -105,7 +144,7 @@ namespace Azure.AI.Projects.Tests
             }));
 
             Console.WriteLine($"Create an Index named `{indexName}` referencing an existing AI Search resource:");
-            SearchIndex index = await projectClient.Indexes.CreateOrUpdateAsync(
+            SearchIndex index = (SearchIndex)await projectClient.Indexes.CreateOrUpdateAsync(
                 name: indexName,
                 version: indexVersion,
                 content: content
@@ -113,17 +152,17 @@ namespace Azure.AI.Projects.Tests
             Console.WriteLine(index);
 
             Console.WriteLine($"Get an existing Index named `{indexName}`, version `{indexVersion}`:");
-            SearchIndex retrievedIndex = await projectClient.Indexes.GetAsync(name: indexName, version: indexVersion);
+            SearchIndex retrievedIndex = await projectClient.Indexes.GetIndexAsync(name: indexName, version: indexVersion);
             Console.WriteLine(retrievedIndex);
 
             Console.WriteLine($"Listing all versions of the Index named `{indexName}`:");
-            await foreach (SearchIndex version in projectClient.Indexes.GetVersionsAsync(name: indexName))
+            await foreach (SearchIndex version in projectClient.Indexes.GetIndexVersionsAsync(name: indexName))
             {
                 Console.WriteLine(version);
             }
 
             Console.WriteLine($"Listing all Indices:");
-            await foreach (SearchIndex version in projectClient.Indexes.GetAsync())
+            await foreach (SearchIndex version in projectClient.Indexes.GetIndexesAsync())
             {
                 Console.WriteLine(version);
             }

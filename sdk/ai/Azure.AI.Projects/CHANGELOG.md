@@ -1,16 +1,11 @@
 # Release History
 
-## 1.0.0 (Unreleased)
-
-First stable version of the client library. The client library now uses version `v1` of the AI Foundry [data plane REST APIs](https://aka.ms/azsdk/azure-ai-projects/ga-rest-api-reference).
+## 1.0.0-beta.11 (Unreleased)
 
 ### Features Added
 
 
 ### Breaking Changes
-* Features that are still in preview were removed from this stable release. This includes:
-  * Evaluation operations
-  * Red-Team operations
 * Class changes:
   * `AIDeployment` has been renamed `AssetDeployment`
   * `AssetCredentialResponse` has been renamed `DatasetCredential`
@@ -19,6 +14,8 @@ First stable version of the client library. The client library now uses version 
   * `PendingUploadResponse` has been renamed `PendingUploadResult`
 * In `Datasets`, methods `PendingUpload` and `PendingUploadAsync`, argument `body` was replaced with `configuration`
 * `GetAzureOpenAIChatClient` and `GetAzureOpenAIEmbeddingClient` methods have been removed and replaced with a single `GetOpenAIClient` method. This method returns an OpenAI client which has properties for accessing individual operation clients. More information is available in the `Inference` samples.
+* All operations methods have been renamed to include the object the operation is for. For example, `Connections.GetDefault` has been renamed to `Connections.GetDefaultConnection`, and `Datasets.Get` has been renamed to `Datasets.GetDatasets`.
+* `Deployments.GetModelDeployment` and `Deployments.GetModelDeploymentAsync` methods have been removed. Use `Deployments.GetDeployment` and `Deployments.GetDeploymentAsync` instead.`
 
 ### Bugs Fixed
 
