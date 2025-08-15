@@ -4,6 +4,7 @@
 using Azure.Generator.Management.Models;
 using Azure.ResourceManager.ManagementGroups;
 using Azure.ResourceManager.Resources;
+using Humanizer;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -57,6 +58,22 @@ namespace Azure.Generator.Management.Utilities
             {
                 ResourceOperationKind.Create => isAsync ? "CreateOrUpdateAsync" : "CreateOrUpdate",
                 ResourceOperationKind.List => isAsync ? "GetAllAsync" : "GetAll",
+                _ => null
+            };
+        }
+
+        /// <summary>
+        /// Gets the appropriate method name for an extension operation based on its kind and corresponding resource name.
+        /// </summary>
+        /// <param name="operationKind"></param>
+        /// <param name="resourceName"></param>
+        /// <param name="isAsync"></param>
+        /// <returns></returns>
+        public static string? GetExtensionOperationMethodName(ResourceOperationKind operationKind, string resourceName, bool isAsync)
+        {
+            return operationKind switch
+            {
+                ResourceOperationKind.List => isAsync ? $"Get{resourceName.Pluralize()}Async" : $"Get{resourceName.Pluralize()}",
                 _ => null
             };
         }
