@@ -242,10 +242,10 @@
 # ServiceOwners:                                                   @olduroja
 
 # PRLabel: %Cognitive - Language
-/sdk/cognitivelanguage/                                            @quentinRobinson @bidisha-c
+/sdk/cognitivelanguage/                                            @quentinRobinson
 
 # ServiceLabel: %Cognitive - Language
-# ServiceOwners:                                                   @quentinRobinson @bidisha-c
+# ServiceOwners:                                                   @quentinRobinson
 
 # PRLabel: %Cognitive - LUIS
 /sdk/cognitiveservices/Language.LUIS*/                             @cahann @kayousef
@@ -278,10 +278,10 @@
 # ServiceOwners:                                                   @cahann @kayousef
 
 # PRLabel: %Cognitive - Text Analytics
-/sdk/textanalytics/                                                @quentinRobinson @bidisha-c
+/sdk/textanalytics/                                                @quentinRobinson
 
 # ServiceLabel: %Cognitive - Text Analytics
-# ServiceOwners:                                                   @quentinRobinson @bidisha-c
+# ServiceOwners:                                                   @quentinRobinson
 
 # PRLabel: %Cognitive - Translator
 /sdk/translation/                                                  @mikeymcz @vikaspalaskar
