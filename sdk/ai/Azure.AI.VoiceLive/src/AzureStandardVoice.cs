@@ -6,6 +6,6 @@ using System.IO;
 
 namespace Azure.AI.VoiceLive
 {
-    public partial class AzureStandardVoice : VoiceBase
+    public partial class AzureStandardVoice : IVoiceType
     { }
 }

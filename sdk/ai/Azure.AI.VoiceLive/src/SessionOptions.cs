@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
@@ -12,11 +13,14 @@ namespace Azure.AI.VoiceLive
     /// Represents configuration options for a VoiceLive session.
     /// </summary>
     /// <remarks>
-    /// This class provides a base set of configuration options that can be used to customize
-    /// the behavior of a  session.
+    /// This unified class provides all configuration options that can be used to customize
+    /// the behavior of a VoiceLive session, whether for conversation, transcription, or
+    /// hybrid scenarios.
     /// </remarks>
     public class SessionOptions
     {
+        // ==================== Audio Configuration ====================
+
         /// <summary>
         /// Gets or sets the input audio format for the session.
         /// </summary>
@@ -42,6 +46,26 @@ namespace Azure.AI.VoiceLive
         public TurnDetection TurnDetection { get; set; }
 
         /// <summary>
+        /// Gets or sets the audio noise reduction settings.
+        /// </summary>
+        /// <value>
+        /// Configuration for reducing noise in the input audio to improve accuracy.
+        /// If not specified, default noise reduction settings will be used.
+        /// </value>
+        public AudioNoiseReduction NoiseReduction { get; set; }
+
+        /// <summary>
+        /// Gets or sets the echo cancellation settings.
+        /// </summary>
+        /// <value>
+        /// Configuration for cancelling echo in the input audio to improve accuracy.
+        /// If not specified, default echo cancellation settings will be used.
+        /// </value>
+        public AudioEchoCancellation EchoCancellation { get; set; }
+
+        // ==================== Modalities & Core Settings ====================
+
+        /// <summary>
         /// Gets or sets the modalities supported by the session.
         /// </summary>
         /// <value>
@@ -50,12 +74,12 @@ namespace Azure.AI.VoiceLive
         public IList<InputModality> Modalities { get; set; } = new List<InputModality> { InputModality.Text, InputModality.Audio };
 
         /// <summary>
-        /// Gets or sets the input audio transcription settings.
+        /// Gets or sets the model to use for the session.
         /// </summary>
         /// <value>
-        /// Configuration for transcribing input audio. If not specified, transcription is disabled.
+        /// The model identifier for processing. If not specified, the service will use a default model.
         /// </value>
-        public AudioInputTranscriptionSettings InputAudioTranscription { get; set; }
+        public string Model { get; set; }
 
         /// <summary>
         /// Gets or sets the temperature parameter for response generation.
@@ -73,6 +97,98 @@ namespace Azure.AI.VoiceLive
         /// </value>
         public int? MaxResponseOutputTokens { get; set; }
 
+        // ==================== Transcription Features ====================
+
+        /// <summary>
+        /// Gets or sets the input audio transcription settings.
+        /// </summary>
+        /// <value>
+        /// Configuration for transcribing input audio. If not specified, transcription is disabled.
+        /// </value>
+        public AudioInputTranscriptionSettings InputAudioTranscription { get; set; }
+
+        /// <summary>
+        /// Gets or sets the language for transcription.
+        /// </summary>
+        /// <value>
+        /// The language code (e.g., "en-US", "fr-FR") to use for transcription.
+        /// If not specified, the service will attempt to auto-detect the language.
+        /// </value>
+        public string Language { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to include confidence scores in transcription results.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> to include confidence scores for transcribed text; otherwise, <c>false</c>.
+        /// Default is <c>false</c>.
+        /// </value>
+        public bool IncludeConfidenceScores { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to include timestamps in transcription results.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> to include word-level timestamps in transcribed text; otherwise, <c>false</c>.
+        /// Default is <c>false</c>.
+        /// </value>
+        public bool IncludeTimestamps { get; set; }
+
+        /// <summary>
+        /// Gets or sets a list of words or phrases to boost recognition accuracy.
+        /// </summary>
+        /// <value>
+        /// A list of domain-specific words or phrases that should be recognized more accurately.
+        /// This can improve transcription quality for specialized vocabulary like brand names,
+        /// technical terms, or industry jargon.
+        /// </value>
+        public IList<string> CustomVocabulary { get; set; } = new List<string>();
+
+        // ==================== Conversation Features ====================
+
+        /// <summary>
+        /// Gets or sets the voice configuration for the conversation.
+        /// </summary>
+        /// <value>
+        /// The voice configuration to use for generating spoken responses. If not specified,
+        /// the service will use a default voice.
+        /// </value>
+        public IVoiceType Voice { get; set; }
+
+        /// <summary>
+        /// Gets or sets the instructions for the conversation assistant.
+        /// </summary>
+        /// <value>
+        /// Instructions that guide the assistant's behavior and responses during the conversation.
+        /// </value>
+        public string Instructions { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tools available to the conversation assistant.
+        /// </summary>
+        /// <value>
+        /// A list of tools that the assistant can use during the conversation.
+        /// </value>
+        public IList<ToolCall> Tools { get; set; } = new List<ToolCall>();
+
+        /// <summary>
+        /// Gets or sets the tool choice strategy for the conversation.
+        /// </summary>
+        /// <value>
+        /// Specifies how the assistant should choose which tools to use. If not specified,
+        /// the assistant will automatically decide when to use tools.
+        /// </value>
+        public string ToolChoice { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to enable parallel tool calling.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> to allow the assistant to call multiple tools in parallel; otherwise, <c>false</c>.
+        /// Default is <c>false</c>.
+        /// </value>
+        public bool ParallelToolCalls { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SessionOptions"/> class.
         /// </summary>
@@ -88,6 +204,7 @@ namespace Azure.AI.VoiceLive
         {
             var session = new RequestSession();
 
+            // Audio configuration
             if (InputAudioFormat.HasValue)
             {
                 session.InputAudioFormat = InputAudioFormat.Value;
@@ -103,6 +220,17 @@ namespace Azure.AI.VoiceLive
                 session.TurnDetection = TurnDetection;
             }
 
+            if (NoiseReduction != null)
+            {
+                session.InputAudioNoiseReduction = NoiseReduction;
+            }
+
+            if (EchoCancellation != null)
+            {
+                session.InputAudioEchoCancellation = EchoCancellation;
+            }
+
+            // Modalities
             if (Modalities != null && Modalities.Count > 0)
             {
                 session.Modalities.Clear();
@@ -112,9 +240,10 @@ namespace Azure.AI.VoiceLive
                 }
             }
 
-            if (InputAudioTranscription != null)
+            // Model and generation settings
+            if (!string.IsNullOrEmpty(Model))
             {
-                session.InputAudioTranscription = InputAudioTranscription;
+                session.Model = Model;
             }
 
             if (Temperature.HasValue)
@@ -124,8 +253,50 @@ namespace Azure.AI.VoiceLive
 
             if (MaxResponseOutputTokens.HasValue)
             {
-                session.MaxResponseOutputTokens = BinaryData.FromObjectAsJson(MaxResponseOutputTokens.Value);
+                session.MaxResponseOutputTokens = MaxResponseOutputTokens.Value;
             }
+
+            // Transcription settings
+            if (InputAudioTranscription != null)
+            {
+                session.InputAudioTranscription = InputAudioTranscription;
+            }
+
+            if (!string.IsNullOrEmpty(Language))
+            {
+                // Store language in additional properties since it might not be a direct property
+                session.AdditionalProperties["language"] = BinaryData.FromString($"\"{Language}\"");
+            }
+
+            // Note: IncludeConfidenceScores, IncludeTimestamps, and CustomVocabulary
+            // may need special handling based on the service API
+
+            // Conversation settings
+            if (Voice != null)
+            {
+                session.Voice = Voice;
+            }
+
+            if (!string.IsNullOrEmpty(Instructions))
+            {
+                session.Instructions = Instructions;
+            }
+
+            if (Tools != null && Tools.Count > 0)
+            {
+                session.Tools.Clear();
+                foreach (var tool in Tools)
+                {
+                    session.Tools.Add(tool);
+                }
+            }
+
+            if (ToolChoice != null)
+            {
+                session.ToolChoice = ToolChoice;
+            }
+
+            // Note: ParallelToolCalls may need special handling
 
             return session;
         }

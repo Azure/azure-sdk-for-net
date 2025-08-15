@@ -10,6 +10,7 @@
 *.userosscache
 *.sln.docstates
 launchsettings.json
+appsettings.Development.json
 
 # Build results
 [Dd]ebug/

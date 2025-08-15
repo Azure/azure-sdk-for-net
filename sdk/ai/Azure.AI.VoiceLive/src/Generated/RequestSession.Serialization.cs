@@ -53,18 +53,6 @@ namespace Azure.AI.VoiceLive
                 writer.WritePropertyName("animation"u8);
                 writer.WriteObjectValue(Animation, options);
             }
-            if (Optional.IsDefined(Voice))
-            {
-                writer.WritePropertyName("voice"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(Voice);
-#else
-                using (JsonDocument document = JsonDocument.Parse(Voice))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
             if (Optional.IsDefined(Instructions))
             {
                 writer.WritePropertyName("instructions"u8);
@@ -135,30 +123,42 @@ namespace Azure.AI.VoiceLive
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(ToolChoice))
-            {
-                writer.WritePropertyName("tool_choice"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(ToolChoice);
-#else
-                using (JsonDocument document = JsonDocument.Parse(ToolChoice))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
             if (Optional.IsDefined(Temperature))
             {
                 writer.WritePropertyName("temperature"u8);
                 writer.WriteNumberValue(Temperature.Value);
             }
-            if (Optional.IsDefined(MaxResponseOutputTokens))
+            if (Optional.IsDefined(_servcieVoice))
+            {
+                writer.WritePropertyName("voice"u8);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(_servcieVoice);
+#else
+                using (JsonDocument document = JsonDocument.Parse(_servcieVoice))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            if (Optional.IsDefined(_maxResponseOutputTokens))
             {
                 writer.WritePropertyName("max_response_output_tokens"u8);
 #if NET6_0_OR_GREATER
-                writer.WriteRawValue(MaxResponseOutputTokens);
+                writer.WriteRawValue(_maxResponseOutputTokens);
 #else
-                using (JsonDocument document = JsonDocument.Parse(MaxResponseOutputTokens))
+                using (JsonDocument document = JsonDocument.Parse(_maxResponseOutputTokens))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            if (Optional.IsDefined(_toolChoice))
+            {
+                writer.WritePropertyName("tool_choice"u8);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(_toolChoice);
+#else
+                using (JsonDocument document = JsonDocument.Parse(_toolChoice))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -209,7 +209,6 @@ namespace Azure.AI.VoiceLive
             string model = default;
             IList<InputModality> modalities = default;
             AnimationOptions animation = default;
-            BinaryData voice = default;
             string instructions = default;
             InputAudio inputAudio = default;
             int? inputAudioSamplingRate = default;
@@ -222,9 +221,10 @@ namespace Azure.AI.VoiceLive
             AudioInputTranscriptionSettings inputAudioTranscription = default;
             IList<AudioTimestampType> outputAudioTimestampTypes = default;
             IList<ToolCall> tools = default;
-            BinaryData toolChoice = default;
             float? temperature = default;
+            BinaryData servcieVoice = default;
             BinaryData maxResponseOutputTokens = default;
+            BinaryData toolChoice = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -254,15 +254,6 @@ namespace Azure.AI.VoiceLive
                         continue;
                     }
                     animation = AnimationOptions.DeserializeAnimationOptions(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("voice"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    voice = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("instructions"u8))
@@ -380,15 +371,6 @@ namespace Azure.AI.VoiceLive
                     tools = array;
                     continue;
                 }
-                if (prop.NameEquals("tool_choice"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    toolChoice = BinaryData.FromString(prop.Value.GetRawText());
-                    continue;
-                }
                 if (prop.NameEquals("temperature"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -396,6 +378,15 @@ namespace Azure.AI.VoiceLive
                         continue;
                     }
                     temperature = prop.Value.GetSingle();
+                    continue;
+                }
+                if (prop.NameEquals("voice"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    servcieVoice = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("max_response_output_tokens"u8))
@@ -407,6 +398,15 @@ namespace Azure.AI.VoiceLive
                     maxResponseOutputTokens = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
+                if (prop.NameEquals("tool_choice"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    toolChoice = BinaryData.FromString(prop.Value.GetRawText());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -416,7 +416,6 @@ namespace Azure.AI.VoiceLive
                 model,
                 modalities ?? new ChangeTrackingList<InputModality>(),
                 animation,
-                voice,
                 instructions,
                 inputAudio,
                 inputAudioSamplingRate,
@@ -429,9 +428,10 @@ namespace Azure.AI.VoiceLive
                 inputAudioTranscription,
                 outputAudioTimestampTypes ?? new ChangeTrackingList<AudioTimestampType>(),
                 tools ?? new ChangeTrackingList<ToolCall>(),
-                toolChoice,
                 temperature,
+                servcieVoice,
                 maxResponseOutputTokens,
+                toolChoice,
                 additionalBinaryDataProperties);
         }
 

@@ -145,7 +145,7 @@ VoiceLiveClient client = new VoiceLiveClient(endpoint, credential);
 VoiceLiveSession session = await client.StartSessionAsync().ConfigureAwait(false);
 
 // Configure session for voice conversation
-ConversationSessionOptions sessionOptions = new ConversationSessionOptions()
+SessionOptions sessionOptions = new SessionOptions()
 {
     Model = "gpt-4o-mini-realtime-preview",
     Instructions = "You are a helpful AI assistant. Respond naturally and conversationally.",
@@ -187,7 +187,7 @@ await foreach (ServerEvent serverEvent in session.GetUpdatesAsync().ConfigureAwa
 ### Configuring custom voice and advanced features
 
 ```C# Snippet:AdvancedVoiceConfiguration
-ConversationSessionOptions sessionOptions = new ConversationSessionOptions()
+SessionOptions sessionOptions = new SessionOptions()
 {
     Model = "gpt-4o-realtime-preview",
     Instructions = "You are a customer service representative. Be helpful and professional.",
@@ -234,7 +234,7 @@ var getCurrentWeatherFunction = new FunctionTool("get_current_weather")
         """)
 };
 
-ConversationSessionOptions sessionOptions = new ConversationSessionOptions()
+SessionOptions sessionOptions = new SessionOptions()
 {
     Model = "gpt-4o-mini-realtime-preview",
     Instructions = "You are a weather assistant. Use the get_current_weather function to help users with weather information.",

@@ -69,7 +69,7 @@ public class BasicVoiceAssistant : IDisposable
             _logger.LogInformation("Connecting to VoiceLive API with model {Model}", _model);
 
             // Start VoiceLive session
-            _session = await _client.StartSessionAsync(cancellationToken).ConfigureAwait(false);
+            _session = await _client.StartSessionAsync(_model, cancellationToken).ConfigureAwait(false);
 
             // Initialize audio processor
             _audioProcessor = new AudioProcessor(_session, _loggerFactory.CreateLogger<AudioProcessor>());
@@ -131,8 +131,9 @@ public class BasicVoiceAssistant : IDisposable
         };
 
         // Create conversation session options
-        var sessionOptions = new ConversationSessionOptions
+        var sessionOptions = new SessionOptions
         {
+            EchoCancellation = new AudioEchoCancellation(),
             Model = _model,
             Instructions = _instructions,
             Voice = azureVoice,

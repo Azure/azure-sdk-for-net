@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 namespace Azure.AI.VoiceLive
 {
     /// <summary>
-    /// Base class for the different voice types supported by the VoiceLive service
+    /// Base interface for the different voice types supported by the VoiceLive service
     /// </summary>
-    public abstract class VoiceBase
+    public interface IVoiceType
     {
     }
 }

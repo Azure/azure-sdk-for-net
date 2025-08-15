@@ -1,11 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFrameworks>net9.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <OutputType>Library</OutputType>
     <NoWarn>$(NoWarn);CS1998</NoWarn> <!-- Suppress async method without await -->
+    <IsSamplesProject>true</IsSamplesProject>
   </PropertyGroup>
 
   <ItemGroup>

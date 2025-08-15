@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
@@ -29,7 +28,6 @@ namespace Azure.AI.VoiceLive
         /// <param name="model"></param>
         /// <param name="modalities"></param>
         /// <param name="animation"></param>
-        /// <param name="voice"></param>
         /// <param name="instructions"></param>
         /// <param name="inputAudio"></param>
         /// <param name="inputAudioSamplingRate"></param>
@@ -42,16 +40,16 @@ namespace Azure.AI.VoiceLive
         /// <param name="inputAudioTranscription"></param>
         /// <param name="outputAudioTimestampTypes"></param>
         /// <param name="tools"></param>
-        /// <param name="toolChoice"></param>
         /// <param name="temperature"></param>
+        /// <param name="servcieVoice"></param>
         /// <param name="maxResponseOutputTokens"></param>
+        /// <param name="toolChoice"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RequestSession(string model, IList<InputModality> modalities, AnimationOptions animation, BinaryData voice, string instructions, InputAudio inputAudio, int? inputAudioSamplingRate, AudioFormat? inputAudioFormat, AudioFormat? outputAudioFormat, TurnDetection turnDetection, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfig avatar, AudioInputTranscriptionSettings inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<ToolCall> tools, BinaryData toolChoice, float? temperature, BinaryData maxResponseOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RequestSession(string model, IList<InputModality> modalities, AnimationOptions animation, string instructions, InputAudio inputAudio, int? inputAudioSamplingRate, AudioFormat? inputAudioFormat, AudioFormat? outputAudioFormat, TurnDetection turnDetection, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfig avatar, AudioInputTranscriptionSettings inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<ToolCall> tools, float? temperature, BinaryData servcieVoice, BinaryData maxResponseOutputTokens, BinaryData toolChoice, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             Modalities = modalities;
             Animation = animation;
-            Voice = voice;
             Instructions = instructions;
             InputAudio = inputAudio;
             InputAudioSamplingRate = inputAudioSamplingRate;
@@ -64,9 +62,10 @@ namespace Azure.AI.VoiceLive
             InputAudioTranscription = inputAudioTranscription;
             OutputAudioTimestampTypes = outputAudioTimestampTypes;
             Tools = tools;
-            ToolChoice = toolChoice;
             Temperature = temperature;
-            MaxResponseOutputTokens = maxResponseOutputTokens;
+            _servcieVoice = servcieVoice;
+            _maxResponseOutputTokens = maxResponseOutputTokens;
+            _toolChoice = toolChoice;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -78,56 +77,6 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets or sets the Animation. </summary>
         public AnimationOptions Animation { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Voice.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description> <see cref="OAIVoice"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="AzureStandardVoice"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="AzureCustomVoice"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="AzurePersonalVoice"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="Phi4mmVoice"/>. </description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Voice { get; set; }
 
         /// <summary> Gets or sets the Instructions. </summary>
         public string Instructions { get; set; }
@@ -165,89 +114,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> Gets the Tools. </summary>
         public IList<ToolCall> Tools { get; }
 
-        /// <summary>
-        /// Gets or sets the ToolChoice.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description> <see cref="ToolChoiceLiteral"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="ToolChoiceObject"/>. </description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData ToolChoice { get; set; }
-
         /// <summary> Gets or sets the Temperature. </summary>
         public float? Temperature { get; set; }
-
-        /// <summary>
-        /// Gets or sets the MaxResponseOutputTokens.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description> <see cref="int"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> "inf". </description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData MaxResponseOutputTokens { get; set; }
     }
 }

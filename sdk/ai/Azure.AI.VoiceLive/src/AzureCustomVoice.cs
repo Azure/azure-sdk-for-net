@@ -2,10 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Data;
 using System.IO;
 
 namespace Azure.AI.VoiceLive
 {
-    public partial class AzureCustomVoice : VoiceBase
+    public partial class AzureCustomVoice : IVoiceType
     { }
 }

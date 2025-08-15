@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -20,11 +21,12 @@ namespace Azure.AI.VoiceLive
         /// simultaneously sending and receiving WebSocket messages.
         /// </remarks>
         /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <param name="model"></param>
         /// <returns>A task that represents the asynchronous operation. The task result contains a new, connected instance of <see cref="VoiceLiveSession"/>.</returns>
-        public virtual async Task<VoiceLiveSession> StartSessionAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<VoiceLiveSession> StartSessionAsync(string model, CancellationToken cancellationToken = default)
         {
             // Convert the HTTP endpoint to a WebSocket endpoint
-            Uri webSocketEndpoint = ConvertToWebSocketEndpoint(_endpoint);
+            Uri webSocketEndpoint = ConvertToWebSocketEndpoint(_endpoint, model);
 
             VoiceLiveSession session = new(this, webSocketEndpoint, _keyCredential);
 
@@ -41,10 +43,11 @@ namespace Azure.AI.VoiceLive
         /// simultaneously sending and receiving WebSocket messages.
         /// </remarks>
         /// <param name="cancellationToken">The cancellation token to use.</param>
+        /// <param name="model"></param>
         /// <returns>A new, connected instance of <see cref="VoiceLiveSession"/>.</returns>
-        public virtual VoiceLiveSession StartSession(CancellationToken cancellationToken = default)
+        public virtual VoiceLiveSession StartSession(string model, CancellationToken cancellationToken = default)
         {
-            return StartSessionAsync(cancellationToken).EnsureCompleted();
+            return StartSessionAsync(model, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -63,7 +66,7 @@ namespace Azure.AI.VoiceLive
         {
             Argument.AssertNotNull(sessionConfig, nameof(sessionConfig));
 
-            VoiceLiveSession session = await StartSessionAsync(cancellationToken).ConfigureAwait(false);
+            VoiceLiveSession session = await StartSessionAsync(sessionConfig.Model, cancellationToken).ConfigureAwait(false);
 
             // Send the session configuration
             ClientEventSessionUpdate sessionUpdateEvent = new(sessionConfig);
@@ -93,8 +96,9 @@ namespace Azure.AI.VoiceLive
         /// Converts an HTTP endpoint to a WebSocket endpoint.
         /// </summary>
         /// <param name="httpEndpoint">The HTTP endpoint to convert.</param>
+        /// <param name="model"></param>
         /// <returns>The WebSocket endpoint.</returns>
-        private static Uri ConvertToWebSocketEndpoint(Uri httpEndpoint)
+        private Uri ConvertToWebSocketEndpoint(Uri httpEndpoint, string model)
         {
             if (httpEndpoint == null)
             {
@@ -119,6 +123,17 @@ namespace Azure.AI.VoiceLive
             if (!builder.Path.EndsWith("/realtime", StringComparison.OrdinalIgnoreCase))
             {
                 builder.Path = builder.Path.TrimEnd('/') + "/voice-agent/realtime";
+            }
+
+            // Add the query parameter for the API version if it doesn't already exist
+            if (!builder.Query.Contains("api-version="))
+            {
+                builder.Query = $"{builder.Query.TrimStart('?')}&api-version={_options.Version}";
+            }
+
+            if (!builder.Query.Contains("model="))
+            {
+                builder.Query = $"{builder.Query.TrimStart('?')}&model={model}";
             }
 
             return builder.Uri;

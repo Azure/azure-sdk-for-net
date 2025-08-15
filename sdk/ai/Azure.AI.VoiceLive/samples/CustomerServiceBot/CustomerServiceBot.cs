@@ -71,7 +71,7 @@ public class CustomerServiceBot : IDisposable
             _logger.LogInformation("Connecting to VoiceLive API with model {Model}", _model);
 
             // Start VoiceLive session
-            _session = await _client.StartSessionAsync(cancellationToken).ConfigureAwait(false);
+            _session = await _client.StartSessionAsync(_model, cancellationToken).ConfigureAwait(false);
 
             // Initialize audio processor
             _audioProcessor = new AudioProcessor(_session, _loggerFactory.CreateLogger<AudioProcessor>());
@@ -134,7 +134,7 @@ public class CustomerServiceBot : IDisposable
         };
 
         // Create conversation session options with function tools
-        var sessionOptions = new ConversationSessionOptions
+        var sessionOptions = new SessionOptions
         {
             Model = _model,
             Instructions = _instructions,
@@ -156,6 +156,7 @@ public class CustomerServiceBot : IDisposable
         sessionOptions.Tools.Add(CreateInitiateReturnProcessTool());
         sessionOptions.Tools.Add(CreateUpdateShippingAddressTool());
 
+        
         await _session!.ConfigureConversationSessionAsync(sessionOptions, cancellationToken).ConfigureAwait(false);
 
         _logger.LogInformation("Session configuration sent with {ToolCount} customer service tools", sessionOptions.Tools.Count);

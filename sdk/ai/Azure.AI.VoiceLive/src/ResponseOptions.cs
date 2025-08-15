@@ -40,7 +40,7 @@ namespace Azure.AI.VoiceLive
         /// <value>
         /// The voice configuration to use for generating spoken responses.
         /// </value>
-        public VoiceBase Voice { get; set; }
+        public IVoiceType Voice { get; set; }
 
         /// <summary>
         /// Gets or sets the output audio format for the response.
