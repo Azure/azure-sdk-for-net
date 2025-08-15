@@ -508,7 +508,7 @@ namespace Azure.Test.Perf
         {
             var latencies = _latencies.Aggregate<IEnumerable<TimeSpan>>((list1, list2) => list1.Concat(list2)).Select(l => new OperationResult
             {
-                Time = l,
+                Time = l.TotalMilliseconds,
                 Size = operationSize,
             }).ToArray();
             string json = JsonSerializer.Serialize(latencies, options: new JsonSerializerOptions()
