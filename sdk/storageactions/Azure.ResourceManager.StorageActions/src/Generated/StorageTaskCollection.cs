@@ -215,6 +215,7 @@ namespace Azure.ResourceManager.StorageActions
 
         /// <summary> Lists all the storage tasks available under the given resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="StorageTaskResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageTaskResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
@@ -226,6 +227,7 @@ namespace Azure.ResourceManager.StorageActions
 
         /// <summary> Lists all the storage tasks available under the given resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="StorageTaskResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageTaskResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext

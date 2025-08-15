@@ -15,7 +15,7 @@ using Azure.ResourceManager.StorageActions;
 namespace Azure.ResourceManager.StorageActions.Models
 {
     /// <summary> Fetch Storage Tasks Run Summary. </summary>
-    internal partial class StorageTaskReportSummary : IJsonModel<StorageTaskReportSummary>
+    public partial class StorageTaskReportSummary : IJsonModel<StorageTaskReportSummary>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

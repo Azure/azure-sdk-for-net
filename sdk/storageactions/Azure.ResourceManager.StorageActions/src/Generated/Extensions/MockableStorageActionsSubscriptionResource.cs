@@ -42,6 +42,7 @@ namespace Azure.ResourceManager.StorageActions.Mocking
 
         /// <summary> Lists all the storage tasks available under the subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="StorageTaskResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageTaskResource> GetStorageTasksAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
@@ -53,6 +54,7 @@ namespace Azure.ResourceManager.StorageActions.Mocking
 
         /// <summary> Lists all the storage tasks available under the subscription. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="StorageTaskResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageTaskResource> GetStorageTasks(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext

@@ -15,7 +15,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.StorageActions.Models;
 
 namespace Azure.ResourceManager.StorageActions
@@ -298,76 +297,118 @@ namespace Azure.ResourceManager.StorageActions
         /// <param name="maxpagesize"> Optional, specifies the maximum number of Storage Task Assignment Resource IDs to be included in the list response. </param>
         /// <param name="filter"> Optional. When specified, it can be used to query using reporting properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<StorageTaskReportInstance> GetStorageTasksReportsAsync(int? maxpagesize = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageTaskReportSummary>> GetStorageTasksReportsAsync(int? maxpagesize = default, string filter = default, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
+            using DiagnosticScope scope = _storageTasksReportClientDiagnostics.CreateScope("StorageTaskResource.GetStorageTasksReports");
+            scope.Start();
+            try
             {
-                CancellationToken = cancellationToken
-            };
-            return new StorageTasksReportGetStorageTasksReportsAsyncCollectionResultOfT(
-                _storageTasksReportRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                maxpagesize,
-                filter,
-                context);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storageTasksReportRestClient.CreateGetStorageTasksReportsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, maxpagesize, filter, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<StorageTaskReportSummary> response = Response.FromValue(StorageTaskReportSummary.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Fetch the storage tasks run report summary for each assignment. </summary>
         /// <param name="maxpagesize"> Optional, specifies the maximum number of Storage Task Assignment Resource IDs to be included in the list response. </param>
         /// <param name="filter"> Optional. When specified, it can be used to query using reporting properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<StorageTaskReportInstance> GetStorageTasksReports(int? maxpagesize = default, string filter = default, CancellationToken cancellationToken = default)
+        public virtual Response<StorageTaskReportSummary> GetStorageTasksReports(int? maxpagesize = default, string filter = default, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
+            using DiagnosticScope scope = _storageTasksReportClientDiagnostics.CreateScope("StorageTaskResource.GetStorageTasksReports");
+            scope.Start();
+            try
             {
-                CancellationToken = cancellationToken
-            };
-            return new StorageTasksReportGetStorageTasksReportsCollectionResultOfT(
-                _storageTasksReportRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                maxpagesize,
-                filter,
-                context);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storageTasksReportRestClient.CreateGetStorageTasksReportsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, maxpagesize, filter, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<StorageTaskReportSummary> response = Response.FromValue(StorageTaskReportSummary.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists Resource IDs of the Storage Task Assignments associated with this Storage Task. </summary>
         /// <param name="maxpagesize"> Optional, specifies the maximum number of Storage Task Assignment Resource IDs to be included in the list response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<SubResource> GetStorageTaskAssignmentsAsync(int? maxpagesize = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<StorageTaskAssignmentsListResult>> GetStorageTaskAssignmentsAsync(int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
+            using DiagnosticScope scope = _storageTaskAssignmentClientDiagnostics.CreateScope("StorageTaskResource.GetStorageTaskAssignments");
+            scope.Start();
+            try
             {
-                CancellationToken = cancellationToken
-            };
-            return new StorageTaskAssignmentGetStorageTaskAssignmentsAsyncCollectionResultOfT(
-                _storageTaskAssignmentRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                maxpagesize,
-                context);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storageTaskAssignmentRestClient.CreateGetStorageTaskAssignmentsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, maxpagesize, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<StorageTaskAssignmentsListResult> response = Response.FromValue(StorageTaskAssignmentsListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Lists Resource IDs of the Storage Task Assignments associated with this Storage Task. </summary>
         /// <param name="maxpagesize"> Optional, specifies the maximum number of Storage Task Assignment Resource IDs to be included in the list response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<SubResource> GetStorageTaskAssignments(int? maxpagesize = default, CancellationToken cancellationToken = default)
+        public virtual Response<StorageTaskAssignmentsListResult> GetStorageTaskAssignments(int? maxpagesize = default, CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
+            using DiagnosticScope scope = _storageTaskAssignmentClientDiagnostics.CreateScope("StorageTaskResource.GetStorageTaskAssignments");
+            scope.Start();
+            try
             {
-                CancellationToken = cancellationToken
-            };
-            return new StorageTaskAssignmentGetStorageTaskAssignmentsCollectionResultOfT(
-                _storageTaskAssignmentRestClient,
-                Guid.Parse(Id.SubscriptionId),
-                Id.ResourceGroupName,
-                Id.Name,
-                maxpagesize,
-                context);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storageTaskAssignmentRestClient.CreateGetStorageTaskAssignmentsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, maxpagesize, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<StorageTaskAssignmentsListResult> response = Response.FromValue(StorageTaskAssignmentsListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Add a tag to the current resource. </summary>

@@ -12,7 +12,7 @@ using Azure.ResourceManager.StorageActions;
 namespace Azure.ResourceManager.StorageActions.Models
 {
     /// <summary> Fetch Storage Tasks Run Summary. </summary>
-    internal partial class StorageTaskReportSummary
+    public partial class StorageTaskReportSummary
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

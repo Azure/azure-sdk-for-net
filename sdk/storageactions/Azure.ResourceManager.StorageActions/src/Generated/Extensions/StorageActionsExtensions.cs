@@ -93,6 +93,7 @@ namespace Azure.ResourceManager.StorageActions
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="StorageTaskResource"/> that may take multiple service requests to iterate over. </returns>
         [ForwardsClientCalls]
         public static AsyncPageable<StorageTaskResource> GetStorageTasksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
@@ -105,6 +106,7 @@ namespace Azure.ResourceManager.StorageActions
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="StorageTaskResource"/> that may take multiple service requests to iterate over. </returns>
         [ForwardsClientCalls]
         public static Pageable<StorageTaskResource> GetStorageTasks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {

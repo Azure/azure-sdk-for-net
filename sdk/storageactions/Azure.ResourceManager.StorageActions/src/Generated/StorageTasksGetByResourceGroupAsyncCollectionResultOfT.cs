@@ -46,24 +46,26 @@ namespace Azure.ResourceManager.StorageActions
         public override async IAsyncEnumerable<Page<StorageTaskData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
-            do
+            while (true)
             {
-                Response response = await GetNextResponse(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
                 }
-                StorageTasksListResult responseWithType = StorageTasksListResult.FromResponse(response);
-                nextPage = responseWithType.NextLink;
-                yield return Page<StorageTaskData>.FromValues(responseWithType.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<StorageTaskData>.FromValues(StorageTasksListResult.FromResponse(response).Value, nextPage?.AbsoluteUri, response);
+                nextPage = StorageTasksListResult.FromResponse(response).NextLink;
+                if (nextPage == null)
+                {
+                    yield break;
+                }
             }
-            while (nextPage != null);
         }
 
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _context) : _client.CreateGetByResourceGroupRequest(_subscriptionId, _resourceGroupName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("StorageTaskCollection.GetAll");
