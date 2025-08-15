@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    /// <summary> Usage for vault. </summary>
-    internal partial class VaultUsageListResult
+    /// <summary> Replication usages for vault. </summary>
+    internal partial class ReplicationUsageList
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,26 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="VaultUsageListResult"/>. </summary>
-        internal VaultUsageListResult()
+        /// <summary> Initializes a new instance of <see cref="ReplicationUsageList"/>. </summary>
+        internal ReplicationUsageList()
         {
-            Value = new ChangeTrackingList<VaultUsage>();
+            Value = new ChangeTrackingList<ReplicationUsage>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VaultUsageListResult"/>. </summary>
-        /// <param name="value"> The list of usages for the given vault. </param>
+        /// <summary> Initializes a new instance of <see cref="ReplicationUsageList"/>. </summary>
+        /// <param name="value"> The list of replication usages for the given vault. </param>
+        /// <param name="nextLink"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VaultUsageListResult(IReadOnlyList<VaultUsage> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReplicationUsageList(IReadOnlyList<ReplicationUsage> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of usages for the given vault. </summary>
-        public IReadOnlyList<VaultUsage> Value { get; }
+        /// <summary> The list of replication usages for the given vault. </summary>
+        public IReadOnlyList<ReplicationUsage> Value { get; }
+        /// <summary> Gets the next link. </summary>
+        public string NextLink { get; }
     }
 }

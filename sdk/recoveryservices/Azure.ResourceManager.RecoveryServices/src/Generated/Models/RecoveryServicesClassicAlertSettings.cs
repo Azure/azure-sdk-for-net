@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    /// <summary> Soft delete Settings of vault. </summary>
-    public partial class RecoveryServicesSoftDeleteSettings
+    /// <summary> Settings for classic alerts. </summary>
+    public partial class RecoveryServicesClassicAlertSettings
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,29 +45,25 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSoftDeleteSettings"/>. </summary>
-        public RecoveryServicesSoftDeleteSettings()
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesClassicAlertSettings"/>. </summary>
+        public RecoveryServicesClassicAlertSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RecoveryServicesSoftDeleteSettings"/>. </summary>
-        /// <param name="softDeleteState"></param>
-        /// <param name="softDeleteRetentionPeriodInDays"> Soft delete retention period in days. </param>
-        /// <param name="enhancedSecurityState"></param>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesClassicAlertSettings"/>. </summary>
+        /// <param name="alertsForCriticalOperations"></param>
+        /// <param name="emailNotificationsForSiteRecovery"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryServicesSoftDeleteSettings(RecoveryServicesSoftDeleteState? softDeleteState, int? softDeleteRetentionPeriodInDays, RecoveryServicesEnhancedSecurityState? enhancedSecurityState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RecoveryServicesClassicAlertSettings(RecoveryServicesAlertsState? alertsForCriticalOperations, RecoveryServicesAlertsState? emailNotificationsForSiteRecovery, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SoftDeleteState = softDeleteState;
-            SoftDeleteRetentionPeriodInDays = softDeleteRetentionPeriodInDays;
-            EnhancedSecurityState = enhancedSecurityState;
+            AlertsForCriticalOperations = alertsForCriticalOperations;
+            EmailNotificationsForSiteRecovery = emailNotificationsForSiteRecovery;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the soft delete state. </summary>
-        public RecoveryServicesSoftDeleteState? SoftDeleteState { get; set; }
-        /// <summary> Soft delete retention period in days. </summary>
-        public int? SoftDeleteRetentionPeriodInDays { get; set; }
-        /// <summary> Gets or sets the enhanced security state. </summary>
-        public RecoveryServicesEnhancedSecurityState? EnhancedSecurityState { get; set; }
+        /// <summary> Gets or sets the alerts for critical operations. </summary>
+        public RecoveryServicesAlertsState? AlertsForCriticalOperations { get; set; }
+        /// <summary> Gets or sets the email notifications for site recovery. </summary>
+        public RecoveryServicesAlertsState? EmailNotificationsForSiteRecovery { get; set; }
     }
 }
