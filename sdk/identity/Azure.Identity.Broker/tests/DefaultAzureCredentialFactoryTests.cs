@@ -57,7 +57,7 @@ namespace Azure.Identity.Broker.Tests
                     Assert.IsTrue(chain.Any(cred => cred is VisualStudioCredential));
                     Assert.IsTrue(chain.Any(cred => cred is AzureDeveloperCliCredential));
                     Assert.IsTrue(chain.Any(cred => cred.GetType() == typeof(VisualStudioCodeCredential)));
-                    Assert.IsFalse(chain.Any(cred => cred.GetType() == typeof(InteractiveBrowserCredential)));
+                    Assert.IsTrue(chain.Any(cred => cred.GetType() == typeof(InteractiveBrowserCredential)));
                 }
                 else if (credSelection == Constants.ProdCredentials)
                 {

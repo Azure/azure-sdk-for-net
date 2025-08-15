@@ -38,13 +38,16 @@ namespace Azure.Identity
             {
                 if (_useDevCredentials)
                 {
+                    TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions brokerOptions);
+
                     return
                     [
                         CreateVisualStudioCredential(),
                         CreateVisualStudioCodeCredential(),
                         CreateAzureCliCredential(),
                         CreateAzurePowerShellCredential(),
-                        CreateAzureDeveloperCliCredential()
+                        CreateAzureDeveloperCliCredential(),
+                        CreateBrokerCredential(brokerOptions)
                     ];
                 }
                 else if (_useProdCredentials)
@@ -97,6 +100,11 @@ namespace Azure.Identity
                 if (!Options.ExcludeManagedIdentityCredential)
                 {
                     chain.Add(CreateManagedIdentityCredential());
+                }
+                if (!Options.ExcludeBrokerCredential)
+                {
+                    TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions brokerOptions);
+                    chain.Add(CreateBrokerCredential(brokerOptions));
                 }
             }
 
