@@ -14,5 +14,10 @@ namespace Azure.AI.VoiceLive
     /// </summary>
     public interface IVoiceType
     {
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        BinaryData ToBinaryData();
     }
 }

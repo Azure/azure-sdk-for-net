@@ -40,7 +40,7 @@ namespace Azure.AI.VoiceLive
                 }
                 else
                 {
-                    _servcieVoice = BinaryData.FromObjectAsJson(value);
+                    _servcieVoice = value.ToBinaryData();
                 }
             }
         }

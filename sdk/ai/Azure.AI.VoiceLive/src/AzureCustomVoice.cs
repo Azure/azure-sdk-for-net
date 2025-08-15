@@ -8,5 +8,11 @@ using System.IO;
 namespace Azure.AI.VoiceLive
 {
     public partial class AzureCustomVoice : IVoiceType
-    { }
+    {
+        /// <summary>
+        ///
+        /// </summary>
+        /// <returns></returns>
+        public BinaryData ToBinaryData() => this.PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions.Json);
+    }
 }
