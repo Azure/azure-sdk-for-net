@@ -28,7 +28,7 @@ Describe "Get-OnboardedDocsMsPackagesForMoniker" -Tag "UnitTest" {
         $onboardingPackages = Get-dotnet-OnboardedDocsMsPackagesForMoniker -DocRepoLocation $DocRepoLocation -moniker $moniker
         foreach ($package in $onboardingPackages.GetEnumerator()) {
             $package.Key | Should -Be $package.Value.Name
-            $packageValueNormalized = (ConvertTo-Json $package.Value) -replace "\r\n", "\n"
+            $packageValueNormalized = (ConvertTo-Json $package.Value) -replace "`r`n", "`n"
             $packageValueNormalized | Should -Be (Get-Content "$DocRepoLocation/metadata/$moniker/$($package.Key).json" -Raw)
         }
     }
