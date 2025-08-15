@@ -25,7 +25,7 @@ public class BicepValueReference(ProvisionableConstruct construct, string proper
             }
             else if (throwIfNoRoot)
             {
-                throw new NotImplementedException("Cannot reference a construct without a name.");
+                throw new InvalidOperationException("Cannot reference a construct without a name.");
             }
             else
             {
