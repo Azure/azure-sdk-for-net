@@ -200,12 +200,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ZooResource"/> that may take multiple service requests to iterate over. </returns>
-<<<<<<< HEAD
-        [ForwardsClientCalls]
         public static AsyncPageable<ZooResource> GetZoosAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-=======
-        public static AsyncPageable<ZooResource> GetBySubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
->>>>>>> origin/main
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -217,12 +212,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ZooResource"/> that may take multiple service requests to iterate over. </returns>
-<<<<<<< HEAD
-        [ForwardsClientCalls]
         public static Pageable<ZooResource> GetZoos(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-=======
-        public static Pageable<ZooResource> GetBySubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
->>>>>>> origin/main
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
