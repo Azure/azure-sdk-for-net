@@ -68,7 +68,10 @@ namespace Azure.Generator.Management.Utilities
         /// <param name="operationKind"></param>
         /// <param name="resourceName"></param>
         /// <param name="isAsync"></param>
-        /// <returns></returns>
+        /// <param name="operationKind">The kind of resource operation to perform (e.g., List, Create).</param>
+        /// <param name="resourceName">The name of the resource for which the operation is being performed.</param>
+        /// <param name="isAsync">Whether the method should be asynchronous.</param>
+        /// <returns>The method name to use for the extension operation, or null if no override is needed.</returns>
         public static string? GetExtensionOperationMethodName(ResourceOperationKind operationKind, string resourceName, bool isAsync)
         {
             return operationKind switch
