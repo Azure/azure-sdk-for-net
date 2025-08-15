@@ -1,0 +1,11 @@
+{
+  "output-folder": ".",
+  "namespace": "Microsoft.PortalServices",
+  "library-name": "Microsoft.PortalServices",
+  "use-model-reader-writer": true,
+  "shared-source-folders": [
+    "../../TempTypeSpecFiles/node_modules/@autorest/csharp/Generator.Shared",
+    "../../TempTypeSpecFiles/node_modules/@autorest/csharp/Azure.Core.Shared"
+  ],
+  "azure-arm": true
+}

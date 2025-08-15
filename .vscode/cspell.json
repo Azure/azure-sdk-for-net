@@ -1776,6 +1776,19 @@
         "Acks",
         "acks"
       ]
+    },
+    {
+      "filename": "**/sdk/workloadorchestration/**/*.cs",
+      "words": [
+        "Inprogress",
+        "Undeployed"
+      ]
+    },    
+    {
+      "filename": "**/sdk/siteconfiguration/**/*.cs",
+      "words": [
+        "Inprogress"      
+      ]
     }
   ],
   "allowCompoundWords": true
