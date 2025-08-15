@@ -101,7 +101,10 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
                     "\"locale\":\"en-US\"," +
                     "\"callConnectionId\":\"callConnectionId\"," +
                     "\"correlationId\":\"correlationId\"," +
-                    "\"speechRecognitionModelEndpointId\":\"speechRecognitionModelEndpointId\"" +
+                    "\"speechRecognitionModelEndpointId\":\"speechRecognitionModelEndpointId\"," +
+                    "\"locales\":[\"en-us\", \"hi-in\"]," +
+                    "\"enableSentimentAnalysis\":true," +
+                    "\"piiRedactionOptions\":{ \"enable\":true,\"redactionType\":\"maskWithCharacter\"}" +
                 "}" +
             "}";
 
@@ -136,7 +139,11 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
                         "}" +
                     "]," +
                     "\"participantRawID\":\"abc12345\"," +
-                    "\"resultStatus\":\"final\"" +
+                    "\"resultStatus\":\"final\"," +
+                    "\"sentimentAnalysisResult\":{" +
+                    "\"sentiment\":\"neutral\"" +
+                    "}," +
+                    "\"languageIdentified\":\"en-US\"" +
                 "}" +
             "}";
 
@@ -168,6 +175,11 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             Assert.AreEqual("callConnectionId", transcriptionMetadata.CallConnectionId);
             Assert.AreEqual("correlationId", transcriptionMetadata.CorrelationId);
             Assert.AreEqual("speechRecognitionModelEndpointId", transcriptionMetadata.SpeechRecognitionModelEndpointId);
+            Assert.IsTrue(transcriptionMetadata.Locales.Contains("en-us"));
+            Assert.IsTrue(transcriptionMetadata.Locales.Contains("hi-in"));
+            Assert.AreEqual(true, transcriptionMetadata.IsSentimentAnalysisEnabled);
+            Assert.True(transcriptionMetadata.PiiRedactionOptions.IsEnabled);
+            Assert.AreEqual("maskWithCharacter", transcriptionMetadata.PiiRedactionOptions.RedactionType.ToString());
         }
 
         private static void ValidateTranscriptionDataWithWordsNull(TranscriptionData transcription)
@@ -207,6 +219,8 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             Assert.AreEqual("abc12345", transcription.Participant.RawId);
             Console.WriteLine(transcription.ResultState.ToString());
             Assert.AreEqual(TranscriptionResultState.Final, transcription.ResultState);
+            Assert.AreEqual("neutral", transcription.SentimentAnalysisResult.Sentiment);
+            Assert.AreEqual("en-US", transcription.LanguageIdentified);
         }
         #endregion
     }
