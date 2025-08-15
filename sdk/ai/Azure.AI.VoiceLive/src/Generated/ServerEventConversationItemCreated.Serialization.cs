@@ -83,7 +83,7 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            string @type = "conversation.item.created";
+            ServerEventType @type = default;
             string eventId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string previousItemId = default;
@@ -92,7 +92,7 @@ namespace Azure.AI.VoiceLive
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = new ServerEventType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("event_id"u8))

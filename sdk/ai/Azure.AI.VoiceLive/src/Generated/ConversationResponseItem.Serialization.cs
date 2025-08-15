@@ -18,11 +18,6 @@ namespace Azure.AI.VoiceLive
     [PersistableModelProxy(typeof(UnknownConversationResponseItem))]
     public abstract partial class ConversationResponseItem : IJsonModel<ConversationResponseItem>
     {
-        /// <summary> Initializes a new instance of <see cref="ConversationResponseItem"/> for deserialization. </summary>
-        internal ConversationResponseItem()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConversationResponseItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -46,8 +41,11 @@ namespace Azure.AI.VoiceLive
                 writer.WritePropertyName("object"u8);
                 writer.WriteStringValue(Object);
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            if (Optional.IsDefined(Type))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type.Value.ToString());
+            }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);

@@ -15,11 +15,8 @@ namespace Azure.AI.VoiceLive
     {
         /// <summary> Initializes a new instance of <see cref="RequestMessageItem"/>. </summary>
         /// <param name="role"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="role"/> is null. </exception>
-        public RequestMessageItem(string role) : base("message")
+        public RequestMessageItem(MessageRole role) : base(ItemType.Message)
         {
-            Argument.AssertNotNull(role, nameof(role));
-
             Role = role;
         }
 
@@ -29,14 +26,14 @@ namespace Azure.AI.VoiceLive
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="role"></param>
         /// <param name="status"></param>
-        internal RequestMessageItem(string @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string role, ItemStatus? status) : base(@type, id, additionalBinaryDataProperties)
+        internal RequestMessageItem(ItemType @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, MessageRole role, ItemStatus? status) : base(@type, id, additionalBinaryDataProperties)
         {
             Role = role;
             Status = status;
         }
 
         /// <summary> Gets or sets the Role. </summary>
-        internal string Role { get; set; }
+        internal MessageRole Role { get; set; }
 
         /// <summary> Gets or sets the Status. </summary>
         public ItemStatus? Status { get; set; }

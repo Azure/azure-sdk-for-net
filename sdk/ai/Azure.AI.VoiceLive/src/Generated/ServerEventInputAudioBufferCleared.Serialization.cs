@@ -64,14 +64,14 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            string @type = "input_audio_buffer.cleared";
+            ServerEventType @type = default;
             string eventId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = new ServerEventType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("event_id"u8))

@@ -16,7 +16,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownClientEvent(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type ?? "unknown", eventId, additionalBinaryDataProperties)
+        internal UnknownClientEvent(ClientEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", eventId, additionalBinaryDataProperties)
         {
         }
     }

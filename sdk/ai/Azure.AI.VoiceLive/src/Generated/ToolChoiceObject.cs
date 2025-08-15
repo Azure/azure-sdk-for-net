@@ -20,20 +20,22 @@ namespace Azure.AI.VoiceLive
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ToolChoiceObject"/>. </summary>
-        private protected ToolChoiceObject()
+        /// <param name="type"></param>
+        private protected ToolChoiceObject(ToolType @type)
         {
+            Type = @type;
         }
 
         /// <summary> Initializes a new instance of <see cref="ToolChoiceObject"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ToolChoiceObject(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ToolChoiceObject(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the Type. </summary>
-        internal string Type { get; set; } = "function";
+        internal ToolType Type { get; set; }
     }
 }

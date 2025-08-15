@@ -15,7 +15,7 @@ namespace Azure.AI.VoiceLive
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventConversationItemInputAudioTranscriptionDelta"/>. </summary>
         /// <param name="itemId"> The ID of the item. </param>
-        internal ServerEventConversationItemInputAudioTranscriptionDelta(string itemId) : base("conversation.item.input_audio_transcription.delta")
+        internal ServerEventConversationItemInputAudioTranscriptionDelta(string itemId) : base(ServerEventType.ConversationItemInputAudioTranscriptionDelta)
         {
             ItemId = itemId;
             Logprobs = new ChangeTrackingList<LogProbProperties>();
@@ -29,7 +29,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
         /// <param name="delta"> The text delta. </param>
         /// <param name="logprobs"> The log probabilities of the transcription. </param>
-        internal ServerEventConversationItemInputAudioTranscriptionDelta(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, int? contentIndex, string delta, IList<LogProbProperties> logprobs) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ServerEventConversationItemInputAudioTranscriptionDelta(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, int? contentIndex, string delta, IList<LogProbProperties> logprobs) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ItemId = itemId;
             ContentIndex = contentIndex;

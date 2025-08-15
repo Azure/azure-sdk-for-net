@@ -16,7 +16,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseOutputItemAdded"/>. </summary>
         /// <param name="responseId"> The ID of the Response to which the item belongs. </param>
         /// <param name="outputIndex"> The index of the output item in the Response. </param>
-        internal ServerEventResponseOutputItemAdded(string responseId, int outputIndex) : base("response.output_item.added")
+        internal ServerEventResponseOutputItemAdded(string responseId, int outputIndex) : base(ServerEventType.ResponseOutputItemAdded)
         {
             ResponseId = responseId;
             OutputIndex = outputIndex;
@@ -29,7 +29,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="responseId"> The ID of the Response to which the item belongs. </param>
         /// <param name="outputIndex"> The index of the output item in the Response. </param>
         /// <param name="item"></param>
-        internal ServerEventResponseOutputItemAdded(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, int outputIndex, ConversationItemWithReference item) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ServerEventResponseOutputItemAdded(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, int outputIndex, ConversationItemWithReference item) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             OutputIndex = outputIndex;

@@ -11,27 +11,27 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Indicates the completion of blendshape animation processing for a specific output of a response. </summary>
-    public partial class ResponseAnimationBlendshapeDoneEvent : ServerEvent
+    public partial class ServerEventResponseAnimationBlendshapeDone : ServerEvent
     {
-        /// <summary> Initializes a new instance of <see cref="ResponseAnimationBlendshapeDoneEvent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEventResponseAnimationBlendshapeDone"/>. </summary>
         /// <param name="responseId"></param>
         /// <param name="itemId"></param>
         /// <param name="outputIndex"></param>
-        internal ResponseAnimationBlendshapeDoneEvent(string responseId, string itemId, int outputIndex) : base("response.animation_blendshapes.done")
+        internal ServerEventResponseAnimationBlendshapeDone(string responseId, string itemId, int outputIndex) : base(ServerEventType.ResponseAnimationBlendshapesDone)
         {
             ResponseId = responseId;
             ItemId = itemId;
             OutputIndex = outputIndex;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponseAnimationBlendshapeDoneEvent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEventResponseAnimationBlendshapeDone"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="responseId"></param>
         /// <param name="itemId"></param>
         /// <param name="outputIndex"></param>
-        internal ResponseAnimationBlendshapeDoneEvent(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ServerEventResponseAnimationBlendshapeDone(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             ItemId = itemId;

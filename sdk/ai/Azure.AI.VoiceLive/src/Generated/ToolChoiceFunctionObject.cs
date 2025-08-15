@@ -16,7 +16,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ToolChoiceFunctionObject"/>. </summary>
         /// <param name="function"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="function"/> is null. </exception>
-        public ToolChoiceFunctionObject(ToolChoiceFunctionObjectFunction function)
+        public ToolChoiceFunctionObject(ToolChoiceFunctionObjectFunction function) : base(ToolType.Function)
         {
             Argument.AssertNotNull(function, nameof(function));
 
@@ -27,7 +27,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="function"></param>
-        internal ToolChoiceFunctionObject(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ToolChoiceFunctionObjectFunction function) : base(@type, additionalBinaryDataProperties)
+        internal ToolChoiceFunctionObject(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ToolChoiceFunctionObjectFunction function) : base(@type, additionalBinaryDataProperties)
         {
             Function = function;
         }

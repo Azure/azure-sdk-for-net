@@ -11,14 +11,14 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Indicates completion of viseme animation delivery for a response. </summary>
-    public partial class ResponseAnimationVisemeDoneEvent : ServerEvent
+    public partial class ServerEventResponseAnimationVisemeDone : ServerEvent
     {
-        /// <summary> Initializes a new instance of <see cref="ResponseAnimationVisemeDoneEvent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEventResponseAnimationVisemeDone"/>. </summary>
         /// <param name="responseId"></param>
         /// <param name="itemId"></param>
         /// <param name="outputIndex"></param>
         /// <param name="contentIndex"></param>
-        internal ResponseAnimationVisemeDoneEvent(string responseId, string itemId, int outputIndex, int contentIndex) : base("response.animation_viseme.done")
+        internal ServerEventResponseAnimationVisemeDone(string responseId, string itemId, int outputIndex, int contentIndex) : base(ServerEventType.ResponseAnimationVisemeDone)
         {
             ResponseId = responseId;
             ItemId = itemId;
@@ -26,7 +26,7 @@ namespace Azure.AI.VoiceLive
             ContentIndex = contentIndex;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponseAnimationVisemeDoneEvent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEventResponseAnimationVisemeDone"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -34,7 +34,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="itemId"></param>
         /// <param name="outputIndex"></param>
         /// <param name="contentIndex"></param>
-        internal ResponseAnimationVisemeDoneEvent(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ServerEventResponseAnimationVisemeDone(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             ItemId = itemId;

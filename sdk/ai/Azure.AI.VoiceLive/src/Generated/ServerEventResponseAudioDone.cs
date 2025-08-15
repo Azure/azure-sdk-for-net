@@ -21,7 +21,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="itemId"> The ID of the item. </param>
         /// <param name="outputIndex"> The index of the output item in the response. </param>
         /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
-        internal ServerEventResponseAudioDone(string responseId, string itemId, int outputIndex, int contentIndex) : base("response.audio.done")
+        internal ServerEventResponseAudioDone(string responseId, string itemId, int outputIndex, int contentIndex) : base(ServerEventType.ResponseAudioDone)
         {
             ResponseId = responseId;
             ItemId = itemId;
@@ -37,7 +37,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="itemId"> The ID of the item. </param>
         /// <param name="outputIndex"> The index of the output item in the response. </param>
         /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
-        internal ServerEventResponseAudioDone(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ServerEventResponseAudioDone(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             ItemId = itemId;

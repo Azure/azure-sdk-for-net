@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Azure.AI.VoiceLive.TestDataGenerator</RootNamespace>
+    <AssemblyName>Azure.AI.VoiceLive.TestDataGenerator</AssemblyName>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>false</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Azure Cognitive Services Speech SDK for audio generation -->
+    
+    <!-- Configuration and logging -->
+    <PackageReference Include="Microsoft.CognitiveServices.Speech" VersionOverride="1.45.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" VersionOverride="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" VersionOverride="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" VersionOverride="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" VersionOverride="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" VersionOverride="8.0.0" />
+    
+    <!-- Command line parsing -->
+    <PackageReference Include="System.CommandLine" VersionOverride="2.0.0-beta4.22272.1" />
+    
+    <!-- JSON handling -->
+    <PackageReference Include="System.Text.Json" VersionOverride="9.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="test-phrases.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

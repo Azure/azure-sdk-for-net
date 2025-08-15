@@ -19,7 +19,7 @@ namespace Azure.AI.VoiceLive
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventError"/>. </summary>
         /// <param name="error"> Details of the error. </param>
-        internal ServerEventError(ServerEventErrorError error) : base("error")
+        internal ServerEventError(ServerEventErrorError error) : base(ServerEventType.Error)
         {
             Error = error;
         }
@@ -29,7 +29,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="error"> Details of the error. </param>
-        internal ServerEventError(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServerEventErrorError error) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ServerEventError(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServerEventErrorError error) : base(@type, eventId, additionalBinaryDataProperties)
         {
             Error = error;
         }

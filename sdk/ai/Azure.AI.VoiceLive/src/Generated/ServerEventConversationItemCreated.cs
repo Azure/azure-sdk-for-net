@@ -28,7 +28,7 @@ namespace Azure.AI.VoiceLive
         /// The ID of the preceding item in the Conversation context, allows the
         /// client to understand the order of the conversation.
         /// </param>
-        internal ServerEventConversationItemCreated(string previousItemId) : base("conversation.item.created")
+        internal ServerEventConversationItemCreated(string previousItemId) : base(ServerEventType.ConversationItemCreated)
         {
             PreviousItemId = previousItemId;
         }
@@ -42,7 +42,7 @@ namespace Azure.AI.VoiceLive
         /// client to understand the order of the conversation.
         /// </param>
         /// <param name="item"></param>
-        internal ServerEventConversationItemCreated(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string previousItemId, ConversationItemWithReference item) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ServerEventConversationItemCreated(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string previousItemId, ConversationItemWithReference item) : base(@type, eventId, additionalBinaryDataProperties)
         {
             PreviousItemId = previousItemId;
             Item = item;

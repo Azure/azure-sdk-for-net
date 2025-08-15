@@ -12,7 +12,7 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// A voicelive server event.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ServerEventSessionAvatarConnecting"/>, <see cref="ServerEventSessionCreated"/>, <see cref="ServerEventSessionUpdated"/>, <see cref="ServerEventError"/>, <see cref="ServerEventResponseTextDelta"/>, <see cref="ServerEventResponseAudioDelta"/>, <see cref="ServerEventConversationItemCreated"/>, <see cref="ServerEventConversationItemDeleted"/>, <see cref="ServerEventConversationItemRetrieved"/>, <see cref="ServerEventConversationItemTruncated"/>, <see cref="ServerEventConversationItemInputAudioTranscriptionCompleted"/>, <see cref="ServerEventConversationItemInputAudioTranscriptionDelta"/>, <see cref="ServerEventConversationItemInputAudioTranscriptionFailed"/>, <see cref="ServerEventInputAudioBufferCommitted"/>, <see cref="ServerEventInputAudioBufferCleared"/>, <see cref="ServerEventInputAudioBufferSpeechStarted"/>, <see cref="ServerEventInputAudioBufferSpeechStopped"/>, <see cref="ServerEventResponseCreated"/>, <see cref="ServerEventResponseDone"/>, <see cref="ServerEventResponseOutputItemAdded"/>, <see cref="ServerEventResponseOutputItemDone"/>, <see cref="ServerEventResponseContentPartAdded"/>, <see cref="ServerEventResponseContentPartDone"/>, <see cref="ServerEventResponseTextDone"/>, <see cref="ServerEventResponseAudioTranscriptDelta"/>, <see cref="ServerEventResponseAudioTranscriptDone"/>, <see cref="ServerEventResponseAudioDone"/>, <see cref="ServerEventResponseFunctionCallArgumentsDelta"/>, <see cref="ServerEventResponseFunctionCallArgumentsDone"/>, <see cref="ResponseAnimationBlendshapeDeltaEvent"/>, <see cref="ResponseAnimationBlendshapeDoneEvent"/>, <see cref="ResponseEmotionHypothesis"/>, <see cref="ResponseAudioTimestampDeltaEvent"/>, <see cref="ResponseAudioTimestampDoneEvent"/>, <see cref="ResponseAnimationVisemeDeltaEvent"/>, and <see cref="ResponseAnimationVisemeDoneEvent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ServerEventSessionAvatarConnecting"/>, <see cref="ServerEventSessionCreated"/>, <see cref="ServerEventSessionUpdated"/>, <see cref="ServerEventError"/>, <see cref="ServerEventResponseTextDelta"/>, <see cref="ServerEventResponseAudioDelta"/>, <see cref="ServerEventConversationItemCreated"/>, <see cref="ServerEventConversationItemDeleted"/>, <see cref="ServerEventConversationItemRetrieved"/>, <see cref="ServerEventConversationItemTruncated"/>, <see cref="ServerEventConversationItemInputAudioTranscriptionCompleted"/>, <see cref="ServerEventConversationItemInputAudioTranscriptionDelta"/>, <see cref="ServerEventConversationItemInputAudioTranscriptionFailed"/>, <see cref="ServerEventInputAudioBufferCommitted"/>, <see cref="ServerEventInputAudioBufferCleared"/>, <see cref="ServerEventInputAudioBufferSpeechStarted"/>, <see cref="ServerEventInputAudioBufferSpeechStopped"/>, <see cref="ServerEventResponseCreated"/>, <see cref="ServerEventResponseDone"/>, <see cref="ServerEventResponseOutputItemAdded"/>, <see cref="ServerEventResponseOutputItemDone"/>, <see cref="ServerEventResponseContentPartAdded"/>, <see cref="ServerEventResponseContentPartDone"/>, <see cref="ServerEventResponseTextDone"/>, <see cref="ServerEventResponseAudioTranscriptDelta"/>, <see cref="ServerEventResponseAudioTranscriptDone"/>, <see cref="ServerEventResponseAudioDone"/>, <see cref="ServerEventResponseFunctionCallArgumentsDelta"/>, <see cref="ServerEventResponseFunctionCallArgumentsDone"/>, <see cref="ServerEventResponseAnimationBlendshapeDelta"/>, <see cref="ServerEventResponseAnimationBlendshapeDone"/>, <see cref="ServerEventResponseEmotionHypothesis"/>, <see cref="ServerEventResponseAudioTimestampDelta"/>, <see cref="ServerEventResponseAudioTimestampDone"/>, <see cref="ServerEventResponseAnimationVisemeDelta"/>, and <see cref="ServerEventResponseAnimationVisemeDone"/>.
     /// </summary>
     public abstract partial class ServerEvent
     {
@@ -21,7 +21,7 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Initializes a new instance of <see cref="ServerEvent"/>. </summary>
         /// <param name="type"> The type of event. </param>
-        private protected ServerEvent(string @type)
+        private protected ServerEvent(ServerEventType @type)
         {
             Type = @type;
         }
@@ -30,7 +30,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServerEvent(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServerEvent(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             EventId = eventId;
@@ -38,7 +38,7 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> The type of event. </summary>
-        internal string Type { get; set; }
+        internal ServerEventType Type { get; set; }
 
         /// <summary> Gets the EventId. </summary>
         public virtual string EventId { get; }

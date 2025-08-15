@@ -12,16 +12,16 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Represents a delta update of blendshape animation frames for a specific output of a response. </summary>
-    public partial class ResponseAnimationBlendshapeDeltaEvent : ServerEvent
+    public partial class ServerEventResponseAnimationBlendshapeDelta : ServerEvent
     {
-        /// <summary> Initializes a new instance of <see cref="ResponseAnimationBlendshapeDeltaEvent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEventResponseAnimationBlendshapeDelta"/>. </summary>
         /// <param name="responseId"></param>
         /// <param name="itemId"></param>
         /// <param name="outputIndex"></param>
         /// <param name="contentIndex"></param>
         /// <param name="frames"></param>
         /// <param name="frameIndex"></param>
-        internal ResponseAnimationBlendshapeDeltaEvent(string responseId, string itemId, int outputIndex, int contentIndex, BinaryData frames, int frameIndex) : base("response.animation_blendshapes.delta")
+        internal ServerEventResponseAnimationBlendshapeDelta(string responseId, string itemId, int outputIndex, int contentIndex, BinaryData frames, int frameIndex) : base(ServerEventType.ResponseAnimationBlendshapesDelta)
         {
             ResponseId = responseId;
             ItemId = itemId;
@@ -31,7 +31,7 @@ namespace Azure.AI.VoiceLive
             FrameIndex = frameIndex;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponseAnimationBlendshapeDeltaEvent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEventResponseAnimationBlendshapeDelta"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -41,7 +41,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="contentIndex"></param>
         /// <param name="frames"></param>
         /// <param name="frameIndex"></param>
-        internal ResponseAnimationBlendshapeDeltaEvent(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, BinaryData frames, int frameIndex) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ServerEventResponseAnimationBlendshapeDelta(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, BinaryData frames, int frameIndex) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             ItemId = itemId;

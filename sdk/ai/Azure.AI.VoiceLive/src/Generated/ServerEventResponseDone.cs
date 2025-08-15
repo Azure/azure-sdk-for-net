@@ -19,7 +19,7 @@ namespace Azure.AI.VoiceLive
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseDone"/>. </summary>
         /// <param name="response"></param>
-        internal ServerEventResponseDone(VoiceLiveResponse response) : base("response.done")
+        internal ServerEventResponseDone(VoiceLiveResponse response) : base(ServerEventType.ResponseDone)
         {
             Response = response;
         }
@@ -29,7 +29,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="response"></param>
-        internal ServerEventResponseDone(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceLiveResponse response) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ServerEventResponseDone(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceLiveResponse response) : base(@type, eventId, additionalBinaryDataProperties)
         {
             Response = response;
         }

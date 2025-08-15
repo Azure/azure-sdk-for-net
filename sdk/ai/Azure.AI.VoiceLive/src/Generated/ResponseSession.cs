@@ -48,7 +48,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="maxResponseOutputTokens"></param>
         /// <param name="agent"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseSession(string id, string model, IList<InputModality> modalities, string instructions, AnimationOptions animation, BinaryData voice, InputAudio inputAudio, AudioFormat? inputAudioFormat, AudioFormat? outputAudioFormat, int? inputAudioSamplingRate, TurnDetection turnDetection, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfig avatar, AudioInputTranscriptionSettings inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<ToolCall> tools, BinaryData toolChoice, float? temperature, BinaryData maxResponseOutputTokens, AgentConfig agent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponseSession(string id, string model, IList<InputModality> modalities, string instructions, AnimationOptions animation, BinaryData voice, InputAudio inputAudio, AudioFormat? inputAudioFormat, AudioFormat? outputAudioFormat, int? inputAudioSamplingRate, TurnDetection turnDetection, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfig avatar, AudioInputTranscriptionSettings inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<ToolCall> tools, BinaryData toolChoice, float? temperature, BinaryData maxResponseOutputTokens, RespondingAgentConfig agent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Model = model;
@@ -258,6 +258,6 @@ namespace Azure.AI.VoiceLive
         public BinaryData MaxResponseOutputTokens { get; }
 
         /// <summary> Gets the Agent. </summary>
-        public AgentConfig Agent { get; }
+        public RespondingAgentConfig Agent { get; }
     }
 }

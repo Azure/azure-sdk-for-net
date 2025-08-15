@@ -35,7 +35,8 @@
   <Target Name="OverwriteWithDevelopmentSettings" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug'">
     <Copy SourceFiles="appsettings.development.json"
           DestinationFiles="$(OutputPath)appsettings.json"
-          OverwriteReadOnlyFiles="true" />
+          OverwriteReadOnlyFiles="true"
+          Condition="Exists('appsettings.development.json')" />
   </Target>
 
 </Project>

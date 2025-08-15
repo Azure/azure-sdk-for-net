@@ -17,7 +17,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="RequestSystemMessageItem"/>. </summary>
         /// <param name="content"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public RequestSystemMessageItem(IEnumerable<RequestTextContentPart> content) : base("system")
+        public RequestSystemMessageItem(IEnumerable<RequestTextContentPart> content) : base(MessageRole.System)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -31,7 +31,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="role"></param>
         /// <param name="status"></param>
         /// <param name="content"></param>
-        internal RequestSystemMessageItem(string @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string role, ItemStatus? status, IList<RequestTextContentPart> content) : base(@type, id, additionalBinaryDataProperties, role, status)
+        internal RequestSystemMessageItem(ItemType @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, MessageRole role, ItemStatus? status, IList<RequestTextContentPart> content) : base(@type, id, additionalBinaryDataProperties, role, status)
         {
             Content = content;
         }

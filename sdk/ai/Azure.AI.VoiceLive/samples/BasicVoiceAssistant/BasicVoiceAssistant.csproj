@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>net9.0</TargetFrameworks>
+    <TargetFrameworks>net8.0</TargetFrameworks>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <AssemblyName>BasicVoiceAssistant</AssemblyName>
@@ -36,7 +36,8 @@
   <Target Name="OverwriteWithDevelopmentSettings" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug'">
     <Copy SourceFiles="appsettings.development.json"
           DestinationFiles="$(OutputPath)appsettings.json"
-          OverwriteReadOnlyFiles="true" />
+          OverwriteReadOnlyFiles="true"
+          Condition="Exists('appsettings.development.json')" />
   </Target>
 
 </Project>

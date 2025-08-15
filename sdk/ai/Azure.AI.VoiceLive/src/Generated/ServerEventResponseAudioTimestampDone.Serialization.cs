@@ -12,17 +12,17 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> Represents a word-level audio timestamp delta for a response. </summary>
-    public partial class ResponseAudioTimestampDeltaEvent : IJsonModel<ResponseAudioTimestampDeltaEvent>
+    /// <summary> Indicates completion of audio timestamp delivery for a response. </summary>
+    public partial class ServerEventResponseAudioTimestampDone : IJsonModel<ServerEventResponseAudioTimestampDone>
     {
-        /// <summary> Initializes a new instance of <see cref="ResponseAudioTimestampDeltaEvent"/> for deserialization. </summary>
-        internal ResponseAudioTimestampDeltaEvent()
+        /// <summary> Initializes a new instance of <see cref="ServerEventResponseAudioTimestampDone"/> for deserialization. </summary>
+        internal ServerEventResponseAudioTimestampDone()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ResponseAudioTimestampDeltaEvent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ServerEventResponseAudioTimestampDone>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -33,10 +33,10 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponseAudioTimestampDeltaEvent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServerEventResponseAudioTimestampDone>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResponseAudioTimestampDeltaEvent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerEventResponseAudioTimestampDone)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("response_id"u8);
@@ -47,57 +47,45 @@ namespace Azure.AI.VoiceLive
             writer.WriteNumberValue(OutputIndex);
             writer.WritePropertyName("content_index"u8);
             writer.WriteNumberValue(ContentIndex);
-            writer.WritePropertyName("audio_offset_ms"u8);
-            writer.WriteNumberValue(AudioOffsetMs);
-            writer.WritePropertyName("audio_duration_ms"u8);
-            writer.WriteNumberValue(AudioDurationMs);
-            writer.WritePropertyName("text"u8);
-            writer.WriteStringValue(Text);
-            writer.WritePropertyName("timestamp_type"u8);
-            writer.WriteStringValue(TimestampType);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponseAudioTimestampDeltaEvent IJsonModel<ResponseAudioTimestampDeltaEvent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ResponseAudioTimestampDeltaEvent)JsonModelCreateCore(ref reader, options);
+        ServerEventResponseAudioTimestampDone IJsonModel<ServerEventResponseAudioTimestampDone>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ServerEventResponseAudioTimestampDone)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ServerEvent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponseAudioTimestampDeltaEvent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServerEventResponseAudioTimestampDone>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResponseAudioTimestampDeltaEvent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerEventResponseAudioTimestampDone)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResponseAudioTimestampDeltaEvent(document.RootElement, options);
+            return DeserializeServerEventResponseAudioTimestampDone(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ResponseAudioTimestampDeltaEvent DeserializeResponseAudioTimestampDeltaEvent(JsonElement element, ModelReaderWriterOptions options)
+        internal static ServerEventResponseAudioTimestampDone DeserializeServerEventResponseAudioTimestampDone(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string @type = "response.audio_timestamp.delta";
+            ServerEventType @type = default;
             string eventId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string responseId = default;
             string itemId = default;
             int outputIndex = default;
             int contentIndex = default;
-            int audioOffsetMs = default;
-            int audioDurationMs = default;
-            string text = default;
-            string timestampType = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = new ServerEventType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("event_id"u8))
@@ -125,83 +113,59 @@ namespace Azure.AI.VoiceLive
                     contentIndex = prop.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("audio_offset_ms"u8))
-                {
-                    audioOffsetMs = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("audio_duration_ms"u8))
-                {
-                    audioDurationMs = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("text"u8))
-                {
-                    text = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("timestamp_type"u8))
-                {
-                    timestampType = prop.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResponseAudioTimestampDeltaEvent(
+            return new ServerEventResponseAudioTimestampDone(
                 @type,
                 eventId,
                 additionalBinaryDataProperties,
                 responseId,
                 itemId,
                 outputIndex,
-                contentIndex,
-                audioOffsetMs,
-                audioDurationMs,
-                text,
-                timestampType);
+                contentIndex);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResponseAudioTimestampDeltaEvent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ServerEventResponseAudioTimestampDone>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponseAudioTimestampDeltaEvent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServerEventResponseAudioTimestampDone>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ResponseAudioTimestampDeltaEvent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerEventResponseAudioTimestampDone)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponseAudioTimestampDeltaEvent IPersistableModel<ResponseAudioTimestampDeltaEvent>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResponseAudioTimestampDeltaEvent)PersistableModelCreateCore(data, options);
+        ServerEventResponseAudioTimestampDone IPersistableModel<ServerEventResponseAudioTimestampDone>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServerEventResponseAudioTimestampDone)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ServerEvent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponseAudioTimestampDeltaEvent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServerEventResponseAudioTimestampDone>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeResponseAudioTimestampDeltaEvent(document.RootElement, options);
+                        return DeserializeServerEventResponseAudioTimestampDone(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResponseAudioTimestampDeltaEvent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerEventResponseAudioTimestampDone)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResponseAudioTimestampDeltaEvent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ServerEventResponseAudioTimestampDone>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

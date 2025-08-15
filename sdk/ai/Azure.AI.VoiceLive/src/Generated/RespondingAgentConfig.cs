@@ -10,31 +10,31 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The AgentConfig. </summary>
-    public partial class AgentConfig
+    /// <summary> The RespondingAgentConfig. </summary>
+    public partial class RespondingAgentConfig
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AgentConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RespondingAgentConfig"/>. </summary>
         /// <param name="name"></param>
         /// <param name="agentId"></param>
         /// <param name="threadId"></param>
-        internal AgentConfig(string name, string agentId, string threadId)
+        internal RespondingAgentConfig(string name, string agentId, string threadId)
         {
             Name = name;
             AgentId = agentId;
             ThreadId = threadId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentConfig"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RespondingAgentConfig"/>. </summary>
         /// <param name="type"></param>
         /// <param name="name"></param>
         /// <param name="description"></param>
         /// <param name="agentId"></param>
         /// <param name="threadId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentConfig(string @type, string name, string description, string agentId, string threadId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RespondingAgentConfig(string @type, string name, string description, string agentId, string threadId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Name = name;

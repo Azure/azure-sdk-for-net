@@ -236,7 +236,7 @@ namespace Azure.AI.VoiceLive
             BinaryData toolChoice = default;
             float? temperature = default;
             BinaryData maxResponseOutputTokens = default;
-            AgentConfig agent = default;
+            RespondingAgentConfig agent = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -431,7 +431,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    agent = AgentConfig.DeserializeAgentConfig(prop.Value, options);
+                    agent = RespondingAgentConfig.DeserializeRespondingAgentConfig(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

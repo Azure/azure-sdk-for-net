@@ -13,7 +13,7 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// A voicelive server event.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ServerEventSessionAvatarConnecting"/>, <see cref="ServerEventSessionCreated"/>, <see cref="ServerEventSessionUpdated"/>, <see cref="ServerEventError"/>, <see cref="ServerEventResponseTextDelta"/>, <see cref="ServerEventResponseAudioDelta"/>, <see cref="ServerEventConversationItemCreated"/>, <see cref="ServerEventConversationItemDeleted"/>, <see cref="ServerEventConversationItemRetrieved"/>, <see cref="ServerEventConversationItemTruncated"/>, <see cref="ServerEventConversationItemInputAudioTranscriptionCompleted"/>, <see cref="ServerEventConversationItemInputAudioTranscriptionDelta"/>, <see cref="ServerEventConversationItemInputAudioTranscriptionFailed"/>, <see cref="ServerEventInputAudioBufferCommitted"/>, <see cref="ServerEventInputAudioBufferCleared"/>, <see cref="ServerEventInputAudioBufferSpeechStarted"/>, <see cref="ServerEventInputAudioBufferSpeechStopped"/>, <see cref="ServerEventResponseCreated"/>, <see cref="ServerEventResponseDone"/>, <see cref="ServerEventResponseOutputItemAdded"/>, <see cref="ServerEventResponseOutputItemDone"/>, <see cref="ServerEventResponseContentPartAdded"/>, <see cref="ServerEventResponseContentPartDone"/>, <see cref="ServerEventResponseTextDone"/>, <see cref="ServerEventResponseAudioTranscriptDelta"/>, <see cref="ServerEventResponseAudioTranscriptDone"/>, <see cref="ServerEventResponseAudioDone"/>, <see cref="ServerEventResponseFunctionCallArgumentsDelta"/>, <see cref="ServerEventResponseFunctionCallArgumentsDone"/>, <see cref="ResponseAnimationBlendshapeDeltaEvent"/>, <see cref="ResponseAnimationBlendshapeDoneEvent"/>, <see cref="ResponseEmotionHypothesis"/>, <see cref="ResponseAudioTimestampDeltaEvent"/>, <see cref="ResponseAudioTimestampDoneEvent"/>, <see cref="ResponseAnimationVisemeDeltaEvent"/>, and <see cref="ResponseAnimationVisemeDoneEvent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ServerEventSessionAvatarConnecting"/>, <see cref="ServerEventSessionCreated"/>, <see cref="ServerEventSessionUpdated"/>, <see cref="ServerEventError"/>, <see cref="ServerEventResponseTextDelta"/>, <see cref="ServerEventResponseAudioDelta"/>, <see cref="ServerEventConversationItemCreated"/>, <see cref="ServerEventConversationItemDeleted"/>, <see cref="ServerEventConversationItemRetrieved"/>, <see cref="ServerEventConversationItemTruncated"/>, <see cref="ServerEventConversationItemInputAudioTranscriptionCompleted"/>, <see cref="ServerEventConversationItemInputAudioTranscriptionDelta"/>, <see cref="ServerEventConversationItemInputAudioTranscriptionFailed"/>, <see cref="ServerEventInputAudioBufferCommitted"/>, <see cref="ServerEventInputAudioBufferCleared"/>, <see cref="ServerEventInputAudioBufferSpeechStarted"/>, <see cref="ServerEventInputAudioBufferSpeechStopped"/>, <see cref="ServerEventResponseCreated"/>, <see cref="ServerEventResponseDone"/>, <see cref="ServerEventResponseOutputItemAdded"/>, <see cref="ServerEventResponseOutputItemDone"/>, <see cref="ServerEventResponseContentPartAdded"/>, <see cref="ServerEventResponseContentPartDone"/>, <see cref="ServerEventResponseTextDone"/>, <see cref="ServerEventResponseAudioTranscriptDelta"/>, <see cref="ServerEventResponseAudioTranscriptDone"/>, <see cref="ServerEventResponseAudioDone"/>, <see cref="ServerEventResponseFunctionCallArgumentsDelta"/>, <see cref="ServerEventResponseFunctionCallArgumentsDone"/>, <see cref="ServerEventResponseAnimationBlendshapeDelta"/>, <see cref="ServerEventResponseAnimationBlendshapeDone"/>, <see cref="ServerEventResponseEmotionHypothesis"/>, <see cref="ServerEventResponseAudioTimestampDelta"/>, <see cref="ServerEventResponseAudioTimestampDone"/>, <see cref="ServerEventResponseAnimationVisemeDelta"/>, and <see cref="ServerEventResponseAnimationVisemeDone"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownServerEvent))]
     public abstract partial class ServerEvent : IJsonModel<ServerEvent>
@@ -42,7 +42,7 @@ namespace Azure.AI.VoiceLive
                 throw new FormatException($"The model {nameof(ServerEvent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(Type.ToString());
             if (Optional.IsDefined(EventId))
             {
                 writer.WritePropertyName("event_id"u8);
@@ -153,19 +153,19 @@ namespace Azure.AI.VoiceLive
                     case "response.function_call_arguments.done":
                         return ServerEventResponseFunctionCallArgumentsDone.DeserializeServerEventResponseFunctionCallArgumentsDone(element, options);
                     case "response.animation_blendshapes.delta":
-                        return ResponseAnimationBlendshapeDeltaEvent.DeserializeResponseAnimationBlendshapeDeltaEvent(element, options);
+                        return ServerEventResponseAnimationBlendshapeDelta.DeserializeServerEventResponseAnimationBlendshapeDelta(element, options);
                     case "response.animation_blendshapes.done":
-                        return ResponseAnimationBlendshapeDoneEvent.DeserializeResponseAnimationBlendshapeDoneEvent(element, options);
+                        return ServerEventResponseAnimationBlendshapeDone.DeserializeServerEventResponseAnimationBlendshapeDone(element, options);
                     case "response.emotion_hypothesis":
-                        return ResponseEmotionHypothesis.DeserializeResponseEmotionHypothesis(element, options);
+                        return ServerEventResponseEmotionHypothesis.DeserializeServerEventResponseEmotionHypothesis(element, options);
                     case "response.audio_timestamp.delta":
-                        return ResponseAudioTimestampDeltaEvent.DeserializeResponseAudioTimestampDeltaEvent(element, options);
+                        return ServerEventResponseAudioTimestampDelta.DeserializeServerEventResponseAudioTimestampDelta(element, options);
                     case "response.audio_timestamp.done":
-                        return ResponseAudioTimestampDoneEvent.DeserializeResponseAudioTimestampDoneEvent(element, options);
+                        return ServerEventResponseAudioTimestampDone.DeserializeServerEventResponseAudioTimestampDone(element, options);
                     case "response.animation_viseme.delta":
-                        return ResponseAnimationVisemeDeltaEvent.DeserializeResponseAnimationVisemeDeltaEvent(element, options);
+                        return ServerEventResponseAnimationVisemeDelta.DeserializeServerEventResponseAnimationVisemeDelta(element, options);
                     case "response.animation_viseme.done":
-                        return ResponseAnimationVisemeDoneEvent.DeserializeResponseAnimationVisemeDoneEvent(element, options);
+                        return ServerEventResponseAnimationVisemeDone.DeserializeServerEventResponseAnimationVisemeDone(element, options);
                 }
             }
             return UnknownServerEvent.DeserializeUnknownServerEvent(element, options);

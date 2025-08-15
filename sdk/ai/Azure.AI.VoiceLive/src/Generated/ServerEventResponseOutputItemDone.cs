@@ -19,7 +19,7 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseOutputItemDone"/>. </summary>
         /// <param name="responseId"> The ID of the Response to which the item belongs. </param>
         /// <param name="outputIndex"> The index of the output item in the Response. </param>
-        internal ServerEventResponseOutputItemDone(string responseId, int outputIndex) : base("response.output_item.done")
+        internal ServerEventResponseOutputItemDone(string responseId, int outputIndex) : base(ServerEventType.ResponseOutputItemDone)
         {
             ResponseId = responseId;
             OutputIndex = outputIndex;
@@ -32,7 +32,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="responseId"> The ID of the Response to which the item belongs. </param>
         /// <param name="outputIndex"> The index of the output item in the Response. </param>
         /// <param name="item"></param>
-        internal ServerEventResponseOutputItemDone(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, int outputIndex, ConversationResponseItem item) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ServerEventResponseOutputItemDone(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, int outputIndex, ConversationResponseItem item) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             OutputIndex = outputIndex;

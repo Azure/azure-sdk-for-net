@@ -15,7 +15,7 @@ namespace Azure.AI.VoiceLive
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventSessionAvatarConnecting"/>. </summary>
         /// <param name="serverSdp"> The server's SDP answer for the avatar connection. </param>
-        internal ServerEventSessionAvatarConnecting(string serverSdp) : base("session.avatar.connecting")
+        internal ServerEventSessionAvatarConnecting(string serverSdp) : base(ServerEventType.SessionAvatarConnecting)
         {
             ServerSdp = serverSdp;
         }
@@ -25,7 +25,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serverSdp"> The server's SDP answer for the avatar connection. </param>
-        internal ServerEventSessionAvatarConnecting(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverSdp) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ServerEventSessionAvatarConnecting(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverSdp) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ServerSdp = serverSdp;
         }

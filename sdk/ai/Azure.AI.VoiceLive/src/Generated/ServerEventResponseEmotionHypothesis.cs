@@ -12,15 +12,15 @@ using System.Linq;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Represents an emotion hypothesis detected from response audio with multiple candidates. </summary>
-    public partial class ResponseEmotionHypothesis : ServerEvent
+    public partial class ServerEventResponseEmotionHypothesis : ServerEvent
     {
-        /// <summary> Initializes a new instance of <see cref="ResponseEmotionHypothesis"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEventResponseEmotionHypothesis"/>. </summary>
         /// <param name="emotion"></param>
         /// <param name="candidates"></param>
         /// <param name="audioOffsetMs"></param>
         /// <param name="audioDurationMs"></param>
         /// <param name="itemId"></param>
-        internal ResponseEmotionHypothesis(string emotion, IEnumerable<EmotionCandidate> candidates, int audioOffsetMs, int audioDurationMs, string itemId) : base("response.emotion_hypothesis")
+        internal ServerEventResponseEmotionHypothesis(string emotion, IEnumerable<EmotionCandidate> candidates, int audioOffsetMs, int audioDurationMs, string itemId) : base(ServerEventType.ResponseEmotionHypothesis)
         {
             Emotion = emotion;
             Candidates = candidates.ToList();
@@ -29,7 +29,7 @@ namespace Azure.AI.VoiceLive
             ItemId = itemId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponseEmotionHypothesis"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEventResponseEmotionHypothesis"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -39,7 +39,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="audioDurationMs"></param>
         /// <param name="responseId"></param>
         /// <param name="itemId"></param>
-        internal ResponseEmotionHypothesis(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string emotion, IList<EmotionCandidate> candidates, int audioOffsetMs, int audioDurationMs, string responseId, string itemId) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ServerEventResponseEmotionHypothesis(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string emotion, IList<EmotionCandidate> candidates, int audioOffsetMs, int audioDurationMs, string responseId, string itemId) : base(@type, eventId, additionalBinaryDataProperties)
         {
             Emotion = emotion;
             Candidates = candidates;

@@ -9,21 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> Indicates completion of viseme animation delivery for a response. </summary>
-    public partial class ResponseAnimationVisemeDoneEvent : IJsonModel<ResponseAnimationVisemeDoneEvent>
+    /// <summary> Represents a viseme ID delta update for animation based on audio. </summary>
+    public partial class ServerEventResponseAnimationVisemeDelta : IJsonModel<ServerEventResponseAnimationVisemeDelta>
     {
-        /// <summary> Initializes a new instance of <see cref="ResponseAnimationVisemeDoneEvent"/> for deserialization. </summary>
-        internal ResponseAnimationVisemeDoneEvent()
+        /// <summary> Initializes a new instance of <see cref="ServerEventResponseAnimationVisemeDelta"/> for deserialization. </summary>
+        internal ServerEventResponseAnimationVisemeDelta()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ResponseAnimationVisemeDoneEvent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ServerEventResponseAnimationVisemeDelta>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -34,10 +33,10 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponseAnimationVisemeDoneEvent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServerEventResponseAnimationVisemeDelta>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResponseAnimationVisemeDoneEvent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerEventResponseAnimationVisemeDelta)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("response_id"u8);
@@ -48,45 +47,51 @@ namespace Azure.AI.VoiceLive
             writer.WriteNumberValue(OutputIndex);
             writer.WritePropertyName("content_index"u8);
             writer.WriteNumberValue(ContentIndex);
+            writer.WritePropertyName("audio_offset_ms"u8);
+            writer.WriteNumberValue(AudioOffsetMs);
+            writer.WritePropertyName("viseme_id"u8);
+            writer.WriteNumberValue(VisemeId);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponseAnimationVisemeDoneEvent IJsonModel<ResponseAnimationVisemeDoneEvent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ResponseAnimationVisemeDoneEvent)JsonModelCreateCore(ref reader, options);
+        ServerEventResponseAnimationVisemeDelta IJsonModel<ServerEventResponseAnimationVisemeDelta>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ServerEventResponseAnimationVisemeDelta)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ServerEvent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponseAnimationVisemeDoneEvent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServerEventResponseAnimationVisemeDelta>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResponseAnimationVisemeDoneEvent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerEventResponseAnimationVisemeDelta)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResponseAnimationVisemeDoneEvent(document.RootElement, options);
+            return DeserializeServerEventResponseAnimationVisemeDelta(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ResponseAnimationVisemeDoneEvent DeserializeResponseAnimationVisemeDoneEvent(JsonElement element, ModelReaderWriterOptions options)
+        internal static ServerEventResponseAnimationVisemeDelta DeserializeServerEventResponseAnimationVisemeDelta(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string @type = "response.animation_viseme.done";
+            ServerEventType @type = default;
             string eventId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string responseId = default;
             string itemId = default;
             int outputIndex = default;
             int contentIndex = default;
+            int audioOffsetMs = default;
+            int visemeId = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = new ServerEventType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("event_id"u8))
@@ -114,67 +119,71 @@ namespace Azure.AI.VoiceLive
                     contentIndex = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("audio_offset_ms"u8))
+                {
+                    audioOffsetMs = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("viseme_id"u8))
+                {
+                    visemeId = prop.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResponseAnimationVisemeDoneEvent(
+            return new ServerEventResponseAnimationVisemeDelta(
                 @type,
                 eventId,
                 additionalBinaryDataProperties,
                 responseId,
                 itemId,
                 outputIndex,
-                contentIndex);
+                contentIndex,
+                audioOffsetMs,
+                visemeId);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResponseAnimationVisemeDoneEvent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ServerEventResponseAnimationVisemeDelta>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponseAnimationVisemeDoneEvent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServerEventResponseAnimationVisemeDelta>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ResponseAnimationVisemeDoneEvent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerEventResponseAnimationVisemeDelta)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponseAnimationVisemeDoneEvent IPersistableModel<ResponseAnimationVisemeDoneEvent>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResponseAnimationVisemeDoneEvent)PersistableModelCreateCore(data, options);
+        ServerEventResponseAnimationVisemeDelta IPersistableModel<ServerEventResponseAnimationVisemeDelta>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServerEventResponseAnimationVisemeDelta)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ServerEvent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponseAnimationVisemeDoneEvent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServerEventResponseAnimationVisemeDelta>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeResponseAnimationVisemeDoneEvent(document.RootElement, options);
+                        return DeserializeServerEventResponseAnimationVisemeDelta(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResponseAnimationVisemeDoneEvent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerEventResponseAnimationVisemeDelta)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResponseAnimationVisemeDoneEvent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ResponseAnimationVisemeDoneEvent"/> from. </param>
-        public static explicit operator ResponseAnimationVisemeDoneEvent(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeResponseAnimationVisemeDoneEvent(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
+        string IPersistableModel<ServerEventResponseAnimationVisemeDelta>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

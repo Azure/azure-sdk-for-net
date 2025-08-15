@@ -13,16 +13,16 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Represents an emotion hypothesis detected from response audio with multiple candidates. </summary>
-    public partial class ResponseEmotionHypothesis : IJsonModel<ResponseEmotionHypothesis>
+    public partial class ServerEventResponseEmotionHypothesis : IJsonModel<ServerEventResponseEmotionHypothesis>
     {
-        /// <summary> Initializes a new instance of <see cref="ResponseEmotionHypothesis"/> for deserialization. </summary>
-        internal ResponseEmotionHypothesis()
+        /// <summary> Initializes a new instance of <see cref="ServerEventResponseEmotionHypothesis"/> for deserialization. </summary>
+        internal ServerEventResponseEmotionHypothesis()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ResponseEmotionHypothesis>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ServerEventResponseEmotionHypothesis>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -33,10 +33,10 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponseEmotionHypothesis>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServerEventResponseEmotionHypothesis>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResponseEmotionHypothesis)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerEventResponseEmotionHypothesis)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("emotion"u8);
@@ -63,30 +63,30 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponseEmotionHypothesis IJsonModel<ResponseEmotionHypothesis>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ResponseEmotionHypothesis)JsonModelCreateCore(ref reader, options);
+        ServerEventResponseEmotionHypothesis IJsonModel<ServerEventResponseEmotionHypothesis>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ServerEventResponseEmotionHypothesis)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ServerEvent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponseEmotionHypothesis>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServerEventResponseEmotionHypothesis>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResponseEmotionHypothesis)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerEventResponseEmotionHypothesis)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResponseEmotionHypothesis(document.RootElement, options);
+            return DeserializeServerEventResponseEmotionHypothesis(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ResponseEmotionHypothesis DeserializeResponseEmotionHypothesis(JsonElement element, ModelReaderWriterOptions options)
+        internal static ServerEventResponseEmotionHypothesis DeserializeServerEventResponseEmotionHypothesis(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string @type = "response.emotion_hypothesis";
+            ServerEventType @type = default;
             string eventId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string emotion = default;
@@ -99,7 +99,7 @@ namespace Azure.AI.VoiceLive
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = new ServerEventType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("event_id"u8))
@@ -147,7 +147,7 @@ namespace Azure.AI.VoiceLive
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResponseEmotionHypothesis(
+            return new ServerEventResponseEmotionHypothesis(
                 @type,
                 eventId,
                 additionalBinaryDataProperties,
@@ -160,43 +160,43 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResponseEmotionHypothesis>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ServerEventResponseEmotionHypothesis>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponseEmotionHypothesis>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServerEventResponseEmotionHypothesis>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ResponseEmotionHypothesis)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerEventResponseEmotionHypothesis)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponseEmotionHypothesis IPersistableModel<ResponseEmotionHypothesis>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResponseEmotionHypothesis)PersistableModelCreateCore(data, options);
+        ServerEventResponseEmotionHypothesis IPersistableModel<ServerEventResponseEmotionHypothesis>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServerEventResponseEmotionHypothesis)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ServerEvent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponseEmotionHypothesis>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServerEventResponseEmotionHypothesis>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeResponseEmotionHypothesis(document.RootElement, options);
+                        return DeserializeServerEventResponseEmotionHypothesis(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResponseEmotionHypothesis)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerEventResponseEmotionHypothesis)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResponseEmotionHypothesis>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ServerEventResponseEmotionHypothesis>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

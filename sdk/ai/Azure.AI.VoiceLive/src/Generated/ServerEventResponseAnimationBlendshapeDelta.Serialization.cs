@@ -12,17 +12,17 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> Indicates the completion of blendshape animation processing for a specific output of a response. </summary>
-    public partial class ResponseAnimationBlendshapeDoneEvent : IJsonModel<ResponseAnimationBlendshapeDoneEvent>
+    /// <summary> Represents a delta update of blendshape animation frames for a specific output of a response. </summary>
+    public partial class ServerEventResponseAnimationBlendshapeDelta : IJsonModel<ServerEventResponseAnimationBlendshapeDelta>
     {
-        /// <summary> Initializes a new instance of <see cref="ResponseAnimationBlendshapeDoneEvent"/> for deserialization. </summary>
-        internal ResponseAnimationBlendshapeDoneEvent()
+        /// <summary> Initializes a new instance of <see cref="ServerEventResponseAnimationBlendshapeDelta"/> for deserialization. </summary>
+        internal ServerEventResponseAnimationBlendshapeDelta()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ResponseAnimationBlendshapeDoneEvent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ServerEventResponseAnimationBlendshapeDelta>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -33,10 +33,10 @@ namespace Azure.AI.VoiceLive
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponseAnimationBlendshapeDoneEvent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServerEventResponseAnimationBlendshapeDelta>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResponseAnimationBlendshapeDoneEvent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerEventResponseAnimationBlendshapeDelta)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("response_id"u8);
@@ -45,44 +45,60 @@ namespace Azure.AI.VoiceLive
             writer.WriteStringValue(ItemId);
             writer.WritePropertyName("output_index"u8);
             writer.WriteNumberValue(OutputIndex);
+            writer.WritePropertyName("content_index"u8);
+            writer.WriteNumberValue(ContentIndex);
+            writer.WritePropertyName("frames"u8);
+#if NET6_0_OR_GREATER
+            writer.WriteRawValue(Frames);
+#else
+            using (JsonDocument document = JsonDocument.Parse(Frames))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
+            writer.WritePropertyName("frame_index"u8);
+            writer.WriteNumberValue(FrameIndex);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponseAnimationBlendshapeDoneEvent IJsonModel<ResponseAnimationBlendshapeDoneEvent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ResponseAnimationBlendshapeDoneEvent)JsonModelCreateCore(ref reader, options);
+        ServerEventResponseAnimationBlendshapeDelta IJsonModel<ServerEventResponseAnimationBlendshapeDelta>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ServerEventResponseAnimationBlendshapeDelta)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ServerEvent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponseAnimationBlendshapeDoneEvent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServerEventResponseAnimationBlendshapeDelta>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResponseAnimationBlendshapeDoneEvent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerEventResponseAnimationBlendshapeDelta)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResponseAnimationBlendshapeDoneEvent(document.RootElement, options);
+            return DeserializeServerEventResponseAnimationBlendshapeDelta(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ResponseAnimationBlendshapeDoneEvent DeserializeResponseAnimationBlendshapeDoneEvent(JsonElement element, ModelReaderWriterOptions options)
+        internal static ServerEventResponseAnimationBlendshapeDelta DeserializeServerEventResponseAnimationBlendshapeDelta(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string @type = "response.animation_blendshapes.done";
+            ServerEventType @type = default;
             string eventId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string responseId = default;
             string itemId = default;
             int outputIndex = default;
+            int contentIndex = default;
+            BinaryData frames = default;
+            int frameIndex = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = new ServerEventType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("event_id"u8))
@@ -105,58 +121,76 @@ namespace Azure.AI.VoiceLive
                     outputIndex = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("content_index"u8))
+                {
+                    contentIndex = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("frames"u8))
+                {
+                    frames = BinaryData.FromString(prop.Value.GetRawText());
+                    continue;
+                }
+                if (prop.NameEquals("frame_index"u8))
+                {
+                    frameIndex = prop.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResponseAnimationBlendshapeDoneEvent(
+            return new ServerEventResponseAnimationBlendshapeDelta(
                 @type,
                 eventId,
                 additionalBinaryDataProperties,
                 responseId,
                 itemId,
-                outputIndex);
+                outputIndex,
+                contentIndex,
+                frames,
+                frameIndex);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResponseAnimationBlendshapeDoneEvent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ServerEventResponseAnimationBlendshapeDelta>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponseAnimationBlendshapeDoneEvent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServerEventResponseAnimationBlendshapeDelta>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIVoiceLiveContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ResponseAnimationBlendshapeDoneEvent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerEventResponseAnimationBlendshapeDelta)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResponseAnimationBlendshapeDoneEvent IPersistableModel<ResponseAnimationBlendshapeDoneEvent>.Create(BinaryData data, ModelReaderWriterOptions options) => (ResponseAnimationBlendshapeDoneEvent)PersistableModelCreateCore(data, options);
+        ServerEventResponseAnimationBlendshapeDelta IPersistableModel<ServerEventResponseAnimationBlendshapeDelta>.Create(BinaryData data, ModelReaderWriterOptions options) => (ServerEventResponseAnimationBlendshapeDelta)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ServerEvent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResponseAnimationBlendshapeDoneEvent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServerEventResponseAnimationBlendshapeDelta>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeResponseAnimationBlendshapeDoneEvent(document.RootElement, options);
+                        return DeserializeServerEventResponseAnimationBlendshapeDelta(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResponseAnimationBlendshapeDoneEvent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerEventResponseAnimationBlendshapeDelta)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResponseAnimationBlendshapeDoneEvent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ServerEventResponseAnimationBlendshapeDelta>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -10,27 +10,29 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> Represents a viseme ID delta update for animation based on audio. </summary>
-    public partial class ResponseAnimationVisemeDeltaEvent : ServerEvent
+    /// <summary> Represents a word-level audio timestamp delta for a response. </summary>
+    public partial class ServerEventResponseAudioTimestampDelta : ServerEvent
     {
-        /// <summary> Initializes a new instance of <see cref="ResponseAnimationVisemeDeltaEvent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEventResponseAudioTimestampDelta"/>. </summary>
         /// <param name="responseId"></param>
         /// <param name="itemId"></param>
         /// <param name="outputIndex"></param>
         /// <param name="contentIndex"></param>
         /// <param name="audioOffsetMs"></param>
-        /// <param name="visemeId"></param>
-        internal ResponseAnimationVisemeDeltaEvent(string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int visemeId) : base("response.animation_viseme.delta")
+        /// <param name="audioDurationMs"></param>
+        /// <param name="text"></param>
+        internal ServerEventResponseAudioTimestampDelta(string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int audioDurationMs, string text) : base(ServerEventType.ResponseAudioTimestampDelta)
         {
             ResponseId = responseId;
             ItemId = itemId;
             OutputIndex = outputIndex;
             ContentIndex = contentIndex;
             AudioOffsetMs = audioOffsetMs;
-            VisemeId = visemeId;
+            AudioDurationMs = audioDurationMs;
+            Text = text;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResponseAnimationVisemeDeltaEvent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEventResponseAudioTimestampDelta"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="eventId"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -39,15 +41,19 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputIndex"></param>
         /// <param name="contentIndex"></param>
         /// <param name="audioOffsetMs"></param>
-        /// <param name="visemeId"></param>
-        internal ResponseAnimationVisemeDeltaEvent(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int visemeId) : base(@type, eventId, additionalBinaryDataProperties)
+        /// <param name="audioDurationMs"></param>
+        /// <param name="text"></param>
+        /// <param name="timestampType"></param>
+        internal ServerEventResponseAudioTimestampDelta(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, int audioOffsetMs, int audioDurationMs, string text, string timestampType) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             ItemId = itemId;
             OutputIndex = outputIndex;
             ContentIndex = contentIndex;
             AudioOffsetMs = audioOffsetMs;
-            VisemeId = visemeId;
+            AudioDurationMs = audioDurationMs;
+            Text = text;
+            TimestampType = timestampType;
         }
 
         /// <summary> Gets the ResponseId. </summary>
@@ -65,7 +71,13 @@ namespace Azure.AI.VoiceLive
         /// <summary> Gets the AudioOffsetMs. </summary>
         public int AudioOffsetMs { get; }
 
-        /// <summary> Gets the VisemeId. </summary>
-        public int VisemeId { get; }
+        /// <summary> Gets the AudioDurationMs. </summary>
+        public int AudioDurationMs { get; }
+
+        /// <summary> Gets the Text. </summary>
+        public string Text { get; }
+
+        /// <summary> Gets the TimestampType. </summary>
+        public string TimestampType { get; } = "word";
     }
 }

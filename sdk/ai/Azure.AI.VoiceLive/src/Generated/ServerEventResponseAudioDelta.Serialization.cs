@@ -81,7 +81,7 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            string @type = "response.audio.delta";
+            ServerEventType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string responseId = default;
             string itemId = default;
@@ -93,7 +93,7 @@ namespace Azure.AI.VoiceLive
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = new ServerEventType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("response_id"u8))

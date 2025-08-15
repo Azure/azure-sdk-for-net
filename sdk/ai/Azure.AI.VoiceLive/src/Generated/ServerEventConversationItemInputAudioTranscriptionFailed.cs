@@ -21,7 +21,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="itemId"> The ID of the user message item. </param>
         /// <param name="contentIndex"> The index of the content part containing the audio. </param>
         /// <param name="error"> Details of the transcription error. </param>
-        internal ServerEventConversationItemInputAudioTranscriptionFailed(string itemId, int contentIndex, VoiceLiveErrorDetails error) : base("conversation.item.input_audio_transcription.failed")
+        internal ServerEventConversationItemInputAudioTranscriptionFailed(string itemId, int contentIndex, VoiceLiveErrorDetails error) : base(ServerEventType.ConversationItemInputAudioTranscriptionFailed)
         {
             ItemId = itemId;
             ContentIndex = contentIndex;
@@ -35,7 +35,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="itemId"> The ID of the user message item. </param>
         /// <param name="contentIndex"> The index of the content part containing the audio. </param>
         /// <param name="error"> Details of the transcription error. </param>
-        internal ServerEventConversationItemInputAudioTranscriptionFailed(string @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, int contentIndex, VoiceLiveErrorDetails error) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ServerEventConversationItemInputAudioTranscriptionFailed(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, int contentIndex, VoiceLiveErrorDetails error) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ItemId = itemId;
             ContentIndex = contentIndex;
