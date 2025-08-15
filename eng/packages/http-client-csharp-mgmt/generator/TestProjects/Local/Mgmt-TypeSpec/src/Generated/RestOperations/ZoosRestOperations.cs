@@ -96,7 +96,6 @@ namespace MgmtTypeSpec
             uri.AppendPath(zooName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
@@ -198,18 +197,6 @@ namespace MgmtTypeSpec
             {
                 uri.AppendQuery("$maxpagesize", TypeFormatters.ConvertToString(maxpagesize, null), true);
             }
-            request.Uri = uri;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateNextZooAddressListRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string zooName, int? maxpagesize, RequestContext context)
-        {
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
             request.Uri = uri;
             request.Headers.SetValue("Accept", "application/json");
             return message;

@@ -329,7 +329,7 @@
 /sdk/communication/Azure.Communication.Sms/                        @gfeitosa-msft @phermanov-msft @ilyapaliakou-msft @besh2014
 
 # PRLabel: %Compute
-/sdk/compute/                                                      @dkulkarni-ms @haagha @MS-syh2qs @grizzlytheodore @TravisCragg-MSFT @melina5656
+/sdk/compute/                                                      @dkulkarni-ms @haagha @MS-syh2qs @TravisCragg-MSFT @melina5656
 
 # ServiceLabel: %Compute
 # ServiceOwners:                                                   @Drewm3 @TravisCragg-MSFT @nikhilpatel909 @sandeepraichura @hilaryw29 @MsGabsta @ushnaarshadkhan

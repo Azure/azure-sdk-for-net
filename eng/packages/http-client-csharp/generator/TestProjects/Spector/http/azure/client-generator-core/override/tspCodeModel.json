@@ -67,8 +67,9 @@
       "parameters": [
         {
           "$id": "7",
+          "kind": "endpoint",
           "name": "endpoint",
-          "nameInRequest": "endpoint",
+          "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
             "$id": "8",
@@ -76,14 +77,10 @@
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
           },
-          "location": "Uri",
           "isApiVersion": false,
-          "isContentType": false,
-          "isRequired": true,
+          "optional": false,
+          "scope": "Client",
           "isEndpoint": true,
-          "skipUrlEncoding": false,
-          "explode": false,
-          "kind": "Client",
           "defaultValue": {
             "type": {
               "$id": "9",
@@ -93,7 +90,10 @@
             },
             "value": "http://localhost:3000"
           },
-          "serverUrlTemplate": "{endpoint}"
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.endpoint"
         }
       ],
       "decorators": [],
@@ -120,8 +120,9 @@
                 "parameters": [
                   {
                     "$id": "13",
+                    "kind": "path",
                     "name": "param2",
-                    "nameInRequest": "param2",
+                    "serializedName": "param2",
                     "type": {
                       "$id": "14",
                       "kind": "string",
@@ -129,20 +130,22 @@
                       "crossLanguageDefinitionId": "TypeSpec.string",
                       "decorators": []
                     },
-                    "location": "Path",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
                     "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.ReorderParameters.reorder.param2"
                   },
                   {
                     "$id": "15",
+                    "kind": "path",
                     "name": "param1",
-                    "nameInRequest": "param1",
+                    "serializedName": "param1",
                     "type": {
                       "$id": "16",
                       "kind": "string",
@@ -150,15 +153,16 @@
                       "crossLanguageDefinitionId": "TypeSpec.string",
                       "decorators": []
                     },
-                    "location": "Path",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
                     "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.ReorderParameters.reorder.param1"
                   }
                 ],
                 "responses": [
@@ -182,8 +186,9 @@
               "parameters": [
                 {
                   "$id": "17",
+                  "kind": "method",
                   "name": "param1",
-                  "nameInRequest": "param1",
+                  "serializedName": "param1",
                   "type": {
                     "$id": "18",
                     "kind": "string",
@@ -193,18 +198,18 @@
                   },
                   "location": "Path",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Customization..anonymous.param1",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 },
                 {
                   "$id": "19",
+                  "kind": "method",
                   "name": "param2",
-                  "nameInRequest": "param2",
+                  "serializedName": "param2",
                   "type": {
                     "$id": "20",
                     "kind": "string",
@@ -214,13 +219,12 @@
                   },
                   "location": "Path",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Customization..anonymous.param2",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {},
@@ -233,8 +237,9 @@
           "parameters": [
             {
               "$id": "21",
+              "kind": "endpoint",
               "name": "endpoint",
-              "nameInRequest": "endpoint",
+              "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
                 "$id": "22",
@@ -242,14 +247,10 @@
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
               },
-              "location": "Uri",
               "isApiVersion": false,
-              "isContentType": false,
-              "isRequired": true,
+              "optional": false,
+              "scope": "Client",
               "isEndpoint": true,
-              "skipUrlEncoding": false,
-              "explode": false,
-              "kind": "Client",
               "defaultValue": {
                 "type": {
                   "$id": "23",
@@ -259,7 +260,10 @@
                 },
                 "value": "http://localhost:3000"
               },
-              "serverUrlTemplate": "{endpoint}"
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.endpoint"
             }
           ],
           "decorators": [],
@@ -289,8 +293,9 @@
                 "parameters": [
                   {
                     "$id": "27",
+                    "kind": "query",
                     "name": "param1",
-                    "nameInRequest": "param1",
+                    "serializedName": "param1",
                     "type": {
                       "$id": "28",
                       "kind": "string",
@@ -298,20 +303,19 @@
                       "crossLanguageDefinitionId": "TypeSpec.string",
                       "decorators": []
                     },
-                    "location": "Query",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
                     "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.GroupParameters.group.param1",
+                    "readOnly": false
                   },
                   {
                     "$id": "29",
+                    "kind": "query",
                     "name": "param2",
-                    "nameInRequest": "param2",
+                    "serializedName": "param2",
                     "type": {
                       "$id": "30",
                       "kind": "string",
@@ -319,15 +323,13 @@
                       "crossLanguageDefinitionId": "TypeSpec.string",
                       "decorators": []
                     },
-                    "location": "Query",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
                     "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.GroupParameters.group.param2",
+                    "readOnly": false
                   }
                 ],
                 "responses": [
@@ -351,20 +353,20 @@
               "parameters": [
                 {
                   "$id": "31",
+                  "kind": "method",
                   "name": "options",
-                  "nameInRequest": "options",
+                  "serializedName": "options",
                   "type": {
                     "$ref": "1"
                   },
                   "location": "",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Customization..anonymous.options",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {},
@@ -377,8 +379,9 @@
           "parameters": [
             {
               "$id": "32",
+              "kind": "endpoint",
               "name": "endpoint",
-              "nameInRequest": "endpoint",
+              "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
                 "$id": "33",
@@ -386,14 +389,10 @@
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
               },
-              "location": "Uri",
               "isApiVersion": false,
-              "isContentType": false,
-              "isRequired": true,
+              "optional": false,
+              "scope": "Client",
               "isEndpoint": true,
-              "skipUrlEncoding": false,
-              "explode": false,
-              "kind": "Client",
               "defaultValue": {
                 "type": {
                   "$id": "34",
@@ -403,7 +402,10 @@
                 },
                 "value": "http://localhost:3000"
               },
-              "serverUrlTemplate": "{endpoint}"
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Override.endpoint"
             }
           ],
           "decorators": [],

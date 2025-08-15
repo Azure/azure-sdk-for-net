@@ -43,7 +43,6 @@ namespace MgmtTypeSpec
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="FooResource"/> object. </returns>
-        [ForwardsClientCalls]
         public static FooResource GetFooResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -56,7 +55,6 @@ namespace MgmtTypeSpec
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="FooSettingsResource"/> object. </returns>
-        [ForwardsClientCalls]
         public static FooSettingsResource GetFooSettingsResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -69,7 +67,6 @@ namespace MgmtTypeSpec
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="BarResource"/> object. </returns>
-        [ForwardsClientCalls]
         public static BarResource GetBarResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -82,7 +79,6 @@ namespace MgmtTypeSpec
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="BarSettingsResource"/> object. </returns>
-        [ForwardsClientCalls]
         public static BarSettingsResource GetBarSettingsResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -90,12 +86,23 @@ namespace MgmtTypeSpec
             return GetMockableMgmtTypeSpecArmClient(client).GetBarSettingsResource(id);
         }
 
+        /// <summary> Gets an object representing a <see cref="BarQuotaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="BarQuotaResource"/> object. </returns>
+        public static BarQuotaResource GetBarQuotaResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMgmtTypeSpecArmClient(client).GetBarQuotaResource(id);
+        }
+
         /// <summary> Gets an object representing a <see cref="ZooResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="ZooResource"/> object. </returns>
-        [ForwardsClientCalls]
         public static ZooResource GetZooResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
@@ -107,7 +114,6 @@ namespace MgmtTypeSpec
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of Foos and their operations over a FooResource. </returns>
-        [ForwardsClientCalls]
         public static FooCollection GetFoos(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -119,13 +125,11 @@ namespace MgmtTypeSpec
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="fooName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fooName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<FooResource>> GetFooAsync(this ResourceGroupResource resourceGroupResource, string fooName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-            Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
 
             return await GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetFooAsync(fooName, cancellationToken).ConfigureAwait(false);
         }
@@ -134,13 +138,11 @@ namespace MgmtTypeSpec
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="fooName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fooName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<FooResource> GetFoo(this ResourceGroupResource resourceGroupResource, string fooName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-            Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
 
             return GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetFoo(fooName, cancellationToken);
         }
@@ -149,7 +151,6 @@ namespace MgmtTypeSpec
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> Returns a <see cref="FooSettingsResource"/> object. </returns>
-        [ForwardsClientCalls]
         public static FooSettingsResource GetFooSettings(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -161,7 +162,6 @@ namespace MgmtTypeSpec
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of Zoos and their operations over a ZooResource. </returns>
-        [ForwardsClientCalls]
         public static ZooCollection GetZoos(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -173,13 +173,11 @@ namespace MgmtTypeSpec
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="zooName"> The name of the Zoo. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="zooName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="zooName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ZooResource>> GetZooAsync(this ResourceGroupResource resourceGroupResource, string zooName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-            Argument.AssertNotNullOrEmpty(zooName, nameof(zooName));
 
             return await GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetZooAsync(zooName, cancellationToken).ConfigureAwait(false);
         }
@@ -188,13 +186,11 @@ namespace MgmtTypeSpec
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="zooName"> The name of the Zoo. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="zooName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="zooName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<ZooResource> GetZoo(this ResourceGroupResource resourceGroupResource, string zooName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-            Argument.AssertNotNullOrEmpty(zooName, nameof(zooName));
 
             return GetMockableMgmtTypeSpecResourceGroupResource(resourceGroupResource).GetZoo(zooName, cancellationToken);
         }
@@ -203,24 +199,24 @@ namespace MgmtTypeSpec
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static AsyncPageable<ZooResource> GetBySubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ZooResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ZooResource> GetZoosAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).GetBySubscriptionAsync(cancellationToken);
+            return GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).GetZoosAsync(cancellationToken);
         }
 
         /// <summary> List Zoo resources by subscription ID. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Pageable<ZooResource> GetBySubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ZooResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ZooResource> GetZoos(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).GetBySubscription(cancellationToken);
+            return GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).GetZoos(cancellationToken);
         }
 
         /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
@@ -228,12 +224,10 @@ namespace MgmtTypeSpec
         /// <param name="location"></param>
         /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="body"/> is null. </exception>
-        [ForwardsClientCalls]
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response<FooPreviewAction>> PreviewActionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, FooPreviewAction body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-            Argument.AssertNotNull(body, nameof(body));
 
             return await GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).PreviewActionsAsync(location, body, cancellationToken).ConfigureAwait(false);
         }
@@ -243,12 +237,10 @@ namespace MgmtTypeSpec
         /// <param name="location"></param>
         /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="body"/> is null. </exception>
-        [ForwardsClientCalls]
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response<FooPreviewAction> PreviewActions(this SubscriptionResource subscriptionResource, AzureLocation location, FooPreviewAction body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-            Argument.AssertNotNull(body, nameof(body));
 
             return GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).PreviewActions(location, body, cancellationToken);
         }
