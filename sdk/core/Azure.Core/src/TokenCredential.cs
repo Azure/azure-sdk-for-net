@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
@@ -54,6 +55,41 @@ namespace Azure.Core
             GetToken(TokenRequestContext.FromGetTokenOptions(properties), cancellationToken).ToAuthenticationToken();
 
         /// <inheritdoc />
-        public override GetTokenOptions? CreateTokenOptions(IReadOnlyDictionary<string, object> properties) => null;
+        public override GetTokenOptions? CreateTokenOptions(IReadOnlyDictionary<string, object> properties)
+        {
+            // Check if scopes are present and in a valid format
+            if (properties.TryGetValue(GetTokenOptions.ScopesPropertyName, out var scopesValue))
+            {
+                // Try to convert scopes to ReadOnlyMemory<string>
+                ReadOnlyMemory<string> scopes = default;
+
+                if (scopesValue is ReadOnlyMemory<string> readOnlyMemoryScopes)
+                {
+                    scopes = readOnlyMemoryScopes;
+                }
+                else if (scopesValue is string[] stringArrayScopes)
+                {
+                    scopes = new ReadOnlyMemory<string>(stringArrayScopes);
+                }
+                else
+                {
+                    // Scopes in invalid format
+                    return null;
+                }
+
+                // Create new properties dictionary with properly formatted scopes
+                var formattedProperties = new Dictionary<string, object>();
+                foreach (var kvp in properties)
+                {
+                    formattedProperties[kvp.Key] = kvp.Value;
+                }
+                formattedProperties[GetTokenOptions.ScopesPropertyName] = scopes;
+
+                return new GetTokenOptions(formattedProperties);
+            }
+
+            // No scopes provided - insufficient information to create TokenRequestContext
+            return null;
+        }
     }
 }
