@@ -58,22 +58,31 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> When enabled, flows created from Network Security Group connections will be re-evaluated when rules are updates. Initial enablement will trigger re-evaluation. </summary>
+        [WirePath("properties.flushConnection")]
         public bool? FlushConnection { get; set; }
         /// <summary> A collection of security rules of the network security group. </summary>
+        [WirePath("properties.securityRules")]
         public IList<SecurityRuleData> SecurityRules { get; }
         /// <summary> The default security rules of network security group. </summary>
+        [WirePath("properties.defaultSecurityRules")]
         public IReadOnlyList<SecurityRuleData> DefaultSecurityRules { get; }
         /// <summary> A collection of references to network interfaces. </summary>
+        [WirePath("properties.networkInterfaces")]
         public IReadOnlyList<NetworkInterfaceData> NetworkInterfaces { get; }
         /// <summary> A collection of references to subnets. </summary>
+        [WirePath("properties.subnets")]
         public IReadOnlyList<SubnetData> Subnets { get; }
         /// <summary> A collection of references to flow log resources. </summary>
+        [WirePath("properties.flowLogs")]
         public IReadOnlyList<FlowLogData> FlowLogs { get; }
         /// <summary> The resource GUID property of the network security group resource. </summary>
+        [WirePath("properties.resourceGuid")]
         public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the network security group resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

@@ -67,12 +67,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The IP address belonging to the backend address. </summary>
+        [WirePath("ipAddress")]
         public string IPAddress { get; }
         /// <summary> Resource ID of the Network Interface IP Configuration. </summary>
+        [WirePath("networkInterfaceIPConfigurationId")]
         public ResourceIdentifier NetworkInterfaceIPConfigurationResourceId { get; }
         /// <summary> The current health of the backend instances that is associated to the LB rule. </summary>
+        [WirePath("state")]
         public string State { get; }
         /// <summary> The explanation of the State. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
     }
 }

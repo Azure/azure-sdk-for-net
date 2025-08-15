@@ -69,8 +69,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Lower bound on number of Application Gateway capacity. </summary>
+        [WirePath("minCapacity")]
         public int MinCapacity { get; set; }
         /// <summary> Upper bound on number of Application Gateway capacity. </summary>
+        [WirePath("maxCapacity")]
         public int? MaxCapacity { get; set; }
     }
 }

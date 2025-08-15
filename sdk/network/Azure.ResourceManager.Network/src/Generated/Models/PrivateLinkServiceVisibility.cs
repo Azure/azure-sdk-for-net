@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Private Link Service Visibility (True/False). </summary>
+        [WirePath("visible")]
         public bool? Visible { get; }
     }
 }

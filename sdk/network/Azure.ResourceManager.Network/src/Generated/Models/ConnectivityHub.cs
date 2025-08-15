@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Resource Id. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary> Resource Type. </summary>
+        [WirePath("resourceType")]
         public ResourceType? ResourceType { get; set; }
     }
 }

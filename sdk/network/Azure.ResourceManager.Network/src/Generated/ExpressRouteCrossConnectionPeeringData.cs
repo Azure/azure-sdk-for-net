@@ -65,36 +65,52 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The peering type. </summary>
+        [WirePath("properties.peeringType")]
         public ExpressRoutePeeringType? PeeringType { get; set; }
         /// <summary> The peering state. </summary>
+        [WirePath("properties.state")]
         public ExpressRoutePeeringState? State { get; set; }
         /// <summary> The Azure ASN. </summary>
+        [WirePath("properties.azureASN")]
         public int? AzureASN { get; }
         /// <summary> The peer ASN. </summary>
+        [WirePath("properties.peerASN")]
         public long? PeerASN { get; set; }
         /// <summary> The primary address prefix. </summary>
+        [WirePath("properties.primaryPeerAddressPrefix")]
         public string PrimaryPeerAddressPrefix { get; set; }
         /// <summary> The secondary address prefix. </summary>
+        [WirePath("properties.secondaryPeerAddressPrefix")]
         public string SecondaryPeerAddressPrefix { get; set; }
         /// <summary> The primary port. </summary>
+        [WirePath("properties.primaryAzurePort")]
         public string PrimaryAzurePort { get; }
         /// <summary> The secondary port. </summary>
+        [WirePath("properties.secondaryAzurePort")]
         public string SecondaryAzurePort { get; }
         /// <summary> The shared key. </summary>
+        [WirePath("properties.sharedKey")]
         public string SharedKey { get; set; }
         /// <summary> The VLAN ID. </summary>
+        [WirePath("properties.vlanId")]
         public int? VlanId { get; set; }
         /// <summary> The Microsoft peering configuration. </summary>
+        [WirePath("properties.microsoftPeeringConfig")]
         public ExpressRouteCircuitPeeringConfig MicrosoftPeeringConfig { get; set; }
         /// <summary> The provisioning state of the express route cross connection peering resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The GatewayManager Etag. </summary>
+        [WirePath("properties.gatewayManagerEtag")]
         public string GatewayManagerETag { get; set; }
         /// <summary> Who was the last to modify the peering. </summary>
+        [WirePath("properties.lastModifiedBy")]
         public string LastModifiedBy { get; }
         /// <summary> The IPv6 peering configuration. </summary>
+        [WirePath("properties.ipv6PeeringConfig")]
         public IPv6ExpressRouteCircuitPeeringConfig IPv6PeeringConfig { get; set; }
     }
 }

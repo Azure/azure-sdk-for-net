@@ -52,14 +52,18 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Rule type. </summary>
+        [WirePath("properties.ruleType")]
         public ApplicationGatewayRequestRoutingRuleType? RuleType { get; set; }
         /// <summary> Priority of the request routing rule. </summary>
+        [WirePath("properties.priority")]
         public int? Priority { get; set; }
         /// <summary> Backend address pool resource of the application gateway. </summary>
         internal WritableSubResource BackendAddressPool { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.backendAddressPool.id")]
         public ResourceIdentifier BackendAddressPoolId
         {
             get => BackendAddressPool is null ? default : BackendAddressPool.Id;
@@ -74,6 +78,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Backend http settings resource of the application gateway. </summary>
         internal WritableSubResource BackendHttpSettings { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.backendHttpSettings.id")]
         public ResourceIdentifier BackendHttpSettingsId
         {
             get => BackendHttpSettings is null ? default : BackendHttpSettings.Id;
@@ -88,6 +93,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Http listener resource of the application gateway. </summary>
         internal WritableSubResource HttpListener { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.httpListener.id")]
         public ResourceIdentifier HttpListenerId
         {
             get => HttpListener is null ? default : HttpListener.Id;
@@ -102,6 +108,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> URL path map resource of the application gateway. </summary>
         internal WritableSubResource UrlPathMap { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.urlPathMap.id")]
         public ResourceIdentifier UrlPathMapId
         {
             get => UrlPathMap is null ? default : UrlPathMap.Id;
@@ -116,6 +123,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Rewrite Rule Set resource in Basic rule of the application gateway. </summary>
         internal WritableSubResource RewriteRuleSet { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.rewriteRuleSet.id")]
         public ResourceIdentifier RewriteRuleSetId
         {
             get => RewriteRuleSet is null ? default : RewriteRuleSet.Id;
@@ -130,6 +138,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Redirect configuration resource of the application gateway. </summary>
         internal WritableSubResource RedirectConfiguration { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.redirectConfiguration.id")]
         public ResourceIdentifier RedirectConfigurationId
         {
             get => RedirectConfiguration is null ? default : RedirectConfiguration.Id;
@@ -144,6 +153,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Load Distribution Policy resource of the application gateway. </summary>
         internal WritableSubResource LoadDistributionPolicy { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.loadDistributionPolicy.id")]
         public ResourceIdentifier LoadDistributionPolicyId
         {
             get => LoadDistributionPolicy is null ? default : LoadDistributionPolicy.Id;
@@ -156,6 +166,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The provisioning state of the request routing rule resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

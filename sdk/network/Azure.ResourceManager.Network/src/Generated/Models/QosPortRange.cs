@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Qos Port Range start. </summary>
+        [WirePath("start")]
         public int? Start { get; set; }
         /// <summary> Qos Port Range end. </summary>
+        [WirePath("end")]
         public int? End { get; set; }
     }
 }

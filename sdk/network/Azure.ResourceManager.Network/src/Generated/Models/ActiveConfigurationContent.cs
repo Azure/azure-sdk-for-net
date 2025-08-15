@@ -64,8 +64,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of regions. </summary>
+        [WirePath("regions")]
         public IList<AzureLocation> Regions { get; }
         /// <summary> When present, the value can be passed to a subsequent query call (together with the same query and scopes used in the current request) to retrieve the next page of data. </summary>
+        [WirePath("skipToken")]
         public string SkipToken { get; set; }
     }
 }

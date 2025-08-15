@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Name of the VirtualNetworkGatewayPolicyGroupMember. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The Vpn Policy member attribute type. </summary>
+        [WirePath("attributeType")]
         public VpnPolicyMemberAttributeType? AttributeType { get; set; }
         /// <summary> The value of Attribute used for this VirtualNetworkGatewayPolicyGroupMember. </summary>
+        [WirePath("attributeValue")]
         public string AttributeValue { get; set; }
     }
 }

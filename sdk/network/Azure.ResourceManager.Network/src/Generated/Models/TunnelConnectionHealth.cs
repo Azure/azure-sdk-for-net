@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Tunnel name. </summary>
+        [WirePath("tunnel")]
         public string Tunnel { get; }
         /// <summary> Virtual Network Gateway connection status. </summary>
+        [WirePath("connectionStatus")]
         public VirtualNetworkGatewayConnectionStatus? ConnectionStatus { get; }
         /// <summary> The Ingress Bytes Transferred in this connection. </summary>
+        [WirePath("ingressBytesTransferred")]
         public long? IngressBytesTransferred { get; }
         /// <summary> The Egress Bytes Transferred in this connection. </summary>
+        [WirePath("egressBytesTransferred")]
         public long? EgressBytesTransferred { get; }
         /// <summary> The time at which connection was established in Utc format. </summary>
+        [WirePath("lastConnectionEstablishedUtcTime")]
         public string LastConnectionEstablishedOn { get; }
     }
 }

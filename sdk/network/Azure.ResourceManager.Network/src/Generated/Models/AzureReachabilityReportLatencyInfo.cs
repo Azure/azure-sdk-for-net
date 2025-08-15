@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The time stamp. </summary>
+        [WirePath("timeStamp")]
         public DateTimeOffset? TimeStamp { get; }
         /// <summary> The relative latency score between 1 and 100, higher values indicating a faster connection. </summary>
+        [WirePath("score")]
         public int? Score { get; }
     }
 }

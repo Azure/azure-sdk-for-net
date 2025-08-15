@@ -80,16 +80,22 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Gets or sets the description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> Id of the intent resource to run analysis on. </summary>
+        [WirePath("intentId")]
         public string IntentId { get; set; }
         /// <summary> Intent information. </summary>
+        [WirePath("intentContent")]
         public AnalysisRunIntentContent IntentContent { get; }
         /// <summary> Gets the analysis result. </summary>
+        [WirePath("analysisResult")]
         public string AnalysisResult { get; }
         /// <summary> Gets the error message. </summary>
+        [WirePath("errorMessage")]
         public string ErrorMessage { get; }
         /// <summary> Provisioning states of a resource. </summary>
+        [WirePath("provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; set; }
     }
 }

@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The name of the field we would like to filter. </summary>
+        [WirePath("field")]
         public string Field { get; set; }
         /// <summary> List of values to filter the current field by. </summary>
+        [WirePath("values")]
         public IList<string> Values { get; }
     }
 }

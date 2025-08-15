@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Minimum and maximum number of scale units to deploy. </summary>
+        [WirePath("bounds")]
         public ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds Bounds { get; set; }
     }
 }

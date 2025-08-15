@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Reference to an ApplicationGatewayBackendHttpSettings resource. </summary>
+        [WirePath("backendHttpSettings")]
         public ApplicationGatewayBackendHttpSettings BackendHttpSettings { get; }
         /// <summary> List of ApplicationGatewayBackendHealthServer resources. </summary>
+        [WirePath("servers")]
         public IReadOnlyList<ApplicationGatewayBackendHealthServer> Servers { get; }
     }
 }

@@ -70,14 +70,19 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Timestamp denoting the last time when the route sets were computed for the gateway. </summary>
+        [WirePath("lastComputedTime")]
         public DateTimeOffset? LastComputedOn { get; }
         /// <summary> Timestamp denoting the next eligible time to re-compute the route sets for the gateway. </summary>
+        [WirePath("nextEligibleComputeTime")]
         public DateTimeOffset? NextEligibleComputeOn { get; }
         /// <summary> Version for the route set. </summary>
+        [WirePath("routeSetVersion")]
         public string RouteSetVersion { get; }
         /// <summary> List of Gateway Route Sets. </summary>
+        [WirePath("routeSets")]
         public IReadOnlyList<GatewayRouteSet> RouteSets { get; }
         /// <summary> Dictionary containing map of the circuit id and circuit details. </summary>
+        [WirePath("circuitsMetadataMap")]
         public IReadOnlyDictionary<string, CircuitMetadataMap> CircuitsMetadataMap { get; }
     }
 }

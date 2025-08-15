@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Verify client certificate issuer name on the application gateway. </summary>
+        [WirePath("verifyClientCertIssuerDN")]
         public bool? VerifyClientCertIssuerDN { get; set; }
         /// <summary> Verify client certificate revocation status. </summary>
+        [WirePath("verifyClientRevocation")]
         public ApplicationGatewayClientRevocationOption? VerifyClientRevocation { get; set; }
     }
 }

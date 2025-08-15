@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -170,6 +172,152 @@ namespace Azure.ResourceManager.Network.Models
             return new NetworkIPConfigurationBgpPeeringAddress(ipconfigurationId, defaultBgpIPAddresses ?? new ChangeTrackingList<string>(), customBgpIPAddresses ?? new ChangeTrackingList<string>(), tunnelIPAddresses ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPConfigurationId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  ipconfigurationId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IPConfigurationId))
+                {
+                    builder.Append("  ipconfigurationId: ");
+                    if (IPConfigurationId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{IPConfigurationId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{IPConfigurationId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultBgpIPAddresses), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  defaultBgpIpAddresses: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(DefaultBgpIPAddresses))
+                {
+                    if (DefaultBgpIPAddresses.Any())
+                    {
+                        builder.Append("  defaultBgpIpAddresses: ");
+                        builder.AppendLine("[");
+                        foreach (var item in DefaultBgpIPAddresses)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomBgpIPAddresses), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  customBgpIpAddresses: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(CustomBgpIPAddresses))
+                {
+                    if (CustomBgpIPAddresses.Any())
+                    {
+                        builder.Append("  customBgpIpAddresses: ");
+                        builder.AppendLine("[");
+                        foreach (var item in CustomBgpIPAddresses)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TunnelIPAddresses), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tunnelIpAddresses: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(TunnelIPAddresses))
+                {
+                    if (TunnelIPAddresses.Any())
+                    {
+                        builder.Append("  tunnelIpAddresses: ");
+                        builder.AppendLine("[");
+                        foreach (var item in TunnelIPAddresses)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<NetworkIPConfigurationBgpPeeringAddress>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkIPConfigurationBgpPeeringAddress>)this).GetFormatFromOptions(options) : options.Format;
@@ -178,6 +326,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkIPConfigurationBgpPeeringAddress)} does not support writing '{options.Format}' format.");
             }

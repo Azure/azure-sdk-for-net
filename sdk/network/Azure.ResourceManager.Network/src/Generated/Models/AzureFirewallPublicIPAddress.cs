@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Public IP Address value. </summary>
+        [WirePath("address")]
         public string Address { get; set; }
     }
 }

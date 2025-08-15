@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The certificate name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The Radius client root certificate thumbprint. </summary>
+        [WirePath("thumbprint")]
         public string Thumbprint { get; set; }
     }
 }

@@ -69,14 +69,19 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Flag to enable/disable traffic analytics. </summary>
+        [WirePath("enabled")]
         public bool? Enabled { get; set; }
         /// <summary> The resource guid of the attached workspace. </summary>
+        [WirePath("workspaceId")]
         public string WorkspaceId { get; set; }
         /// <summary> The location of the attached workspace. </summary>
+        [WirePath("workspaceRegion")]
         public string WorkspaceRegion { get; set; }
         /// <summary> Resource Id of the attached workspace. </summary>
+        [WirePath("workspaceResourceId")]
         public ResourceIdentifier WorkspaceResourceId { get; set; }
         /// <summary> The interval in minutes which would decide how frequently TA service should do flow analytics. </summary>
+        [WirePath("trafficAnalyticsInterval")]
         public int? TrafficAnalyticsIntervalInMinutes { get; set; }
     }
 }

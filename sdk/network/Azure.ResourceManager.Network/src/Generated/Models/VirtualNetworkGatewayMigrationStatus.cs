@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Represent the current state of gateway migration. </summary>
+        [WirePath("state")]
         public VirtualNetworkGatewayMigrationState? State { get; set; }
         /// <summary> Represent the current migration phase of gateway. </summary>
+        [WirePath("phase")]
         public VirtualNetworkGatewayMigrationPhase? Phase { get; set; }
         /// <summary> Error if any occurs during migration. </summary>
+        [WirePath("errorMessage")]
         public string ErrorMessage { get; set; }
     }
 }

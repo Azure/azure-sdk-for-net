@@ -58,26 +58,36 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> FlowLog resource Managed Identity. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> ID of network security group to which flow log will be applied. </summary>
+        [WirePath("properties.targetResourceId")]
         public ResourceIdentifier TargetResourceId { get; set; }
         /// <summary> Guid of network security group to which flow log will be applied. </summary>
+        [WirePath("properties.targetResourceGuid")]
         public Guid? TargetResourceGuid { get; }
         /// <summary> ID of the storage account which is used to store the flow log. </summary>
+        [WirePath("properties.storageId")]
         public ResourceIdentifier StorageId { get; set; }
         /// <summary> Optional field to filter network traffic logs based on SrcIP, SrcPort, DstIP, DstPort, Protocol, Encryption, Direction and Action. If not specified, all network traffic will be logged. </summary>
+        [WirePath("properties.enabledFilteringCriteria")]
         public string EnabledFilteringCriteria { get; set; }
         /// <summary> Flag to enable/disable flow logging. </summary>
+        [WirePath("properties.enabled")]
         public bool? Enabled { get; set; }
         /// <summary> Parameters that define the retention policy for flow log. </summary>
+        [WirePath("properties.retentionPolicy")]
         public RetentionPolicyParameters RetentionPolicy { get; set; }
         /// <summary> Parameters that define the flow log format. </summary>
+        [WirePath("properties.format")]
         public FlowLogProperties Format { get; set; }
         /// <summary> Parameters that define the configuration of traffic analytics. </summary>
         internal TrafficAnalyticsProperties FlowAnalyticsConfiguration { get; set; }
         /// <summary> Parameters that define the configuration of traffic analytics. </summary>
+        [WirePath("properties.flowAnalyticsConfiguration.networkWatcherFlowAnalyticsConfiguration")]
         public TrafficAnalyticsConfigurationProperties TrafficAnalyticsConfiguration
         {
             get => FlowAnalyticsConfiguration is null ? default : FlowAnalyticsConfiguration.TrafficAnalyticsConfiguration;
@@ -90,6 +100,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The provisioning state of the flow log. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

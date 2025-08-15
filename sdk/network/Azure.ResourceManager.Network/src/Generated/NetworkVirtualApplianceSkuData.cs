@@ -45,12 +45,16 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Network Virtual Appliance Sku vendor. </summary>
+        [WirePath("properties.vendor")]
         public string Vendor { get; }
         /// <summary> Available Network Virtual Appliance versions. </summary>
+        [WirePath("properties.availableVersions")]
         public IReadOnlyList<string> AvailableVersions { get; }
         /// <summary> The list of scale units available. </summary>
+        [WirePath("properties.availableScaleUnits")]
         public IList<NetworkVirtualApplianceSkuInstances> AvailableScaleUnits { get; }
     }
 }

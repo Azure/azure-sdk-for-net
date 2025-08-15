@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> /125 IP address space to carve out customer addresses for global reach. </summary>
+        [WirePath("addressPrefix")]
         public string AddressPrefix { get; set; }
         /// <summary> Express Route Circuit connection state. </summary>
+        [WirePath("circuitConnectionStatus")]
         public CircuitConnectionStatus? CircuitConnectionStatus { get; }
     }
 }

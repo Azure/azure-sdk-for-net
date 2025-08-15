@@ -62,18 +62,24 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The destination port on the backend. </summary>
+        [WirePath("properties.port")]
         public int? Port { get; set; }
         /// <summary> The protocol used to communicate with the backend. </summary>
+        [WirePath("properties.protocol")]
         public ApplicationGatewayProtocol? Protocol { get; set; }
         /// <summary> Cookie based affinity. </summary>
+        [WirePath("properties.cookieBasedAffinity")]
         public ApplicationGatewayCookieBasedAffinity? CookieBasedAffinity { get; set; }
         /// <summary> Request timeout in seconds. Application Gateway will fail the request if response is not received within RequestTimeout. Acceptable values are from 1 second to 86400 seconds. </summary>
+        [WirePath("properties.requestTimeout")]
         public int? RequestTimeoutInSeconds { get; set; }
         /// <summary> Probe resource of an application gateway. </summary>
         internal WritableSubResource Probe { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.probe.id")]
         public ResourceIdentifier ProbeId
         {
             get => Probe is null ? default : Probe.Id;
@@ -86,22 +92,31 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Array of references to application gateway authentication certificates. </summary>
+        [WirePath("properties.authenticationCertificates")]
         public IList<WritableSubResource> AuthenticationCertificates { get; }
         /// <summary> Array of references to application gateway trusted root certificates. </summary>
+        [WirePath("properties.trustedRootCertificates")]
         public IList<WritableSubResource> TrustedRootCertificates { get; }
         /// <summary> Connection draining of the backend http settings resource. </summary>
+        [WirePath("properties.connectionDraining")]
         public ApplicationGatewayConnectionDraining ConnectionDraining { get; set; }
         /// <summary> Host header to be sent to the backend servers. </summary>
+        [WirePath("properties.hostName")]
         public string HostName { get; set; }
         /// <summary> Whether to pick host header should be picked from the host name of the backend server. Default value is false. </summary>
+        [WirePath("properties.pickHostNameFromBackendAddress")]
         public bool? PickHostNameFromBackendAddress { get; set; }
         /// <summary> Cookie name to use for the affinity cookie. </summary>
+        [WirePath("properties.affinityCookieName")]
         public string AffinityCookieName { get; set; }
         /// <summary> Whether the probe is enabled. Default value is false. </summary>
+        [WirePath("properties.probeEnabled")]
         public bool? ProbeEnabled { get; set; }
         /// <summary> Path which should be used as a prefix for all HTTP requests. Null means no path will be prefixed. Default value is null. </summary>
+        [WirePath("properties.path")]
         public string Path { get; set; }
         /// <summary> The provisioning state of the backend HTTP settings resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

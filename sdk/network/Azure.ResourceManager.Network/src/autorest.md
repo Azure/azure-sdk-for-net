@@ -32,6 +32,7 @@ model-namespace: true
 public-clients: false
 head-as-boolean: false
 resource-model-requires-type: false
+enable-bicep-serialization: true
 
 #mgmt-debug:
 #  show-serialized-names: true

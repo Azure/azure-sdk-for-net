@@ -35,6 +35,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Properties of the shared key. </summary>
+        [WirePath("properties")]
         public VpnLinkConnectionSharedKeyProperties Properties { get; set; }
     }
 }

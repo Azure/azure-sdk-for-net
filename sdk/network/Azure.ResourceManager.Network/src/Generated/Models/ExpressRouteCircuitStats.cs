@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The Primary BytesIn of the peering. </summary>
+        [WirePath("primarybytesIn")]
         public long? PrimarybytesIn { get; set; }
         /// <summary> The primary BytesOut of the peering. </summary>
+        [WirePath("primarybytesOut")]
         public long? PrimarybytesOut { get; set; }
         /// <summary> The secondary BytesIn of the peering. </summary>
+        [WirePath("secondarybytesIn")]
         public long? SecondarybytesIn { get; set; }
         /// <summary> The secondary BytesOut of the peering. </summary>
+        [WirePath("secondarybytesOut")]
         public long? SecondarybytesOut { get; set; }
     }
 }

@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> SAS url for packet capture on virtual network gateway. </summary>
+        [WirePath("sasUrl")]
         public Uri SasUri { get; set; }
     }
 }

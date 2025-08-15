@@ -113,44 +113,63 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The authorizationKey. </summary>
+        [WirePath("properties.authorizationKey")]
         public string AuthorizationKey { get; set; }
         /// <summary> The reference to virtual network gateway resource. </summary>
+        [WirePath("properties.virtualNetworkGateway1")]
         public VirtualNetworkGatewayData VirtualNetworkGateway1 { get; set; }
         /// <summary> The reference to virtual network gateway resource. </summary>
+        [WirePath("properties.virtualNetworkGateway2")]
         public VirtualNetworkGatewayData VirtualNetworkGateway2 { get; set; }
         /// <summary> The reference to local network gateway resource. </summary>
+        [WirePath("properties.localNetworkGateway2")]
         public LocalNetworkGatewayData LocalNetworkGateway2 { get; set; }
         /// <summary> List of ingress NatRules. </summary>
+        [WirePath("properties.ingressNatRules")]
         public IList<WritableSubResource> IngressNatRules { get; }
         /// <summary> List of egress NatRules. </summary>
+        [WirePath("properties.egressNatRules")]
         public IList<WritableSubResource> EgressNatRules { get; }
         /// <summary> Gateway connection type. </summary>
+        [WirePath("properties.connectionType")]
         public VirtualNetworkGatewayConnectionType ConnectionType { get; set; }
         /// <summary> Connection protocol used for this connection. </summary>
+        [WirePath("properties.connectionProtocol")]
         public VirtualNetworkGatewayConnectionProtocol? ConnectionProtocol { get; set; }
         /// <summary> The routing weight. </summary>
+        [WirePath("properties.routingWeight")]
         public int? RoutingWeight { get; set; }
         /// <summary> The dead peer detection timeout of this connection in seconds. </summary>
+        [WirePath("properties.dpdTimeoutSeconds")]
         public int? DpdTimeoutSeconds { get; set; }
         /// <summary> The connection mode for this connection. </summary>
+        [WirePath("properties.connectionMode")]
         public VirtualNetworkGatewayConnectionMode? ConnectionMode { get; set; }
         /// <summary> Tunnel properties for virtual network gateway connection. </summary>
+        [WirePath("properties.tunnelProperties")]
         public IList<VirtualNetworkGatewayConnectionTunnelProperties> TunnelProperties { get; }
         /// <summary> The IPSec shared key. </summary>
+        [WirePath("properties.sharedKey")]
         public string SharedKey { get; set; }
         /// <summary> Virtual Network Gateway connection status. </summary>
+        [WirePath("properties.connectionStatus")]
         public VirtualNetworkGatewayConnectionStatus? ConnectionStatus { get; }
         /// <summary> Collection of all tunnels' connection health status. </summary>
+        [WirePath("properties.tunnelConnectionStatus")]
         public IReadOnlyList<TunnelConnectionHealth> TunnelConnectionStatus { get; }
         /// <summary> The egress bytes transferred in this connection. </summary>
+        [WirePath("properties.egressBytesTransferred")]
         public long? EgressBytesTransferred { get; }
         /// <summary> The ingress bytes transferred in this connection. </summary>
+        [WirePath("properties.ingressBytesTransferred")]
         public long? IngressBytesTransferred { get; }
         /// <summary> The reference to peerings resource. </summary>
         internal WritableSubResource Peer { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.peer.id")]
         public ResourceIdentifier PeerId
         {
             get => Peer is null ? default : Peer.Id;
@@ -163,24 +182,34 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> EnableBgp flag. </summary>
+        [WirePath("properties.enableBgp")]
         public bool? EnableBgp { get; set; }
         /// <summary> GatewayCustomBgpIpAddresses to be used for virtual network gateway Connection. </summary>
+        [WirePath("properties.gatewayCustomBgpIpAddresses")]
         public IList<GatewayCustomBgpIPAddressIPConfiguration> GatewayCustomBgpIPAddresses { get; }
         /// <summary> Use private local Azure IP for the connection. </summary>
+        [WirePath("properties.useLocalAzureIpAddress")]
         public bool? UseLocalAzureIPAddress { get; set; }
         /// <summary> Enable policy-based traffic selectors. </summary>
+        [WirePath("properties.usePolicyBasedTrafficSelectors")]
         public bool? UsePolicyBasedTrafficSelectors { get; set; }
         /// <summary> The IPSec Policies to be considered by this connection. </summary>
+        [WirePath("properties.ipsecPolicies")]
         public IList<IPsecPolicy> IPsecPolicies { get; }
         /// <summary> The Traffic Selector Policies to be considered by this connection. </summary>
+        [WirePath("properties.trafficSelectorPolicies")]
         public IList<TrafficSelectorPolicy> TrafficSelectorPolicies { get; }
         /// <summary> The resource GUID property of the virtual network gateway connection resource. </summary>
+        [WirePath("properties.resourceGuid")]
         public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the virtual network gateway connection resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Bypass ExpressRoute Gateway for data forwarding. </summary>
+        [WirePath("properties.expressRouteGatewayBypass")]
         public bool? ExpressRouteGatewayBypass { get; set; }
         /// <summary> Bypass the ExpressRoute gateway when accessing private-links. ExpressRoute FastPath (expressRouteGatewayBypass) must be enabled. </summary>
+        [WirePath("properties.enablePrivateLinkFastPath")]
         public bool? EnablePrivateLinkFastPath { get; set; }
     }
 }

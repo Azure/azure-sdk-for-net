@@ -46,14 +46,18 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Peer ASN. </summary>
+        [WirePath("properties.peerAsn")]
         public long? PeerAsn { get; set; }
         /// <summary> Peer IP. </summary>
+        [WirePath("properties.peerIp")]
         public string PeerIP { get; set; }
         /// <summary> The reference to the HubVirtualNetworkConnection resource. </summary>
         internal WritableSubResource HubVirtualNetworkConnection { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.hubVirtualNetworkConnection.id")]
         public ResourceIdentifier HubVirtualNetworkConnectionId
         {
             get => HubVirtualNetworkConnection is null ? default : HubVirtualNetworkConnection.Id;
@@ -66,8 +70,10 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The provisioning state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The current state of the VirtualHub to Peer. </summary>
+        [WirePath("properties.connectionState")]
         public HubBgpConnectionStatus? ConnectionState { get; }
     }
 }

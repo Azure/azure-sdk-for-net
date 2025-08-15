@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Fully qualified domain name (FQDN). </summary>
+        [WirePath("fqdn")]
         public string Fqdn { get; set; }
         /// <summary> IP address. </summary>
+        [WirePath("ipAddress")]
         public string IPAddress { get; set; }
     }
 }

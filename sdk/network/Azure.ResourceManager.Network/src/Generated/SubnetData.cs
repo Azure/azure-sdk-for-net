@@ -92,18 +92,24 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The address prefix for the subnet. </summary>
+        [WirePath("properties.addressPrefix")]
         public string AddressPrefix { get; set; }
         /// <summary> List of address prefixes for the subnet. </summary>
+        [WirePath("properties.addressPrefixes")]
         public IList<string> AddressPrefixes { get; }
         /// <summary> The reference to the NetworkSecurityGroup resource. </summary>
+        [WirePath("properties.networkSecurityGroup")]
         public NetworkSecurityGroupData NetworkSecurityGroup { get; set; }
         /// <summary> The reference to the RouteTable resource. </summary>
+        [WirePath("properties.routeTable")]
         public RouteTableData RouteTable { get; set; }
         /// <summary> Nat gateway associated with this subnet. </summary>
         internal WritableSubResource NatGateway { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.natGateway.id")]
         public ResourceIdentifier NatGatewayId
         {
             get => NatGateway is null ? default : NatGateway.Id;
@@ -116,38 +122,55 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> An array of service endpoints. </summary>
+        [WirePath("properties.serviceEndpoints")]
         public IList<ServiceEndpointProperties> ServiceEndpoints { get; }
         /// <summary> An array of service endpoint policies. </summary>
+        [WirePath("properties.serviceEndpointPolicies")]
         public IList<ServiceEndpointPolicyData> ServiceEndpointPolicies { get; }
         /// <summary> An array of references to private endpoints. </summary>
+        [WirePath("properties.privateEndpoints")]
         public IReadOnlyList<PrivateEndpointData> PrivateEndpoints { get; }
         /// <summary> An array of references to the network interface IP configurations using subnet. </summary>
+        [WirePath("properties.ipConfigurations")]
         public IReadOnlyList<NetworkIPConfiguration> IPConfigurations { get; }
         /// <summary> Array of IP configuration profiles which reference this subnet. </summary>
+        [WirePath("properties.ipConfigurationProfiles")]
         public IReadOnlyList<NetworkIPConfigurationProfile> IPConfigurationProfiles { get; }
         /// <summary> Array of IpAllocation which reference this subnet. </summary>
+        [WirePath("properties.ipAllocations")]
         public IList<WritableSubResource> IPAllocations { get; }
         /// <summary> An array of references to the external resources using subnet. </summary>
+        [WirePath("properties.resourceNavigationLinks")]
         public IReadOnlyList<ResourceNavigationLink> ResourceNavigationLinks { get; }
         /// <summary> An array of references to services injecting into this subnet. </summary>
+        [WirePath("properties.serviceAssociationLinks")]
         public IReadOnlyList<ServiceAssociationLink> ServiceAssociationLinks { get; }
         /// <summary> An array of references to the delegations on the subnet. </summary>
+        [WirePath("properties.delegations")]
         public IList<ServiceDelegation> Delegations { get; }
         /// <summary> A read-only string identifying the intention of use for this subnet based on delegations and other user-defined properties. </summary>
+        [WirePath("properties.purpose")]
         public string Purpose { get; }
         /// <summary> The provisioning state of the subnet resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Enable or Disable apply network policies on private end point in the subnet. </summary>
+        [WirePath("properties.privateEndpointNetworkPolicies")]
         public VirtualNetworkPrivateEndpointNetworkPolicy? PrivateEndpointNetworkPolicy { get; set; }
         /// <summary> Enable or Disable apply network policies on private link service in the subnet. </summary>
+        [WirePath("properties.privateLinkServiceNetworkPolicies")]
         public VirtualNetworkPrivateLinkServiceNetworkPolicy? PrivateLinkServiceNetworkPolicy { get; set; }
         /// <summary> Application gateway IP configurations of virtual network resource. </summary>
+        [WirePath("properties.applicationGatewayIPConfigurations")]
         public IList<ApplicationGatewayIPConfiguration> ApplicationGatewayIPConfigurations { get; }
         /// <summary> Set this property to Tenant to allow sharing subnet with other subscriptions in your AAD tenant. This property can only be set if defaultOutboundAccess is set to false, both properties can only be set if subnet is empty. </summary>
+        [WirePath("properties.sharingScope")]
         public SharingScope? SharingScope { get; set; }
         /// <summary> Set this property to false to disable default outbound connectivity for all VMs in the subnet. This property can only be set at the time of subnet creation and cannot be updated for an existing subnet. </summary>
+        [WirePath("properties.defaultOutboundAccess")]
         public bool? DefaultOutboundAccess { get; set; }
         /// <summary> A list of IPAM Pools for allocating IP address prefixes. </summary>
+        [WirePath("properties.ipamPoolPrefixAllocations")]
         public IList<IpamPoolPrefixAllocation> IpamPoolPrefixAllocations { get; }
     }
 }
