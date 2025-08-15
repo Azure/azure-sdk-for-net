@@ -1016,7 +1016,6 @@ function UpdateValidationStatus($pkgvalidationDetails, $BuildDefinition, $Pipeli
     return $true
 }
 
-
 function Get-LanguageDevOpsName($LanguageShort)
 {
     switch ($LanguageShort.ToLower()) 
@@ -1073,4 +1072,64 @@ function Update-ReleaseStatusInReleasePlan($releasePlanWorkItemId, $status, $ver
     Write-Host "Updating Release Plan [$releasePlanWorkItemId] with status [$status] for language [$LanguageShort]."
     $workItem = UpdateWorkItem -id $releasePlanWorkItemId -fields $fields
     Write-Host "Updated release status for [$LanguageShort] in Release Plan [$releasePlanWorkItemId]"
+}
+function Get-ReleasePlansForCPEXAttestation()
+{
+  $fields = @()
+  $fields += "Custom.ProductServiceTreeID"
+  $fields += "Custom.ReleasePlanType"
+  $fields += "Custom.ProductType"
+  $fields += "Custom.DataScope"
+  $fields += "Custom.MgmtScope"
+
+  $fieldList = ($fields | ForEach-Object { "[$_]"}) -join ", "
+  $query = "SELECT ${fieldList} FROM WorkItems WHERE [System.WorkItemType] = 'Release Plan' AND [System.State] = 'Finished'"
+  $query += " AND [Custom.AttestationStatus] IN ('', 'Pending')"
+  $query += " AND [System.Tags] NOT CONTAINS 'Release Planner App Test'"
+  $query += " AND [System.Tags] NOT CONTAINS 'Release Planner Test App'"
+  $query += " AND [System.ChangedDate] >= @StartOfDay('-1')" # Filter for items changed yesterday only
+  $query += " AND [System.ChangedDate] < @StartOfDay('0')"
+
+  $workItems = Invoke-Query $fields $query
+  return $workItems
+}
+
+function Get-TriagesForCPEXAttestation()
+{
+  $fields = @()
+  $fields += "Custom.ProductServiceTreeID"
+  $fields += "Custom.ProductType"
+  $fields += "Custom.DataScope"
+  $fields += "Custom.MgmtScope"
+
+  $fieldList = ($fields | ForEach-Object { "[$_]"}) -join ", "
+  $query = "SELECT ${fieldList} FROM WorkItems WHERE [System.WorkItemType] = 'Triage' AND [System.State] IN ('Completed', 'New')"
+  $query += " AND [Custom.DataplaneAttestationStatus] IN ('', 'Pending')"
+  $query += " AND [Custom.ManagementPlaneAttestationStatus] IN ('', 'Pending')"
+  $query += " AND [System.Tags] NOT CONTAINS 'Release Planner App Test'"
+  $query += " AND [System.Tags] NOT CONTAINS 'Release Planner Test App'"
+  $query += " AND [System.ChangedDate] >= @StartOfDay('-1')" # Filter for items changed yesterday only
+  $query += " AND [System.ChangedDate] < @StartOfDay('0')"
+
+  $workItems = Invoke-Query $fields $query
+  return $workItems  
+}
+
+function Update-AttestationStatusInReleasePlan($id, $status)
+{
+  $fields = @()
+  $fields += "Custom.AttestationStatus=${status}"
+
+  $workItem = UpdateWorkItem -id $id -fields $fields
+  return $true
+}
+
+function Update-AttestationStatusInTriage($id, $dataStatus, $mgmtStatus)
+{
+  $fields = @()
+  $fields += "Custom.DataplaneAttestationStatus=${dataStatus}"
+  $fields += "Custom.ManagementPlaneAttestationStatus=${mgmtStatus}"
+
+  $workItem = UpdateWorkItem -id $id -fields $fields
+  return $true
 }
