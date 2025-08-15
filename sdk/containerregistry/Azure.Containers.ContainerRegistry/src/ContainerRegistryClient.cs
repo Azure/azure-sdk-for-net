@@ -363,15 +363,15 @@ namespace Azure.Containers.ContainerRegistry
             Argument.AssertNotNullOrEmpty(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(refreshToken, nameof(refreshToken));
 
-            using DiagnosticScope scope_diagnostic = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(ExchangeAcrRefreshTokenForAcrAccessTokenAsync)}");
-            scope_diagnostic.Start();
+            using DiagnosticScope diagnosticScope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(ExchangeAcrRefreshTokenForAcrAccessTokenAsync)}");
+            diagnosticScope.Start();
             try
             {
                 return await _acrAuthClient.ExchangeAcrRefreshTokenForAcrAccessTokenAsync(service, scope, refreshToken, TokenGrantType.RefreshToken, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
-                scope_diagnostic.Failed(e);
+                diagnosticScope.Failed(e);
                 throw;
             }
         }
@@ -392,15 +392,15 @@ namespace Azure.Containers.ContainerRegistry
             Argument.AssertNotNullOrEmpty(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(refreshToken, nameof(refreshToken));
 
-            using DiagnosticScope scope_diagnostic = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(ExchangeAcrRefreshTokenForAcrAccessToken)}");
-            scope_diagnostic.Start();
+            using DiagnosticScope diagnosticScope = _clientDiagnostics.CreateScope($"{nameof(ContainerRegistryClient)}.{nameof(ExchangeAcrRefreshTokenForAcrAccessToken)}");
+            diagnosticScope.Start();
             try
             {
                 return _acrAuthClient.ExchangeAcrRefreshTokenForAcrAccessToken(service, scope, refreshToken, TokenGrantType.RefreshToken, cancellationToken);
             }
             catch (Exception e)
             {
-                scope_diagnostic.Failed(e);
+                diagnosticScope.Failed(e);
                 throw;
             }
         }
