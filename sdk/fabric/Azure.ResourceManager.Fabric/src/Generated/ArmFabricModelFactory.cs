@@ -84,5 +84,25 @@ namespace Azure.ResourceManager.Fabric.Models
 
             return new FabricSkuDetailsForNewCapacity(resourceType, name, locations?.ToList(), serializedAdditionalRawData: null);
         }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FabricQuota"/>. </summary>
+        /// <param name="name"> The name of the quota. </param>
+        /// <param name="unit"> The unit of usage measurement. </param>
+        /// <param name="currentValue"> The current usage of the resource. </param>
+        /// <param name="limit"> The maximum permitted usage of the resource. </param>
+        /// <returns> A new <see cref="Models.FabricQuota"/> instance for mocking. </returns>
+        public static FabricQuota FabricQuota(QuotaName name = null, string unit = null, long currentValue = default, long limit = default)
+        {
+            return new FabricQuota(name, unit, currentValue, limit, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.QuotaName"/>. </summary>
+        /// <param name="value"> The name of the resource. </param>
+        /// <param name="localizedValue"> The localized name of the resource. </param>
+        /// <returns> A new <see cref="Models.QuotaName"/> instance for mocking. </returns>
+        public static QuotaName QuotaName(string value = null, string localizedValue = null)
+        {
+            return new QuotaName(value, localizedValue, serializedAdditionalRawData: null);
+        }
     }
 }

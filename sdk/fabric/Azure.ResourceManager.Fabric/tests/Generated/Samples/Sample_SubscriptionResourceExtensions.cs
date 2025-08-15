@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Fabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetFabricCapacities_ListCapacitiesBySubscription()
         {
-            // Generated from example definition: 2023-11-01/FabricCapacities_ListBySubscription.json
+            // Generated from example definition: 2025-01-15-preview/FabricCapacities_ListBySubscription.json
             // this example is just showing the usage of "FabricCapacity_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Fabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CheckFabricCapacityNameAvailability_CheckNameAvailabilityOfACapacity()
         {
-            // Generated from example definition: 2023-11-01/FabricCapacities_CheckNameAvailability.json
+            // Generated from example definition: 2025-01-15-preview/FabricCapacities_CheckNameAvailability.json
             // this example is just showing the usage of "FabricCapacities_CheckFabricCapacityNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Fabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetSkusFabricCapacities_ListEligibleSKUsForANewCapacity()
         {
-            // Generated from example definition: 2023-11-01/FabricCapacities_ListSkus.json
+            // Generated from example definition: 2025-01-15-preview/FabricCapacities_ListSkus.json
             // this example is just showing the usage of "FabricCapacities_ListSkus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -98,6 +98,34 @@ namespace Azure.ResourceManager.Fabric.Samples
 
             // invoke the operation and iterate over the result
             await foreach (FabricSkuDetailsForNewCapacity item in subscriptionResource.GetSkusFabricCapacitiesAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetUsagesFabricCapacities_ListQuotaUsagesForASubscription()
+        {
+            // Generated from example definition: 2025-01-15-preview/FabricCapacities_ListUsagesBySubscription.json
+            // this example is just showing the usage of "FabricCapacities_ListUsages" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "548B7FB7-3B2A-4F46-BB02-66473F1FC22C";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            string location = "centraluseuap";
+            await foreach (FabricQuota item in subscriptionResource.GetUsagesFabricCapacitiesAsync(location))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
