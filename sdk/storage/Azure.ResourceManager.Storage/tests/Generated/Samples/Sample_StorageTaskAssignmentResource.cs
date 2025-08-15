@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Storage.Samples
                         },
                         Trigger = new ExecutionTriggerUpdate
                         {
-                            TriggerType = ExecutionTriggerType.RunOnce,
+                            TaskExecutionTriggerType = TaskExecutionTriggerType.RunOnce,
                             Parameters = new ExecutionTriggerParametersUpdate
                             {
                                 StartOn = DateTimeOffset.Parse("2022-11-15T21:52:47.8145095Z"),

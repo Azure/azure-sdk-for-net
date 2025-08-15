@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Storage.Samples
                         DomainName = "adtest.com",
                         NetBiosDomainName = "adtest.com",
                         ForestName = "adtest.com",
-                        DomainGuid = Guid.Parse("aebfc118-9fa9-4732-a21f-d98e41a77ae1"),
+                        ActiveDirectoryDomainGuid = Guid.Parse("aebfc118-9fa9-4732-a21f-d98e41a77ae1"),
                         DomainSid = "S-1-5-21-2400535526-2334094090-2402026252",
                         AzureStorageSid = "S-1-5-21-2400535526-2334094090-2402026252-0012",
                         SamAccountName = "sam12498",

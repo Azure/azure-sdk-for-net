@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("forestName"u8);
                 writer.WriteStringValue(ForestName);
             }
-            if (Optional.IsDefined(DomainGuid))
+            if (Optional.IsDefined(ActiveDirectoryDomainGuid))
             {
                 writer.WritePropertyName("domainGuid"u8);
-                writer.WriteStringValue(DomainGuid.Value);
+                writer.WriteStringValue(ActiveDirectoryDomainGuid.Value);
             }
             if (Optional.IsDefined(DomainSid))
             {
@@ -141,7 +141,11 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (property.NameEquals("domainGuid"u8))
                 {
-                    DeserializeNullableGuid(property, ref domainGuid);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    domainGuid = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("domainSid"u8))
@@ -266,7 +270,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DomainGuid), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActiveDirectoryDomainGuid), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  domainGuid: ");
@@ -274,10 +278,10 @@ namespace Azure.ResourceManager.Storage.Models
             }
             else
             {
-                if (Optional.IsDefined(DomainGuid))
+                if (Optional.IsDefined(ActiveDirectoryDomainGuid))
                 {
                     builder.Append("  domainGuid: ");
-                    builder.AppendLine($"'{DomainGuid.Value.ToString()}'");
+                    builder.AppendLine($"'{ActiveDirectoryDomainGuid.Value.ToString()}'");
                 }
             }
 

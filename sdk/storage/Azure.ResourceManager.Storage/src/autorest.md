@@ -171,6 +171,7 @@ rename-mapping:
     BlobInventoryPolicyRule.enabled: IsEnabled
     BlobInventoryPolicySchema.enabled: IsEnabled
     ActiveDirectoryProperties: StorageActiveDirectoryProperties
+    ActiveDirectoryProperties.domainGuid: ActiveDirectoryDomainGuid
     AccountType: ActiveDirectoryAccountType
     StorageAccount.properties.failoverInProgress: IsFailoverInProgress
     StorageAccount.properties.isNfsV3Enabled: IsNfsV3Enabled
@@ -263,7 +264,9 @@ rename-mapping:
     StorageTaskReportProperties.finishTime: FinishedOn|date-time
     TriggerParameters: ExecutionTriggerParameters
     TriggerParametersUpdate: ExecutionTriggerParametersUpdate
-    TriggerType: ExecutionTriggerType
+    TriggerType: TaskExecutionTriggerType
+    ExecutionTrigger.type: TaskExecutionTriggerType
+    ExecutionTriggerUpdate.type: TaskExecutionTriggerType
     ObjectReplicationPolicyPropertiesMetrics.enabled: IsMetricsEnabled
     AccountLimits: FileServiceAccountLimits
     AccountUsage: FileServiceAccountUsage
