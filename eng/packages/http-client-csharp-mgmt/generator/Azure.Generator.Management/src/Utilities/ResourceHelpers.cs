@@ -65,9 +65,6 @@ namespace Azure.Generator.Management.Utilities
         /// <summary>
         /// Gets the appropriate method name for an extension operation based on its kind and corresponding resource name.
         /// </summary>
-        /// <param name="operationKind"></param>
-        /// <param name="resourceName"></param>
-        /// <param name="isAsync"></param>
         /// <param name="operationKind">The kind of resource operation to perform (e.g., List, Create).</param>
         /// <param name="resourceName">The name of the resource for which the operation is being performed.</param>
         /// <param name="isAsync">Whether the method should be asynchronous.</param>
