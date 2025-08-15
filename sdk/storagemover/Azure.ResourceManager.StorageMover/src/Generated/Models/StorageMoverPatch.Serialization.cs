@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StorageMoverPatch(tags ?? new ChangeTrackingDictionary<string, string>(), description, serializedAdditionalRawData);
+            return new StorageMoverPatch(description, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageMoverPatch>.Write(ModelReaderWriterOptions options)
