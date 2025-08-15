@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Fabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateACapacity()
         {
-            // Generated from example definition: 2023-11-01/FabricCapacities_CreateOrUpdate.json
+            // Generated from example definition: 2025-01-15-preview/FabricCapacities_CreateOrUpdate.json
             // this example is just showing the usage of "FabricCapacity_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Fabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetACapacity()
         {
-            // Generated from example definition: 2023-11-01/FabricCapacities_Get.json
+            // Generated from example definition: 2025-01-15-preview/FabricCapacities_Get.json
             // this example is just showing the usage of "FabricCapacity_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Fabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListCapacitiesByResourceGroup()
         {
-            // Generated from example definition: 2023-11-01/FabricCapacities_ListByResourceGroup.json
+            // Generated from example definition: 2025-01-15-preview/FabricCapacities_ListByResourceGroup.json
             // this example is just showing the usage of "FabricCapacity_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Fabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetACapacity()
         {
-            // Generated from example definition: 2023-11-01/FabricCapacities_Get.json
+            // Generated from example definition: 2025-01-15-preview/FabricCapacities_Get.json
             // this example is just showing the usage of "FabricCapacity_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Fabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetACapacity()
         {
-            // Generated from example definition: 2023-11-01/FabricCapacities_Get.json
+            // Generated from example definition: 2025-01-15-preview/FabricCapacities_Get.json
             // this example is just showing the usage of "FabricCapacity_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
