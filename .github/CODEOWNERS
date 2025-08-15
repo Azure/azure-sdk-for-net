@@ -552,7 +552,11 @@
 # ServiceLabel: %KeyVault
 # ServiceOwners:                                                   @cheathamb36 @chen-karen @jackrichins @vickm
 
-# ServiceLabel: %Kubernetes Configuration
+# PRLabel: %KeyVault
+/sdk/keyvault/                                                     @cheathamb36 @chen-karen @jackrichins @vickm
+
+# ServiceLabel: %KeyVault
+# ServiceOwners: @cheathamb36 @chen-karen @jackrichins @vickm
 # ServiceOwners:                                                   @NarayanThiru
 
 # ServiceLabel: %Kusto
