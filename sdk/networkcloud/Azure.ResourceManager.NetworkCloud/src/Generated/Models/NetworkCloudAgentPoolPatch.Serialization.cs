@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkCloudAgentPoolPatch(tags ?? new ChangeTrackingDictionary<string, string>(), administratorConfiguration, count, upgradeSettings, serializedAdditionalRawData);
+            return new NetworkCloudAgentPoolPatch(administratorConfiguration, count, upgradeSettings, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudAgentPoolPatch>.Write(ModelReaderWriterOptions options)

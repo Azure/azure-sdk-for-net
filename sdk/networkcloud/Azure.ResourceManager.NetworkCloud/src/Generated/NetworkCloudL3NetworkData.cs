@@ -53,21 +53,21 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudL3NetworkData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="l3IsolationDomainId"> The resource ID of the Network Fabric l3IsolationDomain. </param>
         /// <param name="vlan"> The VLAN from the l3IsolationDomain that is used for this network. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> or <paramref name="l3IsolationDomainId"/> is null. </exception>
-        public NetworkCloudL3NetworkData(AzureLocation location, ExtendedLocation extendedLocation, ResourceIdentifier l3IsolationDomainId, long vlan) : base(location)
+        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="l3IsolationDomainId"/> or <paramref name="extendedLocation"/> is null. </exception>
+        public NetworkCloudL3NetworkData(AzureLocation location, ResourceIdentifier l3IsolationDomainId, long vlan, ExtendedLocation extendedLocation) : base(location)
         {
-            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
             Argument.AssertNotNull(l3IsolationDomainId, nameof(l3IsolationDomainId));
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
-            ExtendedLocation = extendedLocation;
             AssociatedResourceIds = new ChangeTrackingList<ResourceIdentifier>();
             HybridAksClustersAssociatedIds = new ChangeTrackingList<ResourceIdentifier>();
             L3IsolationDomainId = l3IsolationDomainId;
             VirtualMachinesAssociatedIds = new ChangeTrackingList<ResourceIdentifier>();
             Vlan = vlan;
+            ExtendedLocation = extendedLocation;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudL3NetworkData"/>. </summary>
@@ -77,8 +77,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag"> Resource ETag. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="associatedResourceIds"> The list of resource IDs for the other Microsoft.NetworkCloud resources that have attached this network. </param>
         /// <param name="clusterId"> The resource ID of the Network Cloud cluster this L3 network is associated with. </param>
         /// <param name="detailedStatus"> The more detailed status of the L3 network. </param>
@@ -100,11 +98,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="provisioningState"> The provisioning state of the L3 network. </param>
         /// <param name="virtualMachinesAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of virtual machine resource IDs, excluding any Hybrid AKS virtual machines, that are currently using this L3 network. </param>
         /// <param name="vlan"> The VLAN from the l3IsolationDomain that is used for this network. </param>
+        /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudL3NetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, IReadOnlyList<ResourceIdentifier> associatedResourceIds, ResourceIdentifier clusterId, L3NetworkDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<ResourceIdentifier> hybridAksClustersAssociatedIds, HybridAksIpamEnabled? hybridAksIpamEnabled, HybridAksPluginType? hybridAksPluginType, string interfaceName, IPAllocationType? ipAllocationType, string ipv4ConnectedPrefix, string ipv6ConnectedPrefix, ResourceIdentifier l3IsolationDomainId, L3NetworkProvisioningState? provisioningState, IReadOnlyList<ResourceIdentifier> virtualMachinesAssociatedIds, long vlan, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudL3NetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IReadOnlyList<ResourceIdentifier> associatedResourceIds, ResourceIdentifier clusterId, L3NetworkDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<ResourceIdentifier> hybridAksClustersAssociatedIds, HybridAksIpamEnabled? hybridAksIpamEnabled, HybridAksPluginType? hybridAksPluginType, string interfaceName, IPAllocationType? ipAllocationType, string ipv4ConnectedPrefix, string ipv6ConnectedPrefix, ResourceIdentifier l3IsolationDomainId, L3NetworkProvisioningState? provisioningState, IReadOnlyList<ResourceIdentifier> virtualMachinesAssociatedIds, long vlan, ETag? etag, ExtendedLocation extendedLocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = etag;
-            ExtendedLocation = extendedLocation;
             AssociatedResourceIds = associatedResourceIds;
             ClusterId = clusterId;
             DetailedStatus = detailedStatus;
@@ -120,6 +118,8 @@ namespace Azure.ResourceManager.NetworkCloud
             ProvisioningState = provisioningState;
             VirtualMachinesAssociatedIds = virtualMachinesAssociatedIds;
             Vlan = vlan;
+            ETag = etag;
+            ExtendedLocation = extendedLocation;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -128,10 +128,6 @@ namespace Azure.ResourceManager.NetworkCloud
         {
         }
 
-        /// <summary> Resource ETag. </summary>
-        public ETag? ETag { get; }
-        /// <summary> The extended location of the cluster associated with the resource. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> The list of resource IDs for the other Microsoft.NetworkCloud resources that have attached this network. </summary>
         public IReadOnlyList<ResourceIdentifier> AssociatedResourceIds { get; }
         /// <summary> The resource ID of the Network Cloud cluster this L3 network is associated with. </summary>
@@ -168,5 +164,9 @@ namespace Azure.ResourceManager.NetworkCloud
         public IReadOnlyList<ResourceIdentifier> VirtualMachinesAssociatedIds { get; }
         /// <summary> The VLAN from the l3IsolationDomain that is used for this network. </summary>
         public long Vlan { get; set; }
+        /// <summary> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </summary>
+        public ETag? ETag { get; }
+        /// <summary> The extended location of the cluster associated with the resource. </summary>
+        public ExtendedLocation ExtendedLocation { get; set; }
     }
 }

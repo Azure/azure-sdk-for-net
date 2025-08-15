@@ -54,28 +54,28 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudStorageApplianceData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="administratorCredentials"> The credentials of the administrative interface on this storage appliance. </param>
         /// <param name="rackId"> The resource ID of the rack where this storage appliance resides. </param>
         /// <param name="rackSlot"> The slot the storage appliance is in the rack based on the BOM configuration. </param>
         /// <param name="serialNumber"> The serial number for the storage appliance. </param>
         /// <param name="storageApplianceSkuId"> The SKU for the storage appliance. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/>, <paramref name="administratorCredentials"/>, <paramref name="rackId"/>, <paramref name="serialNumber"/> or <paramref name="storageApplianceSkuId"/> is null. </exception>
-        public NetworkCloudStorageApplianceData(AzureLocation location, ExtendedLocation extendedLocation, AdministrativeCredentials administratorCredentials, ResourceIdentifier rackId, long rackSlot, string serialNumber, string storageApplianceSkuId) : base(location)
+        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="administratorCredentials"/>, <paramref name="rackId"/>, <paramref name="serialNumber"/>, <paramref name="storageApplianceSkuId"/> or <paramref name="extendedLocation"/> is null. </exception>
+        public NetworkCloudStorageApplianceData(AzureLocation location, AdministrativeCredentials administratorCredentials, ResourceIdentifier rackId, long rackSlot, string serialNumber, string storageApplianceSkuId, ExtendedLocation extendedLocation) : base(location)
         {
-            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
             Argument.AssertNotNull(administratorCredentials, nameof(administratorCredentials));
             Argument.AssertNotNull(rackId, nameof(rackId));
             Argument.AssertNotNull(serialNumber, nameof(serialNumber));
             Argument.AssertNotNull(storageApplianceSkuId, nameof(storageApplianceSkuId));
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
-            ExtendedLocation = extendedLocation;
             AdministratorCredentials = administratorCredentials;
             RackId = rackId;
             RackSlot = rackSlot;
             SecretRotationStatus = new ChangeTrackingList<SecretRotationStatus>();
             SerialNumber = serialNumber;
             StorageApplianceSkuId = storageApplianceSkuId;
+            ExtendedLocation = extendedLocation;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudStorageApplianceData"/>. </summary>
@@ -85,8 +85,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag"> Resource ETag. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="administratorCredentials"> The credentials of the administrative interface on this storage appliance. </param>
         /// <param name="capacity"> The total capacity of the storage appliance. Measured in GiB. </param>
         /// <param name="capacityUsed"> The amount of storage consumed. </param>
@@ -105,11 +103,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="serialNumber"> The serial number for the storage appliance. </param>
         /// <param name="storageApplianceSkuId"> The SKU for the storage appliance. </param>
         /// <param name="version"> The version of the storage appliance. </param>
+        /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudStorageApplianceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, AdministrativeCredentials administratorCredentials, long? capacity, long? capacityUsed, ResourceIdentifier clusterId, StorageApplianceDetailedStatus? detailedStatus, string detailedStatusMessage, IPAddress managementIPv4Address, string manufacturer, string model, StorageApplianceProvisioningState? provisioningState, ResourceIdentifier rackId, long rackSlot, RemoteVendorManagementFeature? remoteVendorManagementFeature, RemoteVendorManagementStatus? remoteVendorManagementStatus, IReadOnlyList<SecretRotationStatus> secretRotationStatus, string serialNumber, string storageApplianceSkuId, string version, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudStorageApplianceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AdministrativeCredentials administratorCredentials, long? capacity, long? capacityUsed, ResourceIdentifier clusterId, StorageApplianceDetailedStatus? detailedStatus, string detailedStatusMessage, IPAddress managementIPv4Address, string manufacturer, string model, StorageApplianceProvisioningState? provisioningState, ResourceIdentifier rackId, long rackSlot, RemoteVendorManagementFeature? remoteVendorManagementFeature, RemoteVendorManagementStatus? remoteVendorManagementStatus, IReadOnlyList<SecretRotationStatus> secretRotationStatus, string serialNumber, string storageApplianceSkuId, string version, ETag? etag, ExtendedLocation extendedLocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = etag;
-            ExtendedLocation = extendedLocation;
             AdministratorCredentials = administratorCredentials;
             Capacity = capacity;
             CapacityUsed = capacityUsed;
@@ -128,6 +126,8 @@ namespace Azure.ResourceManager.NetworkCloud
             SerialNumber = serialNumber;
             StorageApplianceSkuId = storageApplianceSkuId;
             Version = version;
+            ETag = etag;
+            ExtendedLocation = extendedLocation;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -136,10 +136,6 @@ namespace Azure.ResourceManager.NetworkCloud
         {
         }
 
-        /// <summary> Resource ETag. </summary>
-        public ETag? ETag { get; }
-        /// <summary> The extended location of the cluster associated with the resource. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> The credentials of the administrative interface on this storage appliance. </summary>
         public AdministrativeCredentials AdministratorCredentials { get; set; }
         /// <summary> The total capacity of the storage appliance. Measured in GiB. </summary>
@@ -176,5 +172,9 @@ namespace Azure.ResourceManager.NetworkCloud
         public string StorageApplianceSkuId { get; set; }
         /// <summary> The version of the storage appliance. </summary>
         public string Version { get; }
+        /// <summary> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </summary>
+        public ETag? ETag { get; }
+        /// <summary> The extended location of the cluster associated with the resource. </summary>
+        public ExtendedLocation ExtendedLocation { get; set; }
     }
 }

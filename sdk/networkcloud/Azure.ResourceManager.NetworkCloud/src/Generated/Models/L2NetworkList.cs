@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="L2NetworkList"/>. </summary>
-        internal L2NetworkList()
+        /// <param name="value"> The L2Network items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal L2NetworkList(IEnumerable<NetworkCloudL2NetworkData> value)
         {
-            Value = new ChangeTrackingList<NetworkCloudL2NetworkData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="L2NetworkList"/>. </summary>
-        /// <param name="nextLink"> The link used to get the next page of operations. </param>
-        /// <param name="value"> The list of L2 networks. </param>
+        /// <param name="value"> The L2Network items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal L2NetworkList(string nextLink, IReadOnlyList<NetworkCloudL2NetworkData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal L2NetworkList(IReadOnlyList<NetworkCloudL2NetworkData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NextLink = nextLink;
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The link used to get the next page of operations. </summary>
-        public string NextLink { get; }
-        /// <summary> The list of L2 networks. </summary>
+        /// <summary> Initializes a new instance of <see cref="L2NetworkList"/> for deserialization. </summary>
+        internal L2NetworkList()
+        {
+        }
+
+        /// <summary> The L2Network items on this page. </summary>
         public IReadOnlyList<NetworkCloudL2NetworkData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

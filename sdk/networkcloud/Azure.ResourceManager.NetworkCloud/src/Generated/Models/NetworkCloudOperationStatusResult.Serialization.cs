@@ -290,13 +290,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 name,
                 operations ?? new ChangeTrackingList<NetworkCloudOperationStatusResult>(),
                 percentComplete,
-                resourceId,
-                startTime,
-                status,
                 exitCode,
                 outputHead,
                 resultRef,
                 resultUrl,
+                resourceId,
+                startTime,
+                status,
                 serializedAdditionalRawData);
         }
 

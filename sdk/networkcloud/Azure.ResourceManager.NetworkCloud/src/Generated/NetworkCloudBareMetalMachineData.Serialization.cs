@@ -609,8 +609,6 @@ namespace Azure.ResourceManager.NetworkCloud
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                etag,
-                extendedLocation,
                 associatedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 bmcConnectionString,
                 bmcCredentials,
@@ -643,6 +641,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 serialNumber,
                 serviceTag,
                 virtualMachinesAssociatedIds ?? new ChangeTrackingList<string>(),
+                etag,
+                extendedLocation,
                 serializedAdditionalRawData);
         }
 

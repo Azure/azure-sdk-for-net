@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkCloudBareMetalMachinePatch(tags ?? new ChangeTrackingDictionary<string, string>(), machineDetails, serializedAdditionalRawData);
+            return new NetworkCloudBareMetalMachinePatch(machineDetails, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudBareMetalMachinePatch>.Write(ModelReaderWriterOptions options)

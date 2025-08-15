@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetCloudServicesNetwork()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/CloudServicesNetworks_Get.json
-            // this example is just showing the usage of "CloudServicesNetworks_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/CloudServicesNetworks_Get.json
+            // this example is just showing the usage of "CloudServicesNetwork_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -48,10 +48,37 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteCloudServicesNetwork()
+        {
+            // Generated from example definition: 2025-02-01/CloudServicesNetworks_Delete.json
+            // this example is just showing the usage of "CloudServicesNetwork_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetworkCloudCloudServicesNetworkResource created on azure
+            // for more information of creating NetworkCloudCloudServicesNetworkResource, please refer to the document of NetworkCloudCloudServicesNetworkResource
+            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
+            string resourceGroupName = "resourceGroupName";
+            string cloudServicesNetworkName = "cloudServicesNetworkName";
+            ResourceIdentifier networkCloudCloudServicesNetworkResourceId = NetworkCloudCloudServicesNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServicesNetworkName);
+            NetworkCloudCloudServicesNetworkResource networkCloudCloudServicesNetwork = client.GetNetworkCloudCloudServicesNetworkResource(networkCloudCloudServicesNetworkResourceId);
+
+            // invoke the operation
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudCloudServicesNetwork.DeleteAsync(WaitUntil.Completed);
+            NetworkCloudOperationStatusResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchCloudServicesNetwork()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/CloudServicesNetworks_Patch.json
-            // this example is just showing the usage of "CloudServicesNetworks_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/CloudServicesNetworks_Patch.json
+            // this example is just showing the usage of "CloudServicesNetwork_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -74,14 +101,6 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 ["key1"] = "myvalue1",
 ["key2"] = "myvalue2"
 },
-                AdditionalEgressEndpoints = {new EgressEndpoint("azure-resource-management", new EndpointDependency[]
-{
-new EndpointDependency("storageaccountex.blob.core.windows.net")
-{
-Port = 443L,
-}
-})},
-                EnableDefaultEgressEndpoints = CloudServicesNetworkEnableDefaultEgressEndpoint.False,
             };
             ArmOperation<NetworkCloudCloudServicesNetworkResource> lro = await networkCloudCloudServicesNetwork.UpdateAsync(WaitUntil.Completed, patch);
             NetworkCloudCloudServicesNetworkResource result = lro.Value;

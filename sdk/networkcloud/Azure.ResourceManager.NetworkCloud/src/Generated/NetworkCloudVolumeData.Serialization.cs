@@ -249,14 +249,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                etag,
-                extendedLocation,
                 attachedTo ?? new ChangeTrackingList<string>(),
                 detailedStatus,
                 detailedStatusMessage,
                 provisioningState,
                 serialNumber,
                 sizeMiB,
+                etag,
+                extendedLocation,
                 serializedAdditionalRawData);
         }
 

@@ -393,8 +393,6 @@ namespace Azure.ResourceManager.NetworkCloud
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                etag,
-                extendedLocation,
                 associatedResourceIds ?? new ChangeTrackingList<string>(),
                 clusterId,
                 detailedStatus,
@@ -406,6 +404,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 provisioningState,
                 virtualMachinesAssociatedIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 vlans,
+                etag,
+                extendedLocation,
                 serializedAdditionalRawData);
         }
 

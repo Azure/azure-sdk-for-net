@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkCloudKubernetesClusterFeaturePatch(tags ?? new ChangeTrackingDictionary<string, string>(), options0 ?? new ChangeTrackingList<StringKeyValuePair>(), serializedAdditionalRawData);
+            return new NetworkCloudKubernetesClusterFeaturePatch(options0 ?? new ChangeTrackingList<StringKeyValuePair>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudKubernetesClusterFeaturePatch>.Write(ModelReaderWriterOptions options)

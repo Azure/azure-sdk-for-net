@@ -49,13 +49,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterPatch"/>. </summary>
         public NetworkCloudClusterPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
             ComputeRackDefinitions = new ChangeTrackingList<NetworkCloudRackDefinition>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterPatch"/>. </summary>
         /// <param name="identity"> The identity for the resource. </param>
-        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
         /// <param name="aggregatorOrSingleRackDefinition"> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </param>
         /// <param name="analyticsOutputSettings"> The settings for the log analytics workspace used for output of logs from this cluster. </param>
         /// <param name="clusterLocation"> The customer-provided location information to identify where the cluster resides. </param>
@@ -71,11 +70,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="secretArchiveSettings"> The settings for the secret archive used to hold credentials for the cluster. </param>
         /// <param name="updateStrategy"> The strategy for updating the cluster. </param>
         /// <param name="vulnerabilityScanningSettings"> The settings for how security vulnerability scanning is applied to the cluster. </param>
+        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudClusterPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, AnalyticsOutputSettings analyticsOutputSettings, string clusterLocation, ServicePrincipalInformation clusterServicePrincipal, CommandOutputSettings commandOutputSettings, ValidationThreshold computeDeploymentThreshold, IList<NetworkCloudRackDefinition> computeRackDefinitions, RuntimeProtectionConfiguration runtimeProtectionConfiguration, ClusterSecretArchive secretArchive, SecretArchiveSettings secretArchiveSettings, ClusterUpdateStrategy updateStrategy, VulnerabilityScanningSettingsPatch vulnerabilityScanningSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkCloudClusterPatch(ManagedServiceIdentity identity, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, AnalyticsOutputSettings analyticsOutputSettings, string clusterLocation, ServicePrincipalInformation clusterServicePrincipal, CommandOutputSettings commandOutputSettings, ValidationThreshold computeDeploymentThreshold, IList<NetworkCloudRackDefinition> computeRackDefinitions, RuntimeProtectionConfiguration runtimeProtectionConfiguration, ClusterSecretArchive secretArchive, SecretArchiveSettings secretArchiveSettings, ClusterUpdateStrategy updateStrategy, VulnerabilityScanningSettingsPatch vulnerabilityScanningSettings, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Identity = identity;
-            Tags = tags;
             AggregatorOrSingleRackDefinition = aggregatorOrSingleRackDefinition;
             AnalyticsOutputSettings = analyticsOutputSettings;
             ClusterLocation = clusterLocation;
@@ -88,13 +87,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             SecretArchiveSettings = secretArchiveSettings;
             UpdateStrategy = updateStrategy;
             VulnerabilityScanningSettings = vulnerabilityScanningSettings;
+            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The identity for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> The Azure resource tags that will replace the existing ones. </summary>
-        public IDictionary<string, string> Tags { get; }
         /// <summary> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </summary>
         public NetworkCloudRackDefinition AggregatorOrSingleRackDefinition { get; set; }
         /// <summary> The settings for the log analytics workspace used for output of logs from this cluster. </summary>
@@ -145,5 +143,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 VulnerabilityScanningSettings.ContainerScan = value;
             }
         }
+
+        /// <summary> The Azure resource tags that will replace the existing ones. </summary>
+        public IDictionary<string, string> Tags { get; }
     }
 }

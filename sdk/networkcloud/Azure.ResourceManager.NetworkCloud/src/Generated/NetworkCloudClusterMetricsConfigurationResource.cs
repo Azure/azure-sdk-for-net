@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.NetworkCloud
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics;
-        private readonly MetricsConfigurationsRestOperations _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient;
+        private readonly ClientDiagnostics _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics;
+        private readonly ClusterMetricsConfigurationsRestOperations _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient;
         private readonly NetworkCloudClusterMetricsConfigurationData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkCloudClusterMetricsConfigurationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string networkCloudClusterMetricsConfigurationMetricsConfigurationsApiVersion);
-            _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient = new MetricsConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudClusterMetricsConfigurationMetricsConfigurationsApiVersion);
+            _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsApiVersion);
+            _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient = new ClusterMetricsConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MetricsConfigurations_Get</description>
+        /// <description>ClusterMetricsConfiguration_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -114,11 +114,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NetworkCloudClusterMetricsConfigurationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationResource.Get");
+            using var scope = _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationResource.Get");
             scope.Start();
             try
             {
-                var response = await _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkCloudClusterMetricsConfigurationResource(Client, response.Value), response.GetRawResponse());
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MetricsConfigurations_Get</description>
+        /// <description>ClusterMetricsConfiguration_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -154,11 +154,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetworkCloudClusterMetricsConfigurationResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationResource.Get");
+            using var scope = _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationResource.Get");
             scope.Start();
             try
             {
-                var response = _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NetworkCloudClusterMetricsConfigurationResource(Client, response.Value), response.GetRawResponse());
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MetricsConfigurations_Delete</description>
+        /// <description>ClusterMetricsConfiguration_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -197,12 +197,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> DeleteAsync(WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationResource.Delete");
+            using var scope = _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationResource.Delete");
             scope.Start();
             try
             {
-                var response = await _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics, Pipeline, _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                var response = await _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics, Pipeline, _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MetricsConfigurations_Delete</description>
+        /// <description>ClusterMetricsConfiguration_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -241,12 +241,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<NetworkCloudOperationStatusResult> Delete(WaitUntil waitUntil, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationResource.Delete");
+            using var scope = _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationResource.Delete");
             scope.Start();
             try
             {
-                var response = _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics, Pipeline, _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                var response = _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ifNoneMatch, cancellationToken);
+                var operation = new NetworkCloudArmOperation<NetworkCloudOperationStatusResult>(new NetworkCloudOperationStatusResultOperationSource(), _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics, Pipeline, _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MetricsConfigurations_Update</description>
+        /// <description>ClusterMetricsConfiguration_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -289,12 +289,12 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationResource.Update");
+            using var scope = _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationResource.Update");
             scope.Start();
             try
             {
-                var response = await _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkCloudArmOperation<NetworkCloudClusterMetricsConfigurationResource>(new NetworkCloudClusterMetricsConfigurationOperationSource(Client), _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics, Pipeline, _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkCloudArmOperation<NetworkCloudClusterMetricsConfigurationResource>(new NetworkCloudClusterMetricsConfigurationOperationSource(Client), _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics, Pipeline, _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MetricsConfigurations_Update</description>
+        /// <description>ClusterMetricsConfiguration_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -337,12 +337,12 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationResource.Update");
+            using var scope = _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationResource.Update");
             scope.Start();
             try
             {
-                var response = _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new NetworkCloudArmOperation<NetworkCloudClusterMetricsConfigurationResource>(new NetworkCloudClusterMetricsConfigurationOperationSource(Client), _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics, Pipeline, _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch, ifNoneMatch, cancellationToken);
+                var operation = new NetworkCloudArmOperation<NetworkCloudClusterMetricsConfigurationResource>(new NetworkCloudClusterMetricsConfigurationOperationSource(Client), _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics, Pipeline, _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MetricsConfigurations_Get</description>
+        /// <description>ClusterMetricsConfiguration_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.NetworkCloud
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationResource.AddTag");
+            using var scope = _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationResource.AddTag");
             scope.Start();
             try
             {
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new NetworkCloudClusterMetricsConfigurationResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MetricsConfigurations_Get</description>
+        /// <description>ClusterMetricsConfiguration_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.NetworkCloud
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationResource.AddTag");
+            using var scope = _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationResource.AddTag");
             scope.Start();
             try
             {
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    var originalResponse = _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                     return Response.FromValue(new NetworkCloudClusterMetricsConfigurationResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MetricsConfigurations_Get</description>
+        /// <description>ClusterMetricsConfiguration_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationResource.SetTags");
+            using var scope = _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationResource.SetTags");
             scope.Start();
             try
             {
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new NetworkCloudClusterMetricsConfigurationResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MetricsConfigurations_Get</description>
+        /// <description>ClusterMetricsConfiguration_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationResource.SetTags");
+            using var scope = _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationResource.SetTags");
             scope.Start();
             try
             {
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    var originalResponse = _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                     return Response.FromValue(new NetworkCloudClusterMetricsConfigurationResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MetricsConfigurations_Get</description>
+        /// <description>ClusterMetricsConfiguration_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationResource.RemoveTag");
+            using var scope = _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationResource.RemoveTag");
             scope.Start();
             try
             {
@@ -629,7 +629,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new NetworkCloudClusterMetricsConfigurationResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MetricsConfigurations_Get</description>
+        /// <description>ClusterMetricsConfiguration_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationResource.RemoveTag");
+            using var scope = _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationResource.RemoveTag");
             scope.Start();
             try
             {
@@ -689,7 +689,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    var originalResponse = _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                     return Response.FromValue(new NetworkCloudClusterMetricsConfigurationResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else

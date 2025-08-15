@@ -65,7 +65,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag"> Resource ETag. </param>
         /// <param name="availabilityLifecycle"> The lifecycle indicator of the feature. </param>
         /// <param name="detailedStatus"> The detailed status of the feature. </param>
         /// <param name="detailedStatusMessage"> The descriptive message for the detailed status of the feature. </param>
@@ -73,10 +72,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="provisioningState"> The provisioning state of the Kubernetes cluster feature. </param>
         /// <param name="required"> The indicator of if the feature is required or optional. Optional features may be deleted by the user, while required features are managed with the kubernetes cluster lifecycle. </param>
         /// <param name="version"> The version of the feature. </param>
+        /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudKubernetesClusterFeatureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, KubernetesClusterFeatureAvailabilityLifecycle? availabilityLifecycle, KubernetesClusterFeatureDetailedStatus? detailedStatus, string detailedStatusMessage, IList<StringKeyValuePair> options, KubernetesClusterFeatureProvisioningState? provisioningState, KubernetesClusterFeatureRequired? required, string version, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudKubernetesClusterFeatureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, KubernetesClusterFeatureAvailabilityLifecycle? availabilityLifecycle, KubernetesClusterFeatureDetailedStatus? detailedStatus, string detailedStatusMessage, IList<StringKeyValuePair> options, KubernetesClusterFeatureProvisioningState? provisioningState, KubernetesClusterFeatureRequired? required, string version, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = etag;
             AvailabilityLifecycle = availabilityLifecycle;
             DetailedStatus = detailedStatus;
             DetailedStatusMessage = detailedStatusMessage;
@@ -84,6 +83,7 @@ namespace Azure.ResourceManager.NetworkCloud
             ProvisioningState = provisioningState;
             Required = required;
             Version = version;
+            ETag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -92,8 +92,6 @@ namespace Azure.ResourceManager.NetworkCloud
         {
         }
 
-        /// <summary> Resource ETag. </summary>
-        public ETag? ETag { get; }
         /// <summary> The lifecycle indicator of the feature. </summary>
         public KubernetesClusterFeatureAvailabilityLifecycle? AvailabilityLifecycle { get; }
         /// <summary> The detailed status of the feature. </summary>
@@ -108,5 +106,7 @@ namespace Azure.ResourceManager.NetworkCloud
         public KubernetesClusterFeatureRequired? Required { get; }
         /// <summary> The version of the feature. </summary>
         public string Version { get; }
+        /// <summary> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </summary>
+        public ETag? ETag { get; }
     }
 }

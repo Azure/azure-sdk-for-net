@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetKubernetesCluster()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/KubernetesClusters_Get.json
-            // this example is just showing the usage of "KubernetesClusters_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/KubernetesClusters_Get.json
+            // this example is just showing the usage of "KubernetesCluster_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -48,10 +48,37 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteKubernetesCluster()
+        {
+            // Generated from example definition: 2025-02-01/KubernetesClusters_Delete.json
+            // this example is just showing the usage of "KubernetesCluster_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetworkCloudKubernetesClusterResource created on azure
+            // for more information of creating NetworkCloudKubernetesClusterResource, please refer to the document of NetworkCloudKubernetesClusterResource
+            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
+            string resourceGroupName = "resourceGroupName";
+            string kubernetesClusterName = "kubernetesClusterName";
+            ResourceIdentifier networkCloudKubernetesClusterResourceId = NetworkCloudKubernetesClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, kubernetesClusterName);
+            NetworkCloudKubernetesClusterResource networkCloudKubernetesCluster = client.GetNetworkCloudKubernetesClusterResource(networkCloudKubernetesClusterResourceId);
+
+            // invoke the operation
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudKubernetesCluster.DeleteAsync(WaitUntil.Completed);
+            NetworkCloudOperationStatusResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchKubernetesCluster()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/KubernetesClusters_Patch.json
-            // this example is just showing the usage of "KubernetesClusters_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/KubernetesClusters_Patch.json
+            // this example is just showing the usage of "KubernetesCluster_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -74,13 +101,6 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 ["key1"] = "myvalue1",
 ["key2"] = "myvalue2"
 },
-                AdministratorSshPublicKeys = { new NetworkCloudSshPublicKey("ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp+jfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsSXISTRnIDpcf5qytjs1Xo+yYyJMvzLL59mhAyb3p/cD+Y3/s3WhAx+l0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= admin@vm") },
-                ControlPlaneNodeConfiguration = new ControlPlaneNodePatchConfiguration
-                {
-                    AdministratorSshPublicKeys = { new NetworkCloudSshPublicKey("ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp+jfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsSXISTRnIDpcf5qytjs1Xo+yYyJMvzLL59mhAyb3p/cD+Y3/s3WhAx+l0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= admin@vm") },
-                    Count = 3L,
-                },
-                KubernetesVersion = "1.XX.Y",
             };
             ArmOperation<NetworkCloudKubernetesClusterResource> lro = await networkCloudKubernetesCluster.UpdateAsync(WaitUntil.Completed, patch);
             NetworkCloudKubernetesClusterResource result = lro.Value;
@@ -96,7 +116,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task RestartNode_RestartAKubernetesClusterNode()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/KubernetesClusters_RestartNode.json
+            // Generated from example definition: 2025-02-01/KubernetesClusters_RestartNode.json
             // this example is just showing the usage of "KubernetesClusters_RestartNode" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

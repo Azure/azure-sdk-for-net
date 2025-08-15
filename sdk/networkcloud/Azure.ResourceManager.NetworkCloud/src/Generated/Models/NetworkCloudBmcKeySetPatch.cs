@@ -48,28 +48,28 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of <see cref="NetworkCloudBmcKeySetPatch"/>. </summary>
         public NetworkCloudBmcKeySetPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
             UserList = new ChangeTrackingList<KeySetUser>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudBmcKeySetPatch"/>. </summary>
-        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
         /// <param name="expireOn"> The date and time after which the users in this key set will be removed from the baseboard management controllers. </param>
         /// <param name="userList"> The unique list of permitted users. </param>
+        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudBmcKeySetPatch(IDictionary<string, string> tags, DateTimeOffset? expireOn, IList<KeySetUser> userList, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkCloudBmcKeySetPatch(DateTimeOffset? expireOn, IList<KeySetUser> userList, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Tags = tags;
             ExpireOn = expireOn;
             UserList = userList;
+            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The Azure resource tags that will replace the existing ones. </summary>
-        public IDictionary<string, string> Tags { get; }
         /// <summary> The date and time after which the users in this key set will be removed from the baseboard management controllers. </summary>
         public DateTimeOffset? ExpireOn { get; set; }
         /// <summary> The unique list of permitted users. </summary>
         public IList<KeySetUser> UserList { get; }
+        /// <summary> The Azure resource tags that will replace the existing ones. </summary>
+        public IDictionary<string, string> Tags { get; }
     }
 }

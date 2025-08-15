@@ -54,21 +54,20 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudKubernetesClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="controlPlaneNodeConfiguration"> The defining characteristics of the control plane for this Kubernetes Cluster. </param>
         /// <param name="initialAgentPoolConfigurations"> The agent pools that are created with this Kubernetes cluster for running critical system services and workloads. This data in this field is only used during creation, and the field will be empty following the creation of the Kubernetes Cluster. After creation, the management of agent pools is done using the agentPools sub-resource. </param>
         /// <param name="kubernetesVersion"> The Kubernetes version for this cluster. </param>
         /// <param name="networkConfiguration"> The configuration of the Kubernetes cluster networking, including the attachment of networks that span the cluster. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/>, <paramref name="controlPlaneNodeConfiguration"/>, <paramref name="initialAgentPoolConfigurations"/>, <paramref name="kubernetesVersion"/> or <paramref name="networkConfiguration"/> is null. </exception>
-        public NetworkCloudKubernetesClusterData(AzureLocation location, ExtendedLocation extendedLocation, ControlPlaneNodeConfiguration controlPlaneNodeConfiguration, IEnumerable<InitialAgentPoolConfiguration> initialAgentPoolConfigurations, string kubernetesVersion, KubernetesClusterNetworkConfiguration networkConfiguration) : base(location)
+        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="controlPlaneNodeConfiguration"/>, <paramref name="initialAgentPoolConfigurations"/>, <paramref name="kubernetesVersion"/>, <paramref name="networkConfiguration"/> or <paramref name="extendedLocation"/> is null. </exception>
+        public NetworkCloudKubernetesClusterData(AzureLocation location, ControlPlaneNodeConfiguration controlPlaneNodeConfiguration, IEnumerable<InitialAgentPoolConfiguration> initialAgentPoolConfigurations, string kubernetesVersion, KubernetesClusterNetworkConfiguration networkConfiguration, ExtendedLocation extendedLocation) : base(location)
         {
-            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
             Argument.AssertNotNull(controlPlaneNodeConfiguration, nameof(controlPlaneNodeConfiguration));
             Argument.AssertNotNull(initialAgentPoolConfigurations, nameof(initialAgentPoolConfigurations));
             Argument.AssertNotNull(kubernetesVersion, nameof(kubernetesVersion));
             Argument.AssertNotNull(networkConfiguration, nameof(networkConfiguration));
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
-            ExtendedLocation = extendedLocation;
             AttachedNetworkIds = new ChangeTrackingList<ResourceIdentifier>();
             AvailableUpgrades = new ChangeTrackingList<AvailableUpgrade>();
             ControlPlaneNodeConfiguration = controlPlaneNodeConfiguration;
@@ -77,6 +76,7 @@ namespace Azure.ResourceManager.NetworkCloud
             KubernetesVersion = kubernetesVersion;
             NetworkConfiguration = networkConfiguration;
             Nodes = new ChangeTrackingList<KubernetesClusterNode>();
+            ExtendedLocation = extendedLocation;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudKubernetesClusterData"/>. </summary>
@@ -86,8 +86,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag"> Resource ETag. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="aadConfiguration"> The Azure Active Directory Integration properties. </param>
         /// <param name="administratorConfiguration"> The administrative credentials that will be applied to the control plane and agent pool nodes that do not specify their own values. </param>
         /// <param name="attachedNetworkIds"> The full list of network resource IDs that are attached to this cluster, including those attached only to specific agent pools. </param>
@@ -105,11 +103,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="networkConfiguration"> The configuration of the Kubernetes cluster networking, including the attachment of networks that span the cluster. </param>
         /// <param name="nodes"> The details of the nodes in this cluster. </param>
         /// <param name="provisioningState"> The provisioning state of the Kubernetes cluster resource. </param>
+        /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudKubernetesClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, NetworkCloudAadConfiguration aadConfiguration, AdministratorConfiguration administratorConfiguration, IReadOnlyList<ResourceIdentifier> attachedNetworkIds, IReadOnlyList<AvailableUpgrade> availableUpgrades, ResourceIdentifier clusterId, ResourceIdentifier connectedClusterId, string controlPlaneKubernetesVersion, ControlPlaneNodeConfiguration controlPlaneNodeConfiguration, KubernetesClusterDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<FeatureStatus> featureStatuses, IList<InitialAgentPoolConfiguration> initialAgentPoolConfigurations, string kubernetesVersion, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, KubernetesClusterNetworkConfiguration networkConfiguration, IReadOnlyList<KubernetesClusterNode> nodes, KubernetesClusterProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudKubernetesClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkCloudAadConfiguration aadConfiguration, AdministratorConfiguration administratorConfiguration, IReadOnlyList<ResourceIdentifier> attachedNetworkIds, IReadOnlyList<AvailableUpgrade> availableUpgrades, ResourceIdentifier clusterId, ResourceIdentifier connectedClusterId, string controlPlaneKubernetesVersion, ControlPlaneNodeConfiguration controlPlaneNodeConfiguration, KubernetesClusterDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<FeatureStatus> featureStatuses, IList<InitialAgentPoolConfiguration> initialAgentPoolConfigurations, string kubernetesVersion, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, KubernetesClusterNetworkConfiguration networkConfiguration, IReadOnlyList<KubernetesClusterNode> nodes, KubernetesClusterProvisioningState? provisioningState, ETag? etag, ExtendedLocation extendedLocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = etag;
-            ExtendedLocation = extendedLocation;
             AadConfiguration = aadConfiguration;
             AdministratorConfiguration = administratorConfiguration;
             AttachedNetworkIds = attachedNetworkIds;
@@ -127,6 +125,8 @@ namespace Azure.ResourceManager.NetworkCloud
             NetworkConfiguration = networkConfiguration;
             Nodes = nodes;
             ProvisioningState = provisioningState;
+            ETag = etag;
+            ExtendedLocation = extendedLocation;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -135,10 +135,6 @@ namespace Azure.ResourceManager.NetworkCloud
         {
         }
 
-        /// <summary> Resource ETag. </summary>
-        public ETag? ETag { get; }
-        /// <summary> The extended location of the cluster associated with the resource. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> The Azure Active Directory Integration properties. </summary>
         internal NetworkCloudAadConfiguration AadConfiguration { get; set; }
         /// <summary> The list of Azure Active Directory group object IDs that will have an administrative role on the Kubernetes cluster. </summary>
@@ -180,5 +176,9 @@ namespace Azure.ResourceManager.NetworkCloud
         public IReadOnlyList<KubernetesClusterNode> Nodes { get; }
         /// <summary> The provisioning state of the Kubernetes cluster resource. </summary>
         public KubernetesClusterProvisioningState? ProvisioningState { get; }
+        /// <summary> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </summary>
+        public ETag? ETag { get; }
+        /// <summary> The extended location of the cluster associated with the resource. </summary>
+        public ExtendedLocation ExtendedLocation { get; set; }
     }
 }

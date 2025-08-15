@@ -52,22 +52,20 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudVirtualMachineConsolePatch"/>. </summary>
-        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
         /// <param name="enabled"> The indicator of whether the console access is enabled. </param>
         /// <param name="expireOn"> The date and time after which the key will be disallowed access. </param>
         /// <param name="sshPublicKey"> The SSH public key that will be provisioned for user access. The user is expected to have the corresponding SSH private key for logging in. </param>
+        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudVirtualMachineConsolePatch(IDictionary<string, string> tags, ConsoleEnabled? enabled, DateTimeOffset? expireOn, NetworkCloudSshPublicKey sshPublicKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkCloudVirtualMachineConsolePatch(ConsoleEnabled? enabled, DateTimeOffset? expireOn, NetworkCloudSshPublicKey sshPublicKey, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Tags = tags;
             Enabled = enabled;
             ExpireOn = expireOn;
             SshPublicKey = sshPublicKey;
+            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The Azure resource tags that will replace the existing ones. </summary>
-        public IDictionary<string, string> Tags { get; }
         /// <summary> The indicator of whether the console access is enabled. </summary>
         public ConsoleEnabled? Enabled { get; set; }
         /// <summary> The date and time after which the key will be disallowed access. </summary>
@@ -80,5 +78,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             get => SshPublicKey is null ? default : SshPublicKey.KeyData;
             set => SshPublicKey = new NetworkCloudSshPublicKey(value);
         }
+
+        /// <summary> The Azure resource tags that will replace the existing ones. </summary>
+        public IDictionary<string, string> Tags { get; }
     }
 }

@@ -104,6 +104,7 @@ namespace Azure.ResourceManager.NetworkCloud
     public partial class NetworkCloudBareMetalMachineData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineData>
     {
         public NetworkCloudBareMetalMachineData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, string bmcConnectionString, Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, string machineDetails, string machineName, string machineSkuId, Azure.Core.ResourceIdentifier rackId, long rackSlot, string serialNumber) { }
+        public NetworkCloudBareMetalMachineData(Azure.Core.AzureLocation location, string bmcConnectionString, Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, string machineDetails, string machineName, string machineSkuId, Azure.Core.ResourceIdentifier rackId, long rackSlot, string serialNumber, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation) { }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> AssociatedResourceIds { get { throw null; } }
         public string BmcConnectionString { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials BmcCredentials { get { throw null; } set { } }
@@ -167,6 +168,7 @@ namespace Azure.ResourceManager.NetworkCloud
     public partial class NetworkCloudBareMetalMachineKeySetData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetData>
     {
         public NetworkCloudBareMetalMachineKeySetData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, string azureGroupId, System.DateTimeOffset expireOn, System.Collections.Generic.IEnumerable<System.Net.IPAddress> jumpHostsAllowed, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetPrivilegeLevel privilegeLevel, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KeySetUser> userList) { }
+        public NetworkCloudBareMetalMachineKeySetData(Azure.Core.AzureLocation location, string azureGroupId, System.DateTimeOffset expireOn, System.Collections.Generic.IEnumerable<System.Net.IPAddress> jumpHostsAllowed, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetPrivilegeLevel privilegeLevel, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KeySetUser> userList, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation) { }
         public string AzureGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetDetailedStatus? DetailedStatus { get { throw null; } }
         public string DetailedStatusMessage { get { throw null; } }
@@ -287,6 +289,7 @@ namespace Azure.ResourceManager.NetworkCloud
     public partial class NetworkCloudBmcKeySetData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetData>
     {
         public NetworkCloudBmcKeySetData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, string azureGroupId, System.DateTimeOffset expireOn, Azure.ResourceManager.NetworkCloud.Models.BmcKeySetPrivilegeLevel privilegeLevel, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KeySetUser> userList) { }
+        public NetworkCloudBmcKeySetData(Azure.Core.AzureLocation location, string azureGroupId, System.DateTimeOffset expireOn, Azure.ResourceManager.NetworkCloud.Models.BmcKeySetPrivilegeLevel privilegeLevel, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KeySetUser> userList, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation) { }
         public string AzureGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.BmcKeySetDetailedStatus? DetailedStatus { get { throw null; } }
         public string DetailedStatusMessage { get { throw null; } }
@@ -435,6 +438,7 @@ namespace Azure.ResourceManager.NetworkCloud
     public partial class NetworkCloudClusterData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterData>
     {
         public NetworkCloudClusterData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, Azure.ResourceManager.NetworkCloud.Models.ClusterType clusterType, string clusterVersion, Azure.Core.ResourceIdentifier networkFabricId) { }
+        public NetworkCloudClusterData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, Azure.ResourceManager.NetworkCloud.Models.ClusterType clusterType, string clusterVersion, Azure.Core.ResourceIdentifier networkFabricId, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation) { }
         public Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackDefinition AggregatorOrSingleRackDefinition { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.AnalyticsOutputSettings AnalyticsOutputSettings { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier AnalyticsWorkspaceId { get { throw null; } set { } }
@@ -571,6 +575,7 @@ namespace Azure.ResourceManager.NetworkCloud
     public partial class NetworkCloudClusterMetricsConfigurationData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationData>
     {
         public NetworkCloudClusterMetricsConfigurationData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, long collectionInterval) { }
+        public NetworkCloudClusterMetricsConfigurationData(Azure.Core.AzureLocation location, long collectionInterval, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation) { }
         public long CollectionInterval { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.ClusterMetricsConfigurationDetailedStatus? DetailedStatus { get { throw null; } }
         public string DetailedStatusMessage { get { throw null; } }
@@ -775,6 +780,7 @@ namespace Azure.ResourceManager.NetworkCloud
     }
     public partial class NetworkCloudKubernetesClusterData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterData>
     {
+        public NetworkCloudKubernetesClusterData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ControlPlaneNodeConfiguration controlPlaneNodeConfiguration, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.InitialAgentPoolConfiguration> initialAgentPoolConfigurations, string kubernetesVersion, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNetworkConfiguration networkConfiguration, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation) { }
         public NetworkCloudKubernetesClusterData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, Azure.ResourceManager.NetworkCloud.Models.ControlPlaneNodeConfiguration controlPlaneNodeConfiguration, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.InitialAgentPoolConfiguration> initialAgentPoolConfigurations, string kubernetesVersion, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNetworkConfiguration networkConfiguration) { }
         public System.Collections.Generic.IList<string> AadAdminGroupObjectIds { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.AdministratorConfiguration AdministratorConfiguration { get { throw null; } set { } }
@@ -930,6 +936,7 @@ namespace Azure.ResourceManager.NetworkCloud
     }
     public partial class NetworkCloudL2NetworkData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkData>
     {
+        public NetworkCloudL2NetworkData(Azure.Core.AzureLocation location, Azure.Core.ResourceIdentifier l2IsolationDomainId, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation) { }
         public NetworkCloudL2NetworkData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, Azure.Core.ResourceIdentifier l2IsolationDomainId) { }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> AssociatedResourceIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier ClusterId { get { throw null; } }
@@ -1002,6 +1009,7 @@ namespace Azure.ResourceManager.NetworkCloud
     }
     public partial class NetworkCloudL3NetworkData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkData>
     {
+        public NetworkCloudL3NetworkData(Azure.Core.AzureLocation location, Azure.Core.ResourceIdentifier l3IsolationDomainId, long vlan, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation) { }
         public NetworkCloudL3NetworkData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, Azure.Core.ResourceIdentifier l3IsolationDomainId, long vlan) { }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> AssociatedResourceIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier ClusterId { get { throw null; } }
@@ -1078,6 +1086,7 @@ namespace Azure.ResourceManager.NetworkCloud
     public partial class NetworkCloudRackData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudRackData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudRackData>
     {
         public NetworkCloudRackData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, string availabilityZone, string rackLocation, string rackSerialNumber, Azure.Core.ResourceIdentifier rackSkuId) { }
+        public NetworkCloudRackData(Azure.Core.AzureLocation location, string availabilityZone, string rackLocation, string rackSerialNumber, Azure.Core.ResourceIdentifier rackSkuId, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation) { }
         public string AvailabilityZone { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ClusterId { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.RackDetailedStatus? DetailedStatus { get { throw null; } }
@@ -1185,6 +1194,7 @@ namespace Azure.ResourceManager.NetworkCloud
     }
     public partial class NetworkCloudStorageApplianceData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceData>
     {
+        public NetworkCloudStorageApplianceData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials administratorCredentials, Azure.Core.ResourceIdentifier rackId, long rackSlot, string serialNumber, string storageApplianceSkuId, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation) { }
         public NetworkCloudStorageApplianceData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials administratorCredentials, Azure.Core.ResourceIdentifier rackId, long rackSlot, string serialNumber, string storageApplianceSkuId) { }
         public Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials AdministratorCredentials { get { throw null; } set { } }
         public long? Capacity { get { throw null; } }
@@ -1264,6 +1274,7 @@ namespace Azure.ResourceManager.NetworkCloud
     public partial class NetworkCloudTrunkedNetworkData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkData>
     {
         public NetworkCloudTrunkedNetworkData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> isolationDomainIds, System.Collections.Generic.IEnumerable<long> vlans) { }
+        public NetworkCloudTrunkedNetworkData(Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> isolationDomainIds, System.Collections.Generic.IEnumerable<long> vlans, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation) { }
         public System.Collections.Generic.IReadOnlyList<string> AssociatedResourceIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier ClusterId { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkDetailedStatus? DetailedStatus { get { throw null; } }
@@ -1357,6 +1368,7 @@ namespace Azure.ResourceManager.NetworkCloud
     }
     public partial class NetworkCloudVirtualMachineConsoleData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleData>
     {
+        public NetworkCloudVirtualMachineConsoleData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ConsoleEnabled enabled, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSshPublicKey sshPublicKey, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation) { }
         public NetworkCloudVirtualMachineConsoleData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, Azure.ResourceManager.NetworkCloud.Models.ConsoleEnabled enabled, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSshPublicKey sshPublicKey) { }
         public Azure.ResourceManager.NetworkCloud.Models.ConsoleDetailedStatus? DetailedStatus { get { throw null; } }
         public string DetailedStatusMessage { get { throw null; } }
@@ -1411,6 +1423,7 @@ namespace Azure.ResourceManager.NetworkCloud
     public partial class NetworkCloudVirtualMachineData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineData>
     {
         public NetworkCloudVirtualMachineData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, string adminUsername, Azure.ResourceManager.NetworkCloud.Models.NetworkAttachment cloudServicesNetworkAttachment, long cpuCores, long memorySizeInGB, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageProfile storageProfile, string vmImage) { }
+        public NetworkCloudVirtualMachineData(Azure.Core.AzureLocation location, string adminUsername, Azure.ResourceManager.NetworkCloud.Models.NetworkAttachment cloudServicesNetworkAttachment, long cpuCores, long memorySizeInGB, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageProfile storageProfile, string vmImage, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation) { }
         public string AdminUsername { get { throw null; } set { } }
         public string AvailabilityZone { get { throw null; } }
         public Azure.Core.ResourceIdentifier BareMetalMachineId { get { throw null; } }
@@ -1511,6 +1524,7 @@ namespace Azure.ResourceManager.NetworkCloud
     public partial class NetworkCloudVolumeData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeData>
     {
         public NetworkCloudVolumeData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, long sizeInMiB) { }
+        public NetworkCloudVolumeData(Azure.Core.AzureLocation location, long sizeInMiB, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation) { }
         public System.Collections.Generic.IReadOnlyList<string> AttachedTo { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.VolumeDetailedStatus? DetailedStatus { get { throw null; } }
         public string DetailedStatusMessage { get { throw null; } }
@@ -1662,6 +1676,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public partial class AdministrativeCredentials : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials>
     {
         public AdministrativeCredentials(string username) { }
+        public AdministrativeCredentials(string password, string username) { }
         public string Password { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1787,6 +1802,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNode KubernetesClusterNode(string agentPoolId, string availabilityZone, string bareMetalMachineId, long? cpuCores, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNodeDetailedStatus? detailedStatus, string detailedStatusMessage, long? diskSizeGB, string image, string kubernetesVersion, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KubernetesLabel> labels, long? memorySizeGB, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolMode? mode, string name, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkAttachment> networkAttachments, Azure.ResourceManager.NetworkCloud.Models.KubernetesNodePowerState? powerState, Azure.ResourceManager.NetworkCloud.Models.KubernetesNodeRole? role, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KubernetesLabel> taints, string vmSkuName) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.LldpNeighbor LldpNeighbor(string portDescription = null, string portName = null, string systemDescription = null, string systemName = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.MachineDisk MachineDisk(long? capacityGB = default(long?), Azure.ResourceManager.NetworkCloud.Models.MachineSkuDiskConnectionType? connection = default(Azure.ResourceManager.NetworkCloud.Models.MachineSkuDiskConnectionType?), Azure.ResourceManager.NetworkCloud.Models.DiskType? diskType = default(Azure.ResourceManager.NetworkCloud.Models.DiskType?)) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.MachineSkuSlot MachineSkuSlot(Azure.ResourceManager.NetworkCloud.Models.BootstrapProtocol? bootstrapProtocol = default(Azure.ResourceManager.NetworkCloud.Models.BootstrapProtocol?), long? cpuCores = default(long?), long? cpuSockets = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.MachineDisk> disks = null, string generation = null, string hardwareVersion = null, long? memoryCapacityGB = default(long?), string model = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudNetworkInterface> networkInterfaces = null, long? totalThreads = default(long?), string vendor = null, long? rackSlot = default(long?)) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.MachineSkuSlot MachineSkuSlot(long? rackSlot = default(long?), Azure.ResourceManager.NetworkCloud.Models.BootstrapProtocol? bootstrapProtocol = default(Azure.ResourceManager.NetworkCloud.Models.BootstrapProtocol?), long? cpuCores = default(long?), long? cpuSockets = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.MachineDisk> disks = null, string generation = null, string hardwareVersion = null, long? memoryCapacityGB = default(long?), string model = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.NetworkCloudNetworkInterface> networkInterfaces = null, long? totalThreads = default(long?), string vendor = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.NetworkAttachment NetworkAttachment(Azure.Core.ResourceIdentifier attachedNetworkArmId = null, Azure.ResourceManager.NetworkCloud.Models.DefaultGateway? defaultGateway = default(Azure.ResourceManager.NetworkCloud.Models.DefaultGateway?), Azure.ResourceManager.NetworkCloud.Models.VirtualMachineIPAllocationMethod ipAllocationMethod = default(Azure.ResourceManager.NetworkCloud.Models.VirtualMachineIPAllocationMethod), string ipv4Address = null, string ipv6Address = null, string macAddress = null, string networkAttachmentName = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -1865,6 +1881,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static Azure.ResourceManager.NetworkCloud.Models.SecretArchiveReference SecretArchiveReference(Azure.Core.ResourceIdentifier keyVaultId = null, string secretName = null, string secretVersion = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.SecretRotationStatus SecretRotationStatus(long? expirePeriodDays = default(long?), System.DateTimeOffset? lastRotationOn = default(System.DateTimeOffset?), long? rotationPeriodDays = default(long?), Azure.ResourceManager.NetworkCloud.Models.SecretArchiveReference secretArchiveReference = null, string secretType = null) { throw null; }
         public static Azure.ResourceManager.NetworkCloud.Models.StorageApplianceSkuSlot StorageApplianceSkuSlot(long? rackSlot = default(long?), long? capacityGB = default(long?), string model = null) { throw null; }
+        public static Azure.ResourceManager.NetworkCloud.Models.StorageApplianceSkuSlot StorageApplianceSkuSlot(long? capacityGB = default(long?), string model = null, long? rackSlot = default(long?)) { throw null; }
     }
     public partial class AttachedNetworkConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.AttachedNetworkConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.AttachedNetworkConfiguration>
     {
@@ -3164,6 +3181,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public partial class ImageRepositoryCredentials : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ImageRepositoryCredentials>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ImageRepositoryCredentials>
     {
         public ImageRepositoryCredentials(string registryUriString, string username) { }
+        public ImageRepositoryCredentials(string password, string registryUriString, string username) { }
         public string Password { get { throw null; } set { } }
         public string RegistryUriString { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
@@ -4412,6 +4430,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public partial class ServicePrincipalInformation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ServicePrincipalInformation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ServicePrincipalInformation>
     {
         public ServicePrincipalInformation(string applicationId, string principalId, string tenantId) { }
+        public ServicePrincipalInformation(string applicationId, string password, string principalId, string tenantId) { }
         public string ApplicationId { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
         public string PrincipalId { get { throw null; } set { } }

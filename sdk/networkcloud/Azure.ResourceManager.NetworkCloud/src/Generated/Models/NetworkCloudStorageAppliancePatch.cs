@@ -52,19 +52,19 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudStorageAppliancePatch"/>. </summary>
-        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
         /// <param name="serialNumber"> The serial number for the storage appliance. </param>
+        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudStorageAppliancePatch(IDictionary<string, string> tags, string serialNumber, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkCloudStorageAppliancePatch(string serialNumber, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Tags = tags;
             SerialNumber = serialNumber;
+            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The Azure resource tags that will replace the existing ones. </summary>
-        public IDictionary<string, string> Tags { get; }
         /// <summary> The serial number for the storage appliance. </summary>
         public string SerialNumber { get; set; }
+        /// <summary> The Azure resource tags that will replace the existing ones. </summary>
+        public IDictionary<string, string> Tags { get; }
     }
 }

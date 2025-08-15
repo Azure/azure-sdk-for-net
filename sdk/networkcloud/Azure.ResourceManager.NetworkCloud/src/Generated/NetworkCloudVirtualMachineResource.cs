@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Consoles_Get</description>
+        /// <description>Console_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Consoles_Get</description>
+        /// <description>Console_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
+        /// <description>VirtualMachine_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
+        /// <description>VirtualMachine_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Delete</description>
+        /// <description>VirtualMachine_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Delete</description>
+        /// <description>VirtualMachine_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Update</description>
+        /// <description>VirtualMachine_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Update</description>
+        /// <description>VirtualMachine_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -770,7 +770,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
+        /// <description>VirtualMachine_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -832,7 +832,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
+        /// <description>VirtualMachine_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -894,7 +894,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
+        /// <description>VirtualMachine_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -951,7 +951,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
+        /// <description>VirtualMachine_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1008,7 +1008,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
+        /// <description>VirtualMachine_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1068,7 +1068,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
+        /// <description>VirtualMachine_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

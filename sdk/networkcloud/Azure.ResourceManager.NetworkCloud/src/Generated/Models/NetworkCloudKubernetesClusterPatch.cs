@@ -52,22 +52,20 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudKubernetesClusterPatch"/>. </summary>
-        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
         /// <param name="administratorConfiguration"> The configuration of the default administrator credentials. </param>
         /// <param name="controlPlaneNodeConfiguration"> The defining characteristics of the control plane that can be patched for this Kubernetes cluster. </param>
         /// <param name="kubernetesVersion"> The Kubernetes version for this cluster. </param>
+        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudKubernetesClusterPatch(IDictionary<string, string> tags, AdministratorConfigurationPatch administratorConfiguration, ControlPlaneNodePatchConfiguration controlPlaneNodeConfiguration, string kubernetesVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkCloudKubernetesClusterPatch(AdministratorConfigurationPatch administratorConfiguration, ControlPlaneNodePatchConfiguration controlPlaneNodeConfiguration, string kubernetesVersion, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Tags = tags;
             AdministratorConfiguration = administratorConfiguration;
             ControlPlaneNodeConfiguration = controlPlaneNodeConfiguration;
             KubernetesVersion = kubernetesVersion;
+            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The Azure resource tags that will replace the existing ones. </summary>
-        public IDictionary<string, string> Tags { get; }
         /// <summary> The configuration of the default administrator credentials. </summary>
         internal AdministratorConfigurationPatch AdministratorConfiguration { get; set; }
         /// <summary> SshPublicKey represents the public key used to authenticate with a resource through SSH. </summary>
@@ -85,5 +83,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public ControlPlaneNodePatchConfiguration ControlPlaneNodeConfiguration { get; set; }
         /// <summary> The Kubernetes version for this cluster. </summary>
         public string KubernetesVersion { get; set; }
+        /// <summary> The Azure resource tags that will replace the existing ones. </summary>
+        public IDictionary<string, string> Tags { get; }
     }
 }

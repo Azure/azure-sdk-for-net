@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BareMetalMachineKeySets_Get</description>
+        /// <description>BareMetalMachineKeySet_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BareMetalMachineKeySets_Get</description>
+        /// <description>BareMetalMachineKeySet_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BmcKeySets_Get</description>
+        /// <description>BmcKeySet_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BmcKeySets_Get</description>
+        /// <description>BmcKeySet_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MetricsConfigurations_Get</description>
+        /// <description>ClusterMetricsConfiguration_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MetricsConfigurations_Get</description>
+        /// <description>ClusterMetricsConfiguration_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <description>Cluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <description>Cluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Clusters_Delete</description>
+        /// <description>Cluster_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Clusters_Delete</description>
+        /// <description>Cluster_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Clusters_Update</description>
+        /// <description>Cluster_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Clusters_Update</description>
+        /// <description>Cluster_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -926,7 +926,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <description>Cluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -988,7 +988,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <description>Cluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1050,7 +1050,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <description>Cluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1107,7 +1107,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <description>Cluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1164,7 +1164,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <description>Cluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1224,7 +1224,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <description>Cluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

@@ -76,8 +76,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag"> Resource ETag. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="administratorConfiguration"> The administrator credentials to be used for the nodes in this agent pool. </param>
         /// <param name="agentOptions"> The configurations that will be applied to each agent in this agent pool. </param>
         /// <param name="attachedNetworkConfiguration"> The configuration of networks being attached to the agent pool for use by the workloads that run on this Kubernetes cluster. </param>
@@ -92,11 +90,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="taints"> The taints applied to the nodes in this agent pool. </param>
         /// <param name="upgradeSettings"> The configuration of the agent pool. </param>
         /// <param name="vmSkuName"> The name of the VM SKU that determines the size of resources allocated for node VMs. </param>
+        /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudAgentPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, AdministratorConfiguration administratorConfiguration, NetworkCloudAgentConfiguration agentOptions, AttachedNetworkConfiguration attachedNetworkConfiguration, IList<string> availabilityZones, long count, AgentPoolDetailedStatus? detailedStatus, string detailedStatusMessage, string kubernetesVersion, IList<KubernetesLabel> labels, NetworkCloudAgentPoolMode mode, AgentPoolProvisioningState? provisioningState, IList<KubernetesLabel> taints, AgentPoolUpgradeSettings upgradeSettings, string vmSkuName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudAgentPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AdministratorConfiguration administratorConfiguration, NetworkCloudAgentConfiguration agentOptions, AttachedNetworkConfiguration attachedNetworkConfiguration, IList<string> availabilityZones, long count, AgentPoolDetailedStatus? detailedStatus, string detailedStatusMessage, string kubernetesVersion, IList<KubernetesLabel> labels, NetworkCloudAgentPoolMode mode, AgentPoolProvisioningState? provisioningState, IList<KubernetesLabel> taints, AgentPoolUpgradeSettings upgradeSettings, string vmSkuName, ETag? etag, ExtendedLocation extendedLocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = etag;
-            ExtendedLocation = extendedLocation;
             AdministratorConfiguration = administratorConfiguration;
             AgentOptions = agentOptions;
             AttachedNetworkConfiguration = attachedNetworkConfiguration;
@@ -111,6 +109,8 @@ namespace Azure.ResourceManager.NetworkCloud
             Taints = taints;
             UpgradeSettings = upgradeSettings;
             VmSkuName = vmSkuName;
+            ETag = etag;
+            ExtendedLocation = extendedLocation;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -119,10 +119,6 @@ namespace Azure.ResourceManager.NetworkCloud
         {
         }
 
-        /// <summary> Resource ETag. </summary>
-        public ETag? ETag { get; }
-        /// <summary> The extended location of the cluster associated with the resource. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> The administrator credentials to be used for the nodes in this agent pool. </summary>
         public AdministratorConfiguration AdministratorConfiguration { get; set; }
         /// <summary> The configurations that will be applied to each agent in this agent pool. </summary>
@@ -151,5 +147,9 @@ namespace Azure.ResourceManager.NetworkCloud
         public AgentPoolUpgradeSettings UpgradeSettings { get; set; }
         /// <summary> The name of the VM SKU that determines the size of resources allocated for node VMs. </summary>
         public string VmSkuName { get; set; }
+        /// <summary> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </summary>
+        public ETag? ETag { get; }
+        /// <summary> The extended location of the cluster associated with the resource. </summary>
+        public ExtendedLocation ExtendedLocation { get; set; }
     }
 }

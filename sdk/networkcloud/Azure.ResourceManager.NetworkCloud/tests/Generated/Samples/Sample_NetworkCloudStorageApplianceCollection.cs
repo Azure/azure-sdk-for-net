@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetStorageAppliance()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/StorageAppliances_Get.json
-            // this example is just showing the usage of "StorageAppliances_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/StorageAppliances_Get.json
+            // this example is just showing the usage of "StorageAppliance_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListStorageAppliancesForResourceGroup()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/StorageAppliances_ListByResourceGroup.json
-            // this example is just showing the usage of "StorageAppliances_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/StorageAppliances_ListByResourceGroup.json
+            // this example is just showing the usage of "StorageAppliance_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetStorageAppliance()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/StorageAppliances_Get.json
-            // this example is just showing the usage of "StorageAppliances_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/StorageAppliances_Get.json
+            // this example is just showing the usage of "StorageAppliance_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -117,8 +117,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetStorageAppliance()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/StorageAppliances_Get.json
-            // this example is just showing the usage of "StorageAppliances_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/StorageAppliances_Get.json
+            // this example is just showing the usage of "StorageAppliance_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

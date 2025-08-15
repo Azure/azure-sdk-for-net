@@ -1,0 +1,13 @@
+{
+  "output-folder": ".",
+  "namespace": "Azure.ResourceManager.NetworkCloud",
+  "library-name": "Azure.ResourceManager.NetworkCloud",
+  "flavor": "azure",
+  "use-model-reader-writer": true,
+  "shared-source-folders": [
+    "../../TempTypeSpecFiles/node_modules/@autorest/csharp/Generator.Shared",
+    "../../TempTypeSpecFiles/node_modules/@autorest/csharp/Azure.Core.Shared"
+  ],
+  "examples-dir": "TempTypeSpecFiles\\NetworkCloud.Management\\examples",
+  "azure-arm": true
+}

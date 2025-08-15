@@ -53,20 +53,19 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster manager associated with the cluster. </param>
         /// <param name="aggregatorOrSingleRackDefinition"> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </param>
         /// <param name="clusterType"> The type of rack configuration for the cluster. </param>
         /// <param name="clusterVersion"> The current runtime version of the cluster. </param>
         /// <param name="networkFabricId"> The resource ID of the Network Fabric associated with the cluster. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/>, <paramref name="aggregatorOrSingleRackDefinition"/>, <paramref name="clusterVersion"/> or <paramref name="networkFabricId"/> is null. </exception>
-        public NetworkCloudClusterData(AzureLocation location, ExtendedLocation extendedLocation, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, ClusterType clusterType, string clusterVersion, ResourceIdentifier networkFabricId) : base(location)
+        /// <param name="extendedLocation"> The extended location of the cluster manager associated with the cluster. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="aggregatorOrSingleRackDefinition"/>, <paramref name="clusterVersion"/>, <paramref name="networkFabricId"/> or <paramref name="extendedLocation"/> is null. </exception>
+        public NetworkCloudClusterData(AzureLocation location, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, ClusterType clusterType, string clusterVersion, ResourceIdentifier networkFabricId, ExtendedLocation extendedLocation) : base(location)
         {
-            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
             Argument.AssertNotNull(aggregatorOrSingleRackDefinition, nameof(aggregatorOrSingleRackDefinition));
             Argument.AssertNotNull(clusterVersion, nameof(clusterVersion));
             Argument.AssertNotNull(networkFabricId, nameof(networkFabricId));
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
-            ExtendedLocation = extendedLocation;
             AggregatorOrSingleRackDefinition = aggregatorOrSingleRackDefinition;
             AvailableUpgradeVersions = new ChangeTrackingList<ClusterAvailableUpgradeVersion>();
             ClusterType = clusterType;
@@ -74,6 +73,7 @@ namespace Azure.ResourceManager.NetworkCloud
             ComputeRackDefinitions = new ChangeTrackingList<NetworkCloudRackDefinition>();
             NetworkFabricId = networkFabricId;
             WorkloadResourceIds = new ChangeTrackingList<ResourceIdentifier>();
+            ExtendedLocation = extendedLocation;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterData"/>. </summary>
@@ -83,9 +83,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag"> Resource ETag. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster manager associated with the cluster. </param>
-        /// <param name="identity"> The identity for the resource. </param>
         /// <param name="aggregatorOrSingleRackDefinition"> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </param>
         /// <param name="analyticsOutputSettings"> The settings for the log analytics workspace used for output of logs from this cluster. </param>
         /// <param name="analyticsWorkspaceId"> Field Deprecated. The resource ID of the Log Analytics Workspace that will be used for storing relevant logs. </param>
@@ -119,12 +116,12 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="updateStrategy"> The strategy for updating the cluster. </param>
         /// <param name="vulnerabilityScanningSettings"> The settings for how security vulnerability scanning is applied to the cluster. </param>
         /// <param name="workloadResourceIds"> The list of workload resource IDs that are hosted within this cluster. </param>
+        /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="extendedLocation"> The extended location of the cluster manager associated with the cluster. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, ManagedServiceIdentity identity, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, AnalyticsOutputSettings analyticsOutputSettings, ResourceIdentifier analyticsWorkspaceId, IReadOnlyList<ClusterAvailableUpgradeVersion> availableUpgradeVersions, ClusterCapacity clusterCapacity, ClusterConnectionStatus? clusterConnectionStatus, ExtendedLocation clusterExtendedLocation, string clusterLocation, ClusterManagerConnectionStatus? clusterManagerConnectionStatus, ResourceIdentifier clusterManagerId, ServicePrincipalInformation clusterServicePrincipal, ClusterType clusterType, string clusterVersion, CommandOutputSettings commandOutputSettings, ValidationThreshold computeDeploymentThreshold, IList<NetworkCloudRackDefinition> computeRackDefinitions, ClusterDetailedStatus? detailedStatus, string detailedStatusMessage, ExtendedLocation hybridAksExtendedLocation, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, long? manualActionCount, ResourceIdentifier networkFabricId, ClusterProvisioningState? provisioningState, RuntimeProtectionConfiguration runtimeProtectionConfiguration, ClusterSecretArchive secretArchive, SecretArchiveSettings secretArchiveSettings, DateTimeOffset? supportExpireOn, ClusterUpdateStrategy updateStrategy, VulnerabilityScanningSettings vulnerabilityScanningSettings, IReadOnlyList<ResourceIdentifier> workloadResourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, AnalyticsOutputSettings analyticsOutputSettings, ResourceIdentifier analyticsWorkspaceId, IReadOnlyList<ClusterAvailableUpgradeVersion> availableUpgradeVersions, ClusterCapacity clusterCapacity, ClusterConnectionStatus? clusterConnectionStatus, ExtendedLocation clusterExtendedLocation, string clusterLocation, ClusterManagerConnectionStatus? clusterManagerConnectionStatus, ResourceIdentifier clusterManagerId, ServicePrincipalInformation clusterServicePrincipal, ClusterType clusterType, string clusterVersion, CommandOutputSettings commandOutputSettings, ValidationThreshold computeDeploymentThreshold, IList<NetworkCloudRackDefinition> computeRackDefinitions, ClusterDetailedStatus? detailedStatus, string detailedStatusMessage, ExtendedLocation hybridAksExtendedLocation, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, long? manualActionCount, ResourceIdentifier networkFabricId, ClusterProvisioningState? provisioningState, RuntimeProtectionConfiguration runtimeProtectionConfiguration, ClusterSecretArchive secretArchive, SecretArchiveSettings secretArchiveSettings, DateTimeOffset? supportExpireOn, ClusterUpdateStrategy updateStrategy, VulnerabilityScanningSettings vulnerabilityScanningSettings, IReadOnlyList<ResourceIdentifier> workloadResourceIds, ETag? etag, ExtendedLocation extendedLocation, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = etag;
-            ExtendedLocation = extendedLocation;
-            Identity = identity;
             AggregatorOrSingleRackDefinition = aggregatorOrSingleRackDefinition;
             AnalyticsOutputSettings = analyticsOutputSettings;
             AnalyticsWorkspaceId = analyticsWorkspaceId;
@@ -155,6 +152,9 @@ namespace Azure.ResourceManager.NetworkCloud
             UpdateStrategy = updateStrategy;
             VulnerabilityScanningSettings = vulnerabilityScanningSettings;
             WorkloadResourceIds = workloadResourceIds;
+            ETag = etag;
+            ExtendedLocation = extendedLocation;
+            Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -163,12 +163,6 @@ namespace Azure.ResourceManager.NetworkCloud
         {
         }
 
-        /// <summary> Resource ETag. </summary>
-        public ETag? ETag { get; }
-        /// <summary> The extended location of the cluster manager associated with the cluster. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
-        /// <summary> The identity for the resource. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </summary>
         public NetworkCloudRackDefinition AggregatorOrSingleRackDefinition { get; set; }
         /// <summary> The settings for the log analytics workspace used for output of logs from this cluster. </summary>
@@ -256,5 +250,11 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> The list of workload resource IDs that are hosted within this cluster. </summary>
         public IReadOnlyList<ResourceIdentifier> WorkloadResourceIds { get; }
+        /// <summary> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </summary>
+        public ETag? ETag { get; }
+        /// <summary> The extended location of the cluster manager associated with the cluster. </summary>
+        public ExtendedLocation ExtendedLocation { get; set; }
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateCloudServicesNetwork()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/CloudServicesNetworks_Create.json
-            // this example is just showing the usage of "CloudServicesNetworks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/CloudServicesNetworks_Create.json
+            // this example is just showing the usage of "CloudServicesNetwork_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -43,14 +43,6 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             string cloudServicesNetworkName = "cloudServicesNetworkName";
             NetworkCloudCloudServicesNetworkData data = new NetworkCloudCloudServicesNetworkData(new AzureLocation("location"), new ExtendedLocation("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ExtendedLocation/customLocations/clusterExtendedLocationName", "CustomLocation"))
             {
-                AdditionalEgressEndpoints = {new EgressEndpoint("azure-resource-management", new EndpointDependency[]
-{
-new EndpointDependency("storageaccountex.blob.core.windows.net")
-{
-Port = 443L,
-}
-})},
-                EnableDefaultEgressEndpoints = CloudServicesNetworkEnableDefaultEgressEndpoint.False,
                 Tags =
 {
 ["key1"] = "myvalue1",
@@ -71,8 +63,8 @@ Port = 443L,
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetCloudServicesNetwork()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/CloudServicesNetworks_Get.json
-            // this example is just showing the usage of "CloudServicesNetworks_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/CloudServicesNetworks_Get.json
+            // this example is just showing the usage of "CloudServicesNetwork_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -104,8 +96,8 @@ Port = 443L,
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListCloudServicesNetworksForResourceGroup()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/CloudServicesNetworks_ListByResourceGroup.json
-            // this example is just showing the usage of "CloudServicesNetworks_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/CloudServicesNetworks_ListByResourceGroup.json
+            // this example is just showing the usage of "CloudServicesNetwork_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -139,8 +131,8 @@ Port = 443L,
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetCloudServicesNetwork()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/CloudServicesNetworks_Get.json
-            // this example is just showing the usage of "CloudServicesNetworks_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/CloudServicesNetworks_Get.json
+            // this example is just showing the usage of "CloudServicesNetwork_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -168,8 +160,8 @@ Port = 443L,
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetCloudServicesNetwork()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/CloudServicesNetworks_Get.json
-            // this example is just showing the usage of "CloudServicesNetworks_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/CloudServicesNetworks_Get.json
+            // this example is just showing the usage of "CloudServicesNetwork_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

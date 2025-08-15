@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="StorageApplianceList"/>. </summary>
-        internal StorageApplianceList()
+        /// <param name="value"> The StorageAppliance items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal StorageApplianceList(IEnumerable<NetworkCloudStorageApplianceData> value)
         {
-            Value = new ChangeTrackingList<NetworkCloudStorageApplianceData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageApplianceList"/>. </summary>
-        /// <param name="nextLink"> The link used to get the next page of operations. </param>
-        /// <param name="value"> The list of storage appliances. </param>
+        /// <param name="value"> The StorageAppliance items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageApplianceList(string nextLink, IReadOnlyList<NetworkCloudStorageApplianceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageApplianceList(IReadOnlyList<NetworkCloudStorageApplianceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NextLink = nextLink;
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The link used to get the next page of operations. </summary>
-        public string NextLink { get; }
-        /// <summary> The list of storage appliances. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageApplianceList"/> for deserialization. </summary>
+        internal StorageApplianceList()
+        {
+        }
+
+        /// <summary> The StorageAppliance items on this page. </summary>
         public IReadOnlyList<NetworkCloudStorageApplianceData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

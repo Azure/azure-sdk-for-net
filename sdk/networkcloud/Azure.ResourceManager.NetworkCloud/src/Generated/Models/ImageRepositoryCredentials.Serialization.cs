@@ -34,11 +34,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 throw new FormatException($"The model {nameof(ImageRepositoryCredentials)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Password))
-            {
-                writer.WritePropertyName("password"u8);
-                writer.WriteStringValue(Password);
-            }
+            writer.WritePropertyName("password"u8);
+            writer.WriteStringValue(Password);
             writer.WritePropertyName("registryUrl"u8);
             writer.WriteStringValue(RegistryUriString);
             writer.WritePropertyName("username"u8);

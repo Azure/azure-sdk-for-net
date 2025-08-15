@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.NetworkCloud.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetworkCloud.Samples
@@ -20,8 +19,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateKubernetesClusterFeature()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/KubernetesClusterFeatures_Create.json
-            // this example is just showing the usage of "KubernetesClusterFeatures_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/KubernetesClusterFeatures_Create.json
+            // this example is just showing the usage of "KubernetesClusterFeature_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -43,7 +42,6 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             string featureName = "featureName";
             NetworkCloudKubernetesClusterFeatureData data = new NetworkCloudKubernetesClusterFeatureData(new AzureLocation("location"))
             {
-                Options = { new StringKeyValuePair("featureOptionName", "featureOptionValue") },
                 Tags =
 {
 ["key1"] = "myvalue1",
@@ -64,8 +62,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetKubernetesClusterFeature()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/KubernetesClusterFeatures_Get.json
-            // this example is just showing the usage of "KubernetesClusterFeatures_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/KubernetesClusterFeatures_Get.json
+            // this example is just showing the usage of "KubernetesClusterFeature_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -98,8 +96,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListFeaturesForTheKubernetesCluster()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/KubernetesClusterFeatures_ListByKubernetesCluster.json
-            // this example is just showing the usage of "KubernetesClusterFeatures_ListByKubernetesCluster" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/KubernetesClusterFeatures_ListByKubernetesCluster.json
+            // this example is just showing the usage of "KubernetesClusterFeature_ListByKubernetesCluster" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -134,8 +132,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetKubernetesClusterFeature()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/KubernetesClusterFeatures_Get.json
-            // this example is just showing the usage of "KubernetesClusterFeatures_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/KubernetesClusterFeatures_Get.json
+            // this example is just showing the usage of "KubernetesClusterFeature_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -164,8 +162,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetKubernetesClusterFeature()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/KubernetesClusterFeatures_Get.json
-            // this example is just showing the usage of "KubernetesClusterFeatures_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/KubernetesClusterFeatures_Get.json
+            // this example is just showing the usage of "KubernetesClusterFeature_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

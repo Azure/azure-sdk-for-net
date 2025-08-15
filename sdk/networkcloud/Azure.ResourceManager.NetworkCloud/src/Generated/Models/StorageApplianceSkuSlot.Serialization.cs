@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StorageApplianceSkuSlot(rackSlot, capacityGB, model, serializedAdditionalRawData);
+            return new StorageApplianceSkuSlot(capacityGB, model, rackSlot, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageApplianceSkuSlot>.Write(ModelReaderWriterOptions options)

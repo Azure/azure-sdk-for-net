@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
@@ -21,8 +22,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateTrunkedNetwork()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/TrunkedNetworks_Create.json
-            // this example is just showing the usage of "TrunkedNetworks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/TrunkedNetworks_Create.json
+            // this example is just showing the usage of "TrunkedNetwork_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -41,9 +42,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // invoke the operation
             string trunkedNetworkName = "trunkedNetworkName";
-            NetworkCloudTrunkedNetworkData data = new NetworkCloudTrunkedNetworkData(new AzureLocation("location"), new ExtendedLocation("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ExtendedLocation/customLocations/clusterExtendedLocationName", "CustomLocation"), new ResourceIdentifier[] { new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/l2IsolationDomainName"), new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/l3IsolationDomainName") }, new long[] { 12L, 14L })
+            NetworkCloudTrunkedNetworkData data = new NetworkCloudTrunkedNetworkData(new AzureLocation("location"), null, null, new ExtendedLocation("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ExtendedLocation/customLocations/clusterExtendedLocationName", "CustomLocation"))
             {
-                InterfaceName = "eth0",
                 Tags =
 {
 ["key1"] = "myvalue1",
@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTrunkedNetwork()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/TrunkedNetworks_Get.json
-            // this example is just showing the usage of "TrunkedNetworks_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/TrunkedNetworks_Get.json
+            // this example is just showing the usage of "TrunkedNetwork_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListTrunkedNetworksForResourceGroup()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/TrunkedNetworks_ListByResourceGroup.json
-            // this example is just showing the usage of "TrunkedNetworks_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/TrunkedNetworks_ListByResourceGroup.json
+            // this example is just showing the usage of "TrunkedNetwork_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -132,8 +132,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetTrunkedNetwork()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/TrunkedNetworks_Get.json
-            // this example is just showing the usage of "TrunkedNetworks_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/TrunkedNetworks_Get.json
+            // this example is just showing the usage of "TrunkedNetwork_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -161,8 +161,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetTrunkedNetwork()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/TrunkedNetworks_Get.json
-            // this example is just showing the usage of "TrunkedNetworks_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/TrunkedNetworks_Get.json
+            // this example is just showing the usage of "TrunkedNetwork_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

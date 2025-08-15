@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BareMetalMachineList"/>. </summary>
-        internal BareMetalMachineList()
+        /// <param name="value"> The BareMetalMachine items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal BareMetalMachineList(IEnumerable<NetworkCloudBareMetalMachineData> value)
         {
-            Value = new ChangeTrackingList<NetworkCloudBareMetalMachineData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="BareMetalMachineList"/>. </summary>
-        /// <param name="nextLink"> The link used to get the next page of operations. </param>
-        /// <param name="value"> The list of bare metal machines. </param>
+        /// <param name="value"> The BareMetalMachine items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BareMetalMachineList(string nextLink, IReadOnlyList<NetworkCloudBareMetalMachineData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BareMetalMachineList(IReadOnlyList<NetworkCloudBareMetalMachineData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NextLink = nextLink;
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The link used to get the next page of operations. </summary>
-        public string NextLink { get; }
-        /// <summary> The list of bare metal machines. </summary>
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachineList"/> for deserialization. </summary>
+        internal BareMetalMachineList()
+        {
+        }
+
+        /// <summary> The BareMetalMachine items on this page. </summary>
         public IReadOnlyList<NetworkCloudBareMetalMachineData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

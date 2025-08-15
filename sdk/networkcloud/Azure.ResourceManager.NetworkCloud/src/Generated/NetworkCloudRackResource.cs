@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Racks_Get</description>
+        /// <description>Rack_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Racks_Get</description>
+        /// <description>Rack_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Racks_Update</description>
+        /// <description>Rack_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Racks_Update</description>
+        /// <description>Rack_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Racks_Get</description>
+        /// <description>Rack_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Racks_Get</description>
+        /// <description>Rack_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Racks_Get</description>
+        /// <description>Rack_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Racks_Get</description>
+        /// <description>Rack_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Racks_Get</description>
+        /// <description>Rack_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Racks_Get</description>
+        /// <description>Rack_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

@@ -53,19 +53,19 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudL2NetworkData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="l2IsolationDomainId"> The resource ID of the Network Fabric l2IsolationDomain. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> or <paramref name="l2IsolationDomainId"/> is null. </exception>
-        public NetworkCloudL2NetworkData(AzureLocation location, ExtendedLocation extendedLocation, ResourceIdentifier l2IsolationDomainId) : base(location)
+        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="l2IsolationDomainId"/> or <paramref name="extendedLocation"/> is null. </exception>
+        public NetworkCloudL2NetworkData(AzureLocation location, ResourceIdentifier l2IsolationDomainId, ExtendedLocation extendedLocation) : base(location)
         {
-            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
             Argument.AssertNotNull(l2IsolationDomainId, nameof(l2IsolationDomainId));
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
-            ExtendedLocation = extendedLocation;
             AssociatedResourceIds = new ChangeTrackingList<ResourceIdentifier>();
             HybridAksClustersAssociatedIds = new ChangeTrackingList<ResourceIdentifier>();
             L2IsolationDomainId = l2IsolationDomainId;
             VirtualMachinesAssociatedIds = new ChangeTrackingList<ResourceIdentifier>();
+            ExtendedLocation = extendedLocation;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudL2NetworkData"/>. </summary>
@@ -75,8 +75,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag"> Resource ETag. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="associatedResourceIds"> The list of resource IDs for the other Microsoft.NetworkCloud resources that have attached this network. </param>
         /// <param name="clusterId"> The resource ID of the Network Cloud cluster this L2 network is associated with. </param>
         /// <param name="detailedStatus"> The more detailed status of the L2 network. </param>
@@ -87,11 +85,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="l2IsolationDomainId"> The resource ID of the Network Fabric l2IsolationDomain. </param>
         /// <param name="provisioningState"> The provisioning state of the L2 network. </param>
         /// <param name="virtualMachinesAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of virtual machine resource ID(s), excluding any Hybrid AKS virtual machines, that are currently using this L2 network. </param>
+        /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudL2NetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, IReadOnlyList<ResourceIdentifier> associatedResourceIds, ResourceIdentifier clusterId, L2NetworkDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<ResourceIdentifier> hybridAksClustersAssociatedIds, HybridAksPluginType? hybridAksPluginType, string interfaceName, ResourceIdentifier l2IsolationDomainId, L2NetworkProvisioningState? provisioningState, IReadOnlyList<ResourceIdentifier> virtualMachinesAssociatedIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudL2NetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IReadOnlyList<ResourceIdentifier> associatedResourceIds, ResourceIdentifier clusterId, L2NetworkDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<ResourceIdentifier> hybridAksClustersAssociatedIds, HybridAksPluginType? hybridAksPluginType, string interfaceName, ResourceIdentifier l2IsolationDomainId, L2NetworkProvisioningState? provisioningState, IReadOnlyList<ResourceIdentifier> virtualMachinesAssociatedIds, ETag? etag, ExtendedLocation extendedLocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = etag;
-            ExtendedLocation = extendedLocation;
             AssociatedResourceIds = associatedResourceIds;
             ClusterId = clusterId;
             DetailedStatus = detailedStatus;
@@ -102,6 +100,8 @@ namespace Azure.ResourceManager.NetworkCloud
             L2IsolationDomainId = l2IsolationDomainId;
             ProvisioningState = provisioningState;
             VirtualMachinesAssociatedIds = virtualMachinesAssociatedIds;
+            ETag = etag;
+            ExtendedLocation = extendedLocation;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -110,10 +110,6 @@ namespace Azure.ResourceManager.NetworkCloud
         {
         }
 
-        /// <summary> Resource ETag. </summary>
-        public ETag? ETag { get; }
-        /// <summary> The extended location of the cluster associated with the resource. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> The list of resource IDs for the other Microsoft.NetworkCloud resources that have attached this network. </summary>
         public IReadOnlyList<ResourceIdentifier> AssociatedResourceIds { get; }
         /// <summary> The resource ID of the Network Cloud cluster this L2 network is associated with. </summary>
@@ -134,5 +130,9 @@ namespace Azure.ResourceManager.NetworkCloud
         public L2NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Field Deprecated. These fields will be empty/omitted. The list of virtual machine resource ID(s), excluding any Hybrid AKS virtual machines, that are currently using this L2 network. </summary>
         public IReadOnlyList<ResourceIdentifier> VirtualMachinesAssociatedIds { get; }
+        /// <summary> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </summary>
+        public ETag? ETag { get; }
+        /// <summary> The extended location of the cluster associated with the resource. </summary>
+        public ExtendedLocation ExtendedLocation { get; set; }
     }
 }

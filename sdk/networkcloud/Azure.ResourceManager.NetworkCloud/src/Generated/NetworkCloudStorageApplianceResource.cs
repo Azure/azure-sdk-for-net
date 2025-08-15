@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageAppliances_Get</description>
+        /// <description>StorageAppliance_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageAppliances_Get</description>
+        /// <description>StorageAppliance_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageAppliances_Update</description>
+        /// <description>StorageAppliance_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageAppliances_Update</description>
+        /// <description>StorageAppliance_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageAppliances_Get</description>
+        /// <description>StorageAppliance_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageAppliances_Get</description>
+        /// <description>StorageAppliance_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageAppliances_Get</description>
+        /// <description>StorageAppliance_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -626,7 +626,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageAppliances_Get</description>
+        /// <description>StorageAppliance_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -683,7 +683,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageAppliances_Get</description>
+        /// <description>StorageAppliance_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -743,7 +743,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageAppliances_Get</description>
+        /// <description>StorageAppliance_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

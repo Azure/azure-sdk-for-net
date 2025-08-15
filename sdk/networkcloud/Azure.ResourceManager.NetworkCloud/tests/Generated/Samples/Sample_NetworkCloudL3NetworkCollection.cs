@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateL3Network()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/L3Networks_Create.json
-            // this example is just showing the usage of "L3Networks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/L3Networks_Create.json
+            // this example is just showing the usage of "L3Network_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -41,12 +41,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
             // invoke the operation
             string l3NetworkName = "l3NetworkName";
-            NetworkCloudL3NetworkData data = new NetworkCloudL3NetworkData(new AzureLocation("location"), new ExtendedLocation("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ExtendedLocation/customLocations/clusterExtendedLocationName", "CustomLocation"), new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/l3IsolationDomainName"), 12L)
+            NetworkCloudL3NetworkData data = new NetworkCloudL3NetworkData(new AzureLocation("location"), null, default, new ExtendedLocation("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ExtendedLocation/customLocations/clusterExtendedLocationName", "CustomLocation"))
             {
-                InterfaceName = "eth0",
-                IPAllocationType = IPAllocationType.DualStack,
-                IPv4ConnectedPrefix = "198.51.100.0/24",
-                IPv6ConnectedPrefix = "2001:db8::/64",
                 Tags =
 {
 ["key1"] = "myvalue1",
@@ -67,8 +63,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetL3network()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/L3Networks_Get.json
-            // this example is just showing the usage of "L3Networks_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/L3Networks_Get.json
+            // this example is just showing the usage of "L3Network_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -100,8 +96,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListL3NetworksForResourceGroup()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/L3Networks_ListByResourceGroup.json
-            // this example is just showing the usage of "L3Networks_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/L3Networks_ListByResourceGroup.json
+            // this example is just showing the usage of "L3Network_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -135,8 +131,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetL3network()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/L3Networks_Get.json
-            // this example is just showing the usage of "L3Networks_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/L3Networks_Get.json
+            // this example is just showing the usage of "L3Network_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -164,8 +160,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetL3network()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/L3Networks_Get.json
-            // this example is just showing the usage of "L3Networks_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/L3Networks_Get.json
+            // this example is just showing the usage of "L3Network_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

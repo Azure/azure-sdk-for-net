@@ -36,11 +36,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
             writer.WritePropertyName("applicationId"u8);
             writer.WriteStringValue(ApplicationId);
-            if (Optional.IsDefined(Password))
-            {
-                writer.WritePropertyName("password"u8);
-                writer.WriteStringValue(Password);
-            }
+            writer.WritePropertyName("password"u8);
+            writer.WriteStringValue(Password);
             writer.WritePropertyName("principalId"u8);
             writer.WriteStringValue(PrincipalId);
             writer.WritePropertyName("tenantId"u8);

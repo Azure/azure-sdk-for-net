@@ -382,8 +382,6 @@ namespace Azure.ResourceManager.NetworkCloud
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                etag,
-                extendedLocation,
                 administratorConfiguration,
                 agentOptions,
                 attachedNetworkConfiguration,
@@ -398,6 +396,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 taints ?? new ChangeTrackingList<KubernetesLabel>(),
                 upgradeSettings,
                 vmSkuName,
+                etag,
+                extendedLocation,
                 serializedAdditionalRawData);
         }
 

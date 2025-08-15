@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.NetworkCloud
                     {
                         if (property0.NameEquals("analyticsWorkspaceId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
@@ -326,8 +326,6 @@ namespace Azure.ResourceManager.NetworkCloud
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                etag,
-                identity,
                 analyticsWorkspaceId,
                 availabilityZones ?? new ChangeTrackingList<string>(),
                 clusterVersions ?? new ChangeTrackingList<ClusterAvailableVersion>(),
@@ -338,6 +336,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 managerExtendedLocation,
                 provisioningState,
                 vmSize,
+                etag,
+                identity,
                 serializedAdditionalRawData);
         }
 

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetL2Network()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/L2Networks_Get.json
-            // this example is just showing the usage of "L2Networks_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/L2Networks_Get.json
+            // this example is just showing the usage of "L2Network_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -48,10 +48,37 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteL2Network()
+        {
+            // Generated from example definition: 2025-02-01/L2Networks_Delete.json
+            // this example is just showing the usage of "L2Network_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetworkCloudL2NetworkResource created on azure
+            // for more information of creating NetworkCloudL2NetworkResource, please refer to the document of NetworkCloudL2NetworkResource
+            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
+            string resourceGroupName = "resourceGroupName";
+            string l2NetworkName = "l2NetworkName";
+            ResourceIdentifier networkCloudL2NetworkResourceId = NetworkCloudL2NetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l2NetworkName);
+            NetworkCloudL2NetworkResource networkCloudL2Network = client.GetNetworkCloudL2NetworkResource(networkCloudL2NetworkResourceId);
+
+            // invoke the operation
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudL2Network.DeleteAsync(WaitUntil.Completed);
+            NetworkCloudOperationStatusResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchL2Network()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/L2Networks_Patch.json
-            // this example is just showing the usage of "L2Networks_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/L2Networks_Patch.json
+            // this example is just showing the usage of "L2Network_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

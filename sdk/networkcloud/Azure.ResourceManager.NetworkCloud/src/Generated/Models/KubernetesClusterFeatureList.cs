@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="KubernetesClusterFeatureList"/>. </summary>
-        internal KubernetesClusterFeatureList()
+        /// <param name="value"> The KubernetesClusterFeature items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal KubernetesClusterFeatureList(IEnumerable<NetworkCloudKubernetesClusterFeatureData> value)
         {
-            Value = new ChangeTrackingList<NetworkCloudKubernetesClusterFeatureData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="KubernetesClusterFeatureList"/>. </summary>
-        /// <param name="nextLink"> The link used to get the next page of operations. </param>
-        /// <param name="value"> The list of Kubernetes cluster features. </param>
+        /// <param name="value"> The KubernetesClusterFeature items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KubernetesClusterFeatureList(string nextLink, IReadOnlyList<NetworkCloudKubernetesClusterFeatureData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal KubernetesClusterFeatureList(IReadOnlyList<NetworkCloudKubernetesClusterFeatureData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NextLink = nextLink;
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The link used to get the next page of operations. </summary>
-        public string NextLink { get; }
-        /// <summary> The list of Kubernetes cluster features. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterFeatureList"/> for deserialization. </summary>
+        internal KubernetesClusterFeatureList()
+        {
+        }
+
+        /// <summary> The KubernetesClusterFeature items on this page. </summary>
         public IReadOnlyList<NetworkCloudKubernetesClusterFeatureData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

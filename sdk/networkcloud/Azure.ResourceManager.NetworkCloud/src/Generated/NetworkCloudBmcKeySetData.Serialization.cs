@@ -287,8 +287,6 @@ namespace Azure.ResourceManager.NetworkCloud
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                etag,
-                extendedLocation,
                 azureGroupId,
                 detailedStatus,
                 detailedStatusMessage,
@@ -298,6 +296,8 @@ namespace Azure.ResourceManager.NetworkCloud
                 provisioningState,
                 userList,
                 userListStatus ?? new ChangeTrackingList<KeySetUserStatus>(),
+                etag,
+                extendedLocation,
                 serializedAdditionalRawData);
         }
 

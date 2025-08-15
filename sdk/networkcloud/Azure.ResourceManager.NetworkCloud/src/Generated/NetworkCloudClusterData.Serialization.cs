@@ -635,9 +635,6 @@ namespace Azure.ResourceManager.NetworkCloud
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                etag,
-                extendedLocation,
-                identity,
                 aggregatorOrSingleRackDefinition,
                 analyticsOutputSettings,
                 analyticsWorkspaceId,
@@ -668,6 +665,9 @@ namespace Azure.ResourceManager.NetworkCloud
                 updateStrategy,
                 vulnerabilityScanningSettings,
                 workloadResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                etag,
+                extendedLocation,
+                identity,
                 serializedAdditionalRawData);
         }
 

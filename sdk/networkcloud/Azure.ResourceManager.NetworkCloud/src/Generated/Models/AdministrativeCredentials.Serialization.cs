@@ -34,11 +34,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 throw new FormatException($"The model {nameof(AdministrativeCredentials)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Password))
-            {
-                writer.WritePropertyName("password"u8);
-                writer.WriteStringValue(Password);
-            }
+            writer.WritePropertyName("password"u8);
+            writer.WriteStringValue(Password);
             writer.WritePropertyName("username"u8);
             writer.WriteStringValue(Username);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

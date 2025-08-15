@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CloudServicesNetworkList"/>. </summary>
-        internal CloudServicesNetworkList()
+        /// <param name="value"> The CloudServicesNetwork items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal CloudServicesNetworkList(IEnumerable<NetworkCloudCloudServicesNetworkData> value)
         {
-            Value = new ChangeTrackingList<NetworkCloudCloudServicesNetworkData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudServicesNetworkList"/>. </summary>
-        /// <param name="nextLink"> The link used to get the next page of operations. </param>
-        /// <param name="value"> The list of cloud services networks. </param>
+        /// <param name="value"> The CloudServicesNetwork items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudServicesNetworkList(string nextLink, IReadOnlyList<NetworkCloudCloudServicesNetworkData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CloudServicesNetworkList(IReadOnlyList<NetworkCloudCloudServicesNetworkData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NextLink = nextLink;
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The link used to get the next page of operations. </summary>
-        public string NextLink { get; }
-        /// <summary> The list of cloud services networks. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudServicesNetworkList"/> for deserialization. </summary>
+        internal CloudServicesNetworkList()
+        {
+        }
+
+        /// <summary> The CloudServicesNetwork items on this page. </summary>
         public IReadOnlyList<NetworkCloudCloudServicesNetworkData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

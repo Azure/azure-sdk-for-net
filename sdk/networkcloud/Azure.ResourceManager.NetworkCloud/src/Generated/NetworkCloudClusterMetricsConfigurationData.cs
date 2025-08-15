@@ -53,17 +53,17 @@ namespace Azure.ResourceManager.NetworkCloud
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterMetricsConfigurationData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="collectionInterval"> The interval in minutes by which metrics will be collected. </param>
+        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> is null. </exception>
-        public NetworkCloudClusterMetricsConfigurationData(AzureLocation location, ExtendedLocation extendedLocation, long collectionInterval) : base(location)
+        public NetworkCloudClusterMetricsConfigurationData(AzureLocation location, long collectionInterval, ExtendedLocation extendedLocation) : base(location)
         {
             Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
-            ExtendedLocation = extendedLocation;
             CollectionInterval = collectionInterval;
             DisabledMetrics = new ChangeTrackingList<string>();
             EnabledMetrics = new ChangeTrackingList<string>();
+            ExtendedLocation = extendedLocation;
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterMetricsConfigurationData"/>. </summary>
@@ -73,25 +73,25 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag"> Resource ETag. </param>
-        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="collectionInterval"> The interval in minutes by which metrics will be collected. </param>
         /// <param name="detailedStatus"> The more detailed status of the metrics configuration. </param>
         /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
         /// <param name="disabledMetrics"> The list of metrics that are available for the cluster but disabled at the moment. </param>
         /// <param name="enabledMetrics"> The list of metric names that have been chosen to be enabled in addition to the core set of enabled metrics. </param>
         /// <param name="provisioningState"> The provisioning state of the metrics configuration. </param>
+        /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudClusterMetricsConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, long collectionInterval, ClusterMetricsConfigurationDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<string> disabledMetrics, IList<string> enabledMetrics, ClusterMetricsConfigurationProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudClusterMetricsConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, long collectionInterval, ClusterMetricsConfigurationDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<string> disabledMetrics, IList<string> enabledMetrics, ClusterMetricsConfigurationProvisioningState? provisioningState, ETag? etag, ExtendedLocation extendedLocation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = etag;
-            ExtendedLocation = extendedLocation;
             CollectionInterval = collectionInterval;
             DetailedStatus = detailedStatus;
             DetailedStatusMessage = detailedStatusMessage;
             DisabledMetrics = disabledMetrics;
             EnabledMetrics = enabledMetrics;
             ProvisioningState = provisioningState;
+            ETag = etag;
+            ExtendedLocation = extendedLocation;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -100,10 +100,6 @@ namespace Azure.ResourceManager.NetworkCloud
         {
         }
 
-        /// <summary> Resource ETag. </summary>
-        public ETag? ETag { get; }
-        /// <summary> The extended location of the cluster associated with the resource. </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> The interval in minutes by which metrics will be collected. </summary>
         public long CollectionInterval { get; set; }
         /// <summary> The more detailed status of the metrics configuration. </summary>
@@ -116,5 +112,9 @@ namespace Azure.ResourceManager.NetworkCloud
         public IList<string> EnabledMetrics { get; }
         /// <summary> The provisioning state of the metrics configuration. </summary>
         public ClusterMetricsConfigurationProvisioningState? ProvisioningState { get; }
+        /// <summary> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </summary>
+        public ETag? ETag { get; }
+        /// <summary> The extended location of the cluster associated with the resource. </summary>
+        public ExtendedLocation ExtendedLocation { get; set; }
     }
 }
