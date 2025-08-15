@@ -122,7 +122,7 @@ namespace Azure.AI.Projects.Tests
             var indexVersion = Environment.GetEnvironmentVariable("INDEX_VERSION") ?? "1.0";
             var aiSearchConnectionName = Environment.GetEnvironmentVariable("AI_SEARCH_CONNECTION_NAME") ?? "my-ai-search-connection-name";
             var aiSearchIndexName = Environment.GetEnvironmentVariable("AI_SEARCH_INDEX_NAME") ?? "my-ai-search-index-name";
-            
+
             AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 #else
             var endpoint = TestEnvironment.PROJECTENDPOINT;
