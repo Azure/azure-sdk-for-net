@@ -3,7 +3,7 @@
 
 namespace Azure.Containers.ContainerRegistry
 {
-    // Custoimization: Change visibility to public.
+    // Customization: Change visibility to public.
     public partial class AcrAccessToken
     {
     }
