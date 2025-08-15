@@ -25,7 +25,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            Response response = client.BatchGet(null, null, "ASC", null, null);
+            Response response = client.BatchGet(1, 0, "ASC", null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -39,7 +39,7 @@ namespace Azure.Analytics.Purview.DataMap.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            Response response = await client.BatchGetAsync(null, null, "ASC", null, null);
+            Response response = await client.BatchGetAsync(1, 0, "ASC", null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -687,7 +687,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            Response response = client.GetRelatedCategories("ed7458f0-9463-48a5-b5c6-4f785fb34e12", null, null, "ASC", null);
+            Response response = client.GetRelatedCategories("ed7458f0-9463-48a5-b5c6-4f785fb34e12", -1, 0, "ASC", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("<key>")[0].ToString());
@@ -701,7 +701,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            Response response = await client.GetRelatedCategoriesAsync("ed7458f0-9463-48a5-b5c6-4f785fb34e12", null, null, "ASC", null);
+            Response response = await client.GetRelatedCategoriesAsync("ed7458f0-9463-48a5-b5c6-4f785fb34e12", -1, 0, "ASC", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("<key>")[0].ToString());
@@ -737,7 +737,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            Response response = client.GetCategoryTerms("ed7458f0-9463-48a5-b5c6-4f785fb34e12", null, null, "ASC", null);
+            Response response = client.GetCategoryTerms("ed7458f0-9463-48a5-b5c6-4f785fb34e12", -1, 0, "ASC", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -751,7 +751,7 @@ TermGuid = "54688d39-b298-4104-9e80-f2a16f44aaea",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            Response response = await client.GetCategoryTermsAsync("ed7458f0-9463-48a5-b5c6-4f785fb34e12", null, null, "ASC", null);
+            Response response = await client.GetCategoryTermsAsync("ed7458f0-9463-48a5-b5c6-4f785fb34e12", -1, 0, "ASC", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -1731,7 +1731,7 @@ Url = "Example Url",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            Response response = client.GetEntitiesAssignedWithTerm("daf0ba4d-bc9a-4536-8a88-4b58e39dd3d4", null, null, "ASC", null);
+            Response response = client.GetEntitiesAssignedWithTerm("daf0ba4d-bc9a-4536-8a88-4b58e39dd3d4", -1, 0, "ASC", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -1745,7 +1745,7 @@ Url = "Example Url",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            Response response = await client.GetEntitiesAssignedWithTermAsync("daf0ba4d-bc9a-4536-8a88-4b58e39dd3d4", null, null, "ASC", null);
+            Response response = await client.GetEntitiesAssignedWithTermAsync("daf0ba4d-bc9a-4536-8a88-4b58e39dd3d4", -1, 0, "ASC", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -1973,7 +1973,7 @@ RelationshipGuid = Guid.Parse("624f08bb-3c93-4f03-9ce1-ed2ce2c7c8d5"),
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            Response response = client.GetRelatedTerms("54688d39-b298-4104-9e80-f2a16f44aaea", null, null, "ASC", null);
+            Response response = client.GetRelatedTerms("54688d39-b298-4104-9e80-f2a16f44aaea", -1, 0, "ASC", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("<key>")[0].ToString());
@@ -1987,7 +1987,7 @@ RelationshipGuid = Guid.Parse("624f08bb-3c93-4f03-9ce1-ed2ce2c7c8d5"),
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            Response response = await client.GetRelatedTermsAsync("54688d39-b298-4104-9e80-f2a16f44aaea", null, null, "ASC", null);
+            Response response = await client.GetRelatedTermsAsync("54688d39-b298-4104-9e80-f2a16f44aaea", -1, 0, "ASC", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("<key>")[0].ToString());
@@ -2327,7 +2327,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            Response response = client.GetCategories("c018ddaf-7c21-4b37-a838-dae5f110c3d8", null, null, "ASC", null);
+            Response response = client.GetCategories("c018ddaf-7c21-4b37-a838-dae5f110c3d8", -1, 0, "ASC", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -2341,7 +2341,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            Response response = await client.GetCategoriesAsync("c018ddaf-7c21-4b37-a838-dae5f110c3d8", null, null, "ASC", null);
+            Response response = await client.GetCategoriesAsync("c018ddaf-7c21-4b37-a838-dae5f110c3d8", -1, 0, "ASC", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -2377,7 +2377,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            Response response = client.GetCategoriesHeaders("c018ddaf-7c21-4b37-a838-dae5f110c3d8", null, null, "ASC", null);
+            Response response = client.GetCategoriesHeaders("c018ddaf-7c21-4b37-a838-dae5f110c3d8", -1, 0, "ASC", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -2391,7 +2391,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            Response response = await client.GetCategoriesHeadersAsync("c018ddaf-7c21-4b37-a838-dae5f110c3d8", null, null, "ASC", null);
+            Response response = await client.GetCategoriesHeadersAsync("c018ddaf-7c21-4b37-a838-dae5f110c3d8", -1, 0, "ASC", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -2541,7 +2541,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            Response response = client.GetTerms("c018ddaf-7c21-4b37-a838-dae5f110c3d8", null, null, "ASC", null);
+            Response response = client.GetTerms("c018ddaf-7c21-4b37-a838-dae5f110c3d8", -1, 0, "ASC", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -2555,7 +2555,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            Response response = await client.GetTermsAsync("c018ddaf-7c21-4b37-a838-dae5f110c3d8", null, null, "ASC", null);
+            Response response = await client.GetTermsAsync("c018ddaf-7c21-4b37-a838-dae5f110c3d8", -1, 0, "ASC", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -2591,7 +2591,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            Response response = client.GetTermHeaders("c018ddaf-7c21-4b37-a838-dae5f110c3d8", null, null, "ASC", null);
+            Response response = client.GetTermHeaders("c018ddaf-7c21-4b37-a838-dae5f110c3d8", -1, 0, "ASC", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -2605,7 +2605,7 @@ TermGuid = "952c7ba4-4c89-42d8-a05a-7d2161be7008",
             TokenCredential credential = new DefaultAzureCredential();
             Glossary client = new DataMapClient(endpoint, credential).GetGlossaryClient();
 
-            Response response = await client.GetTermHeadersAsync("c018ddaf-7c21-4b37-a838-dae5f110c3d8", null, null, "ASC", null);
+            Response response = await client.GetTermHeadersAsync("c018ddaf-7c21-4b37-a838-dae5f110c3d8", -1, 0, "ASC", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());

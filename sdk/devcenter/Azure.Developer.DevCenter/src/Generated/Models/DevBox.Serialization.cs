@@ -112,7 +112,7 @@ namespace Azure.Developer.DevCenter.Models
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedTime.Value, "O");
             }
-            if (Optional.IsDefined(LocalAdministratorStatus))
+            if (options.Format != "W" && Optional.IsDefined(LocalAdministratorStatus))
             {
                 writer.WritePropertyName("localAdministrator"u8);
                 writer.WriteStringValue(LocalAdministratorStatus.Value.ToString());

@@ -343,7 +343,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-Response response = await client.GetRelationshipAsync("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb", null, null);
+Response response = await client.GetRelationshipAsync("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb", false, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
@@ -357,7 +357,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 Relationship client = new DataMapClient(endpoint, credential).GetRelationshipClient();
 
-Response response = client.GetRelationship("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb", null, null);
+Response response = client.GetRelationship("5cf8a9e5-c9fd-abe0-2e8c-d40024263dcb", false, null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());

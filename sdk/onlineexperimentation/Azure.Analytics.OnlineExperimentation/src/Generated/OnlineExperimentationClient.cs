@@ -586,7 +586,6 @@ namespace Azure.Analytics.OnlineExperimentation
             uri.AppendPath(experimentMetricId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             if (requestConditions != null)
             {
                 request.Headers.Add(requestConditions, "R");

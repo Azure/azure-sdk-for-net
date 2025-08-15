@@ -353,7 +353,6 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
             uri.AppendPath(organizationname, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }

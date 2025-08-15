@@ -71,7 +71,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="hardwareProfile"> Information about the Dev Box's hardware resources. </param>
         /// <param name="storageProfile"> Storage settings for this Dev Box. </param>
         /// <param name="imageReference"> Information about the image used for this Dev Box. </param>
-        /// <param name="createdTime"> Creation time of this Dev Box. </param>
+        /// <param name="createdTime"> Creation time of this Dev Box, in RFC3339 format. </param>
         /// <param name="localAdministratorStatus"> Indicates whether the owner of the Dev Box is a local administrator. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DevBox(string name, string projectName, string poolName, HibernateSupport? hibernateSupport, DevBoxProvisioningState? provisioningState, string actionState, PowerState? powerState, Guid? uniqueId, ResponseError error, AzureLocation? location, DevBoxOSType? osType, Guid? userId, DevBoxHardwareProfile hardwareProfile, DevBoxStorageProfile storageProfile, DevBoxImageReference imageReference, DateTimeOffset? createdTime, LocalAdministratorStatus? localAdministratorStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -140,9 +140,7 @@ namespace Azure.Developer.DevCenter.Models
         public DevBoxStorageProfile StorageProfile { get; }
         /// <summary> Information about the image used for this Dev Box. </summary>
         public DevBoxImageReference ImageReference { get; }
-        /// <summary> Creation time of this Dev Box. </summary>
+        /// <summary> Creation time of this Dev Box, in RFC3339 format. </summary>
         public DateTimeOffset? CreatedTime { get; }
-        /// <summary> Indicates whether the owner of the Dev Box is a local administrator. </summary>
-        public LocalAdministratorStatus? LocalAdministratorStatus { get; set; }
     }
 }

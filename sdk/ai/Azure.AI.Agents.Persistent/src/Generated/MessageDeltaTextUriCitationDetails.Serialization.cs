@@ -34,7 +34,7 @@ namespace Azure.AI.Agents.Persistent
                 throw new FormatException($"The model {nameof(MessageDeltaTextUriCitationDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("url"u8);
+            writer.WritePropertyName("Uri"u8);
             writer.WriteStringValue(Uri);
             if (Optional.IsDefined(Title))
             {
@@ -78,15 +78,15 @@ namespace Azure.AI.Agents.Persistent
             {
                 return null;
             }
-            string url = default;
+            string uri = default;
             string title = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("url"u8))
+                if (property.NameEquals("Uri"u8))
                 {
-                    url = property.Value.GetString();
+                    uri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("title"u8))
@@ -100,7 +100,7 @@ namespace Azure.AI.Agents.Persistent
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MessageDeltaTextUriCitationDetails(url, title, serializedAdditionalRawData);
+            return new MessageDeltaTextUriCitationDetails(uri, title, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MessageDeltaTextUriCitationDetails>.Write(ModelReaderWriterOptions options)

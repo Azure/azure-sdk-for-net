@@ -97,7 +97,7 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary>
-        /// [Protocol Method] Gets a pool
+        /// [Protocol Method] Gets a pool.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -139,7 +139,7 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary>
-        /// [Protocol Method] Gets a pool
+        /// [Protocol Method] Gets a pool.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -345,7 +345,7 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary>
-        /// [Protocol Method] Gets a Dev Box
+        /// [Protocol Method] Gets a Dev Box.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -389,7 +389,7 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary>
-        /// [Protocol Method] Gets a Dev Box
+        /// [Protocol Method] Gets a Dev Box.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -471,7 +471,7 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary>
-        /// [Protocol Method] Gets RDP Connection info
+        /// [Protocol Method] Gets RDP Connection info.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -515,7 +515,7 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary>
-        /// [Protocol Method] Gets RDP Connection info
+        /// [Protocol Method] Gets RDP Connection info.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -781,7 +781,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="actionName"> The name of the action. </param>
-        /// <param name="delayUntil"> The time to delay the Dev Box action or actions until. </param>
+        /// <param name="delayUntil"> The time to delay the Dev Box action or actions until, in RFC3339 format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -803,7 +803,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="actionName"> The name of the action. </param>
-        /// <param name="delayUntil"> The time to delay the Dev Box action or actions until. </param>
+        /// <param name="delayUntil"> The time to delay the Dev Box action or actions until, in RFC3339 format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -839,7 +839,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="actionName"> The name of the action. </param>
-        /// <param name="delayUntil"> The time to delay the Dev Box action or actions until. </param>
+        /// <param name="delayUntil"> The time to delay the Dev Box action or actions until, in RFC3339 format. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -886,7 +886,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
         /// <param name="actionName"> The name of the action. </param>
-        /// <param name="delayUntil"> The time to delay the Dev Box action or actions until. </param>
+        /// <param name="delayUntil"> The time to delay the Dev Box action or actions until, in RFC3339 format. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/>, <paramref name="devBoxName"/> or <paramref name="actionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -947,7 +947,7 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary>
-        /// [Protocol Method] Lists available pools
+        /// [Protocol Method] Lists available pools.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -978,7 +978,7 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary>
-        /// [Protocol Method] Lists available pools
+        /// [Protocol Method] Lists available pools.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1008,9 +1008,9 @@ namespace Azure.Developer.DevCenter
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevBoxesClient.GetPools", "value", "nextLink", context);
         }
 
-        /// <summary> Lists available schedules for a pool. </summary>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="poolName"> Pool name. </param>
+        /// <summary> Lists all schedules within a pool that are configured by your project administrator. </summary>
+        /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
+        /// <param name="poolName"> The name of a pool of Dev Boxes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1026,9 +1026,9 @@ namespace Azure.Developer.DevCenter
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DevBoxSchedule.DeserializeDevBoxSchedule(e), ClientDiagnostics, _pipeline, "DevBoxesClient.GetSchedules", "value", "nextLink", context);
         }
 
-        /// <summary> Lists available schedules for a pool. </summary>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="poolName"> Pool name. </param>
+        /// <summary> Lists all schedules within a pool that are configured by your project administrator. </summary>
+        /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
+        /// <param name="poolName"> The name of a pool of Dev Boxes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1045,7 +1045,7 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary>
-        /// [Protocol Method] Lists available schedules for a pool.
+        /// [Protocol Method] Lists all schedules within a pool that are configured by your project administrator.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1059,8 +1059,8 @@ namespace Azure.Developer.DevCenter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="poolName"> Pool name. </param>
+        /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
+        /// <param name="poolName"> The name of a pool of Dev Boxes. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1078,7 +1078,7 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary>
-        /// [Protocol Method] Lists available schedules for a pool.
+        /// [Protocol Method] Lists all schedules within a pool that are configured by your project administrator.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1092,8 +1092,8 @@ namespace Azure.Developer.DevCenter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> Name of the project. </param>
-        /// <param name="poolName"> Pool name. </param>
+        /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
+        /// <param name="poolName"> The name of a pool of Dev Boxes. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="poolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1494,7 +1494,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
-        /// <param name="delayUntil"> The time to delay the Dev Box action or actions until. </param>
+        /// <param name="delayUntil"> The time to delay the Dev Box action or actions until, in RFC3339 format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1515,7 +1515,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
-        /// <param name="delayUntil"> The time to delay the Dev Box action or actions until. </param>
+        /// <param name="delayUntil"> The time to delay the Dev Box action or actions until, in RFC3339 format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1550,7 +1550,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
-        /// <param name="delayUntil"> The time to delay the Dev Box action or actions until. </param>
+        /// <param name="delayUntil"> The time to delay the Dev Box action or actions until, in RFC3339 format. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1586,7 +1586,7 @@ namespace Azure.Developer.DevCenter
         /// <param name="projectName"> Name of the project. </param>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> Display name for the Dev Box. </param>
-        /// <param name="delayUntil"> The time to delay the Dev Box action or actions until. </param>
+        /// <param name="delayUntil"> The time to delay the Dev Box action or actions until, in RFC3339 format. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="userId"/> or <paramref name="devBoxName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1615,7 +1615,7 @@ namespace Azure.Developer.DevCenter
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="projectName"> The DevCenter Project upon which to execute the operation. </param>
+        /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -1657,7 +1657,7 @@ namespace Azure.Developer.DevCenter
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="projectName"> The DevCenter Project upon which to execute the operation. </param>
+        /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
         /// <param name="userId"> The AAD object id of the user. If value is 'me', the identity is taken from the authentication context. </param>
         /// <param name="devBoxName"> The name of a Dev Box. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
@@ -1772,7 +1772,7 @@ namespace Azure.Developer.DevCenter
 
         // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Starts a Dev Box
+        /// [Protocol Method] Starts a Dev Box.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1813,7 +1813,7 @@ namespace Azure.Developer.DevCenter
 
         // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Starts a Dev Box
+        /// [Protocol Method] Starts a Dev Box.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1854,7 +1854,7 @@ namespace Azure.Developer.DevCenter
 
         // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Stops a Dev Box
+        /// [Protocol Method] Stops a Dev Box.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1896,7 +1896,7 @@ namespace Azure.Developer.DevCenter
 
         // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Stops a Dev Box
+        /// [Protocol Method] Stops a Dev Box.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1938,7 +1938,7 @@ namespace Azure.Developer.DevCenter
 
         // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Restarts a Dev Box
+        /// [Protocol Method] Restarts a Dev Box.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1979,7 +1979,7 @@ namespace Azure.Developer.DevCenter
 
         // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
         /// <summary>
-        /// [Protocol Method] Restarts a Dev Box
+        /// [Protocol Method] Restarts a Dev Box.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -2338,7 +2338,6 @@ namespace Azure.Developer.DevCenter
             uri.AppendPath(":skip", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

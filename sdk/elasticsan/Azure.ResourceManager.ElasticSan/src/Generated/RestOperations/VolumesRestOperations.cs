@@ -417,7 +417,6 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 request.Headers.Add("x-ms-force-delete", forceDelete.Value.ToString());
             }
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }

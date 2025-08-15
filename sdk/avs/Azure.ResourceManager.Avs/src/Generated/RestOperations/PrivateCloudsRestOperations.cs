@@ -509,7 +509,6 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath(privateCloudName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -597,7 +596,6 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath("/rotateVcenterPassword", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -683,7 +681,6 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath("/rotateNsxtPassword", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }

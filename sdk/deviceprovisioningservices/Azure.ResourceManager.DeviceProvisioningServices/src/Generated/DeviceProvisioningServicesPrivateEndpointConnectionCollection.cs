@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnection_ListPrivateEndpointConnections</description>
+        /// <description>PrivateEndpointConnections_ListPrivateEndpointConnections</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnection_ListPrivateEndpointConnections</description>
+        /// <description>PrivateEndpointConnections_ListPrivateEndpointConnections</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

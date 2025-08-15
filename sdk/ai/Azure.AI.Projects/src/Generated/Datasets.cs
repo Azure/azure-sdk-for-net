@@ -777,7 +777,6 @@ namespace Azure.AI.Projects
             uri.AppendPath(version, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

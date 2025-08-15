@@ -49,23 +49,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(ConnectionString))
-            {
-                writer.WritePropertyName("connectionString"u8);
-                writer.WriteStringValue(ConnectionString);
-            }
+            writer.WritePropertyName("connectionString"u8);
+            writer.WriteStringValue(ConnectionString);
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (Optional.IsDefined(AuthenticationType))
-            {
-                writer.WritePropertyName("authenticationType"u8);
-                writer.WriteStringValue(AuthenticationType.Value.ToString());
-            }
-            if (Optional.IsDefined(SelectedUserAssignedIdentityResourceId))
-            {
-                writer.WritePropertyName("selectedUserAssignedIdentityResourceId"u8);
-                writer.WriteStringValue(SelectedUserAssignedIdentityResourceId);
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -108,8 +95,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             string name = default;
             string connectionString = default;
             AzureLocation location = default;
-            IotHubAuthenticationType? authenticationType = default;
-            ResourceIdentifier selectedUserAssignedIdentityResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -147,24 +132,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("authenticationType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    authenticationType = new IotHubAuthenticationType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("selectedUserAssignedIdentityResourceId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    selectedUserAssignedIdentityResourceId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -177,8 +144,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 name,
                 connectionString,
                 location,
-                authenticationType,
-                selectedUserAssignedIdentityResourceId,
                 serializedAdditionalRawData);
         }
 

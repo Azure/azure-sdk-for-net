@@ -427,7 +427,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Schedule_GetSchedules_ListsAvailableSchedulesForAPool()
+        public void Example_DevBoxesClientOperations_GetSchedules_ListsAvailableSchedulesForAPool()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -446,7 +446,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Schedule_GetSchedules_ListsAvailableSchedulesForAPool_Async()
+        public async Task Example_DevBoxesClientOperations_GetSchedules_ListsAvailableSchedulesForAPool_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -465,7 +465,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Schedule_GetSchedules_ListsAvailableSchedulesForAPool_Convenience()
+        public void Example_DevBoxesClientOperations_GetSchedules_ListsAvailableSchedulesForAPool_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -478,7 +478,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Schedule_GetSchedules_ListsAvailableSchedulesForAPool_Convenience_Async()
+        public async Task Example_DevBoxesClientOperations_GetSchedules_ListsAvailableSchedulesForAPool_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();

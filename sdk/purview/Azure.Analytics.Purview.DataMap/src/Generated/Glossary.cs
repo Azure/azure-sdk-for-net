@@ -3855,7 +3855,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/atlas/v2/glossary/category/", false);
             uri.AppendPath(categoryId, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -4002,7 +4001,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/atlas/v2/glossary/term/", false);
             uri.AppendPath(termId, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -4090,7 +4088,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath(termId, true);
             uri.AppendPath("/assignedEntities", false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -4108,7 +4105,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath(termId, true);
             uri.AppendPath("/assignedEntities", false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -4191,7 +4187,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/atlas/v2/glossary/", false);
             uri.AppendPath(glossaryId, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

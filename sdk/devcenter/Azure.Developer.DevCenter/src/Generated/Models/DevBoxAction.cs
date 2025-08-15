@@ -61,7 +61,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="name"> The name of the action. </param>
         /// <param name="actionType"> The action that will be taken. </param>
         /// <param name="sourceId"> The id of the resource which triggered this action. </param>
-        /// <param name="suspendedUntil"> The earliest time that the action could occur (UTC). </param>
+        /// <param name="suspendedUntil"> The earliest time that the action could occur (UTC), in RFC3339 format. </param>
         /// <param name="nextAction"> Details about the next run of this action. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DevBoxAction(string name, DevBoxActionType actionType, string sourceId, DateTimeOffset? suspendedUntil, DevBoxNextAction nextAction, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -85,7 +85,7 @@ namespace Azure.Developer.DevCenter.Models
         public DevBoxActionType ActionType { get; }
         /// <summary> The id of the resource which triggered this action. </summary>
         public string SourceId { get; }
-        /// <summary> The earliest time that the action could occur (UTC). </summary>
+        /// <summary> The earliest time that the action could occur (UTC), in RFC3339 format. </summary>
         public DateTimeOffset? SuspendedUntil { get; }
         /// <summary> Details about the next run of this action. </summary>
         public DevBoxNextAction NextAction { get; }
