@@ -1,0 +1,12 @@
+{
+  "output-folder": ".",
+  "namespace": "Azure.ResourceManager.ServiceNetworking",
+  "library-name": "Azure.ResourceManager.ServiceNetworking",
+  "flavor": "azure",
+  "use-model-reader-writer": true,
+  "shared-source-folders": [
+    "../../TempTypeSpecFiles/node_modules/@autorest/csharp/Generator.Shared",
+    "../../TempTypeSpecFiles/node_modules/@autorest/csharp/Azure.Core.Shared"
+  ],
+  "azure-arm": true
+}
