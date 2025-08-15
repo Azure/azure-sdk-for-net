@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> Initializes a new instance of <see cref="CreateEmailSignInUrlResponseProperties"/>. </summary>
         /// <param name="uri"> Sign in url. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CreateEmailSignInUrlResponseProperties(Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CreateEmailSignInUrlResponseProperties(string uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Uri = uri;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Sign in url. </summary>
-        public Uri Uri { get; }
+        public string Uri { get; }
     }
 }
