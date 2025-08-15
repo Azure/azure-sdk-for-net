@@ -10,19 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary>
-    /// Send this event to commit the user input audio buffer, which will create a
-    /// new user message item in the conversation. This event will produce an error
-    /// if the input audio buffer is empty. When in Server VAD mode, the client does
-    /// not need to send this event, the server will commit the audio buffer
-    /// automatically.
-    /// 
-    /// Committing the input audio buffer will trigger input audio transcription
-    /// (if enabled in session configuration), but it will not create a response
-    /// from the model. The server will respond with an `input_audio_buffer.committed`
-    /// event.
-    /// </summary>
-    public partial class ClientEventInputAudioBufferCommit : ClientEvent
+    internal partial class ClientEventInputAudioBufferCommit : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioBufferCommit"/>. </summary>
         public ClientEventInputAudioBufferCommit() : base(ClientEventType.InputAudioBufferCommit)

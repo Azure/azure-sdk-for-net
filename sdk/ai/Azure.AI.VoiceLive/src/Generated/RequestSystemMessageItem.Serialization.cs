@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> The RequestSystemMessageItem. </summary>
-    public partial class RequestSystemMessageItem : IJsonModel<RequestSystemMessageItem>
+    internal partial class RequestSystemMessageItem : IJsonModel<RequestSystemMessageItem>
     {
         /// <summary> Initializes a new instance of <see cref="RequestSystemMessageItem"/> for deserialization. </summary>
         internal RequestSystemMessageItem()

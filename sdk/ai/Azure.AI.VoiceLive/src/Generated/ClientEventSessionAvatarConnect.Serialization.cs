@@ -12,11 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary>
-    ///   Sent when the client connects and provides its SDP (Session Description Protocol)
-    ///   for avatar-related media negotiation.
-    /// </summary>
-    public partial class ClientEventSessionAvatarConnect : IJsonModel<ClientEventSessionAvatarConnect>
+    internal partial class ClientEventSessionAvatarConnect : IJsonModel<ClientEventSessionAvatarConnect>
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventSessionAvatarConnect"/> for deserialization. </summary>
         internal ClientEventSessionAvatarConnect()

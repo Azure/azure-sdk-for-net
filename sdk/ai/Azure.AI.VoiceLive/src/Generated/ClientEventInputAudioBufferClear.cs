@@ -10,11 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary>
-    /// Send this event to clear the audio bytes in the buffer. The server will
-    /// respond with an `input_audio_buffer.cleared` event.
-    /// </summary>
-    public partial class ClientEventInputAudioBufferClear : ClientEvent
+    internal partial class ClientEventInputAudioBufferClear : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioBufferClear"/>. </summary>
         public ClientEventInputAudioBufferClear() : base(ClientEventType.InputAudioBufferClear)

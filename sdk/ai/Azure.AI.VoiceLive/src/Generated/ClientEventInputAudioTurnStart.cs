@@ -10,8 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary>   Indicates the start of a new audio input turn. </summary>
-    public partial class ClientEventInputAudioTurnStart : ClientEvent
+    internal partial class ClientEventInputAudioTurnStart : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioTurnStart"/>. </summary>
         /// <param name="turnId"> Unique identifier for the input audio turn. </param>

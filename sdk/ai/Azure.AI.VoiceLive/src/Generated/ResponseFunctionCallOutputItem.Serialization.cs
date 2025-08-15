@@ -71,7 +71,7 @@ namespace Azure.AI.VoiceLive
                 return null;
             }
             string @object = default;
-            ItemType? @type = default;
+            ItemType @type = default;
             string id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string callId = default;
@@ -85,10 +85,6 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     @type = new ItemType(prop.Value.GetString());
                     continue;
                 }

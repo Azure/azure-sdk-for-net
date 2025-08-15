@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> The RequestUserMessageItem. </summary>
-    public partial class RequestUserMessageItem : RequestMessageItem
+    internal partial class RequestUserMessageItem : RequestMessageItem
     {
         /// <summary> Initializes a new instance of <see cref="RequestUserMessageItem"/>. </summary>
         /// <param name="content"></param>

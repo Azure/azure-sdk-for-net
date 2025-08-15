@@ -10,11 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary>
-    ///   Sent when the client connects and provides its SDP (Session Description Protocol)
-    ///   for avatar-related media negotiation.
-    /// </summary>
-    public partial class ClientEventSessionAvatarConnect : ClientEvent
+    internal partial class ClientEventSessionAvatarConnect : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventSessionAvatarConnect"/>. </summary>
         /// <param name="clientSdp"> The client's SDP offer. </param>

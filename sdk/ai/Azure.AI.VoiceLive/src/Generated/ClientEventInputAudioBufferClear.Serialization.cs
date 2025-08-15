@@ -12,11 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary>
-    /// Send this event to clear the audio bytes in the buffer. The server will
-    /// respond with an `input_audio_buffer.cleared` event.
-    /// </summary>
-    public partial class ClientEventInputAudioBufferClear : IJsonModel<ClientEventInputAudioBufferClear>
+    internal partial class ClientEventInputAudioBufferClear : IJsonModel<ClientEventInputAudioBufferClear>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

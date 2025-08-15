@@ -12,8 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary>   Appends audio data to an ongoing input turn. </summary>
-    public partial class ClientEventInputAudioTurnAppend : IJsonModel<ClientEventInputAudioTurnAppend>
+    internal partial class ClientEventInputAudioTurnAppend : IJsonModel<ClientEventInputAudioTurnAppend>
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioTurnAppend"/> for deserialization. </summary>
         internal ClientEventInputAudioTurnAppend()

@@ -10,8 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary>   Clears all input audio currently being streamed. </summary>
-    public partial class ClientEventInputAudioClear : ClientEvent
+    internal partial class ClientEventInputAudioClear : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioClear"/>. </summary>
         public ClientEventInputAudioClear() : base(ClientEventType.InputAudioClear)

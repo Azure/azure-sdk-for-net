@@ -12,8 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary>   Marks the end of an audio input turn. </summary>
-    public partial class ClientEventInputAudioTurnEnd : IJsonModel<ClientEventInputAudioTurnEnd>
+    internal partial class ClientEventInputAudioTurnEnd : IJsonModel<ClientEventInputAudioTurnEnd>
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventInputAudioTurnEnd"/> for deserialization. </summary>
         internal ClientEventInputAudioTurnEnd()

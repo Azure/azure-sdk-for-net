@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Create a new VoiceLive response with these parameters. </summary>
-    public partial class ResponseCreateParams
+    internal partial class ResponseCreateParams
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

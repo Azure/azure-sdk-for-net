@@ -10,16 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary>
-    /// Add a new Item to the Conversation's context, including messages, function
-    /// calls, and function call responses. This event can be used both to populate a
-    /// "history" of the conversation and to add new items mid-stream, but has the
-    /// current limitation that it cannot populate assistant audio messages.
-    /// 
-    /// If successful, the server will respond with a `conversation.item.created`
-    /// event, otherwise an `error` event will be sent.
-    /// </summary>
-    public partial class ClientEventConversationItemCreate : ClientEvent
+    internal partial class ClientEventConversationItemCreate : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventConversationItemCreate"/>. </summary>
         public ClientEventConversationItemCreate() : base(ClientEventType.ConversationItemCreate)

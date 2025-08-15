@@ -10,20 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary>
-    /// Send this event to truncate a previous assistant message’s audio. The server
-    /// will produce audio faster than voicelive, so this event is useful when the user
-    /// interrupts to truncate audio that has already been sent to the client but not
-    /// yet played. This will synchronize the server's understanding of the audio with
-    /// the client's playback.
-    /// 
-    /// Truncating audio will delete the server-side text transcript to ensure there
-    /// is not text in the context that hasn't been heard by the user.
-    /// 
-    /// If successful, the server will respond with a `conversation.item.truncated`
-    /// event.
-    /// </summary>
-    public partial class ClientEventConversationItemTruncate : ClientEvent
+    internal partial class ClientEventConversationItemTruncate : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventConversationItemTruncate"/>. </summary>
         /// <param name="itemId">

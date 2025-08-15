@@ -11,12 +11,8 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary>
-    /// A voicelive client event.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ClientEventSessionUpdate"/>, <see cref="ClientEventInputAudioBufferAppend"/>, <see cref="ClientEventInputAudioBufferCommit"/>, <see cref="ClientEventInputAudioBufferClear"/>, <see cref="ClientEventInputAudioTurnStart"/>, <see cref="ClientEventInputAudioTurnAppend"/>, <see cref="ClientEventInputAudioTurnEnd"/>, <see cref="ClientEventInputAudioTurnCancel"/>, <see cref="ClientEventInputAudioClear"/>, <see cref="ClientEventConversationItemCreate"/>, <see cref="ClientEventConversationItemRetrieve"/>, <see cref="ClientEventConversationItemTruncate"/>, <see cref="ClientEventConversationItemDelete"/>, <see cref="ClientEventResponseCreate"/>, <see cref="ClientEventResponseCancel"/>, and <see cref="ClientEventSessionAvatarConnect"/>.
-    /// </summary>
     [PersistableModelProxy(typeof(UnknownClientEvent))]
-    public abstract partial class ClientEvent : IJsonModel<ClientEvent>
+    internal abstract partial class ClientEvent : IJsonModel<ClientEvent>
     {
         /// <summary> Initializes a new instance of <see cref="ClientEvent"/> for deserialization. </summary>
         internal ClientEvent()

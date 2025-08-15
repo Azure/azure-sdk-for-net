@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> The RequestMessageItem. </summary>
-    public partial class RequestMessageItem : ConversationRequestItem
+    internal partial class RequestMessageItem : ConversationRequestItem
     {
         /// <summary> Initializes a new instance of <see cref="RequestMessageItem"/>. </summary>
         /// <param name="role"></param>

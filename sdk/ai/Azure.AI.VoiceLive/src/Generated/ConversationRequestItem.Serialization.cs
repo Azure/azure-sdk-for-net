@@ -16,7 +16,7 @@ namespace Azure.AI.VoiceLive
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RequestMessageItem"/>, <see cref="RequestFunctionCallItem"/>, and <see cref="RequestFunctionCallOutputItem"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownConversationRequestItem))]
-    public abstract partial class ConversationRequestItem : IJsonModel<ConversationRequestItem>
+    internal abstract partial class ConversationRequestItem : IJsonModel<ConversationRequestItem>
     {
         /// <summary> Initializes a new instance of <see cref="ConversationRequestItem"/> for deserialization. </summary>
         internal ConversationRequestItem()

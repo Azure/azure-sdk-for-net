@@ -14,7 +14,7 @@ namespace Azure.AI.VoiceLive
     /// The ConversationRequestItem.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RequestMessageItem"/>, <see cref="RequestFunctionCallItem"/>, and <see cref="RequestFunctionCallOutputItem"/>.
     /// </summary>
-    public abstract partial class ConversationRequestItem
+    internal abstract partial class ConversationRequestItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

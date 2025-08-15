@@ -10,13 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary>
-    /// Send this event when you want to retrieve the server's representation of a specific item in the conversation history. This is useful, for example, to inspect user audio after noise cancellation and VAD.
-    /// The server will respond with a `conversation.item.retrieved` event,
-    /// unless the item does not exist in the conversation history, in which case the
-    /// server will respond with an error.
-    /// </summary>
-    public partial class ClientEventConversationItemRetrieve : ClientEvent
+    internal partial class ClientEventConversationItemRetrieve : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventConversationItemRetrieve"/>. </summary>
         /// <param name="itemId"> The ID of the item to retrieve. </param>

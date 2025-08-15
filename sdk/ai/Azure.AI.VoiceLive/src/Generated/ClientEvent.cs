@@ -10,11 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary>
-    /// A voicelive client event.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ClientEventSessionUpdate"/>, <see cref="ClientEventInputAudioBufferAppend"/>, <see cref="ClientEventInputAudioBufferCommit"/>, <see cref="ClientEventInputAudioBufferClear"/>, <see cref="ClientEventInputAudioTurnStart"/>, <see cref="ClientEventInputAudioTurnAppend"/>, <see cref="ClientEventInputAudioTurnEnd"/>, <see cref="ClientEventInputAudioTurnCancel"/>, <see cref="ClientEventInputAudioClear"/>, <see cref="ClientEventConversationItemCreate"/>, <see cref="ClientEventConversationItemRetrieve"/>, <see cref="ClientEventConversationItemTruncate"/>, <see cref="ClientEventConversationItemDelete"/>, <see cref="ClientEventResponseCreate"/>, <see cref="ClientEventResponseCancel"/>, and <see cref="ClientEventSessionAvatarConnect"/>.
-    /// </summary>
-    public abstract partial class ClientEvent
+    internal abstract partial class ClientEvent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

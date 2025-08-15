@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> The RequestFunctionCallItem. </summary>
-    public partial class RequestFunctionCallItem : IJsonModel<RequestFunctionCallItem>
+    internal partial class RequestFunctionCallItem : IJsonModel<RequestFunctionCallItem>
     {
         /// <summary> Initializes a new instance of <see cref="RequestFunctionCallItem"/> for deserialization. </summary>
         internal RequestFunctionCallItem()

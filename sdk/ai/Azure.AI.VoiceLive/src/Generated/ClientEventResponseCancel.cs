@@ -10,12 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary>
-    /// Send this event to cancel an in-progress response. The server will respond
-    /// with a `response.cancelled` event or an error if there is no response to
-    /// cancel.
-    /// </summary>
-    public partial class ClientEventResponseCancel : ClientEvent
+    internal partial class ClientEventResponseCancel : ClientEvent
     {
         /// <summary> Initializes a new instance of <see cref="ClientEventResponseCancel"/>. </summary>
         public ClientEventResponseCancel() : base(ClientEventType.ResponseCancel)

@@ -14,26 +14,6 @@ namespace Azure.AI.VoiceLive
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class VoiceLiveModelFactory
     {
-        /// <summary>
-        /// Send this event to update the session’s default configuration.
-        /// The client may send this event at any time to update any field,
-        /// except for `voice`. However, note that once a session has been
-        /// initialized with a particular `model`, it can’t be changed to
-        /// another model using `session.update`.
-        /// 
-        /// When the server receives a `session.update`, it will respond
-        /// with a `session.updated` event showing the full, effective configuration.
-        /// Only the fields that are present are updated. To clear a field like
-        /// `instructions`, pass an empty string.
-        /// </summary>
-        /// <param name="eventId"></param>
-        /// <param name="session"></param>
-        /// <returns> A new <see cref="VoiceLive.ClientEventSessionUpdate"/> instance for mocking. </returns>
-        public static ClientEventSessionUpdate ClientEventSessionUpdate(string eventId = default, RequestSession session = default)
-        {
-            return new ClientEventSessionUpdate(ClientEventType.SessionUpdate, eventId, additionalBinaryDataProperties: null, session);
-        }
-
         /// <summary> The RequestSession. </summary>
         /// <param name="model"></param>
         /// <param name="modalities"></param>
@@ -342,140 +322,6 @@ namespace Azure.AI.VoiceLive
             return new ToolChoiceFunctionObjectFunction(name, additionalBinaryDataProperties: null);
         }
 
-        /// <summary>
-        /// A voicelive client event.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ClientEventSessionUpdate"/>, <see cref="ClientEventInputAudioBufferAppend"/>, <see cref="ClientEventInputAudioBufferCommit"/>, <see cref="ClientEventInputAudioBufferClear"/>, <see cref="ClientEventInputAudioTurnStart"/>, <see cref="ClientEventInputAudioTurnAppend"/>, <see cref="ClientEventInputAudioTurnEnd"/>, <see cref="ClientEventInputAudioTurnCancel"/>, <see cref="ClientEventInputAudioClear"/>, <see cref="ClientEventConversationItemCreate"/>, <see cref="ClientEventConversationItemRetrieve"/>, <see cref="ClientEventConversationItemTruncate"/>, <see cref="ClientEventConversationItemDelete"/>, <see cref="ClientEventResponseCreate"/>, <see cref="ClientEventResponseCancel"/>, and <see cref="ClientEventSessionAvatarConnect"/>.
-        /// </summary>
-        /// <param name="type"> The type of event. </param>
-        /// <param name="eventId"></param>
-        /// <returns> A new <see cref="VoiceLive.ClientEvent"/> instance for mocking. </returns>
-        public static ClientEvent ClientEvent(string @type = default, string eventId = default)
-        {
-            return new UnknownClientEvent(new ClientEventType(@type), eventId, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Send this event to append audio bytes to the input audio buffer. The audio
-        /// buffer is temporary storage you can write to and later commit. In Server VAD
-        /// mode, the audio buffer is used to detect speech and the server will decide
-        /// when to commit. When Server VAD is disabled, you must commit the audio buffer
-        /// manually.
-        /// 
-        /// The client may choose how much audio to place in each event up to a maximum
-        /// of 15 MiB, for example streaming smaller chunks from the client may allow the
-        /// VAD to be more responsive. Unlike made other client events, the server will
-        /// not send a confirmation response to this event.
-        /// </summary>
-        /// <param name="eventId"></param>
-        /// <param name="audio">
-        /// Base64-encoded audio. This must be in the format specified by the
-        /// `input_audio_format` field in the session configuration.
-        /// </param>
-        /// <returns> A new <see cref="VoiceLive.ClientEventInputAudioBufferAppend"/> instance for mocking. </returns>
-        public static ClientEventInputAudioBufferAppend ClientEventInputAudioBufferAppend(string eventId = default, string audio = default)
-        {
-            return new ClientEventInputAudioBufferAppend(ClientEventType.InputAudioBufferAppend, eventId, additionalBinaryDataProperties: null, audio);
-        }
-
-        /// <summary>
-        /// Send this event to commit the user input audio buffer, which will create a
-        /// new user message item in the conversation. This event will produce an error
-        /// if the input audio buffer is empty. When in Server VAD mode, the client does
-        /// not need to send this event, the server will commit the audio buffer
-        /// automatically.
-        /// 
-        /// Committing the input audio buffer will trigger input audio transcription
-        /// (if enabled in session configuration), but it will not create a response
-        /// from the model. The server will respond with an `input_audio_buffer.committed`
-        /// event.
-        /// </summary>
-        /// <param name="eventId"></param>
-        /// <returns> A new <see cref="VoiceLive.ClientEventInputAudioBufferCommit"/> instance for mocking. </returns>
-        public static ClientEventInputAudioBufferCommit ClientEventInputAudioBufferCommit(string eventId = default)
-        {
-            return new ClientEventInputAudioBufferCommit(ClientEventType.InputAudioBufferCommit, eventId, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Send this event to clear the audio bytes in the buffer. The server will
-        /// respond with an `input_audio_buffer.cleared` event.
-        /// </summary>
-        /// <param name="eventId"></param>
-        /// <returns> A new <see cref="VoiceLive.ClientEventInputAudioBufferClear"/> instance for mocking. </returns>
-        public static ClientEventInputAudioBufferClear ClientEventInputAudioBufferClear(string eventId = default)
-        {
-            return new ClientEventInputAudioBufferClear(ClientEventType.InputAudioBufferClear, eventId, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>   Indicates the start of a new audio input turn. </summary>
-        /// <param name="eventId"></param>
-        /// <param name="turnId"> Unique identifier for the input audio turn. </param>
-        /// <returns> A new <see cref="VoiceLive.ClientEventInputAudioTurnStart"/> instance for mocking. </returns>
-        public static ClientEventInputAudioTurnStart ClientEventInputAudioTurnStart(string eventId = default, string turnId = default)
-        {
-            return new ClientEventInputAudioTurnStart(ClientEventType.InputAudioTurnStart, eventId, additionalBinaryDataProperties: null, turnId);
-        }
-
-        /// <summary>   Appends audio data to an ongoing input turn. </summary>
-        /// <param name="eventId"></param>
-        /// <param name="turnId"> The ID of the turn this audio is part of. </param>
-        /// <param name="audio"> Base64-encoded audio chunk. </param>
-        /// <returns> A new <see cref="VoiceLive.ClientEventInputAudioTurnAppend"/> instance for mocking. </returns>
-        public static ClientEventInputAudioTurnAppend ClientEventInputAudioTurnAppend(string eventId = default, string turnId = default, string audio = default)
-        {
-            return new ClientEventInputAudioTurnAppend(ClientEventType.InputAudioTurnAppend, eventId, additionalBinaryDataProperties: null, turnId, audio);
-        }
-
-        /// <summary>   Marks the end of an audio input turn. </summary>
-        /// <param name="eventId"></param>
-        /// <param name="turnId"> The ID of the audio turn being ended. </param>
-        /// <returns> A new <see cref="VoiceLive.ClientEventInputAudioTurnEnd"/> instance for mocking. </returns>
-        public static ClientEventInputAudioTurnEnd ClientEventInputAudioTurnEnd(string eventId = default, string turnId = default)
-        {
-            return new ClientEventInputAudioTurnEnd(ClientEventType.InputAudioTurnEnd, eventId, additionalBinaryDataProperties: null, turnId);
-        }
-
-        /// <summary>   Cancels an in-progress input audio turn. </summary>
-        /// <param name="eventId"></param>
-        /// <param name="turnId"> The ID of the turn to cancel. </param>
-        /// <returns> A new <see cref="VoiceLive.ClientEventInputAudioTurnCancel"/> instance for mocking. </returns>
-        public static ClientEventInputAudioTurnCancel ClientEventInputAudioTurnCancel(string eventId = default, string turnId = default)
-        {
-            return new ClientEventInputAudioTurnCancel(ClientEventType.InputAudioTurnCancel, eventId, additionalBinaryDataProperties: null, turnId);
-        }
-
-        /// <summary>   Clears all input audio currently being streamed. </summary>
-        /// <param name="eventId"></param>
-        /// <returns> A new <see cref="VoiceLive.ClientEventInputAudioClear"/> instance for mocking. </returns>
-        public static ClientEventInputAudioClear ClientEventInputAudioClear(string eventId = default)
-        {
-            return new ClientEventInputAudioClear(ClientEventType.InputAudioClear, eventId, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Add a new Item to the Conversation's context, including messages, function
-        /// calls, and function call responses. This event can be used both to populate a
-        /// "history" of the conversation and to add new items mid-stream, but has the
-        /// current limitation that it cannot populate assistant audio messages.
-        /// 
-        /// If successful, the server will respond with a `conversation.item.created`
-        /// event, otherwise an `error` event will be sent.
-        /// </summary>
-        /// <param name="eventId"> Optional client-generated ID used to identify this event. </param>
-        /// <param name="previousItemId">
-        /// The ID of the preceding item after which the new item will be inserted.
-        /// If not set, the new item will be appended to the end of the conversation.
-        /// If set to `root`, the new item will be added to the beginning of the conversation.
-        /// If set to an existing ID, it allows an item to be inserted mid-conversation. If the
-        /// ID cannot be found, an error will be returned and the item will not be added.
-        /// </param>
-        /// <param name="item"></param>
-        /// <returns> A new <see cref="VoiceLive.ClientEventConversationItemCreate"/> instance for mocking. </returns>
-        public static ClientEventConversationItemCreate ClientEventConversationItemCreate(string eventId = default, string previousItemId = default, ConversationItemWithReference item = default)
-        {
-            return new ClientEventConversationItemCreate(ClientEventType.ConversationItemCreate, additionalBinaryDataProperties: null, eventId, previousItemId, item);
-        }
-
         /// <summary> The item to add to the conversation. </summary>
         /// <param name="id">
         /// For an item of type (`message` | `function_call` | `function_call_output`)
@@ -553,199 +399,6 @@ namespace Azure.AI.VoiceLive
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary>
-        /// Send this event when you want to retrieve the server's representation of a specific item in the conversation history. This is useful, for example, to inspect user audio after noise cancellation and VAD.
-        /// The server will respond with a `conversation.item.retrieved` event,
-        /// unless the item does not exist in the conversation history, in which case the
-        /// server will respond with an error.
-        /// </summary>
-        /// <param name="eventId"></param>
-        /// <param name="itemId"> The ID of the item to retrieve. </param>
-        /// <returns> A new <see cref="VoiceLive.ClientEventConversationItemRetrieve"/> instance for mocking. </returns>
-        public static ClientEventConversationItemRetrieve ClientEventConversationItemRetrieve(string eventId = default, string itemId = default)
-        {
-            return new ClientEventConversationItemRetrieve(ClientEventType.ConversationItemRetrieve, eventId, additionalBinaryDataProperties: null, itemId);
-        }
-
-        /// <summary>
-        /// Send this event to truncate a previous assistant message’s audio. The server
-        /// will produce audio faster than voicelive, so this event is useful when the user
-        /// interrupts to truncate audio that has already been sent to the client but not
-        /// yet played. This will synchronize the server's understanding of the audio with
-        /// the client's playback.
-        /// 
-        /// Truncating audio will delete the server-side text transcript to ensure there
-        /// is not text in the context that hasn't been heard by the user.
-        /// 
-        /// If successful, the server will respond with a `conversation.item.truncated`
-        /// event.
-        /// </summary>
-        /// <param name="eventId"></param>
-        /// <param name="itemId">
-        /// The ID of the assistant message item to truncate. Only assistant message
-        /// items can be truncated.
-        /// </param>
-        /// <param name="contentIndex"> The index of the content part to truncate. Set this to 0. </param>
-        /// <param name="audioEndMs">
-        /// Inclusive duration up to which audio is truncated, in milliseconds. If
-        /// the audio_end_ms is greater than the actual audio duration, the server
-        /// will respond with an error.
-        /// </param>
-        /// <returns> A new <see cref="VoiceLive.ClientEventConversationItemTruncate"/> instance for mocking. </returns>
-        public static ClientEventConversationItemTruncate ClientEventConversationItemTruncate(string eventId = default, string itemId = default, int contentIndex = default, int audioEndMs = default)
-        {
-            return new ClientEventConversationItemTruncate(
-                ClientEventType.ConversationItemTruncate,
-                eventId,
-                additionalBinaryDataProperties: null,
-                itemId,
-                contentIndex,
-                audioEndMs);
-        }
-
-        /// <summary>
-        /// Send this event when you want to remove any item from the conversation
-        /// history. The server will respond with a `conversation.item.deleted` event,
-        /// unless the item does not exist in the conversation history, in which case the
-        /// server will respond with an error.
-        /// </summary>
-        /// <param name="eventId"></param>
-        /// <param name="itemId"> The ID of the item to delete. </param>
-        /// <returns> A new <see cref="VoiceLive.ClientEventConversationItemDelete"/> instance for mocking. </returns>
-        public static ClientEventConversationItemDelete ClientEventConversationItemDelete(string eventId = default, string itemId = default)
-        {
-            return new ClientEventConversationItemDelete(ClientEventType.ConversationItemDelete, eventId, additionalBinaryDataProperties: null, itemId);
-        }
-
-        /// <summary>
-        /// This event instructs the server to create a Response, which means triggering
-        /// model inference. When in Server VAD mode, the server will create Responses
-        /// automatically.
-        /// 
-        /// A Response will include at least one Item, and may have two, in which case
-        /// the second will be a function call. These Items will be appended to the
-        /// conversation history.
-        /// 
-        /// The server will respond with a `response.created` event, events for Items
-        /// and content created, and finally a `response.done` event to indicate the
-        /// Response is complete.
-        /// 
-        /// The `response.create` event includes inference configuration like
-        /// `instructions`, and `temperature`. These fields will override the Session's
-        /// configuration for this Response only.
-        /// </summary>
-        /// <param name="eventId"></param>
-        /// <param name="response"></param>
-        /// <param name="additionalInstructions"> additional instructions (system prompt) appended to the default instructions of the session. Only affects this response only. </param>
-        /// <returns> A new <see cref="VoiceLive.ClientEventResponseCreate"/> instance for mocking. </returns>
-        public static ClientEventResponseCreate ClientEventResponseCreate(string eventId = default, ResponseCreateParams response = default, string additionalInstructions = default)
-        {
-            return new ClientEventResponseCreate(ClientEventType.ResponseCreate, eventId, additionalBinaryDataProperties: null, response, additionalInstructions);
-        }
-
-        /// <summary> Create a new VoiceLive response with these parameters. </summary>
-        /// <param name="commit"> Whether to commit the response to the conversation. Defaults to true. </param>
-        /// <param name="cancelPrevious"> Whether to cancel any ongoing generation before starting this one. Defaults to true. </param>
-        /// <param name="appendInputItems"> Input items to append to the conversation context before generating a response. </param>
-        /// <param name="inputItems">
-        /// Input items to be used as the context for this response.
-        /// An empty array clears previous context.
-        /// </param>
-        /// <param name="modalities">
-        /// The set of modalities the model can respond with. To disable audio,
-        /// set this to ["text"].
-        /// </param>
-        /// <param name="instructions">
-        /// The default system instructions (i.e. system message) prepended to model
-        /// calls. This field allows the client to guide the model on desired
-        /// responses. The model can be instructed on response content and format,
-        /// (e.g. "be extremely succinct", "act friendly", "here are examples of good
-        /// responses") and on audio behavior (e.g. "talk quickly", "inject emotion
-        /// into your voice", "laugh frequently"). The instructions are not guaranteed
-        /// to be followed by the model, but they provide guidance to the model on the
-        /// desired behavior.
-        /// 
-        /// Note that the server sets default instructions which will be used if this
-        /// field is not set and are visible in the `session.created` event at the
-        /// start of the session.
-        /// </param>
-        /// <param name="voice"> supported voice identifiers and configurations. </param>
-        /// <param name="outputAudioFormat"> The format of output audio. Options are `pcm16`, `g711_ulaw`, or `g711_alaw`. </param>
-        /// <param name="tools"> Tools (functions) available to the model. </param>
-        /// <param name="toolChoice">
-        /// How the model chooses tools. Options are `auto`, `none`, `required`, or
-        /// specify a function, like `{"type": "function", "function": {"name": "my_function"}}`.
-        /// </param>
-        /// <param name="temperature"> Sampling temperature for the model, limited to [0.6, 1.2]. Defaults to 0.8. </param>
-        /// <param name="maxOutputTokens">
-        /// Maximum number of output tokens for a single assistant response,
-        /// inclusive of tool calls. Provide an integer between 1 and 4096 to
-        /// limit output tokens, or `inf` for the maximum available tokens for a
-        /// given model. Defaults to `inf`.
-        /// </param>
-        /// <returns> A new <see cref="VoiceLive.ResponseCreateParams"/> instance for mocking. </returns>
-        public static ResponseCreateParams ResponseCreateParams(bool? commit = default, bool? cancelPrevious = default, IEnumerable<ConversationRequestItem> appendInputItems = default, IEnumerable<ConversationRequestItem> inputItems = default, IEnumerable<InputModality> modalities = default, string instructions = default, BinaryData voice = default, AudioFormat? outputAudioFormat = default, IEnumerable<ToolCall> tools = default, string toolChoice = default, float? temperature = default, BinaryData maxOutputTokens = default)
-        {
-            appendInputItems ??= new ChangeTrackingList<ConversationRequestItem>();
-            inputItems ??= new ChangeTrackingList<ConversationRequestItem>();
-            modalities ??= new ChangeTrackingList<InputModality>();
-            tools ??= new ChangeTrackingList<ToolCall>();
-
-            return new ResponseCreateParams(
-                commit,
-                cancelPrevious,
-                appendInputItems.ToList(),
-                inputItems.ToList(),
-                modalities.ToList(),
-                instructions,
-                voice,
-                outputAudioFormat,
-                tools.ToList(),
-                toolChoice,
-                temperature,
-                maxOutputTokens,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// The ConversationRequestItem.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RequestMessageItem"/>, <see cref="RequestFunctionCallItem"/>, and <see cref="RequestFunctionCallOutputItem"/>.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="id"></param>
-        /// <returns> A new <see cref="VoiceLive.ConversationRequestItem"/> instance for mocking. </returns>
-        public static ConversationRequestItem ConversationRequestItem(string @type = default, string id = default)
-        {
-            return new UnknownConversationRequestItem(new ItemType(@type), id, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The RequestMessageItem. </summary>
-        /// <param name="id"></param>
-        /// <param name="status"></param>
-        /// <returns> A new <see cref="VoiceLive.RequestMessageItem"/> instance for mocking. </returns>
-        public static RequestMessageItem RequestMessageItem(string id = default, ItemStatus? status = default)
-        {
-            return new RequestMessageItem(ItemType.Message, id, additionalBinaryDataProperties: null, MessageRole.User, status);
-        }
-
-        /// <summary> The RequestSystemMessageItem. </summary>
-        /// <param name="id"></param>
-        /// <param name="status"></param>
-        /// <param name="content"></param>
-        /// <returns> A new <see cref="VoiceLive.RequestSystemMessageItem"/> instance for mocking. </returns>
-        public static RequestSystemMessageItem RequestSystemMessageItem(string id = default, ItemStatus? status = default, IEnumerable<RequestTextContentPart> content = default)
-        {
-            content ??= new ChangeTrackingList<RequestTextContentPart>();
-
-            return new RequestSystemMessageItem(
-                ItemType.Message,
-                id,
-                additionalBinaryDataProperties: null,
-                MessageRole.System,
-                status,
-                content.ToList());
-        }
-
         /// <summary> The RequestTextContentPart. </summary>
         /// <param name="text"></param>
         /// <returns> A new <see cref="VoiceLive.RequestTextContentPart"/> instance for mocking. </returns>
@@ -787,99 +440,6 @@ namespace Azure.AI.VoiceLive
         public static ResponseAudioContentPart ResponseAudioContentPart(string transcript = default)
         {
             return new ResponseAudioContentPart(ContentPartType.Audio, additionalBinaryDataProperties: null, transcript);
-        }
-
-        /// <summary> The RequestUserMessageItem. </summary>
-        /// <param name="id"></param>
-        /// <param name="status"></param>
-        /// <param name="content"></param>
-        /// <returns> A new <see cref="VoiceLive.RequestUserMessageItem"/> instance for mocking. </returns>
-        public static RequestUserMessageItem RequestUserMessageItem(string id = default, ItemStatus? status = default, IEnumerable<BinaryData> content = default)
-        {
-            content ??= new ChangeTrackingList<BinaryData>();
-
-            return new RequestUserMessageItem(
-                ItemType.Message,
-                id,
-                additionalBinaryDataProperties: null,
-                MessageRole.User,
-                status,
-                content.ToList());
-        }
-
-        /// <summary> The RequestAssistantMessageItem. </summary>
-        /// <param name="id"></param>
-        /// <param name="status"></param>
-        /// <param name="content"></param>
-        /// <returns> A new <see cref="VoiceLive.RequestAssistantMessageItem"/> instance for mocking. </returns>
-        public static RequestAssistantMessageItem RequestAssistantMessageItem(string id = default, ItemStatus? status = default, IEnumerable<RequestTextContentPart> content = default)
-        {
-            content ??= new ChangeTrackingList<RequestTextContentPart>();
-
-            return new RequestAssistantMessageItem(
-                ItemType.Message,
-                id,
-                additionalBinaryDataProperties: null,
-                MessageRole.Assistant,
-                status,
-                content.ToList());
-        }
-
-        /// <summary> The RequestFunctionCallItem. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="callId"></param>
-        /// <param name="arguments"></param>
-        /// <param name="status"></param>
-        /// <returns> A new <see cref="VoiceLive.RequestFunctionCallItem"/> instance for mocking. </returns>
-        public static RequestFunctionCallItem RequestFunctionCallItem(string id = default, string name = default, string callId = default, string arguments = default, ItemStatus? status = default)
-        {
-            return new RequestFunctionCallItem(
-                ItemType.FunctionCall,
-                id,
-                additionalBinaryDataProperties: null,
-                name,
-                callId,
-                arguments,
-                status);
-        }
-
-        /// <summary> The RequestFunctionCallOutputItem. </summary>
-        /// <param name="id"></param>
-        /// <param name="callId"></param>
-        /// <param name="output"></param>
-        /// <returns> A new <see cref="VoiceLive.RequestFunctionCallOutputItem"/> instance for mocking. </returns>
-        public static RequestFunctionCallOutputItem RequestFunctionCallOutputItem(string id = default, string callId = default, string output = default)
-        {
-            return new RequestFunctionCallOutputItem(ItemType.FunctionCallOutput, id, additionalBinaryDataProperties: null, callId, output);
-        }
-
-        /// <summary>
-        /// Send this event to cancel an in-progress response. The server will respond
-        /// with a `response.cancelled` event or an error if there is no response to
-        /// cancel.
-        /// </summary>
-        /// <param name="eventId"></param>
-        /// <param name="responseId">
-        /// A specific response ID to cancel - if not provided, will cancel an
-        /// in-progress response in the default conversation.
-        /// </param>
-        /// <returns> A new <see cref="VoiceLive.ClientEventResponseCancel"/> instance for mocking. </returns>
-        public static ClientEventResponseCancel ClientEventResponseCancel(string eventId = default, string responseId = default)
-        {
-            return new ClientEventResponseCancel(ClientEventType.ResponseCancel, eventId, additionalBinaryDataProperties: null, responseId);
-        }
-
-        /// <summary>
-        ///   Sent when the client connects and provides its SDP (Session Description Protocol)
-        ///   for avatar-related media negotiation.
-        /// </summary>
-        /// <param name="eventId"></param>
-        /// <param name="clientSdp"> The client's SDP offer. </param>
-        /// <returns> A new <see cref="VoiceLive.ClientEventSessionAvatarConnect"/> instance for mocking. </returns>
-        public static ClientEventSessionAvatarConnect ClientEventSessionAvatarConnect(string eventId = default, string clientSdp = default)
-        {
-            return new ClientEventSessionAvatarConnect(ClientEventType.SessionAvatarConnect, eventId, additionalBinaryDataProperties: null, clientSdp);
         }
 
         /// <summary> Sent when the server is in the process of establishing an avatar media connection and provides its SDP answer. </summary>
@@ -1440,7 +1000,7 @@ namespace Azure.AI.VoiceLive
 
             return new ResponseMessageItem(
                 @object,
-                VoiceLive.ItemType.Message,
+                ItemType.Message,
                 id,
                 additionalBinaryDataProperties: null,
                 role,
@@ -1460,7 +1020,7 @@ namespace Azure.AI.VoiceLive
         {
             return new ResponseFunctionCallItem(
                 @object,
-                VoiceLive.ItemType.FunctionCall,
+                ItemType.FunctionCall,
                 id,
                 additionalBinaryDataProperties: null,
                 name,
@@ -1479,7 +1039,7 @@ namespace Azure.AI.VoiceLive
         {
             return new ResponseFunctionCallOutputItem(
                 @object,
-                VoiceLive.ItemType.FunctionCallOutput,
+                ItemType.FunctionCallOutput,
                 id,
                 additionalBinaryDataProperties: null,
                 callId,

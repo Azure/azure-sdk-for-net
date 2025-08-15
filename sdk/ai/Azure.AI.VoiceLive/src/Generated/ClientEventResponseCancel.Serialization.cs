@@ -12,12 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary>
-    /// Send this event to cancel an in-progress response. The server will respond
-    /// with a `response.cancelled` event or an error if there is no response to
-    /// cancel.
-    /// </summary>
-    public partial class ClientEventResponseCancel : IJsonModel<ClientEventResponseCancel>
+    internal partial class ClientEventResponseCancel : IJsonModel<ClientEventResponseCancel>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
