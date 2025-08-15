@@ -20,7 +20,7 @@ Your goal is to guide user through the process of generating SDKs from TypeSpec 
 ## Step 2: Validate TypeSpec Specification
 **Goal**: Ensure TypeSpec specification compiles without errors
 **Actions**:
-1. Refer to [validate typespec](validate-typespec.instructions.md)
+1. Refer to #file:validate-typespec.instructions.md
 2. If validation succeeds, proceed to Step 3
 3. If validation fails:
     - Display all compilation errors to user
@@ -60,7 +60,7 @@ Your goal is to guide user through the process of generating SDKs from TypeSpec 
     - Option A: "Generate SDK locally". This is currently supported only for Python. Do not recommend this for other languages.
     - Option B: "Use SDK generation pipeline"
 2. Based on selection:
-    - If Option A: Refer to [create sdk locally](create-sdk-locally.instructions.md) and then proceed to Step 6
+    - If Option A: Refer to #file:create-sdk-locally.instructions.md and then proceed to Step 6
     - If Option B: Continue to Step 6
 **Success Criteria**: SDK generation method selected
 
@@ -70,7 +70,7 @@ Your goal is to guide user through the process of generating SDKs from TypeSpec 
 1. Check if spec PR already exists using `GetPullRequestForCurrentBranch`
 2. If PR exists, display PR details and proceed to Step 7
 3. If no PR exists:
-    - Refer to [create spec pullrequest](create-spec-pullrequest.instructions.md)
+    - Refer to #file:create-spec-pullrequest.instructions.md
     - Wait for PR creation confirmation
     - Display created PR details
 **Success Criteria**: Specification pull request exists
@@ -78,12 +78,12 @@ Your goal is to guide user through the process of generating SDKs from TypeSpec 
 ## Step 7: Generate SDKs via Pipeline
 **Goal**: Create release plan and generate SDKs
 **Actions**:
-1. Refer to [create release plan](create-release-plan.instructions.md)
+1. Refer to #file:create-release-plan.instructions.md
 2. If SDK PRs exist, link them to the release plan
-3. Refer [sdk details in release plan](sdk-details-in-release-plan.instructions.md) to add languages and package names to the release plan
-4. If TypeSpec project is for management plane, run [verify namespace approval](verify-namespace-approval.instructions.md) to check package namespace approval.
-5. Refer to [run SDK gen pipeline](run-sdk-gen-pipeline.instructions.md) with the spec PR
-6. Monitor pipeline status and provide updates`
+3. Refer to #file:sdk-details-in-release-plan.instructions.md to add languages and package names to the release plan
+4. If TypeSpec project is for management plane, refer to #file:verify-namespace-approval.instructions.md to check package namespace approval.
+5. Refer to #file:run-sdk-gen-pipeline.instructions.md with the spec PR
+6. Monitor pipeline status and provide updates
 7. Display generated SDK PR links when available
 **Success Criteria**: SDK generation pipeline initiated and SDKs generated
 
@@ -95,7 +95,7 @@ Your goal is to guide user through the process of generating SDKs from TypeSpec 
 ## Step 9: Create release plan
 **Goal**: Create a release plan for the generated SDKs
 **Actions**:
-1. Refer [create release plan](create-release-plan.instructions.md) to create a release plan using the spec pull request.
+1. Refer to #file:create-release-plan.instructions.md to create a release plan using the spec pull request.
 2. If the release plan already exists, display the existing plan details.
 
 ## Step 10: Mark Spec PR as Ready for Review
