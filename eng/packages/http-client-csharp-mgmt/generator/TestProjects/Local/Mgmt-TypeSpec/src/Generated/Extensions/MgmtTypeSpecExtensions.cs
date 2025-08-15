@@ -210,11 +210,11 @@ namespace MgmtTypeSpec
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ZooResource"/> that may take multiple service requests to iterate over. </returns>
         [ForwardsClientCalls]
-        public static AsyncPageable<ZooResource> GetBySubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ZooResource> GetZoosAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).GetBySubscriptionAsync(cancellationToken);
+            return GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).GetZoosAsync(cancellationToken);
         }
 
         /// <summary> List Zoo resources by subscription ID. </summary>
@@ -223,11 +223,11 @@ namespace MgmtTypeSpec
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ZooResource"/> that may take multiple service requests to iterate over. </returns>
         [ForwardsClientCalls]
-        public static Pageable<ZooResource> GetBySubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<ZooResource> GetZoos(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).GetBySubscription(cancellationToken);
+            return GetMockableMgmtTypeSpecSubscriptionResource(subscriptionResource).GetZoos(cancellationToken);
         }
 
         /// <summary> Runs the input conditions against input object metadata properties and designates matched objects in response. </summary>
