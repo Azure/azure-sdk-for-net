@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Added a new `DefaultAzureCredential` constructor that accepts a custom environment variable name for credential configuration. This provides flexibility beyond the default `AZURE_TOKEN_CREDENTIALS` environment variable. The constructor accepts any environment variable name and uses the same credential selection logic as the existing `AZURE_TOKEN_CREDENTIALS` processing.
+- Added `DefaultAzureCredential.DefaultEnvironmentVariableName` constant property that returns `"AZURE_TOKEN_CREDENTIALS"` for convenience when referencing the default environment variable name.
+
 ### Breaking Changes
 
 ### Bugs Fixed
