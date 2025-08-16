@@ -1,0 +1,159 @@
+{
+  "categories": {
+    "Basic": [
+      {
+        "id": "hello",
+        "text": "Hello",
+        "description": "Simple greeting",
+        "expectedDuration": "0.5s"
+      },
+      {
+        "id": "hello_how_are_you",
+        "text": "Hello, how are you?",
+        "description": "Greeting with question",
+        "expectedDuration": "1.5s"
+      },
+      {
+        "id": "goodbye",
+        "text": "Goodbye",
+        "description": "Simple farewell",
+        "expectedDuration": "0.8s"
+      },
+      {
+        "id": "yes",
+        "text": "Yes",
+        "description": "Affirmative response",
+        "expectedDuration": "0.3s"
+      },
+      {
+        "id": "no",
+        "text": "No",
+        "description": "Negative response",
+        "expectedDuration": "0.3s"
+      },
+      {
+        "id": "stop",
+        "text": "Stop",
+        "description": "Stop command",
+        "expectedDuration": "0.4s"
+      },
+      {
+        "id": "please",
+        "text": "Please",
+        "description": "Polite request",
+        "expectedDuration": "0.5s"
+      },
+      {
+        "id": "thank_you",
+        "text": "Thank you",
+        "description": "Gratitude expression",
+        "expectedDuration": "0.7s"
+      }
+    ],
+    "Questions": [
+      {
+        "id": "whats_weather_seattle",
+        "text": "What's the weather in Seattle?",
+        "description": "Weather inquiry",
+        "expectedDuration": "2s"
+      },
+      {
+        "id": "whats_largest_lake",
+        "text": "What's the largest lake in the world?",
+        "description": "Geography question",
+        "expectedDuration": "2.5s"
+      },
+      {
+        "id": "tell_me_story",
+        "text": "Tell me a story about space exploration",
+        "description": "Open-ended request",
+        "expectedDuration": "3s"
+      },
+      {
+        "id": "explain_quantum",
+        "text": "Explain quantum computing",
+        "description": "Technical explanation request",
+        "expectedDuration": "2s"
+      },
+      {
+        "id": "calculate_math",
+        "text": "What's 25 times 4?",
+        "description": "Math calculation",
+        "expectedDuration": "1.5s"
+      },
+      {
+        "id": "what_time_is_it",
+        "text": "What time is it?",
+        "description": "Time inquiry",
+        "expectedDuration": "1.2s"
+      },
+      {
+        "id": "weather_multiple_cities",
+        "text": "What's the weather in Seattle and Portland?",
+        "description": "Multi-part weather question",
+        "expectedDuration": "3s"
+      }
+    ],
+    "Commands": [
+      {
+        "id": "set_timer",
+        "text": "Set a timer for 5 minutes",
+        "description": "Timer command",
+        "expectedDuration": "2s"
+      },
+      {
+        "id": "play_music",
+        "text": "Play some music",
+        "description": "Music command",
+        "expectedDuration": "1.5s"
+      },
+      {
+        "id": "call_john",
+        "text": "Call John",
+        "description": "Phone command",
+        "expectedDuration": "1s"
+      },
+      {
+        "id": "send_message",
+        "text": "Send a message to Sarah",
+        "description": "Messaging command",
+        "expectedDuration": "2s"
+      },
+      {
+        "id": "navigate_home",
+        "text": "Navigate to home",
+        "description": "Navigation command",
+        "expectedDuration": "1.5s"
+      },
+      {
+        "id": "turn_off_lights",
+        "text": "Turn off the lights",
+        "description": "Smart home command",
+        "expectedDuration": "1.8s"
+      }
+    ],
+    "MultiLanguage": [
+      {
+        "id": "hello_multilang",
+        "text": "Hello",
+        "description": "Greeting in multiple languages",
+        "expectedDuration": "0.5s",
+        "languages": ["en-US", "en-GB", "es-ES", "fr-FR", "de-DE", "ja-JP", "zh-CN"]
+      },
+      {
+        "id": "thank_you_multilang",
+        "text": "Thank you",
+        "description": "Gratitude in multiple languages",
+        "expectedDuration": "0.7s",
+        "languages": ["en-US", "es-ES", "fr-FR", "de-DE", "ja-JP"]
+      },
+      {
+        "id": "goodbye_multilang",
+        "text": "Goodbye",
+        "description": "Farewell in multiple languages",
+        "expectedDuration": "0.8s",
+        "languages": ["en-US", "es-ES", "fr-FR", "de-DE"]
+      }
+    ]
+  }
+}
