@@ -16,6 +16,8 @@
 *.csproj text eol=lf
 *.sln    text eol=lf
 *.sh     text eol=lf
+*.json   text eol=lf
+*.bicep  text eol=lf
 
 # Automatically collapse Track 2 test recordings in github PRs
 **/SessionRecords/**/*.json linguist-generated=true
