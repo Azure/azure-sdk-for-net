@@ -80,6 +80,7 @@ namespace Azure.AI.Agents.Persistent
                 switch (discriminator.GetString())
                 {
                     case "azure_ai_search": return RunStepAzureAISearchToolCall.DeserializeRunStepAzureAISearchToolCall(element, options);
+                    case "azure_function": return RunStepAzureFunctionToolCall.DeserializeRunStepAzureFunctionToolCall(element, options);
                     case "bing_custom_search": return RunStepBingCustomSearchToolCall.DeserializeRunStepBingCustomSearchToolCall(element, options);
                     case "bing_grounding": return RunStepBingGroundingToolCall.DeserializeRunStepBingGroundingToolCall(element, options);
                     case "browser_automation": return RunStepBrowserAutomationToolCall.DeserializeRunStepBrowserAutomationToolCall(element, options);
