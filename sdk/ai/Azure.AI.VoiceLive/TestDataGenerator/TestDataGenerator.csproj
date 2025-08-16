@@ -6,7 +6,7 @@
     <RootNamespace>Azure.AI.VoiceLive.TestDataGenerator</RootNamespace>
     <AssemblyName>Azure.AI.VoiceLive.TestDataGenerator</AssemblyName>
     <IsPackable>false</IsPackable>
-    <IsTestProject>false</IsTestProject>
+    <IsTestProject>true</IsTestProject>
   </PropertyGroup>
 
   <ItemGroup>
