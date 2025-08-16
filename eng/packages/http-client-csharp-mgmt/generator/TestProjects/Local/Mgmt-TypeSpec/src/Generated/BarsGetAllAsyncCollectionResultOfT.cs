@@ -15,7 +15,7 @@ using MgmtTypeSpec.Models;
 
 namespace MgmtTypeSpec
 {
-    internal partial class BarsGetAsyncCollectionResultOfT : AsyncPageable<BarData>
+    internal partial class BarsGetAllAsyncCollectionResultOfT : AsyncPageable<BarData>
     {
         private readonly Bars _client;
         private readonly Guid _subscriptionId;
@@ -23,7 +23,7 @@ namespace MgmtTypeSpec
         private readonly string _fooName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of BarsGetAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of BarsGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Bars client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -31,7 +31,7 @@ namespace MgmtTypeSpec
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="fooName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="fooName"/> is an empty string, and was expected to be non-empty. </exception>
-        public BarsGetAsyncCollectionResultOfT(Bars client, Guid subscriptionId, string resourceGroupName, string fooName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public BarsGetAllAsyncCollectionResultOfT(Bars client, Guid subscriptionId, string resourceGroupName, string fooName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(fooName, nameof(fooName));
@@ -43,10 +43,10 @@ namespace MgmtTypeSpec
             _context = context;
         }
 
-        /// <summary> Gets the pages of BarsGetAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of BarsGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of BarsGetAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of BarsGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<BarData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -57,8 +57,9 @@ namespace MgmtTypeSpec
                 {
                     yield break;
                 }
-                yield return Page<BarData>.FromValues((IReadOnlyList<BarData>)BarListResult.FromResponse(response).Value, nextPage?.AbsoluteUri, response);
-                nextPage = BarListResult.FromResponse(response).NextLink;
+                BarListResult result = BarListResult.FromResponse(response);
+                yield return Page<BarData>.FromValues((IReadOnlyList<BarData>)result.Value, nextPage?.AbsoluteUri, response);
+                nextPage = result.NextLink;
                 if (nextPage == null)
                 {
                     yield break;
@@ -71,7 +72,7 @@ namespace MgmtTypeSpec
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetRequest(nextLink, _subscriptionId, _resourceGroupName, _fooName, _context) : _client.CreateGetRequest(_subscriptionId, _resourceGroupName, _fooName, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _fooName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _fooName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BarCollection.GetAll");
             scope.Start();
             try
