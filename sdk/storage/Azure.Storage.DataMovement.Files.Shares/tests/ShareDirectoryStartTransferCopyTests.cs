@@ -704,7 +704,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         [TestCase(true)]
         [TestCase(false)]
         [TestCase(null)]
-        public async Task ShareDirectoryToShareDirectory_PreserveSmb(bool? filePermissions)
+        public async Task ShareDirectoryToShareDirectory_PreserveSmb_NoExistingDestNoOverwriteModeSet(bool? filePermissions)
         {
             // Arrange
             await using IDisposingContainer<ShareClient> source = await GetSourceDisposingContainerAsync();
@@ -783,13 +783,537 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         [TestCase(true)]
         [TestCase(false)]
         [TestCase(null)]
-        public async Task ShareDirectoryToShareDirectory_PreserveNfs(bool? filePermissions)
+        public async Task ShareDirectoryToShareDirectory_PreserveSmb_ExistingDestOverwriteModeSet(bool? filePermissions)
+        {
+            // Arrange
+            await using IDisposingContainer<ShareClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<ShareClient> destination = await GetDestinationDisposingContainerAsync();
+
+            TransferOptions options = new TransferOptions() { CreationMode = StorageResourceCreationMode.OverwriteIfExists };
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+            string sourcePrefix = "sourceFolder";
+            string destPrefix = "destFolder";
+
+            ShareDirectoryCreateOptions directoryCreateOptionsSrc = new ShareDirectoryCreateOptions()
+            {
+                Metadata = _defaultMetadata,
+                FilePermission = new ShareFilePermission() { Permission = "O:BAG:BAD:(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;BU)S:NO_ACCESS_CONTROL" },
+                SmbProperties = new FileSmbProperties()
+                {
+                    FileAttributes = NtfsFileAttributes.Directory | NtfsFileAttributes.Hidden | NtfsFileAttributes.ReadOnly,
+                    FileCreatedOn = _defaultFileCreatedOn,
+                    FileChangedOn = _defaultFileChangedOn,
+                    FileLastWrittenOn = _defaultFileLastWrittenOn,
+                },
+            };
+
+            ShareDirectoryCreateOptions directoryCreateOptionsDest = new ShareDirectoryCreateOptions()
+            {
+                Metadata = DataProvider.BuildTags(),
+                FilePermission = new ShareFilePermission() { Permission = _defaultPermissions },
+                SmbProperties = new FileSmbProperties()
+                {
+                    FileAttributes = NtfsFileAttributes.Directory | NtfsFileAttributes.System,
+                    FileCreatedOn = new DateTimeOffset(2021, 8, 1, 9, 5, 55, default),
+                    FileChangedOn = new DateTimeOffset(2021, 9, 1, 9, 5, 55, default),
+                    FileLastWrittenOn = new DateTimeOffset(2021, 10, 1, 9, 5, 55, default),
+                },
+            };
+
+            // setup source
+            await CreateDirectoryAsync(source.Container, sourcePrefix, directoryCreateOptionsSrc);
+            await CreateDirectoryTreeSmbAsync(source.Container, sourcePrefix, directoryCreateOptionsSrc, DataMovementTestConstants.KB);
+            // setup destination
+            await CreateDirectoryAsync(destination.Container, destPrefix, directoryCreateOptionsDest);
+            await CreateDirectoryTreeSmbAsync(destination.Container, destPrefix, directoryCreateOptionsDest, DataMovementTestConstants.KB);
+
+            // Create storage resource containers
+            StorageResourceContainer sourceResource = new ShareDirectoryStorageResourceContainer(
+                source.Container.GetDirectoryClient(sourcePrefix),
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Smb, });
+
+            StorageResourceContainer destinationResource = new ShareDirectoryStorageResourceContainer(
+                destination.Container.GetDirectoryClient(destPrefix),
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Smb, FilePermissions = filePermissions });
+
+            // Create Transfer Manager with single threaded operation
+            TransferManagerOptions managerOptions = new TransferManagerOptions()
+            {
+                MaximumConcurrency = 1,
+            };
+            TransferManager transferManager = new TransferManager(managerOptions);
+
+            // Start transfer and await for completion.
+            TransferOperation transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options).ConfigureAwait(false);
+
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert
+            testEventsRaised.AssertUnexpectedFailureCheck();
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+
+            TransferPropertiesTestType testType = filePermissions == true
+                ? TransferPropertiesTestType.Preserve
+                : TransferPropertiesTestType.PreserveNoPermissions;
+            await VerifyResultsAsync(
+                sourceContainer: source.Container,
+                sourcePrefix: sourcePrefix,
+                destinationContainer: destination.Container,
+                destinationPrefix: destPrefix,
+                propertiesTestType: testType);
+        }
+
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        [TestCase(null)]
+        public async Task ShareDirectoryToShareDirectory_PreserveSmb_ExistingDestNoOverwriteModeSet(bool? filePermissions)
+        {
+            // Arrange
+            await using IDisposingContainer<ShareClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<ShareClient> destination = await GetDestinationDisposingContainerAsync();
+
+            TransferOptions options = new TransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+            string sourcePrefix = "sourceFolder";
+            string destPrefix = "destFolder";
+
+            ShareDirectoryCreateOptions directoryCreateOptionsSrc = new ShareDirectoryCreateOptions()
+            {
+                Metadata = _defaultMetadata,
+                FilePermission = new ShareFilePermission() { Permission = "O:BAG:BAD:(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;BU)S:NO_ACCESS_CONTROL" },
+                SmbProperties = new FileSmbProperties()
+                {
+                    FileAttributes = NtfsFileAttributes.Directory | NtfsFileAttributes.Hidden | NtfsFileAttributes.ReadOnly,
+                    FileCreatedOn = _defaultFileCreatedOn,
+                    FileChangedOn = _defaultFileChangedOn,
+                    FileLastWrittenOn = _defaultFileLastWrittenOn,
+                },
+            };
+
+            ShareDirectoryCreateOptions directoryCreateOptionsDest = new ShareDirectoryCreateOptions()
+            {
+                Metadata = DataProvider.BuildTags(),
+                FilePermission = new ShareFilePermission() { Permission = _defaultPermissions },
+                SmbProperties = new FileSmbProperties()
+                {
+                    FileAttributes = NtfsFileAttributes.Directory | NtfsFileAttributes.System,
+                    FileCreatedOn = new DateTimeOffset(2021, 8, 1, 9, 5, 55, default),
+                    FileChangedOn = new DateTimeOffset(2021, 9, 1, 9, 5, 55, default),
+                    FileLastWrittenOn = new DateTimeOffset(2021, 10, 1, 9, 5, 55, default),
+                },
+            };
+
+            // setup source
+            await CreateDirectoryAsync(source.Container, sourcePrefix, directoryCreateOptionsSrc);
+            await CreateDirectoryTreeSmbAsync(source.Container, sourcePrefix, directoryCreateOptionsSrc, DataMovementTestConstants.KB);
+            // setup destination
+            await CreateDirectoryAsync(destination.Container, destPrefix, directoryCreateOptionsDest);
+            await CreateDirectoryTreeSmbAsync(destination.Container, destPrefix, directoryCreateOptionsDest, DataMovementTestConstants.KB);
+
+            // Create storage resource containers
+            StorageResourceContainer sourceResource = new ShareDirectoryStorageResourceContainer(
+                source.Container.GetDirectoryClient(sourcePrefix),
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Smb, });
+
+            StorageResourceContainer destinationResource = new ShareDirectoryStorageResourceContainer(
+                destination.Container.GetDirectoryClient(destPrefix),
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Smb, FilePermissions = filePermissions });
+
+            // Create Transfer Manager with single threaded operation
+            TransferManagerOptions managerOptions = new TransferManagerOptions()
+            {
+                MaximumConcurrency = 1,
+            };
+            TransferManager transferManager = new TransferManager(managerOptions);
+
+            // Act and Assert
+            TransferOperation transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, options);
+
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            Assert.AreEqual(1, testEventsRaised.FailedEvents.Count);
+            Assert.AreEqual(
+                $"Share Directory `{destination.Container.GetDirectoryClient(destPrefix + "/bar").Path}` already exists. Cannot overwrite directory.",
+                testEventsRaised.FailedEvents.FirstOrDefault().Exception.Message);
+        }
+
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        [TestCase(null)]
+        public async Task ShareDirectoryToShareDirectory_PreserveSmb_NoExistingDestOverwriteModeSet(bool? filePermissions)
+        {
+            // Arrange
+            await using IDisposingContainer<ShareClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<ShareClient> destination = await GetDestinationDisposingContainerAsync();
+
+            TransferOptions options = new TransferOptions() { CreationMode = StorageResourceCreationMode.OverwriteIfExists };
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+            string sourcePrefix = "sourceFolder";
+            string destPrefix = "destFolder";
+
+            ShareDirectoryCreateOptions directoryCreateOptions = new ShareDirectoryCreateOptions()
+            {
+                Metadata = _defaultMetadata,
+                FilePermission = new ShareFilePermission() { Permission = _defaultPermissions },
+                SmbProperties = new FileSmbProperties()
+                {
+                    FileAttributes = NtfsFileAttributes.Directory | NtfsFileAttributes.ReadOnly | NtfsFileAttributes.Archive,
+                    FileCreatedOn = _defaultFileCreatedOn,
+                    FileChangedOn = _defaultFileChangedOn,
+                    FileLastWrittenOn = _defaultFileLastWrittenOn,
+                },
+            };
+            // setup source
+            await CreateDirectoryAsync(source.Container, sourcePrefix, directoryCreateOptions);
+            await CreateDirectoryTreeSmbAsync(source.Container, sourcePrefix, directoryCreateOptions, DataMovementTestConstants.KB);
+            // setup destination
+            await CreateDirectoryInDestinationAsync(destination.Container, destPrefix);
+
+            // Create storage resource containers
+            StorageResourceContainer sourceResource = new ShareDirectoryStorageResourceContainer(
+                source.Container.GetDirectoryClient(sourcePrefix),
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Smb, });
+
+            StorageResourceContainer destinationResource = new ShareDirectoryStorageResourceContainer(
+                destination.Container.GetDirectoryClient(destPrefix),
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Smb, FilePermissions = filePermissions });
+
+            // Create Transfer Manager with single threaded operation
+            TransferManagerOptions managerOptions = new TransferManagerOptions()
+            {
+                MaximumConcurrency = 1,
+            };
+            TransferManager transferManager = new TransferManager(managerOptions);
+
+            // Start transfer and await for completion.
+            TransferOperation transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options).ConfigureAwait(false);
+
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert
+            testEventsRaised.AssertUnexpectedFailureCheck();
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+
+            TransferPropertiesTestType testType = filePermissions == true
+                ? TransferPropertiesTestType.Preserve
+                : TransferPropertiesTestType.PreserveNoPermissions;
+            await VerifyResultsAsync(
+                sourceContainer: source.Container,
+                sourcePrefix: sourcePrefix,
+                destinationContainer: destination.Container,
+                destinationPrefix: destPrefix,
+                propertiesTestType: testType);
+        }
+
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        [TestCase(null)]
+        public async Task ShareDirectoryToShareDirectory_PreserveNfs_NoExistingDestNoOverwriteModeSet(bool? filePermissions)
         {
             // Arrange
             await using IDisposingContainer<ShareClient> source = await SourceClientBuilder.GetTestShareSasNfsAsync();
             await using IDisposingContainer<ShareClient> destination = await DestinationClientBuilder.GetTestShareSasNfsAsync();
 
             TransferOptions options = new TransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+            string sourcePrefix = "sourceFolder";
+            string destPrefix = "destFolder";
+
+            ShareDirectoryCreateOptions directoryCreateOptions = new ShareDirectoryCreateOptions()
+            {
+                Metadata = _defaultMetadata,
+                SmbProperties = new FileSmbProperties()
+                {
+                    FileCreatedOn = _defaultFileCreatedOn,
+                    FileLastWrittenOn = _defaultFileLastWrittenOn,
+                },
+                PosixProperties = new FilePosixProperties()
+                {
+                    Owner = "345",
+                    Group = "123",
+                    FileMode = NfsFileMode.ParseOctalFileMode("1777"),
+                }
+            };
+            // setup source
+            await CreateDirectoryAsync(source.Container, sourcePrefix, directoryCreateOptions);
+            await CreateDirectoryTreeNfsAsync(source.Container, sourcePrefix, directoryCreateOptions, DataMovementTestConstants.KB);
+            // setup destination
+            await CreateDirectoryInDestinationAsync(destination.Container, destPrefix);
+
+            // Create storage resource containers
+            StorageResourceContainer sourceResource = new ShareDirectoryStorageResourceContainer(
+                source.Container.GetDirectoryClient(sourcePrefix),
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Nfs });
+
+            StorageResourceContainer destinationResource = new ShareDirectoryStorageResourceContainer(
+                destination.Container.GetDirectoryClient(destPrefix),
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Nfs, FilePermissions = filePermissions });
+
+            // Create Transfer Manager with single threaded operation
+            TransferManagerOptions managerOptions = new TransferManagerOptions()
+            {
+                MaximumConcurrency = 1,
+            };
+            TransferManager transferManager = new TransferManager(managerOptions);
+
+            // Start transfer and await for completion.
+            TransferOperation transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options).ConfigureAwait(false);
+
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert
+            testEventsRaised.AssertUnexpectedFailureCheck();
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+
+            TransferPropertiesTestType testType = filePermissions == true
+                ? TransferPropertiesTestType.PreserveNfs
+                : TransferPropertiesTestType.PreserveNfsNoPermissions;
+            await VerifyResultsAsync(
+                sourceContainer: source.Container,
+                sourcePrefix: sourcePrefix,
+                destinationContainer: destination.Container,
+                destinationPrefix: destPrefix,
+                propertiesTestType: testType);
+        }
+
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        [TestCase(null)]
+        public async Task ShareDirectoryToShareDirectory_PreserveNfs_ExistingDestOverwriteModeSet(bool? filePermissions)
+        {
+            // Arrange
+            await using IDisposingContainer<ShareClient> source = await SourceClientBuilder.GetTestShareSasNfsAsync();
+            await using IDisposingContainer<ShareClient> destination = await DestinationClientBuilder.GetTestShareSasNfsAsync();
+
+            TransferOptions options = new TransferOptions() { CreationMode = StorageResourceCreationMode.OverwriteIfExists };
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+            string sourcePrefix = "sourceFolder";
+            string destPrefix = "destFolder";
+
+            ShareDirectoryCreateOptions directoryCreateOptionsSrc = new ShareDirectoryCreateOptions()
+            {
+                Metadata = _defaultMetadata,
+                SmbProperties = new FileSmbProperties()
+                {
+                    FileCreatedOn = _defaultFileCreatedOn,
+                    FileLastWrittenOn = _defaultFileLastWrittenOn,
+                },
+                PosixProperties = new FilePosixProperties()
+                {
+                    Owner = "345",
+                    Group = "123",
+                    FileMode = NfsFileMode.ParseOctalFileMode("1777"),
+                }
+            };
+
+            ShareDirectoryCreateOptions directoryCreateOptionsDest = new ShareDirectoryCreateOptions()
+            {
+                Metadata = DataProvider.BuildTags(),
+                SmbProperties = new FileSmbProperties()
+                {
+                    FileCreatedOn = new DateTimeOffset(2021, 8, 1, 9, 5, 55, default),
+                    FileLastWrittenOn = new DateTimeOffset(2021, 9, 1, 9, 5, 55, default),
+                },
+                PosixProperties = new FilePosixProperties()
+                {
+                    Owner = "3000",
+                    Group = "3001",
+                    FileMode = NfsFileMode.ParseOctalFileMode("0770"),
+                }
+            };
+
+            // setup source
+            await CreateDirectoryAsync(source.Container, sourcePrefix, directoryCreateOptionsSrc);
+            await CreateDirectoryTreeNfsAsync(source.Container, sourcePrefix, directoryCreateOptionsSrc, DataMovementTestConstants.KB);
+            // setup destination
+            await CreateDirectoryAsync(destination.Container, destPrefix, directoryCreateOptionsDest);
+            await CreateDirectoryTreeNfsAsync(destination.Container, destPrefix, directoryCreateOptionsDest, DataMovementTestConstants.KB);
+
+            // Create storage resource containers
+            StorageResourceContainer sourceResource = new ShareDirectoryStorageResourceContainer(
+                source.Container.GetDirectoryClient(sourcePrefix),
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Nfs, });
+
+            StorageResourceContainer destinationResource = new ShareDirectoryStorageResourceContainer(
+                destination.Container.GetDirectoryClient(destPrefix),
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Nfs, FilePermissions = filePermissions });
+
+            // Create Transfer Manager with single threaded operation
+            TransferManagerOptions managerOptions = new TransferManagerOptions()
+            {
+                MaximumConcurrency = 1,
+            };
+            TransferManager transferManager = new TransferManager(managerOptions);
+
+            // Start transfer and await for completion.
+            TransferOperation transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options).ConfigureAwait(false);
+
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert
+            testEventsRaised.AssertUnexpectedFailureCheck();
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+
+            TransferPropertiesTestType testType = filePermissions == true
+                ? TransferPropertiesTestType.PreserveNfs
+                : TransferPropertiesTestType.PreserveNfsNoPermissions;
+            await VerifyResultsAsync(
+                sourceContainer: source.Container,
+                sourcePrefix: sourcePrefix,
+                destinationContainer: destination.Container,
+                destinationPrefix: destPrefix,
+                propertiesTestType: testType);
+        }
+
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        [TestCase(null)]
+        public async Task ShareDirectoryToShareDirectory_PreserveNfs_ExistingDestNoOverwriteModeSet(bool? filePermissions)
+        {
+            // Arrange
+            await using IDisposingContainer<ShareClient> source = await SourceClientBuilder.GetTestShareSasNfsAsync();
+            await using IDisposingContainer<ShareClient> destination = await DestinationClientBuilder.GetTestShareSasNfsAsync();
+
+            TransferOptions options = new TransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+            string sourcePrefix = "sourceFolder";
+            string destPrefix = "destFolder";
+
+            ShareDirectoryCreateOptions directoryCreateOptionsSrc = new ShareDirectoryCreateOptions()
+            {
+                Metadata = _defaultMetadata,
+                SmbProperties = new FileSmbProperties()
+                {
+                    FileCreatedOn = _defaultFileCreatedOn,
+                    FileLastWrittenOn = _defaultFileLastWrittenOn,
+                },
+                PosixProperties = new FilePosixProperties()
+                {
+                    Owner = "345",
+                    Group = "123",
+                    FileMode = NfsFileMode.ParseOctalFileMode("1777"),
+                }
+            };
+
+            ShareDirectoryCreateOptions directoryCreateOptionsDest = new ShareDirectoryCreateOptions()
+            {
+                Metadata = DataProvider.BuildTags(),
+                SmbProperties = new FileSmbProperties()
+                {
+                    FileCreatedOn = new DateTimeOffset(2021, 8, 1, 9, 5, 55, default),
+                    FileLastWrittenOn = new DateTimeOffset(2021, 9, 1, 9, 5, 55, default),
+                },
+                PosixProperties = new FilePosixProperties()
+                {
+                    Owner = "3000",
+                    Group = "3001",
+                    FileMode = NfsFileMode.ParseOctalFileMode("0770"),
+                }
+            };
+
+            // setup source
+            await CreateDirectoryAsync(source.Container, sourcePrefix, directoryCreateOptionsSrc);
+            await CreateDirectoryTreeNfsAsync(source.Container, sourcePrefix, directoryCreateOptionsSrc, DataMovementTestConstants.KB);
+            // setup destination
+            await CreateDirectoryAsync(destination.Container, destPrefix, directoryCreateOptionsDest);
+            await CreateDirectoryTreeNfsAsync(destination.Container, destPrefix, directoryCreateOptionsDest, DataMovementTestConstants.KB);
+
+            // Create storage resource containers
+            StorageResourceContainer sourceResource = new ShareDirectoryStorageResourceContainer(
+                source.Container.GetDirectoryClient(sourcePrefix),
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Nfs, });
+
+            StorageResourceContainer destinationResource = new ShareDirectoryStorageResourceContainer(
+                destination.Container.GetDirectoryClient(destPrefix),
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Nfs, FilePermissions = filePermissions });
+
+            // Create Transfer Manager with single threaded operation
+            TransferManagerOptions managerOptions = new TransferManagerOptions()
+            {
+                MaximumConcurrency = 1,
+            };
+            TransferManager transferManager = new TransferManager(managerOptions);
+
+            // Start transfer and await for completion.
+            TransferOperation transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options).ConfigureAwait(false);
+
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert
+            Assert.AreEqual(1, testEventsRaised.FailedEvents.Count);
+            Assert.AreEqual(
+                $"Share Directory `{destination.Container.GetDirectoryClient(destPrefix + "/bar").Path}` already exists. Cannot overwrite directory.",
+                testEventsRaised.FailedEvents.FirstOrDefault().Exception.Message);
+        }
+
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        [TestCase(null)]
+        public async Task ShareDirectoryToShareDirectory_PreserveNfs_NoExistingDestOverwriteModeSet(bool? filePermissions)
+        {
+            // Arrange
+            await using IDisposingContainer<ShareClient> source = await SourceClientBuilder.GetTestShareSasNfsAsync();
+            await using IDisposingContainer<ShareClient> destination = await DestinationClientBuilder.GetTestShareSasNfsAsync();
+
+            TransferOptions options = new TransferOptions() { CreationMode = StorageResourceCreationMode.OverwriteIfExists };
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
             string sourcePrefix = "sourceFolder";
             string destPrefix = "destFolder";
@@ -1440,6 +1964,88 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             Assert.Contains("item1-symlink", sourceFileNames);
             Assert.False(destinationFileNames.Contains("item1-symlink"));
             Assert.AreEqual("item1", destinationFileNames[0]);
+        }
+
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        [TestCase(null)]
+        public async Task ShareDirectoryToShareDirectory_PreserveNfs_OAuth(bool? filePermissions)
+        {
+            // Arrange
+            await using IDisposingContainer<ShareClient> source = await SourceClientBuilder.GetTestShareOauthNfsAsync(TestEnvironment.Credential);
+            await using IDisposingContainer<ShareClient> destination = await DestinationClientBuilder.GetTestShareOauthNfsAsync(TestEnvironment.Credential);
+
+            TransferOptions options = new TransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+            string sourcePrefix = "sourceFolder";
+            string destPrefix = "destFolder";
+
+            ShareDirectoryCreateOptions directoryCreateOptions = new ShareDirectoryCreateOptions()
+            {
+                Metadata = _defaultMetadata,
+                SmbProperties = new FileSmbProperties()
+                {
+                    FileCreatedOn = _defaultFileCreatedOn,
+                    FileLastWrittenOn = _defaultFileLastWrittenOn,
+                },
+                PosixProperties = new FilePosixProperties()
+                {
+                    Owner = "345",
+                    Group = "123",
+                    FileMode = NfsFileMode.ParseOctalFileMode("1777"),
+                }
+            };
+            // setup source
+            await CreateDirectoryAsync(source.Container, sourcePrefix, directoryCreateOptions);
+            await CreateDirectoryTreeNfsAsync(source.Container, sourcePrefix, directoryCreateOptions, DataMovementTestConstants.KB);
+            // setup destination
+            await CreateDirectoryInDestinationAsync(destination.Container, destPrefix);
+
+            // Create storage resource containers
+            StorageResourceContainer sourceResource = new ShareDirectoryStorageResourceContainer(
+                source.Container.GetDirectoryClient(sourcePrefix),
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Nfs });
+
+            StorageResourceContainer destinationResource = new ShareDirectoryStorageResourceContainer(
+                destination.Container.GetDirectoryClient(destPrefix),
+                new ShareFileStorageResourceOptions() { ShareProtocol = ShareProtocol.Nfs, FilePermissions = filePermissions });
+
+            // Create Transfer Manager with single threaded operation
+            TransferManagerOptions managerOptions = new TransferManagerOptions()
+            {
+                MaximumConcurrency = 1,
+            };
+            TransferManager transferManager = new TransferManager(managerOptions);
+
+            // Start transfer and await for completion.
+            TransferOperation transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options).ConfigureAwait(false);
+
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert
+            testEventsRaised.AssertUnexpectedFailureCheck();
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+
+            TransferPropertiesTestType testType = filePermissions == true
+                ? TransferPropertiesTestType.PreserveNfs
+                : TransferPropertiesTestType.PreserveNfsNoPermissions;
+            await VerifyResultsAsync(
+                sourceContainer: source.Container,
+                sourcePrefix: sourcePrefix,
+                destinationContainer: destination.Container,
+                destinationPrefix: destPrefix,
+                propertiesTestType: testType);
         }
     }
 }

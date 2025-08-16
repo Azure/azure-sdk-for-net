@@ -79,6 +79,17 @@ namespace Azure.Storage.DataMovement
             => CreateIfNotExistsAsync(cancellationToken);
 
         /// <summary>
+        /// Creates storage resource container using the source's properties. Supports overwriting the existing container.
+        /// </summary>
+        /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected internal virtual Task CreateAsync(
+            bool overwrite,
+            StorageResourceContainerProperties sourceProperties,
+            CancellationToken cancellationToken = default)
+            => CreateIfNotExistsAsync(cancellationToken);
+
+        /// <summary>
         /// Storage Resource is a container.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
