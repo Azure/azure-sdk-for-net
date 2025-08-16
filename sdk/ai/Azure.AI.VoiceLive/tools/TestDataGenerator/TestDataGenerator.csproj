@@ -6,10 +6,8 @@
     <RootNamespace>Azure.AI.VoiceLive.TestDataGenerator</RootNamespace>
     <AssemblyName>Azure.AI.VoiceLive.TestDataGenerator</AssemblyName>
     <IsPackable>false</IsPackable>
-    <IsTestProject>true</IsTestProject>
     <InheritDocEnabled>false</InheritDocEnabled>
     <IsShippingLibrary>false</IsShippingLibrary>
-    <ImportRepoCommonSettings>true</ImportRepoCommonSettings>
   </PropertyGroup>
 
   <ItemGroup>
