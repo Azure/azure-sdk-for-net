@@ -21,6 +21,10 @@ namespace Azure.Developer.Playwright;
 /// </summary>
 public class PlaywrightServiceBrowserClient : IDisposable
 {
+    // Static instance for Singleton pattern
+    private static PlaywrightServiceBrowserClient? _instance;
+    private static readonly object _lock = new object();
+
     internal readonly IEntraLifecycle _entraLifecycle;
     internal readonly IEnvironment _environment;
     internal readonly JsonWebTokenHandler _jsonWebTokenHandler;
@@ -32,29 +36,102 @@ public class PlaywrightServiceBrowserClient : IDisposable
     internal TestRunUpdateClient? _testRunUpdateClient;
 
     internal Timer? RotationTimer { get; set; }
+    private volatile bool _initialized;
+    private readonly SemaphoreSlim _initGate = new(1, 1);
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="PlaywrightServiceBrowserClient"/> class.
+    /// Gets the singleton instance of the PlaywrightServiceBrowserClient.
     /// </summary>
-    public PlaywrightServiceBrowserClient() : this(new PlaywrightServiceBrowserClientOptions())
+    public static PlaywrightServiceBrowserClient Instance
     {
-        // No-op
+        get
+        {
+            if (_instance == null)
+            {
+                lock (_lock)
+                {
+                    _instance ??= new PlaywrightServiceBrowserClient(new PlaywrightServiceBrowserClientOptions());
+                }
+            }
+            return _instance;
+        }
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="PlaywrightServiceBrowserClient"/> class.
-    /// </summary>
-    /// <param name="credential">The token credential.</param>
-    public PlaywrightServiceBrowserClient(TokenCredential credential) : this(options: new PlaywrightServiceBrowserClientOptions(), credential: credential)
-    {
-        // No-op
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="PlaywrightServiceBrowserClient"/> class.
+    /// Creates or resets the singleton instance with custom options.
     /// </summary>
     /// <param name="options">The client options.</param>
-    public PlaywrightServiceBrowserClient(PlaywrightServiceBrowserClientOptions options) : this(
+    /// <returns>The singleton instance.</returns>
+    public static PlaywrightServiceBrowserClient CreateInstance(PlaywrightServiceBrowserClientOptions options)
+    {
+        lock (_lock)
+        {
+            _instance = new PlaywrightServiceBrowserClient(options);
+            return _instance;
+        }
+    }
+
+    /// <summary>
+    /// Creates or resets the singleton instance with a token credential.
+    /// </summary>
+    /// <param name="credential">The token credential.</param>
+    /// <returns>The singleton instance.</returns>
+    public static PlaywrightServiceBrowserClient CreateInstance(TokenCredential credential)
+    {
+        lock (_lock)
+        {
+            _instance = new PlaywrightServiceBrowserClient(credential);
+            return _instance;
+        }
+    }
+
+    /// <summary>
+    /// Creates or resets the singleton instance with options and a token credential.
+    /// </summary>
+    /// <param name="credential">The token credential.</param>
+    /// <param name="options">The client options.</param>
+    /// <returns>The singleton instance.</returns>
+    public static PlaywrightServiceBrowserClient CreateInstance(TokenCredential credential, PlaywrightServiceBrowserClientOptions options)
+    {
+        lock (_lock)
+        {
+            _instance = new PlaywrightServiceBrowserClient(credential, options);
+            return _instance;
+        }
+    }
+
+    /// <summary>
+    /// Protected parameterless constructor for mocking (required by AZC0005).
+    /// Initializes safe defaults to satisfy non-nullable fields.
+    /// </summary>
+    protected PlaywrightServiceBrowserClient()
+    {
+        _environment = new EnvironmentHandler();
+        _playwrightVersion = new PlaywrightVersion();
+        _clientUtility = new ClientUtilities(_environment, playwrightVersion: _playwrightVersion);
+        _ciProvider = new CIProvider(_environment);
+        _options = new PlaywrightServiceBrowserClientOptions(PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview, environment: _environment, clientUtility: _clientUtility);
+        _logger = _options.Logger;
+        _jsonWebTokenHandler = new JsonWebTokenHandler();
+        _entraLifecycle = new EntraLifecycle(jsonWebTokenHandler: _jsonWebTokenHandler, logger: _logger, environment: _environment, tokenCredential: null);
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PlaywrightServiceBrowserClient"/> class.
+    /// Private constructor to enforce Singleton pattern.
+    /// </summary>
+    /// <param name="credential">The token credential.</param>
+    private PlaywrightServiceBrowserClient(TokenCredential credential) : this(options: new PlaywrightServiceBrowserClientOptions(), credential: credential)
+    {
+        // No-op
+    }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PlaywrightServiceBrowserClient"/> class.
+    /// Private constructor to enforce Singleton pattern.
+    /// </summary>
+    /// <param name="options">The client options.</param>
+    private PlaywrightServiceBrowserClient(PlaywrightServiceBrowserClientOptions options) : this(
         environment: null,
         entraLifecycle: null,
         jsonWebTokenHandler: null,
@@ -69,10 +146,11 @@ public class PlaywrightServiceBrowserClient : IDisposable
 
     /// <summary>
     /// Initializes a new instance of the <see cref="PlaywrightServiceBrowserClient"/> class.
+    /// Private constructor to enforce Singleton pattern.
     /// </summary>
     /// <param name="options">The client options.</param>
     /// <param name="credential">The token credential.</param>
-    public PlaywrightServiceBrowserClient(TokenCredential credential, PlaywrightServiceBrowserClientOptions options) : this(
+    private PlaywrightServiceBrowserClient(TokenCredential credential, PlaywrightServiceBrowserClientOptions options) : this(
         environment: null,
         entraLifecycle: null,
         jsonWebTokenHandler: null,
@@ -108,6 +186,60 @@ public class PlaywrightServiceBrowserClient : IDisposable
     }
 
     /// <summary>
+    /// Indicates whether the client has completed initialization.
+    /// </summary>
+    public bool IsInitialized => _initialized;
+
+    /// <summary>
+    /// Gets the configured logger (if any).
+    /// </summary>
+    public ILogger? Logger => _logger;
+
+    private async Task EnsureInitializedAsync(CancellationToken cancellationToken)
+    {
+        if (_initialized)
+        {
+            return;
+        }
+        await _initGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+        try
+        {
+            if (_initialized)
+            {
+                return;
+            }
+            await InitializeAsync(cancellationToken).ConfigureAwait(false);
+            _initialized = true;
+        }
+        finally
+        {
+            _initGate.Release();
+        }
+    }
+
+    private void EnsureInitialized(CancellationToken cancellationToken)
+    {
+        if (_initialized)
+        {
+            return;
+        }
+        _initGate.Wait(cancellationToken);
+        try
+        {
+            if (_initialized)
+            {
+                return;
+            }
+            Initialize(cancellationToken);
+            _initialized = true;
+        }
+        finally
+        {
+            _initGate.Release();
+        }
+    }
+
+    /// <summary>
     /// Gets the connect options for connecting to Playwright Service's cloud hosted browsers.
     /// </summary>
     /// <typeparam name="T">The type of the connect options.</typeparam>
@@ -120,6 +252,9 @@ public class PlaywrightServiceBrowserClient : IDisposable
     public virtual async Task<ConnectOptions<T>> GetConnectOptionsAsync<T>(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, CancellationToken cancellationToken = default) where T : class, new()
 #pragma warning restore AZC0015 // Unexpected client method return type.
     {
+        // Auto-initialize on first use so test frameworks don't need explicit setup.
+        await EnsureInitializedAsync(cancellationToken).ConfigureAwait(false);
+
         var environmentValueForUseCloudHostedBrowsers = _environment.GetEnvironmentVariable(Constants.s_playwright_service_use_cloud_hosted_browsers_environment_variable);
         if (bool.TryParse(environmentValueForUseCloudHostedBrowsers, out var useCloudHostedBrowsers) && !useCloudHostedBrowsers)
         {
@@ -174,6 +309,9 @@ public class PlaywrightServiceBrowserClient : IDisposable
     public virtual ConnectOptions<T> GetConnectOptions<T>(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, CancellationToken cancellationToken = default) where T : class, new()
 #pragma warning restore AZC0015 // Unexpected client method return type.
     {
+        // Auto-initialize on first use so test frameworks don't need explicit setup.
+        EnsureInitialized(cancellationToken);
+
         var environmentValueForUseCloudHostedBrowsers = _environment.GetEnvironmentVariable(Constants.s_playwright_service_use_cloud_hosted_browsers_environment_variable);
         if (bool.TryParse(environmentValueForUseCloudHostedBrowsers, out var useCloudHostedBrowsers) && !useCloudHostedBrowsers)
         {
@@ -222,6 +360,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
     public virtual async Task InitializeAsync(CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
     {
+        _logger?.LogInformation("Running tests using Azure Playwright service.");
         if (string.IsNullOrEmpty(_options.ServiceEndpoint))
         {
             _logger?.LogInformation("Exiting initialization as service endpoint is not set.");
@@ -248,6 +387,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
         RotationTimer = new Timer(RotationHandlerAsync, null, TimeSpan.FromMinutes(Constants.s_entra_access_token_rotation_interval_period_in_minutes), TimeSpan.FromMinutes(Constants.s_entra_access_token_rotation_interval_period_in_minutes));
         string? entraIdToken = _entraLifecycle.GetEntraIdAccessToken();
         await CreateTestRunPatchCallAsync(entraIdToken, cancellationToken).ConfigureAwait(false);
+        _initialized = true;
     }
 
     /// <summary>
@@ -257,6 +397,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
     public virtual void Initialize(CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
     {
+        _logger?.LogInformation("Running tests using Azure Playwright service.");
         if (string.IsNullOrEmpty(_options.ServiceEndpoint))
         {
             _logger?.LogInformation("Exiting initialization as service endpoint is not set.");
@@ -290,6 +431,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
         RotationTimer = new Timer(RotationHandlerAsync, null, TimeSpan.FromMinutes(Constants.s_entra_access_token_rotation_interval_period_in_minutes), TimeSpan.FromMinutes(Constants.s_entra_access_token_rotation_interval_period_in_minutes));
         string? entraIdToken = _entraLifecycle.GetEntraIdAccessToken();
         CreateTestRunPatchCall(entraIdToken);
+        _initialized = true;
     }
 
     /// <summary>
@@ -312,6 +454,17 @@ public class PlaywrightServiceBrowserClient : IDisposable
     {
         _logger?.LogInformation("Cleaning up Playwright service resources.");
         RotationTimer?.Dispose();
+
+        // Reset the singleton instance when disposed
+        lock (_lock)
+        {
+            if (_instance == this)
+            {
+                _instance = null;
+            }
+        }
+        _initialized = false;
+
         GC.SuppressFinalize(this);
     }
 
@@ -324,7 +477,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
         }
     }
 
-      /// <summary>
+    /// <summary>
     /// Creates a TestRunUpdateClient with configured retry policy
     /// </summary>
     /// <param name="endpoint">API endpoint URI</param>
