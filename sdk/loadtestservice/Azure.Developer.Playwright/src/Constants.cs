@@ -143,7 +143,6 @@ internal class Constants
 
     // Error messages
     internal static readonly string s_no_service_endpoint_error_message = "Please set PLAYWRIGHT_SERVICE_URL in your environment variables.";
-    internal static readonly string s_service_endpoint_removed_since_scalable_execution_disabled_error_message = "GetConnectOptions method cannot be used when UseCloudHostedBrowsers is set to false in the setup file.";
     internal static readonly string s_no_auth_error = "Could not authenticate with the service. Please refer to https://aka.ms/pww/docs/authentication for more information.";
     internal static readonly string s_entra_no_cred_error = "Azure credentials not found when using Entra ID authentication. Please refer to https://aka.ms/pww/docs/authentication for more information.";
     internal static readonly string s_invalid_mpt_pat_error = "The Access Token provided in the environment variable is invalid.";
