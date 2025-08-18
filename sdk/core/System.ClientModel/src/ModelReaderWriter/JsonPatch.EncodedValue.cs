@@ -13,7 +13,7 @@ public partial struct JsonPatch
         /// <summary>
         /// .
         /// </summary>
-        public static EncodedValue Empty => new(ValueKind.None, ReadOnlyMemory<byte>.Empty);
+        internal static EncodedValue Empty => new(ValueKind.None, ReadOnlyMemory<byte>.Empty);
 
         /// <summary>
         /// .
@@ -34,6 +34,6 @@ public partial struct JsonPatch
         /// <summary>
         /// .
         /// </summary>
-        public ReadOnlyMemory<byte> Value { get; }
+        internal ReadOnlyMemory<byte> Value { get; }
     }
 }

@@ -305,8 +305,6 @@ namespace System.ClientModel.Primitives
         {
             private object _dummy;
             private int _dummyPrimitive;
-            public static System.ClientModel.Primitives.JsonPatch.EncodedValue Empty { get { throw null; } }
-            public System.ReadOnlyMemory<byte> Value { get { throw null; } }
         }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public delegate bool PropagatorGetter(System.ReadOnlySpan<byte> jsonPath, out System.ReadOnlyMemory<byte> value);
