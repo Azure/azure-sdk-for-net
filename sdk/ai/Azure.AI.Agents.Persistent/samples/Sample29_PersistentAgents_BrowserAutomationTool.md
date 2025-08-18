@@ -1,6 +1,6 @@
-# Sample file search using `VectorStoreFile` and agents in Azure.AI.Agents.Persistent.
+# Sample for use of `BrowserAutomationToolDefinition` and agents in Azure.AI.Agents.Persistent.
 
-This example demonstrates how to use Browser Automotion tool in Agents in Azure.AI.Agents.Persistent.
+This example demonstrates how to use Browser Automation tool in Agents in Azure.AI.Agents.Persistent.
 1. Begin by creating the Agent client and reading the required environment variables.
 
 ```C# Snippet:PersistentAgents_BrowserAutomationTool_CreateClient
