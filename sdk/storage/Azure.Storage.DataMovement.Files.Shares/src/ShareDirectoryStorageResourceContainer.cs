@@ -131,11 +131,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             };
         }
 
-        /// <summary>
-        /// This has been deprecated. See <see cref="CreateAsync(bool, StorageResourceContainerProperties, CancellationToken)"/>.
-        /// </summary>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
         protected override Task CreateIfNotExistsAsync(CancellationToken cancellationToken = default)
             => Task.CompletedTask;
 
@@ -164,12 +159,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             return ResourceProperties;
         }
 
-        /// <summary>
-        /// This has been deprecated. See <see cref="CreateAsync(bool, StorageResourceContainerProperties, CancellationToken)"/>.
-        /// </summary>
-        /// <param name="sourceProperties"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
         protected override Task CreateIfNotExistsAsync(
             StorageResourceContainerProperties sourceProperties,
             CancellationToken cancellationToken = default)
