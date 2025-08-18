@@ -3,11 +3,6 @@ description: 'Generate SDKs from TypeSpec'
 ---
 Your goal is to guide user through the process of generating SDKs from TypeSpec projects. Show all the high level steps to the user to ensure they understand the flow. Use the provided tools to perform actions and gather information as needed.
 
-## Pre-Flight Check
-- Verify ${workspaceFolder} is not on main branch
-- If on main branch, prompt user: "You are currently on the main branch. Please create a new branch using `git checkout -b <branch-name>` before proceeding."
-- Wait for user confirmation before continuing
-
 ## Step 1: Identify TypeSpec Project
 **Goal**: Locate the TypeSpec project root path
 **Actions**:
@@ -46,7 +41,8 @@ Your goal is to guide user through the process of generating SDKs from TypeSpec 
 3. Display all modified files (excluding `.github` and `.vscode` folders)
 4. Prompt user: "Please review the modified files. Do you want to commit these changes? (yes/no)"
 5. If yes:
-    - Verify current branch is not "main"
+    - If on main branch, prompt user: "You are currently on the main branch. Please create a new branch using `git checkout -b <branch-name>` before proceeding."
+    - Wait for user confirmation before continuing
     - Run `git add <modified-files>`
     - Prompt for commit message
     - Run `git commit -m "<user-provided-message>"`
