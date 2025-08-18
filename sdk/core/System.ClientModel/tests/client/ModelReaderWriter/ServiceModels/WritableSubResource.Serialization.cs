@@ -60,7 +60,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
 
             string? id = default;
 #pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
-            AdditionalProperties additionalProperties = new(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
+            JsonPatch jsonPatch = new(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
 #pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             foreach (var property in element.EnumerateObject())
             {
@@ -74,9 +74,9 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
                     continue;
                 }
 
-                additionalProperties.Set([.. "$."u8, .. Encoding.UTF8.GetBytes(property.Name)], property.Value.GetUtf8Bytes());
+                jsonPatch.Set([.. "$."u8, .. Encoding.UTF8.GetBytes(property.Name)], property.Value.GetUtf8Bytes());
             }
-            var model = new WritableSubResource(id, additionalProperties);
+            var model = new WritableSubResource(id, jsonPatch);
 
             return model;
         }

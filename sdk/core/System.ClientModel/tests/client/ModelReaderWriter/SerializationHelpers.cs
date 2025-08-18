@@ -74,12 +74,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public static void WriteDictionaryWithPatch<T>(
             this Utf8JsonWriter writer,
             ModelReaderWriterOptions options,
-            ref AdditionalProperties patch,
+            ref JsonPatch patch,
             ReadOnlySpan<byte> propertyName,
             ReadOnlySpan<byte> prefix,
             IDictionary<string, T> dictionary,
             Action<Utf8JsonWriter, T, ModelReaderWriterOptions> write,
-            Func<T, AdditionalProperties>? getPatchFromItem)
+            Func<T, JsonPatch>? getPatchFromItem)
         {
             if (!propertyName.IsEmpty)
                 writer.WritePropertyName(propertyName);

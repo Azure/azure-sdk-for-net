@@ -154,7 +154,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             OptionalProperty<WritableSubResource> proximityPlacementGroup = default;
             OptionalProperty<IReadOnlyList<InstanceViewStatus>> statuses = default;
 #pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
-            AdditionalProperties additionalProperties = new(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
+            JsonPatch jsonPatch = new(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
 #pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             foreach (var property in element.EnumerateObject())
             {
@@ -274,12 +274,12 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                             statuses = array;
                             continue;
                         }
-                        additionalProperties.Set([.. "$.properties."u8, .. Encoding.UTF8.GetBytes(property0.Name)], property0.Value.GetUtf8Bytes());
+                        jsonPatch.Set([.. "$.properties."u8, .. Encoding.UTF8.GetBytes(property0.Name)], property0.Value.GetUtf8Bytes());
 
                     }
                     continue;
                 }
-                additionalProperties.Set([.. "$."u8, .. Encoding.UTF8.GetBytes(property.Name)], property.Value.GetUtf8Bytes());
+                jsonPatch.Set([.. "$."u8, .. Encoding.UTF8.GetBytes(property.Name)], property.Value.GetUtf8Bytes());
             }
 
             return new AvailabilitySetData(
@@ -295,7 +295,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                 OptionalProperty.ToList(virtualMachines),
                 proximityPlacementGroup,
                 OptionalProperty.ToList(statuses),
-                additionalProperties);
+                jsonPatch);
         }
 
         AvailabilitySetData IPersistableModel<AvailabilitySetData>.Create(BinaryData data, ModelReaderWriterOptions options)
@@ -358,7 +358,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
         string IPersistableModel<AvailabilitySetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
 #pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
-        private bool PropagateSet(ReadOnlySpan<byte> jsonPath, AdditionalProperties.EncodedValue value)
+        private bool PropagateSet(ReadOnlySpan<byte> jsonPath, JsonPatch.EncodedValue value)
         {
             ReadOnlySpan<byte> local = jsonPath.SliceToStartOfPropertyName();
 

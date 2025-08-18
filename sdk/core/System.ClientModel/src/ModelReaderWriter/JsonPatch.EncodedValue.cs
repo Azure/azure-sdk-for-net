@@ -3,7 +3,7 @@
 
 namespace System.ClientModel.Primitives;
 
-public partial struct AdditionalProperties
+public partial struct JsonPatch
 {
     /// <summary>
     /// .

@@ -9,19 +9,19 @@ using NUnit.Framework;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests
 {
-    internal class AdditionalPropertiesTests
+    internal class JsonPatchTests
     {
         [Test]
         public void AddPrimitive_String()
         {
-            AdditionalProperties ap = new();
-            ap.Set("$.property"u8, "value");
-            Assert.IsTrue(ap.Contains("$.property"u8));
-            Assert.AreEqual("value", ap.GetString("$.property"u8));
+            JsonPatch jp = new();
+            jp.Set("$.property"u8, "value");
+            Assert.IsTrue(jp.Contains("$.property"u8));
+            Assert.AreEqual("value", jp.GetString("$.property"u8));
 
             using var stream = new MemoryStream();
             Utf8JsonWriter writer = new Utf8JsonWriter(stream);
-            ap.Write(writer);
+            jp.Write(writer);
             writer.Flush();
 
             Assert.AreEqual("{\"property\":\"value\"}", GetJsonString(stream));
@@ -30,16 +30,16 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         [Test]
         public void AddPrimitive_StringAndInt()
         {
-            AdditionalProperties ap = new();
-            ap.Set("$.property"u8, "value");
-            ap.Set("$.property2"u8, 10);
-            Assert.IsTrue(ap.Contains("$.property"u8));
-            Assert.AreEqual("value", ap.GetString("$.property"u8));
-            Assert.AreEqual(10, ap.GetInt32("$.property2"u8));
+            JsonPatch jp = new();
+            jp.Set("$.property"u8, "value");
+            jp.Set("$.property2"u8, 10);
+            Assert.IsTrue(jp.Contains("$.property"u8));
+            Assert.AreEqual("value", jp.GetString("$.property"u8));
+            Assert.AreEqual(10, jp.GetInt32("$.property2"u8));
 
             using var stream = new MemoryStream();
             Utf8JsonWriter writer = new Utf8JsonWriter(stream);
-            ap.Write(writer);
+            jp.Write(writer);
             writer.Flush();
 
             Assert.AreEqual("{\"property\":\"value\",\"property2\":10}", GetJsonString(stream));
@@ -48,15 +48,15 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         [Test]
         public void AddRootArray_String()
         {
-            AdditionalProperties ap = new();
-            ap.Set("$[-]"u8, "value");
-            Assert.IsTrue(ap.Contains("$[-]"u8));
-            Assert.AreEqual("[\"value\"]"u8.ToArray(), ap.GetJson("$[-]"u8).ToArray());
-            Assert.AreEqual("value", ap.GetString("$[0]"u8));
+            JsonPatch jp = new();
+            jp.Set("$[-]"u8, "value");
+            Assert.IsTrue(jp.Contains("$[-]"u8));
+            Assert.AreEqual("[\"value\"]"u8.ToArray(), jp.GetJson("$[-]"u8).ToArray());
+            Assert.AreEqual("value", jp.GetString("$[0]"u8));
 
             using var stream = new MemoryStream();
             Utf8JsonWriter writer = new Utf8JsonWriter(stream);
-            ap.Write(writer);
+            jp.Write(writer);
             writer.Flush();
 
             Assert.AreEqual("[\"value\"]", GetJsonString(stream));
@@ -65,17 +65,17 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         [Test]
         public void AddRootArray_Property_String()
         {
-            AdditionalProperties ap = new();
-            ap.Set("$[0].property"u8, "value");
+            JsonPatch jp = new();
+            jp.Set("$[0].property"u8, "value");
 
-            Assert.IsTrue(ap.Contains("$[-]"u8));
-            Assert.AreEqual("[{\"property\":\"value\"}]"u8.ToArray(), ap.GetJson("$[-]"u8).ToArray());
-            Assert.AreEqual("{\"property\":\"value\"}"u8.ToArray(), ap.GetJson("$[0]"u8).ToArray());
-            Assert.AreEqual("value", ap.GetString("$[0].property"u8));
+            Assert.IsTrue(jp.Contains("$[-]"u8));
+            Assert.AreEqual("[{\"property\":\"value\"}]"u8.ToArray(), jp.GetJson("$[-]"u8).ToArray());
+            Assert.AreEqual("{\"property\":\"value\"}"u8.ToArray(), jp.GetJson("$[0]"u8).ToArray());
+            Assert.AreEqual("value", jp.GetString("$[0].property"u8));
 
             using var stream = new MemoryStream();
             Utf8JsonWriter writer = new Utf8JsonWriter(stream);
-            ap.Write(writer);
+            jp.Write(writer);
             writer.Flush();
 
             Assert.AreEqual("[{\"property\":\"value\"}]", GetJsonString(stream));

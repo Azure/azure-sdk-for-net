@@ -8,7 +8,7 @@ namespace System.ClientModel.Primitives;
 [Experimental("SCM0001")]
 internal static class ByteArrayDictionaryExtensions
 {
-    public static bool TryGetValue(this Dictionary<byte[], AdditionalProperties.EncodedValue> dictionary, ReadOnlySpan<byte> key, out AdditionalProperties.EncodedValue value)
+    public static bool TryGetValue(this Dictionary<byte[], JsonPatch.EncodedValue> dictionary, ReadOnlySpan<byte> key, out JsonPatch.EncodedValue value)
     {
         //TODO: consider the loop hole if anyone uses a byte[] as a key it won't get normalized
         Span<byte> normalizedKey = stackalloc byte[key.Length];
@@ -21,7 +21,7 @@ internal static class ByteArrayDictionaryExtensions
 #endif
     }
 
-    public static bool ContainsKey(this Dictionary<byte[], AdditionalProperties.EncodedValue> dictionary, ReadOnlySpan<byte> key)
+    public static bool ContainsKey(this Dictionary<byte[], JsonPatch.EncodedValue> dictionary, ReadOnlySpan<byte> key)
     {
         Span<byte> normalizedKey = stackalloc byte[key.Length];
         JsonPathComparer.Default.Normalize(key, ref normalizedKey, out int bytesWritten);
@@ -33,7 +33,7 @@ internal static class ByteArrayDictionaryExtensions
 #endif
     }
 
-    public static void Set(this Dictionary<byte[], AdditionalProperties.EncodedValue> dictionary, ReadOnlySpan<byte> key, AdditionalProperties.EncodedValue value)
+    public static void Set(this Dictionary<byte[], JsonPatch.EncodedValue> dictionary, ReadOnlySpan<byte> key, JsonPatch.EncodedValue value)
     {
         Span<byte> normalizedKey = stackalloc byte[key.Length];
         JsonPathComparer.Default.Normalize(key, ref normalizedKey, out int bytesWritten);

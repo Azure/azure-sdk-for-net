@@ -14,7 +14,7 @@ namespace System.ClientModel.Primitives;
 /// <summary>
 /// .
 /// </summary>
-public partial struct AdditionalProperties
+public partial struct JsonPatch
 {
     // Dictionary-based storage using UTF8 byte arrays as keys and encoded byte arrays as values
     private Dictionary<byte[], EncodedValue>? _properties;
@@ -32,7 +32,7 @@ public partial struct AdditionalProperties
     private readonly EncodedValue _rawJson;
 
     // Static constructor to initialize singleton arrays
-    static AdditionalProperties()
+    static JsonPatch()
     {
         // Initialize null value array
         s_nullValueArray = new(ValueKind.Null, "null"u8.ToArray());
@@ -123,6 +123,12 @@ public partial struct AdditionalProperties
     {
         if (_properties is null)
         {
+            // Do not pull _rawJson if the request is for root and there are no properties set.
+            if (jsonPath.SequenceEqual("$"u8))
+            {
+                return false;
+            }
+
             if (_rawJson.Value.IsEmpty)
             {
                 return false;

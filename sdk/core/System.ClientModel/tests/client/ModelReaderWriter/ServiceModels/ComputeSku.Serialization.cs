@@ -17,10 +17,10 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
     public partial class ComputeSku : IJsonModel<ComputeSku>
     {
         [Experimental("SCM0001")]
-        private AdditionalProperties _patch = new();
+        private JsonPatch _patch = new();
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Experimental("SCM0001")]
-        public ref AdditionalProperties Patch => ref _patch;
+        public ref JsonPatch Patch => ref _patch;
 
         void IJsonModel<ComputeSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
 
@@ -68,7 +68,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             OptionalProperty<string> tier = default;
             OptionalProperty<long> capacity = default;
 #pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
-            AdditionalProperties additionalProperties = new(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
+            JsonPatch jsonPatch = new(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
 #pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             foreach (var property in element.EnumerateObject())
             {
@@ -91,9 +91,9 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
                     capacity = property.Value.GetInt64();
                     continue;
                 }
-                additionalProperties.Set([.. "$."u8, .. Encoding.UTF8.GetBytes(property.Name)], property.Value.GetUtf8Bytes());
+                jsonPatch.Set([.. "$."u8, .. Encoding.UTF8.GetBytes(property.Name)], property.Value.GetUtf8Bytes());
             }
-            var model = new ComputeSku(name.Value, tier.Value, OptionalProperty.ToNullable(capacity), additionalProperties);
+            var model = new ComputeSku(name.Value, tier.Value, OptionalProperty.ToNullable(capacity), jsonPatch);
 
             return model;
         }

@@ -31,7 +31,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
 #pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
-        protected TrackedResourceData(string id, string name, string resourceType, SystemData systemData, IDictionary<string, string> tags, string location, in AdditionalProperties additionalProperties) : base(id, name, resourceType, systemData, additionalProperties)
+        protected TrackedResourceData(string id, string name, string resourceType, SystemData systemData, IDictionary<string, string> tags, string location, in JsonPatch jsonPatch) : base(id, name, resourceType, systemData, jsonPatch)
 #pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         {
             Tags = tags;

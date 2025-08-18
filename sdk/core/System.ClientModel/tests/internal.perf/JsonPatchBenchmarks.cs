@@ -8,10 +8,10 @@ using BenchmarkDotNet.Attributes;
 namespace System.ClientModel.Tests.Internal.Perf
 {
 #pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
-    public class AdditionalPropertiesBenchmarks
+    public class JsonPatchBenchmarks
     {
-        private AdditionalProperties _apMatch;
-        private AdditionalProperties _apMiss;
+        private JsonPatch _jpMatch;
+        private JsonPatch _jpMiss;
 #if NET8_0_OR_GREATER
         private string _property = "child";
 #endif
@@ -19,12 +19,12 @@ namespace System.ClientModel.Tests.Internal.Perf
         [Params(1, 5, 20, 100)]
         public int ItemsInDictionary;
 
-        public AdditionalPropertiesBenchmarks()
+        public JsonPatchBenchmarks()
         {
-            _apMatch = new AdditionalProperties();
-            _apMatch.Set("$.tags.child"u8, 0);
-            _apMiss = new AdditionalProperties();
-            _apMiss.Set("$.tags.diffChild"u8, 0);
+            _jpMatch = new JsonPatch();
+            _jpMatch.Set("$.tags.child"u8, 0);
+            _jpMiss = new JsonPatch();
+            _jpMiss.Set("$.tags.diffChild"u8, 0);
         }
 
         [Benchmark]
@@ -35,7 +35,7 @@ namespace System.ClientModel.Tests.Internal.Perf
             for (int i=0; i< ItemsInDictionary; i++)
             {
                 int length = Encoding.UTF8.GetBytes(_property.AsSpan(), buffer);
-                _apMatch.ContainsChildOf("$.tags"u8, buffer.Slice(0, length));
+                _jpMatch.ContainsChildOf("$.tags"u8, buffer.Slice(0, length));
             }
 #endif
         }
@@ -51,7 +51,7 @@ namespace System.ClientModel.Tests.Internal.Perf
             {
                 int length = span.Length;
                 length += Encoding.UTF8.GetBytes(_property.AsSpan(), buffer.Slice(length));
-                _apMatch.Contains(buffer.Slice(0, length));
+                _jpMatch.Contains(buffer.Slice(0, length));
             }
 #endif
         }

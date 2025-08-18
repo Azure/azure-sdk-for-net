@@ -16,11 +16,11 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
     public partial class ListOfAset : IJsonModel<ListOfAset>
     {
         [Experimental("SCM0001")]
-        private AdditionalProperties _patch;
+        private JsonPatch _patch;
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Experimental("SCM0001")]
-        public ref AdditionalProperties Patch => ref _patch;
+        public ref JsonPatch Patch => ref _patch;
 
         public List<AvailabilitySetData> Items { get; private set; }
 
@@ -38,7 +38,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         /// <param name="items">The list of availability set data items.</param>
         /// <param name="patch">Additional properties for patching.</param>
 #pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
-        internal ListOfAset(IList<AvailabilitySetData> items, AdditionalProperties patch)
+        internal ListOfAset(IList<AvailabilitySetData> items, JsonPatch patch)
 #pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         {
             Items = items?.ToList() ?? new();
@@ -124,7 +124,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
             List<AvailabilitySetData> items = new List<AvailabilitySetData>();
 #pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
-            AdditionalProperties additionalProperties = new(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
+            JsonPatch additionalProperties = new(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
 #pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 
             foreach (var arrayItem in element.EnumerateArray())

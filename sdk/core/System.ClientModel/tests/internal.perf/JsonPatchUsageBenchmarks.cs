@@ -11,14 +11,14 @@ using BenchmarkDotNet.Attributes;
 namespace System.ClientModel.Tests.Internal.Perf
 {
 #pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
-    public class AdditionalPropertiesUsageBenchmarks
+    public class JsonPatchUsageBenchmarks
     {
         private AvailabilitySetData _model;
         private AvailabilitySetData _modelWithPatches;
         private BinaryData _data;
         private BinaryData _dataWithPatches;
 
-        public AdditionalPropertiesUsageBenchmarks()
+        public JsonPatchUsageBenchmarks()
         {
             var json = File.ReadAllText(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName, "TestData", "AvailabilitySetData/AvailabilitySetData.json"));
             var data = BinaryData.FromString(json);

@@ -15,11 +15,11 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
     public partial class DictionaryOfAset : IJsonModel<DictionaryOfAset>
     {
         [Experimental("SCM0001")]
-        private AdditionalProperties _patch;
+        private JsonPatch _patch;
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Experimental("SCM0001")]
-        public ref AdditionalProperties Patch => ref _patch;
+        public ref JsonPatch Patch => ref _patch;
 
         public IDictionary<string, AvailabilitySetData> Items { get; private set; }
 
@@ -37,7 +37,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         /// <param name="items">The dictionary of availability set data items.</param>
         /// <param name="patch">Additional properties for patching.</param>
 #pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
-        internal DictionaryOfAset(IDictionary<string, AvailabilitySetData> items, AdditionalProperties patch)
+        internal DictionaryOfAset(IDictionary<string, AvailabilitySetData> items, JsonPatch patch)
 #pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         {
             Items = items ?? new Dictionary<string, AvailabilitySetData>();
@@ -152,7 +152,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
             Dictionary<string, AvailabilitySetData> items = new Dictionary<string, AvailabilitySetData>();
 #pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
-            AdditionalProperties additionalProperties = new(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
+            JsonPatch additionalProperties = new(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
 #pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 
             foreach (var property in element.EnumerateObject())
@@ -195,7 +195,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return aset.Patch.TryGetJson([.. "$"u8, .. GetRemainder(jsonPath, i)], out value);
         }
 
-        private bool PropagateSet(ReadOnlySpan<byte> jsonPath, AdditionalProperties.EncodedValue value)
+        private bool PropagateSet(ReadOnlySpan<byte> jsonPath, JsonPatch.EncodedValue value)
         {
             string key = jsonPath.GetFirstPropertyName(out int i);
 

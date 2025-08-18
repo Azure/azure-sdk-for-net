@@ -15,7 +15,7 @@ namespace System.ClientModel.Primitives;
 /// .
 /// </summary>
 [Experimental("SCM0001")]
-public partial struct AdditionalProperties
+public partial struct JsonPatch
 {
     /// <summary>
     /// .
@@ -44,7 +44,7 @@ public partial struct AdditionalProperties
     /// .
     /// </summary>
     /// <param name="rawJson"></param>
-    public AdditionalProperties(ReadOnlyMemory<byte> rawJson)
+    public JsonPatch(ReadOnlyMemory<byte> rawJson)
     {
         _rawJson = new(ValueKind.Json, rawJson);
     }

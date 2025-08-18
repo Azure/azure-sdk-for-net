@@ -64,11 +64,11 @@ namespace System.ClientModel.Tests.Internal.Perf
         [Benchmark]
         public void InsertItems()
         {
-            AdditionalProperties ap = new();
+            JsonPatch jp = new();
             int count = 0;
             foreach (var kvp in _jsonPaths)
             {
-                ap.Set(kvp.Key.AsSpan(), kvp.Value);
+                jp.Set(kvp.Key.AsSpan(), kvp.Value);
                 count++;
                 if (count >= Inserts)
                 {
@@ -80,11 +80,11 @@ namespace System.ClientModel.Tests.Internal.Perf
         [Benchmark]
         public void InsertItemsNoNesting()
         {
-            AdditionalProperties ap = new();
+            JsonPatch jp = new();
             int count = 0;
             foreach (var kvp in _jsonPathsNoNesting)
             {
-                ap.Set(kvp.Key.AsSpan(), kvp.Value);
+                jp.Set(kvp.Key.AsSpan(), kvp.Value);
                 count++;
                 if (count >= Inserts)
                 {
