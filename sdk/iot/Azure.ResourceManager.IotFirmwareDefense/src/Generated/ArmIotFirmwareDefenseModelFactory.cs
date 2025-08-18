@@ -139,58 +139,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CveResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="cveId"> ID of the CVE result. </param>
-        /// <param name="componentId"> ID of the affected SBOM component. </param>
-        /// <param name="componentName"> Name of the affected SBOM component. </param>
-        /// <param name="componentVersion"> Version of the affected SBOM component. </param>
-        /// <param name="severity"> Severity of the CVE. </param>
-        /// <param name="cveName"> Name of the CVE. </param>
-        /// <param name="effectiveCvssScore"> The most recent CVSS score of the CVE. </param>
-        /// <param name="effectiveCvssVersion"> The version of the effectiveCvssScore property. </param>
-        /// <param name="cvssScores"> All known CVSS scores for the CVE. </param>
-        /// <param name="links"> The list of reference links for the CVE. </param>
-        /// <param name="description"> The CVE description. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <returns> A new <see cref="Models.CveResult"/> instance for mocking. </returns>
-        public static CveResult CveResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string cveId = null, string componentId = null, string componentName = null, string componentVersion = null, string severity = null, string cveName = null, float? effectiveCvssScore = null, int? effectiveCvssVersion = null, IEnumerable<CvssScore> cvssScores = null, IEnumerable<CveLink> links = null, string description = null, FirmwareProvisioningState? provisioningState = null)
-        {
-            cvssScores ??= new List<CvssScore>();
-            links ??= new List<CveLink>();
-
-            return new CveResult(
-                id,
-                name,
-                resourceType,
-                systemData,
-                cveId,
-                componentId,
-                componentName,
-                componentVersion,
-                severity,
-                cveName,
-                effectiveCvssScore,
-                effectiveCvssVersion,
-                cvssScores?.ToList(),
-                links?.ToList(),
-                description,
-                provisioningState,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CveLink"/>. </summary>
-        /// <param name="href"> The destination of the reference link. </param>
-        /// <param name="label"> The label of the reference link. </param>
-        /// <returns> A new <see cref="Models.CveLink"/> instance for mocking. </returns>
-        public static CveLink CveLink(Uri href = null, string label = null)
-        {
-            return new CveLink(href, label, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.CryptoCertificateResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -287,6 +235,68 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 isShortKeySize,
                 provisioningState,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CveResult"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="cveId"> ID of the CVE result. </param>
+        /// <param name="componentId"> ID of the affected SBOM component. </param>
+        /// <param name="componentName"> Name of the affected SBOM component. </param>
+        /// <param name="componentVersion"> Version of the affected SBOM component. </param>
+        /// <param name="severity"> Severity of the CVE. </param>
+        /// <param name="cveName"> Name of the CVE. </param>
+        /// <param name="component"> Legacy property for what is now componentName. </param>
+        /// <param name="cvssScore"> Legacy property for the effective CVE score. </param>
+        /// <param name="cvssV2Score"> Legacy property for the CVE CVSS version 2 score, if one existed. </param>
+        /// <param name="cvssV3Score"> Legacy property for the CVE CVSS version 3 score, if one existed. </param>
+        /// <param name="cvssVersion"> Legacy property for the what CVSS version score was stored in the cvssScore property. </param>
+        /// <param name="effectiveCvssScore"> The most recent CVSS score of the CVE. </param>
+        /// <param name="effectiveCvssVersion"> The version of the effectiveCvssScore property. </param>
+        /// <param name="cvssScores"> All known CVSS scores for the CVE. </param>
+        /// <param name="links"> The list of reference links for the CVE. </param>
+        /// <param name="description"> The CVE description. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.CveResult"/> instance for mocking. </returns>
+        public static CveResult CveResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string cveId = null, string componentId = null, string componentName = null, string componentVersion = null, string severity = null, string cveName = null, CveComponent component = null, string cvssScore = null, string cvssV2Score = null, string cvssV3Score = null, string cvssVersion = null, float? effectiveCvssScore = null, int? effectiveCvssVersion = null, IEnumerable<CvssScore> cvssScores = null, IEnumerable<CveLink> links = null, string description = null, FirmwareProvisioningState? provisioningState = null)
+        {
+            cvssScores ??= new List<CvssScore>();
+            links ??= new List<CveLink>();
+
+            return new CveResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                cveId,
+                componentId,
+                componentName,
+                componentVersion,
+                severity,
+                cveName,
+                component,
+                cvssScore,
+                cvssV2Score,
+                cvssV3Score,
+                cvssVersion,
+                effectiveCvssScore,
+                effectiveCvssVersion,
+                cvssScores?.ToList(),
+                links?.ToList(),
+                description,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CveLink"/>. </summary>
+        /// <param name="href"> The destination of the reference link. </param>
+        /// <param name="label"> The label of the reference link. </param>
+        /// <returns> A new <see cref="Models.CveLink"/> instance for mocking. </returns>
+        public static CveLink CveLink(Uri href = null, string label = null)
+        {
+            return new CveLink(href, label, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PasswordHashResult"/>. </summary>
