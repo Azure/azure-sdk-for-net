@@ -131,14 +131,13 @@ namespace Azure.Storage.DataMovement.Files.Shares
             };
         }
 
-        protected override async Task CreateIfNotExistsAsync(CancellationToken cancellationToken = default)
-        {
-            await ShareDirectoryClient.CreateIfNotExistsAsync(
-                metadata: default,
-                smbProperties: default,
-                filePermission: default,
-                cancellationToken: cancellationToken).ConfigureAwait(false);
-        }
+        /// <summary>
+        /// This has been deprecated. See <see cref="CreateAsync(bool, StorageResourceContainerProperties, CancellationToken)"/>.
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        protected override Task CreateIfNotExistsAsync(CancellationToken cancellationToken = default)
+            => Task.CompletedTask;
 
         protected override StorageResourceContainer GetChildStorageResourceContainer(string path)
             => new ShareDirectoryStorageResourceContainer(ShareDirectoryClient.GetSubdirectoryClient(path), ResourceOptions);
@@ -165,27 +164,16 @@ namespace Azure.Storage.DataMovement.Files.Shares
             return ResourceProperties;
         }
 
-        protected override async Task CreateIfNotExistsAsync(
+        /// <summary>
+        /// This has been deprecated. See <see cref="CreateAsync(bool, StorageResourceContainerProperties, CancellationToken)"/>.
+        /// </summary>
+        /// <param name="sourceProperties"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        protected override Task CreateIfNotExistsAsync(
             StorageResourceContainerProperties sourceProperties,
             CancellationToken cancellationToken = default)
-        {
-            IDictionary<string, string> metadata = ResourceOptions?.GetDirectoryMetadata(sourceProperties?.RawProperties);
-            string directoryPermission = ResourceOptions?.GetDirectoryPermission(sourceProperties);
-            FileSmbProperties smbProperties = ResourceOptions?.GetFileSmbProperties(sourceProperties);
-            FilePosixProperties filePosixProperties = ResourceOptions?.GetFilePosixProperties(sourceProperties);
-
-            ShareDirectoryCreateOptions options = new ShareDirectoryCreateOptions
-            {
-                Metadata = metadata,
-                SmbProperties = smbProperties,
-                FilePermission = new() { Permission = directoryPermission },
-                PosixProperties = filePosixProperties
-            };
-
-            await ShareDirectoryClient.CreateIfNotExistsAsync(
-                options: options,
-                cancellationToken: cancellationToken).ConfigureAwait(false);
-        }
+            => Task.CompletedTask;
 
         protected override async Task CreateAsync(
             bool overwrite,
