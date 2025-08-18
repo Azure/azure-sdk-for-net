@@ -506,7 +506,7 @@ namespace Azure.Test.Perf
 
         private static void WriteResults(string path, long operationSize)
         {
-            var latencies = _latencies.Aggregate<IEnumerable<TimeSpan>>((list1, list2) => list1.Concat(list2)).Select(l => new OperationResult
+            var latencies = _latencies.SelectMany(x => x).Select(l => new OperationResult
             {
                 Time = l.TotalMilliseconds,
                 Size = operationSize,
