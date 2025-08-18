@@ -31,12 +31,162 @@ To learn more about options for Microsoft Entra Id authentication, refer to [Azu
 
 ## Key concepts
 
-Key concepts of the Azure Playwright NUnit SDK for .NET can be found [here](https://aka.ms/pww/docs/overview)
+Key concepts of the Azure Playwright SDK for .NET can be found [here](https://aka.ms/pww/docs/overview)
 
 ## Examples
 
 Code samples for using this SDK can be found in the following locations
 - [.NET Azure Playwright NUnit Library Code Samples](https://aka.ms/pww/samples)
+
+### Use with NUnit (without the Azure.Developer.Playwright.NUnit package)
+
+The core package is independent of the NUnit helper package. With NUnit, add Microsoft.Playwright and Microsoft.Playwright.NUnit, then:
+
+1) Global setup/teardown with SetUpFixture — explicit initialization
+
+```csharp
+using NUnit.Framework;
+using Azure.Developer.Playwright;
+using Azure.Identity;
+
+[SetUpFixture]
+public class PlaywrightServiceSetup
+{
+    [OneTimeSetUp]
+    public async Task SetUp()
+    {
+        var options = new PlaywrightServiceBrowserClientOptions
+        {
+            UseCloudHostedBrowsers = true
+        };
+
+        PlaywrightServiceBrowserClient.CreateInstance(new DefaultAzureCredential(), options);
+        await PlaywrightServiceBrowserClient.Instance.InitializeAsync();
+    }
+
+    [OneTimeTearDown]
+    public async Task GlobalTeardown()
+    {
+        await PlaywrightServiceBrowserClient.Instance.DisposeAsync();
+    }
+}
+```
+
+2) Global setup/teardown with SetUpFixture — implicit auto-initialization
+
+```csharp
+using NUnit.Framework;
+using Azure.Developer.Playwright;
+using Azure.Identity;
+
+[SetUpFixture]
+public class PlaywrightServiceSetup
+{
+    [OneTimeSetUp]
+    public void SetUp()
+    {
+        // First GetConnectOptions call will auto-initialize the client.
+        PlaywrightServiceBrowserClient.CreateInstance(
+            new DefaultAzureCredential(),
+            new PlaywrightServiceBrowserClientOptions { UseCloudHostedBrowsers = true });
+    }
+
+    [OneTimeTearDown]
+    public async Task GlobalTeardown()
+    {
+        await PlaywrightServiceBrowserClient.Instance.DisposeAsync();
+    }
+}
+```
+
+3) Provide cloud connection options to Playwright
+
+```csharp
+using Microsoft.Playwright;
+using Microsoft.Playwright.NUnit;
+using Azure.Developer.Playwright;
+
+public class ServicePageTest : PageTest
+{
+    public override async Task<(string, BrowserTypeConnectOptions?)?> ConnectOptionsAsync()
+    {
+        var client = PlaywrightServiceBrowserClient.Instance; // auto-initializes if not already
+        var connect = await client.GetConnectOptionsAsync<BrowserTypeConnectOptions>();
+        return (connect.WsEndpoint, connect.Options);
+    }
+}
+```
+
+Notes:
+- InitializeAsync is optional because the client auto-initialize on the first getConnectOption call.
+- Reference Microsoft.Playwright.NUnit 1.50.0 or newer.
+- If using Microsoft Entra ID, pass a TokenCredential to CreateInstance (e.g., DefaultAzureCredential).
+
+### Enable logging (optional)
+
+You can pass an ILogger via options to surface client logs. 
+
+#### NUnit-integrated logger
+
+This logger writes to both console and NUnit's TestContext panes so all messages appear in test results:
+
+```csharp
+using System;
+using Microsoft.Extensions.Logging;
+using NUnit.Framework;
+
+internal class NUnitLogger(string? category = null, LogLevel minLevel = LogLevel.Information) : ILogger
+{
+    private readonly string? _category = category;
+    private readonly LogLevel _minLevel = minLevel;
+
+    public bool IsEnabled(LogLevel logLevel) => logLevel >= _minLevel;
+    public IDisposable BeginScope<TState>(TState state) where TState : notnull => NullScope.Instance;
+    public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
+    {
+        if (!IsEnabled(logLevel)) return;
+        if (formatter == null) throw new ArgumentNullException(nameof(formatter));
+        var msg = formatter(state, exception);
+        if (exception != null) msg += "\n" + exception;
+
+        var prefix = _category ?? "AzurePlaywright";
+        
+        var writer = (logLevel == LogLevel.Error || logLevel == LogLevel.Critical) 
+            ? Console.Error : Console.Out;
+        writer.WriteLine($"{DateTime.Now:yyyy-MM-dd HH:mm:ss} [{logLevel}] {prefix}: {msg}");
+
+        try
+        {
+            string nunitLine = $"[{prefix}]: {msg}";
+            if (logLevel == LogLevel.Debug)
+                TestContext.Out.WriteLine(nunitLine);
+            else if (logLevel == LogLevel.Error || logLevel == LogLevel.Critical)
+                TestContext.Error.WriteLine(nunitLine);
+            else
+                TestContext.Progress.WriteLine(nunitLine);
+        }
+        catch
+        {
+          
+        }
+    }
+
+    private sealed class NullScope : IDisposable
+    {
+        public static readonly NullScope Instance = new();
+        public void Dispose() { }
+    }
+}
+// Usage in SetUpFixture
+ILogger logger = new NUnitLogger("AzurePlaywright");
+var options = new PlaywrightServiceBrowserClientOptions 
+{ 
+    UseCloudHostedBrowsers = true,
+    Logger = logger
+};
+PlaywrightServiceBrowserClient.CreateInstance(new DefaultAzureCredential(), options);
+```
+
 
 ## Troubleshooting
 
