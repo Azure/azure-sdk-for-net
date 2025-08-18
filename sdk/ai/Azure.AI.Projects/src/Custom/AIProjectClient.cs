@@ -97,34 +97,17 @@ namespace Azure.AI.Projects
         /// </summary>
         public override IEnumerable<ClientConnection> GetAllConnections() => _cacheManager.GetAllConnections();
 
-        /// <summary> Initializes a new instance of Connections. </summary>
-        public virtual Connections GetConnectionsClient()
-        {
-            return Volatile.Read(ref _cachedConnections) ?? Interlocked.CompareExchange(ref _cachedConnections, new Connections(Pipeline, _endpoint, _apiVersion), null) ?? _cachedConnections;
-        }
-
         /// <summary> Initializes a new instance of Datasets. </summary>
-        public virtual Datasets GetDatasetsClient()
+        public virtual DatasetsOperations GetDatasetsOperationsClient()
         {
-            return Volatile.Read(ref _cachedDatasets) ?? Interlocked.CompareExchange(ref _cachedDatasets, new Datasets(Pipeline, _endpoint, _apiVersion, _tokenCredential), null) ?? _cachedDatasets;
+            // Custom method to allow for passing of credential used when SAS is not provided.
+            return Volatile.Read(ref _cachedDatasetsOperations) ?? Interlocked.CompareExchange(ref _cachedDatasetsOperations, new DatasetsOperations(Pipeline, _endpoint, _apiVersion, _tokenProvider), null) ?? _cachedDatasetsOperations;
         }
 
-        /// <summary> Initializes a new instance of Indexes. </summary>
-        public virtual Indexes GetIndexesClient()
-        {
-            return Volatile.Read(ref _cachedIndexes) ?? Interlocked.CompareExchange(ref _cachedIndexes, new Indexes(Pipeline, _endpoint, _apiVersion), null) ?? _cachedIndexes;
-        }
-
-        /// <summary> Initializes a new instance of Deployments. </summary>
-        public virtual Deployments GetDeploymentsClient()
-        {
-            return Volatile.Read(ref _cachedDeployments) ?? Interlocked.CompareExchange(ref _cachedDeployments, new Deployments(Pipeline, _endpoint, _apiVersion), null) ?? _cachedDeployments;
-        }
-
-        public Connections Connections { get => GetConnectionsClient(); }
-        public Datasets Datasets { get => GetDatasetsClient(); }
-        public Deployments Deployments { get => GetDeploymentsClient(); }
-        public Indexes Indexes { get => GetIndexesClient(); }
+        public ConnectionsOperations Connections { get => GetConnectionsOperationsClient(); }
+        public DatasetsOperations Datasets { get => GetDatasetsOperationsClient(); }
+        public DeploymentsOperations Deployments { get => GetDeploymentsOperationsClient(); }
+        public IndexesOperations Indexes { get => GetIndexesOperationsClient(); }
         public Telemetry Telemetry { get => new Telemetry(this); }
 
         private static ClientPipeline CreatePipeline(PipelinePolicy authenticationPolicy, AIProjectClientOptions options)

@@ -46,7 +46,7 @@ FolderDatasetVersion folderDataset = projectClient.Datasets.UploadFolder(
 Console.WriteLine(folderDataset);
 
 Console.WriteLine($"Retrieving Dataset version {datasetVersion1}:");
-DatasetVersion dataset = projectClient.Datasets.Get(datasetName, datasetVersion1);
+DatasetVersion dataset = projectClient.Datasets.GetDataset(datasetName, datasetVersion1);
 Console.WriteLine(dataset.Id);
 
 Console.WriteLine($"Retrieving credentials of Dataset {datasetName} version {datasetVersion1}:");
@@ -54,14 +54,14 @@ DatasetCredential credentials = projectClient.Datasets.GetCredentials(datasetNam
 Console.WriteLine(credentials);
 
 Console.WriteLine($"Listing all versions for Dataset '{datasetName}':");
-foreach (DatasetVersion ds in projectClient.Datasets.GetVersions(datasetName))
+foreach (DatasetVersion ds in projectClient.Datasets.GetDatasetVersions(datasetName))
 {
     Console.WriteLine(ds);
     Console.WriteLine(ds.Version);
 }
 
 Console.WriteLine($"Listing latest versions for all datasets:");
-foreach (DatasetVersion ds in projectClient.Datasets.Get())
+foreach (DatasetVersion ds in projectClient.Datasets.GetDatasets())
 {
     Console.WriteLine($"{ds.Name}, {ds.Version}, {ds.Id}");
 }
@@ -105,7 +105,7 @@ FolderDatasetVersion folderDataset = await projectClient.Datasets.UploadFolderAs
 Console.WriteLine(folderDataset);
 
 Console.WriteLine($"Retrieving Dataset version {datasetVersion1}:");
-DatasetVersion dataset = await projectClient.Datasets.GetAsync(datasetName, datasetVersion1);
+DatasetVersion dataset = await projectClient.Datasets.GetDatasetAsync(datasetName, datasetVersion1);
 Console.WriteLine(dataset.Id);
 
 Console.WriteLine($"Retrieving credentials of Dataset {datasetName} version {datasetVersion1}:");
@@ -113,14 +113,14 @@ DatasetCredential credentials = await projectClient.Datasets.GetCredentialsAsync
 Console.WriteLine(credentials);
 
 Console.WriteLine($"Listing all versions for Dataset '{datasetName}':");
-await foreach (DatasetVersion ds in projectClient.Datasets.GetVersionsAsync(datasetName))
+await foreach (DatasetVersion ds in projectClient.Datasets.GetDatasetVersionsAsync(datasetName))
 {
     Console.WriteLine(ds);
     Console.WriteLine(ds.Version);
 }
 
 Console.WriteLine($"Listing latest versions for all datasets:");
-await foreach (DatasetVersion ds in projectClient.Datasets.GetAsync())
+await foreach (DatasetVersion ds in projectClient.Datasets.GetDatasetsAsync())
 {
     Console.WriteLine($"{ds.Name}, {ds.Version}, {ds.Id}");
 }

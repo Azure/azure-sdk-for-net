@@ -70,32 +70,34 @@ public class Sample_Deployment : SamplesBase<AIProjectsTestEnvironment>
         var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
         var modelPublisher = System.Environment.GetEnvironmentVariable("MODEL_PUBLISHER");
+
+        AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 #else
         var endpoint = TestEnvironment.PROJECTENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
         var modelPublisher = TestEnvironment.MODELPUBLISHER;
-#endif
 
         // Enable debugging for System.ClientModel
         EnableSystemClientModelDebugging();
 
         // Create client with debugging enabled
         AIProjectClient projectClient = CreateDebugClient(endpoint);
+#endif
 
         Console.WriteLine("List all deployments:");
-        foreach (AssetDeployment deployment in projectClient.Deployments.Get())
+        foreach (AssetDeployment deployment in projectClient.Deployments.GetDeployments())
         {
             Console.WriteLine(deployment);
         }
 
         Console.WriteLine($"List all deployments by the model publisher `{modelPublisher}`:");
-        foreach (AssetDeployment deployment in projectClient.Deployments.Get(modelPublisher: modelPublisher))
+        foreach (AssetDeployment deployment in projectClient.Deployments.GetDeployments(modelPublisher: modelPublisher))
         {
             Console.WriteLine(deployment);
         }
 
         Console.WriteLine($"Get a single model deployment named `{modelDeploymentName}`:");
-        ModelDeployment deploymentDetails = projectClient.Deployments.GetModelDeployment(modelDeploymentName);
+        ModelDeployment deploymentDetails = (ModelDeployment)projectClient.Deployments.GetDeployment(modelDeploymentName);
         Console.WriteLine(deploymentDetails);
         #endregion
     }
@@ -107,34 +109,36 @@ public class Sample_Deployment : SamplesBase<AIProjectsTestEnvironment>
         #region Snippet:AI_Projects_DeploymentExampleAsync
 #if SNIPPET
         var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("DEPLOYMENT_NAME");
+        var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
         var modelPublisher = System.Environment.GetEnvironmentVariable("MODEL_PUBLISHER");
+
+        AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 #else
         var endpoint = TestEnvironment.PROJECTENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
         var modelPublisher = TestEnvironment.MODELPUBLISHER;
-#endif
 
         // Enable debugging for System.ClientModel
         EnableSystemClientModelDebugging();
 
         // Create client with debugging enabled
         AIProjectClient projectClient = CreateDebugClient(endpoint);
+#endif
 
         Console.WriteLine("List all deployments:");
-        await foreach (AssetDeployment deployment in projectClient.Deployments.GetAsync())
+        await foreach (AssetDeployment deployment in projectClient.Deployments.GetDeploymentsAsync())
         {
             Console.WriteLine(deployment);
         }
 
         Console.WriteLine($"List all deployments by the model publisher `{modelPublisher}`:");
-        await foreach (AssetDeployment deployment in projectClient.Deployments.GetAsync(modelPublisher: modelPublisher))
+        await foreach (AssetDeployment deployment in projectClient.Deployments.GetDeploymentsAsync(modelPublisher: modelPublisher))
         {
             Console.WriteLine(deployment);
         }
 
         Console.WriteLine($"Get a single model deployment named `{modelDeploymentName}`:");
-        ModelDeployment deploymentDetails = await projectClient.Deployments.GetModelDeploymentAsync(modelDeploymentName);
+        ModelDeployment deploymentDetails = (ModelDeployment)await projectClient.Deployments.GetDeploymentAsync(modelDeploymentName);
         Console.WriteLine(deploymentDetails);
         #endregion
     }
