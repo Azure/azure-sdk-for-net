@@ -240,7 +240,7 @@ namespace Azure.Generator.Providers
 
         private ScopedApi<HttpMessage> InvokeCreateRequestForContinuationToken(ValueExpression continuationToken)
         {
-            var arguments = RequestFields.Select(f => f == NextTokenField ? continuationToken : f.AsValueExpression);
+            var arguments = RequestFields.Select(f => f.Name.Equals(NextTokenField?.Name) ? continuationToken : f.AsValueExpression);
 
             return ClientField.Invoke(CreateRequestMethodName, arguments).As<HttpMessage>();
         }
