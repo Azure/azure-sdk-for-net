@@ -81,6 +81,10 @@ namespace Azure.AI.Projects
         /// <param name="value"> The value. </param>
         public static implicit operator ConnectionType(string value) => new ConnectionType(value);
 
+        /// <summary> Converts a string to a <see cref="ConnectionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConnectionType?(string value) => value == null ? null : new ConnectionType(value);
+
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConnectionType other && Equals(other);

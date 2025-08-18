@@ -35,12 +35,12 @@ namespace Azure.AI.Projects
             {
                 throw new FormatException($"The model {nameof(BlobReference)} does not support writing '{format}' format.");
             }
+            writer.WritePropertyName("blobUri"u8);
+            writer.WriteStringValue(BlobUri.AbsoluteUri);
             writer.WritePropertyName("storageAccountArmId"u8);
             writer.WriteStringValue(StorageAccountArmId);
             writer.WritePropertyName("credential"u8);
             writer.WriteObjectValue(Credential, options);
-            writer.WritePropertyName("blobUri"u8);
-            writer.WriteStringValue(BlobUri.AbsoluteUri);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -83,12 +83,17 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
+            Uri blobUri = default;
             string storageAccountArmId = default;
             BlobReferenceSasCredential credential = default;
-            Uri blobUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("blobUri"u8))
+                {
+                    blobUri = new Uri(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("storageAccountArmId"u8))
                 {
                     storageAccountArmId = prop.Value.GetString();
@@ -99,17 +104,12 @@ namespace Azure.AI.Projects
                     credential = BlobReferenceSasCredential.DeserializeBlobReferenceSasCredential(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("blobUri"u8))
-                {
-                    blobUri = new Uri(prop.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BlobReference(storageAccountArmId, credential, blobUri, additionalBinaryDataProperties);
+            return new BlobReference(blobUri, storageAccountArmId, credential, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

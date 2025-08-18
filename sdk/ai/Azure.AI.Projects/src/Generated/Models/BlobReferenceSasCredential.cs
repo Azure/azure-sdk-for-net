@@ -19,13 +19,13 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobReferenceSasCredential"/>. </summary>
-        /// <param name="type"> Type of credential. </param>
         /// <param name="sasUri"></param>
+        /// <param name="type"> Type of credential. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobReferenceSasCredential(string @type, Uri sasUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BlobReferenceSasCredential(Uri sasUri, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
             SasUri = sasUri;
+            Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

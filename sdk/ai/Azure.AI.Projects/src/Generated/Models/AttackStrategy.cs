@@ -156,6 +156,10 @@ namespace Azure.AI.Projects
         /// <param name="value"> The value. </param>
         public static implicit operator AttackStrategy(string value) => new AttackStrategy(value);
 
+        /// <summary> Converts a string to a <see cref="AttackStrategy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AttackStrategy?(string value) => value == null ? null : new AttackStrategy(value);
+
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AttackStrategy other && Equals(other);

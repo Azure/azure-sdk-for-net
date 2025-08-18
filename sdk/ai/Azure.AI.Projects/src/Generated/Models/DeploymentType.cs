@@ -41,6 +41,10 @@ namespace Azure.AI.Projects
         /// <param name="value"> The value. </param>
         public static implicit operator DeploymentType(string value) => new DeploymentType(value);
 
+        /// <summary> Converts a string to a <see cref="DeploymentType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DeploymentType?(string value) => value == null ? null : new DeploymentType(value);
+
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DeploymentType other && Equals(other);

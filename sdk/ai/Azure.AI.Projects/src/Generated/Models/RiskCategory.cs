@@ -56,6 +56,10 @@ namespace Azure.AI.Projects
         /// <param name="value"> The value. </param>
         public static implicit operator RiskCategory(string value) => new RiskCategory(value);
 
+        /// <summary> Converts a string to a <see cref="RiskCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RiskCategory?(string value) => value == null ? null : new RiskCategory(value);
+
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RiskCategory other && Equals(other);

@@ -10,17 +10,17 @@ using Azure.Core.Foundations;
 
 namespace Azure.AI.Projects
 {
-    internal partial class EvaluationsGetAsyncCollectionResult : AsyncCollectionResult
+    internal partial class EvaluationsGetAllAsyncCollectionResult : AsyncCollectionResult
     {
         private readonly Evaluations _client;
         private readonly string _clientRequestId;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of EvaluationsGetAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of EvaluationsGetAllAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Evaluations client used to send requests. </param>
         /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public EvaluationsGetAsyncCollectionResult(Evaluations client, string clientRequestId, RequestOptions options)
+        public EvaluationsGetAllAsyncCollectionResult(Evaluations client, string clientRequestId, RequestOptions options)
         {
             _client = client;
             _clientRequestId = clientRequestId;
@@ -31,7 +31,7 @@ namespace Azure.AI.Projects
         /// <returns> The raw pages of the collection. </returns>
         public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
         {
-            PipelineMessage message = _client.CreateGetRequest(_clientRequestId, _options);
+            PipelineMessage message = _client.CreateGetAllRequest(_clientRequestId, _options);
             Uri nextPageUri = null;
             while (true)
             {
@@ -43,7 +43,7 @@ namespace Azure.AI.Projects
                 {
                     yield break;
                 }
-                message = _client.CreateNextGetRequest(nextPageUri, _clientRequestId, _options);
+                message = _client.CreateNextGetAllRequest(nextPageUri, _clientRequestId, _options);
             }
         }
 

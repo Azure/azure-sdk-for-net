@@ -61,6 +61,10 @@ namespace Azure.AI.Projects
         /// <param name="value"> The value. </param>
         public static implicit operator CredentialType(string value) => new CredentialType(value);
 
+        /// <summary> Converts a string to a <see cref="CredentialType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CredentialType?(string value) => value == null ? null : new CredentialType(value);
+
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CredentialType other && Equals(other);

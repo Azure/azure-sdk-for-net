@@ -123,9 +123,9 @@ namespace Azure.AI.Projects
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual CollectionResult Get(string clientRequestId, RequestOptions options)
+        public virtual CollectionResult GetAll(string clientRequestId, RequestOptions options)
         {
-            return new RedTeamsGetCollectionResult(this, clientRequestId, options);
+            return new RedTeamsGetAllCollectionResult(this, clientRequestId, options);
         }
 
         /// <summary>
@@ -140,27 +140,27 @@ namespace Azure.AI.Projects
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncCollectionResult GetAsync(string clientRequestId, RequestOptions options)
+        public virtual AsyncCollectionResult GetAllAsync(string clientRequestId, RequestOptions options)
         {
-            return new RedTeamsGetAsyncCollectionResult(this, clientRequestId, options);
+            return new RedTeamsGetAllAsyncCollectionResult(this, clientRequestId, options);
         }
 
         /// <summary> List a redteam by name. </summary>
         /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<RedTeam> Get(string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual CollectionResult<RedTeam> GetAll(string clientRequestId = default, CancellationToken cancellationToken = default)
         {
-            return new RedTeamsGetCollectionResultOfT(this, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return new RedTeamsGetAllCollectionResultOfT(this, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary> List a redteam by name. </summary>
         /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<RedTeam> GetAsync(string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual AsyncCollectionResult<RedTeam> GetAllAsync(string clientRequestId = default, CancellationToken cancellationToken = default)
         {
-            return new RedTeamsGetAsyncCollectionResultOfT(this, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return new RedTeamsGetAllAsyncCollectionResultOfT(this, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary>

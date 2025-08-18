@@ -39,7 +39,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateGetRequest(string clientRequestId, RequestOptions options)
+        internal PipelineMessage CreateGetAllRequest(string clientRequestId, RequestOptions options)
         {
             PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -59,7 +59,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateNextGetRequest(Uri nextPage, string clientRequestId, RequestOptions options)
+        internal PipelineMessage CreateNextGetAllRequest(Uri nextPage, string clientRequestId, RequestOptions options)
         {
             PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;

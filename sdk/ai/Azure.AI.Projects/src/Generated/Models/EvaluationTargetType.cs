@@ -41,6 +41,10 @@ namespace Azure.AI.Projects
         /// <param name="value"> The value. </param>
         public static implicit operator EvaluationTargetType(string value) => new EvaluationTargetType(value);
 
+        /// <summary> Converts a string to a <see cref="EvaluationTargetType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EvaluationTargetType?(string value) => value == null ? null : new EvaluationTargetType(value);
+
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EvaluationTargetType other && Equals(other);

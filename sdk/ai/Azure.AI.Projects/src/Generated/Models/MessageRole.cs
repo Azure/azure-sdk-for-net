@@ -52,6 +52,10 @@ namespace Azure.AI.Projects
         /// <param name="value"> The value. </param>
         public static implicit operator MessageRole(string value) => new MessageRole(value);
 
+        /// <summary> Converts a string to a <see cref="MessageRole"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MessageRole?(string value) => value == null ? null : new MessageRole(value);
+
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MessageRole other && Equals(other);

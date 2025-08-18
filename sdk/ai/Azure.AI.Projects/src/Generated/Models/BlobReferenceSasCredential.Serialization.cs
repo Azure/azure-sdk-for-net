@@ -32,13 +32,13 @@ namespace Azure.AI.Projects
             }
             if (options.Format != "W")
             {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WritePropertyName("sasUri"u8);
+                writer.WriteStringValue(SasUri.AbsoluteUri);
             }
             if (options.Format != "W")
             {
-                writer.WritePropertyName("sasUri"u8);
-                writer.WriteStringValue(SasUri.AbsoluteUri);
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -82,19 +82,19 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            string @type = default;
             Uri sasUri = default;
+            string @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("sasUri"u8))
                 {
                     sasUri = new Uri(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -102,7 +102,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BlobReferenceSasCredential(@type, sasUri, additionalBinaryDataProperties);
+            return new BlobReferenceSasCredential(sasUri, @type, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

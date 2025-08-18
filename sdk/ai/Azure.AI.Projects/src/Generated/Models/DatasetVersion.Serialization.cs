@@ -39,6 +39,8 @@ namespace Azure.AI.Projects
             {
                 throw new FormatException($"The model {nameof(DatasetVersion)} does not support writing '{format}' format.");
             }
+            writer.WritePropertyName("dataUri"u8);
+            writer.WriteStringValue(DataUri.AbsoluteUri);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             if (options.Format != "W" && Optional.IsDefined(IsReference))
@@ -87,8 +89,6 @@ namespace Azure.AI.Projects
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("dataUri"u8);
-            writer.WriteStringValue(DataUri.AbsoluteUri);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

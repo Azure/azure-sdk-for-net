@@ -123,9 +123,9 @@ namespace Azure.AI.Projects
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual CollectionResult Get(string clientRequestId, RequestOptions options)
+        public virtual CollectionResult GetAll(string clientRequestId, RequestOptions options)
         {
-            return new EvaluationsGetCollectionResult(this, clientRequestId, options);
+            return new EvaluationsGetAllCollectionResult(this, clientRequestId, options);
         }
 
         /// <summary>
@@ -140,27 +140,27 @@ namespace Azure.AI.Projects
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncCollectionResult GetAsync(string clientRequestId, RequestOptions options)
+        public virtual AsyncCollectionResult GetAllAsync(string clientRequestId, RequestOptions options)
         {
-            return new EvaluationsGetAsyncCollectionResult(this, clientRequestId, options);
+            return new EvaluationsGetAllAsyncCollectionResult(this, clientRequestId, options);
         }
 
         /// <summary> List evaluation runs. </summary>
         /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<Evaluation> Get(string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual CollectionResult<Evaluation> GetAll(string clientRequestId = default, CancellationToken cancellationToken = default)
         {
-            return new EvaluationsGetCollectionResultOfT(this, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return new EvaluationsGetAllCollectionResultOfT(this, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary> List evaluation runs. </summary>
         /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<Evaluation> GetAsync(string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual AsyncCollectionResult<Evaluation> GetAllAsync(string clientRequestId = default, CancellationToken cancellationToken = default)
         {
-            return new EvaluationsGetAsyncCollectionResultOfT(this, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return new EvaluationsGetAllAsyncCollectionResultOfT(this, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary>

@@ -6,21 +6,22 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure.Core.Foundations;
 
 namespace Azure.AI.Projects
 {
-    internal partial class RedTeamsGetCollectionResultOfT : CollectionResult<RedTeam>
+    internal partial class EvaluationsGetAllAsyncCollectionResultOfT : AsyncCollectionResult<Evaluation>
     {
-        private readonly RedTeams _client;
+        private readonly Evaluations _client;
         private readonly string _clientRequestId;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of RedTeamsGetCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The RedTeams client used to send requests. </param>
+        /// <summary> Initializes a new instance of EvaluationsGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The Evaluations client used to send requests. </param>
         /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public RedTeamsGetCollectionResultOfT(RedTeams client, string clientRequestId, RequestOptions options)
+        public EvaluationsGetAllAsyncCollectionResultOfT(Evaluations client, string clientRequestId, RequestOptions options)
         {
             _client = client;
             _clientRequestId = clientRequestId;
@@ -29,21 +30,21 @@ namespace Azure.AI.Projects
 
         /// <summary> Gets the raw pages of the collection. </summary>
         /// <returns> The raw pages of the collection. </returns>
-        public override IEnumerable<ClientResult> GetRawPages()
+        public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
         {
-            PipelineMessage message = _client.CreateGetRequest(_clientRequestId, _options);
+            PipelineMessage message = _client.CreateGetAllRequest(_clientRequestId, _options);
             Uri nextPageUri = null;
             while (true)
             {
-                ClientResult result = ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
+                ClientResult result = ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
                 yield return result;
 
-                nextPageUri = ((PagedRedTeam)result).NextLink;
+                nextPageUri = ((PagedEvaluation)result).NextLink;
                 if (nextPageUri == null)
                 {
                     yield break;
                 }
-                message = _client.CreateNextGetRequest(nextPageUri, _clientRequestId, _options);
+                message = _client.CreateNextGetAllRequest(nextPageUri, _clientRequestId, _options);
             }
         }
 
@@ -52,7 +53,7 @@ namespace Azure.AI.Projects
         /// <returns> The continuation token for the specified page. </returns>
         public override ContinuationToken GetContinuationToken(ClientResult page)
         {
-            Uri nextPage = ((PagedRedTeam)page).NextLink;
+            Uri nextPage = ((PagedEvaluation)page).NextLink;
             if (nextPage != null)
             {
                 return ContinuationToken.FromBytes(BinaryData.FromString(nextPage.AbsoluteUri));
@@ -66,9 +67,13 @@ namespace Azure.AI.Projects
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
-        protected override IEnumerable<RedTeam> GetValuesFromPage(ClientResult page)
+        protected override async IAsyncEnumerable<Evaluation> GetValuesFromPageAsync(ClientResult page)
         {
-            return ((PagedRedTeam)page).Value;
+            foreach (Evaluation item in ((PagedEvaluation)page).Value)
+            {
+                yield return item;
+                await Task.Yield();
+            }
         }
     }
 }

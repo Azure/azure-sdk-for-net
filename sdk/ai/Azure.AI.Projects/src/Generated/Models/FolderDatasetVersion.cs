@@ -13,13 +13,14 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="FolderDatasetVersion"/>. </summary>
         /// <param name="dataUri"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataUri"/> is null. </exception>
-        public FolderDatasetVersion(Uri dataUri) : base(DatasetType.UriFolder, dataUri)
+        public FolderDatasetVersion(Uri dataUri) : base(dataUri, DatasetType.UriFolder)
         {
             Argument.AssertNotNull(dataUri, nameof(dataUri));
 
         }
 
         /// <summary> Initializes a new instance of <see cref="FolderDatasetVersion"/>. </summary>
+        /// <param name="dataUri"></param>
         /// <param name="type"> Dataset type. </param>
         /// <param name="isReference"> Indicates if the dataset holds a reference to the storage, or the dataset manages storage itself. If true, the underlying data will not be deleted when the dataset version is deleted. </param>
         /// <param name="connectionName"> The Azure Storage Account connection name. Required if startPendingUploadVersion was not called before creating the Dataset. </param>
@@ -28,9 +29,8 @@ namespace Azure.AI.Projects
         /// <param name="version"> The version of the resource. </param>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="dataUri"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FolderDatasetVersion(DatasetType @type, bool? isReference, string connectionName, string id, string name, string version, string description, IDictionary<string, string> tags, Uri dataUri, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, isReference, connectionName, id, name, version, description, tags, dataUri, additionalBinaryDataProperties)
+        internal FolderDatasetVersion(Uri dataUri, DatasetType @type, bool? isReference, string connectionName, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(dataUri, @type, isReference, connectionName, id, name, version, description, tags, additionalBinaryDataProperties)
         {
         }
     }

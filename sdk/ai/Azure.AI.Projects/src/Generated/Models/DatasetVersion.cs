@@ -17,16 +17,17 @@ namespace Azure.AI.Projects
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DatasetVersion"/>. </summary>
-        /// <param name="type"> Dataset type. </param>
         /// <param name="dataUri"></param>
-        private protected DatasetVersion(DatasetType @type, Uri dataUri)
+        /// <param name="type"> Dataset type. </param>
+        private protected DatasetVersion(Uri dataUri, DatasetType @type)
         {
+            DataUri = dataUri;
             Type = @type;
             Tags = new ChangeTrackingDictionary<string, string>();
-            DataUri = dataUri;
         }
 
         /// <summary> Initializes a new instance of <see cref="DatasetVersion"/>. </summary>
+        /// <param name="dataUri"></param>
         /// <param name="type"> Dataset type. </param>
         /// <param name="isReference"> Indicates if the dataset holds a reference to the storage, or the dataset manages storage itself. If true, the underlying data will not be deleted when the dataset version is deleted. </param>
         /// <param name="connectionName"> The Azure Storage Account connection name. Required if startPendingUploadVersion was not called before creating the Dataset. </param>
@@ -35,10 +36,10 @@ namespace Azure.AI.Projects
         /// <param name="version"> The version of the resource. </param>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="dataUri"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatasetVersion(DatasetType @type, bool? isReference, string connectionName, string id, string name, string version, string description, IDictionary<string, string> tags, Uri dataUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatasetVersion(Uri dataUri, DatasetType @type, bool? isReference, string connectionName, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            DataUri = dataUri;
             Type = @type;
             IsReference = isReference;
             ConnectionName = connectionName;
@@ -47,7 +48,6 @@ namespace Azure.AI.Projects
             Version = version;
             Description = description;
             Tags = tags;
-            DataUri = dataUri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

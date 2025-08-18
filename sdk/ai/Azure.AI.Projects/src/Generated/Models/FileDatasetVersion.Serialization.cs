@@ -63,6 +63,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
+            Uri dataUri = default;
             DatasetType @type = default;
             bool? isReference = default;
             string connectionName = default;
@@ -71,10 +72,14 @@ namespace Azure.AI.Projects
             string version = default;
             string description = default;
             IDictionary<string, string> tags = default;
-            Uri dataUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("dataUri"u8))
+                {
+                    dataUri = new Uri(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new DatasetType(prop.Value.GetString());
@@ -135,17 +140,13 @@ namespace Azure.AI.Projects
                     tags = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("dataUri"u8))
-                {
-                    dataUri = new Uri(prop.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new FileDatasetVersion(
+                dataUri,
                 @type,
                 isReference,
                 connectionName,
@@ -154,7 +155,6 @@ namespace Azure.AI.Projects
                 version,
                 description,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                dataUri,
                 additionalBinaryDataProperties);
         }
 

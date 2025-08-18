@@ -11,7 +11,7 @@ namespace Azure.AI.Projects
     public partial class AzureOpenAIModelConfiguration : TargetConfig
     {
         /// <summary> Initializes a new instance of <see cref="AzureOpenAIModelConfiguration"/>. </summary>
-        /// <param name="modelDeploymentName"> Deployment name for AOAI model. Example: gpt-4o if in AIServices or connection based `connection_name/deployment_name` (i.e. `my-aoai-connection/gpt-4o`. </param>
+        /// <param name="modelDeploymentName"> Deployment name for AOAI model. Example: gpt-4o if in AIServices or connection based `connection_name/deployment_name` (e.g. `my-aoai-connection/gpt-4o`). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelDeploymentName"/> is null. </exception>
         public AzureOpenAIModelConfiguration(string modelDeploymentName) : base("AzureOpenAIModel")
         {
@@ -23,13 +23,13 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="AzureOpenAIModelConfiguration"/>. </summary>
         /// <param name="type"> Type of the model configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="modelDeploymentName"> Deployment name for AOAI model. Example: gpt-4o if in AIServices or connection based `connection_name/deployment_name` (i.e. `my-aoai-connection/gpt-4o`. </param>
+        /// <param name="modelDeploymentName"> Deployment name for AOAI model. Example: gpt-4o if in AIServices or connection based `connection_name/deployment_name` (e.g. `my-aoai-connection/gpt-4o`). </param>
         internal AzureOpenAIModelConfiguration(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string modelDeploymentName) : base(@type, additionalBinaryDataProperties)
         {
             ModelDeploymentName = modelDeploymentName;
         }
 
-        /// <summary> Deployment name for AOAI model. Example: gpt-4o if in AIServices or connection based `connection_name/deployment_name` (i.e. `my-aoai-connection/gpt-4o`. </summary>
+        /// <summary> Deployment name for AOAI model. Example: gpt-4o if in AIServices or connection based `connection_name/deployment_name` (e.g. `my-aoai-connection/gpt-4o`). </summary>
         public string ModelDeploymentName { get; set; }
     }
 }

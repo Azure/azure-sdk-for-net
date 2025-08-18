@@ -51,6 +51,10 @@ namespace Azure.AI.Projects
         /// <param name="value"> The value. </param>
         public static implicit operator IndexType(string value) => new IndexType(value);
 
+        /// <summary> Converts a string to a <see cref="IndexType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IndexType?(string value) => value == null ? null : new IndexType(value);
+
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IndexType other && Equals(other);

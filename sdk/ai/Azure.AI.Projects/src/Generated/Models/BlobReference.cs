@@ -14,26 +14,26 @@ namespace Azure.AI.Projects
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BlobReference"/>. </summary>
+        /// <param name="blobUri"></param>
         /// <param name="storageAccountArmId"> ARM ID of the storage account to use. </param>
         /// <param name="credential"> Credential info to access the storage account. </param>
-        /// <param name="blobUri"></param>
-        internal BlobReference(string storageAccountArmId, BlobReferenceSasCredential credential, Uri blobUri)
+        internal BlobReference(Uri blobUri, string storageAccountArmId, BlobReferenceSasCredential credential)
         {
+            BlobUri = blobUri;
             StorageAccountArmId = storageAccountArmId;
             Credential = credential;
-            BlobUri = blobUri;
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobReference"/>. </summary>
+        /// <param name="blobUri"></param>
         /// <param name="storageAccountArmId"> ARM ID of the storage account to use. </param>
         /// <param name="credential"> Credential info to access the storage account. </param>
-        /// <param name="blobUri"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobReference(string storageAccountArmId, BlobReferenceSasCredential credential, Uri blobUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BlobReference(Uri blobUri, string storageAccountArmId, BlobReferenceSasCredential credential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            BlobUri = blobUri;
             StorageAccountArmId = storageAccountArmId;
             Credential = credential;
-            BlobUri = blobUri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

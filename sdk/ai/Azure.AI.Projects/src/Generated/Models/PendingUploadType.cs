@@ -46,6 +46,10 @@ namespace Azure.AI.Projects
         /// <param name="value"> The value. </param>
         public static implicit operator PendingUploadType(string value) => new PendingUploadType(value);
 
+        /// <summary> Converts a string to a <see cref="PendingUploadType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PendingUploadType?(string value) => value == null ? null : new PendingUploadType(value);
+
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PendingUploadType other && Equals(other);

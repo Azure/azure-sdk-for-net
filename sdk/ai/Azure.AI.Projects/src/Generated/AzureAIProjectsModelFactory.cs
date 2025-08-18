@@ -171,7 +171,7 @@ namespace Azure.AI.Projects
             baseMessages ??= new ChangeTrackingList<Message>();
             modelParams ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new ModelResponseGenerationTarget(EvaluationTargetType.ModelResponseGeneration, additionalBinaryDataProperties: null, baseMessages?.ToList(), modelDeploymentName, modelParams);
+            return new ModelResponseGenerationTarget(EvaluationTargetType.ModelResponseGeneration, additionalBinaryDataProperties: null, baseMessages.ToList(), modelDeploymentName, modelParams);
         }
 
         /// <summary>
@@ -267,7 +267,7 @@ namespace Azure.AI.Projects
         {
             result ??= new ChangeTrackingList<AgentEvaluationResult>();
 
-            return new AgentEvaluation(id, status, error, result?.ToList(), additionalBinaryDataProperties: null);
+            return new AgentEvaluation(id, status, error, result.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Result for the agent evaluation evaluator run. </summary>
@@ -304,6 +304,7 @@ namespace Azure.AI.Projects
         /// DatasetVersion Definition
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FileDatasetVersion"/> and <see cref="FolderDatasetVersion"/>.
         /// </summary>
+        /// <param name="dataUri"></param>
         /// <param name="type"> Dataset type. </param>
         /// <param name="isReference"> Indicates if the dataset holds a reference to the storage, or the dataset manages storage itself. If true, the underlying data will not be deleted when the dataset version is deleted. </param>
         /// <param name="connectionName"> The Azure Storage Account connection name. Required if startPendingUploadVersion was not called before creating the Dataset. </param>
@@ -312,13 +313,13 @@ namespace Azure.AI.Projects
         /// <param name="version"> The version of the resource. </param>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="dataUri"></param>
         /// <returns> A new <see cref="Projects.DatasetVersion"/> instance for mocking. </returns>
-        public static DatasetVersion DatasetVersion(string @type = default, bool? isReference = default, string connectionName = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default, Uri dataUri = default)
+        public static DatasetVersion DatasetVersion(Uri dataUri = default, string @type = default, bool? isReference = default, string connectionName = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new UnknownDatasetVersion(
+                dataUri,
                 new DatasetType(@type),
                 isReference,
                 connectionName,
@@ -327,11 +328,11 @@ namespace Azure.AI.Projects
                 version,
                 description,
                 tags,
-                dataUri,
                 additionalBinaryDataProperties: null);
         }
 
         /// <summary> FileDatasetVersion Definition. </summary>
+        /// <param name="dataUri"></param>
         /// <param name="isReference"> Indicates if the dataset holds a reference to the storage, or the dataset manages storage itself. If true, the underlying data will not be deleted when the dataset version is deleted. </param>
         /// <param name="connectionName"> The Azure Storage Account connection name. Required if startPendingUploadVersion was not called before creating the Dataset. </param>
         /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
@@ -339,13 +340,13 @@ namespace Azure.AI.Projects
         /// <param name="version"> The version of the resource. </param>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="dataUri"></param>
         /// <returns> A new <see cref="Projects.FileDatasetVersion"/> instance for mocking. </returns>
-        public static FileDatasetVersion FileDatasetVersion(bool? isReference = default, string connectionName = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default, Uri dataUri = default)
+        public static FileDatasetVersion FileDatasetVersion(Uri dataUri = default, bool? isReference = default, string connectionName = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new FileDatasetVersion(
+                dataUri,
                 DatasetType.UriFile,
                 isReference,
                 connectionName,
@@ -354,11 +355,11 @@ namespace Azure.AI.Projects
                 version,
                 description,
                 tags,
-                dataUri,
                 additionalBinaryDataProperties: null);
         }
 
         /// <summary> FileDatasetVersion Definition. </summary>
+        /// <param name="dataUri"></param>
         /// <param name="isReference"> Indicates if the dataset holds a reference to the storage, or the dataset manages storage itself. If true, the underlying data will not be deleted when the dataset version is deleted. </param>
         /// <param name="connectionName"> The Azure Storage Account connection name. Required if startPendingUploadVersion was not called before creating the Dataset. </param>
         /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
@@ -366,13 +367,13 @@ namespace Azure.AI.Projects
         /// <param name="version"> The version of the resource. </param>
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="dataUri"></param>
         /// <returns> A new <see cref="Projects.FolderDatasetVersion"/> instance for mocking. </returns>
-        public static FolderDatasetVersion FolderDatasetVersion(bool? isReference = default, string connectionName = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default, Uri dataUri = default)
+        public static FolderDatasetVersion FolderDatasetVersion(Uri dataUri = default, bool? isReference = default, string connectionName = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new FolderDatasetVersion(
+                dataUri,
                 DatasetType.UriFolder,
                 isReference,
                 connectionName,
@@ -381,7 +382,6 @@ namespace Azure.AI.Projects
                 version,
                 description,
                 tags,
-                dataUri,
                 additionalBinaryDataProperties: null);
         }
 
@@ -407,22 +407,22 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Blob reference details. </summary>
+        /// <param name="blobUri"></param>
         /// <param name="storageAccountArmId"> ARM ID of the storage account to use. </param>
         /// <param name="credential"> Credential info to access the storage account. </param>
-        /// <param name="blobUri"></param>
         /// <returns> A new <see cref="Projects.BlobReference"/> instance for mocking. </returns>
-        public static BlobReference BlobReference(string storageAccountArmId = default, BlobReferenceSasCredential credential = default, Uri blobUri = default)
+        public static BlobReference BlobReference(Uri blobUri = default, string storageAccountArmId = default, BlobReferenceSasCredential credential = default)
         {
-            return new BlobReference(storageAccountArmId, credential, blobUri, additionalBinaryDataProperties: null);
+            return new BlobReference(blobUri, storageAccountArmId, credential, additionalBinaryDataProperties: null);
         }
 
         /// <summary> SAS Credential definition. </summary>
-        /// <param name="type"> Type of credential. </param>
         /// <param name="sasUri"></param>
+        /// <param name="type"> Type of credential. </param>
         /// <returns> A new <see cref="Projects.BlobReferenceSasCredential"/> instance for mocking. </returns>
-        public static BlobReferenceSasCredential BlobReferenceSasCredential(string @type = default, Uri sasUri = default)
+        public static BlobReferenceSasCredential BlobReferenceSasCredential(Uri sasUri = default, string @type = default)
         {
-            return new BlobReferenceSasCredential(@type, sasUri, additionalBinaryDataProperties: null);
+            return new BlobReferenceSasCredential(sasUri, @type, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents a reference to a blob for consumption. </summary>
@@ -500,12 +500,12 @@ namespace Azure.AI.Projects
             metadataFields ??= new ChangeTrackingList<string>();
 
             return new FieldMapping(
-                contentFields?.ToList(),
+                contentFields.ToList(),
                 filepathField,
                 titleField,
                 urlField,
-                vectorFields?.ToList(),
-                metadataFields?.ToList(),
+                vectorFields.ToList(),
+                metadataFields.ToList(),
                 additionalBinaryDataProperties: null);
         }
 
@@ -651,9 +651,9 @@ namespace Azure.AI.Projects
                 name,
                 displayName,
                 numTurns,
-                attackStrategies?.ToList(),
+                attackStrategies.ToList(),
                 simulationOnly,
-                riskCategories?.ToList(),
+                riskCategories.ToList(),
                 applicationScenario,
                 tags,
                 properties,
@@ -674,7 +674,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Azure OpenAI model configuration. The API version would be selected by the service for querying the model. </summary>
-        /// <param name="modelDeploymentName"> Deployment name for AOAI model. Example: gpt-4o if in AIServices or connection based `connection_name/deployment_name` (i.e. `my-aoai-connection/gpt-4o`. </param>
+        /// <param name="modelDeploymentName"> Deployment name for AOAI model. Example: gpt-4o if in AIServices or connection based `connection_name/deployment_name` (e.g. `my-aoai-connection/gpt-4o`). </param>
         /// <returns> A new <see cref="Projects.AzureOpenAIModelConfiguration"/> instance for mocking. </returns>
         public static AzureOpenAIModelConfiguration AzureOpenAIModelConfiguration(string modelDeploymentName = default)
         {
