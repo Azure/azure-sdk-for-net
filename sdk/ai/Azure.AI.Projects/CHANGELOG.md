@@ -2,6 +2,9 @@
 
 ## 1.0.0-beta.11 (Unreleased)
 
+### Features Added
+* Added a constructor for `AIProjectClient` which takes a `System.ClientModel.AuthenticationTokenProvider` object for authentication. We will be switching away from `Azure.Core.TokenCredential` with the upcoming stable release.
+
 ### Breaking Changes
 * Class changes:
   * `AIDeployment` has been renamed `AssetDeployment`
