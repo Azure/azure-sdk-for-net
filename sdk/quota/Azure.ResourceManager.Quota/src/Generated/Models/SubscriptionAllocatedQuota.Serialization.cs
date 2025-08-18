@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -111,59 +110,6 @@ namespace Azure.ResourceManager.Quota.Models
             return new SubscriptionAllocatedQuota(subscriptionId, quotaAllocated, serializedAdditionalRawData);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubscriptionId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  subscriptionId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SubscriptionId))
-                {
-                    builder.Append("  subscriptionId: ");
-                    if (SubscriptionId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SubscriptionId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SubscriptionId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QuotaAllocated), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  quotaAllocated: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(QuotaAllocated))
-                {
-                    builder.Append("  quotaAllocated: ");
-                    builder.AppendLine($"'{QuotaAllocated.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<SubscriptionAllocatedQuota>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionAllocatedQuota>)this).GetFormatFromOptions(options) : options.Format;
@@ -172,8 +118,6 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerQuotaContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SubscriptionAllocatedQuota)} does not support writing '{options.Format}' format.");
             }

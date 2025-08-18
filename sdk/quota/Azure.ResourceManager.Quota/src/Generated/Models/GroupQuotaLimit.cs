@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Group Quota properties for the specified resource. </summary>
-        [WirePath("properties")]
         public GroupQuotaLimitProperties Properties { get; set; }
     }
 }

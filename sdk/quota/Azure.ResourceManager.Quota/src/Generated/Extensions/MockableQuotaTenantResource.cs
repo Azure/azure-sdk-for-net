@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         }
 
         /// <summary>
-        /// List all the operations supported by the Microsoft.Quota resource provider.
+        /// List the operations for the provider
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -62,12 +62,11 @@ namespace Azure.ResourceManager.Quota.Mocking
         public virtual AsyncPageable<QuotaOperationResult> GetQuotaOperationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => QuotaOperationRestClient.CreateListRequest();
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuotaOperationRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => QuotaOperationResult.DeserializeQuotaOperationResult(e), QuotaOperationClientDiagnostics, Pipeline, "MockableQuotaTenantResource.GetQuotaOperations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => QuotaOperationResult.DeserializeQuotaOperationResult(e), QuotaOperationClientDiagnostics, Pipeline, "MockableQuotaTenantResource.GetQuotaOperations", "value", null, cancellationToken);
         }
 
         /// <summary>
-        /// List all the operations supported by the Microsoft.Quota resource provider.
+        /// List the operations for the provider
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2025-07-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -88,8 +87,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         public virtual Pageable<QuotaOperationResult> GetQuotaOperations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => QuotaOperationRestClient.CreateListRequest();
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuotaOperationRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => QuotaOperationResult.DeserializeQuotaOperationResult(e), QuotaOperationClientDiagnostics, Pipeline, "MockableQuotaTenantResource.GetQuotaOperations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => QuotaOperationResult.DeserializeQuotaOperationResult(e), QuotaOperationClientDiagnostics, Pipeline, "MockableQuotaTenantResource.GetQuotaOperations", "value", null, cancellationToken);
         }
     }
 }

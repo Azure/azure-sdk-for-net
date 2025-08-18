@@ -70,7 +70,6 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary> Usage properties for the specified resource. </summary>
-        [WirePath("properties")]
         public QuotaUsagesProperties Properties { get; }
     }
 }

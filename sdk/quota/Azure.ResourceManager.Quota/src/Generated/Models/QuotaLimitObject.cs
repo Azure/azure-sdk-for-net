@@ -39,10 +39,8 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> The quota/limit value. </summary>
-        [WirePath("value")]
         public int Value { get; set; }
         /// <summary> The quota or usages limit types. </summary>
-        [WirePath("limitType")]
         public QuotaLimitType? LimitType { get; set; }
     }
 }

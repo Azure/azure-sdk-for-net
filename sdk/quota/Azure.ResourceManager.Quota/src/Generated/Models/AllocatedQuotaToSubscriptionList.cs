@@ -61,7 +61,6 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> List of Group Quota Limit allocated to subscriptions. </summary>
-        [WirePath("value")]
         public IReadOnlyList<SubscriptionAllocatedQuota> Value { get; }
     }
 }
