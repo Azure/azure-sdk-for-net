@@ -119,7 +119,8 @@ namespace Azure.AI.Agents.Persistent.Tests
             {ToolTypes.DeepResearch, typeof(RunStepDeltaDeepResearchToolCall)},
             {ToolTypes.AzureAISearch, typeof(RunStepDeltaAzureAISearchToolCall)},
             {ToolTypes.ConnectedAgent, typeof(RunStepDeltaConnectedAgentToolCall)},
-            {ToolTypes.FileSearch, typeof(RunStepDeltaFileSearchToolCall)}
+            {ToolTypes.FileSearch, typeof(RunStepDeltaFileSearchToolCall)},
+            {ToolTypes.AzureFunction, typeof(RunStepDeltaAzureFunctionToolCall)}
         };
 
         public Dictionary<ToolTypes, Type> ExpectedToolCalls = new()
@@ -131,7 +132,8 @@ namespace Azure.AI.Agents.Persistent.Tests
             {ToolTypes.AzureAISearch, typeof(RunStepAzureAISearchToolCall)},
             {ToolTypes.ConnectedAgent, typeof(RunStepConnectedAgentToolCall)},
             {ToolTypes.FileSearch, typeof(RunStepFileSearchToolCall)},
-            {ToolTypes.BrowserAutomation, typeof(RunStepBrowserAutomationToolCall)}
+            {ToolTypes.BrowserAutomation, typeof(RunStepBrowserAutomationToolCall)},
+            {ToolTypes.AzureFunction, typeof(RunStepAzureFunctionToolCall)}
         };
 
         public Dictionary<ToolTypes, string> ToolPrompts = new()

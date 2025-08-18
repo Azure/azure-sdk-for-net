@@ -18,7 +18,6 @@
         AZC0012;
         SA1649;
         SA1402;
-        AZC0035; <!-- Missing model factory methods. #51265-->
     </NoWarn>
     <!--
       Suppression of OPENAI001 handles temporary [Experimental] leakage from OpenAI library internals for generated MRWContext.
