@@ -901,6 +901,18 @@ function UpdateExistingSDKByInputFiles()
 
 }
 
+function Strip-VariablesFromPath()
+{
+    param(
+        [string]$path
+    )
+    # Strip out variables in curly braces like {output-dir}, {package-dir}, etc.
+    if ($path) {
+        $path = $path -replace '\{[^}]*\}', ''
+    }
+    return $path
+}
+
 function GetSDKProjectFolder()
 {
     param(
@@ -930,6 +942,11 @@ function GetSDKProjectFolder()
     if (!$service || !$packageDir) {
         throw "[ERROR] 'serviceDir' or 'packageDir' not provided. Please configure these settings in the 'tspconfig.yaml' file."
     }
+    
+    # Strip out variables from paths before constructing the project folder
+    $service = Strip-VariablesFromPath -path $service
+    $packageDir = Strip-VariablesFromPath -path $packageDir
+    
     $projectFolder = (Join-Path $sdkRepoRoot $service $packageDir)
     return $projectFolder
 }
