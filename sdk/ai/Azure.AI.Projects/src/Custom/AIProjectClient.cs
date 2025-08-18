@@ -99,18 +99,25 @@ namespace Azure.AI.Projects
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override IEnumerable<ClientConnection> GetAllConnections() => _cacheManager.GetAllConnections();
 
-        /// <summary> Initializes a new instance of Datasets. </summary>
+        /// <summary> Initializes a new instance of DatasetsOperations. </summary>
         public virtual DatasetsOperations GetDatasetsOperationsClient()
         {
             // Custom method to allow for passing of credential used when SAS is not provided.
             return Volatile.Read(ref _cachedDatasetsOperations) ?? Interlocked.CompareExchange(ref _cachedDatasetsOperations, new DatasetsOperations(Pipeline, _endpoint, _apiVersion, _tokenProvider), null) ?? _cachedDatasetsOperations;
         }
 
-        public ConnectionsOperations Connections { get => GetConnectionsOperationsClient(); }
-        public DatasetsOperations Datasets { get => GetDatasetsOperationsClient(); }
-        public DeploymentsOperations Deployments { get => GetDeploymentsOperationsClient(); }
-        public IndexesOperations Indexes { get => GetIndexesOperationsClient(); }
-        public Telemetry Telemetry { get => new Telemetry(this); }
+        /// <summary> Gets the client for managing connections. </summary>
+        public virtual ConnectionsOperations Connections { get => GetConnectionsOperationsClient(); }
+        /// <summary> Gets the client for managing datasets. </summary>
+        public virtual DatasetsOperations Datasets { get => GetDatasetsOperationsClient(); }
+        /// <summary> Gets the client for managing deployments. </summary>
+        public virtual DeploymentsOperations Deployments { get => GetDeploymentsOperationsClient(); }
+        /// <summary> Gets the client for evaluations operations. </summary>
+        public virtual Evaluations Evaluations { get => GetEvaluationsClient(); }
+        /// <summary> Gets the client for managing indexes. </summary>
+        public virtual IndexesOperations Indexes { get => GetIndexesOperationsClient(); }
+        /// <summary> Gets the client for telemetry operations. </summary>
+        public virtual Telemetry Telemetry { get => new Telemetry(this); }
 
         private static ClientPipeline CreatePipeline(PipelinePolicy authenticationPolicy, AIProjectClientOptions options)
         => ClientPipeline.Create(
