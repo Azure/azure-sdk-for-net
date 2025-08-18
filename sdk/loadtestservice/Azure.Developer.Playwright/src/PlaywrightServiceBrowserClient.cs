@@ -58,7 +58,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
     }
 
     /// <summary>
-    /// Creates or resets the singleton instance with custom options.
+    /// Creates (if needed) or returns the singleton instance with custom options.
     /// </summary>
     /// <param name="options">The client options.</param>
     /// <returns>The singleton instance.</returns>
@@ -66,13 +66,13 @@ public class PlaywrightServiceBrowserClient : IDisposable
     {
         lock (_lock)
         {
-            _instance = new PlaywrightServiceBrowserClient(options);
+            _instance ??= new PlaywrightServiceBrowserClient(options);
             return _instance;
         }
     }
 
     /// <summary>
-    /// Creates or resets the singleton instance with a token credential.
+    /// Creates (if needed) or returns the singleton instance with a token credential.
     /// </summary>
     /// <param name="credential">The token credential.</param>
     /// <returns>The singleton instance.</returns>
@@ -80,13 +80,13 @@ public class PlaywrightServiceBrowserClient : IDisposable
     {
         lock (_lock)
         {
-            _instance = new PlaywrightServiceBrowserClient(credential);
+            _instance ??= new PlaywrightServiceBrowserClient(credential);
             return _instance;
         }
     }
 
     /// <summary>
-    /// Creates or resets the singleton instance with options and a token credential.
+    /// Creates (if needed) or returns the singleton instance with options and a token credential.
     /// </summary>
     /// <param name="credential">The token credential.</param>
     /// <param name="options">The client options.</param>
@@ -95,7 +95,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
     {
         lock (_lock)
         {
-            _instance = new PlaywrightServiceBrowserClient(credential, options);
+            _instance ??= new PlaywrightServiceBrowserClient(credential, options);
             return _instance;
         }
     }
@@ -118,20 +118,20 @@ public class PlaywrightServiceBrowserClient : IDisposable
 
     /// <summary>
     /// Initializes a new instance of the <see cref="PlaywrightServiceBrowserClient"/> class.
-    /// Private constructor to enforce Singleton pattern.
+    /// Protected to allow framework-specific wrappers to derive and invoke.
     /// </summary>
     /// <param name="credential">The token credential.</param>
-    private PlaywrightServiceBrowserClient(TokenCredential credential) : this(options: new PlaywrightServiceBrowserClientOptions(), credential: credential)
+    protected PlaywrightServiceBrowserClient(TokenCredential credential) : this(options: new PlaywrightServiceBrowserClientOptions(), tokenCredential: credential)
     {
         // No-op
     }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="PlaywrightServiceBrowserClient"/> class.
-    /// Private constructor to enforce Singleton pattern.
+    /// Protected to allow framework-specific wrappers to derive and invoke.
     /// </summary>
     /// <param name="options">The client options.</param>
-    private PlaywrightServiceBrowserClient(PlaywrightServiceBrowserClientOptions options) : this(
+    protected PlaywrightServiceBrowserClient(PlaywrightServiceBrowserClientOptions options) : this(
         environment: null,
         entraLifecycle: null,
         jsonWebTokenHandler: null,
@@ -146,11 +146,11 @@ public class PlaywrightServiceBrowserClient : IDisposable
 
     /// <summary>
     /// Initializes a new instance of the <see cref="PlaywrightServiceBrowserClient"/> class.
-    /// Private constructor to enforce Singleton pattern.
+    /// Protected to allow framework-specific wrappers to derive and invoke.
     /// </summary>
     /// <param name="options">The client options.</param>
     /// <param name="credential">The token credential.</param>
-    private PlaywrightServiceBrowserClient(TokenCredential credential, PlaywrightServiceBrowserClientOptions options) : this(
+    protected PlaywrightServiceBrowserClient(TokenCredential credential, PlaywrightServiceBrowserClientOptions options) : this(
         environment: null,
         entraLifecycle: null,
         jsonWebTokenHandler: null,
