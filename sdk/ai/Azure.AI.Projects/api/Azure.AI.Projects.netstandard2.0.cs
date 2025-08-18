@@ -98,12 +98,13 @@ namespace Azure.AI.Projects
         public AIProjectClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Projects.AIProjectClientOptions options) : base (default(int)) { }
         public AIProjectClient(System.Uri endpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider) : base (default(int)) { }
         public AIProjectClient(System.Uri endpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Projects.AIProjectClientOptions options) : base (default(int)) { }
-        public Azure.AI.Projects.ConnectionsOperations Connections { get { throw null; } }
-        public Azure.AI.Projects.DatasetsOperations Datasets { get { throw null; } }
-        public Azure.AI.Projects.DeploymentsOperations Deployments { get { throw null; } }
-        public Azure.AI.Projects.IndexesOperations Indexes { get { throw null; } }
+        public Azure.AI.Projects.Connections Connections { get { throw null; } }
+        public Azure.AI.Projects.Datasets Datasets { get { throw null; } }
+        public Azure.AI.Projects.Deployments Deployments { get { throw null; } }
+        public Azure.AI.Projects.Evaluations Evaluations { get { throw null; } }
+        public Azure.AI.Projects.Indexes Indexes { get { throw null; } }
         public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
-        public Azure.AI.Projects.Telemetry Telemetry { get { throw null; } }
+        public virtual Azure.AI.Projects.Telemetry Telemetry { get { throw null; } }
         public override System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientConnection> GetAllConnections() { throw null; }
         public override System.ClientModel.Primitives.ClientConnection GetConnection(string connectionId) { throw null; }
         public virtual Azure.AI.Projects.ConnectionsOperations GetConnectionsOperationsClient() { throw null; }
@@ -215,25 +216,9 @@ namespace Azure.AI.Projects
         Custom = 3,
         None = 4,
     }
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.ApiKeyCredentials))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.AzureAISearchIndex))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.BaseCredentials))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.BlobReference))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.CosmosDBIndex))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.CustomCredential))]
     [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.DatasetCredential))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.DatasetVersion))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.EmbeddingConfiguration))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.EntraIDCredentials))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.FieldMapping))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.FileDatasetVersion))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.FolderDatasetVersion))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.ManagedAzureAISearchIndex))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.ModelDeployment))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.NoAuthenticationCredentials))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.PendingUploadConfiguration))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.PendingUploadResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.SASCredentials))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.PendingUploadRequest))]
+    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.PendingUploadResponse))]
     public partial class AzureAIProjectsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureAIProjectsContext() { }

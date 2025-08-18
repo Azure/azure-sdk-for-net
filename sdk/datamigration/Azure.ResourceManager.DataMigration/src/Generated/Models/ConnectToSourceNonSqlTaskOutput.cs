@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         internal ConnectToSourceNonSqlTaskOutput()
         {
             Databases = new ChangeTrackingList<string>();
-            ValidationErrors = new ChangeTrackingList<ReportableException>();
+            ValidationErrors = new ChangeTrackingList<DataMigrationReportableException>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectToSourceNonSqlTaskOutput"/>. </summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="databases"> List of databases on the server. </param>
         /// <param name="validationErrors"> Validation errors associated with the task. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectToSourceNonSqlTaskOutput(string id, string sourceServerBrandVersion, ServerProperties serverProperties, IReadOnlyList<string> databases, IReadOnlyList<ReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectToSourceNonSqlTaskOutput(string id, string sourceServerBrandVersion, DataMigrationMySqlServerProperties serverProperties, IReadOnlyList<string> databases, IReadOnlyList<DataMigrationReportableException> validationErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             SourceServerBrandVersion = sourceServerBrandVersion;
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Server brand version. </summary>
         public string SourceServerBrandVersion { get; }
         /// <summary> Server properties. </summary>
-        public ServerProperties ServerProperties { get; }
+        public DataMigrationMySqlServerProperties ServerProperties { get; }
         /// <summary> List of databases on the server. </summary>
         public IReadOnlyList<string> Databases { get; }
         /// <summary> Validation errors associated with the task. </summary>
-        public IReadOnlyList<ReportableException> ValidationErrors { get; }
+        public IReadOnlyList<DataMigrationReportableException> ValidationErrors { get; }
     }
 }

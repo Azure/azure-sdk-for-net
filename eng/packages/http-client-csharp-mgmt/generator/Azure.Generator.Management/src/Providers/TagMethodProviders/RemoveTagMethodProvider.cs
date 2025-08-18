@@ -1,11 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Models;
+using Azure.Generator.Management.Providers.OperationMethodProviders;
+using Azure.Generator.Management.Snippets;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
-using Microsoft.TypeSpec.Generator.Expressions;
-using Azure.Generator.Management.Snippets;
 using System.Collections.Generic;
 
 namespace Azure.Generator.Management.Providers.TagMethodProviders
@@ -13,10 +16,12 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
     internal class RemoveTagMethodProvider : BaseTagMethodProvider
     {
         public RemoveTagMethodProvider(
-            ResourceClientProvider resourceClientProvider,
-            MethodProvider updateMethodProvider,
+            ResourceClientProvider resource,
+            RequestPathPattern contextualPath,
+            ResourceOperationMethodProvider updateMethodProvider,
+            RestClientInfo restClientInfo,
             bool isAsync)
-            : base(resourceClientProvider, updateMethodProvider, isAsync,
+            : base(resource, contextualPath, updateMethodProvider, restClientInfo, isAsync,
                    isAsync ? "RemoveTagAsync" : "RemoveTag",
                    "Removes a tag by key from the resource.")
         {
@@ -34,7 +39,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             var keyParam = _keyParameter;
             var cancellationTokenParam = KnownParameters.CancellationTokenParameter;
 
-            var statements = ResourceMethodSnippets.CreateDiagnosticScopeStatements(_resourceClientProvider, "RemoveTag", out var scopeVariable);
+            var statements = ResourceMethodSnippets.CreateDiagnosticScopeStatements(_resource, _clientDiagnosticsField, "RemoveTag", out var scopeVariable);
 
             // Build try block
             var tryStatements = new List<MethodBodyStatement>();

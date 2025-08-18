@@ -22,9 +22,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="workerId"> Router Worker events Worker Id. </param>
-        internal AcsRouterWorkerEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> serializedAdditionalRawData, string workerId) : base(jobId, channelReference, channelId, serializedAdditionalRawData)
+        internal AcsRouterWorkerEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string workerId) : base(jobId, channelReference, channelId, additionalBinaryDataProperties)
         {
             WorkerId = workerId;
         }

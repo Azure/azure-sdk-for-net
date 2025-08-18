@@ -17,12 +17,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="startedBy"> The call participant who initiated the call. </param>
         /// <param name="serverCallId"> The call id of the server. </param>
         /// <param name="correlationId"> The correlationId of calling event. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="startedBy"/>, <paramref name="serverCallId"/> or <paramref name="correlationId"/> is null. </exception>
         internal AcsCallParticipantRemovedEventData(AcsCallParticipantProperties startedBy, string serverCallId, string correlationId) : base(startedBy, serverCallId, correlationId)
         {
-            Argument.AssertNotNull(startedBy, nameof(startedBy));
-            Argument.AssertNotNull(serverCallId, nameof(serverCallId));
-            Argument.AssertNotNull(correlationId, nameof(correlationId));
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsCallParticipantRemovedEventData"/>. </summary>
@@ -33,17 +29,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="isTwoParty"> Is two-party in calling event. </param>
         /// <param name="correlationId"> The correlationId of calling event. </param>
         /// <param name="isRoomsCall"> Is the calling event a room call. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="user"> The user of the call participant. </param>
         /// <param name="displayName"> The display name of the participant. </param>
         /// <param name="participantId"> The id of the participant. </param>
         /// <param name="userAgent"> The user agent of the participant. </param>
-        internal AcsCallParticipantRemovedEventData(AcsCallParticipantProperties startedBy, string serverCallId, AcsCallGroupProperties group, AcsCallRoomProperties room, bool? isTwoParty, string correlationId, bool? isRoomsCall, IDictionary<string, BinaryData> serializedAdditionalRawData, AcsCallParticipantProperties user, string displayName, string participantId, string userAgent) : base(startedBy, serverCallId, group, room, isTwoParty, correlationId, isRoomsCall, serializedAdditionalRawData, user, displayName, participantId, userAgent)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AcsCallParticipantRemovedEventData"/> for deserialization. </summary>
-        internal AcsCallParticipantRemovedEventData()
+        internal AcsCallParticipantRemovedEventData(AcsCallParticipantProperties startedBy, string serverCallId, AcsCallGroupProperties @group, AcsCallRoomProperties room, bool? isTwoParty, string correlationId, bool? isRoomsCall, IDictionary<string, BinaryData> additionalBinaryDataProperties, AcsCallParticipantProperties user, string displayName, string participantId, string userAgent) : base(startedBy, serverCallId, @group, room, isTwoParty, correlationId, isRoomsCall, additionalBinaryDataProperties, user, displayName, participantId, userAgent)
         {
         }
     }

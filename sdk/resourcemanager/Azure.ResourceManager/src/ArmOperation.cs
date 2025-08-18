@@ -5,12 +5,13 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
-using System.Reflection;
 using System;
+using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager
 {
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager
         /// <param name="rehydrationToken">The rehydration token.</param>
         /// <param name="options">The Arm client options.</param>
         /// <returns>The long-running operation.</returns>
-        public static ArmOperation<T> Rehydrate<T>(ArmClient client, RehydrationToken rehydrationToken, ArmClientOptions options = null) where T : notnull
+        public static ArmOperation<T> Rehydrate<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>(ArmClient client, RehydrationToken rehydrationToken, ArmClientOptions options = null) where T : notnull
         {
 
             Argument.AssertNotNull(client, nameof(client));
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager
         /// <param name="rehydrationToken">The rehydration token.</param>
         /// <param name="options">The Arm client options.</param>
         /// <returns>The long-running operation.</returns>
-        public static async Task<ArmOperation<T>> RehydrateAsync<T>(ArmClient client, RehydrationToken rehydrationToken, ArmClientOptions options = null) where T : notnull
+        public static async Task<ArmOperation<T>> RehydrateAsync<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>(ArmClient client, RehydrationToken rehydrationToken, ArmClientOptions options = null) where T : notnull
         {
 
             Argument.AssertNotNull(client, nameof(client));
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager
             return new RehydrationOperation<T>(nextLinkOperation, operationState, operation, options);
         }
 
-        private static bool IsResource<T>() where T : notnull
+        private static bool IsResource<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>() where T : notnull
         {
             var isResource = typeof(T).GetConstructor(
                             BindingFlags.NonPublic | BindingFlags.Instance,

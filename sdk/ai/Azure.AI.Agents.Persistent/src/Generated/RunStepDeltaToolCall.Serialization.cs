@@ -81,9 +81,16 @@ namespace Azure.AI.Agents.Persistent
             {
                 switch (discriminator.GetString())
                 {
+                    case "azure_ai_search": return RunStepDeltaAzureAISearchToolCall.DeserializeRunStepDeltaAzureAISearchToolCall(element, options);
+                    case "bing_custom_search": return RunStepDeltaCustomBingGroundingToolCall.DeserializeRunStepDeltaCustomBingGroundingToolCall(element, options);
+                    case "bing_grounding": return RunStepDeltaBingGroundingToolCall.DeserializeRunStepDeltaBingGroundingToolCall(element, options);
                     case "code_interpreter": return RunStepDeltaCodeInterpreterToolCall.DeserializeRunStepDeltaCodeInterpreterToolCall(element, options);
+                    case "connected_agent": return RunStepDeltaConnectedAgentToolCall.DeserializeRunStepDeltaConnectedAgentToolCall(element, options);
+                    case "deep_research": return RunStepDeltaDeepResearchToolCall.DeserializeRunStepDeltaDeepResearchToolCall(element, options);
                     case "file_search": return RunStepDeltaFileSearchToolCall.DeserializeRunStepDeltaFileSearchToolCall(element, options);
                     case "function": return RunStepDeltaFunctionToolCall.DeserializeRunStepDeltaFunctionToolCall(element, options);
+                    case "mcp": return RunStepDeltaMcpToolCall.DeserializeRunStepDeltaMcpToolCall(element, options);
+                    case "openapi": return RunStepDeltaOpenAPIToolCall.DeserializeRunStepDeltaOpenAPIToolCall(element, options);
                 }
             }
             return UnknownRunStepDeltaToolCall.DeserializeUnknownRunStepDeltaToolCall(element, options);

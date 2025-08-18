@@ -9,14 +9,19 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class AcsMicrosoftTeamsAppIdentifier : IUtf8JsonSerializable, IJsonModel<AcsMicrosoftTeamsAppIdentifier>
+    /// <summary> A Microsoft Teams application. </summary>
+    public partial class AcsMicrosoftTeamsAppIdentifier : IJsonModel<AcsMicrosoftTeamsAppIdentifier>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsMicrosoftTeamsAppIdentifier>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="AcsMicrosoftTeamsAppIdentifier"/> for deserialization. </summary>
+        internal AcsMicrosoftTeamsAppIdentifier()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AcsMicrosoftTeamsAppIdentifier>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +33,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsMicrosoftTeamsAppIdentifier>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AcsMicrosoftTeamsAppIdentifier>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AcsMicrosoftTeamsAppIdentifier)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("appId"u8);
             writer.WriteStringValue(AppId);
             if (Optional.IsDefined(Cloud))
@@ -41,15 +45,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("cloud"u8);
                 writer.WriteStringValue(Cloud.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -58,59 +62,65 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        AcsMicrosoftTeamsAppIdentifier IJsonModel<AcsMicrosoftTeamsAppIdentifier>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AcsMicrosoftTeamsAppIdentifier IJsonModel<AcsMicrosoftTeamsAppIdentifier>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AcsMicrosoftTeamsAppIdentifier JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsMicrosoftTeamsAppIdentifier>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AcsMicrosoftTeamsAppIdentifier>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AcsMicrosoftTeamsAppIdentifier)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAcsMicrosoftTeamsAppIdentifier(document.RootElement, options);
         }
 
-        internal static AcsMicrosoftTeamsAppIdentifier DeserializeAcsMicrosoftTeamsAppIdentifier(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AcsMicrosoftTeamsAppIdentifier DeserializeAcsMicrosoftTeamsAppIdentifier(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string appId = default;
             CommunicationCloudEnvironmentModel? cloud = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("appId"u8))
+                if (prop.NameEquals("appId"u8))
                 {
-                    appId = property.Value.GetString();
+                    appId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cloud"u8))
+                if (prop.NameEquals("cloud"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cloud = new CommunicationCloudEnvironmentModel(property.Value.GetString());
+                    cloud = new CommunicationCloudEnvironmentModel(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new AcsMicrosoftTeamsAppIdentifier(appId, cloud, serializedAdditionalRawData);
+            return new AcsMicrosoftTeamsAppIdentifier(appId, cloud, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<AcsMicrosoftTeamsAppIdentifier>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsMicrosoftTeamsAppIdentifier>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AcsMicrosoftTeamsAppIdentifier>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AcsMicrosoftTeamsAppIdentifier>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -120,15 +130,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        AcsMicrosoftTeamsAppIdentifier IPersistableModel<AcsMicrosoftTeamsAppIdentifier>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsMicrosoftTeamsAppIdentifier>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AcsMicrosoftTeamsAppIdentifier IPersistableModel<AcsMicrosoftTeamsAppIdentifier>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AcsMicrosoftTeamsAppIdentifier PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AcsMicrosoftTeamsAppIdentifier>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAcsMicrosoftTeamsAppIdentifier(document.RootElement, options);
                     }
                 default:
@@ -136,22 +151,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AcsMicrosoftTeamsAppIdentifier>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AcsMicrosoftTeamsAppIdentifier FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAcsMicrosoftTeamsAppIdentifier(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

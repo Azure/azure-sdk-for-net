@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.WorkloadMonitor.Models;
 
 namespace Azure.ResourceManager.WorkloadMonitor
 {
@@ -13,6 +15,13 @@ namespace Azure.ResourceManager.WorkloadMonitor
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(HealthMonitorData))]
+    [ModelReaderWriterBuildable(typeof(HealthMonitorList))]
+    [ModelReaderWriterBuildable(typeof(HealthMonitorResource))]
+    [ModelReaderWriterBuildable(typeof(HealthMonitorStateChangeData))]
+    [ModelReaderWriterBuildable(typeof(HealthMonitorStateChangeList))]
+    [ModelReaderWriterBuildable(typeof(HealthMonitorStateChangeResource))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerWorkloadMonitorContext : ModelReaderWriterContext
     {
     }

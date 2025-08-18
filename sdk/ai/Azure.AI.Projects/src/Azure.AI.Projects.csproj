@@ -7,7 +7,18 @@
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateAPIListing>true</GenerateAPIListing>
-    <NoWarn>$(NoWarn);CS1591;AZC0012;SA1649;SA1402;</NoWarn>
+    <LangVersion>latest</LangVersion>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <NoWarn>
+        $(NoWarn);
+        CS1591;
+        AZC0012;
+        SA1649;
+        SA1402;
+    </NoWarn>
     <!--
       Suppression of OPENAI001 handles temporary [Experimental] leakage from OpenAI library internals for generated MRWContext.
       The longer-term fix is tracked along with:
@@ -15,8 +26,6 @@
         - https://github.com/Azure/autorest.csharp/issues/5364
     -->
     <NoWarn>$(NoWarn);OPENAI001;</NoWarn>
-    <LangVersion>latest</LangVersion>
-    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
   <ItemGroup>

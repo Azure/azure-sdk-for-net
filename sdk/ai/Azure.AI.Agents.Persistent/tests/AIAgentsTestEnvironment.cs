@@ -21,5 +21,6 @@ namespace Azure.AI.Agents.Persistent.Tests
         public string FABRIC_CONNECTION_ID => GetRecordedVariable("AZURE_FABRIC_CONNECTION_ID");
         public string BING_CUSTOM_CONNECTION_ID => GetRecordedVariable("AZURE_BING_CUSTOM_CONNECTION_ID");
         public string DEEP_RESEARCH_MODEL_DEPLOYMENT_NAME => GetRecordedOptionalVariable("DEEP_RESEARCH_MODEL_DEPLOYMENT_NAME");
+        public string BING_CONFIGURATION_NAME => GetRecordedOptionalVariable("BING_CONFIGURATION_NAME");
     }
 }
