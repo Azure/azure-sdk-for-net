@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 using Client.Naming.EnumConflict;
 using Client.Naming.EnumConflict.FirstNamespace;
 using Client.Naming.EnumConflict.SecondNamespace;
-using SpecialWords._Models;
+using NUnit.Framework;
 
 namespace TestProjects.Spector.Tests.Http.Client.Naming.EnumConflict
 {
-    public class EnumConflictTests
+    public class EnumConflictTests : SpectorTestBase
     {
         [SpectorTest]
         public Task Client_Naming_EnumConflict_first() => Test(async (host) =>
