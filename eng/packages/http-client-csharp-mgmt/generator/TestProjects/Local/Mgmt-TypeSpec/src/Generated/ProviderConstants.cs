@@ -11,7 +11,7 @@ namespace MgmtTypeSpec
 {
     internal static partial class ProviderConstants
     {
-        /// <summary> Gets the DefaultProviderNamespace. </summary>
-        public static string DefaultProviderNamespace => ClientDiagnostics.GetResourceProviderNamespace(typeof(ProviderConstants).Assembly);
+        /// <summary> Gets or sets the DefaultProviderNamespace. </summary>
+        public static string DefaultProviderNamespace { get; private set; } = ClientDiagnostics.GetResourceProviderNamespace(typeof(ProviderConstants).Assembly);
     }
 }
