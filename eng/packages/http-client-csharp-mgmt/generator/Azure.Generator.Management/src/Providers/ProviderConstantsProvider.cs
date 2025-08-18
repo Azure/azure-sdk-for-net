@@ -29,7 +29,7 @@ namespace Azure.Generator.Management.Providers
                 MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
                 typeof(string),
                 DefaultProviderNamespaceName,
-                new AutoPropertyBody(true, null, Static<ClientDiagnostics>().Invoke(nameof(ClientDiagnostics.GetResourceProviderNamespace), [TypeOf(Type).Property(nameof(System.Type.Assembly))])),
+                new AutoPropertyBody(true, MethodSignatureModifiers.Private, Static<ClientDiagnostics>().Invoke(nameof(ClientDiagnostics.GetResourceProviderNamespace), [TypeOf(Type).Property(nameof(System.Type.Assembly))])),
                 this);
 
             return [defaultProviderNamespaceProperty];
