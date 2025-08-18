@@ -5,6 +5,7 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading;
 using Azure.Core;
 
@@ -17,6 +18,9 @@ namespace Azure.AI.Projects
     public partial class AIProjectClient : ClientConnectionProvider
     {
         private const int _defaultMaxCacheSize = 100;
+        private readonly ConnectionCacheManager _cacheManager;
+        private readonly TokenCredential _tokenCredential;
+        private static readonly string[] AuthorizationScopes = ["https://ai.azure.com/.default"];
 
         /// <summary> Initializes a new instance of AIProjectClient for mocking. </summary>
         protected AIProjectClient() : base(maxCacheSize: _defaultMaxCacheSize)
@@ -53,7 +57,7 @@ namespace Azure.AI.Projects
         /// <param name="credential"> Service credential. </param>
         /// <param name="options"> The options for configuring the client. </param>
         public AIProjectClient(Uri endpoint, TokenCredential credential, AIProjectClientOptions options)
-            : base(_defaultMaxCacheSize)
+            : base(options.ClientCacheSize)
         {
             options ??= new AIProjectClientOptions();
 
@@ -65,8 +69,12 @@ namespace Azure.AI.Projects
             _cacheManager = new ConnectionCacheManager(_endpoint, credential);
         }
 
+        public AIProjectClient(Uri endpoint, AuthenticationTokenProvider tokenProvider) : this(endpoint, tokenProvider, new AIProjectClientOptions())
+        {
+        }
+
         public AIProjectClient(Uri endpoint, AuthenticationTokenProvider tokenProvider, AIProjectClientOptions options)
-            : base(_defaultMaxCacheSize)
+            : base(options.ClientCacheSize)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(tokenProvider, nameof(tokenProvider));
@@ -79,22 +87,16 @@ namespace Azure.AI.Projects
             _apiVersion = options.Version;
         }
 
-        public AIProjectClient(Uri endpoint, AuthenticationTokenProvider tokenProvider) : this(endpoint, tokenProvider, new AIProjectClientOptions())
-        {
-        }
-
-        private readonly ConnectionCacheManager _cacheManager;
-        private readonly TokenCredential _tokenCredential;
-        private static readonly string[] AuthorizationScopes = ["https://ai.azure.com/.default"];
-
         /// <summary>
         /// Retrieves the connection options for a specified client type and instance ID.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override ClientConnection GetConnection(string connectionId) => _cacheManager.GetConnection(connectionId);
 
         /// <summary>
         /// Retrieves all connection options.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public override IEnumerable<ClientConnection> GetAllConnections() => _cacheManager.GetAllConnections();
 
         /// <summary> Initializes a new instance of Datasets. </summary>

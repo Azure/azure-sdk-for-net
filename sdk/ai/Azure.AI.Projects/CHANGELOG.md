@@ -2,9 +2,6 @@
 
 ## 1.0.0-beta.11 (Unreleased)
 
-### Features Added
-
-
 ### Breaking Changes
 * Class changes:
   * `AIDeployment` has been renamed `AssetDeployment`
@@ -16,10 +13,6 @@
 * `GetAzureOpenAIChatClient` and `GetAzureOpenAIEmbeddingClient` methods have been removed and replaced with a single `GetOpenAIClient` method. This method returns an OpenAI client which has properties for accessing individual operation clients. More information is available in the `Inference` samples.
 * All operations methods have been renamed to include the object the operation is for. For example, `Connections.GetDefault` has been renamed to `Connections.GetDefaultConnection`, and `Datasets.Get` has been renamed to `Datasets.GetDatasets`.
 * `Deployments.GetModelDeployment` and `Deployments.GetModelDeploymentAsync` methods have been removed. Use `Deployments.GetDeployment` and `Deployments.GetDeploymentAsync` instead.`
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.10 (2025-07-11)
 
