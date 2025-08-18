@@ -200,10 +200,10 @@ namespace Azure.Security.KeyVault
             return CreateResponse(response, resultFactory());
         }
 
-        public async Task<Response<TResult>> SendRequestAsync<TResult>(RequestMethod method, Func<TResult> resultFactory, Uri uri, CancellationToken cancellationToken)
+        public async Task<Response<TResult>> SendRequestAsync<TResult>(RequestMethod method, Func<TResult> resultFactory, Uri uri, bool appendApiVersion, CancellationToken cancellationToken)
             where TResult : IJsonDeserializable
         {
-            using Request request = CreateRequest(method, uri, true);
+            using Request request = CreateRequest(method, uri, appendApiVersion);
             Response response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
             return CreateResponse(response, resultFactory());
@@ -218,10 +218,10 @@ namespace Azure.Security.KeyVault
             return CreateResponse(response, resultFactory());
         }
 
-        public Response<TResult> SendRequest<TResult>(RequestMethod method, Func<TResult> resultFactory, Uri uri, CancellationToken cancellationToken)
+        public Response<TResult> SendRequest<TResult>(RequestMethod method, Func<TResult> resultFactory, Uri uri, bool appendApiVersion, CancellationToken cancellationToken)
             where TResult : IJsonDeserializable
         {
-            using Request request = CreateRequest(method, uri, true);
+            using Request request = CreateRequest(method, uri, appendApiVersion);
             Response response = SendRequest(request, cancellationToken);
 
             return CreateResponse(response, resultFactory());

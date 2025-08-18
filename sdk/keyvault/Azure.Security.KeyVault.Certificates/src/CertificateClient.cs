@@ -267,7 +267,7 @@ namespace Azure.Security.KeyVault.Certificates
             try
             {
                 KeyVaultCertificateWithPolicy certificate = _pipeline.SendRequest(RequestMethod.Get, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, options.CertificateName, "/", options.Version);
-                Response<KeyVaultSecret> secretResponse = _pipeline.SendRequest(RequestMethod.Get, () => new KeyVaultSecret(), certificate.SecretId, cancellationToken);
+                Response<KeyVaultSecret> secretResponse = _pipeline.SendRequest(RequestMethod.Get, () => new KeyVaultSecret(), certificate.SecretId, appendApiVersion: true, cancellationToken);
 
                 KeyVaultSecret secret = secretResponse.Value;
                 string value = secret.Value;
@@ -356,7 +356,7 @@ namespace Azure.Security.KeyVault.Certificates
             try
             {
                 KeyVaultCertificateWithPolicy certificate = await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, options.CertificateName, "/", options.Version).ConfigureAwait(false);
-                Response<KeyVaultSecret> secretResponse = await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultSecret(), certificate.SecretId, cancellationToken).ConfigureAwait(false);
+                Response<KeyVaultSecret> secretResponse = await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultSecret(), certificate.SecretId, appendApiVersion: true, cancellationToken).ConfigureAwait(false);
 
                 KeyVaultSecret secret = secretResponse.Value;
                 string value = secret.Value;

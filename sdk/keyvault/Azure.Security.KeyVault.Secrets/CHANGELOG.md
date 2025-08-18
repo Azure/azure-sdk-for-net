@@ -6,9 +6,13 @@
 
 ### Breaking Changes
 
+- Added the `outContentType` query parameter to the Get Secret operation to specify the format in which the certificate will be returned.
+
 ### Bugs Fixed
 
 ### Other Changes
+
+- The default service version is now "2025-06-01-preview".
 
 ## 4.8.0 (2025-06-13)
 

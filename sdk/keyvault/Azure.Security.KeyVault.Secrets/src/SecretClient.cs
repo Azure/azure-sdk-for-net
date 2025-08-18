@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -88,7 +89,29 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response<KeyVaultSecret>> GetSecretAsync(string name, string version = null, CancellationToken cancellationToken = default)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<KeyVaultSecret>> GetSecretAsync(string name, string version, CancellationToken cancellationToken = default)
+        {
+            return await GetSecretAsync(name, version, outContentType: null, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a specified secret from a given key vault.
+        /// </summary>
+        /// <remarks>
+        /// The get operation is applicable to any secret stored in Azure Key Vault.
+        /// This operation requires the secrets/get permission.
+        /// </remarks>
+        /// <param name="name">The name of the secret.</param>
+        /// <param name="version">The version of the secret.</param>
+        /// <param name="outContentType">The media type (MIME type) of the certificate. If a supported format is specified, the certificate content is converted to the requested format.
+        /// Currently, only PFX to PEM conversion is supported. If an unsupported format is specified, the request is rejected. If not specified, the certificate is returned in its original
+        /// format without conversion.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<Response<KeyVaultSecret>> GetSecretAsync(string name, string version = null, string outContentType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -99,7 +122,17 @@ namespace Azure.Security.KeyVault.Secrets
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultSecret(), cancellationToken, SecretsPath, name, "/", version).ConfigureAwait(false);
+                if (!string.IsNullOrEmpty(outContentType))
+                {
+                    string path = string.IsNullOrEmpty(version) ? $"{SecretsPath}{name}" : $"{SecretsPath}{name}/{version}";
+                    var requestUri = _pipeline.CreateFirstPageUri(path, ("outContentType", outContentType));
+
+                    return await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultSecret(), requestUri, appendApiVersion: false, cancellationToken).ConfigureAwait(false);
+                }
+                else
+                {
+                    return await _pipeline.SendRequestAsync(RequestMethod.Get, () => new KeyVaultSecret(), cancellationToken, SecretsPath, name, "/", version).ConfigureAwait(false);
+                }
             }
             catch (Exception e)
             {
@@ -121,7 +154,29 @@ namespace Azure.Security.KeyVault.Secrets
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response<KeyVaultSecret> GetSecret(string name, string version = null, CancellationToken cancellationToken = default)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<KeyVaultSecret> GetSecret(string name, string version, CancellationToken cancellationToken = default)
+        {
+            return GetSecret(name, version, outContentType: null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a specified secret from a given key vault.
+        /// </summary>
+        /// <remarks>
+        /// The get operation is applicable to any secret stored in Azure Key Vault.
+        /// This operation requires the secrets/get permission.
+        /// </remarks>
+        /// <param name="name">The name of the secret.</param>
+        /// <param name="version">The version of the secret.</param>
+        /// <param name="outContentType">The media type (MIME type) of the certificate. If a supported format is specified, the certificate content is converted to the requested format.
+        /// Currently, only PFX to PEM conversion is supported. If an unsupported format is specified, the request is rejected. If not specified, the certificate is returned in its original
+        /// format without conversion.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual Response<KeyVaultSecret> GetSecret(string name, string version = null, string outContentType = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -129,10 +184,19 @@ namespace Azure.Security.KeyVault.Secrets
             scope.AddAttribute(OTelSecretNameKey, name);
             scope.AddAttribute(OTelSecretVersionKey, version);
             scope.Start();
-
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Get, () => new KeyVaultSecret(), cancellationToken, SecretsPath, name, "/", version);
+                if (!string.IsNullOrEmpty(outContentType))
+                {
+                    string path = string.IsNullOrEmpty(version) ? $"{SecretsPath}{name}" : $"{SecretsPath}{name}/{version}";
+                    var requestUri = _pipeline.CreateFirstPageUri(path, ("outContentType", outContentType));
+
+                    return _pipeline.SendRequest(RequestMethod.Get, () => new KeyVaultSecret(), requestUri, appendApiVersion: false, cancellationToken);
+                }
+                else
+                {
+                    return _pipeline.SendRequest(RequestMethod.Get, () => new KeyVaultSecret(), cancellationToken, SecretsPath, name, "/", version);
+                }
             }
             catch (Exception e)
             {
@@ -142,7 +206,7 @@ namespace Azure.Security.KeyVault.Secrets
         }
 
         /// <summary>
-        /// Lists the properties of all enabled and disabled versions of the specified secret. You can use the returned <see cref="SecretProperties.Name"/> and <see cref="SecretProperties.Version"/> in subsequent calls to <see cref="GetSecretAsync"/>.
+        /// Lists the properties of all enabled and disabled versions of the specified secret. You can use the returned <see cref="SecretProperties.Name"/> and <see cref="SecretProperties.Version"/> in subsequent calls to <see cref="GetSecretAsync(string, string, string, CancellationToken)"/>.
         /// </summary>
         /// <remarks>
         /// <para>
@@ -169,7 +233,7 @@ namespace Azure.Security.KeyVault.Secrets
         }
 
         /// <summary>
-        /// Lists the properties of all enabled and disabled versions of the specified secret. You can use the returned <see cref="SecretProperties.Name"/> and <see cref="SecretProperties.Version"/> in subsequent calls to <see cref="GetSecret"/>.
+        /// Lists the properties of all enabled and disabled versions of the specified secret. You can use the returned <see cref="SecretProperties.Name"/> and <see cref="SecretProperties.Version"/> in subsequent calls to <see cref="GetSecret(string, string, string, CancellationToken)"/>.
         /// </summary>
         /// <remarks>
         /// <para>
@@ -196,7 +260,7 @@ namespace Azure.Security.KeyVault.Secrets
         }
 
         /// <summary>
-        /// Lists the properties of all enabled and disabled secrets in the specified vault. You can use the returned <see cref="SecretProperties.Name"/> in subsequent calls to <see cref="GetSecretAsync"/>.
+        /// Lists the properties of all enabled and disabled secrets in the specified vault. You can use the returned <see cref="SecretProperties.Name"/> in subsequent calls to <see cref="GetSecretAsync(string, string, string, CancellationToken)"/>.
         /// </summary>
         /// <remarks>
         /// The Get Secrets operation is applicable to the entire vault. However, only
@@ -214,7 +278,7 @@ namespace Azure.Security.KeyVault.Secrets
         }
 
         /// <summary>
-        /// Lists the properties of all enabled and disabled secrets in the specified vault. You can use the returned <see cref="SecretProperties.Name"/> in subsequent calls to <see cref="GetSecret"/>.
+        /// Lists the properties of all enabled and disabled secrets in the specified vault. You can use the returned <see cref="SecretProperties.Name"/> in subsequent calls to <see cref="GetSecret(string, string, string, CancellationToken)"/>.
         /// </summary>
         /// <remarks>
         /// The Get Secrets operation is applicable to the entire vault. However, only
