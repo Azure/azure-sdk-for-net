@@ -1016,6 +1016,12 @@
 # ServiceLabel: %Elastic %Mgmt
 # ServiceOwners:                                                   @ArthurMa1978
 
+# PRLabel: %Fabric
+/sdk/fabric/Azure.ResourceManager.Fabric/                          @xinzhizou
+
+# ServiceLabel: %Fabric %Mgmt
+# ServiceOwners:                                                   @xinzhizou
+
 # PRLabel: %Grafana
 /sdk/grafana/Azure.ResourceManager.*/                              @qingquanzhao
 
