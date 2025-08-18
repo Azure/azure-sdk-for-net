@@ -49,26 +49,8 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
             TypeSymbolKindCache SymbolToKindCache,
             TypeSymbolTypeRefCache SymbolToTypeRefCache) data)
     {
-        if (data.TypesWithAttribute.Length > 1)
+        if (data.TypesWithAttribute.Length == 0)
         {
-            var first = data.TypesWithAttribute[0].Context;
-
-            for (int i = 1; i < data.TypesWithAttribute.Length; i++)
-            {
-                if (!SymbolEqualityComparer.Default.Equals(first, data.TypesWithAttribute[i].Context))
-                {
-                    // If we have multiple contexts, we cannot generate a single context.
-                    context.ReportDiagnostic(Diagnostic.Create(
-                        DiagnosticDescriptors.MultipleContextsNotSupported,
-                        data.TypesWithAttribute[0].Context?.Locations.First(),
-                        data.TypesWithAttribute.Skip(1).Where(s => s.Context is not null).Select(s => s.Context!.Locations.First())));
-                    return;
-                }
-            }
-        }
-        else if (data.TypesWithAttribute.Length == 0)
-        {
-            // nothing to generate
             return;
         }
 
@@ -77,13 +59,45 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
             return;
         }
 
+        if (data.TypesWithAttribute.Length == 1)
+        {
+            ProcessContext(context, data, data.TypesWithAttribute[0].Attributes);
+            return;
+        }
+
+        var first = data.TypesWithAttribute[0].Context;
+
+        for (int i = 1; i < data.TypesWithAttribute.Length; i++)
+        {
+            if (!SymbolEqualityComparer.Default.Equals(first, data.TypesWithAttribute[i].Context))
+            {
+                // Verify all contexts are partials of each other SCM0001.
+                context.ReportDiagnostic(Diagnostic.Create(
+                    DiagnosticDescriptors.MultipleContextsNotSupported,
+                    data.TypesWithAttribute[0].Context?.Locations.First(),
+                    data.TypesWithAttribute.Skip(1).Where(s => s.Context is not null).Select(s => s.Context!.Locations.First())));
+                return;
+            }
+        }
+
+        ProcessContext(context, data, data.TypesWithAttribute.SelectMany(c => c.Attributes));
+    }
+
+    private void ProcessContext(
+        SourceProductionContext context,
+        (ImmutableArray<(INamedTypeSymbol? Context,
+            ImmutableArray<AttributeData> Attributes)> TypesWithAttribute,
+            TypeSymbolKindCache SymbolToKindCache,
+            TypeSymbolTypeRefCache SymbolToTypeRefCache) data,
+        IEnumerable<AttributeData> allAttributes)
+    {
         var contextSymbol = data.TypesWithAttribute[0].Context!;
 
         var mrwContextSymbol = GetMrwContextSymbol(contextSymbol);
 
         var contextType = data.SymbolToTypeRefCache.Get(contextSymbol, data.SymbolToKindCache);
 
-        var builders = GetTypesFromAttributes(data.TypesWithAttribute[0].Attributes)
+        var builders = GetTypesFromAttributes(allAttributes)
             .SelectMany(typeSymbol => GetRecursiveGenericTypes(typeSymbol, data.SymbolToKindCache))
             .Distinct(SymbolEqualityComparer.Default);
 
@@ -165,7 +179,7 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
         };
     }
 
-    private IEnumerable<ITypeSymbol> GetTypesFromAttributes(ImmutableArray<AttributeData> attributes)
+    private IEnumerable<ITypeSymbol> GetTypesFromAttributes(IEnumerable<AttributeData> attributes)
     {
         foreach (var attr in attributes)
         {
