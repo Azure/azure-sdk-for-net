@@ -91,20 +91,20 @@ public partial struct JsonPatch
     /// .
     /// </summary>
     /// <param name="jsonPath"></param>
-    /// <param name="value"></param>
-    public void Set(ReadOnlySpan<byte> jsonPath, byte[] value)
+    /// <param name="utf8Json"></param>
+    public void Set(ReadOnlySpan<byte> jsonPath, byte[] utf8Json)
     {
-        SetInternal(jsonPath, EncodeValue(value));
+        SetInternal(jsonPath, EncodeValue(utf8Json));
     }
 
     /// <summary>
     /// .
     /// </summary>
     /// <param name="jsonPath"></param>
-    /// <param name="value"></param>
-    public void Set(ReadOnlySpan<byte> jsonPath, BinaryData value)
+    /// <param name="utf8Json"></param>
+    public void Set(ReadOnlySpan<byte> jsonPath, BinaryData utf8Json)
     {
-        SetInternal(jsonPath, EncodeValue(value));
+        SetInternal(jsonPath, EncodeValue(utf8Json));
     }
 
     /// <summary>
@@ -134,10 +134,10 @@ public partial struct JsonPatch
     /// .
     /// </summary>
     /// <param name="jsonPath"></param>
-    /// <param name="json"></param>
-    public void Set(ReadOnlySpan<byte> jsonPath, ReadOnlySpan<byte> json)
+    /// <param name="utf8Json"></param>
+    public void Set(ReadOnlySpan<byte> jsonPath, ReadOnlySpan<byte> utf8Json)
     {
-        SetInternal(jsonPath, EncodeValue(json));
+        SetInternal(jsonPath, EncodeValue(utf8Json));
     }
 
     /// <summary>

@@ -278,15 +278,15 @@ namespace System.ClientModel.Primitives
         public string? GetString(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public bool IsRemoved(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public void Remove(System.ReadOnlySpan<byte> jsonPath) { }
-        public void Set(System.ReadOnlySpan<byte> jsonPath, System.BinaryData value) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, System.BinaryData utf8Json) { }
         public void Set(System.ReadOnlySpan<byte> jsonPath, bool value) { }
-        public void Set(System.ReadOnlySpan<byte> jsonPath, byte[] value) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, byte[] utf8Json) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public void Set(System.ReadOnlySpan<byte> jsonPath, System.ClientModel.Primitives.JsonPatch.EncodedValue value) { }
         public void Set(System.ReadOnlySpan<byte> jsonPath, int value) { }
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("RequiresDynamicCode")]
         public void Set(System.ReadOnlySpan<byte> jsonPath, object value) { }
-        public void Set(System.ReadOnlySpan<byte> jsonPath, System.ReadOnlySpan<byte> json) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, System.ReadOnlySpan<byte> utf8Json) { }
         public void Set(System.ReadOnlySpan<byte> jsonPath, string value) { }
         public void SetNull(System.ReadOnlySpan<byte> jsonPath) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
