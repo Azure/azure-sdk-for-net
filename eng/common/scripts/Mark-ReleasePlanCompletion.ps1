@@ -44,9 +44,10 @@ if(!$workItems)
 
 $activeReleasePlan = $workItems
 if($workItems.Count -gt 1 -and ($workItems -is [System.Array]))
-{
+{    
+    $concatenatedIds = ($workItems | Select-Object -ExpandProperty id) -join ','
+    Write-Host "Multiple release plans found for package name: $PackageName with work item IDs: $concatenatedIds. Using the first release plan to update release status."
     $activeReleasePlan = $workItems[0]
-    Write-Warning "Multiple active release plans found for package name: $PackageName. Using the first release plan to update release status."    
 }
 # Update release status
 Write-Host "Release plan work item ID: $($activeReleasePlan["id"])"
