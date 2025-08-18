@@ -98,13 +98,16 @@ namespace Azure.AI.Projects
         public AIProjectClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Projects.AIProjectClientOptions options) : base (default(int)) { }
         public AIProjectClient(System.Uri endpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider) : base (default(int)) { }
         public AIProjectClient(System.Uri endpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Projects.AIProjectClientOptions options) : base (default(int)) { }
-        public Azure.AI.Projects.ConnectionsOperations Connections { get { throw null; } }
-        public Azure.AI.Projects.DatasetsOperations Datasets { get { throw null; } }
-        public Azure.AI.Projects.DeploymentsOperations Deployments { get { throw null; } }
-        public Azure.AI.Projects.IndexesOperations Indexes { get { throw null; } }
+        public virtual Azure.AI.Projects.ConnectionsOperations Connections { get { throw null; } }
+        public virtual Azure.AI.Projects.DatasetsOperations Datasets { get { throw null; } }
+        public virtual Azure.AI.Projects.DeploymentsOperations Deployments { get { throw null; } }
+        public virtual Azure.AI.Projects.Evaluations Evaluations { get { throw null; } }
+        public virtual Azure.AI.Projects.IndexesOperations Indexes { get { throw null; } }
         public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
-        public Azure.AI.Projects.Telemetry Telemetry { get { throw null; } }
+        public virtual Azure.AI.Projects.Telemetry Telemetry { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientConnection> GetAllConnections() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override System.ClientModel.Primitives.ClientConnection GetConnection(string connectionId) { throw null; }
         public virtual Azure.AI.Projects.ConnectionsOperations GetConnectionsOperationsClient() { throw null; }
         public virtual Azure.AI.Projects.DatasetsOperations GetDatasetsOperationsClient() { throw null; }
@@ -204,6 +207,7 @@ namespace Azure.AI.Projects
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Projects.AttackStrategy left, Azure.AI.Projects.AttackStrategy right) { throw null; }
         public static implicit operator Azure.AI.Projects.AttackStrategy (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.AttackStrategy? (string value) { throw null; }
         public static bool operator !=(Azure.AI.Projects.AttackStrategy left, Azure.AI.Projects.AttackStrategy right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -215,22 +219,6 @@ namespace Azure.AI.Projects
         Custom = 3,
         None = 4,
     }
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.ApiKeyCredentials))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.AzureAISearchIndex))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.BaseCredentials))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.BlobReference))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.CosmosDBIndex))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.CustomCredential))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.DatasetCredential))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.DatasetVersion))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.EmbeddingConfiguration))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.EntraIDCredentials))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.ManagedAzureAISearchIndex))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.ModelDeployment))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.NoAuthenticationCredentials))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.PendingUploadConfiguration))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.PendingUploadResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.Projects.SASCredentials))]
     public partial class AzureAIProjectsContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureAIProjectsContext() { }
@@ -250,13 +238,13 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.AzureAISearchIndex AzureAISearchIndex(string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null, string connectionName = null, string indexName = null, Azure.AI.Projects.FieldMapping fieldMapping = null) { throw null; }
         public static Azure.AI.Projects.AzureOpenAIModelConfiguration AzureOpenAIModelConfiguration(string modelDeploymentName = null) { throw null; }
         public static Azure.AI.Projects.BaseCredentials BaseCredentials(string type = null) { throw null; }
-        public static Azure.AI.Projects.BlobReference BlobReference(string storageAccountArmId = null, Azure.AI.Projects.BlobReferenceSasCredential credential = null, System.Uri blobUri = null) { throw null; }
-        public static Azure.AI.Projects.BlobReferenceSasCredential BlobReferenceSasCredential(string type = null, System.Uri sasUri = null) { throw null; }
+        public static Azure.AI.Projects.BlobReference BlobReference(System.Uri blobUri = null, string storageAccountArmId = null, Azure.AI.Projects.BlobReferenceSasCredential credential = null) { throw null; }
+        public static Azure.AI.Projects.BlobReferenceSasCredential BlobReferenceSasCredential(System.Uri sasUri = null, string type = null) { throw null; }
         public static Azure.AI.Projects.ConnectionProperties ConnectionProperties(string name = null, string id = null, Azure.AI.Projects.ConnectionType type = default(Azure.AI.Projects.ConnectionType), string target = null, bool isDefault = false, Azure.AI.Projects.BaseCredentials credentials = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null) { throw null; }
         public static Azure.AI.Projects.CosmosDBIndex CosmosDBIndex(string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null, string connectionName = null, string databaseName = null, string containerName = null, Azure.AI.Projects.EmbeddingConfiguration embeddingConfiguration = null, Azure.AI.Projects.FieldMapping fieldMapping = null) { throw null; }
         public static Azure.AI.Projects.CustomCredential CustomCredential(System.Collections.Generic.IReadOnlyDictionary<string, string> keys = null) { throw null; }
         public static Azure.AI.Projects.DatasetCredential DatasetCredential(Azure.AI.Projects.BlobReference blobReference = null) { throw null; }
-        public static Azure.AI.Projects.DatasetVersion DatasetVersion(string type = null, bool? isReference = default(bool?), string connectionName = null, string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null, System.Uri dataUri = null) { throw null; }
+        public static Azure.AI.Projects.DatasetVersion DatasetVersion(System.Uri dataUri = null, string type = null, bool? isReference = default(bool?), string connectionName = null, string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.AI.Projects.DeveloperMessage DeveloperMessage(string content = null) { throw null; }
         public static Azure.AI.Projects.EmbeddingConfiguration EmbeddingConfiguration(string modelDeploymentName = null, string embeddingField = null) { throw null; }
         public static Azure.AI.Projects.EntraIDCredentials EntraIDCredentials() { throw null; }
@@ -264,8 +252,8 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.EvaluationTarget EvaluationTarget(string type = null) { throw null; }
         public static Azure.AI.Projects.EvaluatorConfiguration EvaluatorConfiguration(string id = null, System.Collections.Generic.IDictionary<string, System.BinaryData> initParams = null, System.Collections.Generic.IDictionary<string, string> dataMapping = null) { throw null; }
         public static Azure.AI.Projects.FieldMapping FieldMapping(System.Collections.Generic.IEnumerable<string> contentFields = null, string filepathField = null, string titleField = null, string urlField = null, System.Collections.Generic.IEnumerable<string> vectorFields = null, System.Collections.Generic.IEnumerable<string> metadataFields = null) { throw null; }
-        public static Azure.AI.Projects.FileDatasetVersion FileDatasetVersion(bool? isReference = default(bool?), string connectionName = null, string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null, System.Uri dataUri = null) { throw null; }
-        public static Azure.AI.Projects.FolderDatasetVersion FolderDatasetVersion(bool? isReference = default(bool?), string connectionName = null, string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null, System.Uri dataUri = null) { throw null; }
+        public static Azure.AI.Projects.FileDatasetVersion FileDatasetVersion(System.Uri dataUri = null, bool? isReference = default(bool?), string connectionName = null, string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
+        public static Azure.AI.Projects.FolderDatasetVersion FolderDatasetVersion(System.Uri dataUri = null, bool? isReference = default(bool?), string connectionName = null, string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.AI.Projects.InputData InputData(string type = null) { throw null; }
         public static Azure.AI.Projects.InputDataset InputDataset(string id = null) { throw null; }
         public static Azure.AI.Projects.ManagedAzureAISearchIndex ManagedAzureAISearchIndex(string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null, string vectorStoreId = null) { throw null; }
@@ -413,6 +401,7 @@ namespace Azure.AI.Projects
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Projects.ConnectionType left, Azure.AI.Projects.ConnectionType right) { throw null; }
         public static implicit operator Azure.AI.Projects.ConnectionType (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.ConnectionType? (string value) { throw null; }
         public static bool operator !=(Azure.AI.Projects.ConnectionType left, Azure.AI.Projects.ConnectionType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -547,6 +536,7 @@ namespace Azure.AI.Projects
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Projects.DeploymentType left, Azure.AI.Projects.DeploymentType right) { throw null; }
         public static implicit operator Azure.AI.Projects.DeploymentType (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.DeploymentType? (string value) { throw null; }
         public static bool operator !=(Azure.AI.Projects.DeploymentType left, Azure.AI.Projects.DeploymentType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -636,14 +626,14 @@ namespace Azure.AI.Projects
         public virtual System.ClientModel.ClientResult Delete(string name, string clientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteAsync(string name, string clientRequestId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> DeleteAsync(string name, string clientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.Primitives.CollectionResult Get(string clientRequestId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.ClientModel.ClientResult Get(string name, string clientRequestId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.Evaluation> Get(string name, string clientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.Evaluation> Get(string clientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.Primitives.AsyncCollectionResult GetAsync(string clientRequestId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.Primitives.CollectionResult GetAll(string clientRequestId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.Evaluation> GetAll(string clientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.Primitives.AsyncCollectionResult GetAllAsync(string clientRequestId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.Evaluation> GetAllAsync(string clientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetAsync(string name, string clientRequestId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Evaluation>> GetAsync(string name, string clientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.Evaluation> GetAsync(string clientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public abstract partial class EvaluationTarget : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.EvaluationTarget>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.EvaluationTarget>
     {
@@ -945,6 +935,7 @@ namespace Azure.AI.Projects
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Projects.PendingUploadType left, Azure.AI.Projects.PendingUploadType right) { throw null; }
         public static implicit operator Azure.AI.Projects.PendingUploadType (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.PendingUploadType? (string value) { throw null; }
         public static bool operator !=(Azure.AI.Projects.PendingUploadType left, Azure.AI.Projects.PendingUploadType right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -982,14 +973,14 @@ namespace Azure.AI.Projects
         public virtual System.ClientModel.ClientResult Create(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.RedTeam>> CreateAsync(Azure.AI.Projects.RedTeam redTeam, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> CreateAsync(System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
-        public virtual System.ClientModel.Primitives.CollectionResult Get(string clientRequestId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.ClientModel.ClientResult Get(string name, string clientRequestId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.ClientModel.ClientResult<Azure.AI.Projects.RedTeam> Get(string name, string clientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.RedTeam> Get(string clientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.Primitives.AsyncCollectionResult GetAsync(string clientRequestId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.Primitives.CollectionResult GetAll(string clientRequestId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.CollectionResult<Azure.AI.Projects.RedTeam> GetAll(string clientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.Primitives.AsyncCollectionResult GetAllAsync(string clientRequestId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
+        public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.RedTeam> GetAllAsync(string clientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetAsync(string name, string clientRequestId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.RedTeam>> GetAsync(string name, string clientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.RedTeam> GetAsync(string clientRequestId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RiskCategory : System.IEquatable<Azure.AI.Projects.RiskCategory>
@@ -1008,6 +999,7 @@ namespace Azure.AI.Projects
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.AI.Projects.RiskCategory left, Azure.AI.Projects.RiskCategory right) { throw null; }
         public static implicit operator Azure.AI.Projects.RiskCategory (string value) { throw null; }
+        public static implicit operator Azure.AI.Projects.RiskCategory? (string value) { throw null; }
         public static bool operator !=(Azure.AI.Projects.RiskCategory left, Azure.AI.Projects.RiskCategory right) { throw null; }
         public override string ToString() { throw null; }
     }
