@@ -15,6 +15,12 @@ Param (
     [switch]$Json
 )
 
+$EmitterMap = @{
+    'eng/azure-typespec-http-client-csharp-emitter-package.json' = '@azure-typespec/http-client-csharp'
+    'eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json' = '@azure-typespec/http-client-csharp-mgmt'
+    'eng/http-client-csharp-emitter-package.json' = '@typespec/http-client-csharp'
+}
+
 function Test-MgmtLibrary {
     param([string]$Path)
 
@@ -54,15 +60,9 @@ function Get-GeneratorType {
                 if ($content -match 'emitterPackageJsonPath:\s*(?<val>"[^"]+"|[^,\s]+)\s*,?') {
                     $emitterPath = $matches['val'].Trim('"')
 
-                    $emitterMap = @{
-                        'eng/azure-typespec-http-client-csharp-emitter-package.json' = '@azure-typespec/http-client-csharp'
-                        'eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json' = '@azure-typespec/http-client-csharp-mgmt'
-                        'eng/http-client-csharp-emitter-package.json' = '@typespec/http-client-csharp'
-                    }
-
-                    if ($emitterMap.ContainsKey($emitterPath))
+                    if ($EmitterMap.ContainsKey($emitterPath))
                     {
-                        return $emitterMap[$emitterPath]
+                        return $EmitterMap[$emitterPath]
                     }
 
                     # If we couldn't extract a specific name, use a default fully qualified name
