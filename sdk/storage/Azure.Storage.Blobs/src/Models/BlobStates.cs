@@ -7,8 +7,8 @@ namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// Specifies states to be used to determine the blobs that will be included
-    /// when using the <see cref="BlobContainerClient.GetBlobsAsync"/> and
-    /// <see cref="BlobContainerClient.GetBlobsByHierarchyAsync"/>
+    /// when using the <see cref="BlobContainerClient.GetBlobsAsync(GetBlobsOptions, System.Threading.CancellationToken)"/> and
+    /// <see cref="BlobContainerClient.GetBlobsByHierarchyAsync(GetBlobsByHierarchyOptions, System.Threading.CancellationToken)"/>
     /// operations.
     /// </summary>
     [Flags]
