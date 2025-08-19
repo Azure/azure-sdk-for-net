@@ -10,10 +10,10 @@ skip-csproj: true
 library-name: MySql
 namespace: Azure.ResourceManager.MySql.FlexibleServers
 require: https://github.com/Azure/azure-rest-api-specs/blob/928047803788f7377fa003a26ba2bdc2e0fcccc0/specification/mysql/resource-manager/readme.md
-output-folder: $(this-folder)/MySqlFlexibleServers/Generated
+output-folder: $(this-folder)/Generated
 use-model-reader-writer: true
 sample-gen:
-  output-folder: $(this-folder)/../tests/Generated
+  output-folder: $(this-folder)/../tests/MySqlFlexibleServers/Generated
   clear-output-folder: true
 modelerfour:
   flatten-payloads: false
@@ -97,14 +97,11 @@ rename-mapping:
   HighAvailability: MySqlFlexibleServerHighAvailability
   HighAvailabilityMode: MySqlFlexibleServerHighAvailabilityMode
   HighAvailabilityState: MySqlFlexibleServerHighAvailabilityState
-  ServerProperties: MySqlFlexibleServerProperties
-  ServerPropertiesForUpdate: MySqlFlexibleServerPropertiesForUpdate
   ServerForUpdate: MySqlFlexibleServerForUpdate
   ServerListResult: MySqlFlexibleServerListResult
   ServerRestartParameter: MySqlFlexibleServerRestartParameter
   ServerState: MySqlFlexibleServerState
   ServerBackupListResult: MySqlFlexibleServerBackupListResult
-  FirewallRuleProperties: MySqlFlexibleServerFirewallRuleProperties
   FirewallRuleListResult: MySqlFlexibleServerFirewallRuleListResult
   DatabaseListResult: MySqlFlexibleServerDatabaseListResult
   ConfigurationSource: MySqlFlexibleServerConfigurationSource
@@ -155,10 +152,6 @@ rename-mapping:
   ProvisioningState: MySqlFlexibleServerBackupProvisioningState
 
 override-operation-name:
-  ServerParameters_ListUpdateConfigurations: UpdateConfigurations
-  MySqlServers_Start: Start
-  MySqlServers_Stop: Stop
-  MySqlServers_Upgrade: Upgrade
   CheckNameAvailability_Execute: CheckMySqlFlexibleServerNameAvailability
   CheckNameAvailabilityWithoutLocation_Execute: CheckMySqlFlexibleServerNameAvailabilityWithoutLocation
   Configurations_BatchUpdate: UpdateConfigurations

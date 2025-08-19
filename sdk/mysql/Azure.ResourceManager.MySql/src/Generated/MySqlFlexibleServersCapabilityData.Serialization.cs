@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            ResourceManager.Models.SystemData systemData = default;
             IReadOnlyList<string> supportedGeoBackupRegions = default;
             IReadOnlyList<ServerEditionCapabilityV2> supportedFlexibleServerEditions = default;
             IReadOnlyList<ServerVersionCapabilityV2> supportedServerVersions = default;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMySqlContext.Default);
+                    systemData = ModelReaderWriter.Read<ResourceManager.Models.SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMySqlFlexibleServersContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMySqlContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMySqlFlexibleServersContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MySqlFlexibleServersCapabilityData)} does not support writing '{options.Format}' format.");
             }

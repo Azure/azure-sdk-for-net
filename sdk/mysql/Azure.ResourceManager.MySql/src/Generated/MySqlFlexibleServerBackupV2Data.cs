@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="source"> Backup source. </param>
         /// <param name="provisioningState"> The provisioning state of backup resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServerBackupV2Data(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string backupNameV2, MySqlFlexibleServerBackupType? backupType, DateTimeOffset? completedOn, string source, MySqlFlexibleServerBackupProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal MySqlFlexibleServerBackupV2Data(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string backupNameV2, MySqlFlexibleServerBackupType? backupType, DateTimeOffset? completedOn, string source, MySqlFlexibleServerBackupProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             BackupNameV2 = backupNameV2;
             BackupType = backupType;
