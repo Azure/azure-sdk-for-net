@@ -1256,7 +1256,12 @@ namespace Azure.Storage.Files.Shares.Models
     public partial class ShareNfsSettings
     {
         public ShareNfsSettings() { }
-        public bool? EncryptionInTransit { get { throw null; } set { } }
+        public Azure.Storage.Files.Shares.Models.ShareNfsSettingsEncryptionInTransit EncryptionInTransit { get { throw null; } set { } }
+    }
+    public partial class ShareNfsSettingsEncryptionInTransit
+    {
+        public ShareNfsSettingsEncryptionInTransit() { }
+        public bool? Required { get { throw null; } set { } }
     }
     public partial class ShareProperties
     {
@@ -1346,8 +1351,13 @@ namespace Azure.Storage.Files.Shares.Models
     public partial class ShareSmbSettings
     {
         public ShareSmbSettings() { }
-        public bool? EncryptionInTransit { get { throw null; } set { } }
+        public Azure.Storage.Files.Shares.Models.ShareSmbSettingsEncryptionInTransit EncryptionInTransit { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.SmbMultichannel Multichannel { get { throw null; } set { } }
+    }
+    public partial class ShareSmbSettingsEncryptionInTransit
+    {
+        public ShareSmbSettingsEncryptionInTransit() { }
+        public bool? Required { get { throw null; } set { } }
     }
     public static partial class SharesModelFactory
     {
