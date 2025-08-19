@@ -75,35 +75,6 @@ prepend-rp-prefix:
   - ServerState
 
 rename-mapping:
-  ServerAdministratorResource: MySqlServerAdministrator
-  ServerAdministratorResource.properties.login: LoginAccountName
-  ServerAdministratorResource.properties.sid: SecureId
-  ServerAdministratorResourceListResult: MySqlServerAdministratorListResult
-  AdvisorsResultList: MySqlAdvisorListResult
-  QueryTextsResultList: MySqlQueryTextListResult
-  TopQueryStatisticsResultList: MySqlTopQueryStatisticsListResult
-  RecommendationActionsResultList: MySqlRecommendationActionListResult
-  WaitStatisticsResultList: MySqlWaitStatisticsListResult
-  PrivateLinkServiceConnectionStateActionsRequire: MySqlPrivateLinkServiceConnectionStateRequiredActions
-  RecoverableServerResource: MySqlRecoverableServerResourceData
-  RecoverableServerResource.properties.vCore: VCores
-  ServerSecurityAlertPolicy.properties.emailAccountAdmins: SendToEmailAccountAdmins
-  NameAvailability.nameAvailable: IsNameAvailable
-  StorageProfile.storageMB: StorageInMB
-  WaitStatistic.properties.totalTimeInMs: TotalTimeInMinutes
-  PerformanceTierProperties.minStorageMB: MinStorageInMB
-  PerformanceTierProperties.maxStorageMB: MaxStorageInMB
-  PerformanceTierProperties.minLargeStorageMB: MinLargeStorageInMB
-  PerformanceTierProperties.maxLargeStorageMB: MaxLargeStorageInMB
-  PerformanceTierServiceLevelObjectives.maxStorageMB: MaxStorageInMB
-  PerformanceTierServiceLevelObjectives.minStorageMB: MinStorageInMB
-  PerformanceTierServiceLevelObjectives.vCore: VCores
-  NameAvailability: MySqlNameAvailabilityResult
-  PerformanceTierProperties: MySqlPerformanceTier
-  ConfigurationListResult: MySqlConfigurations
-  LogFile.properties.type: LogFileType
-  ConfigurationListResult.value: Values
-  NameAvailabilityRequest: MySqlNameAvailabilityContent
   Storage.storageSizeGB: StorageSizeInGB
   SkuCapability.supportedMemoryPerVCoreMB: SupportedMemoryPerVCoreInMB
   ConfigurationListForBatchUpdate.value: Values
@@ -188,7 +159,6 @@ override-operation-name:
   MySqlServers_Start: Start
   MySqlServers_Stop: Stop
   MySqlServers_Upgrade: Upgrade
-  CheckNameAvailability_Execute: CheckMySqlNameAvailability
   CheckNameAvailability_Execute: CheckMySqlFlexibleServerNameAvailability
   CheckNameAvailabilityWithoutLocation_Execute: CheckMySqlFlexibleServerNameAvailabilityWithoutLocation
   Configurations_BatchUpdate: UpdateConfigurations
