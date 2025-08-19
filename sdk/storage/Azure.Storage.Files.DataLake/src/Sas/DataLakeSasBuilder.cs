@@ -199,6 +199,13 @@ namespace Azure.Storage.Sas
         public string EncryptionScope { get; set; }
 
         /// <summary>
+        /// Optional. Beginning in version 2025-07-05, this value  specifies the Entra ID of the user would is authorized to
+        /// use the resulting SAS URL.  The resulting SAS URL must be used in conjunction with an Entra ID token that has been
+        /// issued to the user specified in this value.
+        /// </summary>
+        public string DelegatedUserObjectId { get; set; }
+
+        /// <summary>
         /// Optional. Required when <see cref="Resource"/> is set to d to indicate the
         /// depth of the directory specified in the canonicalizedresource field of the
         /// string-to-sign to indicate the depth of the directory specified in the
@@ -503,7 +510,8 @@ namespace Azure.Storage.Sas
                 unauthorizedAadObjectId: AgentObjectId,
                 correlationId: CorrelationId,
                 directoryDepth: _directoryDepth,
-                encryptionScope: EncryptionScope);
+                encryptionScope: EncryptionScope,
+                delegatedUserObjectId: DelegatedUserObjectId);
             return p;
         }
 
@@ -530,7 +538,7 @@ namespace Azure.Storage.Sas
                 AgentObjectId,
                 CorrelationId,
                 null, // SignedKeyDelegatedUserTenantId, will be added in a future release.
-                null, // SignedDelegatedUserObjectId, will be added in future release.
+                DelegatedUserObjectId,
                 IPRange.ToString(),
                 SasExtensions.ToProtocolString(Protocol),
                 Version,
