@@ -13,47 +13,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.HealthcareApis.FhirResourceDeleted event. </summary>
     public partial class HealthcareFhirResourceDeletedEventData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HealthcareFhirResourceDeletedEventData"/>. </summary>
         /// <param name="fhirServiceHostName"> Domain name of FHIR account for this resource. </param>
         /// <param name="fhirResourceId"> Id of HL7 FHIR resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fhirServiceHostName"/> or <paramref name="fhirResourceId"/> is null. </exception>
         internal HealthcareFhirResourceDeletedEventData(string fhirServiceHostName, string fhirResourceId)
         {
-            Argument.AssertNotNull(fhirServiceHostName, nameof(fhirServiceHostName));
-            Argument.AssertNotNull(fhirResourceId, nameof(fhirResourceId));
-
             FhirServiceHostName = fhirServiceHostName;
             FhirResourceId = fhirResourceId;
         }
@@ -63,27 +30,25 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="fhirServiceHostName"> Domain name of FHIR account for this resource. </param>
         /// <param name="fhirResourceId"> Id of HL7 FHIR resource. </param>
         /// <param name="fhirResourceVersionId"> VersionId of HL7 FHIR resource. It changes when the resource is created, updated, or deleted(soft-deletion). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HealthcareFhirResourceDeletedEventData(HealthcareFhirResourceType? fhirResourceType, string fhirServiceHostName, string fhirResourceId, long? fhirResourceVersionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HealthcareFhirResourceDeletedEventData(HealthcareFhirResourceType? fhirResourceType, string fhirServiceHostName, string fhirResourceId, long? fhirResourceVersionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FhirResourceType = fhirResourceType;
             FhirServiceHostName = fhirServiceHostName;
             FhirResourceId = fhirResourceId;
             FhirResourceVersionId = fhirResourceVersionId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="HealthcareFhirResourceDeletedEventData"/> for deserialization. </summary>
-        internal HealthcareFhirResourceDeletedEventData()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Type of HL7 FHIR resource. </summary>
         public HealthcareFhirResourceType? FhirResourceType { get; }
+
         /// <summary> Domain name of FHIR account for this resource. </summary>
         public string FhirServiceHostName { get; }
+
         /// <summary> Id of HL7 FHIR resource. </summary>
         public string FhirResourceId { get; }
+
         /// <summary> VersionId of HL7 FHIR resource. It changes when the resource is created, updated, or deleted(soft-deletion). </summary>
         public long? FhirResourceVersionId { get; }
     }

@@ -37,7 +37,6 @@ public class PlaywrightServiceBrowserClientTests
         Assert.Multiple(() =>
         {
             Assert.That(client._options.ServiceAuth, Is.EqualTo(ServiceAuthType.EntraId));
-            Assert.That(client._options.UseCloudHostedBrowsers, Is.True);
             Assert.AreEqual(client._options.OS, OSPlatform.Linux);
             Assert.AreEqual(client._options.ExposeNetwork, Constants.s_default_expose_network);
             Assert.That(Guid.TryParse(client._options.RunId, out _), Is.True);
@@ -165,35 +164,6 @@ public class PlaywrightServiceBrowserClientTests
         client.RotationTimer!.Dispose();
 
         Assert.That(environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString()), Is.Not.Null);
-    }
-
-    [Test]
-    public void InitializeAsync_WhenDefaultAuthIsEntraIdAccessTokenAndAccessTokenEnvironmentVariableIsSetButScalableExecutionIsDisabled_DeletesServiceUrlEnvVariable()
-    {
-        var environment = new TestEnvironment();
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://eastus.api.playwright.microsoft.com/playwrightworkspaces/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers");
-        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
-        var playwrightVersion = new PlaywrightVersion();
-        var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
-        var token = "valid_token";
-        defaultAzureCredentialMock
-            .Setup(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new AccessToken(token, DateTimeOffset.UtcNow.AddMinutes(10)));
-        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null, environment);
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), "access_token");
-        var clientOptions = new PlaywrightServiceBrowserClientOptions(environment: environment, serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview)
-        {
-            UseCloudHostedBrowsers = false
-        };
-        PlaywrightServiceBrowserClient client = new(environment, entraLifecycle: entraLifecycleMock.Object, options: clientOptions, playwrightVersion: playwrightVersion);
-
-        Assert.That(environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString()), Is.Not.Null);
-
-        client.InitializeAsync().Wait();
-        defaultAzureCredentialMock.Verify(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Never);
-
-        Assert.That(client.RotationTimer, Is.Null);
-        Assert.That(environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString()), Is.Null);
     }
 
     [Test]
@@ -465,35 +435,6 @@ public class PlaywrightServiceBrowserClientTests
     }
 
     [Test]
-    public void Initialize_WhenDefaultAuthIsEntraIdAccessTokenAndAccessTokenEnvironmentVariableIsSetButScalableExecutionIsDisabled_DeletesServiceUrlEnvVariable()
-    {
-        var environment = new TestEnvironment();
-        var playwrightVersion = new PlaywrightVersion();
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://eastus.api.playwright.microsoft.com/playwrightworkspaces/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers");
-        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
-        var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
-        var token = "valid_token";
-        defaultAzureCredentialMock
-            .Setup(x => x.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
-            .Returns(new AccessToken(token, DateTimeOffset.UtcNow.AddMinutes(10)));
-        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null, environment);
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), "access_token");
-        var clientOptions = new PlaywrightServiceBrowserClientOptions(environment: environment, serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview)
-        {
-            UseCloudHostedBrowsers = false
-        };
-        PlaywrightServiceBrowserClient client = new(environment, entraLifecycle: entraLifecycleMock.Object, options: clientOptions, playwrightVersion: playwrightVersion);
-
-        Assert.That(environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString()), Is.Not.Null);
-
-        client.Initialize();
-        defaultAzureCredentialMock.Verify(x => x.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Never);
-
-        Assert.That(client.RotationTimer, Is.Null);
-        Assert.That(environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString()), Is.Null);
-    }
-
-    [Test]
     public void Initialize_WhenDefaultAuthIsEntraIdAccessTokenAndAccessTokenEnvironmentVariableIsNotSet_FetchesEntraIdAccessToken()
     {
         var environment = new TestEnvironment();
@@ -751,25 +692,6 @@ public class PlaywrightServiceBrowserClientTests
     }
 
     [Test]
-    public void GetConnectOptionsAsync_WhenUseCloudHostedBrowsersEnvironmentIsFalse_ThrowsException()
-    {
-        var environment = new TestEnvironment();
-        var playwrightVersion = new PlaywrightVersion();
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://eastus.api.playwright.microsoft.com/playwrightworkspaces/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers");
-        var clientOptions = new PlaywrightServiceBrowserClientOptions(environment: environment, serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview)
-        {
-            UseCloudHostedBrowsers = false
-        };
-        PlaywrightServiceBrowserClient client = new(environment, options: clientOptions, playwrightVersion: playwrightVersion);
-        Exception? ex = Assert.ThrowsAsync<Exception>(() => client.GetConnectOptionsAsync<BrowserConnectOptions>());
-        Assert.Multiple(() =>
-        {
-            Assert.That(client._options.UseCloudHostedBrowsers, Is.False);
-            Assert.That(ex!.Message, Is.EqualTo(Constants.s_service_endpoint_removed_since_scalable_execution_disabled_error_message));
-        });
-    }
-
-    [Test]
     public async Task GetConnectOptionsAsync_WhenServiceEndpointIsSet_ReturnsConnectOptions()
     {
         var runId = "run-id";
@@ -994,25 +916,6 @@ public class PlaywrightServiceBrowserClientTests
 
         Exception? ex = Assert.ThrowsAsync<Exception>(() => client.GetConnectOptionsAsync<BrowserConnectOptions>());
         Assert.That(ex!.Message, Is.EqualTo(Constants.s_no_auth_error));
-    }
-
-    [Test]
-    public void GetConnectOptions_WhenUseCloudHostedBrowsersEnvironmentIsFalse_ThrowsException()
-    {
-        var environment = new TestEnvironment();
-        var playwrightVersion = new PlaywrightVersion();
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://eastus.api.playwright.microsoft.com/playwrightworkspaces/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers");
-        var clientOptions = new PlaywrightServiceBrowserClientOptions(environment: environment, serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview)
-        {
-            UseCloudHostedBrowsers = false
-        };
-        PlaywrightServiceBrowserClient client = new(environment, options: clientOptions, playwrightVersion: playwrightVersion);
-        Exception? ex = Assert.Throws<Exception>(() => client.GetConnectOptions<BrowserConnectOptions>());
-        Assert.Multiple(() =>
-        {
-            Assert.That(client._options.UseCloudHostedBrowsers, Is.False);
-            Assert.That(ex!.Message, Is.EqualTo(Constants.s_service_endpoint_removed_since_scalable_execution_disabled_error_message));
-        });
     }
 
     [Test]

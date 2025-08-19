@@ -29,7 +29,6 @@ namespace Azure.Developer.Playwright
         public string RunName { get { throw null; } set { } }
         public Azure.Developer.Playwright.ServiceAuthType ServiceAuth { get { throw null; } set { } }
         public string? ServiceEndpoint { get { throw null; } set { } }
-        public bool UseCloudHostedBrowsers { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2025_07_01_Preview = 1,

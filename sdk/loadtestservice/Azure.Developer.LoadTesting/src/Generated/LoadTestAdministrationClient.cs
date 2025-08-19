@@ -1596,7 +1596,6 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath(fileName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1612,7 +1611,6 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath(testId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1646,7 +1644,6 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath(testProfileId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
