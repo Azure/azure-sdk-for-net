@@ -1050,7 +1050,7 @@ namespace Azure.Storage.Files.DataLake.Models
     }
     public partial class GetPathTagResult
     {
-        public GetPathTagResult() { }
+        internal GetPathTagResult() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class PathAccessControl

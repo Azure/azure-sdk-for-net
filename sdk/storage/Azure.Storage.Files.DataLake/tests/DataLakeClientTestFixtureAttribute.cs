@@ -42,7 +42,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                 StorageVersionExtensions.MaxVersion)
         {
             RecordingServiceVersion = StorageVersionExtensions.MaxVersion;
-            LiveServiceVersions = new object[] { StorageVersionExtensions.MaxVersion };
+            LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion };
         }
     }
 }

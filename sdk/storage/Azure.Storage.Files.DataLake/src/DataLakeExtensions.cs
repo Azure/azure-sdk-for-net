@@ -992,14 +992,9 @@ namespace Azure.Storage.Files.DataLake
 
         internal static GetPathTagResult ToGetPathTagResult(this GetBlobTagResult blobTagResult)
         {
-            if (blobTagResult == null)
-            {
-                return null;
-            }
-            return new GetPathTagResult
-            {
-                Tags = blobTagResult.Tags
-            };
+            return blobTagResult == null
+                ? null
+                : new GetPathTagResult { Tags = blobTagResult.Tags };
         }
 
         #region ValidateConditionsNotPresent

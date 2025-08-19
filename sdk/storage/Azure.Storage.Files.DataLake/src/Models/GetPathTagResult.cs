@@ -14,5 +14,7 @@ namespace Azure.Storage.Files.DataLake.Models
         /// Path Tags.
         /// </summary>
         public Tags Tags { get; internal set; }
+
+        internal GetPathTagResult() { }
     }
 }
