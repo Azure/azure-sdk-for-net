@@ -297,11 +297,11 @@ namespace Azure.ResourceManager.IotOperations
             return GetIotOperationsDataflowEndpoints().Get(dataflowEndpointName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of RegistryEndpointResources in the IotOperationsInstance. </summary>
-        /// <returns> An object representing collection of RegistryEndpointResources and their operations over a RegistryEndpointResource. </returns>
-        public virtual RegistryEndpointResourceCollection GetRegistryEndpointResources()
+        /// <summary> Gets a collection of IotOperationsRegistryEndpointResources in the IotOperationsInstance. </summary>
+        /// <returns> An object representing collection of IotOperationsRegistryEndpointResources and their operations over a IotOperationsRegistryEndpointResource. </returns>
+        public virtual IotOperationsRegistryEndpointCollection GetIotOperationsRegistryEndpoints()
         {
-            return GetCachedClient(client => new RegistryEndpointResourceCollection(client, Id));
+            return GetCachedClient(client => new IotOperationsRegistryEndpointCollection(client, Id));
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RegistryEndpointResource"/></description>
+        /// <description><see cref="IotOperationsRegistryEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -330,9 +330,9 @@ namespace Azure.ResourceManager.IotOperations
         /// <exception cref="ArgumentNullException"> <paramref name="registryEndpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="registryEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RegistryEndpointResource>> GetRegistryEndpointResourceAsync(string registryEndpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IotOperationsRegistryEndpointResource>> GetIotOperationsRegistryEndpointAsync(string registryEndpointName, CancellationToken cancellationToken = default)
         {
-            return await GetRegistryEndpointResources().GetAsync(registryEndpointName, cancellationToken).ConfigureAwait(false);
+            return await GetIotOperationsRegistryEndpoints().GetAsync(registryEndpointName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="RegistryEndpointResource"/></description>
+        /// <description><see cref="IotOperationsRegistryEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -361,47 +361,16 @@ namespace Azure.ResourceManager.IotOperations
         /// <exception cref="ArgumentNullException"> <paramref name="registryEndpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="registryEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RegistryEndpointResource> GetRegistryEndpointResource(string registryEndpointName, CancellationToken cancellationToken = default)
+        public virtual Response<IotOperationsRegistryEndpointResource> GetIotOperationsRegistryEndpoint(string registryEndpointName, CancellationToken cancellationToken = default)
         {
-            return GetRegistryEndpointResources().Get(registryEndpointName, cancellationToken);
+            return GetIotOperationsRegistryEndpoints().Get(registryEndpointName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AkriConnectorTemplateResources in the IotOperationsInstance. </summary>
-        /// <returns> An object representing collection of AkriConnectorTemplateResources and their operations over a AkriConnectorTemplateResource. </returns>
-        public virtual AkriConnectorTemplateResourceCollection GetAkriConnectorTemplateResources()
+        /// <summary> Gets a collection of IotOperationsAkriConnectorTemplateResources in the IotOperationsInstance. </summary>
+        /// <returns> An object representing collection of IotOperationsAkriConnectorTemplateResources and their operations over a IotOperationsAkriConnectorTemplateResource. </returns>
+        public virtual IotOperationsAkriConnectorTemplateCollection GetIotOperationsAkriConnectorTemplates()
         {
-            return GetCachedClient(client => new AkriConnectorTemplateResourceCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a AkriConnectorTemplateResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/akriConnectorTemplates/{akriConnectorTemplateName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AkriConnectorTemplateResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AkriConnectorTemplateResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="akriConnectorTemplateName"> Name of AkriConnectorTemplate resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="akriConnectorTemplateName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="akriConnectorTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<AkriConnectorTemplateResource>> GetAkriConnectorTemplateResourceAsync(string akriConnectorTemplateName, CancellationToken cancellationToken = default)
-        {
-            return await GetAkriConnectorTemplateResources().GetAsync(akriConnectorTemplateName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new IotOperationsAkriConnectorTemplateCollection(client, Id));
         }
 
         /// <summary>
@@ -421,7 +390,7 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AkriConnectorTemplateResource"/></description>
+        /// <description><see cref="IotOperationsAkriConnectorTemplateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -430,9 +399,40 @@ namespace Azure.ResourceManager.IotOperations
         /// <exception cref="ArgumentNullException"> <paramref name="akriConnectorTemplateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="akriConnectorTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AkriConnectorTemplateResource> GetAkriConnectorTemplateResource(string akriConnectorTemplateName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IotOperationsAkriConnectorTemplateResource>> GetIotOperationsAkriConnectorTemplateAsync(string akriConnectorTemplateName, CancellationToken cancellationToken = default)
         {
-            return GetAkriConnectorTemplateResources().Get(akriConnectorTemplateName, cancellationToken);
+            return await GetIotOperationsAkriConnectorTemplates().GetAsync(akriConnectorTemplateName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a AkriConnectorTemplateResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTOperations/instances/{instanceName}/akriConnectorTemplates/{akriConnectorTemplateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AkriConnectorTemplateResource_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotOperationsAkriConnectorTemplateResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="akriConnectorTemplateName"> Name of AkriConnectorTemplate resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="akriConnectorTemplateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="akriConnectorTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<IotOperationsAkriConnectorTemplateResource> GetIotOperationsAkriConnectorTemplate(string akriConnectorTemplateName, CancellationToken cancellationToken = default)
+        {
+            return GetIotOperationsAkriConnectorTemplates().Get(akriConnectorTemplateName, cancellationToken);
         }
 
         /// <summary>

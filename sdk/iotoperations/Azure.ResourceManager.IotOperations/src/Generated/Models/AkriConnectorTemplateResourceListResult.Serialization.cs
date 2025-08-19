@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 return null;
             }
-            IReadOnlyList<AkriConnectorTemplateResourceData> value = default;
+            IReadOnlyList<IotOperationsAkriConnectorTemplateData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<AkriConnectorTemplateResourceData> array = new List<AkriConnectorTemplateResourceData>();
+                    List<IotOperationsAkriConnectorTemplateData> array = new List<IotOperationsAkriConnectorTemplateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AkriConnectorTemplateResourceData.DeserializeAkriConnectorTemplateResourceData(item, options));
+                        array.Add(IotOperationsAkriConnectorTemplateData.DeserializeIotOperationsAkriConnectorTemplateData(item, options));
                     }
                     value = array;
                     continue;

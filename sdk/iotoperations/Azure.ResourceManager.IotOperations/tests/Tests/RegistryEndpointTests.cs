@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotOperations.Tests
         public async Task TestRegistryEndpoints()
         {
             // Get the RegistryEndpoint collection
-            RegistryEndpointResourceCollection endpointCollection = await GetRegistryEndpointResourceCollectionAsync(ResourceGroup);
+            IotOperationsRegistryEndpointCollection endpointCollection = await GetRegistryEndpointResourceCollectionAsync(ResourceGroup);
 
             try
             {
@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.IotOperations.Tests
             }
         }
 
-        private RegistryEndpointResourceData CreateRegistryEndpointResourceData()
+        private IotOperationsRegistryEndpointData CreateRegistryEndpointResourceData()
         {
-            return new RegistryEndpointResourceData
+            return new IotOperationsRegistryEndpointData
             {
-                Properties = new RegistryEndpointProperties
+                Properties = new IotOperationsRegistryEndpointProperties
                 {
                     Host = "contoso.azurecr.io",
                     Authentication = new RegistryEndpointAnonymousAuthentication(new RegistryEndpointAnonymousSettings())

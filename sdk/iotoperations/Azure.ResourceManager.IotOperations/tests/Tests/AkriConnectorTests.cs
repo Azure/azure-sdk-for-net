@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.IotOperations.Tests
                         ConfigurationSchemaRefs = mediaSchemaRefs
                     }
                 };
-                var templateData = new AkriConnectorTemplateResourceData
+                var templateData = new IotOperationsAkriConnectorTemplateData
                 {
                     ExtendedLocation = new IotOperationsExtendedLocation(ExtendedLocation, IotOperationsExtendedLocationType.CustomLocation),
-                    Properties = new AkriConnectorTemplateProperties(runtimeConfiguration, inboundEndpoints)
+                    Properties = new IotOperationsAkriConnectorTemplateProperties(runtimeConfiguration, inboundEndpoints)
                 };
 
                 try
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.IotOperations.Tests
             var connectorName = Recording.GenerateAssetName("sdk-test-akriconnector-");
 
             // Get existing AkriConnectorResource (if any)
-            AkriConnectorResource connectorResource = null;
+            IotOperationsAkriConnectorResource connectorResource = null;
             try
             {
                 connectorResource = await connectorCollection.GetAsync(connectorName);
@@ -88,15 +88,15 @@ namespace Azure.ResourceManager.IotOperations.Tests
             {}
 
             // Create AkriConnectorResource
-            AkriConnectorResourceData connectorData = CreateAkriConnectorResourceData(connectorResource);
+            IotOperationsAkriConnectorData connectorData = CreateAkriConnectorResourceData(connectorResource);
 
-            ArmOperation<AkriConnectorResource> resp =
+            ArmOperation<IotOperationsAkriConnectorResource> resp =
                 await connectorCollection.CreateOrUpdateAsync(
                     WaitUntil.Completed,
                     connectorName,
                     connectorData
                 );
-            AkriConnectorResource createdConnector = resp.Value;
+            IotOperationsAkriConnectorResource createdConnector = resp.Value;
 
             Assert.IsNotNull(createdConnector);
             Assert.IsNotNull(createdConnector.Data);
@@ -111,11 +111,11 @@ namespace Azure.ResourceManager.IotOperations.Tests
             );
         }
 
-        private AkriConnectorResourceData CreateAkriConnectorResourceData(AkriConnectorResource connectorResource)
+        private IotOperationsAkriConnectorData CreateAkriConnectorResourceData(IotOperationsAkriConnectorResource connectorResource)
         {
             if (connectorResource != null)
             {
-                return new AkriConnectorResourceData
+                return new IotOperationsAkriConnectorData
                 {
                     Properties = connectorResource.Data.Properties,
                     ExtendedLocation = connectorResource.Data.ExtendedLocation
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.IotOperations.Tests
             }
             else
             {
-                return new AkriConnectorResourceData
+                return new IotOperationsAkriConnectorData
                 {};
             }
         }

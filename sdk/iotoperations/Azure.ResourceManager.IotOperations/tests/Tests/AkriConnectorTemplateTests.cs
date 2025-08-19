@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.IotOperations.Tests
             // Get AkriConnectorTemplate collection
             var templateCollection = await GetAkriConnectorTemplateResourceCollectionAsync(ResourceGroup);
             // Create AkriConnectorTemplate
-            var templateData = CreateAkriConnectorTemplateResourceData();
+            var templateData = CreateAkriConnectorTemplateData();
 
             if (await templateCollection.ExistsAsync("sdk-test-akriconnector-template"))
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.IotOperations.Tests
             );
         }
 
-        private AkriConnectorTemplateResourceData CreateAkriConnectorTemplateResourceData()
+        private IotOperationsAkriConnectorTemplateData CreateAkriConnectorTemplateData()
         {
             // ManagedConfiguration with ImageConfiguration (registry, tag) and bucketized allocation
             var imageSettings = new AkriConnectorTemplateRuntimeImageConfigurationSettings("aio-connectors/media-connector")
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.IotOperations.Tests
             };
 
             // Build and return the resource data, including extended location (CustomLocation)
-            return new AkriConnectorTemplateResourceData
+            return new IotOperationsAkriConnectorTemplateData
             {
                 ExtendedLocation = new IotOperationsExtendedLocation(ExtendedLocation, IotOperationsExtendedLocationType.CustomLocation),
-                Properties = new AkriConnectorTemplateProperties(
+                Properties = new IotOperationsAkriConnectorTemplateProperties(
                     runtimeConfiguration: runtimeConfiguration,
                     deviceInboundEndpointTypes: inboundEndpoints
                 )

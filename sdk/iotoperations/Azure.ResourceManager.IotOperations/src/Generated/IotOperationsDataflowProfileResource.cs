@@ -157,11 +157,11 @@ namespace Azure.ResourceManager.IotOperations
             return GetIotOperationsDataflows().Get(dataflowName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DataflowGraphResources in the IotOperationsDataflowProfile. </summary>
-        /// <returns> An object representing collection of DataflowGraphResources and their operations over a DataflowGraphResource. </returns>
-        public virtual DataflowGraphResourceCollection GetDataflowGraphResources()
+        /// <summary> Gets a collection of IotOperationsDataflowGraphResources in the IotOperationsDataflowProfile. </summary>
+        /// <returns> An object representing collection of IotOperationsDataflowGraphResources and their operations over a IotOperationsDataflowGraphResource. </returns>
+        public virtual IotOperationsDataflowGraphCollection GetIotOperationsDataflowGraphs()
         {
-            return GetCachedClient(client => new DataflowGraphResourceCollection(client, Id));
+            return GetCachedClient(client => new IotOperationsDataflowGraphCollection(client, Id));
         }
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DataflowGraphResource"/></description>
+        /// <description><see cref="IotOperationsDataflowGraphResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -190,9 +190,9 @@ namespace Azure.ResourceManager.IotOperations
         /// <exception cref="ArgumentNullException"> <paramref name="dataflowGraphName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dataflowGraphName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DataflowGraphResource>> GetDataflowGraphResourceAsync(string dataflowGraphName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IotOperationsDataflowGraphResource>> GetIotOperationsDataflowGraphAsync(string dataflowGraphName, CancellationToken cancellationToken = default)
         {
-            return await GetDataflowGraphResources().GetAsync(dataflowGraphName, cancellationToken).ConfigureAwait(false);
+            return await GetIotOperationsDataflowGraphs().GetAsync(dataflowGraphName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DataflowGraphResource"/></description>
+        /// <description><see cref="IotOperationsDataflowGraphResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,9 +221,9 @@ namespace Azure.ResourceManager.IotOperations
         /// <exception cref="ArgumentNullException"> <paramref name="dataflowGraphName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dataflowGraphName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DataflowGraphResource> GetDataflowGraphResource(string dataflowGraphName, CancellationToken cancellationToken = default)
+        public virtual Response<IotOperationsDataflowGraphResource> GetIotOperationsDataflowGraph(string dataflowGraphName, CancellationToken cancellationToken = default)
         {
-            return GetDataflowGraphResources().Get(dataflowGraphName, cancellationToken);
+            return GetIotOperationsDataflowGraphs().Get(dataflowGraphName, cancellationToken);
         }
 
         /// <summary>

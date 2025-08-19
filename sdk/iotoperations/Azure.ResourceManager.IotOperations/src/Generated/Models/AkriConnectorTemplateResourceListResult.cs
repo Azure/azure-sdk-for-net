@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Initializes a new instance of <see cref="AkriConnectorTemplateResourceListResult"/>. </summary>
         /// <param name="value"> The AkriConnectorTemplateResource items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AkriConnectorTemplateResourceListResult(IEnumerable<AkriConnectorTemplateResourceData> value)
+        internal AkriConnectorTemplateResourceListResult(IEnumerable<IotOperationsAkriConnectorTemplateData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="value"> The AkriConnectorTemplateResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AkriConnectorTemplateResourceListResult(IReadOnlyList<AkriConnectorTemplateResourceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AkriConnectorTemplateResourceListResult(IReadOnlyList<IotOperationsAkriConnectorTemplateData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         }
 
         /// <summary> The AkriConnectorTemplateResource items on this page. </summary>
-        public IReadOnlyList<AkriConnectorTemplateResourceData> Value { get; }
+        public IReadOnlyList<IotOperationsAkriConnectorTemplateData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

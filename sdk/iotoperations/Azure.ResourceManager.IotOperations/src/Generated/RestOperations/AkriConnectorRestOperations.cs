@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.IotOperations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/>, <paramref name="akriConnectorTemplateName"/> or <paramref name="connectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/>, <paramref name="akriConnectorTemplateName"/> or <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AkriConnectorResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string instanceName, string akriConnectorTemplateName, string connectorName, CancellationToken cancellationToken = default)
+        public async Task<Response<IotOperationsAkriConnectorData>> GetAsync(string subscriptionId, string resourceGroupName, string instanceName, string akriConnectorTemplateName, string connectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -101,13 +101,13 @@ namespace Azure.ResourceManager.IotOperations
             {
                 case 200:
                     {
-                        AkriConnectorResourceData value = default;
+                        IotOperationsAkriConnectorData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = AkriConnectorResourceData.DeserializeAkriConnectorResourceData(document.RootElement);
+                        value = IotOperationsAkriConnectorData.DeserializeIotOperationsAkriConnectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AkriConnectorResourceData)null, message.Response);
+                    return Response.FromValue((IotOperationsAkriConnectorData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.IotOperations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/>, <paramref name="akriConnectorTemplateName"/> or <paramref name="connectorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/>, <paramref name="akriConnectorTemplateName"/> or <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AkriConnectorResourceData> Get(string subscriptionId, string resourceGroupName, string instanceName, string akriConnectorTemplateName, string connectorName, CancellationToken cancellationToken = default)
+        public Response<IotOperationsAkriConnectorData> Get(string subscriptionId, string resourceGroupName, string instanceName, string akriConnectorTemplateName, string connectorName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -136,19 +136,19 @@ namespace Azure.ResourceManager.IotOperations
             {
                 case 200:
                     {
-                        AkriConnectorResourceData value = default;
+                        IotOperationsAkriConnectorData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = AkriConnectorResourceData.DeserializeAkriConnectorResourceData(document.RootElement);
+                        value = IotOperationsAkriConnectorData.DeserializeIotOperationsAkriConnectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AkriConnectorResourceData)null, message.Response);
+                    return Response.FromValue((IotOperationsAkriConnectorData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string instanceName, string akriConnectorTemplateName, string connectorName, AkriConnectorResourceData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string instanceName, string akriConnectorTemplateName, string connectorName, IotOperationsAkriConnectorData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.IotOperations
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string instanceName, string akriConnectorTemplateName, string connectorName, AkriConnectorResourceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string instanceName, string akriConnectorTemplateName, string connectorName, IotOperationsAkriConnectorData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.IotOperations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/>, <paramref name="akriConnectorTemplateName"/>, <paramref name="connectorName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/>, <paramref name="akriConnectorTemplateName"/> or <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string instanceName, string akriConnectorTemplateName, string connectorName, AkriConnectorResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string instanceName, string akriConnectorTemplateName, string connectorName, IotOperationsAkriConnectorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.IotOperations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/>, <paramref name="akriConnectorTemplateName"/>, <paramref name="connectorName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/>, <paramref name="akriConnectorTemplateName"/> or <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string instanceName, string akriConnectorTemplateName, string connectorName, AkriConnectorResourceData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string instanceName, string akriConnectorTemplateName, string connectorName, IotOperationsAkriConnectorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -293,7 +293,6 @@ namespace Azure.ResourceManager.IotOperations
             uri.AppendPath(connectorName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }

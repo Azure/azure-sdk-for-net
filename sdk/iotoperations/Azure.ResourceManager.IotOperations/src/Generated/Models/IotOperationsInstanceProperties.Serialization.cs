@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             string version = default;
             SchemaRegistryRef schemaRegistryRef = default;
             SecretProviderClassRef defaultSecretProviderClassRef = default;
-            IDictionary<string, InstanceFeature> features = default;
+            IDictionary<string, IotOperationsInstanceFeature> features = default;
             AzureDeviceRegistryNamespaceRef adrNamespaceRef = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -159,10 +159,10 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    Dictionary<string, InstanceFeature> dictionary = new Dictionary<string, InstanceFeature>();
+                    Dictionary<string, IotOperationsInstanceFeature> dictionary = new Dictionary<string, IotOperationsInstanceFeature>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, InstanceFeature.DeserializeInstanceFeature(property0.Value, options));
+                        dictionary.Add(property0.Name, IotOperationsInstanceFeature.DeserializeIotOperationsInstanceFeature(property0.Value, options));
                     }
                     features = dictionary;
                     continue;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 version,
                 schemaRegistryRef,
                 defaultSecretProviderClassRef,
-                features ?? new ChangeTrackingDictionary<string, InstanceFeature>(),
+                features ?? new ChangeTrackingDictionary<string, IotOperationsInstanceFeature>(),
                 adrNamespaceRef,
                 serializedAdditionalRawData);
         }

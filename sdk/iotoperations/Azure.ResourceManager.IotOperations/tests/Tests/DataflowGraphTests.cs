@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.IotOperations.Tests
             // Get the DataflowGraph collection
             var dataflowProfileCollection = await GetDataflowProfileCollectionAsync(ResourceGroup);
             var dataflowProfileResource = await dataflowProfileCollection.GetAsync(DataflowProfilesName);
-            var graphCollection = dataflowProfileResource.Value.GetDataflowGraphResources();
+            var graphCollection = dataflowProfileResource.Value.GetIotOperationsDataflowGraphs();
 
             // Use a unique name to avoid conflicts with in-progress operations
             var graphName = Recording.GenerateAssetName("sdk-test-dataflowgraph-");
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.IotOperations.Tests
 
             // Create DataflowGraph
             var graphData = CreateDataflowGraphResourceData();
-            DataflowGraphResource createdGraph = null;
+            IotOperationsDataflowGraphResource createdGraph = null;
             try
             {
                 var createOperation = await graphCollection.CreateOrUpdateAsync(
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.IotOperations.Tests
             );
         }
 
-        private DataflowGraphResourceData CreateDataflowGraphResourceData()
+        private IotOperationsDataflowGraphData CreateDataflowGraphResourceData()
         {
-            return new DataflowGraphResourceData
+            return new IotOperationsDataflowGraphData
             {
-                Properties = new DataflowGraphProperties(
+                Properties = new IotOperationsDataflowGraphProperties(
                     new DataflowGraphNode[]
                     {
                         new DataflowGraphSourceNode("temperature", new DataflowGraphSourceSettings("default", new string[] { "telemetry/temperature" })),

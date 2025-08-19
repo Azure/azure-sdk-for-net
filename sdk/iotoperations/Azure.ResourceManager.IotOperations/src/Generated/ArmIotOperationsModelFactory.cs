@@ -54,9 +54,9 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="features"> The features of the AIO Instance. </param>
         /// <param name="adrNamespaceRefResourceId"> The Azure Device Registry Namespace used by Assets, Discovered Assets and devices. </param>
         /// <returns> A new <see cref="Models.IotOperationsInstanceProperties"/> instance for mocking. </returns>
-        public static IotOperationsInstanceProperties IotOperationsInstanceProperties(string description = null, IotOperationsProvisioningState? provisioningState = null, string version = null, ResourceIdentifier schemaRegistryRefResourceId = null, ResourceIdentifier defaultSecretProviderClassRefResourceId = null, IDictionary<string, InstanceFeature> features = null, ResourceIdentifier adrNamespaceRefResourceId = null)
+        public static IotOperationsInstanceProperties IotOperationsInstanceProperties(string description = null, IotOperationsProvisioningState? provisioningState = null, string version = null, ResourceIdentifier schemaRegistryRefResourceId = null, ResourceIdentifier defaultSecretProviderClassRefResourceId = null, IDictionary<string, IotOperationsInstanceFeature> features = null, ResourceIdentifier adrNamespaceRefResourceId = null)
         {
-            features ??= new Dictionary<string, InstanceFeature>();
+            features ??= new Dictionary<string, IotOperationsInstanceFeature>();
 
             return new IotOperationsInstanceProperties(
                 description,
@@ -317,17 +317,17 @@ namespace Azure.ResourceManager.IotOperations.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="IotOperations.DataflowGraphResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotOperations.IotOperationsDataflowGraphData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> Edge location of the resource. </param>
-        /// <returns> A new <see cref="IotOperations.DataflowGraphResourceData"/> instance for mocking. </returns>
-        public static DataflowGraphResourceData DataflowGraphResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DataflowGraphProperties properties = null, IotOperationsExtendedLocation extendedLocation = null)
+        /// <returns> A new <see cref="IotOperations.IotOperationsDataflowGraphData"/> instance for mocking. </returns>
+        public static IotOperationsDataflowGraphData IotOperationsDataflowGraphData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IotOperationsDataflowGraphProperties properties = null, IotOperationsExtendedLocation extendedLocation = null)
         {
-            return new DataflowGraphResourceData(
+            return new IotOperationsDataflowGraphData(
                 id,
                 name,
                 resourceType,
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DataflowGraphProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IotOperationsDataflowGraphProperties"/>. </summary>
         /// <param name="mode"> The mode of the dataflow graph. </param>
         /// <param name="requestDiskPersistence"> Disk persistence mode. </param>
         /// <param name="nodes">
@@ -347,13 +347,13 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// </param>
         /// <param name="nodeConnections"> List of connections between nodes in the dataflow graph. </param>
         /// <param name="provisioningState"> The provisioning state of the dataflow graph. </param>
-        /// <returns> A new <see cref="Models.DataflowGraphProperties"/> instance for mocking. </returns>
-        public static DataflowGraphProperties DataflowGraphProperties(IotOperationsOperationalMode? mode = null, IotOperationsOperationalMode? requestDiskPersistence = null, IEnumerable<DataflowGraphNode> nodes = null, IEnumerable<DataflowGraphNodeConnection> nodeConnections = null, IotOperationsProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="Models.IotOperationsDataflowGraphProperties"/> instance for mocking. </returns>
+        public static IotOperationsDataflowGraphProperties IotOperationsDataflowGraphProperties(IotOperationsOperationalMode? mode = null, IotOperationsOperationalMode? requestDiskPersistence = null, IEnumerable<DataflowGraphNode> nodes = null, IEnumerable<DataflowGraphNodeConnection> nodeConnections = null, IotOperationsProvisioningState? provisioningState = null)
         {
             nodes ??= new List<DataflowGraphNode>();
             nodeConnections ??= new List<DataflowGraphNodeConnection>();
 
-            return new DataflowGraphProperties(
+            return new IotOperationsDataflowGraphProperties(
                 mode,
                 requestDiskPersistence,
                 nodes?.ToList(),
@@ -362,17 +362,17 @@ namespace Azure.ResourceManager.IotOperations.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="IotOperations.RegistryEndpointResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotOperations.IotOperationsRegistryEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> Edge location of the resource. </param>
-        /// <returns> A new <see cref="IotOperations.RegistryEndpointResourceData"/> instance for mocking. </returns>
-        public static RegistryEndpointResourceData RegistryEndpointResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RegistryEndpointProperties properties = null, IotOperationsExtendedLocation extendedLocation = null)
+        /// <returns> A new <see cref="IotOperations.IotOperationsRegistryEndpointData"/> instance for mocking. </returns>
+        public static IotOperationsRegistryEndpointData IotOperationsRegistryEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IotOperationsRegistryEndpointProperties properties = null, IotOperationsExtendedLocation extendedLocation = null)
         {
-            return new RegistryEndpointResourceData(
+            return new IotOperationsRegistryEndpointData(
                 id,
                 name,
                 resourceType,
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RegistryEndpointProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.IotOperationsRegistryEndpointProperties"/>. </summary>
         /// <param name="host"> The Container Registry endpoint hostname. </param>
         /// <param name="authentication">
         /// The authentication settings for the Azure Container Registry.
@@ -391,23 +391,23 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="trustTrustedSigningKeys"> Trust settings for the registry endpoint. </param>
-        /// <returns> A new <see cref="Models.RegistryEndpointProperties"/> instance for mocking. </returns>
-        public static RegistryEndpointProperties RegistryEndpointProperties(string host = null, RegistryEndpointAuthentication authentication = null, IotOperationsProvisioningState? provisioningState = null, RegistryEndpointTrustedSigningKey trustTrustedSigningKeys = null)
+        /// <returns> A new <see cref="Models.IotOperationsRegistryEndpointProperties"/> instance for mocking. </returns>
+        public static IotOperationsRegistryEndpointProperties IotOperationsRegistryEndpointProperties(string host = null, RegistryEndpointAuthentication authentication = null, IotOperationsProvisioningState? provisioningState = null, RegistryEndpointTrustedSigningKey trustTrustedSigningKeys = null)
         {
-            return new RegistryEndpointProperties(host, authentication, provisioningState, trustTrustedSigningKeys != null ? new RegistryEndpointTrustedSettings(trustTrustedSigningKeys, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new IotOperationsRegistryEndpointProperties(host, authentication, provisioningState, trustTrustedSigningKeys != null ? new RegistryEndpointTrustedSettings(trustTrustedSigningKeys, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="IotOperations.AkriConnectorTemplateResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotOperations.IotOperationsAkriConnectorTemplateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> Edge location of the resource. </param>
-        /// <returns> A new <see cref="IotOperations.AkriConnectorTemplateResourceData"/> instance for mocking. </returns>
-        public static AkriConnectorTemplateResourceData AkriConnectorTemplateResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AkriConnectorTemplateProperties properties = null, IotOperationsExtendedLocation extendedLocation = null)
+        /// <returns> A new <see cref="IotOperations.IotOperationsAkriConnectorTemplateData"/> instance for mocking. </returns>
+        public static IotOperationsAkriConnectorTemplateData IotOperationsAkriConnectorTemplateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IotOperationsAkriConnectorTemplateProperties properties = null, IotOperationsExtendedLocation extendedLocation = null)
         {
-            return new AkriConnectorTemplateResourceData(
+            return new IotOperationsAkriConnectorTemplateData(
                 id,
                 name,
                 resourceType,
@@ -417,22 +417,22 @@ namespace Azure.ResourceManager.IotOperations.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="IotOperations.AkriConnectorResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotOperations.IotOperationsAkriConnectorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="akriConnectorProvisioningState"> The resource-specific properties for this resource. </param>
+        /// <param name="iotOperationsAkriConnectorProvisioningState"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> Edge location of the resource. </param>
-        /// <returns> A new <see cref="IotOperations.AkriConnectorResourceData"/> instance for mocking. </returns>
-        public static AkriConnectorResourceData AkriConnectorResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IotOperationsProvisioningState? akriConnectorProvisioningState = null, IotOperationsExtendedLocation extendedLocation = null)
+        /// <returns> A new <see cref="IotOperations.IotOperationsAkriConnectorData"/> instance for mocking. </returns>
+        public static IotOperationsAkriConnectorData IotOperationsAkriConnectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IotOperationsProvisioningState? iotOperationsAkriConnectorProvisioningState = null, IotOperationsExtendedLocation extendedLocation = null)
         {
-            return new AkriConnectorResourceData(
+            return new IotOperationsAkriConnectorData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                akriConnectorProvisioningState != null ? new AkriConnectorProperties(akriConnectorProvisioningState, serializedAdditionalRawData: null) : null,
+                iotOperationsAkriConnectorProvisioningState != null ? new IotOperationsAkriConnectorProperties(iotOperationsAkriConnectorProvisioningState, serializedAdditionalRawData: null) : null,
                 extendedLocation,
                 serializedAdditionalRawData: null);
         }

@@ -149,55 +149,55 @@ namespace Azure.ResourceManager.IotOperations.Tests
         }
 
         // Get AkriConnectorTemplateResourceCollection
-        protected async Task<AkriConnectorTemplateResourceCollection> GetAkriConnectorTemplateResourceCollectionAsync(string resourceGroupName)
+        protected async Task<IotOperationsAkriConnectorTemplateCollection> GetAkriConnectorTemplateResourceCollectionAsync(string resourceGroupName)
         {
             ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
             IotOperationsInstanceCollection instances = rg.GetIotOperationsInstances();
             IotOperationsInstanceResource instance = await instances.GetAsync(InstanceName);
-            return instance.GetAkriConnectorTemplateResources();
+            return instance.GetIotOperationsAkriConnectorTemplates();
         }
 
         // Get a specific AkriConnectorTemplateResource
-        protected async Task<AkriConnectorTemplateResource> GetAkriConnectorTemplateResourceAsync(string resourceGroupName, string akriConnectorTemplateName)
+        protected async Task<IotOperationsAkriConnectorTemplateResource> GetAkriConnectorTemplateResourceAsync(string resourceGroupName, string akriConnectorTemplateName)
         {
-            AkriConnectorTemplateResourceCollection templates = await GetAkriConnectorTemplateResourceCollectionAsync(resourceGroupName);
+            IotOperationsAkriConnectorTemplateCollection templates = await GetAkriConnectorTemplateResourceCollectionAsync(resourceGroupName);
             return await templates.GetAsync(akriConnectorTemplateName);
         }
          // Get DataflowGraph
-        protected async Task<DataflowGraphResource> GetDataflowGraphCollectionAsync(string resourceGroupName)
+        protected async Task<IotOperationsDataflowGraphResource> GetDataflowGraphCollectionAsync(string resourceGroupName)
         {
             ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
             IotOperationsInstanceCollection instances = rg.GetIotOperationsInstances();
             IotOperationsInstanceResource instance = await instances.GetAsync(InstanceName);
-            return IotOperationsExtensions.GetDataflowGraphResource(ArmClient, instance.Id);
+            return IotOperationsExtensions.GetIotOperationsDataflowGraphResource(ArmClient, instance.Id);
         }
         // Get RegistryEndpoint
-        protected async Task<RegistryEndpointResourceCollection> GetRegistryEndpointResourceCollectionAsync()
+        protected async Task<IotOperationsRegistryEndpointCollection> GetRegistryEndpointResourceCollectionAsync()
         {
             ResourceGroupResource rg = await GetResourceGroupAsync(ResourceGroup);
             IotOperationsInstanceCollection instances = rg.GetIotOperationsInstances();
             IotOperationsInstanceResource instance = await instances.GetAsync(InstanceName);
-            return instance.GetRegistryEndpointResources();
+            return instance.GetIotOperationsRegistryEndpoints();
         }
         // GetAkriConnector
-        protected async Task<AkriConnectorResourceCollection> GetAkriConnectorResourceCollectionAsync()
+        protected async Task<IotOperationsAkriConnectorCollection> GetAkriConnectorResourceCollectionAsync()
         {
             ResourceGroupResource rg = await GetResourceGroupAsync(ResourceGroup);
             IotOperationsInstanceCollection instances = rg.GetIotOperationsInstances();
             IotOperationsInstanceResource instance = await instances.GetAsync(InstanceName);
-            AkriConnectorTemplateResourceCollection templateCollection = instance.GetAkriConnectorTemplateResources();
-            AkriConnectorTemplateResource templateResource = await templateCollection.GetAsync(AkriConnectorTemplateName);
-            AkriConnectorResourceCollection connectorCollection = templateResource.GetAkriConnectorResources();
+            IotOperationsAkriConnectorTemplateCollection templateCollection = instance.GetIotOperationsAkriConnectorTemplates();
+            IotOperationsAkriConnectorTemplateResource templateResource = await templateCollection.GetAsync(AkriConnectorTemplateName);
+            IotOperationsAkriConnectorCollection connectorCollection = templateResource.GetIotOperationsAkriConnectors();
             return connectorCollection;
         }
 
         // overload for RegistryEndpointResourceCollection
-        protected async Task<RegistryEndpointResourceCollection> GetRegistryEndpointResourceCollectionAsync(string resourceGroupName)
+        protected async Task<IotOperationsRegistryEndpointCollection> GetRegistryEndpointResourceCollectionAsync(string resourceGroupName)
         {
             ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
             IotOperationsInstanceCollection instances = rg.GetIotOperationsInstances();
             IotOperationsInstanceResource instance = await instances.GetAsync(InstanceName);
-            return instance.GetRegistryEndpointResources();
+            return instance.GetIotOperationsRegistryEndpoints();
         }
 
         // overload for DataflowProfileCollection

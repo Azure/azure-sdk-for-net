@@ -185,79 +185,79 @@ namespace Azure.ResourceManager.IotOperations
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataflowGraphResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataflowGraphResource.CreateResourceIdentifier" /> to create a <see cref="DataflowGraphResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IotOperationsDataflowGraphResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotOperationsDataflowGraphResource.CreateResourceIdentifier" /> to create an <see cref="IotOperationsDataflowGraphResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableIotOperationsArmClient.GetDataflowGraphResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotOperationsArmClient.GetIotOperationsDataflowGraphResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataflowGraphResource"/> object. </returns>
-        public static DataflowGraphResource GetDataflowGraphResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotOperationsDataflowGraphResource"/> object. </returns>
+        public static IotOperationsDataflowGraphResource GetIotOperationsDataflowGraphResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableIotOperationsArmClient(client).GetDataflowGraphResource(id);
+            return GetMockableIotOperationsArmClient(client).GetIotOperationsDataflowGraphResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RegistryEndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RegistryEndpointResource.CreateResourceIdentifier" /> to create a <see cref="RegistryEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IotOperationsRegistryEndpointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotOperationsRegistryEndpointResource.CreateResourceIdentifier" /> to create an <see cref="IotOperationsRegistryEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableIotOperationsArmClient.GetRegistryEndpointResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotOperationsArmClient.GetIotOperationsRegistryEndpointResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="RegistryEndpointResource"/> object. </returns>
-        public static RegistryEndpointResource GetRegistryEndpointResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotOperationsRegistryEndpointResource"/> object. </returns>
+        public static IotOperationsRegistryEndpointResource GetIotOperationsRegistryEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableIotOperationsArmClient(client).GetRegistryEndpointResource(id);
+            return GetMockableIotOperationsArmClient(client).GetIotOperationsRegistryEndpointResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AkriConnectorTemplateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AkriConnectorTemplateResource.CreateResourceIdentifier" /> to create an <see cref="AkriConnectorTemplateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IotOperationsAkriConnectorTemplateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotOperationsAkriConnectorTemplateResource.CreateResourceIdentifier" /> to create an <see cref="IotOperationsAkriConnectorTemplateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableIotOperationsArmClient.GetAkriConnectorTemplateResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotOperationsArmClient.GetIotOperationsAkriConnectorTemplateResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AkriConnectorTemplateResource"/> object. </returns>
-        public static AkriConnectorTemplateResource GetAkriConnectorTemplateResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotOperationsAkriConnectorTemplateResource"/> object. </returns>
+        public static IotOperationsAkriConnectorTemplateResource GetIotOperationsAkriConnectorTemplateResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableIotOperationsArmClient(client).GetAkriConnectorTemplateResource(id);
+            return GetMockableIotOperationsArmClient(client).GetIotOperationsAkriConnectorTemplateResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AkriConnectorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AkriConnectorResource.CreateResourceIdentifier" /> to create an <see cref="AkriConnectorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IotOperationsAkriConnectorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotOperationsAkriConnectorResource.CreateResourceIdentifier" /> to create an <see cref="IotOperationsAkriConnectorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableIotOperationsArmClient.GetAkriConnectorResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotOperationsArmClient.GetIotOperationsAkriConnectorResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AkriConnectorResource"/> object. </returns>
-        public static AkriConnectorResource GetAkriConnectorResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotOperationsAkriConnectorResource"/> object. </returns>
+        public static IotOperationsAkriConnectorResource GetIotOperationsAkriConnectorResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableIotOperationsArmClient(client).GetAkriConnectorResource(id);
+            return GetMockableIotOperationsArmClient(client).GetIotOperationsAkriConnectorResource(id);
         }
 
         /// <summary>
