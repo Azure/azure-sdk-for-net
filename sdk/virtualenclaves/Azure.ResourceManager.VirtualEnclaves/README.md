@@ -1,6 +1,6 @@
 # Microsoft Azure VirtualEnclaves management client library for .NET
 
-**[Describe the service briefly first.]**
+**Azure Virtual Enclaves provide secure, isolated execution environments within Azure, enabling organizations to run sensitive workloads with enhanced confidentiality and integrity. This SDK allows developers and administrators to manage Virtual Enclave resources, configure enclave properties, and integrate secure enclaves with other Azure services through a consistent .NET API.**
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
