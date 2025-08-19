@@ -273,6 +273,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             uri.AppendPath(serverlessRuntimeName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -670,6 +671,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             uri.AppendPath("/startFailedServerlessRuntime", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
