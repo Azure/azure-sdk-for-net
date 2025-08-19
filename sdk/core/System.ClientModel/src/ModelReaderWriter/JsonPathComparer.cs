@@ -54,11 +54,12 @@ internal class JsonPathComparer : IEqualityComparer<byte[]>
 
     public void Normalize(ReadOnlySpan<byte> jsonPath, ref Span<byte> buffer, out int bytesWritten)
     {
-        //TODO: probably have to normalize into ['x'] form since properties can contain dots which makes $.x.y ambiguous vs $['x.y']
         ReadOnlySpan<byte> localPath = jsonPath;
         bytesWritten = 0;
         int length = jsonPath.Length;
         int block = 0;
+        bool inBracket = false;
+        bool needEscapedDot = false;
         for (int i = 0; i < length; i++)
         {
             byte current = jsonPath[i];
@@ -69,7 +70,8 @@ internal class JsonPathComparer : IEqualityComparer<byte[]>
                 bytesWritten += block;
                 block = 0;
                 buffer[bytesWritten++] = (byte)'.';
-                i++; // skip the quote
+                i++;
+                inBracket = true;
             }
             else if (current == (byte)']' && i - 1 >= 0 && (jsonPath[i - 1] == (byte)'\'' || jsonPath[i - 1] == (byte)'"'))
             {
@@ -78,6 +80,21 @@ internal class JsonPathComparer : IEqualityComparer<byte[]>
                 localPath = localPath.Slice(block + 2);
                 bytesWritten += block;
                 block = 0;
+                if (needEscapedDot)
+                {
+                    buffer[bytesWritten++] = (byte)'\'';
+                    buffer[bytesWritten++] = (byte)']';
+                    needEscapedDot = false;
+                }
+                inBracket = false;
+            }
+            else if (current == (byte)'.' && inBracket)
+            {
+                // need to keep the ['(.+)'] format
+                buffer[bytesWritten - 1] = (byte)'[';
+                buffer[bytesWritten++] = (byte)'\'';
+                needEscapedDot = true;
+                block++;
             }
             else
             {

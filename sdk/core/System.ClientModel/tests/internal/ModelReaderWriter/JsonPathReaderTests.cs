@@ -314,11 +314,67 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [TestCase("$.complex.path.here", "$.complex")]
         [TestCase("$", "")]
         [TestCase("$.property", "$.property")]
+        [TestCase("$['property.with.dot'].x", "$['property.with.dot']")]
         public void GetFirstProperty(string jsonPath, string expected)
         {
             var reader = new JsonPathReader(jsonPath);
 
             var result = reader.GetFirstProperty();
+            Assert.AreEqual(expected, Encoding.UTF8.GetString(result.ToArray()));
+        }
+
+        [Test]
+        public void PropertyNameWithDot()
+        {
+            var reader = new JsonPathReader("$.foo['property.with.dot'].x"u8);
+
+            // Root
+            Assert.IsTrue(reader.Read(), "Expected to read Root token");
+            Assert.AreEqual(JsonPathTokenType.Root, reader.Current.TokenType);
+
+            // PropertySeparator
+            Assert.IsTrue(reader.Read(), "Expected to read PropertySeparator token");
+            Assert.AreEqual(JsonPathTokenType.PropertySeparator, reader.Current.TokenType);
+
+            // Property foo
+            Assert.IsTrue(reader.Read(), "Expected to read Property token (foo)");
+            Assert.AreEqual(JsonPathTokenType.Property, reader.Current.TokenType);
+            Assert.AreEqual("foo", Encoding.UTF8.GetString(reader.Current.ValueSpan.ToArray()));
+
+            // PropertySeparator
+            Assert.IsTrue(reader.Read(), "Expected to read PropertySeparator token");
+            Assert.AreEqual(JsonPathTokenType.PropertySeparator, reader.Current.TokenType);
+
+            // Property property.with.dot
+            Assert.IsTrue(reader.Read(), "Expected to read Property token (property.with.dot)");
+            Assert.AreEqual(JsonPathTokenType.Property, reader.Current.TokenType);
+            Assert.AreEqual("property.with.dot", Encoding.UTF8.GetString(reader.Current.ValueSpan.ToArray()));
+
+            // PropertySeparator
+            Assert.IsTrue(reader.Read(), "Expected to read PropertySeparator token");
+            Assert.AreEqual(JsonPathTokenType.PropertySeparator, reader.Current.TokenType);
+
+            // Property x
+            Assert.IsTrue(reader.Read(), "Expected to read Property token (x)");
+            Assert.AreEqual(JsonPathTokenType.Property, reader.Current.TokenType);
+            Assert.AreEqual("x", Encoding.UTF8.GetString(reader.Current.ValueSpan.ToArray()));
+
+            // End
+            Assert.IsTrue(reader.Read(), "Expected to read End token");
+            Assert.AreEqual(JsonPathTokenType.End, reader.Current.TokenType);
+
+            Assert.IsFalse(reader.Read(), "Should not be able to read past End token");
+        }
+
+        [TestCase("$.foo.bar", "$.foo")]
+        [TestCase("$['foo'].bar", "$['foo']")]
+        [TestCase("$[0].bar", "$[0]")]
+        [TestCase("$[0]", "$[-]")] //TODO get rid of special insert
+        [TestCase("$['f.oo'].bar", "$['f.oo']")]
+        [TestCase("$.bar['f.oo']", "$.bar")]
+        public void GetParent(string jsonPath, string expected)
+        {
+            var result = Encoding.UTF8.GetBytes(jsonPath).AsSpan().GetParent();
             Assert.AreEqual(expected, Encoding.UTF8.GetString(result.ToArray()));
         }
     }

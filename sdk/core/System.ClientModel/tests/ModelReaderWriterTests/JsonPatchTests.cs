@@ -93,6 +93,22 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
         }
 
+        [Test]
+        public void AddPropertyNameWithDot()
+        {
+            JsonPatch jp = new();
+            jp.Set("$['pro.perty']"u8, "value");
+            Assert.IsTrue(jp.Contains("$['pro.perty']"u8));
+            Assert.AreEqual("value", jp.GetString("$['pro.perty']"u8));
+
+            using var stream = new MemoryStream();
+            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+            jp.Write(writer);
+            writer.Flush();
+
+            Assert.AreEqual("{\"pro.perty\":\"value\"}", GetJsonString(stream));
+        }
+
         private static string GetJsonString(MemoryStream stream)
         {
             return Encoding.UTF8.GetString(stream.GetBuffer().AsSpan().Slice(0, (int)stream.Position).ToArray());

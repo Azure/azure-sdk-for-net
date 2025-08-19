@@ -152,6 +152,7 @@ internal static class JsonPathReaderExtensions
         if (jsonPath.EndsWith("[-]"u8))
             return jsonPath.Slice(0, jsonPath.Length - 3);
 
+        bool inBracket = false;
         for (int i = jsonPath.Length - 1; i >= 1; i--)
         {
             byte c = jsonPath[i];
@@ -160,7 +161,11 @@ internal static class JsonPathReaderExtensions
             {
                 return jsonPath.Slice(0, i);
             }
-            else if (c == (byte)'.')
+            else if (c == (byte)']')
+            {
+                inBracket = true;
+            }
+            else if (c == (byte)'.' && !inBracket)
             {
                 return jsonPath.Slice(0, i);
             }

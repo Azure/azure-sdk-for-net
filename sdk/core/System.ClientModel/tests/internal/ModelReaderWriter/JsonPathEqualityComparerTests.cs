@@ -30,6 +30,8 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [TestCase("$.a.b[0].c.d[1]['e'].f", "$['a'].b[0]['c'].d[1][\"e\"].f", true)]
         [TestCase("$.a.b[0].c.d[1]['e'].f", "$.a.b[0].c.d[2]['e'].f", false)]
         [TestCase("$.a.b[0].c.d[1]['e'].f", "$.a.b[0].c.d[1]['e'].g", false)]
+        [TestCase("$[\"f.oo\"]['bar']", "$['f.oo'].bar", true)]
+        [TestCase("$['f.oo']['bar']", "$['f.oo'].bar", true)]
         public void Equals_ByteArray(string left, string right, bool expected)
         {
             var a = Encoding.UTF8.GetBytes(left);
@@ -80,6 +82,8 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [TestCase("$['foo']['bar'][2]['baz']", "$.foo.bar[2].baz")]
         [TestCase("$['a'].b[0]['c'].d[1][\"e\"].f", "$.a.b[0].c.d[1].e.f")]
         [TestCase("$['a'].b[0][\"c\"].d[1].e.f", "$.a.b[0].c.d[1].e.f")]
+        [TestCase("$['f.oo']['bar']", "$['f.oo'].bar")]
+        [TestCase("$[\"f.oo\"]['bar']", "$['f.oo'].bar")]
         public void Normalize(string input, string expected)
         {
             var a = Encoding.UTF8.GetBytes(input);
