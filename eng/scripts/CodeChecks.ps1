@@ -57,7 +57,7 @@ function Invoke-Block([scriptblock]$cmd) {
 try {
     Write-Host "Restore ./node_modules"
     Invoke-Block {
-        & npm ci --prefix $RepoRoot
+        & npm ci --prefix $($RepoRoot)
     }
 
     if ($ProjectDirectory -and -not $ServiceDirectory)
