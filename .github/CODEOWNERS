@@ -910,6 +910,9 @@
 # ServiceLabel: %WebPubSub
 # ServiceOwners:                                                   @vicancy @JialinXin
 
+# PRLabel %Contoso
+/sdk/contoso/                                          @danieljurek
+
 ####################
 # Management Libraries
 ####################
