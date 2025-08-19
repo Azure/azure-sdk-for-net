@@ -101,7 +101,7 @@ namespace Azure.Identity
         /// <summary>
         /// Creates an instance of the <see cref="DefaultAzureCredential"/> class that reads credential configuration from a specified environment variable.
         /// </summary>
-        /// <param name="configurationEnvironmentVariableName">The name of the environment variable to read credential configuration from.</param>
+        /// <param name="configurationEnvironmentVariableName">The name of the environment variable to read credential configuration from. Pass <see cref="DefaultEnvironmentVariableName"/> or a custom environment variable name.</param>
         /// <param name="options">Options that configure the management of the requests sent to Microsoft Entra ID, and determine which credentials are included in the <see cref="DefaultAzureCredential"/> authentication flow.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="configurationEnvironmentVariableName"/> is null.</exception>
         /// <exception cref="ArgumentException">Thrown when <paramref name="configurationEnvironmentVariableName"/> is empty.</exception>
