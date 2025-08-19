@@ -98,10 +98,10 @@
 # ServiceOwners:                                                   @trangevi @dargilco @jhakulin @glharper
 
 # PRLabel: %AI Projects
-/sdk/ai/Azure.AI.Projects                                          @jhakulin @nick863
+/sdk/ai/Azure.AI.Projects                                          @dargilco @jhakulin @nick863 @trangevi
 
 # ServiceLabel: %AI Projects
-# ServiceOwners:                                                   @dargilco @jhakulin @nick863
+# ServiceOwners:                                                   @dargilco @jhakulin @nick863 @trangevi
 
 # ServiceLabel: %AKS
 # ServiceOwners:                                                   @Azure/aks-pm
@@ -242,10 +242,10 @@
 # ServiceOwners:                                                   @olduroja
 
 # PRLabel: %Cognitive - Language
-/sdk/cognitivelanguage/                                            @quentinRobinson @bidisha-c
+/sdk/cognitivelanguage/                                            @quentinRobinson
 
 # ServiceLabel: %Cognitive - Language
-# ServiceOwners:                                                   @quentinRobinson @bidisha-c
+# ServiceOwners:                                                   @quentinRobinson
 
 # PRLabel: %Cognitive - LUIS
 /sdk/cognitiveservices/Language.LUIS*/                             @cahann @kayousef
@@ -278,10 +278,10 @@
 # ServiceOwners:                                                   @cahann @kayousef
 
 # PRLabel: %Cognitive - Text Analytics
-/sdk/textanalytics/                                                @quentinRobinson @bidisha-c
+/sdk/textanalytics/                                                @quentinRobinson
 
 # ServiceLabel: %Cognitive - Text Analytics
-# ServiceOwners:                                                   @quentinRobinson @bidisha-c
+# ServiceOwners:                                                   @quentinRobinson
 
 # PRLabel: %Cognitive - Translator
 /sdk/translation/                                                  @mikeymcz @vikaspalaskar

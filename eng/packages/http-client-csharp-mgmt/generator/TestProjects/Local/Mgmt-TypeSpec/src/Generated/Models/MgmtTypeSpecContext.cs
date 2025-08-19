@@ -27,6 +27,7 @@ namespace MgmtTypeSpec
     [ModelReaderWriterBuildable(typeof(BarProperties))]
     [ModelReaderWriterBuildable(typeof(BarListResult))]
     [ModelReaderWriterBuildable(typeof(BarSettingsProperties))]
+    [ModelReaderWriterBuildable(typeof(BarQuotaProperties))]
     [ModelReaderWriterBuildable(typeof(ZooProperties))]
     [ModelReaderWriterBuildable(typeof(ZooPatch))]
     [ModelReaderWriterBuildable(typeof(ZooUpdateProperties))]
