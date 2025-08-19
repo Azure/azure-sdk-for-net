@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 - Added the `outContentType` query parameter to the Get Secret operation to specify the format in which the certificate will be returned.
+- Added the `previousVersion` property to `SecretProperties`.
 
 ### Bugs Fixed
 

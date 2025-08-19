@@ -172,6 +172,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             Assert.AreEqual(exp.ContentType, act.ContentType);
             Assert.AreEqual(exp.KeyId, act.KeyId);
             Assert.AreEqual(exp.Managed, act.Managed);
+            Assert.AreEqual(exp.PreviousVersion, act.PreviousVersion);
 
             Assert.AreEqual(exp.Enabled, act.Enabled);
             Assert.AreEqual(exp.ExpiresOn, act.ExpiresOn);
