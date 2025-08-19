@@ -645,10 +645,10 @@
 # ServiceOwners:                                                   @omziv @anatse @raronen @ischrei @danhadari @azmonapplicationinsights
 
 # PRLabel: %Monitor - Distro
-/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/               @rajkumar-rangaraj 
+/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/               @rajkumar-rangaraj
 
 # PRLabel: %Monitor - Distro
-/sdk/monitor/Azure.Monitor.OpenTelemetry.sln                       @rajkumar-rangaraj 
+/sdk/monitor/Azure.Monitor.OpenTelemetry.sln                       @rajkumar-rangaraj
 
 # ServiceLabel: %Monitor - Distro
 # ServiceOwners:                                                   @rajkumar-rangaraj
@@ -917,6 +917,12 @@
 
 # ServiceLabel: %VideoAnalyzer
 # ServiceOwners:                                                   @giakas
+
+# PRLabel: %VirtualEnclaves
+/sdk/virtualenclaves/                                              @jchavaherrera @Azure/azure-virtual-enclaves
+
+# ServiceLabel: %VirtualEnclaves
+# ServiceOwners:                                                   @jchavaherrera @Azure/azure-virtual-enclaves
 
 # ServiceLabel: %Web Apps
 # ServiceOwners:                                                   @AzureAppServiceCLI @antcp
