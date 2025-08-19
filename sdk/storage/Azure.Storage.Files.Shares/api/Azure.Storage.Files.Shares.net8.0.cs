@@ -1254,6 +1254,16 @@ namespace Azure.Storage.Files.Shares.Models
         public static Azure.Storage.Files.Shares.Models.StorageClosedHandlesSegment StorageClosedHandlesSegment(string marker, int numberOfHandlesClosed) { throw null; }
         public static Azure.Storage.Files.Shares.Models.StorageClosedHandlesSegment StorageClosedHandlesSegment(string marker, int numberOfHandlesClosed, int numberOfHandlesFailedToClose) { throw null; }
     }
+    public partial class ShareNfsSettings
+    {
+        public ShareNfsSettings() { }
+        public Azure.Storage.Files.Shares.Models.ShareNfsSettingsEncryptionInTransit EncryptionInTransit { get { throw null; } set { } }
+    }
+    public partial class ShareNfsSettingsEncryptionInTransit
+    {
+        public ShareNfsSettingsEncryptionInTransit() { }
+        public bool? Required { get { throw null; } set { } }
+    }
     public partial class ShareProperties
     {
         internal ShareProperties() { }
@@ -1296,6 +1306,7 @@ namespace Azure.Storage.Files.Shares.Models
     public partial class ShareProtocolSettings
     {
         public ShareProtocolSettings() { }
+        public Azure.Storage.Files.Shares.Models.ShareNfsSettings Nfs { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareSmbSettings Smb { get { throw null; } set { } }
     }
     public partial class ShareRetentionPolicy
@@ -1341,7 +1352,13 @@ namespace Azure.Storage.Files.Shares.Models
     public partial class ShareSmbSettings
     {
         public ShareSmbSettings() { }
+        public Azure.Storage.Files.Shares.Models.ShareSmbSettingsEncryptionInTransit EncryptionInTransit { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.SmbMultichannel Multichannel { get { throw null; } set { } }
+    }
+    public partial class ShareSmbSettingsEncryptionInTransit
+    {
+        public ShareSmbSettingsEncryptionInTransit() { }
+        public bool? Required { get { throw null; } set { } }
     }
     public static partial class SharesModelFactory
     {
