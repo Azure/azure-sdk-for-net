@@ -107,7 +107,8 @@ namespace Azure.AI.Agents.Persistent.Tests
             AzureAISearch,
             ConnectedAgent,
             FileSearch,
-            AzureFunction
+            AzureFunction,
+            BrowserAutomation
         }
 
         public Dictionary<ToolTypes, Type> ExpectedDeltas = new()
@@ -118,7 +119,8 @@ namespace Azure.AI.Agents.Persistent.Tests
             {ToolTypes.DeepResearch, typeof(RunStepDeltaDeepResearchToolCall)},
             {ToolTypes.AzureAISearch, typeof(RunStepDeltaAzureAISearchToolCall)},
             {ToolTypes.ConnectedAgent, typeof(RunStepDeltaConnectedAgentToolCall)},
-            {ToolTypes.FileSearch, typeof(RunStepDeltaFileSearchToolCall)}
+            {ToolTypes.FileSearch, typeof(RunStepDeltaFileSearchToolCall)},
+            {ToolTypes.AzureFunction, typeof(RunStepDeltaAzureFunctionToolCall)}
         };
 
         public Dictionary<ToolTypes, Type> ExpectedToolCalls = new()
@@ -129,7 +131,9 @@ namespace Azure.AI.Agents.Persistent.Tests
             {ToolTypes.DeepResearch, typeof(RunStepDeepResearchToolCall)},
             {ToolTypes.AzureAISearch, typeof(RunStepAzureAISearchToolCall)},
             {ToolTypes.ConnectedAgent, typeof(RunStepConnectedAgentToolCall)},
-            {ToolTypes.FileSearch, typeof(RunStepFileSearchToolCall)}
+            {ToolTypes.FileSearch, typeof(RunStepFileSearchToolCall)},
+            {ToolTypes.BrowserAutomation, typeof(RunStepBrowserAutomationToolCall)},
+            {ToolTypes.AzureFunction, typeof(RunStepAzureFunctionToolCall)}
         };
 
         public Dictionary<ToolTypes, string> ToolPrompts = new()
@@ -144,7 +148,13 @@ namespace Azure.AI.Agents.Persistent.Tests
             {ToolTypes.AzureAISearch, "What is the temperature rating of the cozynights sleeping bag?"},
             {ToolTypes.ConnectedAgent, "What is the Microsoft stock price?"},
             {ToolTypes.FileSearch,  "What feature does Smart Eyewear offer?"},
-            {ToolTypes.AzureFunction, "What is the most prevalent element in the universe? What would foo say?"}
+            {ToolTypes.AzureFunction, "What is the most prevalent element in the universe? What would foo say?"},
+            {ToolTypes.BrowserAutomation, "Your goal is to report the percent of Microsoft year-to-date stock price change. " +
+                     "To do that, go to the website finance.yahoo.com. " +
+                     "At the top of the page, you will find a search bar." +
+                     "Enter the value 'MSFT', to get information about the Microsoft stock price." +
+                     "At the top of the resulting page you will see a default chart of Microsoft stock price." +
+                     "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it."},
         };
 
         public Dictionary<ToolTypes, string> ToolInstructions = new()
@@ -156,12 +166,15 @@ namespace Azure.AI.Agents.Persistent.Tests
             {ToolTypes.AzureAISearch, "You are a helpful agent that can search for information using Azure AI Search."},
             {ToolTypes.ConnectedAgent, "You are a helpful assistant, and use the connected agents to get stock prices."},
             {ToolTypes.FileSearch,  "You are helpful agent."},
+            {ToolTypes.BrowserAutomation, "You are an Agent helping with browser automation tasks. " +
+                              "You can answer questions, provide information, and assist with various tasks " +
+                              "related to web browsing using the Browser Automation tool available to you." },
         };
 
         public Dictionary<ToolTypes, string> RequiredTextInResponse = new()
         {
             {ToolTypes.AzureFunction, "bar"},
-            {ToolTypes.BingCustomGrounding, "40.+gold.+44 silver.+42.+bronze"}
+            {ToolTypes.BingCustomGrounding, "40.+gold.+44 silver.+42.+bronze"},
         };
         #endregion
 
@@ -1892,6 +1905,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [TestCase(ToolTypes.AzureAISearch)]
         [TestCase(ToolTypes.AzureFunction)]
         [TestCase(ToolTypes.BingCustomGrounding)]
+        [TestCase(ToolTypes.BrowserAutomation)]
         public async Task TestToolCall(ToolTypes toolToTest)
         {
             PersistentAgentsClient client = GetClient();
@@ -2541,6 +2555,11 @@ namespace Azure.AI.Agents.Persistent.Tests
                             connectionId: TestEnvironment.BING_CUSTOM_CONNECTION_ID,
                             instanceName: TestEnvironment.BING_CONFIGURATION_NAME
                         )
+                    ),
+                    ToolTypes.BrowserAutomation => new BrowserAutomationToolDefinition(
+                       new BrowserAutomationToolParameters(
+                           new BrowserAutomationToolConnectionParameters(id: TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
+                       )
                     ),
                     _ => null
                 };
