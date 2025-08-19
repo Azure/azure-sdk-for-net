@@ -178,18 +178,12 @@ namespace Azure.Identity
             bool useDevCredentials = Constants.DevCredentials.Equals(credentialSelection, StringComparison.OrdinalIgnoreCase);
             bool useProdCredentials = Constants.ProdCredentials.Equals(credentialSelection, StringComparison.OrdinalIgnoreCase);
 
-            if (useDevCredentials)
+            return (useDevCredentials, useProdCredentials) switch
             {
-                return CreateDevelopmentCredentialChain();
-            }
-            else if (useProdCredentials)
-            {
-                return CreateProductionCredentialChain();
-            }
-            else
-            {
-                return CreateSpecificCredentialChain(credentialSelection, environmentVariableName);
-            }
+                (true, _) => CreateDevelopmentCredentialChain(),
+                (_, true) => CreateProductionCredentialChain(),
+                _ => CreateSpecificCredentialChain(credentialSelection, environmentVariableName)
+            };
         }
 
         /// <summary>
