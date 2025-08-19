@@ -17,7 +17,7 @@ namespace System.ClientModel.Primitives;
 public partial struct JsonPatch
 {
     // Dictionary-based storage using UTF8 byte arrays as keys and encoded byte arrays as values
-    private Dictionary<byte[], EncodedValue>? _properties;
+    private SpanDictionary? _properties;
 
     private PropagatorSetter? _propagatorSetter;
     private PropagatorGetter? _propagatorGetter;
@@ -334,7 +334,7 @@ public partial struct JsonPatch
         if (_propagatorSetter is not null && _propagatorSetter(jsonPath, encodedValue))
             return;
 
-        _properties ??= new(JsonPathComparer.Default);
+        _properties ??= new();
 
         var parent = jsonPath.GetParent();
         if (parent.IsRoot() || (_propagatorIsFlattened is not null && _propagatorIsFlattened(jsonPath.GetFirstProperty())))
@@ -365,7 +365,7 @@ public partial struct JsonPatch
 
     private bool PropagateJsonPath(ReadOnlySpan<byte> jsonPath, EncodedValue encodedValue)
     {
-        _properties ??= new(JsonPathComparer.Default);
+        _properties ??= new();
 
         Span<byte> childPath = stackalloc byte[jsonPath.Length];
         var currentPath = jsonPath;
