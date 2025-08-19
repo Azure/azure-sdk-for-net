@@ -918,9 +918,6 @@
 # ServiceLabel: %VideoAnalyzer
 # ServiceOwners:                                                   @giakas
 
-# PRLabel: %VirtualEnclaves
-/sdk/virtualenclaves/                                              @jchavaherrera @Azure/azure-virtual-enclaves
-
 # ServiceLabel: %VirtualEnclaves
 # ServiceOwners:                                                   @jchavaherrera @Azure/azure-virtual-enclaves
 
