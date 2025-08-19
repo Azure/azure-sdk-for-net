@@ -78,9 +78,9 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CreateTokenOptionsWithStringArrayScopes()
+        public void CreateTokenOptionsWithStringArrayScopesThrowsException()
         {
-            // Test with string[] scopes
+            // Test with string[] scopes - should now throw an exception
             var scopesArray = new string[] { "scope1", "scope2" };
             var properties = new Dictionary<string, object>
             {
@@ -89,12 +89,10 @@ namespace Azure.Core.Tests
             };
 
             var credential = DelegatedTokenCredential.Create(getToken);
-            var result = credential.CreateTokenOptions(properties);
 
-            Assert.IsNotNull(result);
-            var resultScopes = (ReadOnlyMemory<string>)result.Properties[GetTokenOptions.ScopesPropertyName];
-            Assert.AreEqual(scopesArray, resultScopes.ToArray());
-            Assert.AreEqual("value", result.Properties["additionalProperty"]);
+            var exception = Assert.Throws<ArgumentException>(() => credential.CreateTokenOptions(properties));
+            Assert.That(exception.Message, Does.Contain("scopes"));
+            Assert.That(exception.Message, Does.Contain("ReadOnlyMemory<string>"));
         }
 
         [Test]
@@ -113,9 +111,9 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void CreateTokenOptionsWithInvalidScopes()
+        public void CreateTokenOptionsWithInvalidScopesThrowsException()
         {
-            // Test with invalid scopes type
+            // Test with invalid scopes type - should throw an exception
             var properties = new Dictionary<string, object>
             {
                 [GetTokenOptions.ScopesPropertyName] = "invalid_scopes_type",
@@ -123,19 +121,20 @@ namespace Azure.Core.Tests
             };
 
             var credential = DelegatedTokenCredential.Create(getToken);
-            var result = credential.CreateTokenOptions(properties);
 
-            Assert.IsNull(result);
+            var exception = Assert.Throws<ArgumentException>(() => credential.CreateTokenOptions(properties));
+            Assert.That(exception.Message, Does.Contain("scopes"));
+            Assert.That(exception.Message, Does.Contain("ReadOnlyMemory<string>"));
         }
 
         [Test]
         public void CreateTokenOptionsCanCreateValidTokenRequestContext()
         {
             // Test that the created GetTokenOptions can be used to create TokenRequestContext
-            var scopesArray = new string[] { "scope1", "scope2" };
+            var scopesMemory = new ReadOnlyMemory<string>(new string[] { "scope1", "scope2" });
             var properties = new Dictionary<string, object>
             {
-                [GetTokenOptions.ScopesPropertyName] = scopesArray
+                [GetTokenOptions.ScopesPropertyName] = scopesMemory
             };
 
             var credential = DelegatedTokenCredential.Create(getToken);
@@ -147,7 +146,7 @@ namespace Azure.Core.Tests
             Assert.DoesNotThrow(() =>
             {
                 var context = TokenRequestContext.FromGetTokenOptions(tokenOptions);
-                Assert.AreEqual(scopesArray, context.Scopes);
+                Assert.AreEqual(scopesMemory.ToArray(), context.Scopes);
             });
         }
     }

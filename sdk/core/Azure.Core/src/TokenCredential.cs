@@ -60,32 +60,14 @@ namespace Azure.Core
             // Check if scopes are present and in a valid format
             if (properties.TryGetValue(GetTokenOptions.ScopesPropertyName, out var scopesValue))
             {
-                // Try to convert scopes to ReadOnlyMemory<string>
-                ReadOnlyMemory<string> scopes = default;
-
-                if (scopesValue is ReadOnlyMemory<string> readOnlyMemoryScopes)
+                if (scopesValue is ReadOnlyMemory<string> scopes)
                 {
-                    scopes = readOnlyMemoryScopes;
-                }
-                else if (scopesValue is string[] stringArrayScopes)
-                {
-                    scopes = new ReadOnlyMemory<string>(stringArrayScopes);
+                    return new GetTokenOptions(properties);
                 }
                 else
                 {
-                    // Scopes in invalid format
-                    return null;
+                    throw new ArgumentException($"If a \"{GetTokenOptions.ScopesPropertyName}\" property is included in the properties, it should be typed as ReadOnlyMemory<string>.", nameof(properties));
                 }
-
-                // Create new properties dictionary with properly formatted scopes
-                var formattedProperties = new Dictionary<string, object>();
-                foreach (var kvp in properties)
-                {
-                    formattedProperties[kvp.Key] = kvp.Value;
-                }
-                formattedProperties[GetTokenOptions.ScopesPropertyName] = scopes;
-
-                return new GetTokenOptions(formattedProperties);
             }
 
             // No scopes provided - insufficient information to create TokenRequestContext
