@@ -1,9 +1,6 @@
 param(    
     [Parameter(Mandatory = $true)]
-    [string]$PackageArtifactName,
-
-    [Parameter(Mandatory = $true)]
-    [string]$PackageConfigPath
+    [string]$PackageInfoFilePath
 )
 
 <#
@@ -13,11 +10,8 @@ param(
 .DESCRIPTION
     This script helps to mark release plan completion by finding the active release plans for a package name
 
-.PARAMETER PackageArtifactName
-    The package artifact name being released (required)
-
-.PARAMETER PackageConfigPath
-    The path to the package configuration file (required)
+.PARAMETER PackageInfoFilePath
+    The path to the package information file (required)
 #>
 
 Set-StrictMode -Version 3
@@ -26,19 +20,18 @@ Set-StrictMode -Version 3
 
 
 #Get package properties
-$pkgPropPath = Join-Path -Path $PackageConfigPath "$PackageArtifactName.json"
-if (-Not (Test-Path $pkgPropPath))
+if (-Not (Test-Path $PackageInfoFilePath))
 {
-    Write-Host "Package property file path $($pkgPropPath) is invalid."
+    Write-Host "Package information file path $($PackageInfoFilePath) is invalid."
     exit 0
 }
 # Get package info from json file created before updating version to daily dev
-$pkgInfo = Get-Content $pkgPropPath | ConvertFrom-Json
+$pkgInfo = Get-Content $PackageInfoFilePath | ConvertFrom-Json
 $PackageVersion = $pkgInfo.Version
 $PackageName = $pkgInfo.Name
 if (!$PackageName -or !$PackageVersion)
 {
-    Write-Host "Package name or version is not available in the package property file. Skipping the release plan status update for the package."
+    Write-Host "Package name or version is not available in the package information file. Skipping the release plan status update for the package."
     exit 0
 }
 
