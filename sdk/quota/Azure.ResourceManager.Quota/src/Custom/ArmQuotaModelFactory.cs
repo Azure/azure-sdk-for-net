@@ -3,11 +3,8 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Quota.Models
 {
@@ -23,11 +20,11 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="availableLimit"> The available Group Quota Limit at the MG level. This Group quota can be allocated to subscription(s). </param>
         /// <param name="allocatedToSubscriptionsValue"> Quota allocated to subscriptions. </param>
         /// <returns> A new <see cref="Models.GroupQuotaDetails"/> instance for mocking. </returns>
-        public static GroupQuotaDetails GroupQuotaDetails(string resourceName = null, long? limit = default(long?), string comment = null, string unit = null, long? availableLimit = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quota.Models.SubscriptionAllocatedQuota> allocatedToSubscriptionsValue = null, string value = null, string localizedValue = null)
+        public static GroupQuotaDetails GroupQuotaDetails(string resourceName, long limit, string comment, string unit, long availableLimit, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quota.Models.SubscriptionAllocatedQuota> allocatedToSubscriptionsValue, string value, string localizedValue)
         {
             allocatedToSubscriptionsValue ??= new List<SubscriptionAllocatedQuota>();
 
-            return new GroupQuotaDetails(
+            return GroupQuotaDetails(
                 resourceName,
                 limit,
                 comment,
@@ -35,8 +32,7 @@ namespace Azure.ResourceManager.Quota.Models
                 value,
                 localizedValue,
                 availableLimit,
-                allocatedToSubscriptionsValue != null ? new AllocatedQuotaToSubscriptionList(allocatedToSubscriptionsValue?.ToList(), serializedAdditionalRawData: null) : null,
-                serializedAdditionalRawData: null);
+                allocatedToSubscriptionsValue?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GroupQuotaLimitProperties"/>. </summary>
@@ -49,11 +45,11 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="availableLimit"> The available Group Quota Limit at the MG level. This Group quota can be allocated to subscription(s). </param>
         /// <param name="allocatedToSubscriptionsValue"> Quota allocated to subscriptions. </param>
         /// <returns> A new <see cref="Models.GroupQuotaLimitProperties"/> instance for mocking. </returns>
-        public static GroupQuotaLimitProperties GroupQuotaLimitProperties(string resourceName = null, long? limit = default(long?), string comment = null, string unit = null, long? availableLimit = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quota.Models.SubscriptionAllocatedQuota> allocatedToSubscriptionsValue = null, string value = null, string localizedValue = null)
+        public static GroupQuotaLimitProperties GroupQuotaLimitProperties(string resourceName, long limit, string comment, string unit, long availableLimit, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quota.Models.SubscriptionAllocatedQuota> allocatedToSubscriptionsValue, string value, string localizedValue)
         {
             allocatedToSubscriptionsValue ??= new List<SubscriptionAllocatedQuota>();
 
-            return new GroupQuotaLimitProperties(
+            return GroupQuotaLimitProperties(
                 resourceName,
                 limit,
                 comment,
@@ -61,8 +57,7 @@ namespace Azure.ResourceManager.Quota.Models
                 value,
                 localizedValue,
                 availableLimit,
-                allocatedToSubscriptionsValue != null ? new AllocatedQuotaToSubscriptionList(allocatedToSubscriptionsValue?.ToList(), serializedAdditionalRawData: null) : null,
-                serializedAdditionalRawData: null);
+                allocatedToSubscriptionsValue);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GroupQuotaRequestBase"/>. </summary>
@@ -72,15 +67,14 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="region"> Location/Azure region for the quota requested for resource. </param>
         /// <param name="comments"> GroupQuota Request comments and details for request. This is optional paramter to provide more details related to the requested resource. </param>
         /// <returns> A new <see cref="Models.GroupQuotaRequestBase"/> instance for mocking. </returns>
-        public static GroupQuotaRequestBase GroupQuotaRequestBase(long? limit = default(long?), string region = null, string comments = null, string value = null, string localizedValue = null)
+        public static GroupQuotaRequestBase GroupQuotaRequestBase(long limit, string region, string comments, string value, string localizedValue)
         {
-            return new GroupQuotaRequestBase(
+            return GroupQuotaRequestBase(
                 limit,
                 value,
                 localizedValue,
                 region,
-                comments,
-                serializedAdditionalRawData: null);
+                comments);
         }
     }
 }
