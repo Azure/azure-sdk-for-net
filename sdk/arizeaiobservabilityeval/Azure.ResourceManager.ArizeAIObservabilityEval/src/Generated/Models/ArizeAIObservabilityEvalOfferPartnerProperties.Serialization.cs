@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
 {
-    internal partial class ArizeAIObservabilityEvalOfferPartnerProperties : IUtf8JsonSerializable, IJsonModel<ArizeAIObservabilityEvalOfferPartnerProperties>
+    public partial class ArizeAIObservabilityEvalOfferPartnerProperties : IUtf8JsonSerializable, IJsonModel<ArizeAIObservabilityEvalOfferPartnerProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArizeAIObservabilityEvalOfferPartnerProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

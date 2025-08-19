@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(PolicyType.ToString());
+            writer.WriteStringValue(Type.ToString());
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);

@@ -97,7 +97,7 @@ public partial class ContainerServicePrivateEndpointConnection : ProvisionableRe
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerServicePrivateEndpointConnection.</param>
     public ContainerServicePrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/privateEndpointConnections", resourceVersion ?? "2025-03-01")
+        : base(bicepIdentifier, "Microsoft.ContainerService/managedClusters/privateEndpointConnections", resourceVersion ?? "2025-04-01")
     {
     }
 
@@ -121,6 +121,11 @@ public partial class ContainerServicePrivateEndpointConnection : ProvisionableRe
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-04-01.
+        /// </summary>
+        public static readonly string V2025_04_01 = "2025-04-01";
+
         /// <summary>
         /// 2025-03-01.
         /// </summary>

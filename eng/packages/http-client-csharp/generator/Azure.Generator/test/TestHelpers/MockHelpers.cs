@@ -22,7 +22,7 @@ namespace Azure.Generator.Tests.TestHelpers
         private static readonly string _configFilePath = Path.Combine(AppContext.BaseDirectory, TestHelpersFolder);
         private const string TestHelpersFolder = "TestHelpers";
 
-        public static Mock<AzureClientGenerator> LoadMockPlugin(
+        public static Mock<AzureClientGenerator> LoadMockGenerator(
             Func<InputType, TypeProvider, IReadOnlyList<TypeProvider>>? createSerializationsCore = null,
             Func<InputType, CSharpType>? createCSharpTypeCore = null,
             Func<InputApiKeyAuth>? apiKeyAuth = null,

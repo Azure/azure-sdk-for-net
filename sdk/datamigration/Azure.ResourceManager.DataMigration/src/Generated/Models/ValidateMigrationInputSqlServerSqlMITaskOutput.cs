@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="ValidateMigrationInputSqlServerSqlMITaskOutput"/>. </summary>
         internal ValidateMigrationInputSqlServerSqlMITaskOutput()
         {
-            RestoreDatabaseNameErrors = new ChangeTrackingList<ReportableException>();
-            BackupFolderErrors = new ChangeTrackingList<ReportableException>();
-            BackupShareCredentialsErrors = new ChangeTrackingList<ReportableException>();
-            BackupStorageAccountErrors = new ChangeTrackingList<ReportableException>();
-            ExistingBackupErrors = new ChangeTrackingList<ReportableException>();
+            RestoreDatabaseNameErrors = new ChangeTrackingList<DataMigrationReportableException>();
+            BackupFolderErrors = new ChangeTrackingList<DataMigrationReportableException>();
+            BackupShareCredentialsErrors = new ChangeTrackingList<DataMigrationReportableException>();
+            BackupStorageAccountErrors = new ChangeTrackingList<DataMigrationReportableException>();
+            ExistingBackupErrors = new ChangeTrackingList<DataMigrationReportableException>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ValidateMigrationInputSqlServerSqlMITaskOutput"/>. </summary>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="existingBackupErrors"> Errors associated with existing backup files. </param>
         /// <param name="databaseBackupInfo"> Information about backup files when existing backup mode is used. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ValidateMigrationInputSqlServerSqlMITaskOutput(string id, string name, IReadOnlyList<ReportableException> restoreDatabaseNameErrors, IReadOnlyList<ReportableException> backupFolderErrors, IReadOnlyList<ReportableException> backupShareCredentialsErrors, IReadOnlyList<ReportableException> backupStorageAccountErrors, IReadOnlyList<ReportableException> existingBackupErrors, DatabaseBackupInfo databaseBackupInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ValidateMigrationInputSqlServerSqlMITaskOutput(string id, string name, IReadOnlyList<DataMigrationReportableException> restoreDatabaseNameErrors, IReadOnlyList<DataMigrationReportableException> backupFolderErrors, IReadOnlyList<DataMigrationReportableException> backupShareCredentialsErrors, IReadOnlyList<DataMigrationReportableException> backupStorageAccountErrors, IReadOnlyList<DataMigrationReportableException> existingBackupErrors, DataMigrationDatabaseBackupInfo databaseBackupInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -83,16 +83,16 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Name of database. </summary>
         public string Name { get; }
         /// <summary> Errors associated with the RestoreDatabaseName. </summary>
-        public IReadOnlyList<ReportableException> RestoreDatabaseNameErrors { get; }
+        public IReadOnlyList<DataMigrationReportableException> RestoreDatabaseNameErrors { get; }
         /// <summary> Errors associated with the BackupFolder path. </summary>
-        public IReadOnlyList<ReportableException> BackupFolderErrors { get; }
+        public IReadOnlyList<DataMigrationReportableException> BackupFolderErrors { get; }
         /// <summary> Errors associated with backup share user name and password credentials. </summary>
-        public IReadOnlyList<ReportableException> BackupShareCredentialsErrors { get; }
+        public IReadOnlyList<DataMigrationReportableException> BackupShareCredentialsErrors { get; }
         /// <summary> Errors associated with the storage account provided. </summary>
-        public IReadOnlyList<ReportableException> BackupStorageAccountErrors { get; }
+        public IReadOnlyList<DataMigrationReportableException> BackupStorageAccountErrors { get; }
         /// <summary> Errors associated with existing backup files. </summary>
-        public IReadOnlyList<ReportableException> ExistingBackupErrors { get; }
+        public IReadOnlyList<DataMigrationReportableException> ExistingBackupErrors { get; }
         /// <summary> Information about backup files when existing backup mode is used. </summary>
-        public DatabaseBackupInfo DatabaseBackupInfo { get; }
+        public DataMigrationDatabaseBackupInfo DatabaseBackupInfo { get; }
     }
 }

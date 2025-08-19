@@ -14,50 +14,77 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public readonly partial struct AcsRouterUpdatedWorkerProperty : IEquatable<AcsRouterUpdatedWorkerProperty>
     {
         private readonly string _value;
+        /// <summary> AvailableForOffers. </summary>
+        private const string AvailableForOffersValue = "AvailableForOffers";
+        /// <summary> TotalCapacity. </summary>
+        private const string TotalCapacityValue = "TotalCapacity";
+        /// <summary> QueueAssignments. </summary>
+        private const string QueueAssignmentsValue = "QueueAssignments";
+        /// <summary> Labels. </summary>
+        private const string LabelsValue = "Labels";
+        /// <summary> Tags. </summary>
+        private const string TagsValue = "Tags";
+        /// <summary> ChannelConfigurations. </summary>
+        private const string ChannelConfigurationsValue = "ChannelConfigurations";
 
         /// <summary> Initializes a new instance of <see cref="AcsRouterUpdatedWorkerProperty"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AcsRouterUpdatedWorkerProperty(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AvailableForOffersValue = "AvailableForOffers";
-        private const string TotalCapacityValue = "TotalCapacity";
-        private const string QueueAssignmentsValue = "QueueAssignments";
-        private const string LabelsValue = "Labels";
-        private const string TagsValue = "Tags";
-        private const string ChannelConfigurationsValue = "ChannelConfigurations";
+            _value = value;
+        }
 
         /// <summary> AvailableForOffers. </summary>
         public static AcsRouterUpdatedWorkerProperty AvailableForOffers { get; } = new AcsRouterUpdatedWorkerProperty(AvailableForOffersValue);
+
         /// <summary> TotalCapacity. </summary>
         public static AcsRouterUpdatedWorkerProperty TotalCapacity { get; } = new AcsRouterUpdatedWorkerProperty(TotalCapacityValue);
+
         /// <summary> QueueAssignments. </summary>
         public static AcsRouterUpdatedWorkerProperty QueueAssignments { get; } = new AcsRouterUpdatedWorkerProperty(QueueAssignmentsValue);
+
         /// <summary> Labels. </summary>
         public static AcsRouterUpdatedWorkerProperty Labels { get; } = new AcsRouterUpdatedWorkerProperty(LabelsValue);
+
         /// <summary> Tags. </summary>
         public static AcsRouterUpdatedWorkerProperty Tags { get; } = new AcsRouterUpdatedWorkerProperty(TagsValue);
+
         /// <summary> ChannelConfigurations. </summary>
         public static AcsRouterUpdatedWorkerProperty ChannelConfigurations { get; } = new AcsRouterUpdatedWorkerProperty(ChannelConfigurationsValue);
+
         /// <summary> Determines if two <see cref="AcsRouterUpdatedWorkerProperty"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AcsRouterUpdatedWorkerProperty left, AcsRouterUpdatedWorkerProperty right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AcsRouterUpdatedWorkerProperty"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AcsRouterUpdatedWorkerProperty left, AcsRouterUpdatedWorkerProperty right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AcsRouterUpdatedWorkerProperty"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AcsRouterUpdatedWorkerProperty"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AcsRouterUpdatedWorkerProperty(string value) => new AcsRouterUpdatedWorkerProperty(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AcsRouterUpdatedWorkerProperty"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AcsRouterUpdatedWorkerProperty?(string value) => value == null ? null : new AcsRouterUpdatedWorkerProperty(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AcsRouterUpdatedWorkerProperty other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AcsRouterUpdatedWorkerProperty other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

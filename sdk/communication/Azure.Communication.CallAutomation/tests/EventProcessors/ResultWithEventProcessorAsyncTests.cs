@@ -68,6 +68,57 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
         }
 
         [Test]
+        public async Task ConnectCallEventResultSuccessTest()
+        {
+            int successCode = (int)HttpStatusCode.OK;
+
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(
+                responseCode: successCode,
+                responseContent: CreateOrAnswerCallOrGetCallConnectionPayload,
+                options: new CallAutomationClientOptions() { Source = new CommunicationUserIdentifier("12345") }
+                );
+            CallAutomationEventProcessor handler = callAutomationClient.GetEventProcessor();
+
+            var response = callAutomationClient.ConnectCall(new ConnectCallOptions(new ServerCallLocator(ServerCallId), new Uri(CallBackUri)));
+            Assert.AreEqual(successCode, response.GetRawResponse().Status);
+
+            // Create and send event to event processor
+            SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null, null));
+
+            ConnectCallEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
+
+            // Assert
+            Assert.NotNull(returnedResult);
+            Assert.AreEqual(true, returnedResult.IsSuccess);
+            Assert.NotNull(returnedResult.SuccessResult);
+            Assert.AreEqual(typeof(CallConnected), returnedResult.SuccessResult.GetType());
+            Assert.AreEqual(CallConnectionId, returnedResult.SuccessResult.CallConnectionId);
+        }
+
+        [Test]
+        public async Task ConnectCallEventResultFailedTest()
+        {
+            // Failed with operation mismatch
+            int successCode = (int)HttpStatusCode.OK;
+            CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(
+                responseCode: successCode,
+                responseContent: CreateOrAnswerCallOrGetCallConnectionPayload,
+                options: new CallAutomationClientOptions() { Source = new CommunicationUserIdentifier("12345") });
+            CallAutomationEventProcessor handler = callAutomationClient.GetEventProcessor();
+            var response = callAutomationClient.ConnectCall(new ConnectCallOptions(new ServerCallLocator(ServerCallId), new Uri(CallBackUri)));
+            Assert.AreEqual(successCode, response.GetRawResponse().Status);
+            SendAndProcessEvent(handler, new ConnectFailed(CallConnectionId, ServerCallId, CorelationId, "mismatchedOperationId", null));
+            ConnectCallEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();
+            // Assert
+            Assert.NotNull(returnedResult);
+            Assert.AreEqual(false, returnedResult.IsSuccess);
+            Assert.NotNull(returnedResult.FailureResult);
+            Assert.IsNull(returnedResult.SuccessResult);
+            Assert.AreEqual(typeof(ConnectFailed), returnedResult.FailureResult.GetType());
+            Assert.AreEqual(CallConnectionId, returnedResult.FailureResult.CallConnectionId);
+        }
+
+        [Test]
         public async Task AnswerCallEventResultSuccessTest()
         {
             int successCode = (int)HttpStatusCode.OK;

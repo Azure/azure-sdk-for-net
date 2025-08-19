@@ -1720,6 +1720,7 @@ namespace Azure.Provisioning.Storage
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.Storage.StorageTaskAssignmentExecutionContext ExecutionContext { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ReportPrefix { get { throw null; } set { } }
         public Azure.Provisioning.Storage.StorageTaskReportProperties RunStatus { get { throw null; } set { } }

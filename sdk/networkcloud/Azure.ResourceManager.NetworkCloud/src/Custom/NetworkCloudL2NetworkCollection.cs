@@ -37,10 +37,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <description>L2Networks_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudL2NetworkResource"/></description>
         /// </item>
@@ -53,9 +49,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="l2NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="l2NetworkName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkCloudL2NetworkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string l2NetworkName, NetworkCloudL2NetworkData data, CancellationToken cancellationToken)
-        {
-            return await CreateOrUpdateAsync(waitUntil, l2NetworkName, data, null, null, cancellationToken).ConfigureAwait(false);
-        }
+            => await CreateOrUpdateAsync(waitUntil, l2NetworkName, data, null, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Create a new layer 2 (L2) network or update the properties of the existing network.
@@ -67,10 +61,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>L2Networks_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -85,8 +75,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="l2NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="l2NetworkName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkCloudL2NetworkResource> CreateOrUpdate(WaitUntil waitUntil, string l2NetworkName, NetworkCloudL2NetworkData data, CancellationToken cancellationToken)
-        {
-            return CreateOrUpdate(waitUntil, l2NetworkName, data, null, null, cancellationToken);
-        }
+            => CreateOrUpdate(waitUntil, l2NetworkName, data, null, null, cancellationToken);
     }
 }

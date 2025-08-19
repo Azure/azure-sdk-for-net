@@ -6,6 +6,9 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
+using MgmtTypeSpec.Models;
 
 namespace MgmtTypeSpec
 {
@@ -13,6 +16,26 @@ namespace MgmtTypeSpec
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(FooProperties))]
+    [ModelReaderWriterBuildable(typeof(ExtendedLocation))]
+    [ModelReaderWriterBuildable(typeof(FooListResult))]
+    [ModelReaderWriterBuildable(typeof(FooSettingsProperties))]
+    [ModelReaderWriterBuildable(typeof(FooSettingsPropertiesMetaData))]
+    [ModelReaderWriterBuildable(typeof(FooSettingsPatch))]
+    [ModelReaderWriterBuildable(typeof(FooSettingsUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(BarProperties))]
+    [ModelReaderWriterBuildable(typeof(BarListResult))]
+    [ModelReaderWriterBuildable(typeof(BarSettingsProperties))]
+    [ModelReaderWriterBuildable(typeof(BarQuotaProperties))]
+    [ModelReaderWriterBuildable(typeof(ZooProperties))]
+    [ModelReaderWriterBuildable(typeof(ZooPatch))]
+    [ModelReaderWriterBuildable(typeof(ZooUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(ZooListResult))]
+    [ModelReaderWriterBuildable(typeof(ZooAddressListListResult))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
+    [ModelReaderWriterBuildable(typeof(FooPreviewAction))]
+    [ModelReaderWriterBuildable(typeof(Models.ZooRecommendation))]
     public partial class MgmtTypeSpecContext : ModelReaderWriterContext
     {
     }

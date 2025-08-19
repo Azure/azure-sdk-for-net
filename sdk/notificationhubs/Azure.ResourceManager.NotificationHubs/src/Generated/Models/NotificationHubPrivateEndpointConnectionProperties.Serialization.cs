@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                JsonSerializer.Serialize(writer, PrivateEndpoint);
+                ((IJsonModel<SubResource>)PrivateEndpoint).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(GroupIds))
             {
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                     {
                         continue;
                     }
-                    privateEndpoint = JsonSerializer.Deserialize<SubResource>(property.Value.GetRawText());
+                    privateEndpoint = ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerNotificationHubsContext.Default);
                     continue;
                 }
                 if (property.NameEquals("groupIds"u8))

@@ -19,7 +19,7 @@ namespace Azure.Generator.Tests.Providers.ClientBuilderExtensionsDefinitions
         public void AddsClientExtensionForApiKeyAuth()
         {
             var client  = InputFactory.Client("TestClient", "Samples", "");
-            var plugin = MockHelpers.LoadMockPlugin(
+            var plugin = MockHelpers.LoadMockGenerator(
                 apiKeyAuth: () => new InputApiKeyAuth("mock", null),
                 clients: () => [client]);
 
@@ -36,8 +36,8 @@ namespace Azure.Generator.Tests.Providers.ClientBuilderExtensionsDefinitions
         public void AddsClientExtensionForOAuth()
         {
             var client  = InputFactory.Client("TestClient", "Samples", "");
-            var plugin = MockHelpers.LoadMockPlugin(
-                oauth2Auth: ()=> new InputOAuth2Auth(["mock"]),
+            var plugin = MockHelpers.LoadMockGenerator(
+                oauth2Auth: ()=> new InputOAuth2Auth([new InputOAuth2Flow(["mock"], null, null, null)]),
                 clients: () => [client]);
 
             var builderExtensions = plugin.Object.OutputLibrary.TypeProviders
@@ -53,9 +53,9 @@ namespace Azure.Generator.Tests.Providers.ClientBuilderExtensionsDefinitions
         public void AddsClientExtensionForEachAuthMethod()
         {
             var client  = InputFactory.Client("TestClient", "Samples", "");
-            var plugin = MockHelpers.LoadMockPlugin(
+            var plugin = MockHelpers.LoadMockGenerator(
                 apiKeyAuth: () => new InputApiKeyAuth("mock", null),
-                oauth2Auth: ()=> new InputOAuth2Auth(["mock"]),
+                oauth2Auth: ()=> new InputOAuth2Auth([new InputOAuth2Flow(["mock"], null, null, null)]),
                 clients: () => [client]);
 
             var builderExtensions = plugin.Object.OutputLibrary.TypeProviders
@@ -72,9 +72,9 @@ namespace Azure.Generator.Tests.Providers.ClientBuilderExtensionsDefinitions
         {
             var client1  = InputFactory.Client("TestClient", "Samples", "");
             var client2  = InputFactory.Client("TestClient2", "Samples", "");
-            var plugin = MockHelpers.LoadMockPlugin(
+            var plugin = MockHelpers.LoadMockGenerator(
                 apiKeyAuth: () => new InputApiKeyAuth("mock", null),
-                oauth2Auth: ()=> new InputOAuth2Auth(["mock"]),
+                oauth2Auth: ()=> new InputOAuth2Auth([new InputOAuth2Flow(["mock"], null, null, null)]),
                 clients: () => [client1, client2]);
 
             var builderExtensions = plugin.Object.OutputLibrary.TypeProviders
@@ -90,9 +90,9 @@ namespace Azure.Generator.Tests.Providers.ClientBuilderExtensionsDefinitions
         public void DoesNotAddExtensionMethodsClassIfOnlyInternalClients()
         {
             var client = InputFactory.Client("TestClient", "Samples", "");
-            var plugin = MockHelpers.LoadMockPlugin(
+            var plugin = MockHelpers.LoadMockGenerator(
                 apiKeyAuth: () => new InputApiKeyAuth("mock", null),
-                oauth2Auth: ()=> new InputOAuth2Auth(["mock"]),
+                oauth2Auth: ()=> new InputOAuth2Auth([new InputOAuth2Flow(["mock"], null, null, null)]),
                 clients: () => [client],
                 createClientCore: inputClient =>
                 {
@@ -112,9 +112,9 @@ namespace Azure.Generator.Tests.Providers.ClientBuilderExtensionsDefinitions
         {
             var client1 = InputFactory.Client("TestClient1", "Samples", "");
             var client2 = InputFactory.Client("TestClient2", "Samples", "");
-            var plugin = MockHelpers.LoadMockPlugin(
+            var plugin = MockHelpers.LoadMockGenerator(
                 apiKeyAuth: () => new InputApiKeyAuth("mock", null),
-                oauth2Auth: ()=> new InputOAuth2Auth(["mock"]),
+                oauth2Auth: ()=> new InputOAuth2Auth([new InputOAuth2Flow(["mock"], null, null, null)]),
                 clients: () => [client1, client2],
                 createClientCore: inputClient =>
                 {

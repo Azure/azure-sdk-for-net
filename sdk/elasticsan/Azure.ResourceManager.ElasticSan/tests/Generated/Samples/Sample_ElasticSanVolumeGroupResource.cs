@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_VolumeGroupsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-07-01-preview/examples/VolumeGroups_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "VolumeGroups_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-07-01-preview/VolumeGroups_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "VolumeGroup_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_VolumeGroupsGetMinimumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-07-01-preview/examples/VolumeGroups_Get_MinimumSet_Gen.json
-            // this example is just showing the usage of "VolumeGroups_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-07-01-preview/VolumeGroups_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "VolumeGroup_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_VolumeGroupsDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-07-01-preview/examples/VolumeGroups_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "VolumeGroups_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-07-01-preview/VolumeGroups_Delete_MaximumSet_Gen.json
+            // this example is just showing the usage of "VolumeGroup_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_VolumeGroupsDeleteMinimumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-07-01-preview/examples/VolumeGroups_Delete_MinimumSet_Gen.json
-            // this example is just showing the usage of "VolumeGroups_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-07-01-preview/VolumeGroups_Delete_MinimumSet_Gen.json
+            // this example is just showing the usage of "VolumeGroup_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.ElasticSan.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_VolumeGroupsUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-07-01-preview/examples/VolumeGroups_Update_MaximumSet_Gen.json
-            // this example is just showing the usage of "VolumeGroups_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-07-01-preview/VolumeGroups_Update_MaximumSet_Gen.json
+            // this example is just showing the usage of "VolumeGroup_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -164,28 +164,6 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 [new ResourceIdentifier("key2350")] = new UserAssignedIdentity()
 },
                 },
-                ProtocolType = ElasticSanStorageTargetType.Iscsi,
-                Encryption = ElasticSanEncryptionType.EncryptionAtRestWithPlatformKey,
-                EncryptionProperties = new ElasticSanEncryptionProperties
-                {
-                    KeyVaultProperties = new ElasticSanKeyVaultProperties
-                    {
-                        KeyName = "rommjwp",
-                        KeyVersion = "ulmxxgzgsuhalwesmhfslq",
-                        KeyVaultUri = new Uri("https://microsoft.com/at"),
-                    },
-                    EncryptionUserAssignedIdentity = new ResourceIdentifier("vgbeephfgecgg"),
-                },
-                VirtualNetworkRules = {new ElasticSanVirtualNetworkRule(new ResourceIdentifier("fhhawhc"))
-{
-Action = ElasticSanVirtualNetworkRuleAction.Allow,
-}},
-                EnforceDataIntegrityCheckForIscsi = true,
-                DeleteRetentionPolicy = new ElasticSanDeleteRetentionPolicy
-                {
-                    PolicyState = ElasticSanDeleteRetentionPolicyState.Enabled,
-                    RetentionPeriodDays = 14,
-                },
             };
             ArmOperation<ElasticSanVolumeGroupResource> lro = await elasticSanVolumeGroup.UpdateAsync(WaitUntil.Completed, patch);
             ElasticSanVolumeGroupResource result = lro.Value;
@@ -201,8 +179,8 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
         [Ignore("Only validating compilation of examples")]
         public async Task Update_VolumeGroupsUpdateMinimumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-07-01-preview/examples/VolumeGroups_Update_MinimumSet_Gen.json
-            // this example is just showing the usage of "VolumeGroups_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-07-01-preview/VolumeGroups_Update_MinimumSet_Gen.json
+            // this example is just showing the usage of "VolumeGroup_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -234,8 +212,8 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
         [Ignore("Only validating compilation of examples")]
         public async Task PreBackupVolume_VolumeGroupsPreBackupMaximumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-07-01-preview/examples/Volumes_PreBackup_MaximumSet_Gen.json
-            // this example is just showing the usage of "Volumes_PreBackup" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-07-01-preview/Volumes_PreBackup_MaximumSet_Gen.json
+            // this example is just showing the usage of "VolumeGroups_PreBackup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -263,8 +241,8 @@ Action = ElasticSanVirtualNetworkRuleAction.Allow,
         [Ignore("Only validating compilation of examples")]
         public async Task PreRestoreVolume_VolumeGroupsPreRestoreMaximumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-07-01-preview/examples/Volumes_PreRestore_MaximumSet_Gen.json
-            // this example is just showing the usage of "Volumes_PreRestore" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-07-01-preview/Volumes_PreRestore_MaximumSet_Gen.json
+            // this example is just showing the usage of "VolumeGroups_PreRestore" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

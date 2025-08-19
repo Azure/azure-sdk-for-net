@@ -13,11 +13,44 @@ namespace Azure.AI.OpenAI
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
+        /// <summary> Initializes a new instance of <see cref="ResponseContentFilterResult"/>. </summary>
         internal ResponseContentFilterResult()
         {
         }
 
-        internal ResponseContentFilterResult(ContentFilterSeverityResult sexual, ContentFilterSeverityResult hate, ContentFilterSeverityResult violence, ContentFilterSeverityResult selfHarm, ContentFilterDetectionResult profanity, ContentFilterBlocklistResult customBlocklists, ContentFilterDetectionResult protectedMaterialText, ContentFilterProtectedMaterialResult protectedMaterialCode, InternalAzureContentFilterResultForChoiceError error, ContentFilterTextSpanResult ungroundedMaterial, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <summary> Initializes a new instance of <see cref="ResponseContentFilterResult"/>. </summary>
+        /// <param name="sexual">
+        /// A content filter category for language related to anatomical organs and genitals, romantic relationships, acts
+        /// portrayed in erotic or affectionate terms, pregnancy, physical sexual acts, including those portrayed as an
+        /// assault or a forced sexual violent act against one's will, prostitution, pornography, and abuse.
+        /// </param>
+        /// <param name="hate">
+        /// A content filter category that can refer to any content that attacks or uses pejorative or discriminatory
+        /// language with reference to a person or identity group based on certain differentiating attributes of these groups
+        /// including but not limited to race, ethnicity, nationality, gender identity and expression, sexual orientation,
+        /// religion, immigration status, ability status, personal appearance, and body size.
+        /// </param>
+        /// <param name="violence">
+        /// A content filter category for language related to physical actions intended to hurt, injure, damage, or kill
+        /// someone or something; describes weapons, guns and related entities, such as manufactures, associations,
+        /// legislation, and so on.
+        /// </param>
+        /// <param name="selfHarm">
+        /// A content filter category that describes language related to physical actions intended to purposely hurt, injure,
+        /// damage one's body or kill oneself.
+        /// </param>
+        /// <param name="profanity">
+        /// A detection result that identifies whether crude, vulgar, or otherwise objection language is present in the
+        /// content.
+        /// </param>
+        /// <param name="customBlocklists"> A collection of binary filtering outcomes for configured custom blocklists. </param>
+        /// <param name="customTopics"> A collection of binary filtering outcomes for configured custom topics. </param>
+        /// <param name="error"> If present, details about an error that prevented content filtering from completing its evaluation. </param>
+        /// <param name="protectedMaterialText"> A detection result that describes a match against text protected under copyright or other status. </param>
+        /// <param name="protectedMaterialCode"> A detection result that describes a match against licensed code or other protected source material. </param>
+        /// <param name="ungroundedMaterial"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponseContentFilterResult(ContentFilterSeverityResult sexual, ContentFilterSeverityResult hate, ContentFilterSeverityResult violence, ContentFilterSeverityResult selfHarm, ContentFilterDetectionResult profanity, ContentFilterBlocklistResult customBlocklists, AzureContentFilterCustomTopicResult customTopics, AzureContentFilterResultForChoiceError error, ContentFilterDetectionResult protectedMaterialText, ContentFilterProtectedMaterialResult protectedMaterialCode, ContentFilterTextSpanResult ungroundedMaterial, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sexual = sexual;
             Hate = hate;
@@ -25,9 +58,10 @@ namespace Azure.AI.OpenAI
             SelfHarm = selfHarm;
             Profanity = profanity;
             CustomBlocklists = customBlocklists;
+            CustomTopics = customTopics;
+            Error = error;
             ProtectedMaterialText = protectedMaterialText;
             ProtectedMaterialCode = protectedMaterialCode;
-            Error = error;
             UngroundedMaterial = ungroundedMaterial;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -68,6 +102,12 @@ namespace Azure.AI.OpenAI
 
         /// <summary> A collection of binary filtering outcomes for configured custom blocklists. </summary>
         public ContentFilterBlocklistResult CustomBlocklists { get; }
+
+        /// <summary> A collection of binary filtering outcomes for configured custom topics. </summary>
+        public AzureContentFilterCustomTopicResult CustomTopics { get; }
+
+        /// <summary> If present, details about an error that prevented content filtering from completing its evaluation. </summary>
+        public AzureContentFilterResultForChoiceError Error { get; }
 
         /// <summary> A detection result that describes a match against text protected under copyright or other status. </summary>
         public ContentFilterDetectionResult ProtectedMaterialText { get; }

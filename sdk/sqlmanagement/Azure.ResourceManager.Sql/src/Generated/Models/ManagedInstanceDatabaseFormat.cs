@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.Sql.Models
 
         private const string AlwaysUpToDateValue = "AlwaysUpToDate";
         private const string SqlServer2022Value = "SQLServer2022";
+        private const string SqlServer2025Value = "SQLServer2025";
 
         /// <summary> AlwaysUpToDate. </summary>
         public static ManagedInstanceDatabaseFormat AlwaysUpToDate { get; } = new ManagedInstanceDatabaseFormat(AlwaysUpToDateValue);
         /// <summary> SQLServer2022. </summary>
         public static ManagedInstanceDatabaseFormat SqlServer2022 { get; } = new ManagedInstanceDatabaseFormat(SqlServer2022Value);
+        /// <summary> SQLServer2025. </summary>
+        public static ManagedInstanceDatabaseFormat SqlServer2025 { get; } = new ManagedInstanceDatabaseFormat(SqlServer2025Value);
         /// <summary> Determines if two <see cref="ManagedInstanceDatabaseFormat"/> values are the same. </summary>
         public static bool operator ==(ManagedInstanceDatabaseFormat left, ManagedInstanceDatabaseFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedInstanceDatabaseFormat"/> values are not the same. </summary>

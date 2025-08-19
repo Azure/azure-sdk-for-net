@@ -10,14 +10,31 @@ namespace Azure.AI.OpenAI.Chat
 {
     internal partial class InternalAzureChatDataSourceDeploymentNameVectorizationSource : DataSourceVectorizer
     {
-        public InternalAzureChatDataSourceDeploymentNameVectorizationSource(string deploymentName) : base("deployment_name")
+        /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceDeploymentNameVectorizationSource"/>. </summary>
+        /// <param name="deploymentName">
+        /// The embedding model deployment to use for vectorization. This deployment must exist within the same Azure OpenAI
+        /// resource as the model deployment being used for chat completions.
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        public InternalAzureChatDataSourceDeploymentNameVectorizationSource(string deploymentName) : base(InternalAzureChatDataSourceVectorizationSourceType.DeploymentName)
         {
             Argument.AssertNotNull(deploymentName, nameof(deploymentName));
 
             DeploymentName = deploymentName;
         }
 
-        internal InternalAzureChatDataSourceDeploymentNameVectorizationSource(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string deploymentName, int? dimensions) : base(@type, additionalBinaryDataProperties)
+        /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceDeploymentNameVectorizationSource"/>. </summary>
+        /// <param name="kind"> The differentiating identifier for the concrete vectorization source. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="deploymentName">
+        /// The embedding model deployment to use for vectorization. This deployment must exist within the same Azure OpenAI
+        /// resource as the model deployment being used for chat completions.
+        /// </param>
+        /// <param name="dimensions">
+        /// The number of dimensions to request on embeddings.
+        /// Only supported in 'text-embedding-3' and later models.
+        /// </param>
+        internal InternalAzureChatDataSourceDeploymentNameVectorizationSource(InternalAzureChatDataSourceVectorizationSourceType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string deploymentName, int? dimensions) : base(kind, additionalBinaryDataProperties)
         {
             DeploymentName = deploymentName;
             Dimensions = dimensions;

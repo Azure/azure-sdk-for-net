@@ -32,7 +32,8 @@ managing search indexes, evaluating generative AI performance, and enabling Open
     - [Code interpreter attachment](#create-message-with-code-interpreter-attachment)
     - [Create Agent with Bing Grounding](#create-agent-with-bing-grounding)
     - [Azure AI Search](#create-agent-with-azure-ai-search)
-    - [Function call](#function-call)
+    - [Function call Executed Manually](#function-call-executed-manually)
+    - [Function call Executed Automatically](#function-call-executed-automatically)
     - [Azure function Call](#azure-function-call)
     - [OpenAPI](#create-agent-with-openapi)
     - [Tracing](#tracing)
@@ -94,6 +95,7 @@ PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential(
 
 With an authenticated client, an agent can be created:
 ```C# Snippet:AgentsOverviewCreateAgent
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "Math Tutor",
@@ -209,6 +211,7 @@ FileSearchToolResource fileSearchToolResource = new FileSearchToolResource();
 fileSearchToolResource.VectorStoreIds.Add(vectorStore.Id);
 
 // Create an agent with toolResources and process agent run
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
         model: modelDeploymentName,
         name: "SDK Test Agent - Retrieval",
@@ -239,6 +242,7 @@ PersistentAgentsVectorStore vectorStore = await client.VectorStores.CreateVector
 FileSearchToolResource fileSearchResource = new([vectorStore.Id], null);
 
 List<ToolDefinition> tools = [new FileSearchToolDefinition()];
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "my-agent",
@@ -276,6 +280,7 @@ Here is an example to pass `CodeInterpreterTool` as tool:
 
 ```C# Snippet:AgentsCreateAgentWithInterpreterTool
 List<ToolDefinition> tools = [ new CodeInterpreterToolDefinition() ];
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "my-agent",
@@ -333,6 +338,7 @@ BingGroundingToolDefinition bingGroundingTool = new(
 );
 ```
 ```C# Snippet:AgentsBingGroundingAsync_CreateAgent
+// NOTE: To reuse existing agent, fetch it with agentClient.Administration.GetAgent(agentId)
 PersistentAgent agent = await agentClient.Administration.CreateAgentAsync(
    model: modelDeploymentName,
    name: "my-agent",
@@ -364,10 +370,11 @@ ToolResources toolResource = new()
 
 PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
    model: modelDeploymentName,
    name: "my-agent",
-   instructions: "You are a helpful agent.",
+   instructions: "You are a helpful agent capable to perform Azure AI Search using attached resources.",
    tools: [ new AzureAISearchToolDefinition() ],
    toolResources: toolResource);
 ```
@@ -419,7 +426,7 @@ await foreach (PersistentThreadMessage threadMessage in messages)
 }
 ```
 
-#### Function call
+#### Function call executed manually
 
 Tools that reference caller-defined capabilities as functions can be provided to an agent to allow it to
 dynamically resolve and disambiguate during a run.
@@ -494,7 +501,8 @@ FunctionToolDefinition getCurrentWeatherAtLocationTool = new(
 With the functions defined in their appropriate tools, an agent can be now created that has those tools enabled:
 
 ```C# Snippet:AgentsFunctionsCreateAgentWithFunctionTools
-// note: parallel function calling is only supported with newer models like gpt-4-1106-preview
+// NOTE: parallel function calling is only supported with newer models like gpt-4-1106-preview
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "SDK Test Agent - Functions",
@@ -644,6 +652,68 @@ do
 while (toolOutputs.Count > 0);
 ```
 
+#### Function call executed automatically
+
+In addition to the manual function calls, SDK supports automatic function calling.  After creating functions and`FunctionToolDefinition` according to the last section, here is the steps:
+
+When you create an agent, you can specify the function call by tools argument similar to the example of manual function calls:
+```C# Snippet:StreamingWithAutoFunctionCall_CreateAgent
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
+PersistentAgent agent = client.Administration.CreateAgent(
+    model: modelDeploymentName,
+    name: "SDK Test Agent - Functions",
+        instructions: "You are a weather bot. Use the provided functions to help answer questions. "
+            + "Customize your responses to the user's preferences as much as possible and use friendly "
+            + "nicknames for cities whenever possible.",
+    tools: [getCityNicknameTool, getCurrentWeatherAtLocationTool, getUserFavoriteCityTool]
+);
+```
+
+We create a thread and message similar to the example of manual function tool calls:
+```C# Snippet:StreamingWithAutoFunctionCall_CreateThreadMessage
+PersistentAgentThread thread = client.Threads.CreateThread();
+
+PersistentThreadMessage message = client.Messages.CreateMessage(
+    thread.Id,
+    MessageRole.User,
+    "What's the weather like in my favorite city?");
+```
+
+Setup `AutoFunctionCallOptions`:
+```C# Snippet:StreamingWithAutoFunctionCall_EnableAutoFunctionCalls
+List<ToolOutput> toolOutputs = new();
+Dictionary<string, Delegate> toolDelegates = new();
+toolDelegates.Add(nameof(GetWeatherAtLocation), GetWeatherAtLocation);
+toolDelegates.Add(nameof(GetCityNickname), GetCityNickname);
+toolDelegates.Add(nameof(GetUserFavoriteCity), GetUserFavoriteCity);
+AutoFunctionCallOptions autoFunctionCallOptions = new(toolDelegates, 10);
+```
+
+With autoFunctionCallOptions as parameter for `CreateRunStreamingAsync`, the agent will then call the function automatically when it is needed:
+```C# Snippet:StreamingWithAutoFunctionCallAsync
+CreateRunStreamingOptions runOptions = new()
+{
+    AutoFunctionCallOptions = autoFunctionCallOptions
+};
+await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, options: runOptions))
+{
+    if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
+    {
+        Console.WriteLine("--- Run started! ---");
+    }
+    else if (streamingUpdate is MessageContentUpdate contentUpdate)
+    {
+        Console.Write(contentUpdate.Text);
+    }
+    else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
+    {
+        Console.WriteLine();
+        Console.WriteLine("--- Run completed! ---");
+    }
+}
+```
+To allow the agent cast the parameters to the function call, you must use the supported argument types.  They are `string`, `int`, `ushort`, `float`, `uint`, `decimal`, `double`, `long`, and `bool`.   Other tpes such as array, dictionary, or classes are not supported.   
+
 #### Azure function call
 
 We can use Azure Function from inside the agent. In the example below we are calling function "foo", which responds "Bar". In this example we create `AzureFunctionToolDefinition` object, with the function name, description, input and output queues, followed by function parameters. See below for the instructions on function deployment.
@@ -694,6 +764,7 @@ AzureFunctionToolDefinition azureFnTool = new(
 
 Note that in this scenario we are asking agent to supply storage queue URI to the azure function whenever it is called.
 ```C# Snippet:AgentsAzureFunctionsCreateAgentWithFunctionTools
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "azure-function-agent-foo",
@@ -731,6 +802,7 @@ Assert.AreEqual(
     run.LastError?.Message);
 ```
 
+**Note:** The Azure Function may be only used in standard agent setup. Please follow the [instruction](https://github.com/azure-ai-foundry/foundry-samples/tree/main/samples/microsoft/infrastructure-setup/41-standard-agent-setup) to deploy an agent, capable of calling Azure Functions.
 To make a function call we need to create and deploy the Azure function. In the code snippet below, we have an example of function on C# which can be used by the code above.
 
 ```C#
@@ -837,6 +909,7 @@ OpenApiToolDefinition openapiTool = new(
     defaultParams: [ "format" ]
 );
 
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "azure-function-agent-foo",
@@ -885,7 +958,7 @@ AppContext.SetSwitch("Azure.Experimental.TraceGenAIMessageContent", false);
 ```
 Set the value to `true` to enable content recording.
 
-##### Tracing to Azure Montior
+##### Tracing to Azure Monitor
 First, set the `APPLICATIONINSIGHTS_CONNECTION_STRING` environment variable to point to your Azure Monitor resource.
 
 For tracing to Azure Monitor from your application, the preferred option is to use Azure.Monitor.OpenTelemetry.AspNetCore. Install the package with [NuGet](https://www.nuget.org/ ):

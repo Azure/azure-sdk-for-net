@@ -594,6 +594,7 @@ namespace Azure.Core
         public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.ObjectSerializer? serializer) { throw null; }
         public static Azure.Core.RequestContent Create(System.ReadOnlyMemory<byte> bytes) { throw null; }
         public static Azure.Core.RequestContent Create(string content) { throw null; }
+        public static Azure.Core.RequestContent Create<T>(T model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
         public abstract void Dispose();
         public static implicit operator Azure.Core.RequestContent (Azure.Core.Serialization.DynamicData content) { throw null; }
         public static implicit operator Azure.Core.RequestContent (System.BinaryData content) { throw null; }
@@ -950,14 +951,20 @@ namespace Azure.Core.GeoJson
         MultiLineString = 5,
         GeometryCollection = 6,
     }
-    public sealed partial class GeoPoint : Azure.Core.GeoJson.GeoObject
+    public sealed partial class GeoPoint : Azure.Core.GeoJson.GeoObject, System.ClientModel.Primitives.IJsonModel<Azure.Core.GeoJson.GeoPoint>, System.ClientModel.Primitives.IPersistableModel<Azure.Core.GeoJson.GeoPoint>
     {
+        public GeoPoint() { }
         public GeoPoint(Azure.Core.GeoJson.GeoPosition position) { }
         public GeoPoint(Azure.Core.GeoJson.GeoPosition position, Azure.Core.GeoJson.GeoBoundingBox? boundingBox, System.Collections.Generic.IReadOnlyDictionary<string, object?> customProperties) { }
         public GeoPoint(double longitude, double latitude) { }
         public GeoPoint(double longitude, double latitude, double? altitude) { }
         public Azure.Core.GeoJson.GeoPosition Coordinates { get { throw null; } }
         public override Azure.Core.GeoJson.GeoObjectType Type { get { throw null; } }
+        Azure.Core.GeoJson.GeoPoint? System.ClientModel.Primitives.IJsonModel<Azure.Core.GeoJson.GeoPoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Core.GeoJson.GeoPoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Core.GeoJson.GeoPoint? System.ClientModel.Primitives.IPersistableModel<Azure.Core.GeoJson.GeoPoint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Core.GeoJson.GeoPoint>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Core.GeoJson.GeoPoint>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public sealed partial class GeoPointCollection : Azure.Core.GeoJson.GeoObject, System.Collections.Generic.IEnumerable<Azure.Core.GeoJson.GeoPoint>, System.Collections.Generic.IReadOnlyCollection<Azure.Core.GeoJson.GeoPoint>, System.Collections.Generic.IReadOnlyList<Azure.Core.GeoJson.GeoPoint>, System.Collections.IEnumerable
     {

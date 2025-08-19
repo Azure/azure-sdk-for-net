@@ -22,10 +22,10 @@ namespace Azure.Generator.Tests.Providers.ClientProviders
         private const string KeyAuthCategory = "WithKeyAuth";
         private const string OAuth2Category = "WithOAuth2";
         private const string TestClientName = "TestClient";
-        private static readonly InputClient _testClient = new(TestClientName, "Samples", "", "TestClient description", null, [], [], _testClient, []);
-        private static readonly InputClient _animalClient = new("animal", "Samples", "", "AnimalClient description", null, [], [], _testClient, []);
-        private static readonly InputClient _dogClient = new("dog", "Samples", "", "DogClient description", null, [], [], _animalClient, []);
-        private static readonly InputClient _huskyClient = new("husky", "Samples", "", "HuskyClient description", null, [], [], _dogClient, []);
+        private static readonly InputClient _testClient = new(TestClientName, "Samples", "", "TestClient description", null, [], [], _testClient, [], []);
+        private static readonly InputClient _animalClient = new("animal", "Samples", "", "AnimalClient description", null, [], [], _testClient, [], []);
+        private static readonly InputClient _dogClient = new("dog", "Samples", "", "DogClient description", null, [], [], _animalClient, [], []);
+        private static readonly InputClient _huskyClient = new("husky", "Samples", "", "HuskyClient description", null, [], [], _dogClient, [], []);
 
         private bool _containsSubClients;
         private bool _hasKeyAuth;
@@ -45,8 +45,8 @@ namespace Azure.Generator.Tests.Providers.ClientProviders
                 () => [_animalClient, _dogClient, _huskyClient] :
                 null;
             Func<InputApiKeyAuth>? apiKeyAuth = _hasKeyAuth ? () => new InputApiKeyAuth("mock", null) : null;
-            Func<InputOAuth2Auth>? oauth2Auth = _hasOAuth2 ? () => new InputOAuth2Auth(["mock"]) : null;
-            MockHelpers.LoadMockPlugin(
+            Func<InputOAuth2Auth>? oauth2Auth = _hasOAuth2 ? () => new InputOAuth2Auth([new InputOAuth2Flow(["mock"], null, null, null)]) : null;
+            MockHelpers.LoadMockGenerator(
                 apiKeyAuth: apiKeyAuth,
                 oauth2Auth: oauth2Auth,
                 clients: clients);
@@ -161,92 +161,83 @@ namespace Azure.Generator.Tests.Providers.ClientProviders
             Assert.AreEqual(expected, primaryCtorBody?.ToDisplayString());
         }
 
-        private static IEnumerable<TestCaseData> BuildConstructorsTestCases
+        public static IEnumerable<TestCaseData> BuildConstructorsTestCases
         {
             get
             {
                 yield return new TestCaseData(new List<InputParameter>
                 {
-                    InputFactory.Parameter(
+                    InputFactory.PathParameter(
                         "optionalParam",
                         InputPrimitiveType.String,
-                        location: InputRequestLocation.None,
-                        kind: InputParameterKind.Client),
-                    InputFactory.Parameter(
+                        scope: InputParameterScope.Client),
+                    InputFactory.EndpointParameter(
                         KnownParameters.Endpoint.Name,
                         InputPrimitiveType.String,
-                        location: InputRequestLocation.None,
                         defaultValue: InputFactory.Constant.String("someValue"),
-                        kind: InputParameterKind.Client,
+                        scope: InputParameterScope.Client,
                         isEndpoint: true)
                 }).SetProperty("caseName", "WithDefault");
                 // scenario where endpoint is required
                 yield return new TestCaseData(new List<InputParameter>
                 {
-                    InputFactory.Parameter(
+                    InputFactory.EndpointParameter(
                         KnownParameters.Endpoint.Name,
                         InputPrimitiveType.String,
-                        location: InputRequestLocation.None,
-                        kind: InputParameterKind.Client,
+                        scope: InputParameterScope.Client,
                         isRequired: true,
                         isEndpoint: true),
-                    InputFactory.Parameter(
+                    InputFactory.PathParameter(
                         "optionalParam",
                         InputPrimitiveType.String,
-                        location: InputRequestLocation.None,
-                        kind: InputParameterKind.Client)
+                        scope: InputParameterScope.Client)
                 }).SetProperty("caseName", "WithRequired");
             }
         }
 
-        private static IEnumerable<TestCaseData> BuildAuthFieldsTestCases
+        public static IEnumerable<TestCaseData> BuildAuthFieldsTestCases
         {
             get
             {
                 yield return new TestCaseData(new List<InputParameter>
                 {
-                    InputFactory.Parameter(
+                    InputFactory.EndpointParameter(
                         "optionalParam",
                         InputPrimitiveType.String,
-                        location: InputRequestLocation.None,
-                        kind: InputParameterKind.Client),
-                    InputFactory.Parameter(
+                        scope: InputParameterScope.Client),
+
+                    InputFactory.EndpointParameter(
                         KnownParameters.Endpoint.Name,
                         InputPrimitiveType.String,
-                        location: InputRequestLocation.None,
-                        kind: InputParameterKind.Client,
+                        scope: InputParameterScope.Client,
                         isEndpoint: true)
                 });
                 yield return new TestCaseData(new List<InputParameter>
                 {
                     // have to explicitly set isRequired because we now call CreateParameter in buildFields
-                    InputFactory.Parameter(
+                    InputFactory.EndpointParameter(
                         "optionalNullableParam",
                         InputPrimitiveType.String,
-                        location: InputRequestLocation.None,
                         defaultValue: InputFactory.Constant.String("someValue"),
-                        kind: InputParameterKind.Client,
+                        scope: InputParameterScope.Client,
                         isRequired: false),
-                    InputFactory.Parameter(
+                    InputFactory.EndpointParameter(
                         "requiredParam2",
                         InputPrimitiveType.String,
-                        location: InputRequestLocation.None,
                         defaultValue: InputFactory.Constant.String("someValue"),
-                        kind: InputParameterKind.Client,
+                        scope: InputParameterScope.Client,
                         isRequired: true),
-                    InputFactory.Parameter(
+                    InputFactory.EndpointParameter(
                         "requiredParam3",
                         InputPrimitiveType.Int64,
-                        location: InputRequestLocation.None,
                         defaultValue: InputFactory.Constant.Int64(2),
-                        kind: InputParameterKind.Client,
+                        scope: InputParameterScope.Client,
                         isRequired: true),
-                    InputFactory.Parameter(
+                    InputFactory.EndpointParameter(
                         KnownParameters.Endpoint.Name,
                         InputPrimitiveType.String,
-                        location: InputRequestLocation.None,
                         defaultValue: null,
-                        kind: InputParameterKind.Client,
+                        scope: InputParameterScope.Client,
                         isEndpoint: true)
                 });
             }

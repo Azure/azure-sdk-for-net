@@ -16,7 +16,7 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="FolderDatasetVersion"/>. </summary>
         /// <param name="dataUri"> URI of the data. Example: https://go.microsoft.com/fwlink/?linkid=2202330. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataUri"/> is null. </exception>
-        public FolderDatasetVersion(string dataUri) : base(dataUri)
+        public FolderDatasetVersion(Uri dataUri) : base(dataUri)
         {
             Argument.AssertNotNull(dataUri, nameof(dataUri));
 
@@ -34,7 +34,7 @@ namespace Azure.AI.Projects
         /// <param name="description"> The asset description text. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FolderDatasetVersion(string dataUri, DatasetType type, bool? isReference, string connectionName, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(dataUri, type, isReference, connectionName, id, name, version, description, tags, serializedAdditionalRawData)
+        internal FolderDatasetVersion(Uri dataUri, DatasetType type, bool? isReference, string connectionName, string id, string name, string version, string description, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(dataUri, type, isReference, connectionName, id, name, version, description, tags, serializedAdditionalRawData)
         {
         }
 

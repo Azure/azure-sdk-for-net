@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NeonPostgres.Models;
 
 namespace Azure.ResourceManager.NeonPostgres
 {
@@ -13,6 +15,43 @@ namespace Azure.ResourceManager.NeonPostgres
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(Attributes))]
+    [ModelReaderWriterBuildable(typeof(BranchListResult))]
+    [ModelReaderWriterBuildable(typeof(ComputeListResult))]
+    [ModelReaderWriterBuildable(typeof(ConnectionUriProperties))]
+    [ModelReaderWriterBuildable(typeof(DefaultEndpointSettings))]
+    [ModelReaderWriterBuildable(typeof(EndpointListResult))]
+    [ModelReaderWriterBuildable(typeof(NeonBranchData))]
+    [ModelReaderWriterBuildable(typeof(NeonBranchProperties))]
+    [ModelReaderWriterBuildable(typeof(NeonBranchResource))]
+    [ModelReaderWriterBuildable(typeof(NeonCompanyDetails))]
+    [ModelReaderWriterBuildable(typeof(NeonCompute))]
+    [ModelReaderWriterBuildable(typeof(NeonComputeProperties))]
+    [ModelReaderWriterBuildable(typeof(NeonDatabase))]
+    [ModelReaderWriterBuildable(typeof(NeonDatabaseListResult))]
+    [ModelReaderWriterBuildable(typeof(NeonDatabaseProperties))]
+    [ModelReaderWriterBuildable(typeof(NeonEndpoint))]
+    [ModelReaderWriterBuildable(typeof(NeonEndpointProperties))]
+    [ModelReaderWriterBuildable(typeof(NeonMarketplaceDetails))]
+    [ModelReaderWriterBuildable(typeof(NeonOfferDetails))]
+    [ModelReaderWriterBuildable(typeof(NeonOrganizationData))]
+    [ModelReaderWriterBuildable(typeof(NeonOrganizationProperties))]
+    [ModelReaderWriterBuildable(typeof(NeonOrganizationResource))]
+    [ModelReaderWriterBuildable(typeof(NeonProjectData))]
+    [ModelReaderWriterBuildable(typeof(NeonProjectProperties))]
+    [ModelReaderWriterBuildable(typeof(NeonProjectResource))]
+    [ModelReaderWriterBuildable(typeof(NeonRole))]
+    [ModelReaderWriterBuildable(typeof(NeonRoleListResult))]
+    [ModelReaderWriterBuildable(typeof(NeonRoleProperties))]
+    [ModelReaderWriterBuildable(typeof(NeonSingleSignOnProperties))]
+    [ModelReaderWriterBuildable(typeof(NeonUserDetails))]
+    [ModelReaderWriterBuildable(typeof(OrganizationResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(PartnerOrganizationProperties))]
+    [ModelReaderWriterBuildable(typeof(PgVersion))]
+    [ModelReaderWriterBuildable(typeof(PgVersionsResult))]
+    [ModelReaderWriterBuildable(typeof(ProjectListResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerNeonPostgresContext : ModelReaderWriterContext
     {
     }

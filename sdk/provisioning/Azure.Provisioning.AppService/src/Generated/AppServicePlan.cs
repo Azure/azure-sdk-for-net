@@ -71,6 +71,19 @@ public partial class AppServicePlan : ProvisionableResource
     private HostingEnvironmentProfile? _hostingEnvironmentProfile;
 
     /// <summary>
+    /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will attempt to
+    /// scale asynchronously if there are insufficient workers to scale
+    /// synchronously.             If &lt;code&gt;false&lt;/code&gt;, this App
+    /// Service Plan will only attempt sync scaling.
+    /// </summary>
+    public BicepValue<bool> IsAsyncScalingEnabled 
+    {
+        get { Initialize(); return _isAsyncScalingEnabled!; }
+        set { Initialize(); _isAsyncScalingEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isAsyncScalingEnabled;
+
+    /// <summary>
     /// ServerFarm supports ElasticScale. Apps in this plan will scale as if
     /// the ServerFarm was ElasticPremium sku.
     /// </summary>
@@ -363,6 +376,7 @@ public partial class AppServicePlan : ProvisionableResource
         _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["extendedLocation"]);
         _freeOfferExpireOn = DefineProperty<DateTimeOffset>("FreeOfferExpireOn", ["properties", "freeOfferExpirationTime"]);
         _hostingEnvironmentProfile = DefineModelProperty<HostingEnvironmentProfile>("HostingEnvironmentProfile", ["properties", "hostingEnvironmentProfile"]);
+        _isAsyncScalingEnabled = DefineProperty<bool>("IsAsyncScalingEnabled", ["properties", "asyncScalingEnabled"]);
         _isElasticScaleEnabled = DefineProperty<bool>("IsElasticScaleEnabled", ["properties", "elasticScaleEnabled"]);
         _isHyperV = DefineProperty<bool>("IsHyperV", ["properties", "hyperV"]);
         _isPerSiteScaling = DefineProperty<bool>("IsPerSiteScaling", ["properties", "perSiteScaling"]);

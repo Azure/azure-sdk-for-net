@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="value"> A list of shared galleries. </param>
         /// <param name="nextLink"> The uri to fetch the next page of shared galleries. Call ListNext() with this to fetch the next page of shared galleries. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SharedGalleryList(IReadOnlyList<SharedGalleryData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SharedGalleryList(IReadOnlyList<SharedGalleryData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -75,6 +75,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> A list of shared galleries. </summary>
         public IReadOnlyList<SharedGalleryData> Value { get; }
         /// <summary> The uri to fetch the next page of shared galleries. Call ListNext() with this to fetch the next page of shared galleries. </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }
