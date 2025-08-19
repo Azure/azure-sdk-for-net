@@ -34,6 +34,7 @@ namespace Azure.Generator.Management
         // but currently this is the best we could do right now.
         internal Dictionary<TypeProvider, string> PageableMethodScopes { get; } = new();
 
+        private IReadOnlyDictionary<string, ResourceClientProvider>? _resourceClientsDict;
         private IReadOnlyList<ResourceClientProvider>? _resourceClients;
         private IReadOnlyList<ResourceCollectionClientProvider>? _resourceCollections;
         private IReadOnlyList<MockableResourceProvider>? _mockableResourceProviders;
@@ -44,9 +45,16 @@ namespace Azure.Generator.Management
         internal IReadOnlyList<MockableResourceProvider> MockableResourceProviders => GetValue(ref _mockableResourceProviders);
         internal ExtensionProvider ExtensionProvider => GetValue(ref _extensionProvider);
 
+        internal ResourceClientProvider? GetResourceById(string id)
+        {
+            var dict = GetValue(ref _resourceClientsDict);
+            return dict.TryGetValue(id, out var resource) ? resource : null;
+        }
+
         private T GetValue<T>(ref T? field) where T : class
         {
             InitializeResourceClients(
+                ref _resourceClientsDict,
                 ref _resourceClients,
                 ref _resourceCollections,
                 ref _mockableResourceProviders,
@@ -59,11 +67,13 @@ namespace Azure.Generator.Management
         /// This method initializes the resource clients, collections, and mockable clients.
         /// We do all of these in the same method to ensure they are initialized together
         /// </summary>
-        /// <param name="_resourceClients"></param>
-        /// <param name="_collectionClients"></param>
-        /// <param name="_mockableClients"></param>
-        /// <param name="_extensionProvider"></param>
+        /// <param name="_resourceClientsDict">Represent a map from resource id pattern to the <see cref="ResourceClientProvider"/>. </param>
+        /// <param name="_resourceClients">The full list of <see cref="ResourceClientProvider"/>. </param>
+        /// <param name="_collectionClients">The full list of <see cref="ResourceCollectionClientProvider"/>. </param>
+        /// <param name="_mockableClients">The full list of <see cref="MockableResourceProvider"/>. </param>
+        /// <param name="_extensionProvider">The <see cref="T:ExtensionProvider"/>.</param>
         private static void InitializeResourceClients(
+            ref IReadOnlyDictionary<string, ResourceClientProvider>? _resourceClientsDict,
             ref IReadOnlyList<ResourceClientProvider>? _resourceClients,
             ref IReadOnlyList<ResourceCollectionClientProvider>? _collectionClients,
             ref IReadOnlyList<MockableResourceProvider>? _mockableClients,
@@ -98,6 +108,7 @@ namespace Azure.Generator.Management
             }
 
             // resources and collections are now initialized
+            _resourceClientsDict = resourceDict.ToDictionary(kv => kv.Key.ResourceIdPattern, kv => kv.Value);
             _resourceClients = [.. resourceDict.Values];
             _collectionClients = collections;
 
