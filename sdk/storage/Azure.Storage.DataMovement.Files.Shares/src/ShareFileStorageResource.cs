@@ -431,6 +431,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
         public static InvalidOperationException ShareFileAlreadyExists(string pathName)
             => new InvalidOperationException($"Share File `{pathName}` already exists. Cannot overwrite file.");
 
+        public static InvalidOperationException ShareDirectoryAlreadyExists(string pathName)
+            => new InvalidOperationException($"Share Directory `{pathName}` already exists. Cannot overwrite directory.");
+
         public static ArgumentException ProtocolSetMismatch(string endpoint, ShareProtocol setProtocol, ShareProtocol actualProtocol)
             => new ArgumentException($"The Protocol set on the {endpoint} '{setProtocol}' does not match the actual Protocol of the share '{actualProtocol}'.");
 
