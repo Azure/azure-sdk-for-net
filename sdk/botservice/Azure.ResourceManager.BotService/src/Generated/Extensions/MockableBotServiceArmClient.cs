@@ -47,18 +47,6 @@ namespace Azure.ResourceManager.BotService.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BotConnectionSettingResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BotConnectionSettingResource.CreateResourceIdentifier" /> to create a <see cref="BotConnectionSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BotConnectionSettingResource"/> object. </returns>
-        public virtual BotConnectionSettingResource GetBotConnectionSettingResource(ResourceIdentifier id)
-        {
-            BotConnectionSettingResource.ValidateResourceId(id);
-            return new BotConnectionSettingResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="BotChannelResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="BotChannelResource.CreateResourceIdentifier" /> to create a <see cref="BotChannelResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -71,15 +59,15 @@ namespace Azure.ResourceManager.BotService.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkSecurityPerimeterConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkSecurityPerimeterConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityPerimeterConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="BotConnectionSettingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BotConnectionSettingResource.CreateResourceIdentifier" /> to create a <see cref="BotConnectionSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkSecurityPerimeterConfigurationResource"/> object. </returns>
-        public virtual NetworkSecurityPerimeterConfigurationResource GetNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BotConnectionSettingResource"/> object. </returns>
+        public virtual BotConnectionSettingResource GetBotConnectionSettingResource(ResourceIdentifier id)
         {
-            NetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
-            return new NetworkSecurityPerimeterConfigurationResource(Client, id);
+            BotConnectionSettingResource.ValidateResourceId(id);
+            return new BotConnectionSettingResource(Client, id);
         }
 
         /// <summary>
@@ -92,6 +80,18 @@ namespace Azure.ResourceManager.BotService.Mocking
         {
             BotServicePrivateEndpointConnectionResource.ValidateResourceId(id);
             return new BotServicePrivateEndpointConnectionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkSecurityPerimeterConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkSecurityPerimeterConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityPerimeterConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetworkSecurityPerimeterConfigurationResource"/> object. </returns>
+        public virtual NetworkSecurityPerimeterConfigurationResource GetNetworkSecurityPerimeterConfigurationResource(ResourceIdentifier id)
+        {
+            NetworkSecurityPerimeterConfigurationResource.ValidateResourceId(id);
+            return new NetworkSecurityPerimeterConfigurationResource(Client, id);
         }
     }
 }

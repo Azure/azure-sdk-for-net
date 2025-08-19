@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.BotService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationProperties"/>. </summary>
-        public NetworkSecurityPerimeterConfigurationProperties()
+        internal NetworkSecurityPerimeterConfigurationProperties()
         {
             ProvisioningIssues = new ChangeTrackingList<ProvisioningIssue>();
         }
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="resourceAssociation"> Information about resource association. </param>
         /// <param name="profile"> Information about profile. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterConfigurationProperties(ProvisioningState? provisioningState, IList<ProvisioningIssue> provisioningIssues, NetworkSecurityPerimeter networkSecurityPerimeter, ResourceAssociation resourceAssociation, Profile profile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkSecurityPerimeterConfigurationProperties(ProvisioningState? provisioningState, IReadOnlyList<ProvisioningIssue> provisioningIssues, NetworkSecurityPerimeter networkSecurityPerimeter, ResourceAssociation resourceAssociation, Profile profile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             ProvisioningIssues = provisioningIssues;
@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.BotService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; set; }
+        /// <summary> Gets the provisioning state. </summary>
+        public ProvisioningState? ProvisioningState { get; }
         /// <summary> List of Provisioning Issues if any. </summary>
-        public IList<ProvisioningIssue> ProvisioningIssues { get; }
+        public IReadOnlyList<ProvisioningIssue> ProvisioningIssues { get; }
         /// <summary> Information about Network Security Perimeter. </summary>
         public NetworkSecurityPerimeter NetworkSecurityPerimeter { get; }
         /// <summary> Information about resource association. </summary>

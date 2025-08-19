@@ -50,10 +50,11 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="displayName"> The Name of the bot. </param>
         /// <param name="endpoint"> The bot's endpoint. </param>
         /// <param name="msaAppId"> Microsoft App Id for the bot. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> or <paramref name="msaAppId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/>, <paramref name="endpoint"/> or <paramref name="msaAppId"/> is null. </exception>
         public BotProperties(string displayName, Uri endpoint, string msaAppId)
         {
             Argument.AssertNotNull(displayName, nameof(displayName));
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(msaAppId, nameof(msaAppId));
 
             DisplayName = displayName;

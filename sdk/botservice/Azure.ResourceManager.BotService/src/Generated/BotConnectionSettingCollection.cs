@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.BotService
     /// </summary>
     public partial class BotConnectionSettingCollection : ArmCollection, IEnumerable<BotConnectionSettingResource>, IAsyncEnumerable<BotConnectionSettingResource>
     {
-        private readonly ClientDiagnostics _botConnectionSettingBotConnectionClientDiagnostics;
-        private readonly BotConnectionRestOperations _botConnectionSettingBotConnectionRestClient;
+        private readonly ClientDiagnostics _botConnectionSettingConnectionSettingsClientDiagnostics;
+        private readonly ConnectionSettingsRestOperations _botConnectionSettingConnectionSettingsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="BotConnectionSettingCollection"/> class for mocking. </summary>
         protected BotConnectionSettingCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.BotService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal BotConnectionSettingCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _botConnectionSettingBotConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", BotConnectionSettingResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(BotConnectionSettingResource.ResourceType, out string botConnectionSettingBotConnectionApiVersion);
-            _botConnectionSettingBotConnectionRestClient = new BotConnectionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, botConnectionSettingBotConnectionApiVersion);
+            _botConnectionSettingConnectionSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", BotConnectionSettingResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(BotConnectionSettingResource.ResourceType, out string botConnectionSettingConnectionSettingsApiVersion);
+            _botConnectionSettingConnectionSettingsRestClient = new ConnectionSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, botConnectionSettingConnectionSettingsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BotConnection_Create</description>
+        /// <description>ConnectionSetting_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.BotService
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _botConnectionSettingBotConnectionClientDiagnostics.CreateScope("BotConnectionSettingCollection.CreateOrUpdate");
+            using var scope = _botConnectionSettingConnectionSettingsClientDiagnostics.CreateScope("BotConnectionSettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _botConnectionSettingBotConnectionRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _botConnectionSettingBotConnectionRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, data);
+                var response = await _botConnectionSettingConnectionSettingsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _botConnectionSettingConnectionSettingsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new BotServiceArmOperation<BotConnectionSettingResource>(Response.FromValue(new BotConnectionSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BotConnection_Create</description>
+        /// <description>ConnectionSetting_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -134,12 +134,12 @@ namespace Azure.ResourceManager.BotService
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _botConnectionSettingBotConnectionClientDiagnostics.CreateScope("BotConnectionSettingCollection.CreateOrUpdate");
+            using var scope = _botConnectionSettingConnectionSettingsClientDiagnostics.CreateScope("BotConnectionSettingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _botConnectionSettingBotConnectionRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, data, cancellationToken);
-                var uri = _botConnectionSettingBotConnectionRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, data);
+                var response = _botConnectionSettingConnectionSettingsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, data, cancellationToken);
+                var uri = _botConnectionSettingConnectionSettingsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new BotServiceArmOperation<BotConnectionSettingResource>(Response.FromValue(new BotConnectionSettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BotConnection_Get</description>
+        /// <description>ConnectionSetting_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -182,11 +182,11 @@ namespace Azure.ResourceManager.BotService
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _botConnectionSettingBotConnectionClientDiagnostics.CreateScope("BotConnectionSettingCollection.Get");
+            using var scope = _botConnectionSettingConnectionSettingsClientDiagnostics.CreateScope("BotConnectionSettingCollection.Get");
             scope.Start();
             try
             {
-                var response = await _botConnectionSettingBotConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken).ConfigureAwait(false);
+                var response = await _botConnectionSettingConnectionSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new BotConnectionSettingResource(Client, response.Value), response.GetRawResponse());
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BotConnection_Get</description>
+        /// <description>ConnectionSetting_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -227,11 +227,11 @@ namespace Azure.ResourceManager.BotService
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _botConnectionSettingBotConnectionClientDiagnostics.CreateScope("BotConnectionSettingCollection.Get");
+            using var scope = _botConnectionSettingConnectionSettingsClientDiagnostics.CreateScope("BotConnectionSettingCollection.Get");
             scope.Start();
             try
             {
-                var response = _botConnectionSettingBotConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken);
+                var response = _botConnectionSettingConnectionSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new BotConnectionSettingResource(Client, response.Value), response.GetRawResponse());
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BotConnection_ListByBotService</description>
+        /// <description>ConnectionSetting_ListByBotService</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -268,9 +268,9 @@ namespace Azure.ResourceManager.BotService
         /// <returns> An async collection of <see cref="BotConnectionSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BotConnectionSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _botConnectionSettingBotConnectionRestClient.CreateListByBotServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _botConnectionSettingBotConnectionRestClient.CreateListByBotServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BotConnectionSettingResource(Client, BotConnectionSettingData.DeserializeBotConnectionSettingData(e)), _botConnectionSettingBotConnectionClientDiagnostics, Pipeline, "BotConnectionSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _botConnectionSettingConnectionSettingsRestClient.CreateListByBotServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _botConnectionSettingConnectionSettingsRestClient.CreateListByBotServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BotConnectionSettingResource(Client, BotConnectionSettingData.DeserializeBotConnectionSettingData(e)), _botConnectionSettingConnectionSettingsClientDiagnostics, Pipeline, "BotConnectionSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BotConnection_ListByBotService</description>
+        /// <description>ConnectionSetting_ListByBotService</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -298,9 +298,9 @@ namespace Azure.ResourceManager.BotService
         /// <returns> A collection of <see cref="BotConnectionSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BotConnectionSettingResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _botConnectionSettingBotConnectionRestClient.CreateListByBotServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _botConnectionSettingBotConnectionRestClient.CreateListByBotServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BotConnectionSettingResource(Client, BotConnectionSettingData.DeserializeBotConnectionSettingData(e)), _botConnectionSettingBotConnectionClientDiagnostics, Pipeline, "BotConnectionSettingCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _botConnectionSettingConnectionSettingsRestClient.CreateListByBotServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _botConnectionSettingConnectionSettingsRestClient.CreateListByBotServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BotConnectionSettingResource(Client, BotConnectionSettingData.DeserializeBotConnectionSettingData(e)), _botConnectionSettingConnectionSettingsClientDiagnostics, Pipeline, "BotConnectionSettingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BotConnection_Get</description>
+        /// <description>ConnectionSetting_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -332,11 +332,11 @@ namespace Azure.ResourceManager.BotService
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _botConnectionSettingBotConnectionClientDiagnostics.CreateScope("BotConnectionSettingCollection.Exists");
+            using var scope = _botConnectionSettingConnectionSettingsClientDiagnostics.CreateScope("BotConnectionSettingCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _botConnectionSettingBotConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _botConnectionSettingConnectionSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BotConnection_Get</description>
+        /// <description>ConnectionSetting_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -375,11 +375,11 @@ namespace Azure.ResourceManager.BotService
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _botConnectionSettingBotConnectionClientDiagnostics.CreateScope("BotConnectionSettingCollection.Exists");
+            using var scope = _botConnectionSettingConnectionSettingsClientDiagnostics.CreateScope("BotConnectionSettingCollection.Exists");
             scope.Start();
             try
             {
-                var response = _botConnectionSettingBotConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken);
+                var response = _botConnectionSettingConnectionSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BotConnection_Get</description>
+        /// <description>ConnectionSetting_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -418,11 +418,11 @@ namespace Azure.ResourceManager.BotService
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _botConnectionSettingBotConnectionClientDiagnostics.CreateScope("BotConnectionSettingCollection.GetIfExists");
+            using var scope = _botConnectionSettingConnectionSettingsClientDiagnostics.CreateScope("BotConnectionSettingCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _botConnectionSettingBotConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _botConnectionSettingConnectionSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<BotConnectionSettingResource>(response.GetRawResponse());
                 return Response.FromValue(new BotConnectionSettingResource(Client, response.Value), response.GetRawResponse());
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BotConnection_Get</description>
+        /// <description>ConnectionSetting_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -463,11 +463,11 @@ namespace Azure.ResourceManager.BotService
         {
             Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var scope = _botConnectionSettingBotConnectionClientDiagnostics.CreateScope("BotConnectionSettingCollection.GetIfExists");
+            using var scope = _botConnectionSettingConnectionSettingsClientDiagnostics.CreateScope("BotConnectionSettingCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _botConnectionSettingBotConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken);
+                var response = _botConnectionSettingConnectionSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<BotConnectionSettingResource>(response.GetRawResponse());
                 return Response.FromValue(new BotConnectionSettingResource(Client, response.Value), response.GetRawResponse());

@@ -77,15 +77,8 @@ namespace Azure.ResourceManager.BotService.Models
             }
             if (Optional.IsDefined(CognitiveServiceResourceId))
             {
-                if (CognitiveServiceResourceId != null)
-                {
-                    writer.WritePropertyName("cognitiveServiceResourceId"u8);
-                    writer.WriteStringValue(CognitiveServiceResourceId);
-                }
-                else
-                {
-                    writer.WriteNull("cognitiveServiceResourceId");
-                }
+                writer.WritePropertyName("cognitiveServiceResourceId"u8);
+                writer.WriteStringValue(CognitiveServiceResourceId);
             }
             if (Optional.IsDefined(DefaultLocale))
             {
@@ -185,7 +178,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        cognitiveServiceResourceId = null;
                         continue;
                     }
                     cognitiveServiceResourceId = new ResourceIdentifier(property.Value.GetString());

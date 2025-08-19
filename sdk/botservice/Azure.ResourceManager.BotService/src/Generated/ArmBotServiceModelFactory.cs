@@ -17,16 +17,6 @@ namespace Azure.ResourceManager.BotService.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmBotServiceModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.BotServiceNameAvailabilityResult"/>. </summary>
-        /// <param name="isValid"> indicates if the bot name is valid. </param>
-        /// <param name="message"> additional message from the bot management api showing why a bot name is not available. </param>
-        /// <param name="absCode"> response code from ABS. </param>
-        /// <returns> A new <see cref="Models.BotServiceNameAvailabilityResult"/> instance for mocking. </returns>
-        public static BotServiceNameAvailabilityResult BotServiceNameAvailabilityResult(bool? isValid = null, string message = null, string absCode = null)
-        {
-            return new BotServiceNameAvailabilityResult(isValid, message, absCode, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="BotService.BotData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -228,7 +218,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="suggestedResourceIds"> ARM IDs of resources that can be associated to the same perimeter to remediate the issue. </param>
         /// <param name="suggestedAccessRules"> Access rules that can be added to the same profile to remediate the issue. </param>
         /// <returns> A new <see cref="Models.ProvisioningIssueProperties"/> instance for mocking. </returns>
-        public static ProvisioningIssueProperties ProvisioningIssueProperties(string issueType = null, Severity? severity = null, string description = null, IEnumerable<ResourceIdentifier> suggestedResourceIds = null, IEnumerable<NspAccessRule> suggestedAccessRules = null)
+        public static ProvisioningIssueProperties ProvisioningIssueProperties(string issueType = null, BotServiceSeverity? severity = null, string description = null, IEnumerable<ResourceIdentifier> suggestedResourceIds = null, IEnumerable<NspAccessRule> suggestedAccessRules = null)
         {
             suggestedResourceIds ??= new List<ResourceIdentifier>();
             suggestedAccessRules ??= new List<NspAccessRule>();
@@ -285,7 +275,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="perimeterGuid"> Guid of the Network Security Perimeter. </param>
         /// <param name="location"> Location of the Network Security Perimeter. </param>
         /// <returns> A new <see cref="Models.NetworkSecurityPerimeter"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeter NetworkSecurityPerimeter(ResourceIdentifier id = null, string perimeterGuid = null, AzureLocation? location = null)
+        public static NetworkSecurityPerimeter NetworkSecurityPerimeter(ResourceIdentifier id = null, string perimeterGuid = null, string location = null)
         {
             return new NetworkSecurityPerimeter(id, perimeterGuid, location, serializedAdditionalRawData: null);
         }
@@ -329,91 +319,39 @@ namespace Azure.ResourceManager.BotService.Models
             return new BotServiceSku(name, tier, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.BotServiceHostSettingsResult"/>. </summary>
-        /// <param name="oAuthUri"> For in-conversation bot user authentication. </param>
-        /// <param name="toBotFromChannelOpenIdMetadataUri"> For verifying incoming tokens from the channels. </param>
-        /// <param name="toBotFromChannelTokenIssuer"> For verifying incoming tokens from the channels. </param>
-        /// <param name="toBotFromEmulatorOpenIdMetadataUri"> For verifying incoming tokens from bot emulator. </param>
-        /// <param name="toChannelFromBotLoginUri"> For getting access token to channels from bot host. </param>
-        /// <param name="toChannelFromBotOAuthScope"> For getting access token to channels from bot host. </param>
-        /// <param name="validateAuthority"> Per cloud OAuth setting on whether authority is validated. </param>
-        /// <param name="botOpenIdMetadata"> Same as toBotFromChannelOpenIdMetadataUrl, used by SDK &lt; v4.12. </param>
-        /// <returns> A new <see cref="Models.BotServiceHostSettingsResult"/> instance for mocking. </returns>
-        public static BotServiceHostSettingsResult BotServiceHostSettingsResult(Uri oAuthUri = null, Uri toBotFromChannelOpenIdMetadataUri = null, string toBotFromChannelTokenIssuer = null, Uri toBotFromEmulatorOpenIdMetadataUri = null, Uri toChannelFromBotLoginUri = null, string toChannelFromBotOAuthScope = null, bool? validateAuthority = null, string botOpenIdMetadata = null)
+        /// <summary> Initializes a new instance of <see cref="Models.BotCreateEmailSignInUriResult"/>. </summary>
+        /// <param name="id"> Specifies the resource ID. </param>
+        /// <param name="location"> Specifies the location of the resource. </param>
+        /// <param name="createEmailSignInUrlResponseUri"> The set of properties specific to sign in url. </param>
+        /// <returns> A new <see cref="Models.BotCreateEmailSignInUriResult"/> instance for mocking. </returns>
+        public static BotCreateEmailSignInUriResult BotCreateEmailSignInUriResult(ResourceIdentifier id = null, AzureLocation? location = null, Uri createEmailSignInUrlResponseUri = null)
         {
-            return new BotServiceHostSettingsResult(
-                oAuthUri,
-                toBotFromChannelOpenIdMetadataUri,
-                toBotFromChannelTokenIssuer,
-                toBotFromEmulatorOpenIdMetadataUri,
-                toChannelFromBotLoginUri,
-                toChannelFromBotOAuthScope,
-                validateAuthority,
-                botOpenIdMetadata,
-                serializedAdditionalRawData: null);
+            return new BotCreateEmailSignInUriResult(id, location, createEmailSignInUrlResponseUri != null ? new CreateEmailSignInUrlResponseProperties(createEmailSignInUrlResponseUri, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.BotServiceProvider"/>. </summary>
-        /// <param name="properties"> The Properties of a Service Provider Object. </param>
-        /// <returns> A new <see cref="Models.BotServiceProvider"/> instance for mocking. </returns>
-        public static BotServiceProvider BotServiceProvider(BotServiceProviderProperties properties = null)
+        /// <summary> Initializes a new instance of <see cref="Models.BotServicePrivateLinkResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
+        /// <returns> A new <see cref="Models.BotServicePrivateLinkResourceData"/> instance for mocking. </returns>
+        public static BotServicePrivateLinkResourceData BotServicePrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
         {
-            return new BotServiceProvider(properties, serializedAdditionalRawData: null);
-        }
+            requiredMembers ??= new List<string>();
+            requiredZoneNames ??= new List<string>();
 
-        /// <summary> Initializes a new instance of <see cref="Models.BotServiceProviderProperties"/>. </summary>
-        /// <param name="id"> Id for Service Provider. </param>
-        /// <param name="displayName"> Display Name of the Service Provider. </param>
-        /// <param name="serviceProviderName"> Name of the Service Provider. </param>
-        /// <param name="devPortalUri"> URL of Dev Portal. </param>
-        /// <param name="iconUri"> The URL of icon. </param>
-        /// <param name="parameters"> The list of parameters for the Service Provider. </param>
-        /// <returns> A new <see cref="Models.BotServiceProviderProperties"/> instance for mocking. </returns>
-        public static BotServiceProviderProperties BotServiceProviderProperties(string id = null, string displayName = null, string serviceProviderName = null, Uri devPortalUri = null, Uri iconUri = null, IEnumerable<BotServiceProviderParameter> parameters = null)
-        {
-            parameters ??= new List<BotServiceProviderParameter>();
-
-            return new BotServiceProviderProperties(
+            return new BotServicePrivateLinkResourceData(
                 id,
-                displayName,
-                serviceProviderName,
-                devPortalUri,
-                iconUri,
-                parameters?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.BotServiceProviderParameter"/>. </summary>
-        /// <param name="name"> Name of the Service Provider. </param>
-        /// <param name="serviceProviderParameterType"> Type of the Service Provider. </param>
-        /// <param name="displayName"> Display Name of the Service Provider. </param>
-        /// <param name="description"> Description of the Service Provider. </param>
-        /// <param name="helpUri"> Help Url for the  Service Provider. </param>
-        /// <param name="default"> Default Name for the Service Provider. </param>
-        /// <param name="isRequired"> Meta data for the Service Provider. </param>
-        /// <returns> A new <see cref="Models.BotServiceProviderParameter"/> instance for mocking. </returns>
-        public static BotServiceProviderParameter BotServiceProviderParameter(string name = null, string serviceProviderParameterType = null, string displayName = null, string description = null, Uri helpUri = null, string @default = null, bool? isRequired = null)
-        {
-            return new BotServiceProviderParameter(
                 name,
-                serviceProviderParameterType,
-                displayName,
-                description,
-                helpUri,
-                @default,
-                isRequired != null ? new ServiceProviderParameterMetadata(new ServiceProviderParameterMetadataConstraints(isRequired, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null,
+                resourceType,
+                systemData,
+                groupId,
+                requiredMembers?.ToList(),
+                requiredZoneNames?.ToList(),
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.GetBotServiceQnAMakerEndpointKeyResult"/>. </summary>
-        /// <param name="primaryEndpointKey"> Primary Access Key. </param>
-        /// <param name="secondaryEndpointKey"> Secondary Access Key. </param>
-        /// <param name="installedVersion"> Current version of runtime. </param>
-        /// <param name="lastStableVersion"> Latest version of runtime. </param>
-        /// <returns> A new <see cref="Models.GetBotServiceQnAMakerEndpointKeyResult"/> instance for mocking. </returns>
-        public static GetBotServiceQnAMakerEndpointKeyResult GetBotServiceQnAMakerEndpointKeyResult(string primaryEndpointKey = null, string secondaryEndpointKey = null, string installedVersion = null, string lastStableVersion = null)
-        {
-            return new GetBotServiceQnAMakerEndpointKeyResult(primaryEndpointKey, secondaryEndpointKey, installedVersion, lastStableVersion, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="BotService.BotChannelData"/>. </summary>
@@ -464,213 +402,6 @@ namespace Azure.ResourceManager.BotService.Models
             return new UnknownChannel(channelName, etag, provisioningState, location, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.BotChannelGetWithKeysResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="resource">
-        /// The set of properties specific to bot channel resource
-        /// Please note <see cref="Models.BotChannelProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.AcsChatChannel"/>, <see cref="Models.AlexaChannel"/>, <see cref="Models.DirectLineChannel"/>, <see cref="Models.DirectLineSpeechChannel"/>, <see cref="Models.EmailChannel"/>, <see cref="Models.FacebookChannel"/>, <see cref="Models.KikChannel"/>, <see cref="Models.LineChannel"/>, <see cref="Models.M365Extensions"/>, <see cref="Models.MsTeamsChannel"/>, <see cref="Models.Omnichannel"/>, <see cref="Models.OutlookChannel"/>, <see cref="Models.SearchAssistant"/>, <see cref="Models.SkypeChannel"/>, <see cref="Models.SlackChannel"/>, <see cref="Models.SmsChannel"/>, <see cref="Models.TelegramChannel"/>, <see cref="Models.TelephonyChannel"/> and <see cref="Models.WebChatChannel"/>.
-        /// </param>
-        /// <param name="setting"> Channel settings. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="entityTag"> Entity tag of the resource. </param>
-        /// <param name="changedTime"> Changed time of the resource. </param>
-        /// <param name="properties">
-        /// The set of properties specific to bot channel resource
-        /// Please note <see cref="Models.BotChannelProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.AcsChatChannel"/>, <see cref="Models.AlexaChannel"/>, <see cref="Models.DirectLineChannel"/>, <see cref="Models.DirectLineSpeechChannel"/>, <see cref="Models.EmailChannel"/>, <see cref="Models.FacebookChannel"/>, <see cref="Models.KikChannel"/>, <see cref="Models.LineChannel"/>, <see cref="Models.M365Extensions"/>, <see cref="Models.MsTeamsChannel"/>, <see cref="Models.Omnichannel"/>, <see cref="Models.OutlookChannel"/>, <see cref="Models.SearchAssistant"/>, <see cref="Models.SkypeChannel"/>, <see cref="Models.SlackChannel"/>, <see cref="Models.SmsChannel"/>, <see cref="Models.TelegramChannel"/>, <see cref="Models.TelephonyChannel"/> and <see cref="Models.WebChatChannel"/>.
-        /// </param>
-        /// <param name="sku"> Gets or sets the SKU of the resource. </param>
-        /// <param name="kind"> Required. Gets or sets the Kind of the resource. </param>
-        /// <param name="etag"> Entity Tag. </param>
-        /// <param name="zones"> Entity zones. </param>
-        /// <returns> A new <see cref="Models.BotChannelGetWithKeysResult"/> instance for mocking. </returns>
-        public static BotChannelGetWithKeysResult BotChannelGetWithKeysResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BotChannelProperties resource = null, BotChannelSettings setting = null, string provisioningState = null, string entityTag = null, string changedTime = null, BotChannelProperties properties = null, BotServiceSku sku = null, BotServiceKind? kind = null, ETag? etag = null, IEnumerable<string> zones = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            zones ??= new List<string>();
-
-            return new BotChannelGetWithKeysResult(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                resource,
-                setting,
-                provisioningState,
-                entityTag,
-                changedTime,
-                properties,
-                sku,
-                kind,
-                etag,
-                zones?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.BotChannelSite"/>. </summary>
-        /// <param name="tenantId"> Tenant Id. </param>
-        /// <param name="siteId"> Site Id. </param>
-        /// <param name="siteName"> Site name. </param>
-        /// <param name="key"> Primary key. Value only returned through POST to the action Channel List API, otherwise empty. </param>
-        /// <param name="key2"> Secondary key. Value only returned through POST to the action Channel List API, otherwise empty. </param>
-        /// <param name="isEnabled"> Whether this site is enabled for DirectLine channel. </param>
-        /// <param name="isTokenEnabled"> Whether this site is token enabled for channel. </param>
-        /// <param name="isEndpointParametersEnabled"> Whether this site is EndpointParameters enabled for channel. </param>
-        /// <param name="isDetailedLoggingEnabled"> Whether this site is disabled detailed logging for. </param>
-        /// <param name="isBlockUserUploadEnabled"> Whether this site is enabled for block user upload. </param>
-        /// <param name="isNoStorageEnabled"> Whether this no-storage site is disabled detailed logging for. </param>
-        /// <param name="etag"> Entity Tag. </param>
-        /// <param name="appId"> DirectLine application id. </param>
-        /// <param name="isV1Enabled"> Whether this site is enabled for Bot Framework V1 protocol. </param>
-        /// <param name="isV3Enabled"> Whether this site is enabled for Bot Framework V3 protocol. </param>
-        /// <param name="isSecureSiteEnabled"> Whether this site is enabled for authentication with Bot Framework. </param>
-        /// <param name="trustedOrigins"> List of Trusted Origin URLs for this site. This field is applicable only if isSecureSiteEnabled is True. </param>
-        /// <param name="isWebChatSpeechEnabled"> Whether this site is enabled for Webchat Speech. </param>
-        /// <param name="isWebchatPreviewEnabled"> Whether this site is enabled for preview versions of Webchat. </param>
-        /// <returns> A new <see cref="Models.BotChannelSite"/> instance for mocking. </returns>
-        public static BotChannelSite BotChannelSite(Guid? tenantId = null, string siteId = null, string siteName = null, string key = null, string key2 = null, bool isEnabled = default, bool? isTokenEnabled = null, bool? isEndpointParametersEnabled = null, bool? isDetailedLoggingEnabled = null, bool? isBlockUserUploadEnabled = null, bool? isNoStorageEnabled = null, ETag? etag = null, string appId = null, bool? isV1Enabled = null, bool? isV3Enabled = null, bool? isSecureSiteEnabled = null, IEnumerable<string> trustedOrigins = null, bool? isWebChatSpeechEnabled = null, bool? isWebchatPreviewEnabled = null)
-        {
-            trustedOrigins ??= new List<string>();
-
-            return new BotChannelSite(
-                tenantId,
-                siteId,
-                siteName,
-                key,
-                key2,
-                isEnabled,
-                isTokenEnabled,
-                isEndpointParametersEnabled,
-                isDetailedLoggingEnabled,
-                isBlockUserUploadEnabled,
-                isNoStorageEnabled,
-                etag,
-                appId,
-                isV1Enabled,
-                isV3Enabled,
-                isSecureSiteEnabled,
-                trustedOrigins?.ToList(),
-                isWebChatSpeechEnabled,
-                isWebchatPreviewEnabled,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BotService.BotConnectionSettingData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties"> The set of properties specific to bot channel resource. </param>
-        /// <param name="sku"> Gets or sets the SKU of the resource. </param>
-        /// <param name="kind"> Required. Gets or sets the Kind of the resource. </param>
-        /// <param name="etag"> Entity Tag. </param>
-        /// <param name="zones"> Entity zones. </param>
-        /// <returns> A new <see cref="BotService.BotConnectionSettingData"/> instance for mocking. </returns>
-        public static BotConnectionSettingData BotConnectionSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BotConnectionSettingProperties properties = null, BotServiceSku sku = null, BotServiceKind? kind = null, ETag? etag = null, IEnumerable<string> zones = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            zones ??= new List<string>();
-
-            return new BotConnectionSettingData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                properties,
-                sku,
-                kind,
-                etag,
-                zones?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.BotConnectionSettingProperties"/>. </summary>
-        /// <param name="id"> Id of the Connection Setting. </param>
-        /// <param name="name"> Name of the Connection Setting. </param>
-        /// <param name="clientId"> Client Id associated with the Connection Setting. </param>
-        /// <param name="settingId"> Setting Id set by the service for the Connection Setting. </param>
-        /// <param name="clientSecret"> Client Secret associated with the Connection Setting. </param>
-        /// <param name="scopes"> Scopes associated with the Connection Setting. </param>
-        /// <param name="serviceProviderId"> Service Provider Id associated with the Connection Setting. </param>
-        /// <param name="serviceProviderDisplayName"> Service Provider Display Name associated with the Connection Setting. </param>
-        /// <param name="parameters"> Service Provider Parameters associated with the Connection Setting. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Models.BotConnectionSettingProperties"/> instance for mocking. </returns>
-        public static BotConnectionSettingProperties BotConnectionSettingProperties(string id = null, string name = null, string clientId = null, string settingId = null, string clientSecret = null, string scopes = null, string serviceProviderId = null, string serviceProviderDisplayName = null, IEnumerable<BotConnectionSettingParameter> parameters = null, string provisioningState = null)
-        {
-            parameters ??= new List<BotConnectionSettingParameter>();
-
-            return new BotConnectionSettingProperties(
-                id,
-                name,
-                clientId,
-                settingId,
-                clientSecret,
-                scopes,
-                serviceProviderId,
-                serviceProviderDisplayName,
-                parameters?.ToList(),
-                provisioningState,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.BotCreateEmailSignInUriResult"/>. </summary>
-        /// <param name="id"> Specifies the resource ID. </param>
-        /// <param name="location"> Specifies the location of the resource. </param>
-        /// <param name="createEmailSignInUrlResponseUri"> The set of properties specific to sign in url. </param>
-        /// <returns> A new <see cref="Models.BotCreateEmailSignInUriResult"/> instance for mocking. </returns>
-        public static BotCreateEmailSignInUriResult BotCreateEmailSignInUriResult(ResourceIdentifier id = null, AzureLocation? location = null, Uri createEmailSignInUrlResponseUri = null)
-        {
-            return new BotCreateEmailSignInUriResult(id, location, createEmailSignInUrlResponseUri != null ? new CreateEmailSignInUrlResponseProperties(createEmailSignInUrlResponseUri, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.BotServicePrivateLinkResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
-        /// <returns> A new <see cref="Models.BotServicePrivateLinkResourceData"/> instance for mocking. </returns>
-        public static BotServicePrivateLinkResourceData BotServicePrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
-        {
-            requiredMembers ??= new List<string>();
-            requiredZoneNames ??= new List<string>();
-
-            return new BotServicePrivateLinkResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                groupId,
-                requiredMembers?.ToList(),
-                requiredZoneNames?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AcsChatChannel"/>. </summary>
-        /// <param name="etag"> Entity Tag of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="location"> Specifies the location of the resource. </param>
-        /// <returns> A new <see cref="Models.AcsChatChannel"/> instance for mocking. </returns>
-        public static AcsChatChannel AcsChatChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null)
-        {
-            return new AcsChatChannel("AcsChatChannel", etag, provisioningState, location, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.AlexaChannel"/>. </summary>
         /// <param name="etag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
@@ -697,105 +428,6 @@ namespace Azure.ResourceManager.BotService.Models
         public static AlexaChannelProperties AlexaChannelProperties(string alexaSkillId = null, string uriFragment = null, Uri serviceEndpointUri = null, bool isEnabled = default)
         {
             return new AlexaChannelProperties(alexaSkillId, uriFragment, serviceEndpointUri, isEnabled, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DirectLineChannel"/>. </summary>
-        /// <param name="etag"> Entity Tag of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="location"> Specifies the location of the resource. </param>
-        /// <param name="properties"> The set of properties specific to Direct Line channel resource. </param>
-        /// <returns> A new <see cref="Models.DirectLineChannel"/> instance for mocking. </returns>
-        public static DirectLineChannel DirectLineChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, DirectLineChannelProperties properties = null)
-        {
-            return new DirectLineChannel(
-                "DirectLineChannel",
-                etag,
-                provisioningState,
-                location,
-                serializedAdditionalRawData: null,
-                properties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DirectLineSite"/>. </summary>
-        /// <param name="tenantId"> Tenant Id. </param>
-        /// <param name="siteId"> Site Id. </param>
-        /// <param name="siteName"> Site name. </param>
-        /// <param name="key"> Primary key. Value only returned through POST to the action Channel List API, otherwise empty. </param>
-        /// <param name="key2"> Secondary key. Value only returned through POST to the action Channel List API, otherwise empty. </param>
-        /// <param name="isEnabled"> Whether this site is enabled for DirectLine channel. </param>
-        /// <param name="isTokenEnabled"> Whether this site is token enabled for channel. </param>
-        /// <param name="isEndpointParametersEnabled"> Whether this site is EndpointParameters enabled for channel. </param>
-        /// <param name="isDetailedLoggingEnabled"> Whether this site is disabled detailed logging for. </param>
-        /// <param name="isBlockUserUploadEnabled"> Whether this site is enabled for block user upload. </param>
-        /// <param name="isNoStorageEnabled"> Whether this no-storage site is disabled detailed logging for. </param>
-        /// <param name="etag"> Entity Tag. </param>
-        /// <param name="appId"> DirectLine application id. </param>
-        /// <param name="isV1Enabled"> Whether this site is enabled for Bot Framework V1 protocol. </param>
-        /// <param name="isV3Enabled"> Whether this site is enabled for Bot Framework V3 protocol. </param>
-        /// <param name="isSecureSiteEnabled"> Whether this site is enabled for authentication with Bot Framework. </param>
-        /// <param name="trustedOrigins"> List of Trusted Origin URLs for this site. This field is applicable only if isSecureSiteEnabled is True. </param>
-        /// <param name="isWebChatSpeechEnabled"> Whether this site is enabled for Webchat Speech. </param>
-        /// <param name="isWebchatPreviewEnabled"> Whether this site is enabled for preview versions of Webchat. </param>
-        /// <returns> A new <see cref="Models.DirectLineSite"/> instance for mocking. </returns>
-        public static DirectLineSite DirectLineSite(Guid? tenantId = null, string siteId = null, string siteName = null, string key = null, string key2 = null, bool isEnabled = default, bool? isTokenEnabled = null, bool? isEndpointParametersEnabled = null, bool? isDetailedLoggingEnabled = null, bool? isBlockUserUploadEnabled = null, bool? isNoStorageEnabled = null, ETag? etag = null, string appId = null, bool? isV1Enabled = null, bool? isV3Enabled = null, bool? isSecureSiteEnabled = null, IEnumerable<string> trustedOrigins = null, bool? isWebChatSpeechEnabled = null, bool? isWebchatPreviewEnabled = null)
-        {
-            trustedOrigins ??= new List<string>();
-
-            return new DirectLineSite(
-                tenantId,
-                siteId,
-                siteName,
-                key,
-                key2,
-                isEnabled,
-                isTokenEnabled,
-                isEndpointParametersEnabled,
-                isDetailedLoggingEnabled,
-                isBlockUserUploadEnabled,
-                isNoStorageEnabled,
-                etag,
-                appId,
-                isV1Enabled,
-                isV3Enabled,
-                isSecureSiteEnabled,
-                trustedOrigins?.ToList(),
-                isWebChatSpeechEnabled,
-                isWebchatPreviewEnabled,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DirectLineSpeechChannel"/>. </summary>
-        /// <param name="etag"> Entity Tag of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="location"> Specifies the location of the resource. </param>
-        /// <param name="properties"> The set of properties specific to DirectLine Speech channel resource. </param>
-        /// <returns> A new <see cref="Models.DirectLineSpeechChannel"/> instance for mocking. </returns>
-        public static DirectLineSpeechChannel DirectLineSpeechChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, DirectLineSpeechChannelProperties properties = null)
-        {
-            return new DirectLineSpeechChannel(
-                "DirectLineSpeechChannel",
-                etag,
-                provisioningState,
-                location,
-                serializedAdditionalRawData: null,
-                properties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.EmailChannel"/>. </summary>
-        /// <param name="etag"> Entity Tag of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="location"> Specifies the location of the resource. </param>
-        /// <param name="properties"> The set of properties specific to email channel resource. </param>
-        /// <returns> A new <see cref="Models.EmailChannel"/> instance for mocking. </returns>
-        public static EmailChannel EmailChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, EmailChannelProperties properties = null)
-        {
-            return new EmailChannel(
-                "EmailChannel",
-                etag,
-                provisioningState,
-                location,
-                serializedAdditionalRawData: null,
-                properties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FacebookChannel"/>. </summary>
@@ -837,16 +469,16 @@ namespace Azure.ResourceManager.BotService.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.KikChannel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EmailChannel"/>. </summary>
         /// <param name="etag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="location"> Specifies the location of the resource. </param>
-        /// <param name="properties"> The set of properties specific to Kik channel resource. </param>
-        /// <returns> A new <see cref="Models.KikChannel"/> instance for mocking. </returns>
-        public static KikChannel KikChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, KikChannelProperties properties = null)
+        /// <param name="properties"> The set of properties specific to email channel resource. </param>
+        /// <returns> A new <see cref="Models.EmailChannel"/> instance for mocking. </returns>
+        public static EmailChannel EmailChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, EmailChannelProperties properties = null)
         {
-            return new KikChannel(
-                "KikChannel",
+            return new EmailChannel(
+                "EmailChannel",
                 etag,
                 provisioningState,
                 location,
@@ -854,53 +486,14 @@ namespace Azure.ResourceManager.BotService.Models
                 properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.LineChannel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OutlookChannel"/>. </summary>
         /// <param name="etag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="location"> Specifies the location of the resource. </param>
-        /// <param name="properties"> The set of properties specific to line channel resource. </param>
-        /// <returns> A new <see cref="Models.LineChannel"/> instance for mocking. </returns>
-        public static LineChannel LineChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, LineChannelProperties properties = null)
+        /// <returns> A new <see cref="Models.OutlookChannel"/> instance for mocking. </returns>
+        public static OutlookChannel OutlookChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null)
         {
-            return new LineChannel(
-                "LineChannel",
-                etag,
-                provisioningState,
-                location,
-                serializedAdditionalRawData: null,
-                properties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.LineChannelProperties"/>. </summary>
-        /// <param name="lineRegistrations"> The list of line channel registrations. </param>
-        /// <param name="callbackUri"> Callback Url to enter in line registration. </param>
-        /// <param name="isValidated"> Whether this channel is validated for the bot. </param>
-        /// <returns> A new <see cref="Models.LineChannelProperties"/> instance for mocking. </returns>
-        public static LineChannelProperties LineChannelProperties(IEnumerable<LineRegistration> lineRegistrations = null, Uri callbackUri = null, bool? isValidated = null)
-        {
-            lineRegistrations ??= new List<LineRegistration>();
-
-            return new LineChannelProperties(lineRegistrations?.ToList(), callbackUri, isValidated, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.LineRegistration"/>. </summary>
-        /// <param name="generatedId"> Id generated for the line channel registration. </param>
-        /// <param name="channelSecret"> Secret for the line channel registration. </param>
-        /// <param name="channelAccessToken"> Access token for the line channel registration. </param>
-        /// <returns> A new <see cref="Models.LineRegistration"/> instance for mocking. </returns>
-        public static LineRegistration LineRegistration(string generatedId = null, string channelSecret = null, string channelAccessToken = null)
-        {
-            return new LineRegistration(generatedId, channelSecret, channelAccessToken, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.M365Extensions"/>. </summary>
-        /// <param name="etag"> Entity Tag of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="location"> Specifies the location of the resource. </param>
-        /// <returns> A new <see cref="Models.M365Extensions"/> instance for mocking. </returns>
-        public static M365Extensions M365Extensions(ETag? etag = null, string provisioningState = null, AzureLocation? location = null)
-        {
-            return new M365Extensions("M365Extensions", etag, provisioningState, location, serializedAdditionalRawData: null);
+            return new OutlookChannel("OutlookChannel", etag, provisioningState, location, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MsTeamsChannel"/>. </summary>
@@ -920,36 +513,6 @@ namespace Azure.ResourceManager.BotService.Models
                 properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.Omnichannel"/>. </summary>
-        /// <param name="etag"> Entity Tag of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="location"> Specifies the location of the resource. </param>
-        /// <returns> A new <see cref="Models.Omnichannel"/> instance for mocking. </returns>
-        public static Omnichannel Omnichannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null)
-        {
-            return new Omnichannel("Omnichannel", etag, provisioningState, location, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OutlookChannel"/>. </summary>
-        /// <param name="etag"> Entity Tag of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="location"> Specifies the location of the resource. </param>
-        /// <returns> A new <see cref="Models.OutlookChannel"/> instance for mocking. </returns>
-        public static OutlookChannel OutlookChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null)
-        {
-            return new OutlookChannel("OutlookChannel", etag, provisioningState, location, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SearchAssistant"/>. </summary>
-        /// <param name="etag"> Entity Tag of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="location"> Specifies the location of the resource. </param>
-        /// <returns> A new <see cref="Models.SearchAssistant"/> instance for mocking. </returns>
-        public static SearchAssistant SearchAssistant(ETag? etag = null, string provisioningState = null, AzureLocation? location = null)
-        {
-            return new SearchAssistant("SearchAssistant", etag, provisioningState, location, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.SkypeChannel"/>. </summary>
         /// <param name="etag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
@@ -967,97 +530,16 @@ namespace Azure.ResourceManager.BotService.Models
                 properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SlackChannel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KikChannel"/>. </summary>
         /// <param name="etag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="location"> Specifies the location of the resource. </param>
-        /// <param name="properties"> The set of properties specific to Slack channel resource. </param>
-        /// <returns> A new <see cref="Models.SlackChannel"/> instance for mocking. </returns>
-        public static SlackChannel SlackChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, SlackChannelProperties properties = null)
+        /// <param name="properties"> The set of properties specific to Kik channel resource. </param>
+        /// <returns> A new <see cref="Models.KikChannel"/> instance for mocking. </returns>
+        public static KikChannel KikChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, KikChannelProperties properties = null)
         {
-            return new SlackChannel(
-                "SlackChannel",
-                etag,
-                provisioningState,
-                location,
-                serializedAdditionalRawData: null,
-                properties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SlackChannelProperties"/>. </summary>
-        /// <param name="clientId"> The Slack client id. </param>
-        /// <param name="clientSecret"> The Slack client secret. Value only returned through POST to the action Channel List API, otherwise empty. </param>
-        /// <param name="verificationToken"> The Slack verification token. Value only returned through POST to the action Channel List API, otherwise empty. </param>
-        /// <param name="scopes"> The Slack permission scopes. </param>
-        /// <param name="landingPageUri"> The Slack landing page Url. </param>
-        /// <param name="redirectAction"> The Slack redirect action. </param>
-        /// <param name="lastSubmissionId"> The Sms auth token. </param>
-        /// <param name="registerBeforeOAuthFlow"> Whether to register the settings before OAuth validation is performed. Recommended to True. </param>
-        /// <param name="isValidated"> Whether this channel is validated for the bot. </param>
-        /// <param name="signingSecret"> The Slack signing secret. </param>
-        /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
-        /// <returns> A new <see cref="Models.SlackChannelProperties"/> instance for mocking. </returns>
-        public static SlackChannelProperties SlackChannelProperties(string clientId = null, string clientSecret = null, string verificationToken = null, string scopes = null, Uri landingPageUri = null, string redirectAction = null, string lastSubmissionId = null, bool? registerBeforeOAuthFlow = null, bool? isValidated = null, string signingSecret = null, bool isEnabled = default)
-        {
-            return new SlackChannelProperties(
-                clientId,
-                clientSecret,
-                verificationToken,
-                scopes,
-                landingPageUri,
-                redirectAction,
-                lastSubmissionId,
-                registerBeforeOAuthFlow,
-                isValidated,
-                signingSecret,
-                isEnabled,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SmsChannel"/>. </summary>
-        /// <param name="etag"> Entity Tag of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="location"> Specifies the location of the resource. </param>
-        /// <param name="properties"> The set of properties specific to Sms channel resource. </param>
-        /// <returns> A new <see cref="Models.SmsChannel"/> instance for mocking. </returns>
-        public static SmsChannel SmsChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, SmsChannelProperties properties = null)
-        {
-            return new SmsChannel(
-                "SmsChannel",
-                etag,
-                provisioningState,
-                location,
-                serializedAdditionalRawData: null,
-                properties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.TelegramChannel"/>. </summary>
-        /// <param name="etag"> Entity Tag of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="location"> Specifies the location of the resource. </param>
-        /// <param name="properties"> The set of properties specific to Telegram channel resource. </param>
-        /// <returns> A new <see cref="Models.TelegramChannel"/> instance for mocking. </returns>
-        public static TelegramChannel TelegramChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, TelegramChannelProperties properties = null)
-        {
-            return new TelegramChannel(
-                "TelegramChannel",
-                etag,
-                provisioningState,
-                location,
-                serializedAdditionalRawData: null,
-                properties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.TelephonyChannel"/>. </summary>
-        /// <param name="etag"> Entity Tag of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="location"> Specifies the location of the resource. </param>
-        /// <param name="properties"> The set of properties specific to Telephony channel resource. </param>
-        /// <returns> A new <see cref="Models.TelephonyChannel"/> instance for mocking. </returns>
-        public static TelephonyChannel TelephonyChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, TelephonyChannelProperties properties = null)
-        {
-            return new TelephonyChannel(
-                "TelephonyChannel",
+            return new KikChannel(
+                "KikChannel",
                 etag,
                 provisioningState,
                 location,
@@ -1139,6 +621,535 @@ namespace Azure.ResourceManager.BotService.Models
                 isWebChatSpeechEnabled,
                 isWebchatPreviewEnabled,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BotChannelSite"/>. </summary>
+        /// <param name="tenantId"> Tenant Id. </param>
+        /// <param name="siteId"> Site Id. </param>
+        /// <param name="siteName"> Site name. </param>
+        /// <param name="key"> Primary key. Value only returned through POST to the action Channel List API, otherwise empty. </param>
+        /// <param name="key2"> Secondary key. Value only returned through POST to the action Channel List API, otherwise empty. </param>
+        /// <param name="isEnabled"> Whether this site is enabled for DirectLine channel. </param>
+        /// <param name="isTokenEnabled"> Whether this site is token enabled for channel. </param>
+        /// <param name="isEndpointParametersEnabled"> Whether this site is EndpointParameters enabled for channel. </param>
+        /// <param name="isDetailedLoggingEnabled"> Whether this site is disabled detailed logging for. </param>
+        /// <param name="isBlockUserUploadEnabled"> Whether this site is enabled for block user upload. </param>
+        /// <param name="isNoStorageEnabled"> Whether this no-storage site is disabled detailed logging for. </param>
+        /// <param name="etag"> Entity Tag. </param>
+        /// <param name="appId"> DirectLine application id. </param>
+        /// <param name="isV1Enabled"> Whether this site is enabled for Bot Framework V1 protocol. </param>
+        /// <param name="isV3Enabled"> Whether this site is enabled for Bot Framework V3 protocol. </param>
+        /// <param name="isSecureSiteEnabled"> Whether this site is enabled for authentication with Bot Framework. </param>
+        /// <param name="trustedOrigins"> List of Trusted Origin URLs for this site. This field is applicable only if isSecureSiteEnabled is True. </param>
+        /// <param name="isWebChatSpeechEnabled"> Whether this site is enabled for Webchat Speech. </param>
+        /// <param name="isWebchatPreviewEnabled"> Whether this site is enabled for preview versions of Webchat. </param>
+        /// <returns> A new <see cref="Models.BotChannelSite"/> instance for mocking. </returns>
+        public static BotChannelSite BotChannelSite(Guid? tenantId = null, string siteId = null, string siteName = null, string key = null, string key2 = null, bool isEnabled = default, bool? isTokenEnabled = null, bool? isEndpointParametersEnabled = null, bool? isDetailedLoggingEnabled = null, bool? isBlockUserUploadEnabled = null, bool? isNoStorageEnabled = null, ETag? etag = null, string appId = null, bool? isV1Enabled = null, bool? isV3Enabled = null, bool? isSecureSiteEnabled = null, IEnumerable<string> trustedOrigins = null, bool? isWebChatSpeechEnabled = null, bool? isWebchatPreviewEnabled = null)
+        {
+            trustedOrigins ??= new List<string>();
+
+            return new BotChannelSite(
+                tenantId,
+                siteId,
+                siteName,
+                key,
+                key2,
+                isEnabled,
+                isTokenEnabled,
+                isEndpointParametersEnabled,
+                isDetailedLoggingEnabled,
+                isBlockUserUploadEnabled,
+                isNoStorageEnabled,
+                etag,
+                appId,
+                isV1Enabled,
+                isV3Enabled,
+                isSecureSiteEnabled,
+                trustedOrigins?.ToList(),
+                isWebChatSpeechEnabled,
+                isWebchatPreviewEnabled,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DirectLineChannel"/>. </summary>
+        /// <param name="etag"> Entity Tag of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="location"> Specifies the location of the resource. </param>
+        /// <param name="properties"> The set of properties specific to Direct Line channel resource. </param>
+        /// <returns> A new <see cref="Models.DirectLineChannel"/> instance for mocking. </returns>
+        public static DirectLineChannel DirectLineChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, DirectLineChannelProperties properties = null)
+        {
+            return new DirectLineChannel(
+                "DirectLineChannel",
+                etag,
+                provisioningState,
+                location,
+                serializedAdditionalRawData: null,
+                properties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DirectLineSite"/>. </summary>
+        /// <param name="tenantId"> Tenant Id. </param>
+        /// <param name="siteId"> Site Id. </param>
+        /// <param name="siteName"> Site name. </param>
+        /// <param name="key"> Primary key. Value only returned through POST to the action Channel List API, otherwise empty. </param>
+        /// <param name="key2"> Secondary key. Value only returned through POST to the action Channel List API, otherwise empty. </param>
+        /// <param name="isEnabled"> Whether this site is enabled for DirectLine channel. </param>
+        /// <param name="isTokenEnabled"> Whether this site is token enabled for channel. </param>
+        /// <param name="isEndpointParametersEnabled"> Whether this site is EndpointParameters enabled for channel. </param>
+        /// <param name="isDetailedLoggingEnabled"> Whether this site is disabled detailed logging for. </param>
+        /// <param name="isBlockUserUploadEnabled"> Whether this site is enabled for block user upload. </param>
+        /// <param name="isNoStorageEnabled"> Whether this no-storage site is disabled detailed logging for. </param>
+        /// <param name="etag"> Entity Tag. </param>
+        /// <param name="appId"> DirectLine application id. </param>
+        /// <param name="isV1Enabled"> Whether this site is enabled for Bot Framework V1 protocol. </param>
+        /// <param name="isV3Enabled"> Whether this site is enabled for Bot Framework V3 protocol. </param>
+        /// <param name="isSecureSiteEnabled"> Whether this site is enabled for authentication with Bot Framework. </param>
+        /// <param name="trustedOrigins"> List of Trusted Origin URLs for this site. This field is applicable only if isSecureSiteEnabled is True. </param>
+        /// <param name="isWebChatSpeechEnabled"> Whether this site is enabled for Webchat Speech. </param>
+        /// <param name="isWebchatPreviewEnabled"> Whether this site is enabled for preview versions of Webchat. </param>
+        /// <returns> A new <see cref="Models.DirectLineSite"/> instance for mocking. </returns>
+        public static DirectLineSite DirectLineSite(Guid? tenantId = null, string siteId = null, string siteName = null, string key = null, string key2 = null, bool isEnabled = default, bool? isTokenEnabled = null, bool? isEndpointParametersEnabled = null, bool? isDetailedLoggingEnabled = null, bool? isBlockUserUploadEnabled = null, bool? isNoStorageEnabled = null, ETag? etag = null, string appId = null, bool? isV1Enabled = null, bool? isV3Enabled = null, bool? isSecureSiteEnabled = null, IEnumerable<string> trustedOrigins = null, bool? isWebChatSpeechEnabled = null, bool? isWebchatPreviewEnabled = null)
+        {
+            trustedOrigins ??= new List<string>();
+
+            return new DirectLineSite(
+                tenantId,
+                siteId,
+                siteName,
+                key,
+                key2,
+                isEnabled,
+                isTokenEnabled,
+                isEndpointParametersEnabled,
+                isDetailedLoggingEnabled,
+                isBlockUserUploadEnabled,
+                isNoStorageEnabled,
+                etag,
+                appId,
+                isV1Enabled,
+                isV3Enabled,
+                isSecureSiteEnabled,
+                trustedOrigins?.ToList(),
+                isWebChatSpeechEnabled,
+                isWebchatPreviewEnabled,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TelegramChannel"/>. </summary>
+        /// <param name="etag"> Entity Tag of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="location"> Specifies the location of the resource. </param>
+        /// <param name="properties"> The set of properties specific to Telegram channel resource. </param>
+        /// <returns> A new <see cref="Models.TelegramChannel"/> instance for mocking. </returns>
+        public static TelegramChannel TelegramChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, TelegramChannelProperties properties = null)
+        {
+            return new TelegramChannel(
+                "TelegramChannel",
+                etag,
+                provisioningState,
+                location,
+                serializedAdditionalRawData: null,
+                properties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SmsChannel"/>. </summary>
+        /// <param name="etag"> Entity Tag of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="location"> Specifies the location of the resource. </param>
+        /// <param name="properties"> The set of properties specific to Sms channel resource. </param>
+        /// <returns> A new <see cref="Models.SmsChannel"/> instance for mocking. </returns>
+        public static SmsChannel SmsChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, SmsChannelProperties properties = null)
+        {
+            return new SmsChannel(
+                "SmsChannel",
+                etag,
+                provisioningState,
+                location,
+                serializedAdditionalRawData: null,
+                properties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SlackChannel"/>. </summary>
+        /// <param name="etag"> Entity Tag of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="location"> Specifies the location of the resource. </param>
+        /// <param name="properties"> The set of properties specific to Slack channel resource. </param>
+        /// <returns> A new <see cref="Models.SlackChannel"/> instance for mocking. </returns>
+        public static SlackChannel SlackChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, SlackChannelProperties properties = null)
+        {
+            return new SlackChannel(
+                "SlackChannel",
+                etag,
+                provisioningState,
+                location,
+                serializedAdditionalRawData: null,
+                properties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SlackChannelProperties"/>. </summary>
+        /// <param name="clientId"> The Slack client id. </param>
+        /// <param name="clientSecret"> The Slack client secret. Value only returned through POST to the action Channel List API, otherwise empty. </param>
+        /// <param name="verificationToken"> The Slack verification token. Value only returned through POST to the action Channel List API, otherwise empty. </param>
+        /// <param name="scopes"> The Slack permission scopes. </param>
+        /// <param name="landingPageUri"> The Slack landing page Url. </param>
+        /// <param name="redirectAction"> The Slack redirect action. </param>
+        /// <param name="lastSubmissionId"> The Sms auth token. </param>
+        /// <param name="registerBeforeOAuthFlow"> Whether to register the settings before OAuth validation is performed. Recommended to True. </param>
+        /// <param name="isValidated"> Whether this channel is validated for the bot. </param>
+        /// <param name="signingSecret"> The Slack signing secret. </param>
+        /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
+        /// <returns> A new <see cref="Models.SlackChannelProperties"/> instance for mocking. </returns>
+        public static SlackChannelProperties SlackChannelProperties(string clientId = null, string clientSecret = null, string verificationToken = null, string scopes = null, Uri landingPageUri = null, string redirectAction = null, string lastSubmissionId = null, bool? registerBeforeOAuthFlow = null, bool? isValidated = null, string signingSecret = null, bool isEnabled = default)
+        {
+            return new SlackChannelProperties(
+                clientId,
+                clientSecret,
+                verificationToken,
+                scopes,
+                landingPageUri,
+                redirectAction,
+                lastSubmissionId,
+                registerBeforeOAuthFlow,
+                isValidated,
+                signingSecret,
+                isEnabled,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.LineChannel"/>. </summary>
+        /// <param name="etag"> Entity Tag of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="location"> Specifies the location of the resource. </param>
+        /// <param name="properties"> The set of properties specific to line channel resource. </param>
+        /// <returns> A new <see cref="Models.LineChannel"/> instance for mocking. </returns>
+        public static LineChannel LineChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, LineChannelProperties properties = null)
+        {
+            return new LineChannel(
+                "LineChannel",
+                etag,
+                provisioningState,
+                location,
+                serializedAdditionalRawData: null,
+                properties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.LineChannelProperties"/>. </summary>
+        /// <param name="lineRegistrations"> The list of line channel registrations. </param>
+        /// <param name="callbackUri"> Callback Url to enter in line registration. </param>
+        /// <param name="isValidated"> Whether this channel is validated for the bot. </param>
+        /// <returns> A new <see cref="Models.LineChannelProperties"/> instance for mocking. </returns>
+        public static LineChannelProperties LineChannelProperties(IEnumerable<LineRegistration> lineRegistrations = null, Uri callbackUri = null, bool? isValidated = null)
+        {
+            lineRegistrations ??= new List<LineRegistration>();
+
+            return new LineChannelProperties(lineRegistrations?.ToList(), callbackUri, isValidated, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.LineRegistration"/>. </summary>
+        /// <param name="generatedId"> Id generated for the line channel registration. </param>
+        /// <param name="channelSecret"> Secret for the line channel registration. </param>
+        /// <param name="channelAccessToken"> Access token for the line channel registration. </param>
+        /// <returns> A new <see cref="Models.LineRegistration"/> instance for mocking. </returns>
+        public static LineRegistration LineRegistration(string generatedId = null, string channelSecret = null, string channelAccessToken = null)
+        {
+            return new LineRegistration(generatedId, channelSecret, channelAccessToken, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DirectLineSpeechChannel"/>. </summary>
+        /// <param name="etag"> Entity Tag of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="location"> Specifies the location of the resource. </param>
+        /// <param name="properties"> The set of properties specific to DirectLine Speech channel resource. </param>
+        /// <returns> A new <see cref="Models.DirectLineSpeechChannel"/> instance for mocking. </returns>
+        public static DirectLineSpeechChannel DirectLineSpeechChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, DirectLineSpeechChannelProperties properties = null)
+        {
+            return new DirectLineSpeechChannel(
+                "DirectLineSpeechChannel",
+                etag,
+                provisioningState,
+                location,
+                serializedAdditionalRawData: null,
+                properties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.Omnichannel"/>. </summary>
+        /// <param name="etag"> Entity Tag of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="location"> Specifies the location of the resource. </param>
+        /// <returns> A new <see cref="Models.Omnichannel"/> instance for mocking. </returns>
+        public static Omnichannel Omnichannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null)
+        {
+            return new Omnichannel("Omnichannel", etag, provisioningState, location, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TelephonyChannel"/>. </summary>
+        /// <param name="etag"> Entity Tag of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="location"> Specifies the location of the resource. </param>
+        /// <param name="properties"> The set of properties specific to Telephony channel resource. </param>
+        /// <returns> A new <see cref="Models.TelephonyChannel"/> instance for mocking. </returns>
+        public static TelephonyChannel TelephonyChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null, TelephonyChannelProperties properties = null)
+        {
+            return new TelephonyChannel(
+                "TelephonyChannel",
+                etag,
+                provisioningState,
+                location,
+                serializedAdditionalRawData: null,
+                properties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AcsChatChannel"/>. </summary>
+        /// <param name="etag"> Entity Tag of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="location"> Specifies the location of the resource. </param>
+        /// <returns> A new <see cref="Models.AcsChatChannel"/> instance for mocking. </returns>
+        public static AcsChatChannel AcsChatChannel(ETag? etag = null, string provisioningState = null, AzureLocation? location = null)
+        {
+            return new AcsChatChannel("AcsChatChannel", etag, provisioningState, location, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SearchAssistant"/>. </summary>
+        /// <param name="etag"> Entity Tag of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="location"> Specifies the location of the resource. </param>
+        /// <returns> A new <see cref="Models.SearchAssistant"/> instance for mocking. </returns>
+        public static SearchAssistant SearchAssistant(ETag? etag = null, string provisioningState = null, AzureLocation? location = null)
+        {
+            return new SearchAssistant("SearchAssistant", etag, provisioningState, location, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.M365Extensions"/>. </summary>
+        /// <param name="etag"> Entity Tag of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="location"> Specifies the location of the resource. </param>
+        /// <returns> A new <see cref="Models.M365Extensions"/> instance for mocking. </returns>
+        public static M365Extensions M365Extensions(ETag? etag = null, string provisioningState = null, AzureLocation? location = null)
+        {
+            return new M365Extensions("M365Extensions", etag, provisioningState, location, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BotChannelGetWithKeysResult"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="resource">
+        /// The set of properties specific to bot channel resource
+        /// Please note <see cref="Models.BotChannelProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.AcsChatChannel"/>, <see cref="Models.AlexaChannel"/>, <see cref="Models.DirectLineChannel"/>, <see cref="Models.DirectLineSpeechChannel"/>, <see cref="Models.EmailChannel"/>, <see cref="Models.FacebookChannel"/>, <see cref="Models.KikChannel"/>, <see cref="Models.LineChannel"/>, <see cref="Models.M365Extensions"/>, <see cref="Models.MsTeamsChannel"/>, <see cref="Models.Omnichannel"/>, <see cref="Models.OutlookChannel"/>, <see cref="Models.SearchAssistant"/>, <see cref="Models.SkypeChannel"/>, <see cref="Models.SlackChannel"/>, <see cref="Models.SmsChannel"/>, <see cref="Models.TelegramChannel"/>, <see cref="Models.TelephonyChannel"/> and <see cref="Models.WebChatChannel"/>.
+        /// </param>
+        /// <param name="setting"> Channel settings. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="entityTag"> Entity tag of the resource. </param>
+        /// <param name="changedTime"> Changed time of the resource. </param>
+        /// <param name="properties">
+        /// The set of properties specific to bot channel resource
+        /// Please note <see cref="Models.BotChannelProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.AcsChatChannel"/>, <see cref="Models.AlexaChannel"/>, <see cref="Models.DirectLineChannel"/>, <see cref="Models.DirectLineSpeechChannel"/>, <see cref="Models.EmailChannel"/>, <see cref="Models.FacebookChannel"/>, <see cref="Models.KikChannel"/>, <see cref="Models.LineChannel"/>, <see cref="Models.M365Extensions"/>, <see cref="Models.MsTeamsChannel"/>, <see cref="Models.Omnichannel"/>, <see cref="Models.OutlookChannel"/>, <see cref="Models.SearchAssistant"/>, <see cref="Models.SkypeChannel"/>, <see cref="Models.SlackChannel"/>, <see cref="Models.SmsChannel"/>, <see cref="Models.TelegramChannel"/>, <see cref="Models.TelephonyChannel"/> and <see cref="Models.WebChatChannel"/>.
+        /// </param>
+        /// <param name="sku"> Gets or sets the SKU of the resource. </param>
+        /// <param name="kind"> Required. Gets or sets the Kind of the resource. </param>
+        /// <param name="etag"> Entity Tag. </param>
+        /// <param name="zones"> Entity zones. </param>
+        /// <returns> A new <see cref="Models.BotChannelGetWithKeysResult"/> instance for mocking. </returns>
+        public static BotChannelGetWithKeysResult BotChannelGetWithKeysResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BotChannelProperties resource = null, BotChannelSettings setting = null, string provisioningState = null, string entityTag = null, string changedTime = null, BotChannelProperties properties = null, BotServiceSku sku = null, BotServiceKind? kind = null, ETag? etag = null, IEnumerable<string> zones = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            zones ??= new List<string>();
+
+            return new BotChannelGetWithKeysResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                resource,
+                setting,
+                provisioningState,
+                entityTag,
+                changedTime,
+                properties,
+                sku,
+                kind,
+                etag,
+                zones?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BotService.BotConnectionSettingData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> The set of properties specific to bot channel resource. </param>
+        /// <param name="sku"> Gets or sets the SKU of the resource. </param>
+        /// <param name="kind"> Required. Gets or sets the Kind of the resource. </param>
+        /// <param name="etag"> Entity Tag. </param>
+        /// <param name="zones"> Entity zones. </param>
+        /// <returns> A new <see cref="BotService.BotConnectionSettingData"/> instance for mocking. </returns>
+        public static BotConnectionSettingData BotConnectionSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BotConnectionSettingProperties properties = null, BotServiceSku sku = null, BotServiceKind? kind = null, ETag? etag = null, IEnumerable<string> zones = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            zones ??= new List<string>();
+
+            return new BotConnectionSettingData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                sku,
+                kind,
+                etag,
+                zones?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BotConnectionSettingProperties"/>. </summary>
+        /// <param name="id"> Id of the Connection Setting. </param>
+        /// <param name="name"> Name of the Connection Setting. </param>
+        /// <param name="clientId"> Client Id associated with the Connection Setting. </param>
+        /// <param name="settingId"> Setting Id set by the service for the Connection Setting. </param>
+        /// <param name="clientSecret"> Client Secret associated with the Connection Setting. </param>
+        /// <param name="scopes"> Scopes associated with the Connection Setting. </param>
+        /// <param name="serviceProviderId"> Service Provider Id associated with the Connection Setting. </param>
+        /// <param name="serviceProviderDisplayName"> Service Provider Display Name associated with the Connection Setting. </param>
+        /// <param name="parameters"> Service Provider Parameters associated with the Connection Setting. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.BotConnectionSettingProperties"/> instance for mocking. </returns>
+        public static BotConnectionSettingProperties BotConnectionSettingProperties(string id = null, string name = null, string clientId = null, string settingId = null, string clientSecret = null, string scopes = null, string serviceProviderId = null, string serviceProviderDisplayName = null, IEnumerable<BotConnectionSettingParameter> parameters = null, string provisioningState = null)
+        {
+            parameters ??= new List<BotConnectionSettingParameter>();
+
+            return new BotConnectionSettingProperties(
+                id,
+                name,
+                clientId,
+                settingId,
+                clientSecret,
+                scopes,
+                serviceProviderId,
+                serviceProviderDisplayName,
+                parameters?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BotServiceNameAvailabilityResult"/>. </summary>
+        /// <param name="isValid"> indicates if the bot name is valid. </param>
+        /// <param name="message"> additional message from the bot management api showing why a bot name is not available. </param>
+        /// <param name="absCode"> response code from ABS. </param>
+        /// <returns> A new <see cref="Models.BotServiceNameAvailabilityResult"/> instance for mocking. </returns>
+        public static BotServiceNameAvailabilityResult BotServiceNameAvailabilityResult(bool? isValid = null, string message = null, string absCode = null)
+        {
+            return new BotServiceNameAvailabilityResult(isValid, message, absCode, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BotServiceProvider"/>. </summary>
+        /// <param name="properties"> The Properties of a Service Provider Object. </param>
+        /// <returns> A new <see cref="Models.BotServiceProvider"/> instance for mocking. </returns>
+        public static BotServiceProvider BotServiceProvider(BotServiceProviderProperties properties = null)
+        {
+            return new BotServiceProvider(properties, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BotServiceProviderProperties"/>. </summary>
+        /// <param name="id"> Id for Service Provider. </param>
+        /// <param name="displayName"> Display Name of the Service Provider. </param>
+        /// <param name="serviceProviderName"> Name of the Service Provider. </param>
+        /// <param name="devPortalUri"> URL of Dev Portal. </param>
+        /// <param name="iconUri"> The URL of icon. </param>
+        /// <param name="parameters"> The list of parameters for the Service Provider. </param>
+        /// <returns> A new <see cref="Models.BotServiceProviderProperties"/> instance for mocking. </returns>
+        public static BotServiceProviderProperties BotServiceProviderProperties(string id = null, string displayName = null, string serviceProviderName = null, Uri devPortalUri = null, Uri iconUri = null, IEnumerable<BotServiceProviderParameter> parameters = null)
+        {
+            parameters ??= new List<BotServiceProviderParameter>();
+
+            return new BotServiceProviderProperties(
+                id,
+                displayName,
+                serviceProviderName,
+                devPortalUri,
+                iconUri,
+                parameters?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BotServiceProviderParameter"/>. </summary>
+        /// <param name="name"> Name of the Service Provider. </param>
+        /// <param name="serviceProviderParameterType"> Type of the Service Provider. </param>
+        /// <param name="displayName"> Display Name of the Service Provider. </param>
+        /// <param name="description"> Description of the Service Provider. </param>
+        /// <param name="helpUri"> Help Url for the  Service Provider. </param>
+        /// <param name="default"> Default Name for the Service Provider. </param>
+        /// <param name="isRequired"> Meta data for the Service Provider. </param>
+        /// <returns> A new <see cref="Models.BotServiceProviderParameter"/> instance for mocking. </returns>
+        public static BotServiceProviderParameter BotServiceProviderParameter(string name = null, string serviceProviderParameterType = null, string displayName = null, string description = null, Uri helpUri = null, string @default = null, bool? isRequired = null)
+        {
+            return new BotServiceProviderParameter(
+                name,
+                serviceProviderParameterType,
+                displayName,
+                description,
+                helpUri,
+                @default,
+                isRequired != null ? new ServiceProviderParameterMetadata(new ServiceProviderParameterMetadataConstraints(isRequired, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.GetBotServiceQnAMakerEndpointKeyResult"/>. </summary>
+        /// <param name="primaryEndpointKey"> Primary Access Key. </param>
+        /// <param name="secondaryEndpointKey"> Secondary Access Key. </param>
+        /// <param name="installedVersion"> Current version of runtime. </param>
+        /// <param name="lastStableVersion"> Latest version of runtime. </param>
+        /// <returns> A new <see cref="Models.GetBotServiceQnAMakerEndpointKeyResult"/> instance for mocking. </returns>
+        public static GetBotServiceQnAMakerEndpointKeyResult GetBotServiceQnAMakerEndpointKeyResult(string primaryEndpointKey = null, string secondaryEndpointKey = null, string installedVersion = null, string lastStableVersion = null)
+        {
+            return new GetBotServiceQnAMakerEndpointKeyResult(primaryEndpointKey, secondaryEndpointKey, installedVersion, lastStableVersion, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BotServiceHostSettingsResult"/>. </summary>
+        /// <param name="oAuthUri"> For in-conversation bot user authentication. </param>
+        /// <param name="toBotFromChannelOpenIdMetadataUri"> For verifying incoming tokens from the channels. </param>
+        /// <param name="toBotFromChannelTokenIssuer"> For verifying incoming tokens from the channels. </param>
+        /// <param name="toBotFromEmulatorOpenIdMetadataUri"> For verifying incoming tokens from bot emulator. </param>
+        /// <param name="toChannelFromBotLoginUri"> For getting access token to channels from bot host. </param>
+        /// <param name="toChannelFromBotOAuthScope"> For getting access token to channels from bot host. </param>
+        /// <param name="validateAuthority"> Per cloud OAuth setting on whether authority is validated. </param>
+        /// <param name="botOpenIdMetadata"> Same as toBotFromChannelOpenIdMetadataUrl, used by SDK &lt; v4.12. </param>
+        /// <returns> A new <see cref="Models.BotServiceHostSettingsResult"/> instance for mocking. </returns>
+        public static BotServiceHostSettingsResult BotServiceHostSettingsResult(Uri oAuthUri = null, Uri toBotFromChannelOpenIdMetadataUri = null, string toBotFromChannelTokenIssuer = null, Uri toBotFromEmulatorOpenIdMetadataUri = null, Uri toChannelFromBotLoginUri = null, string toChannelFromBotOAuthScope = null, bool? validateAuthority = null, string botOpenIdMetadata = null)
+        {
+            return new BotServiceHostSettingsResult(
+                oAuthUri,
+                toBotFromChannelOpenIdMetadataUri,
+                toBotFromChannelTokenIssuer,
+                toBotFromEmulatorOpenIdMetadataUri,
+                toChannelFromBotLoginUri,
+                toChannelFromBotOAuthScope,
+                validateAuthority,
+                botOpenIdMetadata,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.OperationResultsDescription"/>. </summary>
+        /// <param name="id"> The ID of the operation returned. </param>
+        /// <param name="name"> The name of the operation result. </param>
+        /// <param name="status"> The status of the operation being performed. </param>
+        /// <param name="startOn"> The time that the operation was started. </param>
+        /// <returns> A new <see cref="Models.OperationResultsDescription"/> instance for mocking. </returns>
+        public static OperationResultsDescription OperationResultsDescription(string id = null, string name = null, OperationResultStatus? status = null, DateTimeOffset? startOn = null)
+        {
+            return new OperationResultsDescription(id, name, status, startOn, serializedAdditionalRawData: null);
         }
     }
 }

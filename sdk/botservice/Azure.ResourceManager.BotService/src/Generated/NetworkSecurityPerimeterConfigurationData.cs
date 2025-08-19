@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.BotService
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationData"/>. </summary>
-        public NetworkSecurityPerimeterConfigurationData()
+        internal NetworkSecurityPerimeterConfigurationData()
         {
         }
 
@@ -70,6 +70,6 @@ namespace Azure.ResourceManager.BotService
         }
 
         /// <summary> Properties of the Network Security Perimeter configuration. </summary>
-        public NetworkSecurityPerimeterConfigurationProperties Properties { get; set; }
+        public NetworkSecurityPerimeterConfigurationProperties Properties { get; }
     }
 }

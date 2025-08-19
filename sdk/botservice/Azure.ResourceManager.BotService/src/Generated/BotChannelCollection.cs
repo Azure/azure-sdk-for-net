@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.BotService
     /// </summary>
     public partial class BotChannelCollection : ArmCollection, IEnumerable<BotChannelResource>, IAsyncEnumerable<BotChannelResource>
     {
-        private readonly ClientDiagnostics _botChannelChannelsClientDiagnostics;
-        private readonly ChannelsRestOperations _botChannelChannelsRestClient;
+        private readonly ClientDiagnostics _botChannelClientDiagnostics;
+        private readonly BotChannelsRestOperations _botChannelRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="BotChannelCollection"/> class for mocking. </summary>
         protected BotChannelCollection()
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.BotService
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal BotChannelCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _botChannelChannelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", BotChannelResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(BotChannelResource.ResourceType, out string botChannelChannelsApiVersion);
-            _botChannelChannelsRestClient = new ChannelsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, botChannelChannelsApiVersion);
+            _botChannelClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BotService", BotChannelResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(BotChannelResource.ResourceType, out string botChannelApiVersion);
+            _botChannelRestClient = new BotChannelsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, botChannelApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Channels_Create</description>
+        /// <description>BotChannel_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -82,12 +82,12 @@ namespace Azure.ResourceManager.BotService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _botChannelChannelsClientDiagnostics.CreateScope("BotChannelCollection.CreateOrUpdate");
+            using var scope = _botChannelClientDiagnostics.CreateScope("BotChannelCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _botChannelChannelsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _botChannelChannelsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, data);
+                var response = await _botChannelRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _botChannelRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new BotServiceArmOperation<BotChannelResource>(Response.FromValue(new BotChannelResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Channels_Create</description>
+        /// <description>BotChannel_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -131,12 +131,12 @@ namespace Azure.ResourceManager.BotService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _botChannelChannelsClientDiagnostics.CreateScope("BotChannelCollection.CreateOrUpdate");
+            using var scope = _botChannelClientDiagnostics.CreateScope("BotChannelCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _botChannelChannelsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, data, cancellationToken);
-                var uri = _botChannelChannelsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, data);
+                var response = _botChannelRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, data, cancellationToken);
+                var uri = _botChannelRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new BotServiceArmOperation<BotChannelResource>(Response.FromValue(new BotChannelResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Channels_Get</description>
+        /// <description>BotChannel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -171,15 +171,15 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="channelName"> The name of the Channel resource. </param>
+        /// <param name="channelName"> The name of the Bot resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BotChannelResource>> GetAsync(BotChannelName channelName, CancellationToken cancellationToken = default)
         {
-            using var scope = _botChannelChannelsClientDiagnostics.CreateScope("BotChannelCollection.Get");
+            using var scope = _botChannelClientDiagnostics.CreateScope("BotChannelCollection.Get");
             scope.Start();
             try
             {
-                var response = await _botChannelChannelsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, cancellationToken).ConfigureAwait(false);
+                var response = await _botChannelRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new BotChannelResource(Client, response.Value), response.GetRawResponse());
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Channels_Get</description>
+        /// <description>BotChannel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -212,15 +212,15 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="channelName"> The name of the Channel resource. </param>
+        /// <param name="channelName"> The name of the Bot resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BotChannelResource> Get(BotChannelName channelName, CancellationToken cancellationToken = default)
         {
-            using var scope = _botChannelChannelsClientDiagnostics.CreateScope("BotChannelCollection.Get");
+            using var scope = _botChannelClientDiagnostics.CreateScope("BotChannelCollection.Get");
             scope.Start();
             try
             {
-                var response = _botChannelChannelsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, cancellationToken);
+                var response = _botChannelRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new BotChannelResource(Client, response.Value), response.GetRawResponse());
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Channels_ListByResourceGroup</description>
+        /// <description>BotChannel_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -257,9 +257,9 @@ namespace Azure.ResourceManager.BotService
         /// <returns> An async collection of <see cref="BotChannelResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BotChannelResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _botChannelChannelsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _botChannelChannelsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BotChannelResource(Client, BotChannelData.DeserializeBotChannelData(e)), _botChannelChannelsClientDiagnostics, Pipeline, "BotChannelCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _botChannelRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _botChannelRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BotChannelResource(Client, BotChannelData.DeserializeBotChannelData(e)), _botChannelClientDiagnostics, Pipeline, "BotChannelCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Channels_ListByResourceGroup</description>
+        /// <description>BotChannel_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -287,9 +287,9 @@ namespace Azure.ResourceManager.BotService
         /// <returns> A collection of <see cref="BotChannelResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BotChannelResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _botChannelChannelsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _botChannelChannelsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BotChannelResource(Client, BotChannelData.DeserializeBotChannelData(e)), _botChannelChannelsClientDiagnostics, Pipeline, "BotChannelCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _botChannelRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _botChannelRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BotChannelResource(Client, BotChannelData.DeserializeBotChannelData(e)), _botChannelClientDiagnostics, Pipeline, "BotChannelCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Channels_Get</description>
+        /// <description>BotChannel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -313,15 +313,15 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="channelName"> The name of the Channel resource. </param>
+        /// <param name="channelName"> The name of the Bot resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(BotChannelName channelName, CancellationToken cancellationToken = default)
         {
-            using var scope = _botChannelChannelsClientDiagnostics.CreateScope("BotChannelCollection.Exists");
+            using var scope = _botChannelClientDiagnostics.CreateScope("BotChannelCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _botChannelChannelsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _botChannelRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Channels_Get</description>
+        /// <description>BotChannel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -352,15 +352,15 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="channelName"> The name of the Channel resource. </param>
+        /// <param name="channelName"> The name of the Bot resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(BotChannelName channelName, CancellationToken cancellationToken = default)
         {
-            using var scope = _botChannelChannelsClientDiagnostics.CreateScope("BotChannelCollection.Exists");
+            using var scope = _botChannelClientDiagnostics.CreateScope("BotChannelCollection.Exists");
             scope.Start();
             try
             {
-                var response = _botChannelChannelsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, cancellationToken: cancellationToken);
+                var response = _botChannelRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Channels_Get</description>
+        /// <description>BotChannel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -391,15 +391,15 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="channelName"> The name of the Channel resource. </param>
+        /// <param name="channelName"> The name of the Bot resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<NullableResponse<BotChannelResource>> GetIfExistsAsync(BotChannelName channelName, CancellationToken cancellationToken = default)
         {
-            using var scope = _botChannelChannelsClientDiagnostics.CreateScope("BotChannelCollection.GetIfExists");
+            using var scope = _botChannelClientDiagnostics.CreateScope("BotChannelCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _botChannelChannelsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _botChannelRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<BotChannelResource>(response.GetRawResponse());
                 return Response.FromValue(new BotChannelResource(Client, response.Value), response.GetRawResponse());
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Channels_Get</description>
+        /// <description>BotChannel_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -432,15 +432,15 @@ namespace Azure.ResourceManager.BotService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="channelName"> The name of the Channel resource. </param>
+        /// <param name="channelName"> The name of the Bot resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual NullableResponse<BotChannelResource> GetIfExists(BotChannelName channelName, CancellationToken cancellationToken = default)
         {
-            using var scope = _botChannelChannelsClientDiagnostics.CreateScope("BotChannelCollection.GetIfExists");
+            using var scope = _botChannelClientDiagnostics.CreateScope("BotChannelCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _botChannelChannelsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, cancellationToken: cancellationToken);
+                var response = _botChannelRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<BotChannelResource>(response.GetRawResponse());
                 return Response.FromValue(new BotChannelResource(Client, response.Value), response.GetRawResponse());

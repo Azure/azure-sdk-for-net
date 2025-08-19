@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    /// <summary> Unknown version of Channel. </summary>
+    /// <summary> Unknown version of BotChannelProperties. </summary>
     internal partial class UnknownChannel : BotChannelProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownChannel"/>. </summary>

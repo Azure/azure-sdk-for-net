@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.BotService.Mocking
     /// <summary> A class to add extension methods to TenantResource. </summary>
     public partial class MockableBotServiceTenantResource : ArmResource
     {
-        private ClientDiagnostics _botClientDiagnostics;
-        private BotsRestOperations _botRestClient;
+        private ClientDiagnostics _botsOperationGroupClientDiagnostics;
+        private BotsOperationGroupRestOperations _botsOperationGroupRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableBotServiceTenantResource"/> class for mocking. </summary>
         protected MockableBotServiceTenantResource()
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.BotService.Mocking
         {
         }
 
-        private ClientDiagnostics BotClientDiagnostics => _botClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BotService", BotResource.ResourceType.Namespace, Diagnostics);
-        private BotsRestOperations BotRestClient => _botRestClient ??= new BotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(BotResource.ResourceType));
+        private ClientDiagnostics BotsOperationGroupClientDiagnostics => _botsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BotService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private BotsOperationGroupRestOperations BotsOperationGroupRestClient => _botsOperationGroupRestClient ??= new BotsOperationGroupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -50,15 +50,11 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bots_GetCheckNameAvailability</description>
+        /// <description>BotsOperationGroup_CheckBotServiceNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2023-09-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -69,11 +65,11 @@ namespace Azure.ResourceManager.BotService.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = BotClientDiagnostics.CreateScope("MockableBotServiceTenantResource.CheckBotServiceNameAvailability");
+            using var scope = BotsOperationGroupClientDiagnostics.CreateScope("MockableBotServiceTenantResource.CheckBotServiceNameAvailability");
             scope.Start();
             try
             {
-                var response = await BotRestClient.GetCheckNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+                var response = await BotsOperationGroupRestClient.CheckBotServiceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -92,15 +88,11 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Bots_GetCheckNameAvailability</description>
+        /// <description>BotsOperationGroup_CheckBotServiceNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
         /// <description>2023-09-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="BotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -111,11 +103,11 @@ namespace Azure.ResourceManager.BotService.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = BotClientDiagnostics.CreateScope("MockableBotServiceTenantResource.CheckBotServiceNameAvailability");
+            using var scope = BotsOperationGroupClientDiagnostics.CreateScope("MockableBotServiceTenantResource.CheckBotServiceNameAvailability");
             scope.Start();
             try
             {
-                var response = BotRestClient.GetCheckNameAvailability(content, cancellationToken);
+                var response = BotsOperationGroupRestClient.CheckBotServiceNameAvailability(content, cancellationToken);
                 return response;
             }
             catch (Exception e)

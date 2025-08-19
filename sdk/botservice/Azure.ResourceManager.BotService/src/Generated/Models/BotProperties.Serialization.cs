@@ -46,15 +46,8 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("iconUrl"u8);
                 writer.WriteStringValue(IconUri.AbsoluteUri);
             }
-            if (Endpoint != null)
-            {
-                writer.WritePropertyName("endpoint"u8);
-                writer.WriteStringValue(Endpoint.AbsoluteUri);
-            }
-            else
-            {
-                writer.WriteNull("endpoint");
-            }
+            writer.WritePropertyName("endpoint"u8);
+            writer.WriteStringValue(Endpoint.AbsoluteUri);
             if (options.Format != "W" && Optional.IsDefined(EndpointVersion))
             {
                 writer.WritePropertyName("endpointVersion"u8);
@@ -354,11 +347,6 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (property.NameEquals("endpoint"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        endpoint = null;
-                        continue;
-                    }
                     endpoint = new Uri(property.Value.GetString());
                     continue;
                 }

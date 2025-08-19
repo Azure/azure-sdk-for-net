@@ -15,20 +15,20 @@ using Azure.ResourceManager.BotService.Models;
 
 namespace Azure.ResourceManager.BotService
 {
-    internal partial class BotConnectionRestOperations
+    internal partial class BotChannelsRestOperations
     {
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of BotConnectionRestOperations. </summary>
+        /// <summary> Initializes a new instance of BotChannelsRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Service host. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public BotConnectionRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        public BotChannelsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
@@ -36,85 +36,7 @@ namespace Azure.ResourceManager.BotService
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateListServiceProvidersRequestUri(string subscriptionId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.BotService/listAuthServiceProviders", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListServiceProvidersRequest(string subscriptionId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.BotService/listAuthServiceProviders", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Lists the available Service Providers for creating Connection Settings. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServiceProviderResponseList>> ListServiceProvidersAsync(string subscriptionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListServiceProvidersRequest(subscriptionId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ServiceProviderResponseList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ServiceProviderResponseList.DeserializeServiceProviderResponseList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Lists the available Service Providers for creating Connection Settings. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServiceProviderResponseList> ListServiceProviders(string subscriptionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListServiceProvidersRequest(subscriptionId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ServiceProviderResponseList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ServiceProviderResponseList.DeserializeServiceProviderResponseList(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByBotServiceRequestUri(string subscriptionId, string resourceGroupName, string resourceName)
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string resourceName, BotChannelName channelName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -124,12 +46,13 @@ namespace Azure.ResourceManager.BotService
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.BotService/botServices/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendPath("/connections", false);
+            uri.AppendPath("/channels/", false);
+            uri.AppendPath(channelName.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateListByBotServiceRequest(string subscriptionId, string resourceGroupName, string resourceName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string resourceName, BotChannelName channelName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -142,7 +65,8 @@ namespace Azure.ResourceManager.BotService
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.BotService/botServices/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendPath("/connections", false);
+            uri.AppendPath("/channels/", false);
+            uri.AppendPath(channelName.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -150,65 +74,71 @@ namespace Azure.ResourceManager.BotService
             return message;
         }
 
-        /// <summary> Returns all the Connection Settings registered to a particular BotService resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Returns a BotService Channel registration specified by the parameters. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the Bot resource. </param>
+        /// <param name="channelName"> The name of the Bot resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConnectionSettingResponseList>> ListByBotServiceAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<BotChannelData>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, BotChannelName channelName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var message = CreateListByBotServiceRequest(subscriptionId, resourceGroupName, resourceName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName, channelName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ConnectionSettingResponseList value = default;
+                        BotChannelData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ConnectionSettingResponseList.DeserializeConnectionSettingResponseList(document.RootElement);
+                        value = BotChannelData.DeserializeBotChannelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((BotChannelData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Returns all the Connection Settings registered to a particular BotService resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Returns a BotService Channel registration specified by the parameters. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the Bot resource. </param>
+        /// <param name="channelName"> The name of the Bot resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConnectionSettingResponseList> ListByBotService(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public Response<BotChannelData> Get(string subscriptionId, string resourceGroupName, string resourceName, BotChannelName channelName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var message = CreateListByBotServiceRequest(subscriptionId, resourceGroupName, resourceName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName, channelName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ConnectionSettingResponseList value = default;
+                        BotChannelData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ConnectionSettingResponseList.DeserializeConnectionSettingResponseList(document.RootElement);
+                        value = BotChannelData.DeserializeBotChannelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((BotChannelData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string connectionName)
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string resourceName, BotChannelName channelName, BotChannelData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -218,117 +148,13 @@ namespace Azure.ResourceManager.BotService
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.BotService/botServices/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendPath("/connections/", false);
-            uri.AppendPath(connectionName, true);
+            uri.AppendPath("/channels/", false);
+            uri.AppendPath(channelName.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string resourceName, string connectionName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.BotService/botServices/", false);
-            uri.AppendPath(resourceName, true);
-            uri.AppendPath("/connections/", false);
-            uri.AppendPath(connectionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Get a Connection Setting registration for a Bot Service. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the Bot resource. </param>
-        /// <param name="connectionName"> The name of the Bot Service Connection Setting resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="connectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BotConnectionSettingData>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, string connectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName, connectionName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        BotConnectionSettingData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = BotConnectionSettingData.DeserializeBotConnectionSettingData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((BotConnectionSettingData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get a Connection Setting registration for a Bot Service. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the Bot resource. </param>
-        /// <param name="connectionName"> The name of the Bot Service Connection Setting resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="connectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BotConnectionSettingData> Get(string subscriptionId, string resourceGroupName, string resourceName, string connectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName, connectionName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        BotConnectionSettingData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = BotConnectionSettingData.DeserializeBotConnectionSettingData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((BotConnectionSettingData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string connectionName, BotConnectionSettingData data)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.BotService/botServices/", false);
-            uri.AppendPath(resourceName, true);
-            uri.AppendPath("/connections/", false);
-            uri.AppendPath(connectionName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string resourceName, string connectionName, BotConnectionSettingData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string resourceName, BotChannelName channelName, BotChannelData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -341,8 +167,8 @@ namespace Azure.ResourceManager.BotService
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.BotService/botServices/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendPath("/connections/", false);
-            uri.AppendPath(connectionName, true);
+            uri.AppendPath("/channels/", false);
+            uri.AppendPath(channelName.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -354,33 +180,32 @@ namespace Azure.ResourceManager.BotService
             return message;
         }
 
-        /// <summary> Register a new Auth Connection for a Bot Service. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Creates a Channel registration for a Bot Service. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the Bot resource. </param>
-        /// <param name="connectionName"> The name of the Bot Service Connection Setting resource. </param>
-        /// <param name="data"> The parameters to provide for creating the Connection Setting. </param>
+        /// <param name="channelName"> The name of the Channel resource. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="connectionName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BotConnectionSettingData>> CreateAsync(string subscriptionId, string resourceGroupName, string resourceName, string connectionName, BotConnectionSettingData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<BotChannelData>> CreateAsync(string subscriptionId, string resourceGroupName, string resourceName, BotChannelName channelName, BotChannelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, resourceName, connectionName, data);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, resourceName, channelName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                 case 201:
                     {
-                        BotConnectionSettingData value = default;
+                        BotChannelData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = BotConnectionSettingData.DeserializeBotConnectionSettingData(document.RootElement);
+                        value = BotChannelData.DeserializeBotChannelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -388,33 +213,32 @@ namespace Azure.ResourceManager.BotService
             }
         }
 
-        /// <summary> Register a new Auth Connection for a Bot Service. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Creates a Channel registration for a Bot Service. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the Bot resource. </param>
-        /// <param name="connectionName"> The name of the Bot Service Connection Setting resource. </param>
-        /// <param name="data"> The parameters to provide for creating the Connection Setting. </param>
+        /// <param name="channelName"> The name of the Channel resource. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="connectionName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BotConnectionSettingData> Create(string subscriptionId, string resourceGroupName, string resourceName, string connectionName, BotConnectionSettingData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<BotChannelData> Create(string subscriptionId, string resourceGroupName, string resourceName, BotChannelName channelName, BotChannelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, resourceName, connectionName, data);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, resourceName, channelName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                 case 201:
                     {
-                        BotConnectionSettingData value = default;
+                        BotChannelData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = BotConnectionSettingData.DeserializeBotConnectionSettingData(document.RootElement);
+                        value = BotChannelData.DeserializeBotChannelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -422,7 +246,7 @@ namespace Azure.ResourceManager.BotService
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string connectionName, BotConnectionSettingData data)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string resourceName, BotChannelName channelName, BotChannelData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -432,13 +256,13 @@ namespace Azure.ResourceManager.BotService
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.BotService/botServices/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendPath("/connections/", false);
-            uri.AppendPath(connectionName, true);
+            uri.AppendPath("/channels/", false);
+            uri.AppendPath(channelName.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, string connectionName, BotConnectionSettingData data)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, BotChannelName channelName, BotChannelData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -451,8 +275,8 @@ namespace Azure.ResourceManager.BotService
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.BotService/botServices/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendPath("/connections/", false);
-            uri.AppendPath(connectionName, true);
+            uri.AppendPath("/channels/", false);
+            uri.AppendPath(channelName.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -464,33 +288,32 @@ namespace Azure.ResourceManager.BotService
             return message;
         }
 
-        /// <summary> Updates a Connection Setting registration for a Bot Service. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Updates a Channel registration for a Bot Service. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the Bot resource. </param>
-        /// <param name="connectionName"> The name of the Bot Service Connection Setting resource. </param>
-        /// <param name="data"> The parameters to provide for updating the Connection Setting. </param>
+        /// <param name="channelName"> The name of the Channel resource. </param>
+        /// <param name="data"> The parameters to provide for the created bot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="connectionName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BotConnectionSettingData>> UpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, string connectionName, BotConnectionSettingData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<BotChannelData>> UpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, BotChannelName channelName, BotChannelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, connectionName, data);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, channelName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                 case 201:
                     {
-                        BotConnectionSettingData value = default;
+                        BotChannelData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = BotConnectionSettingData.DeserializeBotConnectionSettingData(document.RootElement);
+                        value = BotChannelData.DeserializeBotChannelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -498,33 +321,32 @@ namespace Azure.ResourceManager.BotService
             }
         }
 
-        /// <summary> Updates a Connection Setting registration for a Bot Service. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Updates a Channel registration for a Bot Service. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the Bot resource. </param>
-        /// <param name="connectionName"> The name of the Bot Service Connection Setting resource. </param>
-        /// <param name="data"> The parameters to provide for updating the Connection Setting. </param>
+        /// <param name="channelName"> The name of the Channel resource. </param>
+        /// <param name="data"> The parameters to provide for the created bot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="connectionName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BotConnectionSettingData> Update(string subscriptionId, string resourceGroupName, string resourceName, string connectionName, BotConnectionSettingData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<BotChannelData> Update(string subscriptionId, string resourceGroupName, string resourceName, BotChannelName channelName, BotChannelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, connectionName, data);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, channelName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                 case 201:
                     {
-                        BotConnectionSettingData value = default;
+                        BotChannelData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = BotConnectionSettingData.DeserializeBotConnectionSettingData(document.RootElement);
+                        value = BotChannelData.DeserializeBotChannelData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -532,7 +354,7 @@ namespace Azure.ResourceManager.BotService
             }
         }
 
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string connectionName)
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string resourceName, BotChannelName channelName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -542,13 +364,13 @@ namespace Azure.ResourceManager.BotService
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.BotService/botServices/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendPath("/connections/", false);
-            uri.AppendPath(connectionName, true);
+            uri.AppendPath("/channels/", false);
+            uri.AppendPath(channelName.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string resourceName, string connectionName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string resourceName, BotChannelName channelName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -561,8 +383,8 @@ namespace Azure.ResourceManager.BotService
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.BotService/botServices/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendPath("/connections/", false);
-            uri.AppendPath(connectionName, true);
+            uri.AppendPath("/channels/", false);
+            uri.AppendPath(channelName.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -570,22 +392,21 @@ namespace Azure.ResourceManager.BotService
             return message;
         }
 
-        /// <summary> Deletes a Connection Setting registration for a Bot Service. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Deletes a Channel registration from a Bot Service. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the Bot resource. </param>
-        /// <param name="connectionName"> The name of the Bot Service Connection Setting resource. </param>
+        /// <param name="channelName"> The name of the Bot resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="connectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string resourceName, string connectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string resourceName, BotChannelName channelName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, resourceName, connectionName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, resourceName, channelName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -597,22 +418,21 @@ namespace Azure.ResourceManager.BotService
             }
         }
 
-        /// <summary> Deletes a Connection Setting registration for a Bot Service. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Deletes a Channel registration from a Bot Service. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the Bot resource. </param>
-        /// <param name="connectionName"> The name of the Bot Service Connection Setting resource. </param>
+        /// <param name="channelName"> The name of the Bot resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="connectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string resourceName, string connectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string resourceName, BotChannelName channelName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, resourceName, connectionName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, resourceName, channelName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -624,7 +444,7 @@ namespace Azure.ResourceManager.BotService
             }
         }
 
-        internal RequestUriBuilder CreateListWithSecretsRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string connectionName)
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName, string resourceName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -634,14 +454,108 @@ namespace Azure.ResourceManager.BotService
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.BotService/botServices/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendPath("/connections/", false);
-            uri.AppendPath(connectionName, true);
-            uri.AppendPath("/listWithSecrets", false);
+            uri.AppendPath("/channels", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateListWithSecretsRequest(string subscriptionId, string resourceGroupName, string resourceName, string connectionName)
+        internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName, string resourceName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.BotService/botServices/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/channels", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Returns all the Channel registrations of a particular BotService resource. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceName"> The name of the Bot resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ChannelResponseList>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, resourceName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ChannelResponseList value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ChannelResponseList.DeserializeChannelResponseList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Returns all the Channel registrations of a particular BotService resource. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceName"> The name of the Bot resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ChannelResponseList> ListByResourceGroup(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName, resourceName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ChannelResponseList value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ChannelResponseList.DeserializeChannelResponseList(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetChannelWithKeysRequestUri(string subscriptionId, string resourceGroupName, string resourceName, BotChannelName channelName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.BotService/botServices/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/channels/", false);
+            uri.AppendPath(channelName.ToString(), true);
+            uri.AppendPath("/listChannelWithKeys", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetChannelWithKeysRequest(string subscriptionId, string resourceGroupName, string resourceName, BotChannelName channelName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -654,9 +568,9 @@ namespace Azure.ResourceManager.BotService
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.BotService/botServices/", false);
             uri.AppendPath(resourceName, true);
-            uri.AppendPath("/connections/", false);
-            uri.AppendPath(connectionName, true);
-            uri.AppendPath("/listWithSecrets", false);
+            uri.AppendPath("/channels/", false);
+            uri.AppendPath(channelName.ToString(), true);
+            uri.AppendPath("/listChannelWithKeys", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -664,30 +578,29 @@ namespace Azure.ResourceManager.BotService
             return message;
         }
 
-        /// <summary> Get a Connection Setting registration for a Bot Service. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Lists a Channel registration for a Bot Service including secrets. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the Bot resource. </param>
-        /// <param name="connectionName"> The name of the Bot Service Connection Setting resource. </param>
+        /// <param name="channelName"> The name of the Channel resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="connectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BotConnectionSettingData>> ListWithSecretsAsync(string subscriptionId, string resourceGroupName, string resourceName, string connectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<BotChannelGetWithKeysResult>> GetChannelWithKeysAsync(string subscriptionId, string resourceGroupName, string resourceName, BotChannelName channelName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var message = CreateListWithSecretsRequest(subscriptionId, resourceGroupName, resourceName, connectionName);
+            using var message = CreateGetChannelWithKeysRequest(subscriptionId, resourceGroupName, resourceName, channelName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        BotConnectionSettingData value = default;
+                        BotChannelGetWithKeysResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = BotConnectionSettingData.DeserializeBotConnectionSettingData(document.RootElement);
+                        value = BotChannelGetWithKeysResult.DeserializeBotChannelGetWithKeysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -695,30 +608,29 @@ namespace Azure.ResourceManager.BotService
             }
         }
 
-        /// <summary> Get a Connection Setting registration for a Bot Service. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <summary> Lists a Channel registration for a Bot Service including secrets. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the Bot resource. </param>
-        /// <param name="connectionName"> The name of the Bot Service Connection Setting resource. </param>
+        /// <param name="channelName"> The name of the Channel resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="connectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BotConnectionSettingData> ListWithSecrets(string subscriptionId, string resourceGroupName, string resourceName, string connectionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<BotChannelGetWithKeysResult> GetChannelWithKeys(string subscriptionId, string resourceGroupName, string resourceName, BotChannelName channelName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
 
-            using var message = CreateListWithSecretsRequest(subscriptionId, resourceGroupName, resourceName, connectionName);
+            using var message = CreateGetChannelWithKeysRequest(subscriptionId, resourceGroupName, resourceName, channelName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        BotConnectionSettingData value = default;
+                        BotChannelGetWithKeysResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = BotConnectionSettingData.DeserializeBotConnectionSettingData(document.RootElement);
+                        value = BotChannelGetWithKeysResult.DeserializeBotChannelGetWithKeysResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -726,7 +638,115 @@ namespace Azure.ResourceManager.BotService
             }
         }
 
-        internal RequestUriBuilder CreateListByBotServiceNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string resourceName)
+        internal RequestUriBuilder CreateGetBotChannelWithRegenerateKeysRequestUri(string subscriptionId, string resourceGroupName, string resourceName, RegenerateKeysBotChannelName channelName, BotChannelRegenerateKeysContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.BotService/botServices/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/channels/", false);
+            uri.AppendPath(channelName.ToSerialString(), true);
+            uri.AppendPath("/regeneratekeys", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetBotChannelWithRegenerateKeysRequest(string subscriptionId, string resourceGroupName, string resourceName, RegenerateKeysBotChannelName channelName, BotChannelRegenerateKeysContent content)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.BotService/botServices/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/channels/", false);
+            uri.AppendPath(channelName.ToSerialString(), true);
+            uri.AppendPath("/regeneratekeys", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
+            request.Content = content0;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Regenerates secret keys and returns them for the DirectLine Channel of a particular BotService resource. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceName"> The name of the Bot resource. </param>
+        /// <param name="channelName"> The name of the Channel resource for which keys are to be regenerated. </param>
+        /// <param name="content"> The parameters to provide for the created bot. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<BotChannelData>> GetBotChannelWithRegenerateKeysAsync(string subscriptionId, string resourceGroupName, string resourceName, RegenerateKeysBotChannelName channelName, BotChannelRegenerateKeysContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateGetBotChannelWithRegenerateKeysRequest(subscriptionId, resourceGroupName, resourceName, channelName, content);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        BotChannelData value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = BotChannelData.DeserializeBotChannelData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Regenerates secret keys and returns them for the DirectLine Channel of a particular BotService resource. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="resourceName"> The name of the Bot resource. </param>
+        /// <param name="channelName"> The name of the Channel resource for which keys are to be regenerated. </param>
+        /// <param name="content"> The parameters to provide for the created bot. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<BotChannelData> GetBotChannelWithRegenerateKeys(string subscriptionId, string resourceGroupName, string resourceName, RegenerateKeysBotChannelName channelName, BotChannelRegenerateKeysContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var message = CreateGetBotChannelWithRegenerateKeysRequest(subscriptionId, resourceGroupName, resourceName, channelName, content);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        BotChannelData value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = BotChannelData.DeserializeBotChannelData(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string resourceName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -734,7 +754,7 @@ namespace Azure.ResourceManager.BotService
             return uri;
         }
 
-        internal HttpMessage CreateListByBotServiceNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceName)
+        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -748,30 +768,30 @@ namespace Azure.ResourceManager.BotService
             return message;
         }
 
-        /// <summary> Returns all the Connection Settings registered to a particular BotService resource. </summary>
+        /// <summary> Returns all the Channel registrations of a particular BotService resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the Bot resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ConnectionSettingResponseList>> ListByBotServiceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public async Task<Response<ChannelResponseList>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var message = CreateListByBotServiceNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceName);
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ConnectionSettingResponseList value = default;
+                        ChannelResponseList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ConnectionSettingResponseList.DeserializeConnectionSettingResponseList(document.RootElement);
+                        value = ChannelResponseList.DeserializeChannelResponseList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -779,30 +799,30 @@ namespace Azure.ResourceManager.BotService
             }
         }
 
-        /// <summary> Returns all the Connection Settings registered to a particular BotService resource. </summary>
+        /// <summary> Returns all the Channel registrations of a particular BotService resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the Bot resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ConnectionSettingResponseList> ListByBotServiceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        public Response<ChannelResponseList> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var message = CreateListByBotServiceNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceName);
+            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ConnectionSettingResponseList value = default;
+                        ChannelResponseList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ConnectionSettingResponseList.DeserializeConnectionSettingResponseList(document.RootElement);
+                        value = ChannelResponseList.DeserializeChannelResponseList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

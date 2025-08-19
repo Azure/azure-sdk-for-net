@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.BotService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetNetworkSecurityPerimeterConfiguration()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2023-09-15-preview/examples/GetNetworkSecurityPerimeterConfiguration.json
-            // this example is just showing the usage of "NetworkSecurityPerimeterConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2023-09-15-preview/GetNetworkSecurityPerimeterConfiguration.json
+            // this example is just showing the usage of "NetworkSecurityPerimeterConfiguration_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.BotService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListNetworkSecurityPerimeterConfigurations()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2023-09-15-preview/examples/ListNetworkSecurityPerimeterConfigurations.json
-            // this example is just showing the usage of "NetworkSecurityPerimeterConfigurations_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2023-09-15-preview/ListNetworkSecurityPerimeterConfigurations.json
+            // this example is just showing the usage of "NetworkSecurityPerimeterConfiguration_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.BotService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetNetworkSecurityPerimeterConfiguration()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2023-09-15-preview/examples/GetNetworkSecurityPerimeterConfiguration.json
-            // this example is just showing the usage of "NetworkSecurityPerimeterConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2023-09-15-preview/GetNetworkSecurityPerimeterConfiguration.json
+            // this example is just showing the usage of "NetworkSecurityPerimeterConfiguration_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -119,8 +119,8 @@ namespace Azure.ResourceManager.BotService.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetNetworkSecurityPerimeterConfiguration()
         {
-            // Generated from example definition: specification/botservice/resource-manager/Microsoft.BotService/preview/2023-09-15-preview/examples/GetNetworkSecurityPerimeterConfiguration.json
-            // this example is just showing the usage of "NetworkSecurityPerimeterConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2023-09-15-preview/GetNetworkSecurityPerimeterConfiguration.json
+            // this example is just showing the usage of "NetworkSecurityPerimeterConfiguration_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
