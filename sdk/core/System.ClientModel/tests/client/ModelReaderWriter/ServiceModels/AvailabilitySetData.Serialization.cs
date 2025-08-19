@@ -115,7 +115,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
 
                         ((IJsonModel<WritableSubResource>)VirtualMachines[i]).Write(writer, options);
                     }
-                    Patch.WriteArray(writer, "$.properties.virtualMachines[-]"u8);
+                    Patch.WriteArray(writer, "$.properties.virtualMachines"u8);
                     writer.WriteEndArray();
                 }
                 if (OptionalProperty.IsDefined(ProximityPlacementGroup) && !Patch.Contains("$.properties.proximityPlacementGroup"u8))

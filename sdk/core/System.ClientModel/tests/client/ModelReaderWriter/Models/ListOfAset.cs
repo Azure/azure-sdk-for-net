@@ -72,7 +72,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                 {
                     ((IJsonModel<AvailabilitySetData>)item).Write(writer, options);
                 }
-                Patch.WriteArray(writer, "$[-]"u8);
+                Patch.WriteArray(writer, "$"u8);
                 writer.WriteEndArray();
             }
 

@@ -49,9 +49,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void AddRootArray_String()
         {
             JsonPatch jp = new();
-            jp.Set("$[-]"u8, "value");
-            Assert.IsTrue(jp.Contains("$[-]"u8));
-            Assert.AreEqual("[\"value\"]"u8.ToArray(), jp.GetJson("$[-]"u8).ToArray());
+            jp.Append("$"u8, "value");
+
+            Assert.AreEqual("[\"value\"]"u8.ToArray(), jp.GetJson("$"u8).ToArray());
             Assert.AreEqual("value", jp.GetString("$[0]"u8));
 
             using var stream = new MemoryStream();
@@ -68,8 +68,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             JsonPatch jp = new();
             jp.Set("$[0].property"u8, "value");
 
-            Assert.IsTrue(jp.Contains("$[-]"u8));
-            Assert.AreEqual("[{\"property\":\"value\"}]"u8.ToArray(), jp.GetJson("$[-]"u8).ToArray());
+            Assert.AreEqual("[{\"property\":\"value\"}]"u8.ToArray(), jp.GetJson("$"u8).ToArray());
             Assert.AreEqual("{\"property\":\"value\"}"u8.ToArray(), jp.GetJson("$[0]"u8).ToArray());
             Assert.AreEqual("value", jp.GetString("$[0].property"u8));
 

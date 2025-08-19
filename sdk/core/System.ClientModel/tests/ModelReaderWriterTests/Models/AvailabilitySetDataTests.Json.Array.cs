@@ -19,9 +19,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         {
             var model = GetInitialModel();
 
-            model.Patch.Set("$.properties.virtualMachines[-]"u8, "{\"id\":\"myNewVmId\"}"u8);
+            model.Patch.Append("$.properties.virtualMachines"u8, "{\"id\":\"myNewVmId\"}"u8);
 
-            Assert.AreEqual("[{\"id\":\"myNewVmId\"}]"u8.ToArray(), model.Patch.GetJson("$.properties.virtualMachines[-]"u8).ToArray());
+            Assert.AreEqual("[{\"id\":\"myNewVmId\"}]"u8.ToArray(), model.Patch.GetJson("$.properties.virtualMachines"u8).ToArray());
             Assert.AreEqual("{\"id\":\"myNewVmId\"}"u8.ToArray(), model.Patch.GetJson("$.properties.virtualMachines[0]"u8).ToArray());
 
             var data = ModelReaderWriter.Write(model);
@@ -41,7 +41,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         {
             var model = GetInitialModel();
 
-            model.Patch.Set("$.newArray[-]"u8, "{\"x\":\"value1\"}"u8);
+            model.Patch.Append("$.newArray"u8, "{\"x\":\"value1\"}"u8);
 
             Assert.AreEqual("[{\"x\":\"value1\"}]"u8.ToArray(), model.Patch.GetJson("$.newArray"u8).ToArray());
             Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model.Patch.GetJson("$.newArray[0]"u8).ToArray());
@@ -63,8 +63,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         {
             var model = GetInitialModel();
 
-            model.Patch.Set("$.newArray[-]"u8, "5"u8);
-            model.Patch.Set("$.newArray[-]"u8, "10"u8);
+            model.Patch.Append("$.newArray"u8, "5"u8);
+            model.Patch.Append("$.newArray"u8, "10"u8);
 
             Assert.AreEqual("[5,10]"u8.ToArray(), model.Patch.GetJson("$.newArray"u8).ToArray());
             Assert.AreEqual("5"u8.ToArray(), model.Patch.GetJson("$.newArray[0]"u8).ToArray());
@@ -88,8 +88,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         {
             var model = GetInitialModel();
 
-            model.Patch.Set("$.newArray[-]"u8, "5"u8);
-            model.Patch.Set("$.newArray[-]"u8, "10"u8);
+            model.Patch.Append("$.newArray"u8, "5"u8);
+            model.Patch.Append("$.newArray"u8, "10"u8);
 
             Assert.AreEqual("[5,10]"u8.ToArray(), model.Patch.GetJson("$.newArray"u8).ToArray());
             Assert.AreEqual("5"u8.ToArray(), model.Patch.GetJson("$.newArray[0]"u8).ToArray());
@@ -134,9 +134,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             model.VirtualMachines.Add(new WritableSubResource() { Id = "myExistingVmId" });
 
-            model.Patch.Set("$.properties.virtualMachines[-]"u8, new { id = "myNewVmId" });
+            model.Patch.Append("$.properties.virtualMachines"u8, new { id = "myNewVmId" });
 
-            Assert.AreEqual("[{\"id\":\"myNewVmId\"}]"u8.ToArray(), model.Patch.GetJson("$.properties.virtualMachines[-]"u8).ToArray());
+            Assert.AreEqual("[{\"id\":\"myNewVmId\"}]"u8.ToArray(), model.Patch.GetJson("$.properties.virtualMachines"u8).ToArray());
             Assert.AreEqual("{\"id\":\"myNewVmId\"}"u8.ToArray(), model.Patch.GetJson("$.properties.virtualMachines[0]"u8).ToArray());
             Assert.AreEqual("myNewVmId", model.Patch.GetString("$.properties.virtualMachines[0].id"u8));
 
@@ -164,12 +164,12 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         {
             var model = GetInitialModel();
 
-            model.Patch.Set("$.properties.virtualMachines[-]"u8, "{\"id\":\"myNewVmId1\"}"u8);
-            model.Patch.Set("$.properties.virtualMachines[-]"u8, new WritableSubResource() { Id = "myNewVmId2" });
-            model.Patch.Set("$.properties.virtualMachines[-]"u8, new { id = "myNewVmId3" });
-            model.Patch.Set("$.properties.virtualMachines[-]"u8, new { Id = "myNewVmId4" });
+            model.Patch.Append("$.properties.virtualMachines"u8, "{\"id\":\"myNewVmId1\"}"u8);
+            model.Patch.Append("$.properties.virtualMachines"u8, new WritableSubResource() { Id = "myNewVmId2" });
+            model.Patch.Append("$.properties.virtualMachines"u8, new { id = "myNewVmId3" });
+            model.Patch.Append("$.properties.virtualMachines"u8, new { Id = "myNewVmId4" });
 
-            Assert.AreEqual("[{\"id\":\"myNewVmId1\"},{\"id\":\"myNewVmId2\"},{\"id\":\"myNewVmId3\"},{\"id\":\"myNewVmId4\"}]"u8.ToArray(), model.Patch.GetJson("$.properties.virtualMachines[-]"u8).ToArray());
+            Assert.AreEqual("[{\"id\":\"myNewVmId1\"},{\"id\":\"myNewVmId2\"},{\"id\":\"myNewVmId3\"},{\"id\":\"myNewVmId4\"}]"u8.ToArray(), model.Patch.GetJson("$.properties.virtualMachines"u8).ToArray());
             Assert.AreEqual("{\"id\":\"myNewVmId1\"}"u8.ToArray(), model.Patch.GetJson("$.properties.virtualMachines[0]"u8).ToArray());
             Assert.AreEqual("{\"id\":\"myNewVmId2\"}"u8.ToArray(), model.Patch.GetJson("$.properties.virtualMachines[1]"u8).ToArray());
             Assert.AreEqual("{\"id\":\"myNewVmId3\"}"u8.ToArray(), model.Patch.GetJson("$.properties.virtualMachines[2]"u8).ToArray());
@@ -195,7 +195,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         {
             var model = GetInitialModel();
 
-            model.Patch.Set("$.newArray[-]"u8, "{\"x\":\"value1\"}"u8);
+            model.Patch.Append("$.newArray"u8, "{\"x\":\"value1\"}"u8);
 
             Assert.AreEqual("[{\"x\":\"value1\"}]"u8.ToArray(), model.Patch.GetJson("$.newArray"u8).ToArray());
             Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model.Patch.GetJson("$.newArray[0]"u8).ToArray());
@@ -331,7 +331,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         {
             var model = GetInitialModel();
 
-            model.Patch.Set("$.newArray[-]"u8, "{\"x\":\"value1\"}"u8);
+            model.Patch.Append("$.newArray"u8, "{\"x\":\"value1\"}"u8);
 
             Assert.AreEqual("[{\"x\":\"value1\"}]"u8.ToArray(), model.Patch.GetJson("$.newArray"u8).ToArray());
             Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model.Patch.GetJson("$.newArray[0]"u8).ToArray());
@@ -363,9 +363,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         {
             var model = GetInitialModel();
 
-            model.Patch.Set("$.newArray[-]"u8, true);
-            model.Patch.Set("$.newArray[-]"u8, false);
-            model.Patch.Set("$.newArray[-]"u8, true);
+            model.Patch.Append("$.newArray"u8, true);
+            model.Patch.Append("$.newArray"u8, false);
+            model.Patch.Append("$.newArray"u8, true);
 
             Assert.AreEqual("[true,false,true]"u8.ToArray(), model.Patch.GetJson("$.newArray"u8).ToArray());
             Assert.AreEqual(true, model.Patch.GetBoolean("$.newArray[0]"u8));
@@ -403,8 +403,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         {
             var model = GetInitialModel();
 
-            model.Patch.Set("$.newArray[-]"u8, "{\"x\":\"value1\"}"u8);
-            model.Patch.Set("$.newArray[-]"u8, "{\"x\":\"value2\"}"u8);
+            model.Patch.Append("$.newArray"u8, "{\"x\":\"value1\"}"u8);
+            model.Patch.Append("$.newArray"u8, "{\"x\":\"value2\"}"u8);
 
             Assert.AreEqual("[{\"x\":\"value1\"},{\"x\":\"value2\"}]"u8.ToArray(), model.Patch.GetJson("$.newArray"u8).ToArray());
             Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model.Patch.GetJson("$.newArray[0]"u8).ToArray());
@@ -439,9 +439,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         {
             var model = GetInitialModel();
 
-            model.Patch.Set("$.newArray[-]"u8, "{\"x\":\"value1\"}"u8);
-            model.Patch.Set("$.newArray[-]"u8, "{\"x\":\"value2\"}"u8);
-            model.Patch.Set("$.newArray[-]"u8, "{\"x\":\"value3\"}"u8);
+            model.Patch.Append("$.newArray"u8, "{\"x\":\"value1\"}"u8);
+            model.Patch.Append("$.newArray"u8, "{\"x\":\"value2\"}"u8);
+            model.Patch.Append("$.newArray"u8, "{\"x\":\"value3\"}"u8);
 
             Assert.AreEqual("[{\"x\":\"value1\"},{\"x\":\"value2\"},{\"x\":\"value3\"}]"u8.ToArray(), model.Patch.GetJson("$.newArray"u8).ToArray());
             Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model.Patch.GetJson("$.newArray[0]"u8).ToArray());
@@ -554,8 +554,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         {
             var model = GetInitialModel();
 
-            model.Patch.Set("$.newArray[-]"u8, "{\"x\":\"value1\"}"u8);
-            model.Patch.Set("$.newArray[-]"u8, "{\"x\":\"value2\"}"u8);
+            model.Patch.Append("$.newArray"u8, "{\"x\":\"value1\"}"u8);
+            model.Patch.Append("$.newArray"u8, "{\"x\":\"value2\"}"u8);
 
             Assert.AreEqual("[{\"x\":\"value1\"},{\"x\":\"value2\"}]"u8.ToArray(), model.Patch.GetJson("$.newArray"u8).ToArray());
             Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model.Patch.GetJson("$.newArray[0]"u8).ToArray());
@@ -602,7 +602,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.AreEqual("testAS-3375", model.Patch.GetString("$[0].name"u8));
             Assert.AreEqual("testAS-3376", model.Patch.GetString("$[1].name"u8));
 
-            model.Patch.Set("$[-]"u8, new AvailabilitySetData(AzureLocation.BrazilSouth)
+            model.Patch.Append("$"u8, new AvailabilitySetData(AzureLocation.BrazilSouth)
             {
                 Name = "testAS-3377",
                 Id = "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3377",

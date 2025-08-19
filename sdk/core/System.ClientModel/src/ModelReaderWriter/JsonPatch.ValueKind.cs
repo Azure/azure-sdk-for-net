@@ -17,7 +17,7 @@ public partial struct JsonPatch
         Null = 1 << 4,
         BooleanTrue = 1 << 5,
         BooleanFalse = 1 << 6,
-        ArrayItem = 1 << 7,
+        ArrayItemAppend = 1 << 7,
         Written = 1 << 8,
         Boolean = BooleanTrue | BooleanFalse,
         NullableInt32 = Int32 | Null,

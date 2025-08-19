@@ -269,6 +269,10 @@ namespace System.ClientModel.Primitives
         private object _dummy;
         private int _dummyPrimitive;
         public JsonPatch(System.ReadOnlyMemory<byte> rawJson) { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("RequiresDynamicCode")]
+        public void Append(System.ReadOnlySpan<byte> jsonPath, object value) { }
+        public void Append(System.ReadOnlySpan<byte> jsonPath, System.ReadOnlySpan<byte> utf8Json) { }
+        public void Append<T>(System.ReadOnlySpan<byte> jsonPath, System.ClientModel.Primitives.IJsonModel<T> value) { }
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]public bool Contains(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public bool ContainsChildOf(System.ReadOnlySpan<byte> prefix, System.ReadOnlySpan<byte> property) { throw null; }
         public bool GetBoolean(System.ReadOnlySpan<byte> jsonPath) { throw null; }

@@ -85,7 +85,7 @@ public partial struct JsonPatch
         {
             if (TryGetParentMatch(jsonPath, true, out var parentPath, out var currentValue))
             {
-                if (parentPath.IsArrayInsert())
+                if (currentValue.Kind.HasFlag(ValueKind.ArrayItemAppend))
                 {
                     int openBracketIndex = jsonPath.LastIndexOf((byte)'[');
                     Span<byte> childPath = stackalloc byte[jsonPath.Length - openBracketIndex + 1];
@@ -182,10 +182,16 @@ public partial struct JsonPatch
                 break;
         }
 
-        if (parentPath.IsRoot() && includeRoot && !_rawJson.Value.IsEmpty)
+        if (parentPath.IsRoot() && includeRoot)
         {
-            encodedValue = _rawJson;
-            return true;
+            if (_properties.TryGetValue(parentPath, out encodedValue))
+                return true;
+
+            if (!_rawJson.Value.IsEmpty)
+            {
+                encodedValue = _rawJson;
+                return true;
+            }
         }
 
         return false;
@@ -339,17 +345,18 @@ public partial struct JsonPatch
         var parent = jsonPath.GetParent();
         if (parent.IsRoot() || (_propagatorIsFlattened is not null && _propagatorIsFlattened(jsonPath.GetFirstProperty())))
         {
-            if (jsonPath.IsArrayInsert())
+            if (encodedValue.Kind.HasFlag(ValueKind.ArrayItemAppend))
             {
+                // TODO: double allocation here since encoded value is a ROM, perhaps we can delay converting to ROM for array inserts
                 if (_properties.TryGetValue(jsonPath, out var currentValue))
                 {
                     byte[] newValue = [.. currentValue.Value.Span.Slice(0, currentValue.Value.Span.Length - 1), (byte)',', .. encodedValue.Value.Span, (byte)']'];
-                    _properties.Set(jsonPath, new(ValueKind.Json, newValue));
+                    _properties.Set(jsonPath, new(ValueKind.Json | ValueKind.ArrayItemAppend, newValue));
                 }
                 else
                 {
                     byte[] newValue = [(byte)'[', .. encodedValue.Value.Span, (byte)']'];
-                    _properties.Set(jsonPath, new(ValueKind.Json, newValue));
+                    _properties.Set(jsonPath, new(ValueKind.Json | ValueKind.ArrayItemAppend, newValue));
                 }
             }
             else
@@ -383,15 +390,29 @@ public partial struct JsonPatch
             currentPath = currentPath.GetParent();
         } while (!currentPath.IsRoot());
 
+        ValueKind kind = ValueKind.Json;
+        if (lastPath.IsArrayIndex())
+        {
+            lastPath = currentPath;
+            kind |= ValueKind.ArrayItemAppend;
+        }
+
         GetSubPath(lastPath, jsonPath, ref childPath);
-        _properties.Set(lastPath, new(ValueKind.Json, GetNewJson(EncodedValue.Empty, childPath, encodedValue)));
+        _properties.Set(lastPath, new(kind, GetNewJson(EncodedValue.Empty, childPath, encodedValue)));
 
         return false;
     }
 
     private static void GetSubPath(ReadOnlySpan<byte> parentPath, ReadOnlySpan<byte> fullPath, ref Span<byte> subPath)
     {
-        var childSlice = parentPath.IsArrayInsert() ? fullPath.Slice(parentPath.Length - 3) : fullPath.Slice(parentPath.Length);
+        if (parentPath.IsRoot())
+        {
+            fullPath.CopyTo(subPath);
+            subPath = subPath.Slice(0, fullPath.Length);
+            return;
+        }
+
+        var childSlice = fullPath.Slice(parentPath.Length);
         subPath[0] = (byte)'$';
         childSlice.CopyTo(subPath.Slice(1));
         subPath = subPath.Slice(0, childSlice.Length + 1);
@@ -493,7 +514,7 @@ public partial struct JsonPatch
         if (encodedValue.Value.Length == 0)
             throw new ArgumentException("Empty encoded value");
 
-        ValueKind kind = encodedValue.Kind & ~ValueKind.ArrayItem;
+        ValueKind kind = encodedValue.Kind & ~ValueKind.ArrayItemAppend;
         ReadOnlySpan<byte> valueBytes = encodedValue.Value.Span;
 
         writer.WritePropertyName(propertyName);

@@ -369,7 +369,9 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [TestCase("$.foo.bar", "$.foo")]
         [TestCase("$['foo'].bar", "$['foo']")]
         [TestCase("$[0].bar", "$[0]")]
-        [TestCase("$[0]", "$[-]")] //TODO get rid of special insert
+        [TestCase("$.x[0].bar", "$.x[0]")]
+        [TestCase("$.x[0]", "$.x")]
+        [TestCase("$[0]", "$")]
         [TestCase("$['f.oo'].bar", "$['f.oo']")]
         [TestCase("$.bar['f.oo']", "$.bar")]
         public void GetParent(string jsonPath, string expected)

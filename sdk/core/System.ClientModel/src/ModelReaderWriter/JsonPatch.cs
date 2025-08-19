@@ -74,7 +74,9 @@ public partial struct JsonPatch
         if (_properties == null)
             return false;
 
-        return _properties.ContainsKey(jsonPath);
+        // if someone called Append on an array, we don't want to consider that as "contains" for the array path
+        // since the entire array wasn't set it was just one item appended to it.
+        return _properties.TryGetValue(jsonPath, out var value) && !value.Kind.HasFlag(ValueKind.ArrayItemAppend);
     }
 
     /// <summary>
@@ -371,21 +373,16 @@ public partial struct JsonPatch
         // if we are at the root of the writer we need to write the start / end object
         if (writer.CurrentDepth == 0 && writer.BytesCommitted == 0 && writer.BytesPending == 0)
         {
-            if (!_properties.ContainsKey("$[-]"u8))
+            if (!_properties.TryGetValue("$"u8, out var encodedValue) && !encodedValue.Kind.HasFlag(ValueKind.ArrayItemAppend))
             {
                 writer.WriteStartObject();
                 writingRoot = true;
             }
         }
 
-        HashSet<byte[]> arrays = new(JsonPathComparer.Default);
-#if NET9_0_OR_GREATER
-        HashSet<byte[]>.AlternateLookup<ReadOnlySpan<byte>> alternateArrays = arrays.GetAlternateLookup<ReadOnlySpan<byte>>();
-#endif
-
         foreach (var kvp in _properties)
         {
-            if (kvp.Key.IsRoot() || (_propagatorIsFlattened is not null && _propagatorIsFlattened(kvp.Key)))
+            if (_propagatorIsFlattened is not null && _propagatorIsFlattened(kvp.Key))
                 continue;
 
             if (kvp.Value.Kind == ValueKind.Removed || kvp.Value.Kind.HasFlag(ValueKind.Written))
@@ -393,19 +390,17 @@ public partial struct JsonPatch
                 continue;
             }
 
-            var parent = kvp.Key.GetParent();
-
-            if (kvp.Key.IsArrayInsert())
+            if (kvp.Value.Kind.HasFlag(ValueKind.ArrayItemAppend))
             {
-                if (!parent.IsRoot())
+                if (!kvp.Key.IsRoot())
                 {
-                    writer.WritePropertyName(parent.GetPropertyName());
+                    writer.WritePropertyName(kvp.Key.GetPropertyName());
                 }
                 writer.WriteRawValue(kvp.Value.Value.Span);
                 continue;
             }
 
-            if (!parent.IsRoot())
+            if (!kvp.Key.GetParent().IsRoot())
             {
                 JsonPathReader pathReader = new(kvp.Key);
                 ReadOnlySpan<byte> firstProperty = pathReader.GetFirstProperty();
@@ -495,5 +490,55 @@ public partial struct JsonPatch
         }
 
         return false;
+    }
+
+    /// <summary>
+    /// .
+    /// </summary>
+    /// <param name="jsonPath"></param>
+    /// <param name="utf8Json"></param>
+    public void Append(ReadOnlySpan<byte> jsonPath, ReadOnlySpan<byte> utf8Json)
+    {
+        var encodedValue = EncodeValue(utf8Json);
+        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+    }
+
+    /// <summary>
+    /// .
+    /// </summary>
+    /// <param name="jsonPath"></param>
+    /// <param name="value"></param>
+    [RequiresUnreferencedCode("RequiresUnreferencedCode")]
+    [RequiresDynamicCode("RequiresDynamicCode")]
+    public void Append(ReadOnlySpan<byte> jsonPath, object value)
+    {
+        EncodedValue encodedValue;
+        if (IsAnonymousType(value))
+        {
+            var options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
+            encodedValue = EncodeValue(JsonSerializer.SerializeToUtf8Bytes(value, options));
+        }
+        else
+        {
+            encodedValue = EncodeValue(value);
+        }
+
+        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+    }
+
+    /// <summary>
+    /// .
+    /// </summary>
+    /// <param name="jsonPath"></param>
+    /// <param name="value"></param>
+    public void Append<T>(ReadOnlySpan<byte> jsonPath, IJsonModel<T> value)
+    {
+        var writer = new ModelWriter<T>(value, ModelReaderWriterOptions.Json);
+        using var reader = writer.ExtractReader();
+        var encodedValue = EncodeValue(reader.ToBinaryData());
+        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 }

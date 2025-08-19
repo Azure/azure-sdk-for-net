@@ -145,12 +145,8 @@ internal static class JsonPathReaderExtensions
             Span<byte> arrayInsert = stackalloc byte[jsonPath.Length];
             int openBracketIndex = jsonPath.LastIndexOf((byte)'[');
             jsonPath.Slice(0, openBracketIndex).CopyTo(arrayInsert);
-            "[-]"u8.CopyTo(arrayInsert.Slice(openBracketIndex));
-            return arrayInsert.Slice(0, openBracketIndex + 3).ToArray();
+            return arrayInsert.Slice(0, openBracketIndex).ToArray();
         }
-
-        if (jsonPath.EndsWith("[-]"u8))
-            return jsonPath.Slice(0, jsonPath.Length - 3);
 
         bool inBracket = false;
         for (int i = jsonPath.Length - 1; i >= 1; i--)
@@ -172,16 +168,6 @@ internal static class JsonPathReaderExtensions
         }
 
         return ReadOnlySpan<byte>.Empty;
-    }
-
-    public static bool IsArrayInsert(this byte[] jsonPath)
-        => IsArrayInsert(jsonPath.AsSpan());
-
-    public static bool IsArrayInsert(this ReadOnlySpan<byte> jsonPath)
-    {
-        var indexSpan = jsonPath.GetIndexSpan();
-
-        return indexSpan.Length == 1 && indexSpan[0] == (byte)'-';
     }
 
     public static ReadOnlySpan<byte> GetIndexSpan(this byte[] jsonPath)
@@ -250,13 +236,8 @@ internal static class JsonPathReaderExtensions
             return [.. json.Slice(0, (int)endLeft).Span, .. jsonReplacement.Span, .. json.Slice((int)startRight).Span];
         }
 
-        if (jsonPath.IsArrayInsert())
+        if (jsonReader.TokenType == JsonTokenType.StartArray)
         {
-            if (jsonReader.TokenType != JsonTokenType.StartArray)
-            {
-                throw new InvalidOperationException("Cannot insert into an array when the target is not an array.");
-            }
-
             //skip to the end of the array
             while (jsonReader.Read() && jsonReader.TokenType != JsonTokenType.EndArray)
             {

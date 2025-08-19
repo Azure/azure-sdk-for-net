@@ -25,7 +25,7 @@ namespace System.ClientModel.Tests.Internal.Perf
             _model = ModelReaderWriter.Read<AvailabilitySetData>(data, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
             _modelWithPatches = ModelReaderWriter.Read<AvailabilitySetData>(data, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
             _modelWithPatches.Patch.Set("$.sku.name"u8, "newSkuName");
-            _modelWithPatches.Patch.Set("$.properties.virtualMachines[-]"u8, "{\"id\":\"vmId\"}"u8);
+            _modelWithPatches.Patch.Append("$.properties.virtualMachines"u8, "{\"id\":\"vmId\"}"u8);
             _modelWithPatches.Patch.Set("$.foobar"u8, 5);
             _data = ModelReaderWriter.Write(_model, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
             _dataWithPatches = ModelReaderWriter.Write(_modelWithPatches, ModelReaderWriterOptions.Json, TestClientModelReaderWriterContext.Default);
