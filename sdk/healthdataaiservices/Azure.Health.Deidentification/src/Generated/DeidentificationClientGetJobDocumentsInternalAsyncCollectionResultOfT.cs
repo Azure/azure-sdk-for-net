@@ -48,24 +48,27 @@ namespace Azure.Health.Deidentification
         public override async IAsyncEnumerable<Page<DeidentificationDocumentDetails>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
-            do
+            while (true)
             {
-                Response response = await GetNextResponse(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
                 }
-                PagedDeidentificationDocumentDetails responseWithType = (PagedDeidentificationDocumentDetails)response;
-                nextPage = responseWithType.NextLink;
-                yield return Page<DeidentificationDocumentDetails>.FromValues((IReadOnlyList<DeidentificationDocumentDetails>)responseWithType.Value, nextPage?.AbsoluteUri, response);
+                PagedDeidentificationDocumentDetails result = (PagedDeidentificationDocumentDetails)response;
+                yield return Page<DeidentificationDocumentDetails>.FromValues((IReadOnlyList<DeidentificationDocumentDetails>)result.Value, nextPage?.AbsoluteUri, response);
+                nextPage = result.NextLink;
+                if (nextPage == null)
+                {
+                    yield break;
+                }
             }
-            while (nextPage != null);
         }
 
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetJobDocumentsInternalRequest(nextLink, _jobName, _maxpagesize, _continuationToken, _context) : _client.CreateGetJobDocumentsInternalRequest(_jobName, _maxpagesize, _continuationToken, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DeidentificationClient.GetJobDocumentsInternal");

@@ -54,6 +54,9 @@ namespace Azure.Test.Perf
         [Option('x', "test-proxies", Separator = ';', HelpText = "URIs of TestProxy Servers (separated by ';')")]
         public IEnumerable<Uri> TestProxies { get; set; }
 
+        [Option("results-file", HelpText = "File path location to store the results for the test run.")]
+        public string ResultsFile { get; set; }
+
         [Option('w', "warmup", Default = 5, HelpText = "Duration of warmup in seconds")]
         public int Warmup { get; set; }
     }

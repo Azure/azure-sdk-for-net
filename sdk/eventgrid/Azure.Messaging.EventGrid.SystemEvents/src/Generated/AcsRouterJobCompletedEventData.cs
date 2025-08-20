@@ -14,38 +14,29 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsRouterJobCompletedEventData : AcsRouterJobEventData
     {
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobCompletedEventData"/>. </summary>
-        /// <param name="labels"> Router Job events Labels. </param>
-        /// <param name="tags"> Router Jobs events Tags. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labels"/> or <paramref name="tags"/> is null. </exception>
-        internal AcsRouterJobCompletedEventData(IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags) : base(labels, tags)
+        internal AcsRouterJobCompletedEventData()
         {
-            Argument.AssertNotNull(labels, nameof(labels));
-            Argument.AssertNotNull(tags, nameof(tags));
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobCompletedEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="queueId"> Router Job events Queue Id. </param>
         /// <param name="labels"> Router Job events Labels. </param>
         /// <param name="tags"> Router Jobs events Tags. </param>
         /// <param name="assignmentId"> Router Job Completed Assignment Id. </param>
         /// <param name="workerId"> Router Job Completed Worker Id. </param>
-        internal AcsRouterJobCompletedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> serializedAdditionalRawData, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, string assignmentId, string workerId) : base(jobId, channelReference, channelId, serializedAdditionalRawData, queueId, labels, tags)
+        internal AcsRouterJobCompletedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, string assignmentId, string workerId) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, queueId, labels, tags)
         {
             AssignmentId = assignmentId;
             WorkerId = workerId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsRouterJobCompletedEventData"/> for deserialization. </summary>
-        internal AcsRouterJobCompletedEventData()
-        {
-        }
-
         /// <summary> Router Job Completed Assignment Id. </summary>
         public string AssignmentId { get; }
+
         /// <summary> Router Job Completed Worker Id. </summary>
         public string WorkerId { get; }
     }

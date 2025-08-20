@@ -19,7 +19,11 @@ using Azure.ResourceManager.Resources;
 
 namespace MgmtTypeSpec
 {
-    /// <summary></summary>
+    /// <summary>
+    /// A class representing a collection of <see cref="BarResource"/> and their operations.
+    /// Each <see cref="BarResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
+    /// To get a <see cref="BarCollection"/> instance call the GetBars method from an instance of the parent resource.
+    /// </summary>
     public partial class BarCollection : ArmCollection, IEnumerable<BarResource>, IAsyncEnumerable<BarResource>
     {
         private readonly ClientDiagnostics _barsClientDiagnostics;
@@ -37,7 +41,7 @@ namespace MgmtTypeSpec
         {
             TryGetApiVersion(BarResource.ResourceType, out string barApiVersion);
             _barsClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", BarResource.ResourceType.Namespace, Diagnostics);
-            _barsRestClient = new Bars(_barsClientDiagnostics, Pipeline, Endpoint, barApiVersion);
+            _barsRestClient = new Bars(_barsClientDiagnostics, Pipeline, Endpoint, barApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -63,7 +67,7 @@ namespace MgmtTypeSpec
             Argument.AssertNotNullOrEmpty(barName, nameof(barName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarCollection.CreateOrUpdateAsync");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -144,7 +148,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNullOrEmpty(barName, nameof(barName));
 
-            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarCollection.GetAsync");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarCollection.Get");
             scope.Start();
             try
             {
@@ -203,24 +207,26 @@ namespace MgmtTypeSpec
 
         /// <summary> List Bar resources by Foo. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BarResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BarResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BarData, BarResource>(new BarsGetAsyncCollectionResultOfT(_barsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new BarResource(Client, data));
+            return new AsyncPageableWrapper<BarData, BarResource>(new BarsGetAllAsyncCollectionResultOfT(_barsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new BarResource(Client, data));
         }
 
         /// <summary> List Bar resources by Foo. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BarResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BarResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BarData, BarResource>(new BarsGetCollectionResultOfT(_barsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new BarResource(Client, data));
+            return new PageableWrapper<BarData, BarResource>(new BarsGetAllCollectionResultOfT(_barsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new BarResource(Client, data));
         }
 
         /// <summary> Checks to see if the resource exists in azure. </summary>
@@ -232,7 +238,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNullOrEmpty(barName, nameof(barName));
 
-            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarCollection.ExistsAsync");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarCollection.Exists");
             scope.Start();
             try
             {
@@ -290,7 +296,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNullOrEmpty(barName, nameof(barName));
 
-            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarCollection.GetIfExistsAsync");
+            using DiagnosticScope scope = _barsClientDiagnostics.CreateScope("BarCollection.GetIfExists");
             scope.Start();
             try
             {

@@ -34,18 +34,22 @@ namespace BasicTypeSpec
         public override IEnumerable<Page<ThingModel>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
-            do
+            while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
                 }
-                ListWithStringNextLinkResponse responseWithType = (ListWithStringNextLinkResponse)response;
-                nextPage = responseWithType.Next != null ? new Uri(responseWithType.Next) : null;
-                yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)responseWithType.Things, nextPage?.AbsoluteUri, response);
+                ListWithStringNextLinkResponse result = (ListWithStringNextLinkResponse)response;
+                yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)result.Things, nextPage?.AbsoluteUri, response);
+                string nextPageString = result.Next;
+                if (nextPageString == null)
+                {
+                    yield break;
+                }
+                nextPage = new Uri(nextPageString);
             }
-            while (nextPage != null);
         }
 
         /// <summary> Get next page. </summary>

@@ -4,7 +4,6 @@
       "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-text/projects/MyImportTextProjectRaw0718/:import?api-version=2025-05-15-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Content-Length": "1016",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",

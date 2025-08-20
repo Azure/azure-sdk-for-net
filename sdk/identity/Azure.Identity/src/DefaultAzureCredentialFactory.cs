@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -319,18 +319,29 @@ namespace Azure.Identity
                 // AOT friendly.
 
                 // Try to get the options type
-                Type optionsType = Type.GetType("Azure.Identity.Broker.DevelopmentBrokerOptions, Azure.Identity.Broker", throwOnError: false);
-                ConstructorInfo optionsCtor = optionsType?.GetConstructor(Type.EmptyTypes);
-                object optionsInstance = optionsCtor?.Invoke(null);
-                options = optionsInstance as InteractiveBrowserCredentialOptions;
+                var optionsType = Type.GetType("Azure.Identity.Broker.DevelopmentBrokerOptions, Azure.Identity.Broker", throwOnError: false);
+                if (optionsType == null)
+                    return false;
+
+                var constructor = optionsType.GetConstructor(Type.EmptyTypes);
+                if (constructor == null)
+                    return false;
+
+                var instance = constructor.Invoke(null);
+                options = instance as InteractiveBrowserCredentialOptions;
+
+                if (options == null)
+                    return false;
+
                 options.IsChainedCredential = true;
-                // Set default value for UseDefaultBrokerAccount on macOS
+
+                // Set platform-specific options
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                 {
-                    options.RedirectUri = new(Constants.MacBrokerRedirectUri);
+                    options.RedirectUri = new Uri(Constants.MacBrokerRedirectUri);
                 }
 
-                return options != null;
+                return true;
             }
             catch
             {

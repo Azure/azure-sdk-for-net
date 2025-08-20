@@ -16,10 +16,8 @@ namespace MgmtTypeSpec
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(PrivateLinkListResult))]
-    [ModelReaderWriterBuildable(typeof(PrivateLink))]
-    [ModelReaderWriterBuildable(typeof(MgmtTypeSpecPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(FooData))]
     [ModelReaderWriterBuildable(typeof(FooProperties))]
     [ModelReaderWriterBuildable(typeof(ExtendedLocation))]
@@ -34,6 +32,8 @@ namespace MgmtTypeSpec
     [ModelReaderWriterBuildable(typeof(BarListResult))]
     [ModelReaderWriterBuildable(typeof(BarSettingsResourceData))]
     [ModelReaderWriterBuildable(typeof(BarSettingsProperties))]
+    [ModelReaderWriterBuildable(typeof(BarQuotaResourceData))]
+    [ModelReaderWriterBuildable(typeof(BarQuotaProperties))]
     [ModelReaderWriterBuildable(typeof(ZooData))]
     [ModelReaderWriterBuildable(typeof(ZooProperties))]
     [ModelReaderWriterBuildable(typeof(ZooPatch))]
@@ -41,7 +41,14 @@ namespace MgmtTypeSpec
     [ModelReaderWriterBuildable(typeof(ZooListResult))]
     [ModelReaderWriterBuildable(typeof(ZooAddressListListResult))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
+    [ModelReaderWriterBuildable(typeof(FooPreviewAction))]
     [ModelReaderWriterBuildable(typeof(Models.ZooRecommendation))]
+    [ModelReaderWriterBuildable(typeof(FooResource))]
+    [ModelReaderWriterBuildable(typeof(FooSettingsResource))]
+    [ModelReaderWriterBuildable(typeof(BarResource))]
+    [ModelReaderWriterBuildable(typeof(BarSettingsResource))]
+    [ModelReaderWriterBuildable(typeof(BarQuotaResource))]
+    [ModelReaderWriterBuildable(typeof(ZooResource))]
     public partial class MgmtTypeSpecContext : ModelReaderWriterContext
     {
     }

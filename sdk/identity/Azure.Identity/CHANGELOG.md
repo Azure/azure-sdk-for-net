@@ -1,8 +1,18 @@
 # Release History
 
-## 1.15.0-beta.2 (Unreleased)
+## 1.16.0-beta.1 (Unreleased)
 
 ### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+- Fixed `AzureDeveloperCliCredential` hanging when the `AZD_DEBUG` environment variable is set by adding the `--no-prompt` flag to prevent interactive prompts ([#52005](https://github.com/Azure/azure-sdk-for-net/issues/52005)).
+
+### Other Changes
+
+## 1.15.0 (2025-08-11)
 
 ### Breaking Changes
 
