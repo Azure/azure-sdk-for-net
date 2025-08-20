@@ -109,20 +109,21 @@ namespace Azure.Generator.Management.Providers
 
         private IReadOnlyList<ResourceClientProvider> BuildChildResources()
         {
-            // first we find all the resources from the output library
-            var allResources = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders
-                .OfType<ResourceClientProvider>();
-
-            var childResources = new List<ResourceClientProvider>();
-            // TODO -- this is quite cumbersome that every time we have to iterate all the resources to find the child resources of this resource.
-            // maybe later we could maintain a map in the OutputLibrary so that we could get them directly.
-            foreach (var candidate in allResources)
+            var childResources = new List<ResourceClientProvider>(_resourceMetadata.ChildResourceIds.Count);
+            // the resourcemetadata has a list of the ids of child resources
+            foreach (var childId in _resourceMetadata.ChildResourceIds)
             {
-                // check if the request path of this resource, is the same as the parent resource request path of the candidate.
-                if (_resourceMetadata.ResourceIdPattern == candidate._resourceMetadata.ParentResourceId)
+                // if the child resource id is not in the output library, we cannot find it.
+                var childResource = ManagementClientGenerator.Instance.OutputLibrary.GetResourceById(childId);
+                if (childResource is null)
                 {
-                    childResources.Add(candidate);
+                    ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                        "general-warning",
+                        $"Cannot find child resource with id {childId} for resource {ResourceName}."
+                    );
+                    continue;
                 }
+                childResources.Add(childResource);
             }
             return childResources;
         }
