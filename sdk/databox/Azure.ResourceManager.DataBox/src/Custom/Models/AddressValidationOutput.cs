@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         /// <summary> Error code and message of validation response. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public ResponseError Error { get => Properties.Error; }
+        public ResponseError Error { get => Properties?.Error; }
         /// <summary> The address validation status. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public AddressValidationStatus? ValidationStatus { get => Properties.ValidationStatus; }
+        public AddressValidationStatus? ValidationStatus { get => Properties?.ValidationStatus; }
         /// <summary> List of alternate addresses. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public IReadOnlyList<DataBoxShippingAddress> AlternateAddresses { get => Properties.AlternateAddresses; }
+        public IReadOnlyList<DataBoxShippingAddress> AlternateAddresses { get => Properties?.AlternateAddresses; }
     }
 }
