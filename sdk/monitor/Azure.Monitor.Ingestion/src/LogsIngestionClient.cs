@@ -20,8 +20,6 @@ namespace Azure.Monitor.Ingestion
         /// <summary> The message to show when AOT compilation is used for non-compliant overloads. </summary>
         private const string AotWarningMessage = "Serialization is performed at runtime without a serialization context available.";
 
-        private static ResponseClassifier ResponseClassifier204 => new StatusCodeClassifier(stackalloc ushort[] { 204 });
-
         /// <summary> Initializes a new instance of LogsIngestionClient for mocking. </summary>
         protected LogsIngestionClient()
         {
@@ -70,7 +68,7 @@ namespace Azure.Monitor.Ingestion
 
         internal HttpMessage CreateUploadRequest(string ruleId, string streamName, RequestContent content, string contentEncoding, RequestContext context = null)
         {
-            var message = Pipeline.CreateMessage(context, ResponseClassifier204);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
