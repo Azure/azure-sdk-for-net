@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedOn"u8);
-                writer.WriteStringValue(StartedOn.Value, "O");
+                writer.WriteStringValue(StartedOn);
             }
             if (Optional.IsCollectionDefined(SelectedLogins))
             {
@@ -112,16 +112,16 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases = default;
-            DateTimeOffset? startedOn = default;
+            string startedOn = default;
             IList<string> selectedLogins = default;
             IList<string> selectedAgentJobs = default;
-            DataMigrationFileShareInfo backupFileShare = default;
-            DataMigrationBlobShare backupBlobShare = default;
-            DataMigrationBackupMode? backupMode = default;
+            FileShare backupFileShare = default;
+            BlobShare backupBlobShare = default;
+            BackupMode? backupMode = default;
             string aadDomainName = default;
             string encryptedKeyForSecureFields = default;
-            DataMigrationSqlConnectionInfo sourceConnectionInfo = default;
-            DataMigrationSqlConnectionInfo targetConnectionInfo = default;
+            SqlConnectionInfo sourceConnectionInfo = default;
+            SqlConnectionInfo targetConnectionInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -138,11 +138,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (property.NameEquals("startedOn"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    startedOn = property.Value.GetDateTimeOffset("O");
+                    startedOn = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("selectedLogins"u8))
@@ -179,12 +175,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    backupFileShare = DataMigrationFileShareInfo.DeserializeDataMigrationFileShareInfo(property.Value, options);
+                    backupFileShare = FileShare.DeserializeFileShare(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("backupBlobShare"u8))
                 {
-                    backupBlobShare = DataMigrationBlobShare.DeserializeDataMigrationBlobShare(property.Value, options);
+                    backupBlobShare = BlobShare.DeserializeBlobShare(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("backupMode"u8))
@@ -193,7 +189,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    backupMode = new DataMigrationBackupMode(property.Value.GetString());
+                    backupMode = new BackupMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("aadDomainName"u8))
@@ -208,12 +204,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = DataMigrationSqlConnectionInfo.DeserializeDataMigrationSqlConnectionInfo(property.Value, options);
+                    sourceConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = DataMigrationSqlConnectionInfo.DeserializeDataMigrationSqlConnectionInfo(property.Value, options);
+                    targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

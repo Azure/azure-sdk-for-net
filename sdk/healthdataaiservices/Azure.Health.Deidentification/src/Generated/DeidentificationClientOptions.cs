@@ -10,13 +10,21 @@ using Azure.Core;
 
 namespace Azure.Health.Deidentification
 {
-    /// <summary> Client options for <see cref="DeidentificationClient"/>. </summary>
+    /// <summary> Client options for DeidentificationClient. </summary>
     public partial class DeidentificationClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2024_11_15;
 
-        /// <summary> Initializes a new instance of DeidentificationClientOptions. </summary>
-        /// <param name="version"> The service version. </param>
+        /// <summary> The version of the service to use. </summary>
+        public enum ServiceVersion
+        {
+            /// <summary> Service version "2024-11-15". </summary>
+            V2024_11_15 = 1,
+        }
+
+        internal string Version { get; }
+
+        /// <summary> Initializes new instance of DeidentificationClientOptions. </summary>
         public DeidentificationClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
@@ -24,16 +32,6 @@ namespace Azure.Health.Deidentification
                 ServiceVersion.V2024_11_15 => "2024-11-15",
                 _ => throw new NotSupportedException()
             };
-        }
-
-        /// <summary> Gets the Version. </summary>
-        internal string Version { get; }
-
-        /// <summary> The version of the service to use. </summary>
-        public enum ServiceVersion
-        {
-            /// <summary> V2024_11_15. </summary>
-            V2024_11_15 = 1
         }
     }
 }

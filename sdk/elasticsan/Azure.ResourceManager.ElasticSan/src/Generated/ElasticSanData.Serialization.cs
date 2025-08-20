@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ElasticSan.Models;
@@ -143,7 +142,7 @@ namespace Azure.ResourceManager.ElasticSan
             long? totalVolumeSizeGiB = default;
             long? volumeGroupCount = default;
             long? totalIops = default;
-            long? totalMBps = default;
+            long? totalMbps = default;
             long? totalSizeTiB = default;
             IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections = default;
             ElasticSanPublicNetworkAccess? publicNetworkAccess = default;
@@ -192,7 +191,7 @@ namespace Azure.ResourceManager.ElasticSan
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerElasticSanContext.Default);
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -275,7 +274,7 @@ namespace Azure.ResourceManager.ElasticSan
                             {
                                 continue;
                             }
-                            totalMBps = property0.Value.GetInt64();
+                            totalMbps = property0.Value.GetInt64();
                             continue;
                         }
                         if (property0.NameEquals("totalSizeTiB"u8))
@@ -343,7 +342,7 @@ namespace Azure.ResourceManager.ElasticSan
                 totalVolumeSizeGiB,
                 volumeGroupCount,
                 totalIops,
-                totalMBps,
+                totalMbps,
                 totalSizeTiB,
                 privateEndpointConnections ?? new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>(),
                 publicNetworkAccess,

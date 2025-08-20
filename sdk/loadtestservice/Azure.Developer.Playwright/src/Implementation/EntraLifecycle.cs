@@ -104,10 +104,14 @@ internal class EntraLifecycle: IEntraLifecycle
             var token = _environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString());
             JsonWebToken jsonWebToken = _jsonWebTokenHandler.ReadJsonWebToken(token);
             jsonWebToken.TryGetClaim(
-                "pwid",
-                out System.Security.Claims.Claim? pwidClaim
+                "aid",
+                out System.Security.Claims.Claim? aidClaim
             );
-            if (pwidClaim != null)
+            jsonWebToken.TryGetClaim(
+                "accountId",
+                out System.Security.Claims.Claim? accountIdClaim
+            );
+            if (aidClaim != null || accountIdClaim != null)
                 return; // MPT Token
             var expiry = (long)(jsonWebToken.ValidTo - new DateTime(1970, 1, 1)).TotalSeconds;
             _entraIdAccessToken = token;

@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace _Type.Property.Nullable
 {
@@ -33,6 +34,9 @@ namespace _Type.Property.Nullable
         protected virtual StringProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<StringProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        /// <param name="stringProperty"> The <see cref="StringProperty"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(StringProperty stringProperty) => throw null;
 
         public static explicit operator StringProperty(Response result) => throw null;
     }

@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             string databasesToSourceTables = default;
             string databasesToTargetTables = default;
             string tableValidationErrors = default;
-            IReadOnlyList<DataMigrationReportableException> validationErrors = default;
+            IReadOnlyList<ReportableException> validationErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<DataMigrationReportableException> array = new List<DataMigrationReportableException>();
+                    List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataMigrationReportableException.DeserializeDataMigrationReportableException(item, options));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     validationErrors = array;
                     continue;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new GetUserTablesSqlSyncTaskOutput(databasesToSourceTables, databasesToTargetTables, tableValidationErrors, validationErrors ?? new ChangeTrackingList<DataMigrationReportableException>(), serializedAdditionalRawData);
+            return new GetUserTablesSqlSyncTaskOutput(databasesToSourceTables, databasesToTargetTables, tableValidationErrors, validationErrors ?? new ChangeTrackingList<ReportableException>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GetUserTablesSqlSyncTaskOutput>.Write(ModelReaderWriterOptions options)

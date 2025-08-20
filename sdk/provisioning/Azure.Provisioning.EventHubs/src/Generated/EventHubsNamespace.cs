@@ -83,6 +83,16 @@ public partial class EventHubsNamespace : ProvisionableResource
     private EventHubsEncryption? _encryption;
 
     /// <summary>
+    /// Geo Data Replication settings for the namespace.
+    /// </summary>
+    public NamespaceGeoDataReplicationProperties GeoDataReplication 
+    {
+        get { Initialize(); return _geoDataReplication!; }
+        set { Initialize(); AssignOrReplace(ref _geoDataReplication, value); }
+    }
+    private NamespaceGeoDataReplicationProperties? _geoDataReplication;
+
+    /// <summary>
     /// Properties of BYOK Identity description.
     /// </summary>
     public ManagedServiceIdentity Identity 
@@ -286,6 +296,7 @@ public partial class EventHubsNamespace : ProvisionableResource
         _clusterArmId = DefineProperty<ResourceIdentifier>("ClusterArmId", ["properties", "clusterArmId"]);
         _disableLocalAuth = DefineProperty<bool>("DisableLocalAuth", ["properties", "disableLocalAuth"]);
         _encryption = DefineModelProperty<EventHubsEncryption>("Encryption", ["properties", "encryption"]);
+        _geoDataReplication = DefineModelProperty<NamespaceGeoDataReplicationProperties>("GeoDataReplication", ["properties", "geoDataReplication"]);
         _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
         _isAutoInflateEnabled = DefineProperty<bool>("IsAutoInflateEnabled", ["properties", "isAutoInflateEnabled"]);
         _kafkaEnabled = DefineProperty<bool>("KafkaEnabled", ["properties", "kafkaEnabled"]);

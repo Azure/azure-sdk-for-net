@@ -4,7 +4,11 @@
 
 ### Features Added
 
-- Added `SchemaRegistryClientBuilderExtensions` to support dependency injection.
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
 
 ## 1.4.0 (2024-09-17)
 

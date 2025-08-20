@@ -9,47 +9,46 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.OpenAI.Chat;
 
 [CodeGenType("MongoDBChatDataSource")]
-[CodeGenSuppress(nameof(MongoDBChatDataSource), typeof(InternalMongoDBChatDataSourceParameters))]
 [Experimental("AOAI001")]
 #if AZURE_OPENAI_GA
 [EditorBrowsable(EditorBrowsableState.Never)]
 #endif
-public partial class MongoDBChatDataSource
+public partial class MongoDBChatDataSource : ChatDataSource
 {
     [CodeGenMember("Parameters")]
     internal InternalMongoDBChatDataSourceParameters InternalParameters { get; }
 
 #if !AZURE_OPENAI_GA
     /// <inheritdoc cref="InternalMongoDBChatDataSourceParameters.Authentication"/>
-    public DataSourceAuthentication Authentication
+    required public DataSourceAuthentication Authentication
     {
         get => InternalParameters.Authentication;
         set => InternalParameters.Authentication = value;
     }
 
     /// <inheritdoc cref="InternalMongoDBChatDataSourceParameters.Endpoint"/>
-    public string EndpointName
+    required public string EndpointName
     {
         get => InternalParameters.Endpoint;
         set => InternalParameters.Endpoint = value;
     }
 
     /// <inheritdoc cref="InternalMongoDBChatDataSourceParameters.CollectionName"/>
-    public string CollectionName
+    required public string CollectionName
     {
         get => InternalParameters.CollectionName;
         set => InternalParameters.CollectionName = value;
     }
 
     /// <inheritdoc cref="InternalMongoDBChatDataSourceParameters.AppName"/>
-    public string AppName
+    required public string AppName
     {
         get => InternalParameters.AppName;
         set => InternalParameters.AppName = value;
     }
 
     /// <inheritdoc cref="InternalMongoDBChatDataSourceParameters.IndexName"/>
-    public string IndexName
+    required public string IndexName
     {
         get => InternalParameters.IndexName;
         set => InternalParameters.IndexName = value;
@@ -107,25 +106,37 @@ public partial class MongoDBChatDataSource
     /// <summary>
     /// Creates a new instance of <see cref="MongoDBChatDataSource"/>.
     /// </summary>
-    public MongoDBChatDataSource() : base(InternalAzureChatDataSourceKind.MongoDb, null)
+    public MongoDBChatDataSource() : base(type: "mongo_db", additionalBinaryDataProperties: null)
     {
         InternalParameters = new();
     }
+
 #else
     public MongoDBChatDataSource()
     {
         throw new InvalidOperationException($"MongoDB data sources are not supported in this GA version. Please use a preview library and service version for this integration.");
     }
+
 #endif
 
+    // CUSTOM: Made internal.
     /// <summary> Initializes a new instance of <see cref="MongoDBChatDataSource"/>. </summary>
-    /// <param name="kind"></param>
+    /// <param name="internalParameters"> The parameter information to control the use of the MongoDB data source. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="internalParameters"/> is null. </exception>
+    internal MongoDBChatDataSource(InternalMongoDBChatDataSourceParameters internalParameters)
+    {
+        Argument.AssertNotNull(internalParameters, nameof(internalParameters));
+        InternalParameters = internalParameters;
+    }
+
+    /// <summary> Initializes a new instance of <see cref="MongoDBChatDataSource"/>. </summary>
+    /// <param name="type"></param>
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     /// <param name="internalParameters"> The parameter information to control the use of the Azure Search data source. </param>
     [SetsRequiredMembers]
-    internal MongoDBChatDataSource(InternalAzureChatDataSourceKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, InternalMongoDBChatDataSourceParameters internalParameters)
-        : base(kind, additionalBinaryDataProperties)
+    internal MongoDBChatDataSource(string type, IDictionary<string, BinaryData> additionalBinaryDataProperties, InternalMongoDBChatDataSourceParameters internalParameters)
+        : base(type, additionalBinaryDataProperties)
     {
-        InternalParameters = internalParameters ?? new();
+        InternalParameters = internalParameters;
     }
 }

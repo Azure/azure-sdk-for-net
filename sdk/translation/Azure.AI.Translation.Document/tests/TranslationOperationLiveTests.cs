@@ -408,7 +408,6 @@ namespace Azure.AI.Translation.Document.Tests
         }
 
         [RecordedTest]
-        [Ignore("Test is failing and needs to be recorded.  Tracking: #50669")]
         public async Task DocumentTranslationWithGlossary()
         {
             Uri source = await CreateSourceContainerAsync(oneTestDocuments);

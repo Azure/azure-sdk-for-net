@@ -48,11 +48,6 @@ namespace Azure.AI.Language.Conversations.Authoring
                 writer.WritePropertyName("evaluationOptions"u8);
                 writer.WriteObjectValue(EvaluationOptions, options);
             }
-            if (Optional.IsDefined(DataGenerationSettings))
-            {
-                writer.WritePropertyName("dataGenerationSettings"u8);
-                writer.WriteObjectValue(DataGenerationSettings, options);
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -94,7 +89,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             string trainingConfigVersion = default;
             ConversationAuthoringTrainingMode trainingMode = default;
             ConversationAuthoringEvaluationDetails evaluationOptions = default;
-            AnalyzeConversationAuthoringDataGenerationSettings dataGenerationSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,28 +117,13 @@ namespace Azure.AI.Language.Conversations.Authoring
                     evaluationOptions = ConversationAuthoringEvaluationDetails.DeserializeConversationAuthoringEvaluationDetails(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("dataGenerationSettings"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    dataGenerationSettings = AnalyzeConversationAuthoringDataGenerationSettings.DeserializeAnalyzeConversationAuthoringDataGenerationSettings(property.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConversationAuthoringTrainingJobDetails(
-                modelLabel,
-                trainingConfigVersion,
-                trainingMode,
-                evaluationOptions,
-                dataGenerationSettings,
-                serializedAdditionalRawData);
+            return new ConversationAuthoringTrainingJobDetails(modelLabel, trainingConfigVersion, trainingMode, evaluationOptions, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConversationAuthoringTrainingJobDetails>.Write(ModelReaderWriterOptions options)

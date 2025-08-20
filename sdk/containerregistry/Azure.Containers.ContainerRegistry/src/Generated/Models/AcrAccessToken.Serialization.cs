@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    public partial class AcrAccessToken
+    internal partial class AcrAccessToken
     {
         internal static AcrAccessToken DeserializeAcrAccessToken(JsonElement element)
         {

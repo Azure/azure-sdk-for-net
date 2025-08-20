@@ -45,11 +45,11 @@ namespace Azure.AI.OpenAI.Chat
         /// <param name="value"> The value. </param>
         public static implicit operator ChatDocumentFilterReason(string value) => new ChatDocumentFilterReason(value);
 
-        /// <inheritdoc/>
+        /// <param name="obj"> The object to compare. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ChatDocumentFilterReason other && Equals(other);
 
-        /// <inheritdoc/>
+        /// <param name="other"> The instance to compare. </param>
         public bool Equals(ChatDocumentFilterReason other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>

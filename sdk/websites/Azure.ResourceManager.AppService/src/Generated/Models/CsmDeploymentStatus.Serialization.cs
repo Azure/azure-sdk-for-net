@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                ((IJsonModel<ResponseError>)item).Write(writer, options);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default);
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 }
                                 else
                                 {
-                                    array.Add(ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default));
+                                    array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
                                 }
                             }
                             errors = array;

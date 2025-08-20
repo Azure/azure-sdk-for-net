@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetwork.Models;
@@ -67,7 +66,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                 writer.WriteStartArray();
                 foreach (var item in ManagementGroups)
                 {
-                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -77,7 +76,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                 writer.WriteStartArray();
                 foreach (var item in Subscriptions)
                 {
-                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -87,7 +86,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworks)
                 {
-                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -97,7 +96,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                 writer.WriteStartArray();
                 foreach (var item in Subnets)
                 {
-                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -179,7 +178,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerManagedNetworkContext.Default);
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -218,7 +217,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerManagedNetworkContext.Default));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                             }
                             managementGroups = array;
                             continue;
@@ -232,7 +231,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerManagedNetworkContext.Default));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                             }
                             subscriptions = array;
                             continue;
@@ -246,7 +245,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerManagedNetworkContext.Default));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                             }
                             virtualNetworks = array;
                             continue;
@@ -260,7 +259,7 @@ namespace Azure.ResourceManager.ManagedNetwork
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerManagedNetworkContext.Default));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                             }
                             subnets = array;
                             continue;

@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(HubVirtualNetworkConnection))
             {
                 writer.WritePropertyName("hubVirtualNetworkConnection"u8);
-                ((IJsonModel<WritableSubResource>)HubVirtualNetworkConnection).Write(writer, options);
+                JsonSerializer.Serialize(writer, HubVirtualNetworkConnection);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -167,7 +166,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            hubVirtualNetworkConnection = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            hubVirtualNetworkConnection = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

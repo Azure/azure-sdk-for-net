@@ -26,13 +26,5 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             RemoteVolumeResourceId = remoteVolumeResourceId;
         }
-
-        /// <summary> Indicates whether the local volume is the source or destination for the Volume Replication. </summary>
-        public NetAppEndpointType? EndpointType
-        {
-            get;
-            [EditorBrowsable(EditorBrowsableState.Never)]
-            set;
-        }
     }
 }

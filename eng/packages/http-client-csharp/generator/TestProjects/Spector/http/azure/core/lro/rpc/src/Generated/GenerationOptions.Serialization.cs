@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace _Specs_.Azure.Core.Lro.Rpc
@@ -36,5 +37,7 @@ namespace _Specs_.Azure.Core.Lro.Rpc
 
         /// <param name="generationOptions"> The <see cref="GenerationOptions"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(GenerationOptions generationOptions) => throw null;
+
+        public static explicit operator GenerationOptions(Response result) => throw null;
     }
 }

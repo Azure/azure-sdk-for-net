@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Volume_Create</description>
+        /// <description>Volumes_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Volume_Create</description>
+        /// <description>Volumes_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Volume_Get</description>
+        /// <description>Volumes_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Volume_Get</description>
+        /// <description>Volumes_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Volume_ListByVolumeGroup</description>
+        /// <description>Volumes_ListByVolumeGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Volume_ListByVolumeGroup</description>
+        /// <description>Volumes_ListByVolumeGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Volume_Get</description>
+        /// <description>Volumes_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Volume_Get</description>
+        /// <description>Volumes_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Volume_Get</description>
+        /// <description>Volumes_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.ElasticSan
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Volume_Get</description>
+        /// <description>Volumes_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

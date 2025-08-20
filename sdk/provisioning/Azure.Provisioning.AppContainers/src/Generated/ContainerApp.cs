@@ -208,15 +208,6 @@ public partial class ContainerApp : ProvisionableResource
     private BicepValue<ContainerAppProvisioningState>? _provisioningState;
 
     /// <summary>
-    /// Running status of the Container App.
-    /// </summary>
-    public BicepValue<ContainerAppRunningStatus> RunningStatus 
-    {
-        get { Initialize(); return _runningStatus!; }
-    }
-    private BicepValue<ContainerAppRunningStatus>? _runningStatus;
-
-    /// <summary>
     /// Gets the SystemData.
     /// </summary>
     public SystemData SystemData 
@@ -236,7 +227,7 @@ public partial class ContainerApp : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerApp.</param>
     public ContainerApp(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.App/containerApps", resourceVersion ?? "2025-01-01")
+        : base(bicepIdentifier, "Microsoft.App/containerApps", resourceVersion ?? "2024-03-01")
     {
     }
 
@@ -264,7 +255,6 @@ public partial class ContainerApp : ProvisionableResource
         _latestRevisionName = DefineProperty<string>("LatestRevisionName", ["properties", "latestRevisionName"], isOutput: true);
         _outboundIPAddressList = DefineListProperty<IPAddress>("OutboundIPAddressList", ["properties", "outboundIpAddresses"], isOutput: true);
         _provisioningState = DefineProperty<ContainerAppProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _runningStatus = DefineProperty<ContainerAppRunningStatus>("RunningStatus", ["properties", "runningStatus"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }
 
@@ -273,11 +263,6 @@ public partial class ContainerApp : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2025-01-01.
-        /// </summary>
-        public static readonly string V2025_01_01 = "2025-01-01";
-
         /// <summary>
         /// 2024-03-01.
         /// </summary>

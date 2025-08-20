@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             string databaseName = default;
             double? sizeMB = default;
-            DataMigrationState? state = default;
+            MigrationState? state = default;
             DatabaseMigrationStage? stage = default;
             DateTimeOffset? startedOn = default;
             DateTimeOffset? endedOn = default;
             string message = default;
-            IReadOnlyList<DataMigrationReportableException> exceptionsAndWarnings = default;
+            IReadOnlyList<ReportableException> exceptionsAndWarnings = default;
             string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    state = new DataMigrationState(property.Value.GetString());
+                    state = new MigrationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("stage"u8))
@@ -177,10 +177,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<DataMigrationReportableException> array = new List<DataMigrationReportableException>();
+                    List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataMigrationReportableException.DeserializeDataMigrationReportableException(item, options));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     exceptionsAndWarnings = array;
                     continue;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 startedOn,
                 endedOn,
                 message,
-                exceptionsAndWarnings ?? new ChangeTrackingList<DataMigrationReportableException>());
+                exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>());
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlMITaskOutputDatabaseLevel>.Write(ModelReaderWriterOptions options)

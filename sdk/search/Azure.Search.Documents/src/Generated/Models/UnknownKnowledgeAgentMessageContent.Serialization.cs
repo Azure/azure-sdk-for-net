@@ -5,62 +5,29 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Search.Documents.Agents.Models;
 
 namespace Azure.Search.Documents.Models
 {
-    internal partial class UnknownKnowledgeAgentMessageContent : IUtf8JsonSerializable, IJsonModel<KnowledgeAgentMessageContent>
+    internal partial class UnknownKnowledgeAgentMessageContent : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KnowledgeAgentMessageContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<KnowledgeAgentMessageContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type.ToString());
             writer.WriteEndObject();
         }
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        internal static UnknownKnowledgeAgentMessageContent DeserializeUnknownKnowledgeAgentMessageContent(JsonElement element)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgentMessageContent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(KnowledgeAgentMessageContent)} does not support writing '{format}' format.");
-            }
-
-            base.JsonModelWriteCore(writer, options);
-        }
-
-        KnowledgeAgentMessageContent IJsonModel<KnowledgeAgentMessageContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgentMessageContent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(KnowledgeAgentMessageContent)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKnowledgeAgentMessageContent(document.RootElement, options);
-        }
-
-        internal static UnknownKnowledgeAgentMessageContent DeserializeUnknownKnowledgeAgentMessageContent(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             KnowledgeAgentMessageContentType type = "Unknown";
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -68,45 +35,9 @@ namespace Azure.Search.Documents.Models
                     type = new KnowledgeAgentMessageContentType(property.Value.GetString());
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownKnowledgeAgentMessageContent(type, serializedAdditionalRawData);
+            return new UnknownKnowledgeAgentMessageContent(type);
         }
-
-        BinaryData IPersistableModel<KnowledgeAgentMessageContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgentMessageContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(KnowledgeAgentMessageContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        KnowledgeAgentMessageContent IPersistableModel<KnowledgeAgentMessageContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgentMessageContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeKnowledgeAgentMessageContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KnowledgeAgentMessageContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<KnowledgeAgentMessageContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -120,7 +51,7 @@ namespace Azure.Search.Documents.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<KnowledgeAgentMessageContent>(this, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue<KnowledgeAgentMessageContent>(this);
             return content;
         }
     }

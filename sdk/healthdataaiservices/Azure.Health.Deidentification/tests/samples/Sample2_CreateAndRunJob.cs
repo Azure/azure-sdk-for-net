@@ -16,7 +16,7 @@ namespace Azure.Health.Deidentification.Samples
         [Test]
         public void CreateAndRunJob()
         {
-            string serviceEndpoint = TestEnvironment.Endpoint;
+            const string serviceEndpoint = "https://example.api.cac001.deid.azure.com";
             TokenCredential credential = TestEnvironment.Credential;
 
             DeidentificationClient client = new(

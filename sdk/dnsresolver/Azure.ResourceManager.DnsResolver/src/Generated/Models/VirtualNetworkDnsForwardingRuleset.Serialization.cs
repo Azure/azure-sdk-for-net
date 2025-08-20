@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -46,7 +45,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             if (Optional.IsDefined(VirtualNetworkLink))
             {
                 writer.WritePropertyName("virtualNetworkLink"u8);
-                ((IJsonModel<WritableSubResource>)VirtualNetworkLink).Write(writer, options);
+                JsonSerializer.Serialize(writer, VirtualNetworkLink);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -116,7 +115,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                             {
                                 continue;
                             }
-                            virtualNetworkLink = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerDnsResolverContext.Default);
+                            virtualNetworkLink = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                     }

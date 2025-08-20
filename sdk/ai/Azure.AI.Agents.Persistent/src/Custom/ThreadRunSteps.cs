@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure.AI.Agents.Persistent.Telemetry;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -89,31 +88,15 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetRunStepsRequest(
-                threadId: threadId,
-                runId: runId,
-                include: include,
-                limit: limit,
-                order: order?.ToString(),
-                after: continuationToken,
-                before: before,
-                context: context
-            );
-            var asyncPageable = new ContinuationTokenPageableAsync<RunStep>(
+            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetRunStepsRequest(threadId, runId, include, limit, order?.ToString(), continuationToken, before, context);
+            return new ContinuationTokenPageableAsync<RunStep>(
                 createPageRequest: PageRequest,
                 valueFactory: e => RunStep.DeserializeRunStep(e),
                 pipeline: _pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
-                requestContext: context,
-                itemType: ContinuationItemType.RunStep,
-                threadId: threadId,
-                runId: runId,
-                endpoint: _endpoint,
-                after: after
+                requestContext: context
             );
-
-            return asyncPageable;
         }
 
         /// <summary> Gets a list of run steps from a thread run. </summary>
@@ -136,31 +119,15 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetRunStepsRequest(
-                threadId: threadId,
-                runId: runId,
-                include: include,
-                limit: limit,
-                order: order?.ToString(),
-                after: continuationToken,
-                before: before,
-                context: context
-            );
-            var pageable = new ContinuationTokenPageable<RunStep>(
+            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetRunStepsRequest(threadId, runId, include, limit, order?.ToString(), continuationToken, before, context);
+            return new ContinuationTokenPageable<RunStep>(
                 createPageRequest: PageRequest,
                 valueFactory: e => RunStep.DeserializeRunStep(e),
                 pipeline: _pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
-                requestContext: context,
-                itemType: ContinuationItemType.RunStep,
-                threadId: threadId,
-                runId: runId,
-                endpoint: _endpoint,
-                after: after
+                requestContext: context
             );
-
-            return pageable;
         }
 
         /// <summary>

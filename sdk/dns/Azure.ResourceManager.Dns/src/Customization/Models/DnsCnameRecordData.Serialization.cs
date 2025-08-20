@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Dns
                 }
                 if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.GetRawText());
+                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

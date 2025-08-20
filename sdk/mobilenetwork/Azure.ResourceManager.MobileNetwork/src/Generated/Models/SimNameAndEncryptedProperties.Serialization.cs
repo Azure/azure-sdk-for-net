@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -76,7 +75,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(SimPolicy))
             {
                 writer.WritePropertyName("simPolicy"u8);
-                ((IJsonModel<WritableSubResource>)SimPolicy).Write(writer, options);
+                JsonSerializer.Serialize(writer, SimPolicy);
             }
             if (Optional.IsCollectionDefined(StaticIPConfiguration))
             {
@@ -224,7 +223,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                             {
                                 continue;
                             }
-                            simPolicy = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerMobileNetworkContext.Default);
+                            simPolicy = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("staticIpConfiguration"u8))

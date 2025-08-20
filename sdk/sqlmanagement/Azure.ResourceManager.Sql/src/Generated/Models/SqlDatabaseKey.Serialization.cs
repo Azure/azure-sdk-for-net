@@ -55,11 +55,6 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("subregion"u8);
                 writer.WriteStringValue(Subregion);
             }
-            if (options.Format != "W" && Optional.IsDefined(KeyVersion))
-            {
-                writer.WritePropertyName("keyVersion"u8);
-                writer.WriteStringValue(KeyVersion);
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -101,7 +96,6 @@ namespace Azure.ResourceManager.Sql.Models
             string thumbprint = default;
             DateTimeOffset? creationDate = default;
             string subregion = default;
-            string keyVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,24 +128,13 @@ namespace Azure.ResourceManager.Sql.Models
                     subregion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyVersion"u8))
-                {
-                    keyVersion = property.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SqlDatabaseKey(
-                type,
-                thumbprint,
-                creationDate,
-                subregion,
-                keyVersion,
-                serializedAdditionalRawData);
+            return new SqlDatabaseKey(type, thumbprint, creationDate, subregion, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -238,29 +221,6 @@ namespace Azure.ResourceManager.Sql.Models
                     else
                     {
                         builder.AppendLine($"'{Subregion}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVersion), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  keyVersion: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(KeyVersion))
-                {
-                    builder.Append("  keyVersion: ");
-                    if (KeyVersion.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{KeyVersion}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{KeyVersion}'");
                     }
                 }
             }

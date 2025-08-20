@@ -560,17 +560,12 @@ function Search-GitHubIssues {
     [ValidateNotNullOrEmpty()]
     [Parameter(Mandatory = $true)]
     $CommitHash,
-    $State="open",
-    $AuthToken
+    $State="open"
   )
   $uri = "https://api.github.com/search/issues?q=sha:$CommitHash+state:$State"
-  $params = @{
-    Method = 'GET'
-    Uri = $uri
-    MaximumRetryCount = 3
-  }
-  if ($AuthToken) {
-    $params.Headers = Get-GitHubApiHeaders -token $AuthToken
-  }
-  return Invoke-RestMethod @params
+
+  return Invoke-RestMethod `
+          -Method GET `
+          -Uri $uri `
+          -MaximumRetryCount 3
 }

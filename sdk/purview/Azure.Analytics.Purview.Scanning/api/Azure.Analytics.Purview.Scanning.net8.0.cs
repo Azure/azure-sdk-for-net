@@ -1,5 +1,11 @@
 namespace Azure.Analytics.Purview.Scanning
 {
+    public partial class AzureAnalyticsPurviewScanningContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureAnalyticsPurviewScanningContext() { }
+        public static Azure.Analytics.Purview.Scanning.AzureAnalyticsPurviewScanningContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class PurviewClassificationRuleClient
     {
         protected PurviewClassificationRuleClient() { }

@@ -3,6 +3,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -12,13 +13,10 @@ namespace Azure.AI.OpenAI.Chat
 {
     internal partial class InternalAzureChatDataSourceConnectionStringAuthenticationOptions : IJsonModel<InternalAzureChatDataSourceConnectionStringAuthenticationOptions>
     {
-        /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceConnectionStringAuthenticationOptions"/> for deserialization. </summary>
-        internal InternalAzureChatDataSourceConnectionStringAuthenticationOptions() : this(InternalAzureChatDataSourceAuthenticationOptionsType.ConnectionString, null, null)
+        internal InternalAzureChatDataSourceConnectionStringAuthenticationOptions()
         {
         }
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InternalAzureChatDataSourceConnectionStringAuthenticationOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -26,8 +24,6 @@ namespace Azure.AI.OpenAI.Chat
             writer.WriteEndObject();
         }
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalAzureChatDataSourceConnectionStringAuthenticationOptions>)this).GetFormatFromOptions(options) : options.Format;
@@ -43,12 +39,8 @@ namespace Azure.AI.OpenAI.Chat
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         InternalAzureChatDataSourceConnectionStringAuthenticationOptions IJsonModel<InternalAzureChatDataSourceConnectionStringAuthenticationOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (InternalAzureChatDataSourceConnectionStringAuthenticationOptions)JsonModelCreateCore(ref reader, options);
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataSourceAuthentication JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalAzureChatDataSourceConnectionStringAuthenticationOptions>)this).GetFormatFromOptions(options) : options.Format;
@@ -60,22 +52,20 @@ namespace Azure.AI.OpenAI.Chat
             return DeserializeInternalAzureChatDataSourceConnectionStringAuthenticationOptions(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         internal static InternalAzureChatDataSourceConnectionStringAuthenticationOptions DeserializeInternalAzureChatDataSourceConnectionStringAuthenticationOptions(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            InternalAzureChatDataSourceAuthenticationOptionsType kind = default;
+            string @type = "connection_string";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string connectionString = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    kind = new InternalAzureChatDataSourceAuthenticationOptionsType(prop.Value.GetString());
+                    @type = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("connection_string"u8))
@@ -88,31 +78,25 @@ namespace Azure.AI.OpenAI.Chat
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalAzureChatDataSourceConnectionStringAuthenticationOptions(kind, additionalBinaryDataProperties, connectionString);
+            return new InternalAzureChatDataSourceConnectionStringAuthenticationOptions(@type, additionalBinaryDataProperties, connectionString);
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<InternalAzureChatDataSourceConnectionStringAuthenticationOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalAzureChatDataSourceConnectionStringAuthenticationOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIOpenAIContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(InternalAzureChatDataSourceConnectionStringAuthenticationOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         InternalAzureChatDataSourceConnectionStringAuthenticationOptions IPersistableModel<InternalAzureChatDataSourceConnectionStringAuthenticationOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalAzureChatDataSourceConnectionStringAuthenticationOptions)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataSourceAuthentication PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalAzureChatDataSourceConnectionStringAuthenticationOptions>)this).GetFormatFromOptions(options) : options.Format;
@@ -128,7 +112,22 @@ namespace Azure.AI.OpenAI.Chat
             }
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<InternalAzureChatDataSourceConnectionStringAuthenticationOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        public static implicit operator BinaryContent(InternalAzureChatDataSourceConnectionStringAuthenticationOptions internalAzureChatDataSourceConnectionStringAuthenticationOptions)
+        {
+            if (internalAzureChatDataSourceConnectionStringAuthenticationOptions == null)
+            {
+                return null;
+            }
+            return BinaryContent.Create(internalAzureChatDataSourceConnectionStringAuthenticationOptions, ModelSerializationExtensions.WireOptions);
+        }
+
+        public static explicit operator InternalAzureChatDataSourceConnectionStringAuthenticationOptions(ClientResult result)
+        {
+            using PipelineResponse response = result.GetRawResponse();
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeInternalAzureChatDataSourceConnectionStringAuthenticationOptions(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

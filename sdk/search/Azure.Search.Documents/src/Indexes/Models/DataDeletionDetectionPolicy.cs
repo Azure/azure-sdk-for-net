@@ -6,7 +6,7 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class DataDeletionDetectionPolicy
     {
         /// <summary> Initializes a new instance of DataDeletionDetectionPolicy. </summary>
-        internal DataDeletionDetectionPolicy()
+        private protected DataDeletionDetectionPolicy()
         {
         }
     }

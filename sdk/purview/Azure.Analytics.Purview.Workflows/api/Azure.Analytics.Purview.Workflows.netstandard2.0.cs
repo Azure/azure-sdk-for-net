@@ -11,6 +11,12 @@ namespace Azure.Analytics.Purview.Workflows
         public virtual Azure.Response Reject(System.Guid taskId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RejectAsync(System.Guid taskId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
+    public partial class AzureAnalyticsPurviewWorkflowsContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureAnalyticsPurviewWorkflowsContext() { }
+        public static Azure.Analytics.Purview.Workflows.AzureAnalyticsPurviewWorkflowsContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class PurviewWorkflowServiceClientOptions : Azure.Core.ClientOptions
     {
         public PurviewWorkflowServiceClientOptions(Azure.Analytics.Purview.Workflows.PurviewWorkflowServiceClientOptions.ServiceVersion version = Azure.Analytics.Purview.Workflows.PurviewWorkflowServiceClientOptions.ServiceVersion.V2023_10_01_Preview) { }

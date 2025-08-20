@@ -305,7 +305,6 @@ public partial class ArmApplication : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
-        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _kind = DefineProperty<string>("Kind", ["kind"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);

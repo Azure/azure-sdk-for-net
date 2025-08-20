@@ -10,20 +10,15 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Resources.ResourceActionFailure event. This is raised when a resource action operation fails. </summary>
     [JsonConverter(typeof(ResourceActionFailureEventDataConverter))]
-    public partial class ResourceActionFailureEventData : IJsonModel<ResourceActionFailureEventData>
+    public partial class ResourceActionFailureEventData : IUtf8JsonSerializable, IJsonModel<ResourceActionFailureEventData>
     {
-        /// <summary> Initializes a new instance of <see cref="ResourceActionFailureEventData"/> for deserialization. </summary>
-        internal ResourceActionFailureEventData()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceActionFailureEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResourceActionFailureEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -35,11 +30,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceActionFailureEventData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceActionFailureEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourceActionFailureEventData)} does not support writing '{format}' format.");
             }
+
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
@@ -77,11 +73,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             writer.WritePropertyName("authorization"u8);
             AuthorizationJson.WriteTo(writer);
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("claims"u8);
-                ClaimsJson.WriteTo(writer);
-            }
+            writer.WritePropertyName("claims"u8);
+            ClaimsJson.WriteTo(writer);
             if (Optional.IsDefined(CorrelationId))
             {
                 writer.WritePropertyName("correlationId"u8);
@@ -89,15 +82,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             writer.WritePropertyName("httpRequest"u8);
             HttpRequestJson.WriteTo(writer);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -106,27 +99,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceActionFailureEventData IJsonModel<ResourceActionFailureEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceActionFailureEventData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ResourceActionFailureEventData IJsonModel<ResourceActionFailureEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceActionFailureEventData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceActionFailureEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourceActionFailureEventData)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeResourceActionFailureEventData(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ResourceActionFailureEventData DeserializeResourceActionFailureEventData(JsonElement element, ModelReaderWriterOptions options)
+        internal static ResourceActionFailureEventData DeserializeResourceActionFailureEventData(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -138,73 +126,75 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string resourceUri = default;
             string operationName = default;
             string status = default;
-            JsonElement authorizationJson = default;
-            JsonElement claimsJson = default;
+            JsonElement authorization = default;
+            JsonElement claims = default;
             string correlationId = default;
-            JsonElement httpRequestJson = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            JsonElement httpRequest = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("tenantId"u8))
+                if (property.NameEquals("tenantId"u8))
                 {
-                    tenantId = prop.Value.GetString();
+                    tenantId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("subscriptionId"u8))
+                if (property.NameEquals("subscriptionId"u8))
                 {
-                    subscriptionId = prop.Value.GetString();
+                    subscriptionId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("resourceGroup"u8))
+                if (property.NameEquals("resourceGroup"u8))
                 {
-                    resourceGroup = prop.Value.GetString();
+                    resourceGroup = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("resourceProvider"u8))
+                if (property.NameEquals("resourceProvider"u8))
                 {
-                    resourceProvider = prop.Value.GetString();
+                    resourceProvider = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("resourceUri"u8))
+                if (property.NameEquals("resourceUri"u8))
                 {
-                    resourceUri = prop.Value.GetString();
+                    resourceUri = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("operationName"u8))
+                if (property.NameEquals("operationName"u8))
                 {
-                    operationName = prop.Value.GetString();
+                    operationName = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("status"u8))
+                if (property.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString();
+                    status = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("authorization"u8))
+                if (property.NameEquals("authorization"u8))
                 {
-                    authorizationJson = prop.Value.Clone();
+                    authorization = property.Value.Clone();
                     continue;
                 }
-                if (prop.NameEquals("claims"u8))
+                if (property.NameEquals("claims"u8))
                 {
-                    claimsJson = prop.Value.Clone();
+                    claims = property.Value.Clone();
                     continue;
                 }
-                if (prop.NameEquals("correlationId"u8))
+                if (property.NameEquals("correlationId"u8))
                 {
-                    correlationId = prop.Value.GetString();
+                    correlationId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("httpRequest"u8))
+                if (property.NameEquals("httpRequest"u8))
                 {
-                    httpRequestJson = prop.Value.Clone();
+                    httpRequest = property.Value.Clone();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new ResourceActionFailureEventData(
                 tenantId,
                 subscriptionId,
@@ -213,20 +203,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 resourceUri,
                 operationName,
                 status,
-                authorizationJson,
-                claimsJson,
+                authorization,
+                claims,
                 correlationId,
-                httpRequestJson,
-                additionalBinaryDataProperties);
+                httpRequest,
+                serializedAdditionalRawData);
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResourceActionFailureEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ResourceActionFailureEventData>.Write(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceActionFailureEventData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceActionFailureEventData>)this).GetFormatFromOptions(options) : options.Format;
+
             switch (format)
             {
                 case "J":
@@ -236,20 +223,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceActionFailureEventData IPersistableModel<ResourceActionFailureEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceActionFailureEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        ResourceActionFailureEventData IPersistableModel<ResourceActionFailureEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceActionFailureEventData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceActionFailureEventData>)this).GetFormatFromOptions(options) : options.Format;
+
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeResourceActionFailureEventData(document.RootElement, options);
                     }
                 default:
@@ -257,28 +239,35 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ResourceActionFailureEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ResourceActionFailureEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeResourceActionFailureEventData(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
 
         internal partial class ResourceActionFailureEventDataConverter : JsonConverter<ResourceActionFailureEventData>
         {
-            /// <summary> Writes the JSON representation of the model. </summary>
-            /// <param name="writer"> The writer. </param>
-            /// <param name="model"> The model to write. </param>
-            /// <param name="options"> The serialization options. </param>
             public override void Write(Utf8JsonWriter writer, ResourceActionFailureEventData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<IJsonModel<ResourceActionFailureEventData>>(model, ModelSerializationExtensions.WireOptions);
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
             }
 
-            /// <summary> Reads the JSON representation and converts into the model. </summary>
-            /// <param name="reader"> The reader. </param>
-            /// <param name="typeToConvert"> The type to convert. </param>
-            /// <param name="options"> The serialization options. </param>
             public override ResourceActionFailureEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return DeserializeResourceActionFailureEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeResourceActionFailureEventData(document.RootElement);
             }
         }
     }

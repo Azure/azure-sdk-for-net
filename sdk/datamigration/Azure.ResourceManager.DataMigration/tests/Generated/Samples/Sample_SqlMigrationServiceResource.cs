@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetMigrationService()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/GetSqlMigrationService.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/GetMigrationService.json
             // this example is just showing the usage of "SqlMigrationServices_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteSQLMigrationService()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/DeleteSqlMigrationService.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/DeleteMigrationService.json
             // this example is just showing the usage of "SqlMigrationServices_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateSQLMigrationService()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/UpdateSqlMigrationService.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/UpdateMigrationService.json
             // this example is just showing the usage of "SqlMigrationServices_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAuthKeys_RetrieveTheListOfAuthenticationKeys()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/ListAuthKeysSqlMigrationService.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/ListAuthKeysMigrationService.json
             // this example is just showing the usage of "SqlMigrationServices_ListAuthKeys" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
             SqlMigrationServiceResource sqlMigrationService = client.GetSqlMigrationServiceResource(sqlMigrationServiceResourceId);
 
             // invoke the operation
-            SqlMigrationAuthenticationKeys result = await sqlMigrationService.GetAuthKeysAsync();
+            AuthenticationKeys result = await sqlMigrationService.GetAuthKeysAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task RegenerateAuthKeys_RegenerateTheOfAuthenticationKeys()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/RegenAuthKeysSqlMigrationService.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/RegenAuthKeysMigrationService.json
             // this example is just showing the usage of "SqlMigrationServices_RegenerateAuthKeys" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -157,11 +157,11 @@ namespace Azure.ResourceManager.DataMigration.Samples
             SqlMigrationServiceResource sqlMigrationService = client.GetSqlMigrationServiceResource(sqlMigrationServiceResourceId);
 
             // invoke the operation
-            SqlMigrationRegenAuthKeys sqlMigrationRegenAuthKeys = new SqlMigrationRegenAuthKeys
+            RegenAuthKeys regenAuthKeys = new RegenAuthKeys
             {
                 KeyName = "authKey1",
             };
-            SqlMigrationRegenAuthKeys result = await sqlMigrationService.RegenerateAuthKeysAsync(sqlMigrationRegenAuthKeys);
+            RegenAuthKeys result = await sqlMigrationService.RegenerateAuthKeysAsync(regenAuthKeys);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task DeleteNode_DeleteTheIntegrationRuntimeNode()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/DeleteIntegrationRuntimeNode.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/DeleteIntegrationRuntimeNode.json
             // this example is just showing the usage of "SqlMigrationServices_DeleteNode" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -187,12 +187,12 @@ namespace Azure.ResourceManager.DataMigration.Samples
             SqlMigrationServiceResource sqlMigrationService = client.GetSqlMigrationServiceResource(sqlMigrationServiceResourceId);
 
             // invoke the operation
-            DeletedIntegrationRuntimeNodeResult deletedIntegrationRuntimeNodeResult = new DeletedIntegrationRuntimeNodeResult
+            DeleteNode deleteNode = new DeleteNode
             {
                 NodeName = "nodeName",
                 IntegrationRuntimeName = "IRName",
             };
-            DeletedIntegrationRuntimeNodeResult result = await sqlMigrationService.DeleteNodeAsync(deletedIntegrationRuntimeNodeResult);
+            DeleteNode result = await sqlMigrationService.DeleteNodeAsync(deleteNode);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetMigrations_ListDatabaseMigrationsAttachedToTheService()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/ListMigrationsBySqlMigrationService.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/ListMigrationsByMigrationService.json
             // this example is just showing the usage of "SqlMigrationServices_ListMigrations" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetMonitoringData_RetrieveTheMonitoringData()
         {
-            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2025-03-15-preview/examples/GetMonitorDataSqlMigrationService.json
+            // Generated from example definition: specification/datamigration/resource-manager/Microsoft.DataMigration/preview/2022-03-30-preview/examples/GetMonitorDataMigrationService.json
             // this example is just showing the usage of "SqlMigrationServices_ListMonitoringData" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
             SqlMigrationServiceResource sqlMigrationService = client.GetSqlMigrationServiceResource(sqlMigrationServiceResourceId);
 
             // invoke the operation
-            IntegrationRuntimeMonitoringResult result = await sqlMigrationService.GetMonitoringDataAsync();
+            IntegrationRuntimeMonitoringData result = await sqlMigrationService.GetMonitoringDataAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

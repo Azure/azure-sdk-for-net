@@ -20,7 +20,6 @@ public class BasicSqlTests(bool async)
         await test.Define(
             ctx =>
             {
-                #region Snippet:SqlServerBasic
                 Infrastructure infra = new();
 
                 ProvisioningParameter dbName =
@@ -62,7 +61,6 @@ public class BasicSqlTests(bool async)
                         Sku = new SqlSku { Name = "Standard", Tier = "Standard" }
                     };
                 infra.Add(db);
-                #endregion
 
                 return infra;
             })

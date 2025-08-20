@@ -46,6 +46,7 @@ namespace TestProjects.Spector.Tests
 
             var constructors = root.DescendantNodes()
                 .OfType<ConstructorDeclarationSyntax>()
+                .Where(c => c.Modifiers.Any(SyntaxKind.PublicKeyword))
                 .ToList();
 
             if (constructors.Count != 0)

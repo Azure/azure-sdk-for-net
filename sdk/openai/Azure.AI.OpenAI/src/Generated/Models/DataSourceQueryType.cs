@@ -57,11 +57,11 @@ namespace Azure.AI.OpenAI.Chat
         /// <param name="value"> The value. </param>
         public static implicit operator DataSourceQueryType(string value) => new DataSourceQueryType(value);
 
-        /// <inheritdoc/>
+        /// <param name="obj"> The object to compare. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataSourceQueryType other && Equals(other);
 
-        /// <inheritdoc/>
+        /// <param name="other"> The instance to compare. </param>
         public bool Equals(DataSourceQueryType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>

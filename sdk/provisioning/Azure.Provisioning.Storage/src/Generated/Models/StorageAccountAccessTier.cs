@@ -27,9 +27,4 @@ public enum StorageAccountAccessTier
     /// Premium.
     /// </summary>
     Premium,
-
-    /// <summary>
-    /// Cold.
-    /// </summary>
-    Cold,
 }

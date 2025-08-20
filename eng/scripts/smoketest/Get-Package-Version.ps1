@@ -1,3 +1,6 @@
+param(
+    [string]$ArtifactsPath
+)
 . (Join-Path $PSScriptRoot ../../common/scripts/common.ps1)
 $ErrorActionPreference = 'Continue'
 

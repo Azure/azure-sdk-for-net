@@ -39,10 +39,10 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("affinityId"u8);
                 writer.WriteStringValue(AffinityId);
             }
-            if (Optional.IsDefined(NodeUri))
+            if (Optional.IsDefined(NodeUrl))
             {
                 writer.WritePropertyName("nodeUrl"u8);
-                writer.WriteStringValue(NodeUri.AbsoluteUri);
+                writer.WriteStringValue(NodeUrl);
             }
             if (Optional.IsDefined(PoolId))
             {
@@ -59,10 +59,10 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("taskRootDirectory"u8);
                 writer.WriteStringValue(TaskRootDirectory);
             }
-            if (Optional.IsDefined(TaskRootDirectoryUri))
+            if (Optional.IsDefined(TaskRootDirectoryUrl))
             {
                 writer.WritePropertyName("taskRootDirectoryUrl"u8);
-                writer.WriteStringValue(TaskRootDirectoryUri.AbsoluteUri);
+                writer.WriteStringValue(TaskRootDirectoryUrl);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -102,11 +102,11 @@ namespace Azure.Compute.Batch
                 return null;
             }
             string affinityId = default;
-            Uri nodeUrl = default;
+            string nodeUrl = default;
             string poolId = default;
             string nodeId = default;
             string taskRootDirectory = default;
-            Uri taskRootDirectoryUrl = default;
+            string taskRootDirectoryUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,11 +118,7 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("nodeUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    nodeUrl = new Uri(property.Value.GetString());
+                    nodeUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("poolId"u8))
@@ -142,11 +138,7 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("taskRootDirectoryUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    taskRootDirectoryUrl = new Uri(property.Value.GetString());
+                    taskRootDirectoryUrl = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

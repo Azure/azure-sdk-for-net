@@ -3,17 +3,16 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> A content filter result for an image generation operation's output response content. </summary>
+    /// <summary></summary>
     public partial class ResponseImageContentFilterResult : IJsonModel<ResponseImageContentFilterResult>
     {
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResponseImageContentFilterResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -71,8 +70,6 @@ namespace Azure.AI.OpenAI
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         ResponseImageContentFilterResult IJsonModel<ResponseImageContentFilterResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
@@ -88,8 +85,6 @@ namespace Azure.AI.OpenAI
             return DeserializeResponseImageContentFilterResult(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         internal static ResponseImageContentFilterResult DeserializeResponseImageContentFilterResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -147,7 +142,6 @@ namespace Azure.AI.OpenAI
             return new ResponseImageContentFilterResult(sexual, violence, hate, selfHarm, additionalBinaryDataProperties);
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ResponseImageContentFilterResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -157,14 +151,12 @@ namespace Azure.AI.OpenAI
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIOpenAIContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ResponseImageContentFilterResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         ResponseImageContentFilterResult IPersistableModel<ResponseImageContentFilterResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
@@ -184,7 +176,24 @@ namespace Azure.AI.OpenAI
             }
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ResponseImageContentFilterResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="responseImageContentFilterResult"> The <see cref="ResponseImageContentFilterResult"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(ResponseImageContentFilterResult responseImageContentFilterResult)
+        {
+            if (responseImageContentFilterResult == null)
+            {
+                return null;
+            }
+            return BinaryContent.Create(responseImageContentFilterResult, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="ResponseImageContentFilterResult"/> from. </param>
+        public static explicit operator ResponseImageContentFilterResult(ClientResult result)
+        {
+            using PipelineResponse response = result.GetRawResponse();
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeResponseImageContentFilterResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            DataMigrationOracleOciDriverInfo installedDriver = default;
-            IReadOnlyList<DataMigrationReportableException> validationErrors = default;
+            OracleOciDriverInfo installedDriver = default;
+            IReadOnlyList<ReportableException> validationErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    installedDriver = DataMigrationOracleOciDriverInfo.DeserializeDataMigrationOracleOciDriverInfo(property.Value, options);
+                    installedDriver = OracleOciDriverInfo.DeserializeOracleOciDriverInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("validationErrors"u8))
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<DataMigrationReportableException> array = new List<DataMigrationReportableException>();
+                    List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataMigrationReportableException.DeserializeDataMigrationReportableException(item, options));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     validationErrors = array;
                     continue;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CheckOciDriverTaskOutput(installedDriver, validationErrors ?? new ChangeTrackingList<DataMigrationReportableException>(), serializedAdditionalRawData);
+            return new CheckOciDriverTaskOutput(installedDriver, validationErrors ?? new ChangeTrackingList<ReportableException>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CheckOciDriverTaskOutput>.Write(ModelReaderWriterOptions options)

@@ -27,29 +27,4 @@ public enum StorageProvisioningState
     /// Succeeded.
     /// </summary>
     Succeeded,
-
-    /// <summary>
-    /// ValidateSubscriptionQuotaBegin.
-    /// </summary>
-    ValidateSubscriptionQuotaBegin,
-
-    /// <summary>
-    /// ValidateSubscriptionQuotaEnd.
-    /// </summary>
-    ValidateSubscriptionQuotaEnd,
-
-    /// <summary>
-    /// Deleting.
-    /// </summary>
-    Deleting,
-
-    /// <summary>
-    /// Canceled.
-    /// </summary>
-    Canceled,
-
-    /// <summary>
-    /// Failed.
-    /// </summary>
-    Failed,
 }

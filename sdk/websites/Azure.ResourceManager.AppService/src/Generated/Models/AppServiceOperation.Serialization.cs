@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                ((IJsonModel<ResponseError>)item).Write(writer, options);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         else
                         {
-                            array.Add(ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppServiceContext.Default));
+                            array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
                         }
                     }
                     errors = array;

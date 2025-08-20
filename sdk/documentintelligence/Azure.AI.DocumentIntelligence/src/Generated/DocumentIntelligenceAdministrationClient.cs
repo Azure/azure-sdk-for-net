@@ -1047,6 +1047,7 @@ namespace Azure.AI.DocumentIntelligence
             uri.AppendPath("/documentModels:build", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -1063,6 +1064,7 @@ namespace Azure.AI.DocumentIntelligence
             uri.AppendPath("/documentModels:compose", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -1098,6 +1100,7 @@ namespace Azure.AI.DocumentIntelligence
             uri.AppendPath(":copyTo", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -1146,6 +1149,7 @@ namespace Azure.AI.DocumentIntelligence
             uri.AppendPath(modelId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1206,6 +1210,7 @@ namespace Azure.AI.DocumentIntelligence
             uri.AppendPath("/documentClassifiers:build", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -1241,6 +1246,7 @@ namespace Azure.AI.DocumentIntelligence
             uri.AppendPath(":copyTo", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -1289,6 +1295,7 @@ namespace Azure.AI.DocumentIntelligence
             uri.AppendPath(classifierId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

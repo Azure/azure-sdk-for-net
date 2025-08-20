@@ -66,7 +66,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             var modelFromStj = JsonSerializer.Deserialize<ResourceProviderData>(WirePayload, stjOptions);
             var stjResult = JsonSerializer.Serialize(modelFromStj, stjOptions);
-            Assert.AreEqual(File.ReadAllText(TestData.GetLocation("ResourceProviderData/ResourceProviderData-TwoSpaces.json")).TrimEnd(), NormalizeLF(stjResult));
+            Assert.AreEqual(File.ReadAllText(TestData.GetLocation("ResourceProviderData/ResourceProviderData-TwoSpaces.json")).TrimEnd(), stjResult);
         }
 
         [Test]
@@ -82,11 +82,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             var modelFromStj = JsonSerializer.Deserialize<ResourceProviderData>(WirePayload, stjOptions);
             var stjResult = JsonSerializer.Serialize(modelFromStj, stjOptions);
-            Assert.AreEqual(File.ReadAllText(TestData.GetLocation("ResourceProviderData/ResourceProviderData-TwoSpaces.json")).TrimEnd(), NormalizeLF(stjResult));
+            Assert.AreEqual(File.ReadAllText(TestData.GetLocation("ResourceProviderData/ResourceProviderData-TwoSpaces.json")).TrimEnd(), stjResult);
 #endif
         }
-
-        private static string NormalizeLF(string s)
-            => s.Replace("\r\n", "\n");
     }
 }

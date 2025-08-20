@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
 
 namespace Azure.Compute.Batch
 {
@@ -54,7 +53,7 @@ namespace Azure.Compute.Batch
         /// <param name="frontendPort"> The public port number of the endpoint. </param>
         /// <param name="backendPort"> The backend port number of the endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="publicIpAddress"/> or <paramref name="publicFQDN"/> is null. </exception>
-        internal InboundEndpoint(string name, InboundEndpointProtocol protocol, IPAddress publicIpAddress, string publicFQDN, int frontendPort, int backendPort)
+        internal InboundEndpoint(string name, InboundEndpointProtocol protocol, string publicIpAddress, string publicFQDN, int frontendPort, int backendPort)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(publicIpAddress, nameof(publicIpAddress));
@@ -76,7 +75,7 @@ namespace Azure.Compute.Batch
         /// <param name="frontendPort"> The public port number of the endpoint. </param>
         /// <param name="backendPort"> The backend port number of the endpoint. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InboundEndpoint(string name, InboundEndpointProtocol protocol, IPAddress publicIpAddress, string publicFQDN, int frontendPort, int backendPort, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InboundEndpoint(string name, InboundEndpointProtocol protocol, string publicIpAddress, string publicFQDN, int frontendPort, int backendPort, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Protocol = protocol;
@@ -97,7 +96,7 @@ namespace Azure.Compute.Batch
         /// <summary> The protocol of the endpoint. </summary>
         public InboundEndpointProtocol Protocol { get; }
         /// <summary> The public IP address of the Compute Node. </summary>
-        public IPAddress PublicIpAddress { get; }
+        public string PublicIpAddress { get; }
         /// <summary> The public fully qualified domain name for the Compute Node. </summary>
         public string PublicFQDN { get; }
         /// <summary> The public port number of the endpoint. </summary>

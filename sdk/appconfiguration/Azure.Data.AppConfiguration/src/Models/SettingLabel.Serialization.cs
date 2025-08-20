@@ -11,13 +11,23 @@ namespace Azure.Data.AppConfiguration
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, ModelSerializationExtensions.WireOptions);
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
             writer.WriteEndObject();
         }
 
         internal static SettingLabel DeserializeLabel(JsonElement element)
         {
-            return DeserializeSettingLabel(element, ModelSerializationExtensions.WireOptions);
+            string name = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+            }
+            return new SettingLabel(name);
         }
     }
 }

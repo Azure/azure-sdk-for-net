@@ -66,16 +66,6 @@ public partial class CognitiveServicesModelSku : ProvisionableConstruct
     private BicepList<ServiceAccountCallRateLimit>? _rateLimits;
 
     /// <summary>
-    /// The list of billing meter info.
-    /// </summary>
-    public BicepList<BillingMeterInfo> Cost 
-    {
-        get { Initialize(); return _cost!; }
-        set { Initialize(); _cost!.Assign(value); }
-    }
-    private BicepList<BillingMeterInfo>? _cost;
-
-    /// <summary>
     /// Creates a new CognitiveServicesModelSku.
     /// </summary>
     public CognitiveServicesModelSku()
@@ -93,6 +83,5 @@ public partial class CognitiveServicesModelSku : ProvisionableConstruct
         _deprecationOn = DefineProperty<DateTimeOffset>("DeprecationOn", ["deprecationDate"]);
         _capacity = DefineModelProperty<CognitiveServicesCapacityConfig>("Capacity", ["capacity"]);
         _rateLimits = DefineListProperty<ServiceAccountCallRateLimit>("RateLimits", ["rateLimits"], isOutput: true);
-        _cost = DefineListProperty<BillingMeterInfo>("Cost", ["cost"]);
     }
 }

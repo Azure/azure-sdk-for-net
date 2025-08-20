@@ -19,9 +19,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// for authentication. This case-sensitive string can be up to 128 characters
         /// long, and supports UTF-8 characters.
         /// </param>
+        /// <param name="clientName"> Name of the client resource in the Event Grid namespace. </param>
         /// <param name="namespaceName"> Name of the Event Grid namespace where the MQTT client was created or updated. </param>
-        internal EventGridMqttClientDeletedEventData(string clientAuthenticationName, string namespaceName) : base(clientAuthenticationName, namespaceName)
+        /// <exception cref="ArgumentNullException"> <paramref name="clientAuthenticationName"/>, <paramref name="clientName"/> or <paramref name="namespaceName"/> is null. </exception>
+        internal EventGridMqttClientDeletedEventData(string clientAuthenticationName, string clientName, string namespaceName) : base(clientAuthenticationName, clientName, namespaceName)
         {
+            Argument.AssertNotNull(clientAuthenticationName, nameof(clientAuthenticationName));
+            Argument.AssertNotNull(clientName, nameof(clientName));
+            Argument.AssertNotNull(namespaceName, nameof(namespaceName));
         }
 
         /// <summary> Initializes a new instance of <see cref="EventGridMqttClientDeletedEventData"/>. </summary>
@@ -32,8 +37,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// </param>
         /// <param name="clientName"> Name of the client resource in the Event Grid namespace. </param>
         /// <param name="namespaceName"> Name of the Event Grid namespace where the MQTT client was created or updated. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventGridMqttClientDeletedEventData(string clientAuthenticationName, string clientName, string namespaceName, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(clientAuthenticationName, clientName, namespaceName, additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventGridMqttClientDeletedEventData(string clientAuthenticationName, string clientName, string namespaceName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(clientAuthenticationName, clientName, namespaceName, serializedAdditionalRawData)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EventGridMqttClientDeletedEventData"/> for deserialization. </summary>
+        internal EventGridMqttClientDeletedEventData()
         {
         }
     }

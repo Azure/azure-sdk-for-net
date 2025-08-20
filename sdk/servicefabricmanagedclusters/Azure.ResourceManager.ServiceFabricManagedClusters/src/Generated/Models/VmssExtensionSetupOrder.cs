@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary> Vm extension setup order. </summary>
+    /// <summary>
+    /// Vm extension setup order.
+    ///
+    /// </summary>
     public readonly partial struct VmssExtensionSetupOrder : IEquatable<VmssExtensionSetupOrder>
     {
         private readonly string _value;

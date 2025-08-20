@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ComponentModel;
 using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.Broker;
 
@@ -11,8 +10,6 @@ namespace Azure.Identity.Broker
     /// <summary>
     /// Options to configure the <see cref="SharedTokenCacheCredential"/> to use the system authentication broker for silent authentication if available.
     /// </summary>
-    [Obsolete("SharedTokenCacheCredential is deprecated. For brokered authentication, consider using InteractiveBrowserCredential.")]
-    [EditorBrowsable(EditorBrowsableState.Never)]
     public class SharedTokenCacheCredentialBrokerOptions : SharedTokenCacheCredentialOptions, IMsalPublicClientInitializerOptions
     {
         /// <summary>

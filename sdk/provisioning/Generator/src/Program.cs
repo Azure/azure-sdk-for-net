@@ -33,7 +33,6 @@ List<Specification> specs =
     new OperationalInsightsSpecification(),
     new PostgreSqlSpecification(),
     new RedisSpecification(),
-    new RedisEnterpriseSpecification(),
     new SearchSpecification(),
     new ServiceBusSpecification(),
     new SignalRSpecification(),

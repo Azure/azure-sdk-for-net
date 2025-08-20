@@ -49,6 +49,16 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("callIntelligenceOptions"u8);
                 writer.WriteObjectValue(CallIntelligenceOptions);
             }
+            if (Optional.IsDefined(TeamsAppSource))
+            {
+                writer.WritePropertyName("teamsAppSource"u8);
+                writer.WriteObjectValue(TeamsAppSource);
+            }
+            if (Optional.IsDefined(CustomCallingContext))
+            {
+                writer.WritePropertyName("customCallingContext"u8);
+                writer.WriteObjectValue(CustomCallingContext);
+            }
             if (Optional.IsDefined(MediaStreamingOptions))
             {
                 writer.WritePropertyName("mediaStreamingOptions"u8);
@@ -58,11 +68,6 @@ namespace Azure.Communication.CallAutomation
             {
                 writer.WritePropertyName("transcriptionOptions"u8);
                 writer.WriteObjectValue(TranscriptionOptions);
-            }
-            if (Optional.IsDefined(TeamsAppSource))
-            {
-                writer.WritePropertyName("teamsAppSource"u8);
-                writer.WriteObjectValue(TeamsAppSource);
             }
             writer.WriteEndObject();
         }

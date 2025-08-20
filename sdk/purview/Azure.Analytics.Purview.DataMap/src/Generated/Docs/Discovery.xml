@@ -13,26 +13,31 @@ QueryConfig body = new QueryConfig
 {
     Keywords = "exampledata",
     Limit = 10,
-    Orderby = {BinaryData.FromObjectAsJson(new
+    Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        name = "ASC",
-    }), BinaryData.FromObjectAsJson(new
+        ["$id"] = "6260",
+        ["name"] = "ASC"
+    }), BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        updateTime = "DESC",
+        ["$id"] = "6262",
+        ["updateTime"] = "DESC"
     })},
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "6254",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Files",
+                ["$id"] = "6255",
+                ["objectType"] = "Files"
             },
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
+                ["$id"] = "6256",
+                ["entityType"] = "azure_blob_path"
             }
-        },
+        }
     }),
     Facets = {new SearchFacetItem
     {
@@ -87,21 +92,24 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 QueryConfig body = new QueryConfig
 {
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "6339",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
+                ["$id"] = "6340",
+                ["entityType"] = "azure_blob_path"
             },
             new Dictionary<string, object>
             {
+                ["$id"] = "6341",
                 ["attributeName"] = "qualifiedName",
                 ["operator"] = "contains",
                 ["attributeValue"] = ".csv"
             }
-        },
+        }
     }),
 };
 Response<QueryResult> response = await client.QueryAsync(body);
@@ -115,39 +123,45 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 QueryConfig body = new QueryConfig
 {
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "6392",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
+                ["$id"] = "6393",
+                ["entityType"] = "azure_blob_path"
             },
             new Dictionary<string, object>
             {
+                ["$id"] = "6394",
                 ["attributeName"] = "qualifiedName",
                 ["operator"] = "contains",
                 ["attributeValue"] = ".csv"
             },
-            new
+            new Dictionary<string, object>
             {
-                or = new object[]
+                ["$id"] = "6395",
+                ["or"] = new object[]
                 {
                     new Dictionary<string, object>
                     {
+                        ["$id"] = "6396",
                         ["attributeName"] = "name",
                         ["operator"] = "eq",
                         ["attributeValue"] = "exampledata.csv"
                     },
                     new Dictionary<string, object>
                     {
+                        ["$id"] = "6397",
                         ["attributeName"] = "qualifiedName",
                         ["operator"] = "prefix",
                         ["attributeValue"] = "https://"
                     }
-                },
+                }
             }
-        },
+        }
     }),
 };
 Response<QueryResult> response = await client.QueryAsync(body);
@@ -161,155 +175,187 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 QueryConfig body = new QueryConfig
 {
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        or = new object[]
-        {
-            new
-            {
-                assetType = "SQL Server",
-            },
-            new
-            {
-                assetType = "Azure SQL Server",
-            },
-            new
-            {
-                assetType = "Azure SQL Database",
-            },
-            new
-            {
-                assetType = "Azure SQL Data Warehouse",
-            },
-            new
-            {
-                assetType = "Azure SQL Managed Instance",
-            },
-            new
-            {
-                assetType = "Azure Storage Account",
-            },
-            new
-            {
-                assetType = "Azure Blob Storage",
-            },
-            new
-            {
-                assetType = "Azure Files",
-            },
-            new
-            {
-                assetType = "Azure Table Storage",
-            },
-            new
-            {
-                assetType = "Azure Data Lake Storage Gen1",
-            },
-            new
-            {
-                assetType = "Azure Data Lake Storage Gen2",
-            },
-            new
-            {
-                assetType = "Azure Cosmos DB",
-            },
-            new
-            {
-                assetType = "Azure Data Factory",
-            },
-            new
-            {
-                assetType = "Azure Cognitive Search",
-            },
-            new
-            {
-                assetType = "Power BI",
-            },
-            new
-            {
-                assetType = "Azure Data Explorer",
-            },
-            new
-            {
-                assetType = "Amazon S3",
-            },
-            new
-            {
-                assetType = "Azure Data Share",
-            },
-            new
-            {
-                assetType = "Teradata",
-            },
-            new
-            {
-                assetType = "SAP S4HANA",
-            },
-            new
-            {
-                assetType = "SAP ECC",
-            },
-            new
-            {
-                assetType = "SQL Server Integration Services",
-            },
-            new
-            {
-                assetType = "hive",
-            },
-            new
-            {
-                assetType = "Azure Database for MySQL",
-            },
-            new
-            {
-                assetType = "Azure Database for MariaDB",
-            },
-            new
-            {
-                assetType = "Azure Database for PostgreSQL",
-            },
-            new
-            {
-                assetType = "Azure Synapse Analytics",
-            }
-        },
-    }),
-};
-Response<QueryResult> response = await client.QueryAsync(body);
-]]></code>
-This sample shows how to call QueryAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
-
-QueryConfig body = new QueryConfig
-{
-    Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
-    {
-        or = new object[]
+        ["$id"] = "6450",
+        ["or"] = new object[]
         {
             new Dictionary<string, object>
             {
+                ["$id"] = "6451",
+                ["assetType"] = "SQL Server"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6452",
+                ["assetType"] = "Azure SQL Server"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6453",
+                ["assetType"] = "Azure SQL Database"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6454",
+                ["assetType"] = "Azure SQL Data Warehouse"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6455",
+                ["assetType"] = "Azure SQL Managed Instance"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6456",
+                ["assetType"] = "Azure Storage Account"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6457",
+                ["assetType"] = "Azure Blob Storage"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6458",
+                ["assetType"] = "Azure Files"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6459",
+                ["assetType"] = "Azure Table Storage"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6460",
+                ["assetType"] = "Azure Data Lake Storage Gen1"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6461",
+                ["assetType"] = "Azure Data Lake Storage Gen2"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6462",
+                ["assetType"] = "Azure Cosmos DB"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6463",
+                ["assetType"] = "Azure Data Factory"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6464",
+                ["assetType"] = "Azure Cognitive Search"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6465",
+                ["assetType"] = "Power BI"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6466",
+                ["assetType"] = "Azure Data Explorer"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6467",
+                ["assetType"] = "Amazon S3"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6468",
+                ["assetType"] = "Azure Data Share"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6469",
+                ["assetType"] = "Teradata"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6470",
+                ["assetType"] = "SAP S4HANA"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6471",
+                ["assetType"] = "SAP ECC"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6472",
+                ["assetType"] = "SQL Server Integration Services"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6473",
+                ["assetType"] = "hive"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6474",
+                ["assetType"] = "Azure Database for MySQL"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6475",
+                ["assetType"] = "Azure Database for MariaDB"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6476",
+                ["assetType"] = "Azure Database for PostgreSQL"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6477",
+                ["assetType"] = "Azure Synapse Analytics"
+            }
+        }
+    }),
+};
+Response<QueryResult> response = await client.QueryAsync(body);
+]]></code>
+This sample shows how to call QueryAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+    {
+        ["$id"] = "6519",
+        ["or"] = new object[]
+        {
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6520",
                 ["attributeName"] = "name",
                 ["operator"] = "eq",
                 ["attributeValue"] = "exampledata.csv"
             },
             new Dictionary<string, object>
             {
+                ["$id"] = "6521",
                 ["attributeName"] = "createTime",
                 ["operator"] = "ge",
                 ["attributeValue"] = 1545580800000L
             },
             new Dictionary<string, object>
             {
+                ["$id"] = "6522",
                 ["attributeName"] = "modifiedTime",
                 ["operator"] = "timerange",
                 ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
             }
-        },
+        }
     }),
 };
 Response<QueryResult> response = await client.QueryAsync(body);
@@ -323,35 +369,40 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 QueryConfig body = new QueryConfig
 {
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        or = new object[]
+        ["$id"] = "6584",
+        ["or"] = new object[]
         {
             new Dictionary<string, object>
             {
+                ["$id"] = "6585",
                 ["attributeName"] = "<BusinessMetadataName>.<StringAttributeName>",
                 ["operator"] = "eq|ne|contains|prefix",
                 ["attributeValue"] = "string value"
             },
             new Dictionary<string, object>
             {
+                ["$id"] = "6586",
                 ["attributeName"] = "<BusinessMetadataName>.<NumberAttributeName>",
                 ["operator"] = "eq|ne|gt|ge|lt|le",
                 ["attributeValue"] = 123
             },
             new Dictionary<string, object>
             {
+                ["$id"] = "6587",
                 ["attributeName"] = "<BusinessMetadataName>.<BooleanAttributeName>",
                 ["operator"] = "eq|ne",
                 ["attributeValue"] = true
             },
             new Dictionary<string, object>
             {
+                ["$id"] = "6588",
                 ["attributeName"] = "<BusinessMetadataName>.<DateAttributeName>",
                 ["operator"] = "timerange",
                 ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
             }
-        },
+        }
     }),
 };
 Response<QueryResult> response = await client.QueryAsync(body);
@@ -365,10 +416,11 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 QueryConfig body = new QueryConfig
 {
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        classification = "MICROSOFT.PERSONAL.EMAIL",
-        includeSubClassifications = true,
+        ["$id"] = "6611",
+        ["classification"] = "MICROSOFT.PERSONAL.EMAIL",
+        ["includeSubClassifications"] = true
     }),
 };
 Response<QueryResult> response = await client.QueryAsync(body);
@@ -382,9 +434,10 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 QueryConfig body = new QueryConfig
 {
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        collectionId = "collectionName",
+        ["$id"] = "6661",
+        ["collectionId"] = "collectionName"
     }),
 };
 Response<QueryResult> response = await client.QueryAsync(body);
@@ -398,9 +451,10 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 QueryConfig body = new QueryConfig
 {
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        objectType = "Tables",
+        ["$id"] = "6710",
+        ["objectType"] = "Tables"
     }),
     Facets = {new SearchFacetItem
     {
@@ -431,15 +485,17 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 QueryConfig body = new QueryConfig
 {
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "6840",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                fileExtension = "txt",
+                ["$id"] = "6841",
+                ["fileExtension"] = "txt"
             }
-        },
+        }
     }),
 };
 Response<QueryResult> response = await client.QueryAsync(body);
@@ -454,29 +510,34 @@ QueryConfig body = new QueryConfig
 {
     Keywords = "<term name>",
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "6884",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Glossary terms",
+                ["$id"] = "6885",
+                ["objectType"] = "Glossary terms"
             },
-            new
+            new Dictionary<string, object>
             {
-                or = new object[]
+                ["$id"] = "6886",
+                ["or"] = new object[]
                 {
-                    new
+                    new Dictionary<string, object>
                     {
-                        glossaryType = "AtlasGlossary",
+                        ["$id"] = "6887",
+                        ["glossaryType"] = "AtlasGlossary"
                     },
-                    new
+                    new Dictionary<string, object>
                     {
-                        glossaryType = "AtlasGlossaryTerm",
+                        ["$id"] = "6888",
+                        ["glossaryType"] = "AtlasGlossaryTerm"
                     }
-                },
+                }
             }
-        },
+        }
     }),
     Facets = {new SearchFacetItem
     {
@@ -507,15 +568,17 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 QueryConfig body = new QueryConfig
 {
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "6956",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                id = "bfecbcc3-1838-45fe-96d6-112de8a170f9",
+                ["$id"] = "6957",
+                ["id"] = "bfecbcc3-1838-45fe-96d6-112de8a170f9"
             }
-        },
+        }
     }),
 };
 Response<QueryResult> response = await client.QueryAsync(body);
@@ -529,12 +592,14 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 QueryConfig body = new QueryConfig
 {
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        not = new
+        ["$id"] = "6985",
+        ["not"] = new Dictionary<string, object>
         {
-            classification = "MICROSOFT.SYSTEM.TEMP_FILE",
-        },
+            ["$id"] = "6986",
+            ["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
+        }
     }),
 };
 Response<QueryResult> response = await client.QueryAsync(body);
@@ -548,43 +613,52 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 QueryConfig body = new QueryConfig
 {
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        or = new object[]
+        ["$id"] = "7028",
+        ["or"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Dashboards",
+                ["$id"] = "7029",
+                ["objectType"] = "Dashboards"
             },
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Data pipelines",
+                ["$id"] = "7030",
+                ["objectType"] = "Data pipelines"
             },
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Files",
+                ["$id"] = "7031",
+                ["objectType"] = "Files"
             },
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Folders",
+                ["$id"] = "7032",
+                ["objectType"] = "Folders"
             },
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Glossary terms",
+                ["$id"] = "7033",
+                ["objectType"] = "Glossary terms"
             },
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Reports",
+                ["$id"] = "7034",
+                ["objectType"] = "Reports"
             },
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Stored procedures",
+                ["$id"] = "7035",
+                ["objectType"] = "Stored procedures"
             },
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Tables",
+                ["$id"] = "7036",
+                ["objectType"] = "Tables"
             }
-        },
+        }
     }),
 };
 Response<QueryResult> response = await client.QueryAsync(body);
@@ -600,26 +674,31 @@ QueryConfig body = new QueryConfig
     Keywords = "exampledata",
     Limit = 2,
     ContinuationToken = "<token>",
-    Orderby = {BinaryData.FromObjectAsJson(new
+    Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        name = "ASC",
-    }), BinaryData.FromObjectAsJson(new
+        ["$id"] = "7081",
+        ["name"] = "ASC"
+    }), BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        updateTime = "DESC",
+        ["$id"] = "7083",
+        ["updateTime"] = "DESC"
     })},
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "7074",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Files",
+                ["$id"] = "7075",
+                ["objectType"] = "Files"
             },
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
+                ["$id"] = "7076",
+                ["entityType"] = "azure_blob_path"
             }
-        },
+        }
     }),
     Facets = {new SearchFacetItem
     {
@@ -675,26 +754,31 @@ QueryConfig body = new QueryConfig
 {
     Keywords = "exampledata",
     Limit = 2,
-    Orderby = {BinaryData.FromObjectAsJson(new
+    Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        name = "ASC",
-    }), BinaryData.FromObjectAsJson(new
+        ["$id"] = "7167",
+        ["name"] = "ASC"
+    }), BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        updateTime = "DESC",
+        ["$id"] = "7169",
+        ["updateTime"] = "DESC"
     })},
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "7161",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Files",
+                ["$id"] = "7162",
+                ["objectType"] = "Files"
             },
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
+                ["$id"] = "7163",
+                ["entityType"] = "azure_blob_path"
             }
-        },
+        }
     }),
     Facets = {new SearchFacetItem
     {
@@ -751,26 +835,31 @@ QueryConfig body = new QueryConfig
     Keywords = "exampledata",
     Limit = 2,
     ContinuationToken = "<token>",
-    Orderby = {BinaryData.FromObjectAsJson(new
+    Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        name = "ASC",
-    }), BinaryData.FromObjectAsJson(new
+        ["$id"] = "7254",
+        ["name"] = "ASC"
+    }), BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        updateTime = "DESC",
+        ["$id"] = "7256",
+        ["updateTime"] = "DESC"
     })},
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "7247",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Files",
+                ["$id"] = "7248",
+                ["objectType"] = "Files"
             },
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
+                ["$id"] = "7249",
+                ["entityType"] = "azure_blob_path"
             }
-        },
+        }
     }),
     Facets = {new SearchFacetItem
     {
@@ -825,23 +914,27 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 QueryConfig body = new QueryConfig
 {
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        or = new object[]
+        ["$id"] = "7333",
+        ["or"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                createTime = new Dictionary<string, object>
+                ["$id"] = "7334",
+                ["createTime"] = new Dictionary<string, object>
                 {
+                    ["$id"] = "7335",
                     ["operator"] = "lt",
                     ["timeThreshold"] = 1545580800000L
-                },
+                }
             },
-            new
+            new Dictionary<string, object>
             {
-                updateTime = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D",
+                ["$id"] = "7336",
+                ["updateTime"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
             }
-        },
+        }
     }),
 };
 Response<QueryResult> response = await client.QueryAsync(body);
@@ -856,43 +949,51 @@ QueryConfig body = new QueryConfig
 {
     Keywords = "exampledata",
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "7369",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Files",
+                ["$id"] = "7370",
+                ["objectType"] = "Files"
             },
-            new
+            new Dictionary<string, object>
             {
-                not = new
+                ["$id"] = "7371",
+                ["not"] = new Dictionary<string, object>
                 {
-                    or = new object[]
+                    ["$id"] = "7372",
+                    ["or"] = new object[]
                     {
                         new Dictionary<string, object>
                         {
+                            ["$id"] = "7373",
                             ["attributeName"] = "size",
                             ["operator"] = "eq",
                             ["attributeValue"] = 0
                         },
                         new Dictionary<string, object>
                         {
+                            ["$id"] = "7374",
                             ["attributeName"] = "fileSize",
                             ["operator"] = "eq",
                             ["attributeValue"] = 0
                         }
-                    },
-                },
+                    }
+                }
             },
-            new
+            new Dictionary<string, object>
             {
-                not = new
+                ["$id"] = "7375",
+                ["not"] = new Dictionary<string, object>
                 {
-                    classification = "MICROSOFT.SYSTEM.TEMP_FILE",
-                },
+                    ["$id"] = "7376",
+                    ["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
+                }
             }
-        },
+        }
     }),
     TaxonomySetting = new SearchTaxonomySetting
     {
@@ -919,24 +1020,28 @@ QueryConfig body = new QueryConfig
 {
     Keywords = "<asset name>",
     Limit = 3,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        or = new object[]
+        ["$id"] = "7430",
+        ["or"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                term = "ExampleTerm",
+                ["$id"] = "7431",
+                ["term"] = "ExampleTerm"
             },
-            new
+            new Dictionary<string, object>
             {
-                term = "ExampleTerm",
-                glossary = "GlossaryName",
+                ["$id"] = "7432",
+                ["term"] = "ExampleTerm",
+                ["glossary"] = "GlossaryName"
             },
-            new
+            new Dictionary<string, object>
             {
-                termGuid = "<term guid>",
+                ["$id"] = "7433",
+                ["termGuid"] = "<term guid>"
             }
-        },
+        }
     }),
 };
 Response<QueryResult> response = await client.QueryAsync(body);
@@ -950,16 +1055,18 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 QueryConfig body = new QueryConfig
 {
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "7466",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
-                includeSubTypes = false,
+                ["$id"] = "7467",
+                ["entityType"] = "azure_blob_path",
+                ["includeSubTypes"] = false
             }
-        },
+        }
     }),
 };
 Response<QueryResult> response = await client.QueryAsync(body);
@@ -977,26 +1084,31 @@ QueryConfig body = new QueryConfig
 {
     Keywords = "exampledata",
     Limit = 10,
-    Orderby = {BinaryData.FromObjectAsJson(new
+    Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        name = "ASC",
-    }), BinaryData.FromObjectAsJson(new
+        ["$id"] = "6260",
+        ["name"] = "ASC"
+    }), BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        updateTime = "DESC",
+        ["$id"] = "6262",
+        ["updateTime"] = "DESC"
     })},
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "6254",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Files",
+                ["$id"] = "6255",
+                ["objectType"] = "Files"
             },
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
+                ["$id"] = "6256",
+                ["entityType"] = "azure_blob_path"
             }
-        },
+        }
     }),
     Facets = {new SearchFacetItem
     {
@@ -1051,21 +1163,24 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 QueryConfig body = new QueryConfig
 {
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "6339",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
+                ["$id"] = "6340",
+                ["entityType"] = "azure_blob_path"
             },
             new Dictionary<string, object>
             {
+                ["$id"] = "6341",
                 ["attributeName"] = "qualifiedName",
                 ["operator"] = "contains",
                 ["attributeValue"] = ".csv"
             }
-        },
+        }
     }),
 };
 Response<QueryResult> response = client.Query(body);
@@ -1079,39 +1194,45 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 QueryConfig body = new QueryConfig
 {
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "6392",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
+                ["$id"] = "6393",
+                ["entityType"] = "azure_blob_path"
             },
             new Dictionary<string, object>
             {
+                ["$id"] = "6394",
                 ["attributeName"] = "qualifiedName",
                 ["operator"] = "contains",
                 ["attributeValue"] = ".csv"
             },
-            new
+            new Dictionary<string, object>
             {
-                or = new object[]
+                ["$id"] = "6395",
+                ["or"] = new object[]
                 {
                     new Dictionary<string, object>
                     {
+                        ["$id"] = "6396",
                         ["attributeName"] = "name",
                         ["operator"] = "eq",
                         ["attributeValue"] = "exampledata.csv"
                     },
                     new Dictionary<string, object>
                     {
+                        ["$id"] = "6397",
                         ["attributeName"] = "qualifiedName",
                         ["operator"] = "prefix",
                         ["attributeValue"] = "https://"
                     }
-                },
+                }
             }
-        },
+        }
     }),
 };
 Response<QueryResult> response = client.Query(body);
@@ -1125,155 +1246,187 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 QueryConfig body = new QueryConfig
 {
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        or = new object[]
-        {
-            new
-            {
-                assetType = "SQL Server",
-            },
-            new
-            {
-                assetType = "Azure SQL Server",
-            },
-            new
-            {
-                assetType = "Azure SQL Database",
-            },
-            new
-            {
-                assetType = "Azure SQL Data Warehouse",
-            },
-            new
-            {
-                assetType = "Azure SQL Managed Instance",
-            },
-            new
-            {
-                assetType = "Azure Storage Account",
-            },
-            new
-            {
-                assetType = "Azure Blob Storage",
-            },
-            new
-            {
-                assetType = "Azure Files",
-            },
-            new
-            {
-                assetType = "Azure Table Storage",
-            },
-            new
-            {
-                assetType = "Azure Data Lake Storage Gen1",
-            },
-            new
-            {
-                assetType = "Azure Data Lake Storage Gen2",
-            },
-            new
-            {
-                assetType = "Azure Cosmos DB",
-            },
-            new
-            {
-                assetType = "Azure Data Factory",
-            },
-            new
-            {
-                assetType = "Azure Cognitive Search",
-            },
-            new
-            {
-                assetType = "Power BI",
-            },
-            new
-            {
-                assetType = "Azure Data Explorer",
-            },
-            new
-            {
-                assetType = "Amazon S3",
-            },
-            new
-            {
-                assetType = "Azure Data Share",
-            },
-            new
-            {
-                assetType = "Teradata",
-            },
-            new
-            {
-                assetType = "SAP S4HANA",
-            },
-            new
-            {
-                assetType = "SAP ECC",
-            },
-            new
-            {
-                assetType = "SQL Server Integration Services",
-            },
-            new
-            {
-                assetType = "hive",
-            },
-            new
-            {
-                assetType = "Azure Database for MySQL",
-            },
-            new
-            {
-                assetType = "Azure Database for MariaDB",
-            },
-            new
-            {
-                assetType = "Azure Database for PostgreSQL",
-            },
-            new
-            {
-                assetType = "Azure Synapse Analytics",
-            }
-        },
-    }),
-};
-Response<QueryResult> response = client.Query(body);
-]]></code>
-This sample shows how to call Query.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
-
-QueryConfig body = new QueryConfig
-{
-    Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
-    {
-        or = new object[]
+        ["$id"] = "6450",
+        ["or"] = new object[]
         {
             new Dictionary<string, object>
             {
+                ["$id"] = "6451",
+                ["assetType"] = "SQL Server"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6452",
+                ["assetType"] = "Azure SQL Server"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6453",
+                ["assetType"] = "Azure SQL Database"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6454",
+                ["assetType"] = "Azure SQL Data Warehouse"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6455",
+                ["assetType"] = "Azure SQL Managed Instance"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6456",
+                ["assetType"] = "Azure Storage Account"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6457",
+                ["assetType"] = "Azure Blob Storage"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6458",
+                ["assetType"] = "Azure Files"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6459",
+                ["assetType"] = "Azure Table Storage"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6460",
+                ["assetType"] = "Azure Data Lake Storage Gen1"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6461",
+                ["assetType"] = "Azure Data Lake Storage Gen2"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6462",
+                ["assetType"] = "Azure Cosmos DB"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6463",
+                ["assetType"] = "Azure Data Factory"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6464",
+                ["assetType"] = "Azure Cognitive Search"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6465",
+                ["assetType"] = "Power BI"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6466",
+                ["assetType"] = "Azure Data Explorer"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6467",
+                ["assetType"] = "Amazon S3"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6468",
+                ["assetType"] = "Azure Data Share"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6469",
+                ["assetType"] = "Teradata"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6470",
+                ["assetType"] = "SAP S4HANA"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6471",
+                ["assetType"] = "SAP ECC"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6472",
+                ["assetType"] = "SQL Server Integration Services"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6473",
+                ["assetType"] = "hive"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6474",
+                ["assetType"] = "Azure Database for MySQL"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6475",
+                ["assetType"] = "Azure Database for MariaDB"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6476",
+                ["assetType"] = "Azure Database for PostgreSQL"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6477",
+                ["assetType"] = "Azure Synapse Analytics"
+            }
+        }
+    }),
+};
+Response<QueryResult> response = client.Query(body);
+]]></code>
+This sample shows how to call Query.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+QueryConfig body = new QueryConfig
+{
+    Limit = 10,
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
+    {
+        ["$id"] = "6519",
+        ["or"] = new object[]
+        {
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6520",
                 ["attributeName"] = "name",
                 ["operator"] = "eq",
                 ["attributeValue"] = "exampledata.csv"
             },
             new Dictionary<string, object>
             {
+                ["$id"] = "6521",
                 ["attributeName"] = "createTime",
                 ["operator"] = "ge",
                 ["attributeValue"] = 1545580800000L
             },
             new Dictionary<string, object>
             {
+                ["$id"] = "6522",
                 ["attributeName"] = "modifiedTime",
                 ["operator"] = "timerange",
                 ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
             }
-        },
+        }
     }),
 };
 Response<QueryResult> response = client.Query(body);
@@ -1287,35 +1440,40 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 QueryConfig body = new QueryConfig
 {
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        or = new object[]
+        ["$id"] = "6584",
+        ["or"] = new object[]
         {
             new Dictionary<string, object>
             {
+                ["$id"] = "6585",
                 ["attributeName"] = "<BusinessMetadataName>.<StringAttributeName>",
                 ["operator"] = "eq|ne|contains|prefix",
                 ["attributeValue"] = "string value"
             },
             new Dictionary<string, object>
             {
+                ["$id"] = "6586",
                 ["attributeName"] = "<BusinessMetadataName>.<NumberAttributeName>",
                 ["operator"] = "eq|ne|gt|ge|lt|le",
                 ["attributeValue"] = 123
             },
             new Dictionary<string, object>
             {
+                ["$id"] = "6587",
                 ["attributeName"] = "<BusinessMetadataName>.<BooleanAttributeName>",
                 ["operator"] = "eq|ne",
                 ["attributeValue"] = true
             },
             new Dictionary<string, object>
             {
+                ["$id"] = "6588",
                 ["attributeName"] = "<BusinessMetadataName>.<DateAttributeName>",
                 ["operator"] = "timerange",
                 ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
             }
-        },
+        }
     }),
 };
 Response<QueryResult> response = client.Query(body);
@@ -1329,10 +1487,11 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 QueryConfig body = new QueryConfig
 {
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        classification = "MICROSOFT.PERSONAL.EMAIL",
-        includeSubClassifications = true,
+        ["$id"] = "6611",
+        ["classification"] = "MICROSOFT.PERSONAL.EMAIL",
+        ["includeSubClassifications"] = true
     }),
 };
 Response<QueryResult> response = client.Query(body);
@@ -1346,9 +1505,10 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 QueryConfig body = new QueryConfig
 {
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        collectionId = "collectionName",
+        ["$id"] = "6661",
+        ["collectionId"] = "collectionName"
     }),
 };
 Response<QueryResult> response = client.Query(body);
@@ -1362,9 +1522,10 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 QueryConfig body = new QueryConfig
 {
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        objectType = "Tables",
+        ["$id"] = "6710",
+        ["objectType"] = "Tables"
     }),
     Facets = {new SearchFacetItem
     {
@@ -1395,15 +1556,17 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 QueryConfig body = new QueryConfig
 {
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "6840",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                fileExtension = "txt",
+                ["$id"] = "6841",
+                ["fileExtension"] = "txt"
             }
-        },
+        }
     }),
 };
 Response<QueryResult> response = client.Query(body);
@@ -1418,29 +1581,34 @@ QueryConfig body = new QueryConfig
 {
     Keywords = "<term name>",
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "6884",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Glossary terms",
+                ["$id"] = "6885",
+                ["objectType"] = "Glossary terms"
             },
-            new
+            new Dictionary<string, object>
             {
-                or = new object[]
+                ["$id"] = "6886",
+                ["or"] = new object[]
                 {
-                    new
+                    new Dictionary<string, object>
                     {
-                        glossaryType = "AtlasGlossary",
+                        ["$id"] = "6887",
+                        ["glossaryType"] = "AtlasGlossary"
                     },
-                    new
+                    new Dictionary<string, object>
                     {
-                        glossaryType = "AtlasGlossaryTerm",
+                        ["$id"] = "6888",
+                        ["glossaryType"] = "AtlasGlossaryTerm"
                     }
-                },
+                }
             }
-        },
+        }
     }),
     Facets = {new SearchFacetItem
     {
@@ -1471,15 +1639,17 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 QueryConfig body = new QueryConfig
 {
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "6956",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                id = "bfecbcc3-1838-45fe-96d6-112de8a170f9",
+                ["$id"] = "6957",
+                ["id"] = "bfecbcc3-1838-45fe-96d6-112de8a170f9"
             }
-        },
+        }
     }),
 };
 Response<QueryResult> response = client.Query(body);
@@ -1493,12 +1663,14 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 QueryConfig body = new QueryConfig
 {
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        not = new
+        ["$id"] = "6985",
+        ["not"] = new Dictionary<string, object>
         {
-            classification = "MICROSOFT.SYSTEM.TEMP_FILE",
-        },
+            ["$id"] = "6986",
+            ["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
+        }
     }),
 };
 Response<QueryResult> response = client.Query(body);
@@ -1512,43 +1684,52 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 QueryConfig body = new QueryConfig
 {
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        or = new object[]
+        ["$id"] = "7028",
+        ["or"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Dashboards",
+                ["$id"] = "7029",
+                ["objectType"] = "Dashboards"
             },
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Data pipelines",
+                ["$id"] = "7030",
+                ["objectType"] = "Data pipelines"
             },
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Files",
+                ["$id"] = "7031",
+                ["objectType"] = "Files"
             },
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Folders",
+                ["$id"] = "7032",
+                ["objectType"] = "Folders"
             },
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Glossary terms",
+                ["$id"] = "7033",
+                ["objectType"] = "Glossary terms"
             },
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Reports",
+                ["$id"] = "7034",
+                ["objectType"] = "Reports"
             },
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Stored procedures",
+                ["$id"] = "7035",
+                ["objectType"] = "Stored procedures"
             },
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Tables",
+                ["$id"] = "7036",
+                ["objectType"] = "Tables"
             }
-        },
+        }
     }),
 };
 Response<QueryResult> response = client.Query(body);
@@ -1564,26 +1745,31 @@ QueryConfig body = new QueryConfig
     Keywords = "exampledata",
     Limit = 2,
     ContinuationToken = "<token>",
-    Orderby = {BinaryData.FromObjectAsJson(new
+    Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        name = "ASC",
-    }), BinaryData.FromObjectAsJson(new
+        ["$id"] = "7081",
+        ["name"] = "ASC"
+    }), BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        updateTime = "DESC",
+        ["$id"] = "7083",
+        ["updateTime"] = "DESC"
     })},
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "7074",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Files",
+                ["$id"] = "7075",
+                ["objectType"] = "Files"
             },
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
+                ["$id"] = "7076",
+                ["entityType"] = "azure_blob_path"
             }
-        },
+        }
     }),
     Facets = {new SearchFacetItem
     {
@@ -1639,26 +1825,31 @@ QueryConfig body = new QueryConfig
 {
     Keywords = "exampledata",
     Limit = 2,
-    Orderby = {BinaryData.FromObjectAsJson(new
+    Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        name = "ASC",
-    }), BinaryData.FromObjectAsJson(new
+        ["$id"] = "7167",
+        ["name"] = "ASC"
+    }), BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        updateTime = "DESC",
+        ["$id"] = "7169",
+        ["updateTime"] = "DESC"
     })},
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "7161",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Files",
+                ["$id"] = "7162",
+                ["objectType"] = "Files"
             },
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
+                ["$id"] = "7163",
+                ["entityType"] = "azure_blob_path"
             }
-        },
+        }
     }),
     Facets = {new SearchFacetItem
     {
@@ -1715,26 +1906,31 @@ QueryConfig body = new QueryConfig
     Keywords = "exampledata",
     Limit = 2,
     ContinuationToken = "<token>",
-    Orderby = {BinaryData.FromObjectAsJson(new
+    Orderby = {BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        name = "ASC",
-    }), BinaryData.FromObjectAsJson(new
+        ["$id"] = "7254",
+        ["name"] = "ASC"
+    }), BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        updateTime = "DESC",
+        ["$id"] = "7256",
+        ["updateTime"] = "DESC"
     })},
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "7247",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Files",
+                ["$id"] = "7248",
+                ["objectType"] = "Files"
             },
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
+                ["$id"] = "7249",
+                ["entityType"] = "azure_blob_path"
             }
-        },
+        }
     }),
     Facets = {new SearchFacetItem
     {
@@ -1789,23 +1985,27 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 QueryConfig body = new QueryConfig
 {
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        or = new object[]
+        ["$id"] = "7333",
+        ["or"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                createTime = new Dictionary<string, object>
+                ["$id"] = "7334",
+                ["createTime"] = new Dictionary<string, object>
                 {
+                    ["$id"] = "7335",
                     ["operator"] = "lt",
                     ["timeThreshold"] = 1545580800000L
-                },
+                }
             },
-            new
+            new Dictionary<string, object>
             {
-                updateTime = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D",
+                ["$id"] = "7336",
+                ["updateTime"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
             }
-        },
+        }
     }),
 };
 Response<QueryResult> response = client.Query(body);
@@ -1820,43 +2020,51 @@ QueryConfig body = new QueryConfig
 {
     Keywords = "exampledata",
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "7369",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Files",
+                ["$id"] = "7370",
+                ["objectType"] = "Files"
             },
-            new
+            new Dictionary<string, object>
             {
-                not = new
+                ["$id"] = "7371",
+                ["not"] = new Dictionary<string, object>
                 {
-                    or = new object[]
+                    ["$id"] = "7372",
+                    ["or"] = new object[]
                     {
                         new Dictionary<string, object>
                         {
+                            ["$id"] = "7373",
                             ["attributeName"] = "size",
                             ["operator"] = "eq",
                             ["attributeValue"] = 0
                         },
                         new Dictionary<string, object>
                         {
+                            ["$id"] = "7374",
                             ["attributeName"] = "fileSize",
                             ["operator"] = "eq",
                             ["attributeValue"] = 0
                         }
-                    },
-                },
+                    }
+                }
             },
-            new
+            new Dictionary<string, object>
             {
-                not = new
+                ["$id"] = "7375",
+                ["not"] = new Dictionary<string, object>
                 {
-                    classification = "MICROSOFT.SYSTEM.TEMP_FILE",
-                },
+                    ["$id"] = "7376",
+                    ["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
+                }
             }
-        },
+        }
     }),
     TaxonomySetting = new SearchTaxonomySetting
     {
@@ -1883,24 +2091,28 @@ QueryConfig body = new QueryConfig
 {
     Keywords = "<asset name>",
     Limit = 3,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        or = new object[]
+        ["$id"] = "7430",
+        ["or"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                term = "ExampleTerm",
+                ["$id"] = "7431",
+                ["term"] = "ExampleTerm"
             },
-            new
+            new Dictionary<string, object>
             {
-                term = "ExampleTerm",
-                glossary = "GlossaryName",
+                ["$id"] = "7432",
+                ["term"] = "ExampleTerm",
+                ["glossary"] = "GlossaryName"
             },
-            new
+            new Dictionary<string, object>
             {
-                termGuid = "<term guid>",
+                ["$id"] = "7433",
+                ["termGuid"] = "<term guid>"
             }
-        },
+        }
     }),
 };
 Response<QueryResult> response = client.Query(body);
@@ -1914,16 +2126,18 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 QueryConfig body = new QueryConfig
 {
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "7466",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
-                includeSubTypes = false,
+                ["$id"] = "7467",
+                ["entityType"] = "azure_blob_path",
+                ["includeSubTypes"] = false
             }
-        },
+        }
     }),
 };
 Response<QueryResult> response = client.Query(body);
@@ -1940,30 +2154,35 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     keywords = "exampledata",
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "6254",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Files",
+                ["$id"] = "6255",
+                ["objectType"] = "Files"
             },
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
+                ["$id"] = "6256",
+                ["entityType"] = "azure_blob_path"
             }
-        },
+        }
     },
     limit = 10,
     orderby = new object[]
     {
-        new
+        new Dictionary<string, object>
         {
-            name = "ASC",
+            ["$id"] = "6260",
+            ["name"] = "ASC"
         },
-        new
+        new Dictionary<string, object>
         {
-            updateTime = "DESC",
+            ["$id"] = "6262",
+            ["updateTime"] = "DESC"
         }
     },
     facets = new object[]
@@ -2029,21 +2248,24 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     limit = 10,
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "6339",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
+                ["$id"] = "6340",
+                ["entityType"] = "azure_blob_path"
             },
             new Dictionary<string, object>
             {
+                ["$id"] = "6341",
                 ["attributeName"] = "qualifiedName",
                 ["operator"] = "contains",
                 ["attributeValue"] = ".csv"
             }
-        },
+        }
     },
 });
 Response response = await client.QueryAsync(content);
@@ -2060,39 +2282,45 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     limit = 10,
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "6392",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
+                ["$id"] = "6393",
+                ["entityType"] = "azure_blob_path"
             },
             new Dictionary<string, object>
             {
+                ["$id"] = "6394",
                 ["attributeName"] = "qualifiedName",
                 ["operator"] = "contains",
                 ["attributeValue"] = ".csv"
             },
-            new
+            new Dictionary<string, object>
             {
-                or = new object[]
+                ["$id"] = "6395",
+                ["or"] = new object[]
                 {
                     new Dictionary<string, object>
                     {
+                        ["$id"] = "6396",
                         ["attributeName"] = "name",
                         ["operator"] = "eq",
                         ["attributeValue"] = "exampledata.csv"
                     },
                     new Dictionary<string, object>
                     {
+                        ["$id"] = "6397",
                         ["attributeName"] = "qualifiedName",
                         ["operator"] = "prefix",
                         ["attributeValue"] = "https://"
                     }
-                },
+                }
             }
-        },
+        }
     },
 });
 Response response = await client.QueryAsync(content);
@@ -2109,158 +2337,190 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     limit = 10,
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        or = new object[]
-        {
-            new
-            {
-                assetType = "SQL Server",
-            },
-            new
-            {
-                assetType = "Azure SQL Server",
-            },
-            new
-            {
-                assetType = "Azure SQL Database",
-            },
-            new
-            {
-                assetType = "Azure SQL Data Warehouse",
-            },
-            new
-            {
-                assetType = "Azure SQL Managed Instance",
-            },
-            new
-            {
-                assetType = "Azure Storage Account",
-            },
-            new
-            {
-                assetType = "Azure Blob Storage",
-            },
-            new
-            {
-                assetType = "Azure Files",
-            },
-            new
-            {
-                assetType = "Azure Table Storage",
-            },
-            new
-            {
-                assetType = "Azure Data Lake Storage Gen1",
-            },
-            new
-            {
-                assetType = "Azure Data Lake Storage Gen2",
-            },
-            new
-            {
-                assetType = "Azure Cosmos DB",
-            },
-            new
-            {
-                assetType = "Azure Data Factory",
-            },
-            new
-            {
-                assetType = "Azure Cognitive Search",
-            },
-            new
-            {
-                assetType = "Power BI",
-            },
-            new
-            {
-                assetType = "Azure Data Explorer",
-            },
-            new
-            {
-                assetType = "Amazon S3",
-            },
-            new
-            {
-                assetType = "Azure Data Share",
-            },
-            new
-            {
-                assetType = "Teradata",
-            },
-            new
-            {
-                assetType = "SAP S4HANA",
-            },
-            new
-            {
-                assetType = "SAP ECC",
-            },
-            new
-            {
-                assetType = "SQL Server Integration Services",
-            },
-            new
-            {
-                assetType = "hive",
-            },
-            new
-            {
-                assetType = "Azure Database for MySQL",
-            },
-            new
-            {
-                assetType = "Azure Database for MariaDB",
-            },
-            new
-            {
-                assetType = "Azure Database for PostgreSQL",
-            },
-            new
-            {
-                assetType = "Azure Synapse Analytics",
-            }
-        },
-    },
-});
-Response response = await client.QueryAsync(content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call QueryAsync and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
-
-using RequestContent content = RequestContent.Create(new
-{
-    limit = 10,
-    filter = new
-    {
-        or = new object[]
+        ["$id"] = "6450",
+        ["or"] = new object[]
         {
             new Dictionary<string, object>
             {
+                ["$id"] = "6451",
+                ["assetType"] = "SQL Server"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6452",
+                ["assetType"] = "Azure SQL Server"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6453",
+                ["assetType"] = "Azure SQL Database"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6454",
+                ["assetType"] = "Azure SQL Data Warehouse"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6455",
+                ["assetType"] = "Azure SQL Managed Instance"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6456",
+                ["assetType"] = "Azure Storage Account"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6457",
+                ["assetType"] = "Azure Blob Storage"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6458",
+                ["assetType"] = "Azure Files"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6459",
+                ["assetType"] = "Azure Table Storage"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6460",
+                ["assetType"] = "Azure Data Lake Storage Gen1"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6461",
+                ["assetType"] = "Azure Data Lake Storage Gen2"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6462",
+                ["assetType"] = "Azure Cosmos DB"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6463",
+                ["assetType"] = "Azure Data Factory"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6464",
+                ["assetType"] = "Azure Cognitive Search"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6465",
+                ["assetType"] = "Power BI"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6466",
+                ["assetType"] = "Azure Data Explorer"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6467",
+                ["assetType"] = "Amazon S3"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6468",
+                ["assetType"] = "Azure Data Share"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6469",
+                ["assetType"] = "Teradata"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6470",
+                ["assetType"] = "SAP S4HANA"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6471",
+                ["assetType"] = "SAP ECC"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6472",
+                ["assetType"] = "SQL Server Integration Services"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6473",
+                ["assetType"] = "hive"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6474",
+                ["assetType"] = "Azure Database for MySQL"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6475",
+                ["assetType"] = "Azure Database for MariaDB"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6476",
+                ["assetType"] = "Azure Database for PostgreSQL"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6477",
+                ["assetType"] = "Azure Synapse Analytics"
+            }
+        }
+    },
+});
+Response response = await client.QueryAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call QueryAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    limit = 10,
+    filter = new Dictionary<string, object>
+    {
+        ["$id"] = "6519",
+        ["or"] = new object[]
+        {
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6520",
                 ["attributeName"] = "name",
                 ["operator"] = "eq",
                 ["attributeValue"] = "exampledata.csv"
             },
             new Dictionary<string, object>
             {
+                ["$id"] = "6521",
                 ["attributeName"] = "createTime",
                 ["operator"] = "ge",
                 ["attributeValue"] = 1545580800000L
             },
             new Dictionary<string, object>
             {
+                ["$id"] = "6522",
                 ["attributeName"] = "modifiedTime",
                 ["operator"] = "timerange",
                 ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
             }
-        },
+        }
     },
 });
 Response response = await client.QueryAsync(content);
@@ -2277,35 +2537,40 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     limit = 10,
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        or = new object[]
+        ["$id"] = "6584",
+        ["or"] = new object[]
         {
             new Dictionary<string, object>
             {
+                ["$id"] = "6585",
                 ["attributeName"] = "<BusinessMetadataName>.<StringAttributeName>",
                 ["operator"] = "eq|ne|contains|prefix",
                 ["attributeValue"] = "string value"
             },
             new Dictionary<string, object>
             {
+                ["$id"] = "6586",
                 ["attributeName"] = "<BusinessMetadataName>.<NumberAttributeName>",
                 ["operator"] = "eq|ne|gt|ge|lt|le",
                 ["attributeValue"] = 123
             },
             new Dictionary<string, object>
             {
+                ["$id"] = "6587",
                 ["attributeName"] = "<BusinessMetadataName>.<BooleanAttributeName>",
                 ["operator"] = "eq|ne",
                 ["attributeValue"] = true
             },
             new Dictionary<string, object>
             {
+                ["$id"] = "6588",
                 ["attributeName"] = "<BusinessMetadataName>.<DateAttributeName>",
                 ["operator"] = "timerange",
                 ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
             }
-        },
+        }
     },
 });
 Response response = await client.QueryAsync(content);
@@ -2322,10 +2587,11 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     limit = 10,
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        classification = "MICROSOFT.PERSONAL.EMAIL",
-        includeSubClassifications = true,
+        ["$id"] = "6611",
+        ["classification"] = "MICROSOFT.PERSONAL.EMAIL",
+        ["includeSubClassifications"] = true
     },
 });
 Response response = await client.QueryAsync(content);
@@ -2342,9 +2608,10 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     limit = 10,
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        collectionId = "collectionName",
+        ["$id"] = "6661",
+        ["collectionId"] = "collectionName"
     },
 });
 Response response = await client.QueryAsync(content);
@@ -2360,9 +2627,10 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 
 using RequestContent content = RequestContent.Create(new
 {
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        objectType = "Tables",
+        ["$id"] = "6710",
+        ["objectType"] = "Tables"
     },
     limit = 10,
     facets = new object[]
@@ -2403,15 +2671,17 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     limit = 10,
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "6840",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                fileExtension = "txt",
+                ["$id"] = "6841",
+                ["fileExtension"] = "txt"
             }
-        },
+        }
     },
 });
 Response response = await client.QueryAsync(content);
@@ -2429,29 +2699,34 @@ using RequestContent content = RequestContent.Create(new
 {
     keywords = "<term name>",
     limit = 10,
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "6884",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Glossary terms",
+                ["$id"] = "6885",
+                ["objectType"] = "Glossary terms"
             },
-            new
+            new Dictionary<string, object>
             {
-                or = new object[]
+                ["$id"] = "6886",
+                ["or"] = new object[]
                 {
-                    new
+                    new Dictionary<string, object>
                     {
-                        glossaryType = "AtlasGlossary",
+                        ["$id"] = "6887",
+                        ["glossaryType"] = "AtlasGlossary"
                     },
-                    new
+                    new Dictionary<string, object>
                     {
-                        glossaryType = "AtlasGlossaryTerm",
+                        ["$id"] = "6888",
+                        ["glossaryType"] = "AtlasGlossaryTerm"
                     }
-                },
+                }
             }
-        },
+        }
     },
     facets = new object[]
     {
@@ -2489,15 +2764,17 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     limit = 10,
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "6956",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                id = "bfecbcc3-1838-45fe-96d6-112de8a170f9",
+                ["$id"] = "6957",
+                ["id"] = "bfecbcc3-1838-45fe-96d6-112de8a170f9"
             }
-        },
+        }
     },
 });
 Response response = await client.QueryAsync(content);
@@ -2514,12 +2791,14 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     limit = 10,
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        not = new
+        ["$id"] = "6985",
+        ["not"] = new Dictionary<string, object>
         {
-            classification = "MICROSOFT.SYSTEM.TEMP_FILE",
-        },
+            ["$id"] = "6986",
+            ["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
+        }
     },
 });
 Response response = await client.QueryAsync(content);
@@ -2536,43 +2815,52 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     limit = 10,
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        or = new object[]
+        ["$id"] = "7028",
+        ["or"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Dashboards",
+                ["$id"] = "7029",
+                ["objectType"] = "Dashboards"
             },
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Data pipelines",
+                ["$id"] = "7030",
+                ["objectType"] = "Data pipelines"
             },
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Files",
+                ["$id"] = "7031",
+                ["objectType"] = "Files"
             },
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Folders",
+                ["$id"] = "7032",
+                ["objectType"] = "Folders"
             },
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Glossary terms",
+                ["$id"] = "7033",
+                ["objectType"] = "Glossary terms"
             },
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Reports",
+                ["$id"] = "7034",
+                ["objectType"] = "Reports"
             },
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Stored procedures",
+                ["$id"] = "7035",
+                ["objectType"] = "Stored procedures"
             },
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Tables",
+                ["$id"] = "7036",
+                ["objectType"] = "Tables"
             }
-        },
+        }
     },
 });
 Response response = await client.QueryAsync(content);
@@ -2589,31 +2877,36 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     keywords = "exampledata",
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "7074",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Files",
+                ["$id"] = "7075",
+                ["objectType"] = "Files"
             },
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
+                ["$id"] = "7076",
+                ["entityType"] = "azure_blob_path"
             }
-        },
+        }
     },
     limit = 2,
     continuationToken = "<token>",
     orderby = new object[]
     {
-        new
+        new Dictionary<string, object>
         {
-            name = "ASC",
+            ["$id"] = "7081",
+            ["name"] = "ASC"
         },
-        new
+        new Dictionary<string, object>
         {
-            updateTime = "DESC",
+            ["$id"] = "7083",
+            ["updateTime"] = "DESC"
         }
     },
     facets = new object[]
@@ -2679,30 +2972,35 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     keywords = "exampledata",
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "7161",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Files",
+                ["$id"] = "7162",
+                ["objectType"] = "Files"
             },
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
+                ["$id"] = "7163",
+                ["entityType"] = "azure_blob_path"
             }
-        },
+        }
     },
     limit = 2,
     orderby = new object[]
     {
-        new
+        new Dictionary<string, object>
         {
-            name = "ASC",
+            ["$id"] = "7167",
+            ["name"] = "ASC"
         },
-        new
+        new Dictionary<string, object>
         {
-            updateTime = "DESC",
+            ["$id"] = "7169",
+            ["updateTime"] = "DESC"
         }
     },
     facets = new object[]
@@ -2768,31 +3066,36 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     keywords = "exampledata",
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "7247",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Files",
+                ["$id"] = "7248",
+                ["objectType"] = "Files"
             },
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
+                ["$id"] = "7249",
+                ["entityType"] = "azure_blob_path"
             }
-        },
+        }
     },
     limit = 2,
     continuationToken = "<token>",
     orderby = new object[]
     {
-        new
+        new Dictionary<string, object>
         {
-            name = "ASC",
+            ["$id"] = "7254",
+            ["name"] = "ASC"
         },
-        new
+        new Dictionary<string, object>
         {
-            updateTime = "DESC",
+            ["$id"] = "7256",
+            ["updateTime"] = "DESC"
         }
     },
     facets = new object[]
@@ -2858,23 +3161,27 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     limit = 10,
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        or = new object[]
+        ["$id"] = "7333",
+        ["or"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                createTime = new Dictionary<string, object>
+                ["$id"] = "7334",
+                ["createTime"] = new Dictionary<string, object>
                 {
+                    ["$id"] = "7335",
                     ["operator"] = "lt",
                     ["timeThreshold"] = 1545580800000L
-                },
+                }
             },
-            new
+            new Dictionary<string, object>
             {
-                updateTime = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D",
+                ["$id"] = "7336",
+                ["updateTime"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
             }
-        },
+        }
     },
 });
 Response response = await client.QueryAsync(content);
@@ -2891,43 +3198,51 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     keywords = "exampledata",
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "7369",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Files",
+                ["$id"] = "7370",
+                ["objectType"] = "Files"
             },
-            new
+            new Dictionary<string, object>
             {
-                not = new
+                ["$id"] = "7371",
+                ["not"] = new Dictionary<string, object>
                 {
-                    or = new object[]
+                    ["$id"] = "7372",
+                    ["or"] = new object[]
                     {
                         new Dictionary<string, object>
                         {
+                            ["$id"] = "7373",
                             ["attributeName"] = "size",
                             ["operator"] = "eq",
                             ["attributeValue"] = 0
                         },
                         new Dictionary<string, object>
                         {
+                            ["$id"] = "7374",
                             ["attributeName"] = "fileSize",
                             ["operator"] = "eq",
                             ["attributeValue"] = 0
                         }
-                    },
-                },
+                    }
+                }
             },
-            new
+            new Dictionary<string, object>
             {
-                not = new
+                ["$id"] = "7375",
+                ["not"] = new Dictionary<string, object>
                 {
-                    classification = "MICROSOFT.SYSTEM.TEMP_FILE",
-                },
+                    ["$id"] = "7376",
+                    ["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
+                }
             }
-        },
+        }
     },
     limit = 10,
     taxonomySetting = new
@@ -2961,24 +3276,28 @@ using RequestContent content = RequestContent.Create(new
 {
     keywords = "<asset name>",
     limit = 3,
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        or = new object[]
+        ["$id"] = "7430",
+        ["or"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                term = "ExampleTerm",
+                ["$id"] = "7431",
+                ["term"] = "ExampleTerm"
             },
-            new
+            new Dictionary<string, object>
             {
-                term = "ExampleTerm",
-                glossary = "GlossaryName",
+                ["$id"] = "7432",
+                ["term"] = "ExampleTerm",
+                ["glossary"] = "GlossaryName"
             },
-            new
+            new Dictionary<string, object>
             {
-                termGuid = "<term guid>",
+                ["$id"] = "7433",
+                ["termGuid"] = "<term guid>"
             }
-        },
+        }
     },
 });
 Response response = await client.QueryAsync(content);
@@ -2995,16 +3314,18 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     limit = 10,
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "7466",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
-                includeSubTypes = false,
+                ["$id"] = "7467",
+                ["entityType"] = "azure_blob_path",
+                ["includeSubTypes"] = false
             }
-        },
+        }
     },
 });
 Response response = await client.QueryAsync(content);
@@ -3024,30 +3345,35 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     keywords = "exampledata",
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "6254",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Files",
+                ["$id"] = "6255",
+                ["objectType"] = "Files"
             },
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
+                ["$id"] = "6256",
+                ["entityType"] = "azure_blob_path"
             }
-        },
+        }
     },
     limit = 10,
     orderby = new object[]
     {
-        new
+        new Dictionary<string, object>
         {
-            name = "ASC",
+            ["$id"] = "6260",
+            ["name"] = "ASC"
         },
-        new
+        new Dictionary<string, object>
         {
-            updateTime = "DESC",
+            ["$id"] = "6262",
+            ["updateTime"] = "DESC"
         }
     },
     facets = new object[]
@@ -3113,21 +3439,24 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     limit = 10,
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "6339",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
+                ["$id"] = "6340",
+                ["entityType"] = "azure_blob_path"
             },
             new Dictionary<string, object>
             {
+                ["$id"] = "6341",
                 ["attributeName"] = "qualifiedName",
                 ["operator"] = "contains",
                 ["attributeValue"] = ".csv"
             }
-        },
+        }
     },
 });
 Response response = client.Query(content);
@@ -3144,39 +3473,45 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     limit = 10,
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "6392",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
+                ["$id"] = "6393",
+                ["entityType"] = "azure_blob_path"
             },
             new Dictionary<string, object>
             {
+                ["$id"] = "6394",
                 ["attributeName"] = "qualifiedName",
                 ["operator"] = "contains",
                 ["attributeValue"] = ".csv"
             },
-            new
+            new Dictionary<string, object>
             {
-                or = new object[]
+                ["$id"] = "6395",
+                ["or"] = new object[]
                 {
                     new Dictionary<string, object>
                     {
+                        ["$id"] = "6396",
                         ["attributeName"] = "name",
                         ["operator"] = "eq",
                         ["attributeValue"] = "exampledata.csv"
                     },
                     new Dictionary<string, object>
                     {
+                        ["$id"] = "6397",
                         ["attributeName"] = "qualifiedName",
                         ["operator"] = "prefix",
                         ["attributeValue"] = "https://"
                     }
-                },
+                }
             }
-        },
+        }
     },
 });
 Response response = client.Query(content);
@@ -3193,158 +3528,190 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     limit = 10,
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        or = new object[]
-        {
-            new
-            {
-                assetType = "SQL Server",
-            },
-            new
-            {
-                assetType = "Azure SQL Server",
-            },
-            new
-            {
-                assetType = "Azure SQL Database",
-            },
-            new
-            {
-                assetType = "Azure SQL Data Warehouse",
-            },
-            new
-            {
-                assetType = "Azure SQL Managed Instance",
-            },
-            new
-            {
-                assetType = "Azure Storage Account",
-            },
-            new
-            {
-                assetType = "Azure Blob Storage",
-            },
-            new
-            {
-                assetType = "Azure Files",
-            },
-            new
-            {
-                assetType = "Azure Table Storage",
-            },
-            new
-            {
-                assetType = "Azure Data Lake Storage Gen1",
-            },
-            new
-            {
-                assetType = "Azure Data Lake Storage Gen2",
-            },
-            new
-            {
-                assetType = "Azure Cosmos DB",
-            },
-            new
-            {
-                assetType = "Azure Data Factory",
-            },
-            new
-            {
-                assetType = "Azure Cognitive Search",
-            },
-            new
-            {
-                assetType = "Power BI",
-            },
-            new
-            {
-                assetType = "Azure Data Explorer",
-            },
-            new
-            {
-                assetType = "Amazon S3",
-            },
-            new
-            {
-                assetType = "Azure Data Share",
-            },
-            new
-            {
-                assetType = "Teradata",
-            },
-            new
-            {
-                assetType = "SAP S4HANA",
-            },
-            new
-            {
-                assetType = "SAP ECC",
-            },
-            new
-            {
-                assetType = "SQL Server Integration Services",
-            },
-            new
-            {
-                assetType = "hive",
-            },
-            new
-            {
-                assetType = "Azure Database for MySQL",
-            },
-            new
-            {
-                assetType = "Azure Database for MariaDB",
-            },
-            new
-            {
-                assetType = "Azure Database for PostgreSQL",
-            },
-            new
-            {
-                assetType = "Azure Synapse Analytics",
-            }
-        },
-    },
-});
-Response response = client.Query(content);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
-]]></code>
-This sample shows how to call Query and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
-
-using RequestContent content = RequestContent.Create(new
-{
-    limit = 10,
-    filter = new
-    {
-        or = new object[]
+        ["$id"] = "6450",
+        ["or"] = new object[]
         {
             new Dictionary<string, object>
             {
+                ["$id"] = "6451",
+                ["assetType"] = "SQL Server"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6452",
+                ["assetType"] = "Azure SQL Server"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6453",
+                ["assetType"] = "Azure SQL Database"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6454",
+                ["assetType"] = "Azure SQL Data Warehouse"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6455",
+                ["assetType"] = "Azure SQL Managed Instance"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6456",
+                ["assetType"] = "Azure Storage Account"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6457",
+                ["assetType"] = "Azure Blob Storage"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6458",
+                ["assetType"] = "Azure Files"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6459",
+                ["assetType"] = "Azure Table Storage"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6460",
+                ["assetType"] = "Azure Data Lake Storage Gen1"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6461",
+                ["assetType"] = "Azure Data Lake Storage Gen2"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6462",
+                ["assetType"] = "Azure Cosmos DB"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6463",
+                ["assetType"] = "Azure Data Factory"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6464",
+                ["assetType"] = "Azure Cognitive Search"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6465",
+                ["assetType"] = "Power BI"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6466",
+                ["assetType"] = "Azure Data Explorer"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6467",
+                ["assetType"] = "Amazon S3"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6468",
+                ["assetType"] = "Azure Data Share"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6469",
+                ["assetType"] = "Teradata"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6470",
+                ["assetType"] = "SAP S4HANA"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6471",
+                ["assetType"] = "SAP ECC"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6472",
+                ["assetType"] = "SQL Server Integration Services"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6473",
+                ["assetType"] = "hive"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6474",
+                ["assetType"] = "Azure Database for MySQL"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6475",
+                ["assetType"] = "Azure Database for MariaDB"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6476",
+                ["assetType"] = "Azure Database for PostgreSQL"
+            },
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6477",
+                ["assetType"] = "Azure Synapse Analytics"
+            }
+        }
+    },
+});
+Response response = client.Query(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call Query and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(apiVersion: "2023-09-01");
+
+using RequestContent content = RequestContent.Create(new
+{
+    limit = 10,
+    filter = new Dictionary<string, object>
+    {
+        ["$id"] = "6519",
+        ["or"] = new object[]
+        {
+            new Dictionary<string, object>
+            {
+                ["$id"] = "6520",
                 ["attributeName"] = "name",
                 ["operator"] = "eq",
                 ["attributeValue"] = "exampledata.csv"
             },
             new Dictionary<string, object>
             {
+                ["$id"] = "6521",
                 ["attributeName"] = "createTime",
                 ["operator"] = "ge",
                 ["attributeValue"] = 1545580800000L
             },
             new Dictionary<string, object>
             {
+                ["$id"] = "6522",
                 ["attributeName"] = "modifiedTime",
                 ["operator"] = "timerange",
                 ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
             }
-        },
+        }
     },
 });
 Response response = client.Query(content);
@@ -3361,35 +3728,40 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     limit = 10,
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        or = new object[]
+        ["$id"] = "6584",
+        ["or"] = new object[]
         {
             new Dictionary<string, object>
             {
+                ["$id"] = "6585",
                 ["attributeName"] = "<BusinessMetadataName>.<StringAttributeName>",
                 ["operator"] = "eq|ne|contains|prefix",
                 ["attributeValue"] = "string value"
             },
             new Dictionary<string, object>
             {
+                ["$id"] = "6586",
                 ["attributeName"] = "<BusinessMetadataName>.<NumberAttributeName>",
                 ["operator"] = "eq|ne|gt|ge|lt|le",
                 ["attributeValue"] = 123
             },
             new Dictionary<string, object>
             {
+                ["$id"] = "6587",
                 ["attributeName"] = "<BusinessMetadataName>.<BooleanAttributeName>",
                 ["operator"] = "eq|ne",
                 ["attributeValue"] = true
             },
             new Dictionary<string, object>
             {
+                ["$id"] = "6588",
                 ["attributeName"] = "<BusinessMetadataName>.<DateAttributeName>",
                 ["operator"] = "timerange",
                 ["attributeValue"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
             }
-        },
+        }
     },
 });
 Response response = client.Query(content);
@@ -3406,10 +3778,11 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     limit = 10,
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        classification = "MICROSOFT.PERSONAL.EMAIL",
-        includeSubClassifications = true,
+        ["$id"] = "6611",
+        ["classification"] = "MICROSOFT.PERSONAL.EMAIL",
+        ["includeSubClassifications"] = true
     },
 });
 Response response = client.Query(content);
@@ -3426,9 +3799,10 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     limit = 10,
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        collectionId = "collectionName",
+        ["$id"] = "6661",
+        ["collectionId"] = "collectionName"
     },
 });
 Response response = client.Query(content);
@@ -3444,9 +3818,10 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 
 using RequestContent content = RequestContent.Create(new
 {
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        objectType = "Tables",
+        ["$id"] = "6710",
+        ["objectType"] = "Tables"
     },
     limit = 10,
     facets = new object[]
@@ -3487,15 +3862,17 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     limit = 10,
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "6840",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                fileExtension = "txt",
+                ["$id"] = "6841",
+                ["fileExtension"] = "txt"
             }
-        },
+        }
     },
 });
 Response response = client.Query(content);
@@ -3513,29 +3890,34 @@ using RequestContent content = RequestContent.Create(new
 {
     keywords = "<term name>",
     limit = 10,
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "6884",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Glossary terms",
+                ["$id"] = "6885",
+                ["objectType"] = "Glossary terms"
             },
-            new
+            new Dictionary<string, object>
             {
-                or = new object[]
+                ["$id"] = "6886",
+                ["or"] = new object[]
                 {
-                    new
+                    new Dictionary<string, object>
                     {
-                        glossaryType = "AtlasGlossary",
+                        ["$id"] = "6887",
+                        ["glossaryType"] = "AtlasGlossary"
                     },
-                    new
+                    new Dictionary<string, object>
                     {
-                        glossaryType = "AtlasGlossaryTerm",
+                        ["$id"] = "6888",
+                        ["glossaryType"] = "AtlasGlossaryTerm"
                     }
-                },
+                }
             }
-        },
+        }
     },
     facets = new object[]
     {
@@ -3573,15 +3955,17 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     limit = 10,
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "6956",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                id = "bfecbcc3-1838-45fe-96d6-112de8a170f9",
+                ["$id"] = "6957",
+                ["id"] = "bfecbcc3-1838-45fe-96d6-112de8a170f9"
             }
-        },
+        }
     },
 });
 Response response = client.Query(content);
@@ -3598,12 +3982,14 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     limit = 10,
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        not = new
+        ["$id"] = "6985",
+        ["not"] = new Dictionary<string, object>
         {
-            classification = "MICROSOFT.SYSTEM.TEMP_FILE",
-        },
+            ["$id"] = "6986",
+            ["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
+        }
     },
 });
 Response response = client.Query(content);
@@ -3620,43 +4006,52 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     limit = 10,
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        or = new object[]
+        ["$id"] = "7028",
+        ["or"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Dashboards",
+                ["$id"] = "7029",
+                ["objectType"] = "Dashboards"
             },
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Data pipelines",
+                ["$id"] = "7030",
+                ["objectType"] = "Data pipelines"
             },
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Files",
+                ["$id"] = "7031",
+                ["objectType"] = "Files"
             },
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Folders",
+                ["$id"] = "7032",
+                ["objectType"] = "Folders"
             },
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Glossary terms",
+                ["$id"] = "7033",
+                ["objectType"] = "Glossary terms"
             },
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Reports",
+                ["$id"] = "7034",
+                ["objectType"] = "Reports"
             },
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Stored procedures",
+                ["$id"] = "7035",
+                ["objectType"] = "Stored procedures"
             },
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Tables",
+                ["$id"] = "7036",
+                ["objectType"] = "Tables"
             }
-        },
+        }
     },
 });
 Response response = client.Query(content);
@@ -3673,31 +4068,36 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     keywords = "exampledata",
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "7074",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Files",
+                ["$id"] = "7075",
+                ["objectType"] = "Files"
             },
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
+                ["$id"] = "7076",
+                ["entityType"] = "azure_blob_path"
             }
-        },
+        }
     },
     limit = 2,
     continuationToken = "<token>",
     orderby = new object[]
     {
-        new
+        new Dictionary<string, object>
         {
-            name = "ASC",
+            ["$id"] = "7081",
+            ["name"] = "ASC"
         },
-        new
+        new Dictionary<string, object>
         {
-            updateTime = "DESC",
+            ["$id"] = "7083",
+            ["updateTime"] = "DESC"
         }
     },
     facets = new object[]
@@ -3763,30 +4163,35 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     keywords = "exampledata",
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "7161",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Files",
+                ["$id"] = "7162",
+                ["objectType"] = "Files"
             },
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
+                ["$id"] = "7163",
+                ["entityType"] = "azure_blob_path"
             }
-        },
+        }
     },
     limit = 2,
     orderby = new object[]
     {
-        new
+        new Dictionary<string, object>
         {
-            name = "ASC",
+            ["$id"] = "7167",
+            ["name"] = "ASC"
         },
-        new
+        new Dictionary<string, object>
         {
-            updateTime = "DESC",
+            ["$id"] = "7169",
+            ["updateTime"] = "DESC"
         }
     },
     facets = new object[]
@@ -3852,31 +4257,36 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     keywords = "exampledata",
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "7247",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Files",
+                ["$id"] = "7248",
+                ["objectType"] = "Files"
             },
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
+                ["$id"] = "7249",
+                ["entityType"] = "azure_blob_path"
             }
-        },
+        }
     },
     limit = 2,
     continuationToken = "<token>",
     orderby = new object[]
     {
-        new
+        new Dictionary<string, object>
         {
-            name = "ASC",
+            ["$id"] = "7254",
+            ["name"] = "ASC"
         },
-        new
+        new Dictionary<string, object>
         {
-            updateTime = "DESC",
+            ["$id"] = "7256",
+            ["updateTime"] = "DESC"
         }
     },
     facets = new object[]
@@ -3942,23 +4352,27 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     limit = 10,
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        or = new object[]
+        ["$id"] = "7333",
+        ["or"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                createTime = new Dictionary<string, object>
+                ["$id"] = "7334",
+                ["createTime"] = new Dictionary<string, object>
                 {
+                    ["$id"] = "7335",
                     ["operator"] = "lt",
                     ["timeThreshold"] = 1545580800000L
-                },
+                }
             },
-            new
+            new Dictionary<string, object>
             {
-                updateTime = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D",
+                ["$id"] = "7336",
+                ["updateTime"] = "LAST_24H|LAST_7D|LAST_30D|LAST_365D|MORE_THAN_365D"
             }
-        },
+        }
     },
 });
 Response response = client.Query(content);
@@ -3975,43 +4389,51 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     keywords = "exampledata",
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "7369",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                objectType = "Files",
+                ["$id"] = "7370",
+                ["objectType"] = "Files"
             },
-            new
+            new Dictionary<string, object>
             {
-                not = new
+                ["$id"] = "7371",
+                ["not"] = new Dictionary<string, object>
                 {
-                    or = new object[]
+                    ["$id"] = "7372",
+                    ["or"] = new object[]
                     {
                         new Dictionary<string, object>
                         {
+                            ["$id"] = "7373",
                             ["attributeName"] = "size",
                             ["operator"] = "eq",
                             ["attributeValue"] = 0
                         },
                         new Dictionary<string, object>
                         {
+                            ["$id"] = "7374",
                             ["attributeName"] = "fileSize",
                             ["operator"] = "eq",
                             ["attributeValue"] = 0
                         }
-                    },
-                },
+                    }
+                }
             },
-            new
+            new Dictionary<string, object>
             {
-                not = new
+                ["$id"] = "7375",
+                ["not"] = new Dictionary<string, object>
                 {
-                    classification = "MICROSOFT.SYSTEM.TEMP_FILE",
-                },
+                    ["$id"] = "7376",
+                    ["classification"] = "MICROSOFT.SYSTEM.TEMP_FILE"
+                }
             }
-        },
+        }
     },
     limit = 10,
     taxonomySetting = new
@@ -4045,24 +4467,28 @@ using RequestContent content = RequestContent.Create(new
 {
     keywords = "<asset name>",
     limit = 3,
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        or = new object[]
+        ["$id"] = "7430",
+        ["or"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                term = "ExampleTerm",
+                ["$id"] = "7431",
+                ["term"] = "ExampleTerm"
             },
-            new
+            new Dictionary<string, object>
             {
-                term = "ExampleTerm",
-                glossary = "GlossaryName",
+                ["$id"] = "7432",
+                ["term"] = "ExampleTerm",
+                ["glossary"] = "GlossaryName"
             },
-            new
+            new Dictionary<string, object>
             {
-                termGuid = "<term guid>",
+                ["$id"] = "7433",
+                ["termGuid"] = "<term guid>"
             }
-        },
+        }
     },
 });
 Response response = client.Query(content);
@@ -4079,16 +4505,18 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     limit = 10,
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "7466",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
-                includeSubTypes = false,
+                ["$id"] = "7467",
+                ["entityType"] = "azure_blob_path",
+                ["includeSubTypes"] = false
             }
-        },
+        }
     },
 });
 Response response = client.Query(content);
@@ -4109,16 +4537,18 @@ SuggestConfig body = new SuggestConfig
 {
     Keywords = "exampledata",
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "7528",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
-                includeSubTypes = false,
+                ["$id"] = "7529",
+                ["entityType"] = "azure_blob_path",
+                ["includeSubTypes"] = false
             }
-        },
+        }
     }),
 };
 Response<SuggestResult> response = await client.SuggestAsync(body);
@@ -4136,16 +4566,18 @@ SuggestConfig body = new SuggestConfig
 {
     Keywords = "exampledata",
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "7528",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
-                includeSubTypes = false,
+                ["$id"] = "7529",
+                ["entityType"] = "azure_blob_path",
+                ["includeSubTypes"] = false
             }
-        },
+        }
     }),
 };
 Response<SuggestResult> response = client.Suggest(body);
@@ -4162,16 +4594,18 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     keywords = "exampledata",
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "7528",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
-                includeSubTypes = false,
+                ["$id"] = "7529",
+                ["entityType"] = "azure_blob_path",
+                ["includeSubTypes"] = false
             }
-        },
+        }
     },
     limit = 10,
 });
@@ -4192,16 +4626,18 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     keywords = "exampledata",
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "7528",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
-                includeSubTypes = false,
+                ["$id"] = "7529",
+                ["entityType"] = "azure_blob_path",
+                ["includeSubTypes"] = false
             }
-        },
+        }
     },
     limit = 10,
 });
@@ -4223,16 +4659,18 @@ AutoCompleteConfig body = new AutoCompleteConfig
 {
     Keywords = "exa",
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "7588",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
-                includeSubTypes = false,
+                ["$id"] = "7589",
+                ["entityType"] = "azure_blob_path",
+                ["includeSubTypes"] = false
             }
-        },
+        }
     }),
 };
 Response<AutoCompleteResult> response = await client.AutoCompleteAsync(body);
@@ -4250,16 +4688,18 @@ AutoCompleteConfig body = new AutoCompleteConfig
 {
     Keywords = "exa",
     Limit = 10,
-    Filter = BinaryData.FromObjectAsJson(new
+    Filter = BinaryData.FromObjectAsJson(new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "7588",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
-                includeSubTypes = false,
+                ["$id"] = "7589",
+                ["entityType"] = "azure_blob_path",
+                ["includeSubTypes"] = false
             }
-        },
+        }
     }),
 };
 Response<AutoCompleteResult> response = client.AutoComplete(body);
@@ -4276,16 +4716,18 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     keywords = "exa",
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "7588",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
-                includeSubTypes = false,
+                ["$id"] = "7589",
+                ["entityType"] = "azure_blob_path",
+                ["includeSubTypes"] = false
             }
-        },
+        }
     },
     limit = 10,
 });
@@ -4306,16 +4748,18 @@ Discovery client = new DataMapClient(endpoint, credential).GetDiscoveryClient(ap
 using RequestContent content = RequestContent.Create(new
 {
     keywords = "exa",
-    filter = new
+    filter = new Dictionary<string, object>
     {
-        and = new object[]
+        ["$id"] = "7588",
+        ["and"] = new object[]
         {
-            new
+            new Dictionary<string, object>
             {
-                entityType = "azure_blob_path",
-                includeSubTypes = false,
+                ["$id"] = "7589",
+                ["entityType"] = "azure_blob_path",
+                ["includeSubTypes"] = false
             }
-        },
+        }
     },
     limit = 10,
 });

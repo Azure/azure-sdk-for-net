@@ -4,7 +4,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -34,9 +33,9 @@ public partial class Readme : SamplesBase<AIProjectsTestEnvironment>
         #region Snippet:AI_Projects_Readme_Troubleshooting
         try
         {
-            projectClient.Datasets.GetDataset("non-existent-dataset-name", "non-existent-dataset-version");
+            projectClient.GetDatasetsClient().GetDataset("non-existent-dataset-name", "non-existent-dataset-version");
         }
-        catch (ClientResultException ex) when (ex.Status == 404)
+        catch (RequestFailedException ex) when (ex.Status == 404)
         {
             Console.WriteLine($"Exception status code: {ex.Status}");
             Console.WriteLine($"Exception message: {ex.Message}");

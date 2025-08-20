@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.StorageActions.Models
 {
@@ -47,31 +46,25 @@ namespace Azure.ResourceManager.StorageActions.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="StorageTasksListResult"/>. </summary>
-        /// <param name="value"> Gets the list of storage tasks and their properties. </param>
-        internal StorageTasksListResult(IEnumerable<StorageTaskData> value)
+        internal StorageTasksListResult()
         {
-            Value = value.ToList();
+            Value = new ChangeTrackingList<StorageTaskData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageTasksListResult"/>. </summary>
         /// <param name="value"> Gets the list of storage tasks and their properties. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="nextLink"> Request URL that can be used to query next page of storage tasks. Returned when total number of requested storage tasks exceed maximum page size. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTasksListResult(IReadOnlyList<StorageTaskData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageTasksListResult(IReadOnlyList<StorageTaskData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageTasksListResult"/> for deserialization. </summary>
-        internal StorageTasksListResult()
-        {
-        }
-
         /// <summary> Gets the list of storage tasks and their properties. </summary>
         public IReadOnlyList<StorageTaskData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> Request URL that can be used to query next page of storage tasks. Returned when total number of requested storage tasks exceed maximum page size. </summary>
+        public string NextLink { get; }
     }
 }

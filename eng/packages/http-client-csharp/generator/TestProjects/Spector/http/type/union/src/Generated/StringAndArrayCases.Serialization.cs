@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure;
+using Azure.Core;
 
 namespace _Type.Union
 {
@@ -32,5 +34,10 @@ namespace _Type.Union
         protected virtual StringAndArrayCases PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<StringAndArrayCases>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        /// <param name="stringAndArrayCases"> The <see cref="StringAndArrayCases"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(StringAndArrayCases stringAndArrayCases) => throw null;
+
+        public static explicit operator StringAndArrayCases(Response result) => throw null;
     }
 }

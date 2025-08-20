@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -47,27 +46,27 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(DefaultBackendAddressPool))
             {
                 writer.WritePropertyName("defaultBackendAddressPool"u8);
-                ((IJsonModel<WritableSubResource>)DefaultBackendAddressPool).Write(writer, options);
+                JsonSerializer.Serialize(writer, DefaultBackendAddressPool);
             }
             if (Optional.IsDefined(DefaultBackendHttpSettings))
             {
                 writer.WritePropertyName("defaultBackendHttpSettings"u8);
-                ((IJsonModel<WritableSubResource>)DefaultBackendHttpSettings).Write(writer, options);
+                JsonSerializer.Serialize(writer, DefaultBackendHttpSettings);
             }
             if (Optional.IsDefined(DefaultRewriteRuleSet))
             {
                 writer.WritePropertyName("defaultRewriteRuleSet"u8);
-                ((IJsonModel<WritableSubResource>)DefaultRewriteRuleSet).Write(writer, options);
+                JsonSerializer.Serialize(writer, DefaultRewriteRuleSet);
             }
             if (Optional.IsDefined(DefaultRedirectConfiguration))
             {
                 writer.WritePropertyName("defaultRedirectConfiguration"u8);
-                ((IJsonModel<WritableSubResource>)DefaultRedirectConfiguration).Write(writer, options);
+                JsonSerializer.Serialize(writer, DefaultRedirectConfiguration);
             }
             if (Optional.IsDefined(DefaultLoadDistributionPolicy))
             {
                 writer.WritePropertyName("defaultLoadDistributionPolicy"u8);
-                ((IJsonModel<WritableSubResource>)DefaultLoadDistributionPolicy).Write(writer, options);
+                JsonSerializer.Serialize(writer, DefaultLoadDistributionPolicy);
             }
             if (Optional.IsCollectionDefined(PathRules))
             {
@@ -169,7 +168,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            defaultBackendAddressPool = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            defaultBackendAddressPool = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("defaultBackendHttpSettings"u8))
@@ -178,7 +177,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            defaultBackendHttpSettings = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            defaultBackendHttpSettings = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("defaultRewriteRuleSet"u8))
@@ -187,7 +186,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            defaultRewriteRuleSet = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            defaultRewriteRuleSet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("defaultRedirectConfiguration"u8))
@@ -196,7 +195,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            defaultRedirectConfiguration = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            defaultRedirectConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("defaultLoadDistributionPolicy"u8))
@@ -205,7 +204,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            defaultLoadDistributionPolicy = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            defaultLoadDistributionPolicy = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("pathRules"u8))

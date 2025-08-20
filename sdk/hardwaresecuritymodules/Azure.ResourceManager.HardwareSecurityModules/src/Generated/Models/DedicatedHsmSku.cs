@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> SKU of the dedicated HSM. </summary>
+        [WirePath("name")]
         public DedicatedHsmSkuName? Name { get; set; }
     }
 }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Agents.Models
@@ -27,17 +26,11 @@ namespace Azure.Search.Documents.Agents.Models
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeAgentMessageImageContent"/>. </summary>
         /// <param name="type"> The type of the message. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="image"></param>
-        internal KnowledgeAgentMessageImageContent(KnowledgeAgentMessageContentType type, IDictionary<string, BinaryData> serializedAdditionalRawData, KnowledgeAgentMessageImageContentImage image) : base(type, serializedAdditionalRawData)
+        internal KnowledgeAgentMessageImageContent(KnowledgeAgentMessageContentType type, KnowledgeAgentMessageImageContentImage image) : base(type)
         {
             Image = image;
             Type = type;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="KnowledgeAgentMessageImageContent"/> for deserialization. </summary>
-        internal KnowledgeAgentMessageImageContent()
-        {
         }
 
         /// <summary> Gets or sets the image. </summary>

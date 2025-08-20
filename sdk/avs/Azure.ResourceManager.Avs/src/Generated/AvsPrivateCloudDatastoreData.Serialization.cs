@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
@@ -49,7 +48,7 @@ namespace Azure.ResourceManager.Avs
             if (Optional.IsDefined(NetAppVolume))
             {
                 writer.WritePropertyName("netAppVolume"u8);
-                ((IJsonModel<WritableSubResource>)NetAppVolume).Write(writer, options);
+                JsonSerializer.Serialize(writer, NetAppVolume);
             }
             if (Optional.IsDefined(DiskPoolVolume))
             {
@@ -60,11 +59,6 @@ namespace Azure.ResourceManager.Avs
             {
                 writer.WritePropertyName("elasticSanVolume"u8);
                 writer.WriteObjectValue(ElasticSanVolume, options);
-            }
-            if (Optional.IsDefined(PureStorageVolume))
-            {
-                writer.WritePropertyName("pureStorageVolume"u8);
-                writer.WriteObjectValue(PureStorageVolume, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -102,7 +96,6 @@ namespace Azure.ResourceManager.Avs
             WritableSubResource netAppVolume = default;
             DiskPoolVolume diskPoolVolume = default;
             ElasticSanVolume elasticSanVolume = default;
-            AvsPureStorageVolume pureStorageVolume = default;
             DatastoreStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -129,7 +122,7 @@ namespace Azure.ResourceManager.Avs
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAvsContext.Default);
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -156,7 +149,7 @@ namespace Azure.ResourceManager.Avs
                             {
                                 continue;
                             }
-                            netAppVolume = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerAvsContext.Default);
+                            netAppVolume = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("diskPoolVolume"u8))
@@ -175,15 +168,6 @@ namespace Azure.ResourceManager.Avs
                                 continue;
                             }
                             elasticSanVolume = ElasticSanVolume.DeserializeElasticSanVolume(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("pureStorageVolume"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            pureStorageVolume = AvsPureStorageVolume.DeserializeAvsPureStorageVolume(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -213,7 +197,6 @@ namespace Azure.ResourceManager.Avs
                 netAppVolume,
                 diskPoolVolume,
                 elasticSanVolume,
-                pureStorageVolume,
                 status,
                 serializedAdditionalRawData);
         }

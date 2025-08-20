@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
@@ -16,15 +14,9 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSimilarity"/>. </summary>
         /// <param name="oDataType"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownSimilarity(string oDataType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(oDataType, serializedAdditionalRawData)
+        internal UnknownSimilarity(string oDataType) : base(oDataType)
         {
             ODataType = oDataType ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownSimilarity"/> for deserialization. </summary>
-        internal UnknownSimilarity()
-        {
         }
     }
 }

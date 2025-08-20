@@ -81,7 +81,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 Assert.IsNotEmpty(batchNodeID);
 
                 // create new user
-                BatchNodeUserCreateOptions user = new BatchNodeUserCreateOptions(userName)
+                BatchNodeUserCreateContent user = new BatchNodeUserCreateContent(userName)
                 {
                     Password = userPassWord
                 };
@@ -89,7 +89,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 Assert.IsFalse(response.IsError);
 
                 // update users password
-                BatchNodeUserUpdateOptions content = new BatchNodeUserUpdateOptions()
+                BatchNodeUserUpdateContent content = new BatchNodeUserUpdateContent()
                 {
                     Password = updatedPassWord
                 };
@@ -126,47 +126,8 @@ namespace Azure.Compute.Batch.Tests.Integration
                 Assert.IsNotEmpty(batchNodeID);
 
                 // reboot node
-                RebootNodeOperation rebootNodeOperation = await client.RebootNodeAsync(poolID, batchNodeID);
-
-                BatchNode node = await rebootNodeOperation.WaitForCompletionAsync().ConfigureAwait(false);
-                Assert.IsTrue(rebootNodeOperation.HasCompleted);
-                Assert.IsTrue(rebootNodeOperation.HasValue);
-                Assert.IsFalse(rebootNodeOperation.GetRawResponse().IsError);
-                await iaasWindowsPoolFixture.WaitForPoolAllocation(client, poolID);
-            }
-            finally
-            {
-                await client.DeletePoolAsync(poolID);
-            }
-        }
-
-        [RecordedTest]
-        public async Task ReImageBatchNode()
-        {
-            var client = CreateBatchClient();
-            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "ReImageBatchNode", IsPlayBack());
-            var poolID = iaasWindowsPoolFixture.PoolId;
-
-            try
-            {
-                // create a pool to verify we have something to query for
-                BatchPool pool = await iaasWindowsPoolFixture.CreatePoolAsync(1);
-
-                string batchNodeID = "";
-                await foreach (BatchNode item in client.GetNodesAsync(poolID))
-                {
-                    batchNodeID = item.Id;
-                }
-                Assert.IsNotEmpty(batchNodeID);
-
-                // reboot node
-                ReimageNodeOperation reImageNodeOperation = await client.ReimageNodeAsync(poolID, batchNodeID);
-
-                BatchNode node = await reImageNodeOperation.WaitForCompletionAsync().ConfigureAwait(false);
-
-                Assert.IsFalse(reImageNodeOperation.GetRawResponse().IsError);
-                Assert.IsTrue(reImageNodeOperation.HasCompleted);
-                Assert.IsTrue(reImageNodeOperation.HasValue);
+                Response response = await client.RebootNodeAsync(poolID, batchNodeID);
+                Assert.IsFalse(response.IsError);
                 await iaasWindowsPoolFixture.WaitForPoolAllocation(client, poolID);
             }
             finally
@@ -195,20 +156,29 @@ namespace Azure.Compute.Batch.Tests.Integration
                 Assert.IsNotEmpty(batchNodeID);
 
                 // Deallocate node
-                DeallocateNodeOperation deallocateNodeOperation = await client.DeallocateNodeAsync(poolID, batchNodeID);
-                await deallocateNodeOperation.WaitForCompletionAsync().ConfigureAwait(false);
-                Assert.IsTrue(deallocateNodeOperation.HasCompleted);
-                Assert.IsTrue(deallocateNodeOperation.HasValue);
-                Assert.IsFalse(deallocateNodeOperation.GetRawResponse().IsError);
-                Assert.AreEqual(BatchNodeState.Deallocated, deallocateNodeOperation.Value.State);
+                Response response = await client.DeallocateNodeAsync(poolID, batchNodeID);
+                Assert.IsFalse(response.IsError);
+
+                // wait for node state to reach deallocated
+                BatchNode node = await client.GetNodeAsync(poolID, batchNodeID);
+                while (node.State != BatchNodeState.Deallocated)
+                {
+                    TestSleep(10);
+                    node = await client.GetNodeAsync(poolID, batchNodeID);
+                }
+                Assert.AreEqual(BatchNodeState.Deallocated, node.State);
 
                 // start node
-                StartNodeOperation startNodeOperation = await client.StartNodeAsync(poolID, batchNodeID);
-                await startNodeOperation.WaitForCompletionAsync().ConfigureAwait(false);
-                Assert.IsTrue(startNodeOperation.HasCompleted);
-                Assert.IsTrue(startNodeOperation.HasValue);
-                Assert.IsFalse(startNodeOperation.GetRawResponse().IsError);
-                Assert.AreNotEqual(BatchNodeState.Starting, startNodeOperation.Value.State);
+                response = await client.StartNodeAsync(poolID, batchNodeID);
+                Assert.IsFalse(response.IsError);
+
+                // wait for node state to reach starting
+                node = await client.GetNodeAsync(poolID, batchNodeID);
+                while (node.State != BatchNodeState.Starting)
+                {
+                    node = await client.GetNodeAsync(poolID, batchNodeID);
+                }
+                Assert.AreEqual(BatchNodeState.Starting, node.State);
             }
             finally
             {
@@ -225,7 +195,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             try
             {
                 // create a pool to verify we have something to query for
-                BatchPoolCreateOptions batchPoolCreateOptions = iaasWindowsPoolFixture.CreatePoolOptions(1);
+                BatchPoolCreateContent batchPoolCreateOptions = iaasWindowsPoolFixture.CreatePoolOptions(1);
                 VMExtension vMExtension = new VMExtension("CustomExtension", "Microsoft.Azure.Geneva", "GenevaMonitoring")
                 {
                     TypeHandlerVersion = "2.16",
@@ -273,11 +243,11 @@ namespace Azure.Compute.Batch.Tests.Integration
 
             try
             {
-                BatchPoolCreateOptions batchPoolCreateOptions = iaasWindowsPoolFixture.CreatePoolOptions(1);
+                BatchPoolCreateContent batchPoolCreateOptions = iaasWindowsPoolFixture.CreatePoolOptions(1);
                 batchPoolCreateOptions.UserAccounts.Add(new UserAccount("testuser", "Password1!"));
 
-                BatchPoolEndpointConfiguration batchPoolEndpointConfiguration = new BatchPoolEndpointConfiguration(new List<BatchInboundNatPool>());
-                batchPoolEndpointConfiguration.InboundNatPools.Add(new BatchInboundNatPool("ruleName", InboundEndpointProtocol.Tcp, 3389, 15000, 15100));
+                BatchPoolEndpointConfiguration batchPoolEndpointConfiguration = new BatchPoolEndpointConfiguration(new List<InboundNatPool>());
+                batchPoolEndpointConfiguration.InboundNatPools.Add(new InboundNatPool("ruleName", InboundEndpointProtocol.Tcp, 3389, 15000, 15100));
 
                 batchPoolCreateOptions.NetworkConfiguration = new NetworkConfiguration()
                 {
@@ -297,7 +267,7 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 BatchNodeRemoteLoginSettings batchNodeRemoteLoginSettings = await client.GetNodeRemoteLoginSettingsAsync(poolID, batchNodeID);
                 Assert.NotNull(batchNodeRemoteLoginSettings);
-                Assert.NotNull(batchNodeRemoteLoginSettings.RemoteLoginIpAddress);
+                Assert.IsNotEmpty(batchNodeRemoteLoginSettings.RemoteLoginIpAddress);
             }
             finally
             {
@@ -323,7 +293,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                     batchNodeID = item.Id;
                 }
                 Assert.IsNotEmpty(batchNodeID);
-                BatchNodeDisableSchedulingOptions batchNodeDisableSchedulingContent = new BatchNodeDisableSchedulingOptions()
+                BatchNodeDisableSchedulingContent batchNodeDisableSchedulingContent = new BatchNodeDisableSchedulingContent()
                 {
                     NodeDisableSchedulingOption = BatchNodeDisableSchedulingOption.TaskCompletion,
                 };
@@ -333,7 +303,7 @@ namespace Azure.Compute.Batch.Tests.Integration
                 response = await client.EnableNodeSchedulingAsync(poolID, batchNodeID);
                 Assert.AreEqual(200, response.Status);
 
-                UploadBatchServiceLogsOptions uploadBatchServiceLogsContent = new UploadBatchServiceLogsOptions(new Uri("http://contoso.com"), DateTimeOffset.Parse("2026-05-01T00:00:00.0000000Z"));
+                UploadBatchServiceLogsContent uploadBatchServiceLogsContent = new UploadBatchServiceLogsContent("http://contoso.com", DateTimeOffset.Parse("2026-05-01T00:00:00.0000000Z"));
 
                 UploadBatchServiceLogsResult uploadBatchServiceLogsResult =  await client.UploadNodeLogsAsync(poolID, batchNodeID, uploadBatchServiceLogsContent);
                 Assert.NotNull(uploadBatchServiceLogsResult);

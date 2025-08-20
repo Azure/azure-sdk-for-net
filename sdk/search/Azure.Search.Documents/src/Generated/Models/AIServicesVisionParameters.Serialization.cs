@@ -6,34 +6,16 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class AIServicesVisionParameters : IUtf8JsonSerializable, IJsonModel<AIServicesVisionParameters>
+    public partial class AIServicesVisionParameters : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AIServicesVisionParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<AIServicesVisionParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AIServicesVisionParameters>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(AIServicesVisionParameters)} does not support writing '{format}' format.");
-            }
-
             if (ModelVersion != null)
             {
                 writer.WritePropertyName("modelVersion"u8);
@@ -55,46 +37,18 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (AuthIdentity != null)
                 {
                     writer.WritePropertyName("authIdentity"u8);
-                    writer.WriteObjectValue(AuthIdentity, options);
+                    writer.WriteObjectValue(AuthIdentity);
                 }
                 else
                 {
                     writer.WriteNull("authIdentity");
                 }
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
+            writer.WriteEndObject();
         }
 
-        AIServicesVisionParameters IJsonModel<AIServicesVisionParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        internal static AIServicesVisionParameters DeserializeAIServicesVisionParameters(JsonElement element)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AIServicesVisionParameters>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(AIServicesVisionParameters)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAIServicesVisionParameters(document.RootElement, options);
-        }
-
-        internal static AIServicesVisionParameters DeserializeAIServicesVisionParameters(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -103,8 +57,6 @@ namespace Azure.Search.Documents.Indexes.Models
             Uri resourceUri = default;
             string apiKey = default;
             SearchIndexerDataIdentity authIdentity = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelVersion"u8))
@@ -134,48 +86,12 @@ namespace Azure.Search.Documents.Indexes.Models
                         authIdentity = null;
                         continue;
                     }
-                    authIdentity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(property.Value, options);
+                    authIdentity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(property.Value);
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new AIServicesVisionParameters(modelVersion, resourceUri, apiKey, authIdentity, serializedAdditionalRawData);
+            return new AIServicesVisionParameters(modelVersion, resourceUri, apiKey, authIdentity);
         }
-
-        BinaryData IPersistableModel<AIServicesVisionParameters>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AIServicesVisionParameters>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AIServicesVisionParameters)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AIServicesVisionParameters IPersistableModel<AIServicesVisionParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AIServicesVisionParameters>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAIServicesVisionParameters(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AIServicesVisionParameters)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AIServicesVisionParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -189,7 +105,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

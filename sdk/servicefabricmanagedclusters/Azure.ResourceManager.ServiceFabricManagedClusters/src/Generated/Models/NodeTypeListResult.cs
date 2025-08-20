@@ -7,11 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary> The response of a NodeType list operation. </summary>
+    /// <summary> Node type list results. </summary>
     internal partial class NodeTypeListResult
     {
         /// <summary>
@@ -47,34 +46,25 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NodeTypeListResult"/>. </summary>
-        /// <param name="value"> The NodeType items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal NodeTypeListResult(IEnumerable<ServiceFabricManagedNodeTypeData> value)
+        internal NodeTypeListResult()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            Value = new ChangeTrackingList<ServiceFabricManagedNodeTypeData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NodeTypeListResult"/>. </summary>
-        /// <param name="value"> The NodeType items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value"> The list of node types. </param>
+        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NodeTypeListResult(IReadOnlyList<ServiceFabricManagedNodeTypeData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NodeTypeListResult(IReadOnlyList<ServiceFabricManagedNodeTypeData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NodeTypeListResult"/> for deserialization. </summary>
-        internal NodeTypeListResult()
-        {
-        }
-
-        /// <summary> The NodeType items on this page. </summary>
+        /// <summary> The list of node types. </summary>
         public IReadOnlyList<ServiceFabricManagedNodeTypeData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> The URL to use for getting the next set of results. </summary>
+        public string NextLink { get; }
     }
 }

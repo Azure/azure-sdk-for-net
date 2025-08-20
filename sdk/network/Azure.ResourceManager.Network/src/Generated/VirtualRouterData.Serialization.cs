@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -63,12 +62,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(HostedSubnet))
             {
                 writer.WritePropertyName("hostedSubnet"u8);
-                ((IJsonModel<WritableSubResource>)HostedSubnet).Write(writer, options);
+                JsonSerializer.Serialize(writer, HostedSubnet);
             }
             if (Optional.IsDefined(HostedGateway))
             {
                 writer.WritePropertyName("hostedGateway"u8);
-                ((IJsonModel<WritableSubResource>)HostedGateway).Write(writer, options);
+                JsonSerializer.Serialize(writer, HostedGateway);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Peerings))
             {
@@ -76,7 +75,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Peerings)
                 {
-                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -217,7 +216,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            hostedSubnet = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            hostedSubnet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("hostedGateway"u8))
@@ -226,7 +225,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            hostedGateway = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            hostedGateway = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("peerings"u8))
@@ -238,7 +237,7 @@ namespace Azure.ResourceManager.Network
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerNetworkContext.Default));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                             }
                             peerings = array;
                             continue;

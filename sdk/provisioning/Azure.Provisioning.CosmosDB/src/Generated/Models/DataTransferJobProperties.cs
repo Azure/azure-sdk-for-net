@@ -34,8 +34,7 @@ public partial class DataTransferJobProperties : ProvisionableConstruct
     /// Azure.ResourceManager.CosmosDB.Models.AzureBlobDataTransferDataSourceSink,
     /// Azure.ResourceManager.CosmosDB.Models.BaseCosmosDataTransferDataSourceSink,
     /// Azure.ResourceManager.CosmosDB.Models.CosmosCassandraDataTransferDataSourceSink,
-    /// Azure.ResourceManager.CosmosDB.Models.CosmosMongoDataTransferDataSourceSink,
-    /// Azure.ResourceManager.CosmosDB.Models.CosmosMongoVCoreDataTransferDataSourceSink
+    /// Azure.ResourceManager.CosmosDB.Models.CosmosMongoDataTransferDataSourceSink
     /// and
     /// Azure.ResourceManager.CosmosDB.Models.CosmosSqlDataTransferDataSourceSink.
     /// </summary>
@@ -56,8 +55,7 @@ public partial class DataTransferJobProperties : ProvisionableConstruct
     /// Azure.ResourceManager.CosmosDB.Models.AzureBlobDataTransferDataSourceSink,
     /// Azure.ResourceManager.CosmosDB.Models.BaseCosmosDataTransferDataSourceSink,
     /// Azure.ResourceManager.CosmosDB.Models.CosmosCassandraDataTransferDataSourceSink,
-    /// Azure.ResourceManager.CosmosDB.Models.CosmosMongoDataTransferDataSourceSink,
-    /// Azure.ResourceManager.CosmosDB.Models.CosmosMongoVCoreDataTransferDataSourceSink
+    /// Azure.ResourceManager.CosmosDB.Models.CosmosMongoDataTransferDataSourceSink
     /// and
     /// Azure.ResourceManager.CosmosDB.Models.CosmosSqlDataTransferDataSourceSink.
     /// </summary>
@@ -117,11 +115,11 @@ public partial class DataTransferJobProperties : ProvisionableConstruct
     /// <summary>
     /// Error response for Faulted job.
     /// </summary>
-    public CosmosDBErrorResult ErrorResult 
+    public ErrorResponse Error 
     {
-        get { Initialize(); return _errorResult!; }
+        get { Initialize(); return _error!; }
     }
-    private CosmosDBErrorResult? _errorResult;
+    private ErrorResponse? _error;
 
     /// <summary>
     /// Total Duration of Job.
@@ -163,7 +161,7 @@ public partial class DataTransferJobProperties : ProvisionableConstruct
         _totalCount = DefineProperty<long>("TotalCount", ["totalCount"], isOutput: true);
         _lastUpdatedUtcOn = DefineProperty<DateTimeOffset>("LastUpdatedUtcOn", ["lastUpdatedUtcTime"], isOutput: true);
         _workerCount = DefineProperty<int>("WorkerCount", ["workerCount"]);
-        _errorResult = DefineModelProperty<CosmosDBErrorResult>("ErrorResult", ["error"], isOutput: true);
+        _error = DefineModelProperty<ErrorResponse>("Error", ["error"], isOutput: true);
         _duration = DefineProperty<TimeSpan>("Duration", ["duration"], isOutput: true);
         _mode = DefineProperty<DataTransferJobMode>("Mode", ["mode"]);
     }

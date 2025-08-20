@@ -11,8 +11,7 @@ namespace Azure.Projects;
 
 internal class EventGridSystemTopicFeature : AzureProjectFeature
 {
-    internal static string EventGridTopicVersion =>
-        SystemTopic.ResourceVersions.V2022_06_15;
+    internal const string EventGridTopicVersion = "2022-06-15";
 
     public EventGridSystemTopicFeature(string topicName, StorageAccountFeature source, string topicType)
     {

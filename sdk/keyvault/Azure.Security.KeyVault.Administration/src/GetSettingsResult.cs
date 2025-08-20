@@ -5,7 +5,7 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    [CodeGenType("SettingsListResult")]
+    [CodeGenModel("SettingsListResult")]
     public partial class GetSettingsResult
     {
     }

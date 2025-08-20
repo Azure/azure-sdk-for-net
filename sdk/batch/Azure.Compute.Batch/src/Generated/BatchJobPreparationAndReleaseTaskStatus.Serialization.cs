@@ -44,10 +44,10 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("nodeId"u8);
                 writer.WriteStringValue(NodeId);
             }
-            if (Optional.IsDefined(NodeUri))
+            if (Optional.IsDefined(NodeUrl))
             {
                 writer.WritePropertyName("nodeUrl"u8);
-                writer.WriteStringValue(NodeUri.AbsoluteUri);
+                writer.WriteStringValue(NodeUrl);
             }
             if (Optional.IsDefined(JobPreparationTaskExecutionInfo))
             {
@@ -98,7 +98,7 @@ namespace Azure.Compute.Batch
             }
             string poolId = default;
             string nodeId = default;
-            Uri nodeUrl = default;
+            string nodeUrl = default;
             BatchJobPreparationTaskExecutionInfo jobPreparationTaskExecutionInfo = default;
             BatchJobReleaseTaskExecutionInfo jobReleaseTaskExecutionInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -117,11 +117,7 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("nodeUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    nodeUrl = new Uri(property.Value.GetString());
+                    nodeUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("jobPreparationTaskExecutionInfo"u8))

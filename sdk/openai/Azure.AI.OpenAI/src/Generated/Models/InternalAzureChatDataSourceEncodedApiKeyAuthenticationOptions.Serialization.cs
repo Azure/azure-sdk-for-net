@@ -3,6 +3,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -12,13 +13,10 @@ namespace Azure.AI.OpenAI.Chat
 {
     internal partial class InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions : IJsonModel<InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions>
     {
-        /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions"/> for deserialization. </summary>
-        internal InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions() : this(InternalAzureChatDataSourceAuthenticationOptionsType.EncodedApiKey, null, null)
+        internal InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions()
         {
         }
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -26,8 +24,6 @@ namespace Azure.AI.OpenAI.Chat
             writer.WriteEndObject();
         }
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions>)this).GetFormatFromOptions(options) : options.Format;
@@ -43,12 +39,8 @@ namespace Azure.AI.OpenAI.Chat
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions IJsonModel<InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions)JsonModelCreateCore(ref reader, options);
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataSourceAuthentication JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions>)this).GetFormatFromOptions(options) : options.Format;
@@ -60,22 +52,20 @@ namespace Azure.AI.OpenAI.Chat
             return DeserializeInternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         internal static InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions DeserializeInternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            InternalAzureChatDataSourceAuthenticationOptionsType kind = default;
+            string @type = "encoded_api_key";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string encodedApiKey = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    kind = new InternalAzureChatDataSourceAuthenticationOptionsType(prop.Value.GetString());
+                    @type = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("encoded_api_key"u8))
@@ -88,31 +78,25 @@ namespace Azure.AI.OpenAI.Chat
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions(kind, additionalBinaryDataProperties, encodedApiKey);
+            return new InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions(@type, additionalBinaryDataProperties, encodedApiKey);
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIOpenAIContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions IPersistableModel<InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataSourceAuthentication PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions>)this).GetFormatFromOptions(options) : options.Format;
@@ -128,7 +112,22 @@ namespace Azure.AI.OpenAI.Chat
             }
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        public static implicit operator BinaryContent(InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions internalAzureChatDataSourceEncodedApiKeyAuthenticationOptions)
+        {
+            if (internalAzureChatDataSourceEncodedApiKeyAuthenticationOptions == null)
+            {
+                return null;
+            }
+            return BinaryContent.Create(internalAzureChatDataSourceEncodedApiKeyAuthenticationOptions, ModelSerializationExtensions.WireOptions);
+        }
+
+        public static explicit operator InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions(ClientResult result)
+        {
+            using PipelineResponse response = result.GetRawResponse();
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeInternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

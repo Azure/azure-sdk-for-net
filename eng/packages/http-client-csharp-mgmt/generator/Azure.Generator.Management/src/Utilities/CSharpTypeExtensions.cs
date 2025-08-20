@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.Primitives;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Azure.Generator.Management.Utilities
@@ -12,7 +13,7 @@ namespace Azure.Generator.Management.Utilities
         public static CSharpType WrapAsync(this CSharpType type, bool isAsync)
         {
             return isAsync
-                ? new CSharpType(typeof(Task<>), type)
+                ? new CSharpType(typeof(System.Threading.Tasks.Task<>), type)
                 : type;
         }
 
@@ -21,15 +22,24 @@ namespace Azure.Generator.Management.Utilities
             if (isLongRunning)
             {
                 return type is not null
-                    ? new CSharpType(typeof(ArmOperation<>), type)
-                    : typeof(ArmOperation);
+                    ? new CSharpType(typeof(Azure.ResourceManager.ArmOperation<>), type)
+                    : typeof(Azure.ResourceManager.ArmOperation);
             }
             else
             {
                 return type is not null
-                    ? new CSharpType(typeof(Response<>), type)
-                    : typeof(Response);
+                    ? new CSharpType(typeof(Azure.Response<>), type)
+                    : typeof(Azure.Response);
             }
+        }
+
+        public static CSharpType UnWrapAsync(this CSharpType type)
+        {
+            if (type.IsFrameworkType && type.IsGenericType && type.FrameworkType.GetGenericTypeDefinition() == typeof(Task<>))
+            {
+                return type.Arguments[0];
+            }
+            return type;
         }
     }
 }

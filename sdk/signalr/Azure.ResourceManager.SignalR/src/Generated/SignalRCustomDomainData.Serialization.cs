@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SignalR
             writer.WritePropertyName("domainName"u8);
             writer.WriteStringValue(DomainName);
             writer.WritePropertyName("customCertificate"u8);
-            ((IJsonModel<WritableSubResource>)CustomCertificate).Write(writer, options);
+            JsonSerializer.Serialize(writer, CustomCertificate);
             writer.WriteEndObject();
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SignalR
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSignalRContext.Default);
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.SignalR
                         }
                         if (property0.NameEquals("customCertificate"u8))
                         {
-                            customCertificate = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerSignalRContext.Default);
+                            customCertificate = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                     }

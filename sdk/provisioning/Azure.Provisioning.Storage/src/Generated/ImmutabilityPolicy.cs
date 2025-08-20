@@ -138,7 +138,6 @@ public partial class ImmutabilityPolicy : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
-        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _allowProtectedAppendWrites = DefineProperty<bool>("AllowProtectedAppendWrites", ["properties", "allowProtectedAppendWrites"]);
         _allowProtectedAppendWritesAll = DefineProperty<bool>("AllowProtectedAppendWritesAll", ["properties", "allowProtectedAppendWritesAll"]);

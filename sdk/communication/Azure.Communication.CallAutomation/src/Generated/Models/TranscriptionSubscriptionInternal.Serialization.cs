@@ -21,7 +21,6 @@ namespace Azure.Communication.CallAutomation
             string id = default;
             TranscriptionSubscriptionState? state = default;
             IReadOnlyList<TranscriptionResultState> subscribedResultTypes = default;
-            string locale = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -52,13 +51,8 @@ namespace Azure.Communication.CallAutomation
                     subscribedResultTypes = array;
                     continue;
                 }
-                if (property.NameEquals("locale"u8))
-                {
-                    locale = property.Value.GetString();
-                    continue;
-                }
             }
-            return new TranscriptionSubscriptionInternal(id, state, subscribedResultTypes ?? new ChangeTrackingList<TranscriptionResultState>(), locale);
+            return new TranscriptionSubscriptionInternal(id, state, subscribedResultTypes ?? new ChangeTrackingList<TranscriptionResultState>());
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

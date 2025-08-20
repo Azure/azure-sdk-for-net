@@ -8,7 +8,7 @@
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> The AcrAccessToken. </summary>
-    public partial class AcrAccessToken
+    internal partial class AcrAccessToken
     {
         /// <summary> Initializes a new instance of <see cref="AcrAccessToken"/>. </summary>
         internal AcrAccessToken()

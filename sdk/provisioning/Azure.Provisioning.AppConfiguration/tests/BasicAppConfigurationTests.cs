@@ -20,7 +20,6 @@ public class BasicAppConfigurationTests(bool async)
         await test.Define(
             ctx =>
             {
-                #region Snippet:AppConfigurationStoreFF
                 Infrastructure infra = new();
 
                 ProvisioningParameter featureFlagKey =
@@ -60,7 +59,6 @@ public class BasicAppConfigurationTests(bool async)
                         Value = BicepFunction.AsString(flag)
                     };
                 infra.Add(featureFlag);
-                #endregion
 
                 return infra;
             })

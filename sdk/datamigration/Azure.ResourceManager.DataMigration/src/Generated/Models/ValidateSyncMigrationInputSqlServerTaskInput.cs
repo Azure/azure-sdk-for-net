@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/>, <paramref name="targetConnectionInfo"/> or <paramref name="selectedDatabases"/> is null. </exception>
-        public ValidateSyncMigrationInputSqlServerTaskInput(DataMigrationSqlConnectionInfo sourceConnectionInfo, DataMigrationSqlConnectionInfo targetConnectionInfo, IEnumerable<MigrateSqlServerSqlDBSyncDatabaseInput> selectedDatabases)
+        public ValidateSyncMigrationInputSqlServerTaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IEnumerable<MigrateSqlServerSqlDBSyncDatabaseInput> selectedDatabases)
         {
             Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
             Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ValidateSyncMigrationInputSqlServerTaskInput(DataMigrationSqlConnectionInfo sourceConnectionInfo, DataMigrationSqlConnectionInfo targetConnectionInfo, IList<MigrateSqlServerSqlDBSyncDatabaseInput> selectedDatabases, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ValidateSyncMigrationInputSqlServerTaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IList<MigrateSqlServerSqlDBSyncDatabaseInput> selectedDatabases, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceConnectionInfo = sourceConnectionInfo;
             TargetConnectionInfo = targetConnectionInfo;
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Information for connecting to source SQL server. </summary>
-        public DataMigrationSqlConnectionInfo SourceConnectionInfo { get; set; }
+        public SqlConnectionInfo SourceConnectionInfo { get; set; }
         /// <summary> Information for connecting to target. </summary>
-        public DataMigrationSqlConnectionInfo TargetConnectionInfo { get; set; }
+        public SqlConnectionInfo TargetConnectionInfo { get; set; }
         /// <summary> Databases to migrate. </summary>
         public IList<MigrateSqlServerSqlDBSyncDatabaseInput> SelectedDatabases { get; }
     }

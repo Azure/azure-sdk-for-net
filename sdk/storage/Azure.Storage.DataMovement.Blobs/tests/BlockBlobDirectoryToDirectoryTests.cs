@@ -87,8 +87,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
         private async Task PopulateVirtualDirectoryContainer(
             BlobContainerClient containerClient,
-            long objectLength,
-            string prefix = default)
+            long objectLength)
         {
             byte[] data = GetRandomBuffer(objectLength);
             Metadata folderMetadata = new Dictionary<string, string>()
@@ -111,9 +110,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             ];
             foreach (string file in files)
             {
-                string fileName = prefix != default ? $"{prefix}/{file}" : file;
                 using MemoryStream stream = new(data);
-                BlobClient blobClient = containerClient.GetBlobClient(fileName);
+                BlobClient blobClient = containerClient.GetBlobClient(file);
                 await blobClient.UploadAsync(stream);
             }
 
@@ -121,8 +119,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             string[] emptyDirs = ["emptyDir", "recursiveDir/emptySubDir"];
             foreach (string dir in emptyDirs)
             {
-                string dirName = prefix != default ? $"{prefix}/{dir}" : dir;
-                BlobClient blobClient = containerClient.GetBlobClient(dirName);
+                BlobClient blobClient = containerClient.GetBlobClient(dir);
                 await blobClient.UploadAsync(Stream.Null, new BlobUploadOptions()
                 {
                     Metadata = folderMetadata
@@ -131,9 +128,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [RecordedTest]
-        public async Task DirectoryCopyWithVirtualDirectories(
-            [Values(true, false)] bool hns,
-            [Values(true, false)] bool usePrefix)
+        public async Task DirectoryCopyWithVirtualDirectories([Values(true, false)] bool hns)
         {
             BlobServiceClient serviceClient = SourceClientBuilder.GetServiceClientFromOauthConfig(
                 hns ? Tenants.TestConfigHierarchicalNamespace : Tenants.TestConfigDefault,
@@ -142,9 +137,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             await using DisposingBlobContainer sourceContainer = await SourceClientBuilder.GetTestContainerAsync(serviceClient);
             await using DisposingBlobContainer destinationContainer = await DestinationClientBuilder.GetTestContainerAsync(serviceClient);
 
-            string sourcePrefix = usePrefix ? "source" : default;
-            string destinationPrefix = usePrefix ? "destination" : default;
-            await PopulateVirtualDirectoryContainer(sourceContainer.Container, 1024, prefix: sourcePrefix);
+            await PopulateVirtualDirectoryContainer(sourceContainer.Container, 1024);
 
             TransferManager transferManager = new();
             BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
@@ -153,8 +146,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             TestEventsRaised testEventsRaised = new(transferOptions);
 
             TransferOperation transfer = await transferManager.StartTransferAsync(
-                GetSourceStorageResourceContainer(sourceContainer.Container, sourcePrefix),
-                GetSourceStorageResourceContainer(destinationContainer.Container, destinationPrefix),
+                GetSourceStorageResourceContainer(sourceContainer.Container, default),
+                GetSourceStorageResourceContainer(destinationContainer.Container, default),
                 transferOptions);
 
             CancellationTokenSource tokenSource = new(TimeSpan.FromSeconds(30));
@@ -165,8 +158,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             testEventsRaised.AssertUnexpectedFailureCheck();
             await VerifyResultsAsync(
-                sourceContainer.Container, sourcePrefix,
-                destinationContainer.Container, destinationPrefix);
+                sourceContainer.Container, string.Empty,
+                destinationContainer.Container, string.Empty);
         }
     }
 }

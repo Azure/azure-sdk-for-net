@@ -12,17 +12,11 @@ namespace Azure.AI.OpenAI
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InternalAzureOpenAIChatErrorInnerError"/>. </summary>
         internal InternalAzureOpenAIChatErrorInnerError()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalAzureOpenAIChatErrorInnerError"/>. </summary>
-        /// <param name="code"> The code associated with the inner error. </param>
-        /// <param name="revisedPrompt"> If applicable, the modified prompt used for generation. </param>
-        /// <param name="contentFilterResults"> The content filter result details associated with the inner error. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalAzureOpenAIChatErrorInnerError(string code, string revisedPrompt, RequestContentFilterResult contentFilterResults, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalAzureOpenAIChatErrorInnerError(InternalAzureOpenAIChatErrorInnerErrorCode? code, string revisedPrompt, RequestContentFilterResult contentFilterResults, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             RevisedPrompt = revisedPrompt;
@@ -31,7 +25,7 @@ namespace Azure.AI.OpenAI
         }
 
         /// <summary> The code associated with the inner error. </summary>
-        public string Code { get; set; }
+        public InternalAzureOpenAIChatErrorInnerErrorCode? Code { get; set; }
 
         /// <summary> If applicable, the modified prompt used for generation. </summary>
         public string RevisedPrompt { get; set; }

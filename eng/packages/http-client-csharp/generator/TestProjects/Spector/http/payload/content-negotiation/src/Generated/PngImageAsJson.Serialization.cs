@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace Payload.ContentNegotiation._DifferentBody
 {
@@ -33,6 +34,9 @@ namespace Payload.ContentNegotiation._DifferentBody
         protected virtual PngImageAsJson PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<PngImageAsJson>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        /// <param name="pngImageAsJson"> The <see cref="PngImageAsJson"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(PngImageAsJson pngImageAsJson) => throw null;
 
         public static explicit operator PngImageAsJson(Response result) => throw null;
     }

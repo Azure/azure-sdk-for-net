@@ -5,9 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Search.Documents.Agents.Models
 {
     /// <summary> Represents a semantic ranker activity record. </summary>
@@ -23,19 +20,13 @@ namespace Azure.Search.Documents.Agents.Models
         /// <summary> Initializes a new instance of <see cref="KnowledgeAgentSemanticRankerActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="type"> The type of the activity record. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="inputTokens"> The number of input tokens for the semantic ranker activity. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the model activity. </param>
-        internal KnowledgeAgentSemanticRankerActivityRecord(int id, string type, IDictionary<string, BinaryData> serializedAdditionalRawData, int? inputTokens, int? elapsedMs) : base(id, type, serializedAdditionalRawData)
+        internal KnowledgeAgentSemanticRankerActivityRecord(int id, string type, int? inputTokens, int? elapsedMs) : base(id, type)
         {
             InputTokens = inputTokens;
             ElapsedMs = elapsedMs;
             Type = type ?? "AzureSearchSemanticRanker";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="KnowledgeAgentSemanticRankerActivityRecord"/> for deserialization. </summary>
-        internal KnowledgeAgentSemanticRankerActivityRecord()
-        {
         }
 
         /// <summary> The number of input tokens for the semantic ranker activity. </summary>

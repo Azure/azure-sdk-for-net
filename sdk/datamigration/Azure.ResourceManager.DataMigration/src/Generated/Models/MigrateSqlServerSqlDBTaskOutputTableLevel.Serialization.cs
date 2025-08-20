@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             string objectName = default;
             DateTimeOffset? startedOn = default;
             DateTimeOffset? endedOn = default;
-            DataMigrationState? state = default;
+            MigrationState? state = default;
             string statusMessage = default;
             long? itemsCount = default;
             long? itemsCompletedCount = default;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    state = new DataMigrationState(property.Value.GetString());
+                    state = new MigrationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("statusMessage"u8))

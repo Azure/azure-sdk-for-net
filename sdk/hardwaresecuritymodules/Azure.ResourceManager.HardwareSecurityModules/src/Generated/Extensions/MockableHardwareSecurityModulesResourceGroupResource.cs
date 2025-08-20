@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmCluster_Get</description>
+        /// <description>CloudHsmClusters_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-31</description>
+        /// <description>2024-06-30-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudHsmCluster_Get</description>
+        /// <description>CloudHsmClusters_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-31</description>
+        /// <description>2024-06-30-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-31</description>
+        /// <description>2024-06-30-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-31</description>
+        /// <description>2024-06-30-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

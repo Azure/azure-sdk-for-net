@@ -5,7 +5,6 @@
 
 #nullable enable
 
-using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using System;
 
@@ -57,16 +56,6 @@ public partial class CognitiveServicesCapacityConfig : ProvisionableConstruct
     private BicepValue<int>? _default;
 
     /// <summary>
-    /// The array of allowed values for capacity.
-    /// </summary>
-    public BicepList<int> AllowedValues 
-    {
-        get { Initialize(); return _allowedValues!; }
-        set { Initialize(); _allowedValues!.Assign(value); }
-    }
-    private BicepList<int>? _allowedValues;
-
-    /// <summary>
     /// Creates a new CognitiveServicesCapacityConfig.
     /// </summary>
     public CognitiveServicesCapacityConfig()
@@ -84,6 +73,5 @@ public partial class CognitiveServicesCapacityConfig : ProvisionableConstruct
         _maximum = DefineProperty<int>("Maximum", ["maximum"]);
         _step = DefineProperty<int>("Step", ["step"]);
         _default = DefineProperty<int>("Default", ["default"]);
-        _allowedValues = DefineListProperty<int>("AllowedValues", ["allowedValues"]);
     }
 }

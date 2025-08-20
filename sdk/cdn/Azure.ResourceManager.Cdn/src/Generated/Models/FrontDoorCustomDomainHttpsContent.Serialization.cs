@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -56,7 +55,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(Secret))
             {
                 writer.WritePropertyName("secret"u8);
-                ((IJsonModel<WritableSubResource>)Secret).Write(writer, options);
+                JsonSerializer.Serialize(writer, Secret);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -142,7 +141,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    secret = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerCdnContext.Default);
+                    secret = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")

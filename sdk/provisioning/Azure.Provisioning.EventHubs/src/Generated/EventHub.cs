@@ -70,16 +70,6 @@ public partial class EventHub : ProvisionableResource
     private BicepValue<EventHubEntityStatus>? _status;
 
     /// <summary>
-    /// Gets and Sets Metadata of User.
-    /// </summary>
-    public BicepValue<string> UserMetadata 
-    {
-        get { Initialize(); return _userMetadata!; }
-        set { Initialize(); _userMetadata!.Assign(value); }
-    }
-    private BicepValue<string>? _userMetadata;
-
-    /// <summary>
     /// Exact time the Event Hub was created.
     /// </summary>
     public BicepValue<DateTimeOffset> CreatedOn 
@@ -168,7 +158,6 @@ public partial class EventHub : ProvisionableResource
         _partitionCount = DefineProperty<long>("PartitionCount", ["properties", "partitionCount"]);
         _retentionDescription = DefineModelProperty<RetentionDescription>("RetentionDescription", ["properties", "retentionDescription"]);
         _status = DefineProperty<EventHubEntityStatus>("Status", ["properties", "status"]);
-        _userMetadata = DefineProperty<string>("UserMetadata", ["properties", "userMetadata"]);
         _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "createdAt"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isOutput: true);
@@ -197,16 +186,6 @@ public partial class EventHub : ProvisionableResource
         /// 2017-04-01.
         /// </summary>
         public static readonly string V2017_04_01 = "2017-04-01";
-
-        /// <summary>
-        /// 2015-08-01.
-        /// </summary>
-        public static readonly string V2015_08_01 = "2015-08-01";
-
-        /// <summary>
-        /// 2014-09-01.
-        /// </summary>
-        public static readonly string V2014_09_01 = "2014-09-01";
     }
 
     /// <summary>

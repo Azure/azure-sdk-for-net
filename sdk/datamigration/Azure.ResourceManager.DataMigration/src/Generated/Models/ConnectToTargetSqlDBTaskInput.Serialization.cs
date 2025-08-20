@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
             writer.WritePropertyName("targetConnectionInfo"u8);
             writer.WriteObjectValue(TargetConnectionInfo, options);
-            if (Optional.IsDefined(ShouldQueryObjectCounts))
+            if (Optional.IsDefined(QueryObjectCounts))
             {
                 writer.WritePropertyName("queryObjectCounts"u8);
-                writer.WriteBooleanValue(ShouldQueryObjectCounts.Value);
+                writer.WriteBooleanValue(QueryObjectCounts.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            DataMigrationSqlConnectionInfo targetConnectionInfo = default;
+            SqlConnectionInfo targetConnectionInfo = default;
             bool? queryObjectCounts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = DataMigrationSqlConnectionInfo.DeserializeDataMigrationSqlConnectionInfo(property.Value, options);
+                    targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("queryObjectCounts"u8))

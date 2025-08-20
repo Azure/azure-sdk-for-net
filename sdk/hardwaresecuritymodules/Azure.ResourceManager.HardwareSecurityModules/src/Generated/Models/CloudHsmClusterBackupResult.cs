@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> Properties of the Cloud HSM Cluster. </summary>
+        [WirePath("properties")]
         public CloudHsmClusterBackupResultProperties Properties { get; }
     }
 }

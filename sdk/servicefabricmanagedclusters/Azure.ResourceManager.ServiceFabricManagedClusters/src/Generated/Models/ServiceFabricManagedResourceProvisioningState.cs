@@ -33,25 +33,25 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         private const string DeletedValue = "Deleted";
         private const string OtherValue = "Other";
 
-        /// <summary> The resource does not have a provisioning state. </summary>
+        /// <summary> None. </summary>
         public static ServiceFabricManagedResourceProvisioningState None { get; } = new ServiceFabricManagedResourceProvisioningState(NoneValue);
-        /// <summary> The resource is being created. </summary>
+        /// <summary> Creating. </summary>
         public static ServiceFabricManagedResourceProvisioningState Creating { get; } = new ServiceFabricManagedResourceProvisioningState(CreatingValue);
-        /// <summary> The resource is created. </summary>
+        /// <summary> Created. </summary>
         public static ServiceFabricManagedResourceProvisioningState Created { get; } = new ServiceFabricManagedResourceProvisioningState(CreatedValue);
-        /// <summary> The resource is being updated. </summary>
+        /// <summary> Updating. </summary>
         public static ServiceFabricManagedResourceProvisioningState Updating { get; } = new ServiceFabricManagedResourceProvisioningState(UpdatingValue);
-        /// <summary> The resource provisioning has succeeded. </summary>
+        /// <summary> Succeeded. </summary>
         public static ServiceFabricManagedResourceProvisioningState Succeeded { get; } = new ServiceFabricManagedResourceProvisioningState(SucceededValue);
-        /// <summary> The resource provisioning has failed. </summary>
+        /// <summary> Failed. </summary>
         public static ServiceFabricManagedResourceProvisioningState Failed { get; } = new ServiceFabricManagedResourceProvisioningState(FailedValue);
-        /// <summary> The resource provisioning has been canceled. </summary>
+        /// <summary> Canceled. </summary>
         public static ServiceFabricManagedResourceProvisioningState Canceled { get; } = new ServiceFabricManagedResourceProvisioningState(CanceledValue);
-        /// <summary> The resource is being deleted. </summary>
+        /// <summary> Deleting. </summary>
         public static ServiceFabricManagedResourceProvisioningState Deleting { get; } = new ServiceFabricManagedResourceProvisioningState(DeletingValue);
-        /// <summary> The resource has been deleted. </summary>
+        /// <summary> Deleted. </summary>
         public static ServiceFabricManagedResourceProvisioningState Deleted { get; } = new ServiceFabricManagedResourceProvisioningState(DeletedValue);
-        /// <summary> The resource provisioning state is a state other than the previously specified states. </summary>
+        /// <summary> Other. </summary>
         public static ServiceFabricManagedResourceProvisioningState Other { get; } = new ServiceFabricManagedResourceProvisioningState(OtherValue);
         /// <summary> Determines if two <see cref="ServiceFabricManagedResourceProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ServiceFabricManagedResourceProvisioningState left, ServiceFabricManagedResourceProvisioningState right) => left.Equals(right);

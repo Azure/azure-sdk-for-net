@@ -7,11 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    /// <summary> The response of a CloudHsmCluster list operation. </summary>
+    /// <summary> List of Cloud HSM Clusters. </summary>
     internal partial class CloudHsmClusterListResult
     {
         /// <summary>
@@ -47,34 +46,25 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CloudHsmClusterListResult"/>. </summary>
-        /// <param name="value"> The CloudHsmCluster items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal CloudHsmClusterListResult(IEnumerable<CloudHsmClusterData> value)
+        internal CloudHsmClusterListResult()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            Value = new ChangeTrackingList<CloudHsmClusterData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudHsmClusterListResult"/>. </summary>
-        /// <param name="value"> The CloudHsmCluster items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value"> The list of Cloud HSM Clusters. </param>
+        /// <param name="nextLink"> The URL to get the next set of Cloud HSM Clusters. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudHsmClusterListResult(IReadOnlyList<CloudHsmClusterData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CloudHsmClusterListResult(IReadOnlyList<CloudHsmClusterData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterListResult"/> for deserialization. </summary>
-        internal CloudHsmClusterListResult()
-        {
-        }
-
-        /// <summary> The CloudHsmCluster items on this page. </summary>
+        /// <summary> The list of Cloud HSM Clusters. </summary>
         public IReadOnlyList<CloudHsmClusterData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> The URL to get the next set of Cloud HSM Clusters. </summary>
+        public string NextLink { get; }
     }
 }

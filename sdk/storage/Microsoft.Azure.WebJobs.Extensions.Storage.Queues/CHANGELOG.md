@@ -10,11 +10,6 @@
 
 ### Other Changes
 
-## 5.3.5 (2025-07-21)
-
-### Other Changes
-- This release contains bug fixes to improve quality.
-
 ## 5.3.4 (2025-02-11)
 
 ### Bugs Fixed

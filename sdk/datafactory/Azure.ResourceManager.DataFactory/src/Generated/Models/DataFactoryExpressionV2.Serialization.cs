@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(V2Type.Value.ToString());
             }
-            if (Optional.IsDefined(V2Value))
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                JsonSerializer.Serialize(writer, V2Value);
+                writer.WriteStringValue(Value);
             }
             if (Optional.IsCollectionDefined(Operators))
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryExpressionV2Type? type = default;
-            DataFactoryElement<string> value = default;
+            string value = default;
             IList<DataFactoryElement<string>> operators = default;
             IList<DataFactoryExpressionV2> operands = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -126,11 +126,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("value"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    value = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    value = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("operators"u8))

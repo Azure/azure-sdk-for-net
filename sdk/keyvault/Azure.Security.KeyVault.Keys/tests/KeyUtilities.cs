@@ -65,8 +65,8 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 case KeyWrapAlgorithm.A128KWValue:
                 case KeyWrapAlgorithm.A192KWValue:
                 case KeyWrapAlgorithm.A256KWValue:
-                case KeyWrapAlgorithm.CkmAesKeyWrapValue:
-                case KeyWrapAlgorithm.CkmAesKeyWrapPadValue:
+                case EncryptionAlgorithm.CkmAesKeyWrapValue:
+                case EncryptionAlgorithm.CkmAesKeyWrapPadValue:
                     return CreateAesKey(algorithm.GetAesKeyWrapAlgorithm().KeySizeInBytes, keyOps);
 
                 case KeyWrapAlgorithm.Rsa15Value:

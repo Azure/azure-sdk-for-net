@@ -10,10 +10,11 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace BasicTypeSpec
 {
-    /// <summary> The ReturnsAnonymousModelResponse. </summary>
+    /// <summary></summary>
     public partial class ReturnsAnonymousModelResponse : IJsonModel<ReturnsAnonymousModelResponse>
     {
         /// <param name="writer"> The JSON writer. </param>
@@ -126,6 +127,18 @@ namespace BasicTypeSpec
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ReturnsAnonymousModelResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="returnsAnonymousModelResponse"> The <see cref="ReturnsAnonymousModelResponse"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(ReturnsAnonymousModelResponse returnsAnonymousModelResponse)
+        {
+            if (returnsAnonymousModelResponse == null)
+            {
+                return null;
+            }
+            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteObjectValue(returnsAnonymousModelResponse, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
 
         /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ReturnsAnonymousModelResponse"/> from. </param>
         public static explicit operator ReturnsAnonymousModelResponse(Response result)

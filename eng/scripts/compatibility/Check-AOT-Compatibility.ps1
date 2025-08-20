@@ -1,21 +1,10 @@
-param(
-  [string]$ServiceDirectory,
-  [string]$PackageName,
-  [string]$ExpectedWarningsFilePath,
-  [string]$DirectoryName = "")
+param([string]$ServiceDirectory, [string]$PackageName, [string]$ExpectedWarningsFilePath)
 
 ### Creating a test app ###
 
 Write-Host "Creating a test app to publish."
 
 $expectedWarningsFullPath = Join-Path -Path "..\..\..\..\sdk\$ServiceDirectory\" -ChildPath $ExpectedWarningsFilePath
-
-# Set the project reference path based on whether DirectoryName was provided
-if ([string]::IsNullOrEmpty($DirectoryName)) {
-    $projectRefFullPath = "..\..\..\..\sdk\$ServiceDirectory\$PackageName\src\$PackageName.csproj"
-} else {
-    $projectRefFullPath = "..\..\..\..\sdk\$ServiceDirectory\$DirectoryName\src\$PackageName.csproj"
-}
 
 $folderPath = "\TempAotCompatFiles"
 New-Item -ItemType Directory -Path "./$folderPath" | Out-Null
@@ -29,12 +18,11 @@ $csprojContent = @"
     <OutputType>Exe</OutputType>
     <TargetFramework>net9.0</TargetFramework>
     <PublishAot>true</PublishAot>
-    <EventSourceSupport>true</EventSourceSupport>
     <TrimmerSingleWarn>false</TrimmerSingleWarn>
     <IsTestSupportProject>true</IsTestSupportProject>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="$projectRefFullPath" />
+    <ProjectReference Include="..\..\..\..\sdk\$ServiceDirectory\$PackageName\src\$PackageName.csproj" />
       <TrimmerRootAssembly Include="$PackageName" />
   </ItemGroup>
   <ItemGroup>

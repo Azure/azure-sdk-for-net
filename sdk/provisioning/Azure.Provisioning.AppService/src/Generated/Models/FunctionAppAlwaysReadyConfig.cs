@@ -32,12 +32,12 @@ public partial class FunctionAppAlwaysReadyConfig : ProvisionableConstruct
     /// function group or a specific function. For additional information see
     /// https://aka.ms/flexconsumption/alwaysready.
     /// </summary>
-    public BicepValue<int> AlwaysReadyInstanceCount 
+    public BicepValue<float> InstanceCount 
     {
-        get { Initialize(); return _alwaysReadyInstanceCount!; }
-        set { Initialize(); _alwaysReadyInstanceCount!.Assign(value); }
+        get { Initialize(); return _instanceCount!; }
+        set { Initialize(); _instanceCount!.Assign(value); }
     }
-    private BicepValue<int>? _alwaysReadyInstanceCount;
+    private BicepValue<float>? _instanceCount;
 
     /// <summary>
     /// Creates a new FunctionAppAlwaysReadyConfig.
@@ -52,8 +52,7 @@ public partial class FunctionAppAlwaysReadyConfig : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _instanceCount = DefineProperty<float>("InstanceCount", ["instanceCount"]);
         _name = DefineProperty<string>("Name", ["name"]);
-        _alwaysReadyInstanceCount = DefineProperty<int>("AlwaysReadyInstanceCount", ["instanceCount"]);
+        _instanceCount = DefineProperty<float>("InstanceCount", ["instanceCount"]);
     }
 }

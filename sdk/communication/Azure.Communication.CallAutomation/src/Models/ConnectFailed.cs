@@ -22,7 +22,8 @@ namespace Azure.Communication.CallAutomation
             using var document = JsonDocument.Parse(content);
             JsonElement element = document.RootElement;
 
-            return DeserializeConnectFailed(element);
+            // return DeserializeConnectFailed(element);
+            return null;
         }
     }
 }

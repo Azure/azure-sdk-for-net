@@ -10,20 +10,15 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.AdvancedMessageReceived event. </summary>
     [JsonConverter(typeof(AcsMessageReceivedEventDataConverter))]
-    public partial class AcsMessageReceivedEventData : IJsonModel<AcsMessageReceivedEventData>
+    public partial class AcsMessageReceivedEventData : IUtf8JsonSerializable, IJsonModel<AcsMessageReceivedEventData>
     {
-        /// <summary> Initializes a new instance of <see cref="AcsMessageReceivedEventData"/> for deserialization. </summary>
-        internal AcsMessageReceivedEventData()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsMessageReceivedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AcsMessageReceivedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -35,11 +30,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsMessageReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AcsMessageReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AcsMessageReceivedEventData)} does not support writing '{format}' format.");
             }
+
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Content))
             {
@@ -85,173 +81,167 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AcsMessageReceivedEventData IJsonModel<AcsMessageReceivedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AcsMessageReceivedEventData)JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AcsMessageEventData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AcsMessageReceivedEventData IJsonModel<AcsMessageReceivedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsMessageReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AcsMessageReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AcsMessageReceivedEventData)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAcsMessageReceivedEventData(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AcsMessageReceivedEventData DeserializeAcsMessageReceivedEventData(JsonElement element, ModelReaderWriterOptions options)
+        internal static AcsMessageReceivedEventData DeserializeAcsMessageReceivedEventData(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string @from = default;
-            string to = default;
-            DateTimeOffset? receivedTimestamp = default;
-            AcsMessageChannelEventError errorInternal = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string content = default;
             string messageId = default;
-            AcsMessageChannelKind? channelKind = default;
+            AcsMessageChannelKind? channelType = default;
             string messageType = default;
-            AcsMessageMediaContent mediaContent = default;
+            AcsMessageMediaContent media = default;
             AcsMessageReactionContent reaction = default;
             AcsMessageContext context = default;
             AcsMessageButtonContent button = default;
-            AcsMessageInteractiveContent interactiveContent = default;
-            foreach (var prop in element.EnumerateObject())
+            AcsMessageInteractiveContent interactive = default;
+            string @from = default;
+            string to = default;
+            DateTimeOffset? receivedTimeStamp = default;
+            AcsMessageChannelEventError error = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("from"u8))
+                if (property.NameEquals("content"u8))
                 {
-                    @from = prop.Value.GetString();
+                    content = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("to"u8))
+                if (property.NameEquals("messageId"u8))
                 {
-                    to = prop.Value.GetString();
+                    messageId = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("receivedTimeStamp"u8))
+                if (property.NameEquals("channelType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    receivedTimestamp = prop.Value.GetDateTimeOffset("O");
+                    channelType = new AcsMessageChannelKind(property.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("error"u8))
+                if (property.NameEquals("messageType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    messageType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("media"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    errorInternal = AcsMessageChannelEventError.DeserializeAcsMessageChannelEventError(prop.Value, options);
+                    media = AcsMessageMediaContent.DeserializeAcsMessageMediaContent(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("content"u8))
+                if (property.NameEquals("reaction"u8))
                 {
-                    content = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("messageId"u8))
-                {
-                    messageId = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("channelType"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    channelKind = new AcsMessageChannelKind(prop.Value.GetString());
+                    reaction = AcsMessageReactionContent.DeserializeAcsMessageReactionContent(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("messageType"u8))
+                if (property.NameEquals("context"u8))
                 {
-                    messageType = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("media"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    mediaContent = AcsMessageMediaContent.DeserializeAcsMessageMediaContent(prop.Value, options);
+                    context = AcsMessageContext.DeserializeAcsMessageContext(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("reaction"u8))
+                if (property.NameEquals("button"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    reaction = AcsMessageReactionContent.DeserializeAcsMessageReactionContent(prop.Value, options);
+                    button = AcsMessageButtonContent.DeserializeAcsMessageButtonContent(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("context"u8))
+                if (property.NameEquals("interactive"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    context = AcsMessageContext.DeserializeAcsMessageContext(prop.Value, options);
+                    interactive = AcsMessageInteractiveContent.DeserializeAcsMessageInteractiveContent(property.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("button"u8))
+                if (property.NameEquals("from"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    @from = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("to"u8))
+                {
+                    to = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("receivedTimeStamp"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    button = AcsMessageButtonContent.DeserializeAcsMessageButtonContent(prop.Value, options);
+                    receivedTimeStamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("interactive"u8))
+                if (property.NameEquals("error"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    interactiveContent = AcsMessageInteractiveContent.DeserializeAcsMessageInteractiveContent(prop.Value, options);
+                    error = AcsMessageChannelEventError.DeserializeAcsMessageChannelEventError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new AcsMessageReceivedEventData(
                 @from,
                 to,
-                receivedTimestamp,
-                errorInternal,
-                additionalBinaryDataProperties,
+                receivedTimeStamp,
+                error,
+                serializedAdditionalRawData,
                 content,
                 messageId,
-                channelKind,
+                channelType,
                 messageType,
-                mediaContent,
+                media,
                 reaction,
                 context,
                 button,
-                interactiveContent);
+                interactive);
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AcsMessageReceivedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AcsMessageReceivedEventData>.Write(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsMessageReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AcsMessageReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
             switch (format)
             {
                 case "J":
@@ -261,20 +251,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        AcsMessageReceivedEventData IPersistableModel<AcsMessageReceivedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AcsMessageReceivedEventData)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AcsMessageEventData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        AcsMessageReceivedEventData IPersistableModel<AcsMessageReceivedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcsMessageReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AcsMessageReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
+
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAcsMessageReceivedEventData(document.RootElement, options);
                     }
                 default:
@@ -282,28 +267,35 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AcsMessageReceivedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AcsMessageReceivedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAcsMessageReceivedEventData(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
 
         internal partial class AcsMessageReceivedEventDataConverter : JsonConverter<AcsMessageReceivedEventData>
         {
-            /// <summary> Writes the JSON representation of the model. </summary>
-            /// <param name="writer"> The writer. </param>
-            /// <param name="model"> The model to write. </param>
-            /// <param name="options"> The serialization options. </param>
             public override void Write(Utf8JsonWriter writer, AcsMessageReceivedEventData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<IJsonModel<AcsMessageReceivedEventData>>(model, ModelSerializationExtensions.WireOptions);
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
             }
 
-            /// <summary> Reads the JSON representation and converts into the model. </summary>
-            /// <param name="reader"> The reader. </param>
-            /// <param name="typeToConvert"> The type to convert. </param>
-            /// <param name="options"> The serialization options. </param>
             public override AcsMessageReceivedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAcsMessageReceivedEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsMessageReceivedEventData(document.RootElement);
             }
         }
     }

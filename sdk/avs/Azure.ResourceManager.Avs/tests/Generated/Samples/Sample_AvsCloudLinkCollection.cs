@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CloudLinksCreateOrUpdate()
         {
-            // Generated from example definition: 2024-09-01/CloudLinks_CreateOrUpdate.json
-            // this example is just showing the usage of "CloudLink_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/CloudLinks_CreateOrUpdate.json
+            // this example is just showing the usage of "CloudLinks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -40,7 +40,10 @@ namespace Azure.ResourceManager.Avs.Samples
 
             // invoke the operation
             string cloudLinkName = "cloudLink1";
-            AvsCloudLinkData data = new AvsCloudLinkData();
+            AvsCloudLinkData data = new AvsCloudLinkData
+            {
+                LinkedCloud = new ResourceIdentifier("/subscriptions/12341234-1234-1234-1234-123412341234/resourceGroups/mygroup/providers/Microsoft.AVS/privateClouds/cloud2"),
+            };
             ArmOperation<AvsCloudLinkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, cloudLinkName, data);
             AvsCloudLinkResource result = lro.Value;
 
@@ -55,8 +58,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_CloudLinksGet()
         {
-            // Generated from example definition: 2024-09-01/CloudLinks_Get.json
-            // this example is just showing the usage of "CloudLink_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/CloudLinks_Get.json
+            // this example is just showing the usage of "CloudLinks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -89,8 +92,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_CloudLinksList()
         {
-            // Generated from example definition: 2024-09-01/CloudLinks_List.json
-            // this example is just showing the usage of "CloudLink_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/CloudLinks_List.json
+            // this example is just showing the usage of "CloudLinks_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -125,8 +128,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_CloudLinksGet()
         {
-            // Generated from example definition: 2024-09-01/CloudLinks_Get.json
-            // this example is just showing the usage of "CloudLink_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/CloudLinks_Get.json
+            // this example is just showing the usage of "CloudLinks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -155,8 +158,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_CloudLinksGet()
         {
-            // Generated from example definition: 2024-09-01/CloudLinks_Get.json
-            // this example is just showing the usage of "CloudLink_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/CloudLinks_Get.json
+            // this example is just showing the usage of "CloudLinks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

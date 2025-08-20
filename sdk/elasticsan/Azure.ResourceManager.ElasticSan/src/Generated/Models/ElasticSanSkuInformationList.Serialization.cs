@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 throw new FormatException($"The model {nameof(ElasticSanSkuInformationList)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W")
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink.AbsoluteUri);
+                writer.WriteStringValue(NextLink);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,13 +87,17 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 return null;
             }
             IReadOnlyList<ElasticSanSkuInformation> value = default;
-            Uri nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<ElasticSanSkuInformation> array = new List<ElasticSanSkuInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -104,11 +108,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
                 if (property.NameEquals("nextLink"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    nextLink = new Uri(property.Value.GetString());
+                    nextLink = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ElasticSanSkuInformationList(value, nextLink, serializedAdditionalRawData);
+            return new ElasticSanSkuInformationList(value ?? new ChangeTrackingList<ElasticSanSkuInformation>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticSanSkuInformationList>.Write(ModelReaderWriterOptions options)

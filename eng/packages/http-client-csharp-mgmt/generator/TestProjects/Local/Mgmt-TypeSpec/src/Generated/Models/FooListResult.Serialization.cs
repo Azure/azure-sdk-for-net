@@ -10,11 +10,12 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 using MgmtTypeSpec;
 
 namespace MgmtTypeSpec.Models
 {
-    /// <summary> The response of a Foo list operation. </summary>
+    /// <summary></summary>
     internal partial class FooListResult : IJsonModel<FooListResult>
     {
         /// <summary> Initializes a new instance of <see cref="FooListResult"/> for deserialization. </summary>
@@ -166,8 +167,20 @@ namespace MgmtTypeSpec.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<FooListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+        /// <param name="fooListResult"> The <see cref="FooListResult"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(FooListResult fooListResult)
+        {
+            if (fooListResult == null)
+            {
+                return null;
+            }
+            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            content.JsonWriter.WriteObjectValue(fooListResult, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="FooListResult"/> from. </param>
-        internal static FooListResult FromResponse(Response result)
+        public static explicit operator FooListResult(Response result)
         {
             using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);

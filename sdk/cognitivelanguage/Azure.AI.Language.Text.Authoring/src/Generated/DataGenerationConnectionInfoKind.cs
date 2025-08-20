@@ -22,9 +22,9 @@ namespace Azure.AI.Language.Text.Authoring
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string AzureOpenAIValue = "AzureOpenAI";
+        private const string AzureOpenAIValue = "azureOpenAI";
 
-        /// <summary> AzureOpenAI. </summary>
+        /// <summary> azureOpenAI. </summary>
         public static DataGenerationConnectionInfoKind AzureOpenAI { get; } = new DataGenerationConnectionInfoKind(AzureOpenAIValue);
         /// <summary> Determines if two <see cref="DataGenerationConnectionInfoKind"/> values are the same. </summary>
         public static bool operator ==(DataGenerationConnectionInfoKind left, DataGenerationConnectionInfoKind right) => left.Equals(right);

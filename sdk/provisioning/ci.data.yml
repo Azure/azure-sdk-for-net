@@ -17,7 +17,6 @@ trigger:
     - sdk/provisioning/Azure.Provisioning.KeyVault
     - sdk/provisioning/Azure.Provisioning.PostgreSql
     - sdk/provisioning/Azure.Provisioning.Redis
-    - sdk/provisioning/Azure.Provisioning.RedisEnterprise
     - sdk/provisioning/Azure.Provisioning.Search
     - sdk/provisioning/Azure.Provisioning.ServiceBus
     - sdk/provisioning/Azure.Provisioning.SignalR
@@ -45,7 +44,6 @@ pr:
     - sdk/provisioning/Azure.Provisioning.KeyVault
     - sdk/provisioning/Azure.Provisioning.PostgreSql
     - sdk/provisioning/Azure.Provisioning.Redis
-    - sdk/provisioning/Azure.Provisioning.RedisEnterprise
     - sdk/provisioning/Azure.Provisioning.Search
     - sdk/provisioning/Azure.Provisioning.ServiceBus
     - sdk/provisioning/Azure.Provisioning.SignalR
@@ -86,9 +84,6 @@ parameters:
     default: false
   - name: release_Azure_Provisioning_Redis
     displayName: 'Azure.Provisioning.Redis'
-    type: boolean
-  - name: release_Azure_Provisioning_RedisEnterprise
-    displayName: 'Azure.Provisioning.RedisEnterprise'
     type: boolean
     default: false
   - name: release_Azure_Provisioning_Search
@@ -147,9 +142,6 @@ extends:
     - name: Azure.Provisioning.Redis
       safeName: AzureProvisioningRedis
       createReleaseStage: ${{ parameters.release_Azure_Provisioning_Redis }}
-    - name: Azure.Provisioning.RedisEnterprise
-      safeName: AzureProvisioningRedisEnterprise
-      createReleaseStage: ${{ parameters.release_Azure_Provisioning_RedisEnterprise }}
     - name: Azure.Provisioning.Search
       safeName: AzureProvisioningSearch
       createReleaseStage: ${{ parameters.release_Azure_Provisioning_Search }}

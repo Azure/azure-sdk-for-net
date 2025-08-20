@@ -28,6 +28,8 @@ namespace Azure.Communication.CallAutomation
             CommunicationIdentifierModel source = default;
             string correlationId = default;
             CommunicationUserIdentifierModel answeredBy = default;
+            string mediaSubscriptionId = default;
+            string dataSubscriptionId = default;
             MediaStreamingSubscriptionInternal mediaStreamingSubscription = default;
             TranscriptionSubscriptionInternal transcriptionSubscription = default;
             PhoneNumberIdentifierModel answeredFor = default;
@@ -108,6 +110,16 @@ namespace Azure.Communication.CallAutomation
                     answeredBy = CommunicationUserIdentifierModel.DeserializeCommunicationUserIdentifierModel(property.Value);
                     continue;
                 }
+                if (property.NameEquals("mediaSubscriptionId"u8))
+                {
+                    mediaSubscriptionId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dataSubscriptionId"u8))
+                {
+                    dataSubscriptionId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("mediaStreamingSubscription"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -147,6 +159,8 @@ namespace Azure.Communication.CallAutomation
                 source,
                 correlationId,
                 answeredBy,
+                mediaSubscriptionId,
+                dataSubscriptionId,
                 mediaStreamingSubscription,
                 transcriptionSubscription,
                 answeredFor);

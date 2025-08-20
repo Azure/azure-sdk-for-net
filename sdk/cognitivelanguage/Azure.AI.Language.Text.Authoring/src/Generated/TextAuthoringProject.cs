@@ -243,6 +243,7 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath(projectName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -278,6 +279,7 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath("/:copy", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -305,6 +307,7 @@ namespace Azure.AI.Language.Text.Authoring
                 uri.AppendQuery("trainedModelLabel", trainedModelLabel, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -321,6 +324,7 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath("/:import", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             if (format != null)
             {
                 request.Headers.Add("format", format);
@@ -343,6 +347,7 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath("/:train", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -399,6 +404,7 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath("/:cancel", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -431,6 +437,7 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath("/resources/:unassign", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -467,6 +474,7 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath("/resources/:assign", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -503,6 +511,7 @@ namespace Azure.AI.Language.Text.Authoring
             uri.AppendPath("/deployments/:swap", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;

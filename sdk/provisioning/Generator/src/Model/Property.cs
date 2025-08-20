@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Generator.Model;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -78,8 +77,6 @@ public class Property(TypeModel parent, ModelBase propertyType, PropertyInfo? ar
                 };
         }
     }
-
-    public PropertyHideLevel HideLevel { get; set; } = PropertyHideLevel.DoNotHide;
 
     public override string ToString() =>
         $"<Property {Parent?.Spec?.Name}::{Parent?.Name}.{Name} : {PropertyType?.Name}>";

@@ -8,7 +8,7 @@
     <PackageTags>Azure Monitor OpenTelemetry Exporter Distro ApplicationInsights</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
-    <NoWarn>$(NoWarn);SA1636;AZC0011;AZC0034</NoWarn>
+    <NoWarn>SA1636;AZC0011</NoWarn>
     <DefineConstants>$(DefineConstants);ASP_NET_CORE_DISTRO;</DefineConstants>
   </PropertyGroup>
 
@@ -54,5 +54,5 @@
     <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\SemanticConventions.cs" LinkBase="Shared\Exporter" />
     <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\StringExtensions.cs" LinkBase="Shared\Exporter" />
   </ItemGroup>
-
+  
 </Project>

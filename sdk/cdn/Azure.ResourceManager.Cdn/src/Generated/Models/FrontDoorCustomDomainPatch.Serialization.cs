@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -51,12 +50,12 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(DnsZone))
             {
                 writer.WritePropertyName("azureDnsZone"u8);
-                ((IJsonModel<WritableSubResource>)DnsZone).Write(writer, options);
+                JsonSerializer.Serialize(writer, DnsZone);
             }
             if (Optional.IsDefined(PreValidatedCustomDomainResource))
             {
                 writer.WritePropertyName("preValidatedCustomDomainResourceId"u8);
-                ((IJsonModel<WritableSubResource>)PreValidatedCustomDomainResource).Write(writer, options);
+                JsonSerializer.Serialize(writer, PreValidatedCustomDomainResource);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -133,7 +132,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             {
                                 continue;
                             }
-                            azureDnsZone = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerCdnContext.Default);
+                            azureDnsZone = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("preValidatedCustomDomainResourceId"u8))
@@ -142,7 +141,7 @@ namespace Azure.ResourceManager.Cdn.Models
                             {
                                 continue;
                             }
-                            preValidatedCustomDomainResourceId = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerCdnContext.Default);
+                            preValidatedCustomDomainResourceId = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                     }

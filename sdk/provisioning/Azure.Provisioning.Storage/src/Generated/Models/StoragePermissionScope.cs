@@ -17,8 +17,7 @@ public partial class StoragePermissionScope : ProvisionableConstruct
 {
     /// <summary>
     /// The permissions for the local user. Possible values include: Read (r),
-    /// Write (w), Delete (d), List (l), Create (c), Modify Ownership (o), and
-    /// Modify Permissions (p).
+    /// Write (w), Delete (d), List (l), and Create (c).
     /// </summary>
     public BicepValue<string> Permissions 
     {

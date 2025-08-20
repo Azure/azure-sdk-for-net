@@ -28,7 +28,6 @@ Console.WriteLine($"Created vector store file batch, vector store file batch ID:
 FileSearchToolResource fileSearchResource = new([vectorStore.Id], null);
 
 List<ToolDefinition> tools = [new FileSearchToolDefinition()];
-// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = client.Administration.CreateAgent(
     model: modelName,
     name: "my-agent",
@@ -64,7 +63,6 @@ Console.WriteLine($"Created vector store file batch, vector store file batch ID:
 FileSearchToolResource fileSearchResource = new([vectorStore.Id], null);
 
 List<ToolDefinition> tools = [new FileSearchToolDefinition()];
-// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelName,
     name: "my-agent",
@@ -197,7 +195,6 @@ private static string replaceReferences(Dictionary<string, string> fileIds, stri
 
 Synchronous sample:
 ```C# Snippet:AgentsVectorStoreBatchFileSearchCleanup
-// NOTE: Comment out this code block if you plan to reuse the agent later.
 bool delTask = client.VectorStores.DeleteVectorStore(vectorStore.Id);
 if (delTask)
 {
@@ -212,7 +209,6 @@ client.Administration.DeleteAgent(agent.Id);
 
 Asynchronous sample:
 ```C# Snippet:AgentsVectorStoreBatchFileSearchAsyncCleanup
-// NOTE: Comment out this code block if you plan to reuse the agent later.
 bool delTask = await client.VectorStores.DeleteVectorStoreAsync(vectorStore.Id);
 if (delTask)
 {

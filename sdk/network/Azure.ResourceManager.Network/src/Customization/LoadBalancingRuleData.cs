@@ -3,9 +3,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -14,12 +14,6 @@ namespace Azure.ResourceManager.Network
 {
     public partial class LoadBalancingRuleData : NetworkResourceData
     {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void EnsureProperties()
-        {
-            Properties ??= new LoadBalancingRuleProperties(default, default);
-        }
-
         /// <summary> Gets or sets Id. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ResourceIdentifier FrontendIPConfigurationId
@@ -27,7 +21,10 @@ namespace Azure.ResourceManager.Network
             get => Properties?.FrontendIPConfigurationId;
             set
             {
-                EnsureProperties();
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRuleProperties();
+                }
                 Properties.FrontendIPConfigurationId = value;
             }
         }
@@ -39,21 +36,17 @@ namespace Azure.ResourceManager.Network
             get => Properties?.BackendAddressPoolId;
             set
             {
-                EnsureProperties();
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRuleProperties();
+                }
                 Properties.BackendAddressPoolId = value;
             }
         }
 
         /// <summary> An array of references to pool of DIPs. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public IList<WritableSubResource> BackendAddressPools
-        {
-            get
-            {
-                EnsureProperties();
-                return Properties.BackendAddressPools;
-            }
-        }
+        public IList<WritableSubResource> BackendAddressPools => Properties?.BackendAddressPools;
 
         /// <summary> Gets or sets Id. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -62,7 +55,10 @@ namespace Azure.ResourceManager.Network
             get => Properties?.ProbeId;
             set
             {
-                EnsureProperties();
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRuleProperties();
+                }
                 Properties.ProbeId = value;
             }
         }
@@ -74,7 +70,10 @@ namespace Azure.ResourceManager.Network
             get => Properties?.Protocol;
             set
             {
-                EnsureProperties();
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRuleProperties();
+                }
                 Properties.Protocol = value ?? default;
             }
         }
@@ -86,7 +85,10 @@ namespace Azure.ResourceManager.Network
             get => Properties?.LoadDistribution;
             set
             {
-                EnsureProperties();
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRuleProperties();
+                }
                 Properties.LoadDistribution = value;
             }
         }
@@ -98,7 +100,10 @@ namespace Azure.ResourceManager.Network
             get => Properties?.FrontendPort;
             set
             {
-                EnsureProperties();
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRuleProperties();
+                }
                 Properties.FrontendPort = value ?? default;
             }
         }
@@ -110,7 +115,10 @@ namespace Azure.ResourceManager.Network
             get => Properties?.BackendPort;
             set
             {
-                EnsureProperties();
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRuleProperties();
+                }
                 Properties.BackendPort = value;
             }
         }
@@ -122,7 +130,10 @@ namespace Azure.ResourceManager.Network
             get => Properties?.IdleTimeoutInMinutes;
             set
             {
-                EnsureProperties();
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRuleProperties();
+                }
                 Properties.IdleTimeoutInMinutes = value;
             }
         }
@@ -134,7 +145,10 @@ namespace Azure.ResourceManager.Network
             get => Properties?.EnableFloatingIP;
             set
             {
-                EnsureProperties();
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRuleProperties();
+                }
                 Properties.EnableFloatingIP = value;
             }
         }
@@ -146,7 +160,10 @@ namespace Azure.ResourceManager.Network
             get => Properties?.EnableTcpReset;
             set
             {
-                EnsureProperties();
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRuleProperties();
+                }
                 Properties.EnableTcpReset = value;
             }
         }
@@ -158,7 +175,10 @@ namespace Azure.ResourceManager.Network
             get => Properties?.DisableOutboundSnat;
             set
             {
-                EnsureProperties();
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRuleProperties();
+                }
                 Properties.DisableOutboundSnat = value;
             }
         }

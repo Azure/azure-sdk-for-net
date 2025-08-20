@@ -10,26 +10,19 @@ namespace Azure.AI.OpenAI.Chat
 {
     internal partial class InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions : DataSourceAuthentication
     {
-        /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions"/>. </summary>
-        /// <param name="encodedApiKey"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="encodedApiKey"/> is null. </exception>
-        public InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions(string encodedApiKey) : base(InternalAzureChatDataSourceAuthenticationOptionsType.EncodedApiKey)
+        public InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions(string encodedApiKey) : base("encoded_api_key")
         {
             Argument.AssertNotNull(encodedApiKey, nameof(encodedApiKey));
 
             EncodedApiKey = encodedApiKey;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions"/>. </summary>
-        /// <param name="kind"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="encodedApiKey"></param>
-        internal InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions(InternalAzureChatDataSourceAuthenticationOptionsType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string encodedApiKey) : base(kind, additionalBinaryDataProperties)
+        internal InternalAzureChatDataSourceEncodedApiKeyAuthenticationOptions(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string encodedApiKey) : base(@type, additionalBinaryDataProperties)
         {
             EncodedApiKey = encodedApiKey;
         }
 
-        /// <summary> Gets or sets the EncodedApiKey. </summary>
+        /// <summary> Gets the EncodedApiKey. </summary>
         public string EncodedApiKey { get; set; }
     }
 }

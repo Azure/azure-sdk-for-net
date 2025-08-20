@@ -13,13 +13,7 @@ namespace PlaywrightTests.Sample1; // Remember to change this as per your projec
 
 [SetUpFixture]
 #if SNIPPET
-public class PlaywrightServiceNUnitSetup : PlaywrightServiceBrowserNUnit
-{
-    public PlaywrightServiceNUnitSetup() : base(
-        credential: new DefaultAzureCredential()
-    )
-    { }
-}
+public class PlaywrightServiceNUnitSetup : PlaywrightServiceBrowserNUnit { }
 #else
 public class Sample1ServiceSetup : PlaywrightServiceBrowserNUnit
 {

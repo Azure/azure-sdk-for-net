@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    internal partial class UnknownMongoDBProgress : IUtf8JsonSerializable, IJsonModel<DataMigrationMongoDBProgress>
+    internal partial class UnknownMongoDBProgress : IUtf8JsonSerializable, IJsonModel<MongoDBProgress>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataMigrationMongoDBProgress>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBProgress>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DataMigrationMongoDBProgress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MongoDBProgress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,25 +28,25 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationMongoDBProgress>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBProgress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataMigrationMongoDBProgress)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBProgress)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
         }
 
-        DataMigrationMongoDBProgress IJsonModel<DataMigrationMongoDBProgress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MongoDBProgress IJsonModel<MongoDBProgress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationMongoDBProgress>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBProgress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataMigrationMongoDBProgress)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBProgress)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDataMigrationMongoDBProgress(document.RootElement, options);
+            return DeserializeMongoDBProgress(document.RootElement, options);
         }
 
         internal static UnknownMongoDBProgress DeserializeUnknownMongoDBProgress(JsonElement element, ModelReaderWriterOptions options = null)
@@ -60,15 +60,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             long bytesCopied = default;
             long documentsCopied = default;
             string elapsedTime = default;
-            IReadOnlyDictionary<string, DataMigrationMongoDBError> errors = default;
+            IReadOnlyDictionary<string, MongoDBError> errors = default;
             long eventsPending = default;
             long eventsReplayed = default;
             DateTimeOffset? lastEventTime = default;
             DateTimeOffset? lastReplayTime = default;
             string name = default;
             string qualifiedName = default;
-            DataMigrationMongoDBProgressResultType resultType = "Unknown";
-            DataMigrationMongoDBMigrationState state = default;
+            MongoDBProgressResultType resultType = "Unknown";
+            MongoDBMigrationState state = default;
             long totalBytes = default;
             long totalDocuments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (property.NameEquals("errors"u8))
                 {
-                    Dictionary<string, DataMigrationMongoDBError> dictionary = new Dictionary<string, DataMigrationMongoDBError>();
+                    Dictionary<string, MongoDBError> dictionary = new Dictionary<string, MongoDBError>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DataMigrationMongoDBError.DeserializeDataMigrationMongoDBError(property0.Value, options));
+                        dictionary.Add(property0.Name, MongoDBError.DeserializeMongoDBError(property0.Value, options));
                     }
                     errors = dictionary;
                     continue;
@@ -140,12 +140,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (property.NameEquals("resultType"u8))
                 {
-                    resultType = new DataMigrationMongoDBProgressResultType(property.Value.GetString());
+                    resultType = new MongoDBProgressResultType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("state"u8))
                 {
-                    state = new DataMigrationMongoDBMigrationState(property.Value.GetString());
+                    state = new MongoDBMigrationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("totalBytes"u8))
@@ -182,35 +182,35 @@ namespace Azure.ResourceManager.DataMigration.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DataMigrationMongoDBProgress>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MongoDBProgress>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationMongoDBProgress>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBProgress>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DataMigrationMongoDBProgress)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBProgress)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DataMigrationMongoDBProgress IPersistableModel<DataMigrationMongoDBProgress>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MongoDBProgress IPersistableModel<MongoDBProgress>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationMongoDBProgress>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBProgress>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataMigrationMongoDBProgress(document.RootElement, options);
+                        return DeserializeMongoDBProgress(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataMigrationMongoDBProgress)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBProgress)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DataMigrationMongoDBProgress>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MongoDBProgress>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

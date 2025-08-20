@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -33,16 +32,14 @@ namespace Azure.Security.KeyVault.Administration.Tests
                 new KeyVaultServiceError("500", "failed restore", null),
                 JobId,
                 DateTimeOffset.Now.AddMinutes(-5),
-                now,
-                new Dictionary<string, BinaryData>());
+                now);
             incompleteRestore = new SelectiveKeyRestoreDetailsInternal(
                 "in progress",
                 "",
                 null,
                 JobId,
                 DateTimeOffset.Now.AddMinutes(-5),
-                null,
-                new Dictionary<string, BinaryData>());
+                null);
 
             failedResponse = new Mock<Response<SelectiveKeyRestoreDetailsInternal>>();
             failedResponse.SetupGet(m => m.Value).Returns(failedRestore);

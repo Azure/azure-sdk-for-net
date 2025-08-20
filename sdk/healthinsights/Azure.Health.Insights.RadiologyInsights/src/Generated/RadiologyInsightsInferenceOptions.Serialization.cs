@@ -44,16 +44,6 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WritePropertyName("findingOptions"u8);
                 writer.WriteObjectValue(FindingOptions, options);
             }
-            if (Optional.IsDefined(GuidanceOptions))
-            {
-                writer.WritePropertyName("guidanceOptions"u8);
-                writer.WriteObjectValue(GuidanceOptions, options);
-            }
-            if (Optional.IsDefined(QualityMeasureOptions))
-            {
-                writer.WritePropertyName("qualityMeasureOptions"u8);
-                writer.WriteObjectValue(QualityMeasureOptions, options);
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -93,8 +83,6 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
             FollowupRecommendationOptions followupRecommendationOptions = default;
             FindingOptions findingOptions = default;
-            GuidanceOptions guidanceOptions = default;
-            QualityMeasureOptions qualityMeasureOptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,31 +105,13 @@ namespace Azure.Health.Insights.RadiologyInsights
                     findingOptions = FindingOptions.DeserializeFindingOptions(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("guidanceOptions"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    guidanceOptions = GuidanceOptions.DeserializeGuidanceOptions(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("qualityMeasureOptions"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    qualityMeasureOptions = QualityMeasureOptions.DeserializeQualityMeasureOptions(property.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RadiologyInsightsInferenceOptions(followupRecommendationOptions, findingOptions, guidanceOptions, qualityMeasureOptions, serializedAdditionalRawData);
+            return new RadiologyInsightsInferenceOptions(followupRecommendationOptions, findingOptions, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RadiologyInsightsInferenceOptions>.Write(ModelReaderWriterOptions options)

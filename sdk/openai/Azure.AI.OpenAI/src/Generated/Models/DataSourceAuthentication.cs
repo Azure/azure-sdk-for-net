@@ -16,24 +16,19 @@ namespace Azure.AI.OpenAI.Chat
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DataSourceAuthentication"/>. </summary>
-        /// <param name="kind"></param>
-        private protected DataSourceAuthentication(InternalAzureChatDataSourceAuthenticationOptionsType kind)
+        private protected DataSourceAuthentication(string @type)
         {
-            Kind = kind;
+            Type = @type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataSourceAuthentication"/>. </summary>
-        /// <param name="kind"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataSourceAuthentication(InternalAzureChatDataSourceAuthenticationOptionsType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataSourceAuthentication(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Kind = kind;
+            Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the Type. </summary>
-        internal InternalAzureChatDataSourceAuthenticationOptionsType Kind { get; set; }
+        internal string Type { get; set; }
 
         /// <summary></summary>
         internal IDictionary<string, BinaryData> SerializedAdditionalRawData

@@ -39,15 +39,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (Optional.IsDefined(VipVmOcid))
+            if (Optional.IsDefined(VmOcid))
             {
                 writer.WritePropertyName("vmOcid"u8);
-                writer.WriteStringValue(VipVmOcid);
+                writer.WriteStringValue(VmOcid);
             }
-            if (options.Format != "W" && Optional.IsDefined(VipOcid))
+            if (options.Format != "W" && Optional.IsDefined(Ocid))
             {
                 writer.WritePropertyName("ocid"u8);
-                writer.WriteStringValue(VipOcid);
+                writer.WriteStringValue(Ocid);
             }
             if (options.Format != "W" && Optional.IsDefined(Domain))
             {
@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 return null;
             }
             string ipAddress = default;
-            string vmOcid = default;
-            string ocid = default;
+            ResourceIdentifier vmOcid = default;
+            ResourceIdentifier ocid = default;
             string domain = default;
             string lifecycleDetails = default;
             OracleDatabaseProvisioningState? provisioningState = default;
@@ -130,12 +130,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("vmOcid"u8))
                 {
-                    vmOcid = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vmOcid = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ocid"u8))
                 {
-                    ocid = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ocid = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("domain"u8))

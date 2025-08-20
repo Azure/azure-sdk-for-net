@@ -64,7 +64,7 @@ namespace Azure.Generator.Primitives
             [EmbeddingVector] = typeof(ReadOnlyMemory<>)
         };
 
-        private static readonly IReadOnlyDictionary<CSharpType, SerializationExpression> _typeToSerializationExpression = new Dictionary<CSharpType, SerializationExpression>
+        private static readonly IReadOnlyDictionary<Type, SerializationExpression> _typeToSerializationExpression = new Dictionary<Type, SerializationExpression>
         {
             [typeof(Guid)] = SerializeTypeWithImplicitOperatorToString,
             [typeof(IPAddress)] = SerializeTypeWithToString,
@@ -74,7 +74,7 @@ namespace Azure.Generator.Primitives
             [typeof(ResponseError)] = SerializeResponseError,
         };
 
-        private static readonly IReadOnlyDictionary<CSharpType, DeserializationExpression> _typeToDeserializationExpression = new Dictionary<CSharpType, DeserializationExpression>
+        private static readonly IReadOnlyDictionary<Type, DeserializationExpression> _typeToDeserializationExpression = new Dictionary<Type, DeserializationExpression>
         {
             [typeof(Guid)] = DeserializeNewInstanceStringLikeType,
             [typeof(IPAddress)] = DeserializeParsableStringLikeType,
@@ -86,8 +86,8 @@ namespace Azure.Generator.Primitives
 
         public static bool TryGetKnownType(string id, [MaybeNullWhen(false)] out Type type) => _idToTypes.TryGetValue(id, out type);
 
-        public static bool TryGetJsonSerializationExpression(CSharpType type, [MaybeNullWhen(false)] out SerializationExpression expression) => _typeToSerializationExpression.TryGetValue(type, out expression);
+        public static bool TryGetJsonSerializationExpression(Type type, [MaybeNullWhen(false)] out SerializationExpression expression) => _typeToSerializationExpression.TryGetValue(type, out expression);
 
-        public static bool TryGetJsonDeserializationExpression(CSharpType type, [MaybeNullWhen(false)] out DeserializationExpression expression) => _typeToDeserializationExpression.TryGetValue(type, out expression);
+        public static bool TryGetJsonDeserializationExpression(Type type, [MaybeNullWhen(false)] out DeserializationExpression expression) => _typeToDeserializationExpression.TryGetValue(type, out expression);
     }
 }

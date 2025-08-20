@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -53,32 +52,32 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(VirtualWan))
             {
                 writer.WritePropertyName("virtualWan"u8);
-                ((IJsonModel<WritableSubResource>)VirtualWan).Write(writer, options);
+                JsonSerializer.Serialize(writer, VirtualWan);
             }
             if (Optional.IsDefined(VpnGateway))
             {
                 writer.WritePropertyName("vpnGateway"u8);
-                ((IJsonModel<WritableSubResource>)VpnGateway).Write(writer, options);
+                JsonSerializer.Serialize(writer, VpnGateway);
             }
             if (Optional.IsDefined(P2SVpnGateway))
             {
                 writer.WritePropertyName("p2SVpnGateway"u8);
-                ((IJsonModel<WritableSubResource>)P2SVpnGateway).Write(writer, options);
+                JsonSerializer.Serialize(writer, P2SVpnGateway);
             }
             if (Optional.IsDefined(ExpressRouteGateway))
             {
                 writer.WritePropertyName("expressRouteGateway"u8);
-                ((IJsonModel<WritableSubResource>)ExpressRouteGateway).Write(writer, options);
+                JsonSerializer.Serialize(writer, ExpressRouteGateway);
             }
             if (Optional.IsDefined(AzureFirewall))
             {
                 writer.WritePropertyName("azureFirewall"u8);
-                ((IJsonModel<WritableSubResource>)AzureFirewall).Write(writer, options);
+                JsonSerializer.Serialize(writer, AzureFirewall);
             }
             if (Optional.IsDefined(SecurityPartnerProvider))
             {
                 writer.WritePropertyName("securityPartnerProvider"u8);
-                ((IJsonModel<WritableSubResource>)SecurityPartnerProvider).Write(writer, options);
+                JsonSerializer.Serialize(writer, SecurityPartnerProvider);
             }
             if (Optional.IsDefined(AddressPrefix))
             {
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in BgpConnections)
                 {
-                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -136,7 +135,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
-                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -146,7 +145,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in RouteMaps)
                 {
-                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            virtualWan = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            virtualWan = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("vpnGateway"u8))
@@ -325,7 +324,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            vpnGateway = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            vpnGateway = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("p2SVpnGateway"u8))
@@ -334,7 +333,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            p2sVpnGateway = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            p2sVpnGateway = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("expressRouteGateway"u8))
@@ -343,7 +342,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            expressRouteGateway = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            expressRouteGateway = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("azureFirewall"u8))
@@ -352,7 +351,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            azureFirewall = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            azureFirewall = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("securityPartnerProvider"u8))
@@ -361,7 +360,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            securityPartnerProvider = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            securityPartnerProvider = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("addressPrefix"u8))
@@ -429,7 +428,7 @@ namespace Azure.ResourceManager.Network
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerNetworkContext.Default));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                             }
                             bgpConnections = array;
                             continue;
@@ -443,7 +442,7 @@ namespace Azure.ResourceManager.Network
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerNetworkContext.Default));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                             }
                             ipConfigurations = array;
                             continue;
@@ -457,7 +456,7 @@ namespace Azure.ResourceManager.Network
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerNetworkContext.Default));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                             }
                             routeMaps = array;
                             continue;

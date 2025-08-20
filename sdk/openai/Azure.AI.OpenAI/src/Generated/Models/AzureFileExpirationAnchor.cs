@@ -42,11 +42,11 @@ namespace Azure.AI.OpenAI.Files
         /// <param name="value"> The value. </param>
         public static implicit operator AzureFileExpirationAnchor(string value) => new AzureFileExpirationAnchor(value);
 
-        /// <inheritdoc/>
+        /// <param name="obj"> The object to compare. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AzureFileExpirationAnchor other && Equals(other);
 
-        /// <inheritdoc/>
+        /// <param name="other"> The instance to compare. </param>
         public bool Equals(AzureFileExpirationAnchor other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>

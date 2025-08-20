@@ -5,36 +5,17 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class DocumentIntelligenceLayoutSkill : IUtf8JsonSerializable, IJsonModel<DocumentIntelligenceLayoutSkill>
+    public partial class DocumentIntelligenceLayoutSkill : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentIntelligenceLayoutSkill>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<DocumentIntelligenceLayoutSkill>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceLayoutSkill>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(DocumentIntelligenceLayoutSkill)} does not support writing '{format}' format.");
-            }
-
-            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(OutputFormat))
             {
                 if (OutputFormat != null)
@@ -93,31 +74,49 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (ChunkingProperties != null)
                 {
                     writer.WritePropertyName("chunkingProperties"u8);
-                    writer.WriteObjectValue(ChunkingProperties, options);
+                    writer.WriteObjectValue(ChunkingProperties);
                 }
                 else
                 {
                     writer.WriteNull("chunkingProperties");
                 }
             }
-        }
-
-        DocumentIntelligenceLayoutSkill IJsonModel<DocumentIntelligenceLayoutSkill>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceLayoutSkill>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            writer.WritePropertyName("@odata.type"u8);
+            writer.WriteStringValue(ODataType);
+            if (Optional.IsDefined(Name))
             {
-                throw new FormatException($"The model {nameof(DocumentIntelligenceLayoutSkill)} does not support reading '{format}' format.");
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
             }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDocumentIntelligenceLayoutSkill(document.RootElement, options);
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(Context))
+            {
+                writer.WritePropertyName("context"u8);
+                writer.WriteStringValue(Context);
+            }
+            writer.WritePropertyName("inputs"u8);
+            writer.WriteStartArray();
+            foreach (var item in Inputs)
+            {
+                writer.WriteObjectValue<InputFieldMappingEntry>(item);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("outputs"u8);
+            writer.WriteStartArray();
+            foreach (var item in Outputs)
+            {
+                writer.WriteObjectValue<OutputFieldMappingEntry>(item);
+            }
+            writer.WriteEndArray();
+            writer.WriteEndObject();
         }
 
-        internal static DocumentIntelligenceLayoutSkill DeserializeDocumentIntelligenceLayoutSkill(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DocumentIntelligenceLayoutSkill DeserializeDocumentIntelligenceLayoutSkill(JsonElement element)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -133,8 +132,6 @@ namespace Azure.Search.Documents.Indexes.Models
             string context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("outputFormat"u8))
@@ -189,7 +186,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         chunkingProperties = null;
                         continue;
                     }
-                    chunkingProperties = DocumentIntelligenceLayoutSkillChunkingProperties.DeserializeDocumentIntelligenceLayoutSkillChunkingProperties(property.Value, options);
+                    chunkingProperties = DocumentIntelligenceLayoutSkillChunkingProperties.DeserializeDocumentIntelligenceLayoutSkillChunkingProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@odata.type"u8))
@@ -217,7 +214,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<InputFieldMappingEntry> array = new List<InputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item, options));
+                        array.Add(InputFieldMappingEntry.DeserializeInputFieldMappingEntry(item));
                     }
                     inputs = array;
                     continue;
@@ -227,17 +224,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<OutputFieldMappingEntry> array = new List<OutputFieldMappingEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item, options));
+                        array.Add(OutputFieldMappingEntry.DeserializeOutputFieldMappingEntry(item));
                     }
                     outputs = array;
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DocumentIntelligenceLayoutSkill(
                 odataType,
                 name,
@@ -245,44 +237,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 context,
                 inputs,
                 outputs,
-                serializedAdditionalRawData,
                 outputFormat,
                 outputMode,
                 markdownHeaderDepth,
                 extractionOptions ?? new ChangeTrackingList<DocumentIntelligenceLayoutSkillExtractionOptions>(),
                 chunkingProperties);
         }
-
-        BinaryData IPersistableModel<DocumentIntelligenceLayoutSkill>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceLayoutSkill>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DocumentIntelligenceLayoutSkill)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DocumentIntelligenceLayoutSkill IPersistableModel<DocumentIntelligenceLayoutSkill>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DocumentIntelligenceLayoutSkill>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDocumentIntelligenceLayoutSkill(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DocumentIntelligenceLayoutSkill)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DocumentIntelligenceLayoutSkill>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -296,7 +256,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

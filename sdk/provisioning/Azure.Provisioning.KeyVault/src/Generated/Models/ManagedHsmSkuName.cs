@@ -29,16 +29,4 @@ public enum ManagedHsmSkuName
     /// </summary>
     [DataMember(Name = "Custom_B6")]
     CustomB6,
-
-    /// <summary>
-    /// Custom_C42.
-    /// </summary>
-    [DataMember(Name = "Custom_C42")]
-    CustomC42,
-
-    /// <summary>
-    /// Custom_C10.
-    /// </summary>
-    [DataMember(Name = "Custom_C10")]
-    CustomC10,
 }

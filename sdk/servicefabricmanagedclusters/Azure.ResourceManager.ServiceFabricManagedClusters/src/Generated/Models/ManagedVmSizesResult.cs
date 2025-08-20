@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -47,34 +46,25 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ManagedVmSizesResult"/>. </summary>
-        /// <param name="value"> The ManagedVMSize items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ManagedVmSizesResult(IEnumerable<ServiceFabricManagedUnsupportedVmSize> value)
+        internal ManagedVmSizesResult()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            Value = new ChangeTrackingList<ServiceFabricManagedUnsupportedVmSize>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedVmSizesResult"/>. </summary>
-        /// <param name="value"> The ManagedVMSize items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value"> List of Managed VM Sizes for Service Fabric Managed Clusters. </param>
+        /// <param name="nextLink"> URL to get the next set of Managed VM Sizes if there are any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedVmSizesResult(IReadOnlyList<ServiceFabricManagedUnsupportedVmSize> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedVmSizesResult(IReadOnlyList<ServiceFabricManagedUnsupportedVmSize> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedVmSizesResult"/> for deserialization. </summary>
-        internal ManagedVmSizesResult()
-        {
-        }
-
-        /// <summary> The ManagedVMSize items on this page. </summary>
+        /// <summary> List of Managed VM Sizes for Service Fabric Managed Clusters. </summary>
         public IReadOnlyList<ServiceFabricManagedUnsupportedVmSize> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> URL to get the next set of Managed VM Sizes if there are any. </summary>
+        public string NextLink { get; }
     }
 }

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             AutonomousMaintenanceScheduleType? autonomousMaintenanceScheduleType = default;
             string characterSet = default;
             float? computeCount = default;
-            OracleDatabaseComputeModel? computeModel = default;
+            AutonomousDatabaseComputeModel? computeModel = default;
             int? cpuCoreCount = default;
             IList<OracleCustomerContact> customerContacts = default;
             int? dataStorageSizeInTbs = default;
@@ -72,14 +72,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string displayName = default;
             bool? isAutoScalingEnabled = default;
             bool? isAutoScalingForStorageEnabled = default;
-            IReadOnlyList<string> peerDbIds = default;
-            string peerDbId = default;
+            IReadOnlyList<string> peerDBIds = default;
+            string peerDBId = default;
             bool? isLocalDataGuardEnabled = default;
             bool? isRemoteDataGuardEnabled = default;
             DisasterRecoveryType? localDisasterRecoveryType = default;
-            DateTimeOffset? timeDisasterRecoveryRoleChanged = default;
-            DisasterRecoveryConfigurationDetails remoteDisasterRecoveryConfiguration = default;
-            AutonomousDatabaseStandbySummary localStandbyDb = default;
+            AutonomousDatabaseStandbySummary localStandbyDB = default;
             int? failedDataRecoveryInSeconds = default;
             bool? isMtlsConnectionRequired = default;
             bool? isPreviewVersionWithServiceTermsAccepted = default;
@@ -131,7 +129,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             DateTimeOffset? timeReclamationOfFreeAutonomousDatabase = default;
             int? usedDataStorageSizeInGbs = default;
             int? usedDataStorageSizeInTbs = default;
-            string ocid = default;
+            ResourceIdentifier ocid = default;
             int? backupRetentionPeriodInDays = default;
             IList<string> whitelistedIPs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -177,7 +175,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    computeModel = new OracleDatabaseComputeModel(property.Value.GetString());
+                    computeModel = new AutonomousDatabaseComputeModel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("cpuCoreCount"u8))
@@ -269,12 +267,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         array.Add(item.GetString());
                     }
-                    peerDbIds = array;
+                    peerDBIds = array;
                     continue;
                 }
                 if (property.NameEquals("peerDbId"u8))
                 {
-                    peerDbId = property.Value.GetString();
+                    peerDBId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("isLocalDataGuardEnabled"u8))
@@ -304,31 +302,13 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     localDisasterRecoveryType = new DisasterRecoveryType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("timeDisasterRecoveryRoleChanged"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    timeDisasterRecoveryRoleChanged = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("remoteDisasterRecoveryConfiguration"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    remoteDisasterRecoveryConfiguration = DisasterRecoveryConfigurationDetails.DeserializeDisasterRecoveryConfigurationDetails(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("localStandbyDb"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    localStandbyDb = AutonomousDatabaseStandbySummary.DeserializeAutonomousDatabaseStandbySummary(property.Value, options);
+                    localStandbyDB = AutonomousDatabaseStandbySummary.DeserializeAutonomousDatabaseStandbySummary(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("failedDataRecoveryInSeconds"u8))
@@ -783,7 +763,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("ocid"u8))
                 {
-                    ocid = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ocid = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("backupRetentionPeriodInDays"u8))
@@ -831,14 +815,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 displayName,
                 isAutoScalingEnabled,
                 isAutoScalingForStorageEnabled,
-                peerDbIds ?? new ChangeTrackingList<string>(),
-                peerDbId,
+                peerDBIds ?? new ChangeTrackingList<string>(),
+                peerDBId,
                 isLocalDataGuardEnabled,
                 isRemoteDataGuardEnabled,
                 localDisasterRecoveryType,
-                timeDisasterRecoveryRoleChanged,
-                remoteDisasterRecoveryConfiguration,
-                localStandbyDb,
+                localStandbyDB,
                 failedDataRecoveryInSeconds,
                 isMtlsConnectionRequired,
                 isPreviewVersionWithServiceTermsAccepted,

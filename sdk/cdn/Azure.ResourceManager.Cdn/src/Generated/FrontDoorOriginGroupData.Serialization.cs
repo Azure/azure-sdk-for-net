@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
@@ -72,11 +71,6 @@ namespace Azure.ResourceManager.Cdn
                 writer.WritePropertyName("sessionAffinityState"u8);
                 writer.WriteStringValue(SessionAffinityState.Value.ToString());
             }
-            if (Optional.IsDefined(Authentication))
-            {
-                writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication, options);
-            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -119,7 +113,6 @@ namespace Azure.ResourceManager.Cdn
             HealthProbeSettings healthProbeSettings = default;
             int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
             EnabledState? sessionAffinityState = default;
-            OriginAuthenticationProperties authentication = default;
             FrontDoorProvisioningState? provisioningState = default;
             FrontDoorDeploymentStatus? deploymentStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -147,7 +140,7 @@ namespace Azure.ResourceManager.Cdn
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCdnContext.Default);
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -201,15 +194,6 @@ namespace Azure.ResourceManager.Cdn
                             sessionAffinityState = new EnabledState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("authentication"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            authentication = OriginAuthenticationProperties.DeserializeOriginAuthenticationProperties(property0.Value, options);
-                            continue;
-                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -247,7 +231,6 @@ namespace Azure.ResourceManager.Cdn
                 healthProbeSettings,
                 trafficRestorationTimeToHealedOrNewEndpointsInMinutes,
                 sessionAffinityState,
-                authentication,
                 provisioningState,
                 deploymentStatus,
                 serializedAdditionalRawData);

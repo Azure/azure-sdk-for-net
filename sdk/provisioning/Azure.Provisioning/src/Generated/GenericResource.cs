@@ -199,7 +199,6 @@ public partial class GenericResource : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
-        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["extendedLocation"]);

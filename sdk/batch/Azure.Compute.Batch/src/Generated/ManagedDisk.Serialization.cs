@@ -82,7 +82,7 @@ namespace Azure.Compute.Batch
                 return null;
             }
             StorageAccountType? storageAccountType = default;
-            BatchVmDiskSecurityProfile securityProfile = default;
+            VMDiskSecurityProfile securityProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +102,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    securityProfile = BatchVmDiskSecurityProfile.DeserializeBatchVmDiskSecurityProfile(property.Value, options);
+                    securityProfile = VMDiskSecurityProfile.DeserializeVMDiskSecurityProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

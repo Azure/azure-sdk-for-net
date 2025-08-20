@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             MigrateMISyncCompleteCommandInput input = default;
             MigrateMISyncCompleteCommandOutput output = default;
-            DataMigrationCommandType commandType = default;
-            IReadOnlyList<DataMigrationODataError> errors = default;
-            DataMigrationCommandState? state = default;
+            CommandType commandType = default;
+            IReadOnlyList<ODataError> errors = default;
+            CommandState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (property.NameEquals("commandType"u8))
                 {
-                    commandType = new DataMigrationCommandType(property.Value.GetString());
+                    commandType = new CommandType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errors"u8))
@@ -105,10 +105,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<DataMigrationODataError> array = new List<DataMigrationODataError>();
+                    List<ODataError> array = new List<ODataError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataMigrationODataError.DeserializeDataMigrationODataError(item, options));
+                        array.Add(ODataError.DeserializeODataError(item, options));
                     }
                     errors = array;
                     continue;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    state = new DataMigrationCommandState(property.Value.GetString());
+                    state = new CommandState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new MigrateMISyncCompleteCommandProperties(
                 commandType,
-                errors ?? new ChangeTrackingList<DataMigrationODataError>(),
+                errors ?? new ChangeTrackingList<ODataError>(),
                 state,
                 serializedAdditionalRawData,
                 input,

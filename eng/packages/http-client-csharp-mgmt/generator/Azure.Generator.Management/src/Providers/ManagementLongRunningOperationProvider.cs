@@ -5,10 +5,12 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -46,7 +48,7 @@ namespace Azure.Generator.Management.Providers
         {
             return Path.Combine("src", "Generated", "LongRunningOperation", GetFileName());
 
-            string GetFileName() => _isGeneric ? $"{Name}OfT.cs" : $"{Name}.cs";
+            string GetFileName() => _isGeneric ? $"{_serviceName}ArmOperationOfT.cs" : $"{Name}.cs";
         }
 
         protected override CSharpType[] BuildImplements() => [_isGeneric ? new CSharpType(typeof(ArmOperation<>), _t) : typeof(ArmOperation)];
@@ -125,12 +127,20 @@ namespace Azure.Generator.Management.Providers
         {
             var rehydrationTokenParaemter = new ParameterProvider("rehydrationToken", $"The token to rehydrate a long-running operation", new CSharpType(typeof(RehydrationToken), true));
             var signature = new MethodSignature(GetOperationIdName, null, MethodSignatureModifiers.Private, typeof(string), null, [rehydrationTokenParaemter]);
-            var body = Return(rehydrationTokenParaemter.NullConditional().Property(nameof(RehydrationToken.Id)));
+            var body = new MethodBodyStatement[]
+            {
+                new IfStatement(rehydrationTokenParaemter.Is(Null))
+                {
+                    Return(Null)
+                },
+                Declare("lroDetails", typeof(Dictionary<string, string>), Static(typeof(ModelReaderWriter)).Invoke("Write", [rehydrationTokenParaemter, Static(typeof(ModelReaderWriterOptions)).Property("Json")]).Invoke("ToObjectFromJson", [], new List<CSharpType>{ typeof(Dictionary<string, string>) }, false), out var lroDetailsVariable),
+                Return(new IndexerExpression(lroDetailsVariable, Literal("id")))
+            };
             return new MethodProvider(signature, body, this);
         }
 
         protected override ConstructorProvider[] BuildConstructors()
-            => [ConstructorProviderHelpers.BuildMockingConstructor(this), BuildRehydrationConstructor(), BuildInitializationConstructor()];
+            => [ConstructorProviderHelper.BuildMockingConstructor(this), BuildRehydrationConstructor(), BuildInitializationConstructor()];
 
         private ConstructorProvider BuildInitializationConstructor()
         {
@@ -138,7 +148,7 @@ namespace Azure.Generator.Management.Providers
             var clientDiagnosticsParameter = new ParameterProvider("clientDiagnostics", $"The instance of <see cref=\"ClientDiagnostics\"/>", typeof(ClientDiagnostics));
             var pipelineParameter = new ParameterProvider("pipeline", $"The instance of <see cref=\"HttpPipeline\"/>", typeof(HttpPipeline));
             var requestParameter = new ParameterProvider("request", $"The operation request", typeof(Request));
-            var responseParameter = new ParameterProvider("response", $"The operation response", typeof(Response));
+            var responseParameter = new ParameterProvider("response", $"The opertion response", typeof(Response));
             var finalStateViaParameter = new ParameterProvider("finalStateVia", $"The finalStateVia of the operation", typeof(OperationFinalStateVia));
             var skipApiVersionOverrideParameter = new ParameterProvider("skipApiVersionOverride", $"If should skip Api version override", typeof(bool), defaultValue: Literal(false));
             var apiVersionOverrideValueParameter = new ParameterProvider("apiVersionOverrideValue", $"The Api version override value", typeof(string), defaultValue: Null);

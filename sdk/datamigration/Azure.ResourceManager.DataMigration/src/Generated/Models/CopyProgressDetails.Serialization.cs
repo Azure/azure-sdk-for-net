@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("rowsCopied"u8);
                 writer.WriteNumberValue(RowsCopied.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CopyStartOn))
+            if (options.Format != "W" && Optional.IsDefined(CopyStart))
             {
                 writer.WritePropertyName("copyStart"u8);
-                writer.WriteStringValue(CopyStartOn.Value, "O");
+                writer.WriteStringValue(CopyStart.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(CopyThroughput))
             {

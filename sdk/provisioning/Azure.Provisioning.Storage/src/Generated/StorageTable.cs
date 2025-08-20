@@ -98,7 +98,6 @@ public partial class StorageTable : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
-        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _signedIdentifiers = DefineListProperty<StorageTableSignedIdentifier>("SignedIdentifiers", ["properties", "signedIdentifiers"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);

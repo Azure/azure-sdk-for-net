@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Agents.Models
@@ -24,13 +23,12 @@ namespace Azure.Search.Documents.Agents.Models
         /// <summary> Initializes a new instance of <see cref="KnowledgeAgentSearchActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="type"> The type of the activity record. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="targetIndex"> The target index for the retrieval activity. </param>
         /// <param name="query"> The query details for the retrieval activity. </param>
         /// <param name="queryTime"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
-        internal KnowledgeAgentSearchActivityRecord(int id, string type, IDictionary<string, BinaryData> serializedAdditionalRawData, string targetIndex, KnowledgeAgentSearchActivityRecordQuery query, DateTimeOffset? queryTime, int? count, int? elapsedMs) : base(id, type, serializedAdditionalRawData)
+        internal KnowledgeAgentSearchActivityRecord(int id, string type, string targetIndex, KnowledgeAgentSearchActivityRecordQuery query, DateTimeOffset? queryTime, int? count, int? elapsedMs) : base(id, type)
         {
             TargetIndex = targetIndex;
             Query = query;
@@ -38,11 +36,6 @@ namespace Azure.Search.Documents.Agents.Models
             Count = count;
             ElapsedMs = elapsedMs;
             Type = type ?? "AzureSearchQuery";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="KnowledgeAgentSearchActivityRecord"/> for deserialization. </summary>
-        internal KnowledgeAgentSearchActivityRecord()
-        {
         }
 
         /// <summary> The target index for the retrieval activity. </summary>

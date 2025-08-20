@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            IReadOnlyList<DataMigrationSku> value = default;
+            IReadOnlyList<ResourceSku> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<DataMigrationSku> array = new List<DataMigrationSku>();
+                    List<ResourceSku> array = new List<ResourceSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataMigrationSku.DeserializeDataMigrationSku(item, options));
+                        array.Add(ResourceSku.DeserializeResourceSku(item, options));
                     }
                     value = array;
                     continue;

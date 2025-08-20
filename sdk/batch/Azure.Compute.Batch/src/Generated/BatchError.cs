@@ -46,8 +46,13 @@ namespace Azure.Compute.Batch
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="BatchError"/>. </summary>
-        internal BatchError()
+        /// <param name="code"> An identifier for the error. Codes are invariant and are intended to be consumed programmatically. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="code"/> is null. </exception>
+        internal BatchError(string code)
         {
+            Argument.AssertNotNull(code, nameof(code));
+
+            Code = code;
             Values = new ChangeTrackingList<BatchErrorDetail>();
         }
 
@@ -62,6 +67,11 @@ namespace Azure.Compute.Batch
             Message = message;
             Values = values;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchError"/> for deserialization. </summary>
+        internal BatchError()
+        {
         }
 
         /// <summary> An identifier for the error. Codes are invariant and are intended to be consumed programmatically. </summary>

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Azure.Data.AppConfiguration
 {
-    internal static partial class SettingFieldsExtensions
+    internal static class SettingFieldsExtensions
     {
         /// <summary>
         /// Maps a SettingFields member to its corresponding service name in accordance with the REST API specification.

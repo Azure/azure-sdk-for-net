@@ -73,18 +73,17 @@ namespace Azure.Generator.Tests.Common
             if (AssertFailures(strategy, format, serviceResponse, options))
                 return;
 
-            var model = (T?)strategy.Read(serviceResponse, ModelInstance, options);
-            Assert.NotNull(model);
-            VerifyModel(model!, format);
-            var data = strategy.Write(model!, options);
+            T model = (T)strategy.Read(serviceResponse, ModelInstance, options);
+
+            VerifyModel(model, format);
+            var data = strategy.Write(model, options);
             string roundTrip = data.ToString();
 
             // we validate those are equivalent element, representing the same json object (ignoring the spaces and orders, etc)
             AssertJsonEquivalency(expectedSerializedString, roundTrip);
 
-            var model2 = (T?)strategy.Read(roundTrip, ModelInstance, options);
-            Assert.NotNull(model2);
-            CompareModels(model!, model2!, format);
+            T model2 = (T)strategy.Read(roundTrip, ModelInstance, options);
+            CompareModels(model, model2, format);
         }
 
         private void AssertJsonEquivalency(string expected, string result)
@@ -168,12 +167,12 @@ namespace Azure.Generator.Tests.Common
                     if (strategy.GetType().Name.StartsWith("ModelJsonConverterStrategy"))
                     {
                         //we never get to the interface implementation because JsonSerializer errors before that
-                        Assert.Throws<JsonException>(() => { var model = (T?)strategy.Read(serviceResponse, ModelInstance, options); });
+                        Assert.Throws<JsonException>(() => { T model = (T)strategy.Read(serviceResponse, ModelInstance, options); });
                         result = true;
                     }
                     else
                     {
-                        Assert.Throws<InvalidOperationException>(() => { var model = (T?)strategy.Read(serviceResponse, ModelInstance, options); });
+                        Assert.Throws<InvalidOperationException>(() => { T model = (T)strategy.Read(serviceResponse, ModelInstance, options); });
                         result = true;
                     }
                 }
@@ -186,7 +185,7 @@ namespace Azure.Generator.Tests.Common
             }
             else if (ModelInstance is not IJsonModel<T> && format == "J")
             {
-                Assert.Throws<FormatException>(() => { T model = (T)strategy.Read(serviceResponse, ModelInstance, options)!; });
+                Assert.Throws<FormatException>(() => { T model = (T)strategy.Read(serviceResponse, ModelInstance, options); });
                 Assert.Throws<FormatException>(() => { var data = strategy.Write(ModelInstance, options); });
                 result = true;
             }

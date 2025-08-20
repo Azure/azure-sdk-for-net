@@ -7,10 +7,6 @@ See the [Contributing guidelines](https://github.com/Azure/azure-sdk-for-net/blo
 ## AutoRest Configuration
 > see https://aka.ms/autorest
 
-```yaml
-use-model-reader-writer: true
-```
-
 ## Swagger Source(s)
 ```yaml
 title: SearchServiceClient
@@ -83,19 +79,6 @@ directive:
   where: $.definitions.*
   transform: >
     $["x-namespace"] = "Azure.Search.Documents.Agents.Models"
-```
-
-### Remove models that have newer versions
-
-These classes have `CodeGenModel` pointing to newer models. Don't try to generate the
-old models into the same class.
-
-```yaml
-directive:
-  - remove-model: EdgeNGramTokenFilter
-  - remove-model: KeywordTokenizer
-  - remove-model: LuceneStandardTokenizer
-  - remove-model: NGramTokenFilter
 ```
 
 ## Renaming models after the AI Studio rebrand to AI Foundry

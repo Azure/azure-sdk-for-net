@@ -46,26 +46,46 @@ function IsSpecDir {
     param (
         [string]$dir
     )
-    return (Test-Path "$dir/main.tsp")
+    $subdirs = Get-ChildItem -Path $dir -Directory
+    return -not ($subdirs) -and (Test-Path "$dir/main.tsp")
 }
 
 $failingSpecs = @(
-    Join-Path 'http' 'streaming' 'jsonl'
     Join-Path 'http' 'payload' 'xml'
+    Join-Path 'http' 'server' 'path' 'multiple'
+    Join-Path 'http' 'server' 'versions' 'versioned'
+    Join-Path 'http' 'versioning' 'added'
+    Join-Path 'http' 'versioning' 'madeOptional'
+    Join-Path 'http' 'versioning' 'removed'
+    Join-Path 'http' 'versioning' 'renamedFrom'
+    Join-Path 'http' 'versioning' 'returnTypeChangedFrom'
+    Join-Path 'http' 'versioning' 'typeChangedFrom'
+    Join-Path 'http' 'client' 'naming'
+    Join-Path 'http' 'resiliency' 'srv-driven'
+    Join-Path 'http' 'client' 'structure' 'client-operation-group'
+    Join-Path 'http' 'client' 'structure' 'renamed-operation'
+    Join-Path 'http' 'client' 'structure' 'multi-client'
+    Join-Path 'http' 'client' 'structure' 'two-operation-group'
     Join-Path 'http' 'response' 'status-code-range' # Response namespace conflicts with Azure.Response
     # Azure scenarios not yet buildable
     Join-Path 'http' 'client' 'namespace'
+    Join-Path 'http' 'azure' 'client-generator-core' 'access'
     Join-Path 'http' 'azure' 'client-generator-core' 'client-initialization'
-    Join-Path 'http' 'azure' 'client-generator-core' 'deserialize-empty-string-as-null' # long path issue and also not needed for Azure emitter
+    Join-Path 'http' 'azure' 'client-generator-core' 'deserialize-empty-string-as-null'
+    Join-Path 'http' 'azure' 'client-generator-core' 'api-version' 'header'
+    Join-Path 'http' 'azure' 'client-generator-core' 'api-version' 'path'
+    Join-Path 'http' 'azure' 'client-generator-core' 'api-version' 'query'
+    Join-Path 'http' 'azure' 'core' 'basic'
+    Join-Path 'http' 'azure' 'core' 'page'
     Join-Path 'http' 'azure' 'core' 'scalar'
     Join-Path 'http' 'azure' 'core' 'traits'
+    Join-Path 'http' 'azure' 'encode' 'duration'
     Join-Path 'http' 'azure' 'payload' 'pageable'
     # These scenarios will be covered in Azure.Generator.Management
     Join-Path 'http' 'azure' 'resource-manager' 'common-properties'
     Join-Path 'http' 'azure' 'resource-manager' 'non-resource'
     Join-Path 'http' 'azure' 'resource-manager' 'operation-templates'
     Join-Path 'http' 'azure' 'resource-manager' 'resources'
-    Join-Path 'http' 'azure' 'resource-manager' 'large-header'
 
 )
 

@@ -6,8 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.ResourceConnector.Models;
 
 namespace Azure.ResourceManager.ResourceConnector
 {
@@ -15,27 +13,6 @@ namespace Azure.ResourceManager.ResourceConnector
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(ApplianceArtifactProfile))]
-    [ModelReaderWriterBuildable(typeof(ApplianceClusterUserCredentialResult))]
-    [ModelReaderWriterBuildable(typeof(ApplianceClusterUserKeysResult))]
-    [ModelReaderWriterBuildable(typeof(ApplianceCredentialKubeconfig))]
-    [ModelReaderWriterBuildable(typeof(ApplianceListResult))]
-    [ModelReaderWriterBuildable(typeof(AppliancePropertiesInfrastructureConfig))]
-    [ModelReaderWriterBuildable(typeof(ApplianceSshKey))]
-    [ModelReaderWriterBuildable(typeof(ApplianceSupportedVersion))]
-    [ModelReaderWriterBuildable(typeof(ApplianceSupportedVersionCatalogVersion))]
-    [ModelReaderWriterBuildable(typeof(ApplianceSupportedVersionCatalogVersionProperties))]
-    [ModelReaderWriterBuildable(typeof(ApplianceSupportedVersionMetadata))]
-    [ModelReaderWriterBuildable(typeof(ApplianceTelemetryConfigResult))]
-    [ModelReaderWriterBuildable(typeof(ApplianceUpgradeGraph))]
-    [ModelReaderWriterBuildable(typeof(ApplianceUpgradeGraphProperties))]
-    [ModelReaderWriterBuildable(typeof(HybridConnectionConfig))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
-    [ModelReaderWriterBuildable(typeof(ResourceConnectorApplianceData))]
-    [ModelReaderWriterBuildable(typeof(ResourceConnectorAppliancePatch))]
-    [ModelReaderWriterBuildable(typeof(ResourceConnectorApplianceResource))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerResourceConnectorContext : ModelReaderWriterContext
     {
     }

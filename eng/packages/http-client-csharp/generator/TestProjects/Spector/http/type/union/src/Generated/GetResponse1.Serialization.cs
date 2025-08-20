@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace _Type.Union
 {
@@ -33,6 +34,9 @@ namespace _Type.Union
         protected virtual GetResponse1 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<GetResponse1>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        /// <param name="getResponse1"> The <see cref="GetResponse1"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(GetResponse1 getResponse1) => throw null;
 
         public static explicit operator GetResponse1(Response result) => throw null;
     }

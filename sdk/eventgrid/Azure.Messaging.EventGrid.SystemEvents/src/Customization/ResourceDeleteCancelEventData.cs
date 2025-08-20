@@ -19,7 +19,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private string _authorization;
 
         /// <summary> The requested authorization for the operation. </summary>
-        public ResourceAuthorization AuthorizationValue => _authorizationValue ??= ResourceAuthorization.DeserializeResourceAuthorization(AuthorizationJson, ModelSerializationExtensions.WireOptions);
+        public ResourceAuthorization AuthorizationValue => _authorizationValue ??= ResourceAuthorization.DeserializeResourceAuthorization(AuthorizationJson);
         private ResourceAuthorization _authorizationValue;
 
         [CodeGenMember("Claims")]
@@ -43,7 +43,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private string _httpRequest;
 
         /// <summary> The details of the operation. </summary>
-        public ResourceHttpRequest HttpRequestValue => _httpRequestValue ??= ResourceHttpRequest.DeserializeResourceHttpRequest(HttpRequestJson, ModelSerializationExtensions.WireOptions);
+        public ResourceHttpRequest HttpRequestValue => _httpRequestValue ??= ResourceHttpRequest.DeserializeResourceHttpRequest(HttpRequestJson);
         private ResourceHttpRequest _httpRequestValue;
     }
 }

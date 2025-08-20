@@ -68,11 +68,15 @@ namespace Azure.Developer.Playwright.Tests.Utility
             var provider = new CIProvider(environment: environment);
             CIInfo ciInfo = provider.GetCIInfo();
 
-            Assert.AreEqual(CIConstants.s_gITHUB_ACTIONS, ciInfo.providerName);
-            Assert.AreEqual("refs/heads/branch_name", ciInfo.branch);
-            Assert.AreEqual("actor", ciInfo.author);
-            Assert.AreEqual("commit_sha", ciInfo.commitId);
-            Assert.AreEqual("server_url/repository/commit/commit_sha", ciInfo.revisionUrl);
+            Assert.AreEqual(CIConstants.s_gITHUB_ACTIONS, ciInfo.Provider);
+            Assert.AreEqual("repo_id", ciInfo.Repo);
+            Assert.AreEqual("refs/heads/branch_name", ciInfo.Branch);
+            Assert.AreEqual("actor", ciInfo.Author);
+            Assert.AreEqual("commit_sha", ciInfo.CommitId);
+            Assert.AreEqual("server_url/repository/commit/commit_sha", ciInfo.RevisionUrl);
+            Assert.AreEqual("run_id", ciInfo.RunId);
+            Assert.AreEqual(1, ciInfo.RunAttempt);
+            Assert.AreEqual("job_id", ciInfo.JobId);
         }
 
         [Test]
@@ -96,11 +100,15 @@ namespace Azure.Developer.Playwright.Tests.Utility
             var provider = new CIProvider(environment: environment);
             CIInfo ciInfo = provider.GetCIInfo();
 
-            Assert.AreEqual(CIConstants.s_gITHUB_ACTIONS, ciInfo.providerName);
-            Assert.AreEqual("refs/heads/head_branch_name", ciInfo.branch);
-            Assert.AreEqual("actor", ciInfo.author);
-            Assert.AreEqual("commit_sha", ciInfo.commitId);
-            Assert.AreEqual("server_url/repository/commit/commit_sha", ciInfo.revisionUrl);
+            Assert.AreEqual(CIConstants.s_gITHUB_ACTIONS, ciInfo.Provider);
+            Assert.AreEqual("repo_id", ciInfo.Repo);
+            Assert.AreEqual("refs/heads/head_branch_name", ciInfo.Branch);
+            Assert.AreEqual("actor", ciInfo.Author);
+            Assert.AreEqual("commit_sha", ciInfo.CommitId);
+            Assert.AreEqual("server_url/repository/commit/commit_sha", ciInfo.RevisionUrl);
+            Assert.AreEqual("run_id", ciInfo.RunId);
+            Assert.AreEqual(1, ciInfo.RunAttempt);
+            Assert.AreEqual("job_id", ciInfo.JobId);
         }
 
         [Test]
@@ -124,11 +132,15 @@ namespace Azure.Developer.Playwright.Tests.Utility
             var provider = new CIProvider(environment: environment);
             CIInfo ciInfo = provider.GetCIInfo();
 
-            Assert.AreEqual(CIConstants.s_gITHUB_ACTIONS, ciInfo.providerName);
-            Assert.AreEqual("refs/heads/head_branch_name", ciInfo.branch);
-            Assert.AreEqual("actor", ciInfo.author);
-            Assert.AreEqual("commit_sha", ciInfo.commitId);
-            Assert.AreEqual("server_url/repository/commit/commit_sha", ciInfo.revisionUrl);
+            Assert.AreEqual(CIConstants.s_gITHUB_ACTIONS, ciInfo.Provider);
+            Assert.AreEqual("repo_id", ciInfo.Repo);
+            Assert.AreEqual("refs/heads/head_branch_name", ciInfo.Branch);
+            Assert.AreEqual("actor", ciInfo.Author);
+            Assert.AreEqual("commit_sha", ciInfo.CommitId);
+            Assert.AreEqual("server_url/repository/commit/commit_sha", ciInfo.RevisionUrl);
+            Assert.AreEqual("run_id", ciInfo.RunId);
+            Assert.AreEqual(1, ciInfo.RunAttempt);
+            Assert.AreEqual("job_id", ciInfo.JobId);
         }
 
         [Test]
@@ -153,11 +165,15 @@ namespace Azure.Developer.Playwright.Tests.Utility
             var provider = new CIProvider(environment: environment);
             CIInfo ciInfo = provider.GetCIInfo();
 
-            Assert.AreEqual(CIConstants.s_aZURE_DEVOPS, ciInfo.providerName);
-            Assert.AreEqual("branch_name", ciInfo.branch);
-            Assert.AreEqual("author", ciInfo.author);
-            Assert.AreEqual("commit_sha", ciInfo.commitId);
-            Assert.AreEqual("collection_uri/team_project/_git/repository_name/commit/commit_sha", ciInfo.revisionUrl);
+            Assert.AreEqual(CIConstants.s_aZURE_DEVOPS, ciInfo.Provider);
+            Assert.AreEqual("repo_id", ciInfo.Repo);
+            Assert.AreEqual("branch_name", ciInfo.Branch);
+            Assert.AreEqual("author", ciInfo.Author);
+            Assert.AreEqual("commit_sha", ciInfo.CommitId);
+            Assert.AreEqual("collection_uri/team_project/_git/repository_name/commit/commit_sha", ciInfo.RevisionUrl);
+            Assert.AreEqual("definition_id-job_id", ciInfo.RunId);
+            Assert.AreEqual(1, ciInfo.RunAttempt);
+            Assert.AreEqual("deployment_id", ciInfo.JobId);
         }
 
         [Test]
@@ -185,11 +201,15 @@ namespace Azure.Developer.Playwright.Tests.Utility
             var provider = new CIProvider(environment: environment);
             CIInfo ciInfo = provider.GetCIInfo();
 
-            Assert.AreEqual(CIConstants.s_aZURE_DEVOPS, ciInfo.providerName);
-            Assert.AreEqual("branch_name", ciInfo.branch);
-            Assert.AreEqual("author", ciInfo.author);
-            Assert.AreEqual("commit_sha", ciInfo.commitId);
-            Assert.AreEqual("collection_uri/team_project/_git/repository_name/commit/commit_sha", ciInfo.revisionUrl);
+            Assert.AreEqual(CIConstants.s_aZURE_DEVOPS, ciInfo.Provider);
+            Assert.AreEqual("repo_id", ciInfo.Repo);
+            Assert.AreEqual("branch_name", ciInfo.Branch);
+            Assert.AreEqual("author", ciInfo.Author);
+            Assert.AreEqual("commit_sha", ciInfo.CommitId);
+            Assert.AreEqual("collection_uri/team_project/_git/repository_name/commit/commit_sha", ciInfo.RevisionUrl);
+            Assert.AreEqual("release-def-release-dep", ciInfo.RunId);
+            Assert.AreEqual(1, ciInfo.RunAttempt);
+            Assert.AreEqual("release-dep", ciInfo.JobId);
         }
 
         [Test]
@@ -212,11 +232,15 @@ namespace Azure.Developer.Playwright.Tests.Utility
             var provider = new CIProvider(environment: environment);
             CIInfo ciInfo = provider.GetCIInfo();
 
-            Assert.AreEqual(CIConstants.s_dEFAULT, ciInfo.providerName);
-            Assert.AreEqual("branch", ciInfo.branch);
-            Assert.AreEqual("author", ciInfo.author);
-            Assert.AreEqual("commit_sha", ciInfo.commitId);
-            Assert.AreEqual("revision_url", ciInfo.revisionUrl);
+            Assert.AreEqual(CIConstants.s_dEFAULT, ciInfo.Provider);
+            Assert.AreEqual("repo", ciInfo.Repo);
+            Assert.AreEqual("branch", ciInfo.Branch);
+            Assert.AreEqual("author", ciInfo.Author);
+            Assert.AreEqual("commit_sha", ciInfo.CommitId);
+            Assert.AreEqual("revision_url", ciInfo.RevisionUrl);
+            Assert.AreEqual("run_id", ciInfo.RunId);
+            Assert.AreEqual(1, ciInfo.RunAttempt);
+            Assert.AreEqual("job_id", ciInfo.JobId);
         }
     }
 }

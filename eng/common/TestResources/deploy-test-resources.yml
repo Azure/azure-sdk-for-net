@@ -1,6 +1,5 @@
 parameters:
   ServiceDirectory: ''
-  TestResourcesDirectory: ''
   ArmTemplateParameters: '@{}'
   DeleteAfterHours: 8
   Location: ''
@@ -99,7 +98,6 @@ steps:
           eng/common/TestResources/New-TestResources.ps1 `
             -ResourceType '${{ parameters.ResourceType }}' `
             -ServiceDirectory '${{ parameters.ServiceDirectory }}' `
-            -TestResourcesDirectory '${{ parameters.TestResourcesDirectory }}' `
             -Location '${{ parameters.Location }}' `
             -DeleteAfterHours '${{ parameters.DeleteAfterHours }}' `
             @subscriptionConfiguration `
@@ -144,7 +142,6 @@ steps:
         eng/common/TestResources/New-TestResources.ps1 `
           -ResourceType '${{ parameters.ResourceType }}' `
           -ServiceDirectory '${{ parameters.ServiceDirectory }}' `
-          -TestResourcesDirectory '${{ parameters.TestResourcesDirectory }}' `
           -Location '${{ parameters.Location }}' `
           -DeleteAfterHours '${{ parameters.DeleteAfterHours }}' `
           @subscriptionConfiguration `

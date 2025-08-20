@@ -20,7 +20,6 @@ public class BasicCommunicationTests(bool async)
         await test.Define(
             ctx =>
             {
-                #region Snippet:CommunicationBasic
                 Infrastructure infra = new();
 
                 ProvisioningParameter location =
@@ -37,7 +36,6 @@ public class BasicCommunicationTests(bool async)
                         DataLocation = "unitedstates"
                     };
                 infra.Add(comm);
-                #endregion
 
                 return infra;
             })

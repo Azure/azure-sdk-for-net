@@ -3,22 +3,20 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> A representation of a span of completion text as used by Azure OpenAI content filter results. </summary>
+    /// <summary></summary>
     public partial class ContentFilterTextSpan : IJsonModel<ContentFilterTextSpan>
     {
-        /// <summary> Initializes a new instance of <see cref="ContentFilterTextSpan"/> for deserialization. </summary>
         internal ContentFilterTextSpan()
         {
         }
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContentFilterTextSpan>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -66,8 +64,6 @@ namespace Azure.AI.OpenAI
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         ContentFilterTextSpan IJsonModel<ContentFilterTextSpan>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
@@ -83,8 +79,6 @@ namespace Azure.AI.OpenAI
             return DeserializeContentFilterTextSpan(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         internal static ContentFilterTextSpan DeserializeContentFilterTextSpan(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -114,7 +108,6 @@ namespace Azure.AI.OpenAI
             return new ContentFilterTextSpan(completionStartOffset, completionEndOffset, additionalBinaryDataProperties);
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ContentFilterTextSpan>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -124,14 +117,12 @@ namespace Azure.AI.OpenAI
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIOpenAIContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ContentFilterTextSpan)} does not support writing '{options.Format}' format.");
             }
         }
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         ContentFilterTextSpan IPersistableModel<ContentFilterTextSpan>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
@@ -151,7 +142,24 @@ namespace Azure.AI.OpenAI
             }
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ContentFilterTextSpan>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="contentFilterTextSpan"> The <see cref="ContentFilterTextSpan"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(ContentFilterTextSpan contentFilterTextSpan)
+        {
+            if (contentFilterTextSpan == null)
+            {
+                return null;
+            }
+            return BinaryContent.Create(contentFilterTextSpan, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="ContentFilterTextSpan"/> from. </param>
+        public static explicit operator ContentFilterTextSpan(ClientResult result)
+        {
+            using PipelineResponse response = result.GetRawResponse();
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeContentFilterTextSpan(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

@@ -20,18 +20,18 @@ namespace Azure.ResourceManager.Avs.Models
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            Type = ScriptExecutionParameterType.SecureValue;
+            ParameterType = ScriptExecutionParameterType.SecureValue;
         }
 
         /// <summary> Initializes a new instance of <see cref="ScriptSecureStringExecutionParameterDetails"/>. </summary>
-        /// <param name="type"> script execution parameter type. </param>
+        /// <param name="parameterType"> script execution parameter type. </param>
         /// <param name="name"> The parameter name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="secureValue"> A secure value for the passed parameter, not to be stored in logs. </param>
-        internal ScriptSecureStringExecutionParameterDetails(ScriptExecutionParameterType type, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, string secureValue) : base(type, name, serializedAdditionalRawData)
+        internal ScriptSecureStringExecutionParameterDetails(ScriptExecutionParameterType parameterType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, string secureValue) : base(parameterType, name, serializedAdditionalRawData)
         {
             SecureValue = secureValue;
-            Type = type;
+            ParameterType = parameterType;
         }
 
         /// <summary> Initializes a new instance of <see cref="ScriptSecureStringExecutionParameterDetails"/> for deserialization. </summary>

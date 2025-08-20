@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 namespace Azure.Provisioning.Sql;
 
 /// <summary>
-/// Type of enclave requested on the database i.e. Default or VBS enclaves.
+/// Type of enclave requested on the elastic pool.
 /// </summary>
 public enum SqlAlwaysEncryptedEnclaveType
 {

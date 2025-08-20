@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <description>Consoles_CreateOrUpdate</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudVirtualMachineConsoleResource"/></description>
         /// </item>
@@ -46,7 +50,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="consoleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="consoleName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkCloudVirtualMachineConsoleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string consoleName, NetworkCloudVirtualMachineConsoleData data, CancellationToken cancellationToken)
-            => await CreateOrUpdateAsync(waitUntil, consoleName, data, null, null, cancellationToken).ConfigureAwait(false);
+        {
+            return await CreateOrUpdateAsync(waitUntil, consoleName, data, null, null, cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Create a new virtual machine console or update the properties of the existing virtual machine console.
@@ -58,6 +64,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Consoles_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -72,6 +82,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="consoleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="consoleName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkCloudVirtualMachineConsoleResource> CreateOrUpdate(WaitUntil waitUntil, string consoleName, NetworkCloudVirtualMachineConsoleData data, CancellationToken cancellationToken)
-            => CreateOrUpdate(waitUntil, consoleName, data, null, null, cancellationToken);
+        {
+            return CreateOrUpdate(waitUntil, consoleName, data, null, null, cancellationToken);
+        }
     }
 }

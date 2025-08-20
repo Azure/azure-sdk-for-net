@@ -81,7 +81,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            IList<BatchAccessScope> access = default;
+            IList<AccessScope> access = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,10 +92,10 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    List<BatchAccessScope> array = new List<BatchAccessScope>();
+                    List<AccessScope> array = new List<AccessScope>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new BatchAccessScope(item.GetString()));
+                        array.Add(new AccessScope(item.GetString()));
                     }
                     access = array;
                     continue;
@@ -106,7 +106,7 @@ namespace Azure.Compute.Batch
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AuthenticationTokenSettings(access ?? new ChangeTrackingList<BatchAccessScope>(), serializedAdditionalRawData);
+            return new AuthenticationTokenSettings(access ?? new ChangeTrackingList<AccessScope>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AuthenticationTokenSettings>.Write(ModelReaderWriterOptions options)

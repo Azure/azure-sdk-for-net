@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
@@ -17,15 +15,13 @@ namespace Azure.Communication.Chat
         public ChatParticipant(CommunicationIdentifier identifier)
         {
             User = identifier;
-            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        internal ChatParticipant(CommunicationIdentifier user, string displayName, DateTimeOffset? shareHistoryTime, IDictionary<string, string> metadata = null)
+        internal ChatParticipant(CommunicationIdentifier user, string displayName, DateTimeOffset? shareHistoryTime)
         {
             User = user;
             DisplayName = displayName;
             ShareHistoryTime = shareHistoryTime;
-            Metadata = metadata;
         }
 
         internal ChatParticipant(ChatParticipantInternal chatParticipantInternal)
@@ -33,7 +29,6 @@ namespace Azure.Communication.Chat
             User = CommunicationIdentifierSerializer.Deserialize(chatParticipantInternal.CommunicationIdentifier);
             DisplayName = chatParticipantInternal.DisplayName;
             ShareHistoryTime = chatParticipantInternal.ShareHistoryTime;
-            Metadata = chatParticipantInternal.Metadata;
         }
 
         ///<summary>Instance of <see cref="CommunicationIdentifier"/>. </summary>
@@ -43,14 +38,9 @@ namespace Azure.Communication.Chat
         /// <summary> Time from which the chat history is shared with the member. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </summary>
         public DateTimeOffset? ShareHistoryTime { get; set; }
 
-        /// <summary>
-        /// Metadata
-        /// </summary>
-        public IDictionary<string, string> Metadata { get; }
-
         internal ChatParticipantInternal ToChatParticipantInternal()
         {
-            return new ChatParticipantInternal(CommunicationIdentifierSerializer.Serialize(User), DisplayName, ShareHistoryTime, Metadata);
+            return new ChatParticipantInternal(CommunicationIdentifierSerializer.Serialize(User), DisplayName, ShareHistoryTime);
         }
     }
 }

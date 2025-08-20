@@ -94,16 +94,6 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             }
         }
 
-        protected override async Task<IDisposingContainer<ShareClient>> GetDestinationDisposingContainerOauthAsync(
-            string containerName = default,
-            CancellationToken cancellationToken = default)
-        {
-            ShareClientOptions options = DestinationClientBuilder.GetOptions();
-            options.ShareTokenIntent = ShareTokenIntent.Backup;
-            ShareServiceClient oauthService = DestinationClientBuilder.GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, TestEnvironment.Credential, options);
-            return await DestinationClientBuilder.GetTestShareAsync(oauthService, containerName);
-        }
-
         protected override async Task<IDisposingContainer<ShareClient>> GetDestinationDisposingContainerAsync(ShareServiceClient service = null, string containerName = null, CancellationToken cancellationToken = default)
             => await DestinationClientBuilder.GetTestShareAsync(service, containerName);
 
@@ -186,12 +176,19 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             return InstrumentClientOptions(options);
         }
 
-        protected override async Task<IDisposingContainer<BlobContainerClient>> GetSourceDisposingContainerOauthAsync(
-            string containerName = default,
-            CancellationToken cancellationToken = default)
+        protected override ShareClient GetOAuthDestinationContainerClient(string containerName)
         {
-            BlobServiceClient oauthService = SourceClientBuilder.GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, TestEnvironment.Credential);
-            return await SourceClientBuilder.GetTestContainerAsync(oauthService, containerName);
+            ShareClientOptions options = DestinationClientBuilder.GetOptions();
+            options.ShareTokenIntent = ShareTokenIntent.Backup;
+            ShareServiceClient oauthService = DestinationClientBuilder.GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, TestEnvironment.Credential, options);
+            return oauthService.GetShareClient(containerName);
+        }
+
+        protected override BlobContainerClient GetOAuthSourceContainerClient(string containerName)
+        {
+            BlobClientOptions options = SourceClientBuilder.GetOptions();
+            BlobServiceClient oauthService = SourceClientBuilder.GetServiceClientFromOauthConfig(Tenants.TestConfigOAuth, TestEnvironment.Credential, options);
+            return oauthService.GetBlobContainerClient(containerName);
         }
 
         // Blob to File always needs OAuth source container

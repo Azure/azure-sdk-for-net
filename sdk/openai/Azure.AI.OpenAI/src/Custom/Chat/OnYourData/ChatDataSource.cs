@@ -9,5 +9,5 @@ namespace Azure.AI.OpenAI.Chat;
 
 [CodeGenType("AzureChatDataSource")]
 [Experimental("AOAI001")]
-public partial class ChatDataSource
+public abstract partial class ChatDataSource
 { }

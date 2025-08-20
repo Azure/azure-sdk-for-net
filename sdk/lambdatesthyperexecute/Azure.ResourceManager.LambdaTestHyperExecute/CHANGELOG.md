@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.0.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,12 +9,6 @@
 ### Bugs Fixed
 
 ### Other Changes
-
-## 1.0.0 (2025-07-07)
-
-### Features Added
-
-This package is a first stable release version of the client library Azure LambdaTest HyperExecute.
 
 ## 1.0.0-beta.1 (2025-04-24)
 

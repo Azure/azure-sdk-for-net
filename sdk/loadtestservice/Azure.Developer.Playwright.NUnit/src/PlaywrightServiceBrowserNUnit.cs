@@ -76,6 +76,8 @@ public class PlaywrightServiceBrowserNUnit : PlaywrightServiceBrowserClient
     [OneTimeSetUp]
     public async Task InitializeAsync()
     {
+        if (!_options.UseCloudHostedBrowsers)
+            return;
         nunitLogger.LogInformation("\nRunning tests using Azure Playwright service.\n");
 
         await base.InitializeAsync().ConfigureAwait(false);

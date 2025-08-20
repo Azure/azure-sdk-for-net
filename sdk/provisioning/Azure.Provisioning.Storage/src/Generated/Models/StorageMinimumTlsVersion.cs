@@ -30,10 +30,4 @@ public enum StorageMinimumTlsVersion
     /// </summary>
     [DataMember(Name = "TLS1_2")]
     Tls1_2,
-
-    /// <summary>
-    /// TLS1_3.
-    /// </summary>
-    [DataMember(Name = "TLS1_3")]
-    Tls1_3,
 }

@@ -143,17 +143,17 @@ namespace Azure.Security.KeyVault.Keys
             if (Attestation != null)
             {
                 json.WriteStartObject(s_keyAttestationPropertyNameBytes);
-                if (!Attestation.CertificatePemFile.IsEmpty)
+                if (Attestation.CertificatePemFile != null)
                 {
-                    json.WriteString("certificatePemFile", Convert.ToBase64String(Attestation.CertificatePemFile.ToArray()));
+                    json.WriteString("certificatePemFile", Convert.ToBase64String(Attestation.CertificatePemFile));
                 }
-                if (!Attestation.PrivateKeyAttestation.IsEmpty)
+                if (Attestation.PrivateKeyAttestation != null)
                 {
-                    json.WriteString("privateKeyAttestation", Convert.ToBase64String(Attestation.PrivateKeyAttestation.ToArray()));
+                    json.WriteString("privateKeyAttestation", Convert.ToBase64String(Attestation.PrivateKeyAttestation));
                 }
-                if (!Attestation.PublicKeyAttestation.IsEmpty)
+                if (Attestation.PublicKeyAttestation != null)
                 {
-                    json.WriteString("publicKeyAttestation", Convert.ToBase64String(Attestation.PublicKeyAttestation.ToArray()));
+                    json.WriteString("publicKeyAttestation", Convert.ToBase64String(Attestation.PublicKeyAttestation));
                 }
                 if (Attestation.Version != null)
                 {

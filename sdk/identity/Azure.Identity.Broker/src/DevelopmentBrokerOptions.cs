@@ -3,7 +3,6 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.InteropServices;
 using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.Broker;
 
@@ -32,12 +31,6 @@ namespace Azure.Identity.Broker
         public DevelopmentBrokerOptions() : base()
         {
             _beforeBuildClient = AddBroker;
-
-            // Set default value for UseDefaultBrokerAccount on macOS
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-            {
-                RedirectUri = new(Constants.MacBrokerRedirectUri);
-            }
         }
 
         Action<PublicClientApplicationBuilder> IMsalSettablePublicClientInitializerOptions.BeforeBuildClient
@@ -51,7 +44,7 @@ namespace Azure.Identity.Broker
         private void AddBroker(PublicClientApplicationBuilder builder)
         {
             builder.WithParentActivityOrWindow(() => IntPtr.Zero);
-            var options = new BrokerOptions(BrokerOptions.OperatingSystems.Windows | BrokerOptions.OperatingSystems.Linux | BrokerOptions.OperatingSystems.OSX);
+            var options = new BrokerOptions(BrokerOptions.OperatingSystems.Windows | BrokerOptions.OperatingSystems.Linux);
             if (IsLegacyMsaPassthroughEnabled.HasValue)
             {
                 options.MsaPassthrough = IsLegacyMsaPassthroughEnabled.Value;

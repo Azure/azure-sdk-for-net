@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             IList<MigrateOracleAzureDBPostgreSqlSyncDatabaseInput> selectedDatabases = default;
-            DataMigrationPostgreSqlConnectionInfo targetConnectionInfo = default;
-            DataMigrationOracleConnectionInfo sourceConnectionInfo = default;
+            PostgreSqlConnectionInfo targetConnectionInfo = default;
+            OracleConnectionInfo sourceConnectionInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,12 +101,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = DataMigrationPostgreSqlConnectionInfo.DeserializeDataMigrationPostgreSqlConnectionInfo(property.Value, options);
+                    targetConnectionInfo = PostgreSqlConnectionInfo.DeserializePostgreSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = DataMigrationOracleConnectionInfo.DeserializeDataMigrationOracleConnectionInfo(property.Value, options);
+                    sourceConnectionInfo = OracleConnectionInfo.DeserializeOracleConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

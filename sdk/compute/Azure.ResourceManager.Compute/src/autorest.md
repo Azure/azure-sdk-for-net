@@ -10,7 +10,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/7f6e17564770ef938595a0c7c9929753fa51047d/specification/compute/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/883abbe08d313739069c0007eb820aa0a0710748/specification/compute/resource-manager/readme.md
+#tag: package-2025-02-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -305,7 +306,7 @@ rename-mapping:
   Modes: HostEndpointSettingsMode
   Expand: GetVirtualMachineImagesWithPropertiesExpand
   RebalanceBehavior: VmssRebalanceBehavior
-  RebalanceStrategy: VmssRebalanceStrategy
+  RebalanceStrategy: VmssRebalanceStrategy 
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
@@ -367,15 +368,21 @@ directive:
             }
           }
         };
-  - from: ComputeRP.json
+  - from: virtualMachine.json
     where: $.definitions
     transform: >
       $.VirtualMachineInstallPatchesParameters.properties.maximumDuration["format"] = "duration";
-  - from: ComputeRP.json
+  - from: virtualMachineImage.json
     where: $.definitions
     transform: >
       $.VirtualMachineImageProperties.properties.dataDiskImages.description = "The list of data disk images information.";
-  - from: DiskRP.json
+# resolve the duplicate schema issue
+  - from: diskRPCommon.json
+    where: $.definitions
+    transform: >
+      $.PurchasePlan["x-ms-client-name"] = "DiskPurchasePlan";
+      $.GrantAccessData.properties.access.description = "The Access Level, accepted values include None, Read, Write.";
+  - from: disk.json
     where: $.definitions
     transform: >
       $.Disk.properties.managedByExtended.items["x-ms-format"] = "arm-id";
@@ -390,13 +397,8 @@ directive:
       $.RoleInstance.properties.properties["x-ms-client-flatten"] = true;
       $.LoadBalancerConfiguration.properties.properties["x-ms-client-flatten"] = true;
       $.LoadBalancerFrontendIpConfiguration.properties.properties["x-ms-client-flatten"] = true;
-  # rename the expand parameter in this operation to expandOption to avoid the breaking change of its type
-  - from: ComputeRP.json
-    where: $["x-ms-paths"]["/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmimage/offers/{offer}/skus/{skus}/versions?$expand=Properties"].get
-    transform: >
-      $.parameters[6]["x-ms-client-name"] = "expandOption";
   # this makes the name in VirtualMachineScaleSetExtension to be readonly so that our inheritance chooser could properly make it inherit from Azure.ResourceManager.ResourceData. We have some customized code to add the setter for name back (as in constructor)
-  - from: ComputeRP.json
+  - from: virtualMachineScaleSet.json
     where: $.definitions.VirtualMachineScaleSetExtension.properties.name
     transform: $["readOnly"] = true;
   # add a json converter to this model
@@ -404,11 +406,11 @@ directive:
     where: $.definitions.KeyVaultSecretReference
     transform: $["x-csharp-usage"] = "converter";
   # TODO -- to be removed. This is a temporary workaround because the rename-mapping configuration is not working properly on arrays.
-  - from: ComputeRP.json
+  - from: restorePoint.json
     where: $.definitions.RestorePointSourceVMStorageProfile.properties.dataDisks
     transform: $["x-ms-client-name"] = "DataDiskList";
   # Add a dummy property because generator tries to flatten automaticallyApprove in both UserInitiatedRedeploy and UserInitiatedReboot
-  - from: ComputeRP.json
+  - from: computeRPCommon.json
     where: $.definitions.UserInitiatedRedeploy.properties
     transform: >
       $.dummyProperty = {
@@ -416,35 +418,46 @@ directive:
         "description": "This is a dummy property to prevent flattening."
       };
   # add additionalproperties to a few models to support private properties supported by the service
-  - from: ComputeRP.json
+  - from: virtualMachineScaleSet.json
     where: $.definitions
     transform: >
       $.VirtualMachineScaleSetProperties.additionalProperties = true;
       $.VirtualMachineScaleSet.properties.properties["x-ms-client-flatten"] = false;
       $.VirtualMachineScaleSetUpdate.properties.properties["x-ms-client-flatten"] = false;
-      $.VirtualMachineScaleSetVM.properties.properties["x-ms-client-flatten"] = false;
-      $.VirtualMachineScaleSetVMProperties.additionalProperties = true;
       $.UpgradePolicy.additionalProperties = true;
-  - from: ComputeRP.json
+  - from: computeRPCommon.json
     where: $.definitions.VMSizeProperties
     transform: >
       $.additionalProperties = true;
-  - from: ComputeRP.json
-    where: $.definitions.Placement.properties.zonePlacementPolicy
-    transform: >
-      delete $["$ref"];
-      $["type"] = "string";
-  - from: ComputeRP.json
+  # Enable AnyZone Capability, this is a temporary change, will be removed after service team update the spec
+  - from: virtualMachine.json
     where: $.definitions
-    transform: delete $["Expand"]
-  - from: ComputeRP.json
-    where: $.definitions.VirtualMachineScaleSetStorageProfile.properties.diskControllerType
     transform: >
-      delete $["$ref"];
-      $["type"] = "string";
-  - from: ComputeRP.json
-    where: $.definitions.VirtualMachineScaleSetUpdateStorageProfile.properties.diskControllerType
-    transform: >
-      delete $["$ref"];
-      $["type"] = "string";
+      $.Placement = {
+              "properties": {
+                "zonePlacementPolicy": {
+                  "type": "string",
+                  "description": "Specifies policy for auto zone placement."
+                },
+                "includeZones": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "List of zones to include for auto zone placement."
+                },
+                "excludeZones": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "List of zones to exclude for auto zone placement."
+                }
+              },
+              "description": "The virtual machine automatic zone placement feature."
+            };
+      $.VirtualMachine.properties.placement = {
+              "$ref": "#/definitions/Placement",
+              "description": "The virtual machine automatic zone placement feature."
+            };
 ```

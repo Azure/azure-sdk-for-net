@@ -26,7 +26,7 @@ namespace Azure.Health.Deidentification.Samples
         [Test]
         public void HelloWorld()
         {
-            string serviceEndpoint = TestEnvironment.Endpoint;
+            const string serviceEndpoint = "https://example.api.cac001.deid.azure.com";
             TokenCredential credential = TestEnvironment.Credential;
 
             #region Snippet:AzHealthDeidSample1_HelloWorld

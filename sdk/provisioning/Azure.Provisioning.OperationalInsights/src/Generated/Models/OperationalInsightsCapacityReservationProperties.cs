@@ -25,7 +25,7 @@ public partial class OperationalInsightsCapacityReservationProperties : Provisio
     private BicepValue<DateTimeOffset>? _lastSkuUpdatedOn;
 
     /// <summary>
-    /// Minimum CapacityReservation value in Gigabytes.
+    /// Minimum CapacityReservation value in GB.
     /// </summary>
     public BicepValue<long> MinCapacity 
     {

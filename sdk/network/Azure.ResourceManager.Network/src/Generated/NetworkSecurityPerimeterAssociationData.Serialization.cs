@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -49,12 +48,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(PrivateLinkResource))
             {
                 writer.WritePropertyName("privateLinkResource"u8);
-                ((IJsonModel<WritableSubResource>)PrivateLinkResource).Write(writer, options);
+                JsonSerializer.Serialize(writer, PrivateLinkResource);
             }
             if (Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
-                ((IJsonModel<WritableSubResource>)Profile).Write(writer, options);
+                JsonSerializer.Serialize(writer, Profile);
             }
             if (Optional.IsDefined(AccessMode))
             {
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default);
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -150,7 +149,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            privateLinkResource = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            privateLinkResource = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("profile"u8))
@@ -159,7 +158,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            profile = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            profile = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("accessMode"u8))

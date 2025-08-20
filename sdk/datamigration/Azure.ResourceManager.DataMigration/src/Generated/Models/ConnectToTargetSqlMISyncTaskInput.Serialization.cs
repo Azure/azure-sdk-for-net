@@ -75,20 +75,20 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            DataMigrationMISqlConnectionInfo targetConnectionInfo = default;
-            DataMigrationAadApp azureApp = default;
+            MISqlConnectionInfo targetConnectionInfo = default;
+            AzureActiveDirectoryApp azureApp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = DataMigrationMISqlConnectionInfo.DeserializeDataMigrationMISqlConnectionInfo(property.Value, options);
+                    targetConnectionInfo = MISqlConnectionInfo.DeserializeMISqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("azureApp"u8))
                 {
-                    azureApp = DataMigrationAadApp.DeserializeDataMigrationAadApp(property.Value, options);
+                    azureApp = AzureActiveDirectoryApp.DeserializeAzureActiveDirectoryApp(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-using System.Collections.ObjectModel;
 
 namespace System.ClientModel.Primitives;
 
@@ -29,7 +28,6 @@ public readonly struct ClientConnection
         Locator = locator;
         Credential = credential;
         CredentialKind = credentialKind;
-        Metadata = new Dictionary<string, string>();
     }
 
     /// <summary>
@@ -47,7 +45,6 @@ public readonly struct ClientConnection
         Id = id;
         Locator = locator;
         CredentialKind = CredentialKind.None;
-        Metadata = new ReadOnlyDictionary<string, string>(new Dictionary<string, string>());
     }
 
     /// <summary>
@@ -62,23 +59,6 @@ public readonly struct ClientConnection
         Id = id;
         Locator = locator;
         CredentialKind = credentialKind;
-        Metadata = new ReadOnlyDictionary<string, string>(new Dictionary<string, string>());
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="ClientConnection"/> struct with the specified subclient ID.
-    /// It is only for the JSON serializer.
-    /// </summary>
-    /// <param name="metadata">The connection metadata.</param>
-    /// <param name="id">The identifier for the connection.</param>
-    /// <param name="locator">The endpoint or resource identifier.</param>
-    /// <param name="credentialKind">The kind of connection used by the client</param>
-    internal ClientConnection(IReadOnlyDictionary<string, string> metadata, string id, string locator, CredentialKind credentialKind)
-    {
-        Id = id;
-        Locator = locator;
-        CredentialKind = credentialKind;
-        Metadata = metadata;
     }
 
     /// <summary>
@@ -116,7 +96,4 @@ public readonly struct ClientConnection
     /// </summary>
     /// <returns>A string in the format 'Id => Locator'.</returns>
     public override string ToString() => $"{Id} => {Locator}";
-
-    /// <summary> Metadata of the connection. </summary>
-    public IReadOnlyDictionary<string, string> Metadata { get; }
 }

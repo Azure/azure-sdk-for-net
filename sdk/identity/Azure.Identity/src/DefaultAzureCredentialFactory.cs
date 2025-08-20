@@ -1,10 +1,9 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using Azure.Core;
 
 namespace Azure.Identity
@@ -30,9 +29,14 @@ namespace Azure.Identity
 
         public TokenCredential[] CreateCredentialChain()
         {
-            string credentialSelection = EnvironmentVariables.CredentialSelection?.Trim().ToLower();
+            string credentialSelection = EnvironmentVariables.CredentialSelection?.Trim();
             bool _useDevCredentials = Constants.DevCredentials.Equals(credentialSelection, StringComparison.OrdinalIgnoreCase);
             bool _useProdCredentials = Constants.ProdCredentials.Equals(credentialSelection, StringComparison.OrdinalIgnoreCase);
+
+            if (credentialSelection != null && !_useDevCredentials && !_useProdCredentials)
+            {
+                throw new InvalidOperationException($"Invalid value for environment variable AZURE_TOKEN_CREDENTIALS: {credentialSelection}. Valid values are '{Constants.DevCredentials}' or '{Constants.ProdCredentials}'.");
+            }
 
             if (_useDefaultCredentialChain)
             {
@@ -41,7 +45,6 @@ namespace Azure.Identity
                     return
                     [
                         CreateVisualStudioCredential(),
-                        CreateVisualStudioCodeCredential(),
                         CreateAzureCliCredential(),
                         CreateAzurePowerShellCredential(),
                         CreateAzureDeveloperCliCredential()
@@ -55,27 +58,6 @@ namespace Azure.Identity
                         CreateWorkloadIdentityCredential(),
                         CreateManagedIdentityCredential()
                     ];
-                }
-                else if (credentialSelection != null)
-                {
-                    string validCredentials = $"'{Constants.DevCredentials}', '{Constants.ProdCredentials}', '{Constants.VisualStudioCredential}', '{Constants.VisualStudioCodeCredential}', '{Constants.AzureCliCredential}', '{Constants.AzurePowerShellCredential}', '{Constants.AzureDeveloperCliCredential}', '{Constants.EnvironmentCredential}', '{Constants.WorkloadIdentityCredential}', '{Constants.ManagedIdentityCredential}', '{Constants.InteractiveBrowserCredential}', '{Constants.BrokerCredential}'";
-                    return credentialSelection switch
-                    {
-                        Constants.VisualStudioCredential => [CreateVisualStudioCredential()],
-                        Constants.VisualStudioCodeCredential => [CreateVisualStudioCodeCredential()],
-                        Constants.AzureCliCredential => [CreateAzureCliCredential()],
-                        Constants.AzurePowerShellCredential => [CreateAzurePowerShellCredential()],
-                        Constants.AzureDeveloperCliCredential => [CreateAzureDeveloperCliCredential()],
-                        Constants.EnvironmentCredential => [CreateEnvironmentCredential()],
-                        Constants.WorkloadIdentityCredential => [CreateWorkloadIdentityCredential()],
-                        Constants.ManagedIdentityCredential => [CreateManagedIdentityCredential()],
-                        Constants.InteractiveBrowserCredential => [CreateInteractiveBrowserCredential()],
-                        Constants.BrokerCredential =>
-                            TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions brokerOptions)
-                                ? [CreateBrokerCredential(brokerOptions)]
-                                : throw new CredentialUnavailableException("BrokerCredential is not available without a reference to Azure.Identity.Broker."),
-                        _ => throw new InvalidOperationException($"Invalid value for environment variable AZURE_TOKEN_CREDENTIALS: {credentialSelection}. Valid values are {validCredentials}. See https://aka.ms/azsdk/net/identity/defaultazurecredential/troubleshoot for more information.")
-                    };
                 }
                 return s_defaultCredentialChain;
             }
@@ -102,22 +84,22 @@ namespace Azure.Identity
 
             if (!_useProdCredentials)
             {
-#pragma warning disable CS0618 // Type of member is obsolete
                 if (!Options.ExcludeSharedTokenCacheCredential)
                 {
                     chain.Add(CreateSharedTokenCacheCredential());
                 }
-#pragma warning restore CS0618
 
                 if (!Options.ExcludeVisualStudioCredential)
                 {
                     chain.Add(CreateVisualStudioCredential());
                 }
 
+#pragma warning disable CS0618 // Type or member is obsolete
                 if (!Options.ExcludeVisualStudioCodeCredential)
                 {
                     chain.Add(CreateVisualStudioCodeCredential());
                 }
+#pragma warning restore CS0618 // Type or member is obsolete
 
                 if (!Options.ExcludeAzureCliCredential)
                 {
@@ -138,10 +120,12 @@ namespace Azure.Identity
                 {
                     chain.Add(CreateInteractiveBrowserCredential());
                 }
+#if PREVIEW_FEATURE_FLAG
                 if (!Options.ExcludeBrokerCredential && TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions brokerOptions))
                 {
-                    chain.Add(CreateBrokerCredential(brokerOptions));
+                    chain.Add(CreateBrokerAuthenticationCredential(brokerOptions));
                 }
+#endif
             }
             if (chain.Count == 0)
             {
@@ -212,7 +196,6 @@ namespace Azure.Identity
 
         public virtual TokenCredential CreateSharedTokenCacheCredential()
         {
-#pragma warning disable CS0618 // Type or member is obsolete
             var options = Options.Clone<SharedTokenCacheCredentialOptions>();
 
             options.TenantId = Options.SharedTokenCacheTenantId;
@@ -220,7 +203,6 @@ namespace Azure.Identity
             options.Username = Options.SharedTokenCacheUsername;
 
             return new SharedTokenCacheCredential(Options.SharedTokenCacheTenantId, Options.SharedTokenCacheUsername, options, Pipeline);
-#pragma warning restore CS0618
         }
 
         public virtual TokenCredential CreateInteractiveBrowserCredential()
@@ -238,11 +220,10 @@ namespace Azure.Identity
                 Pipeline);
         }
 
-        public TokenCredential CreateBrokerCredential(InteractiveBrowserCredentialOptions brokerOptions)
+        public TokenCredential CreateBrokerAuthenticationCredential(InteractiveBrowserCredentialOptions brokerOptions)
         {
             var options = Options.Clone<DevelopmentBrokerOptions>();
             ((IMsalSettablePublicClientInitializerOptions)options).BeforeBuildClient = ((IMsalSettablePublicClientInitializerOptions)brokerOptions).BeforeBuildClient;
-            options.RedirectUri = brokerOptions.RedirectUri;
 
             options.TokenCachePersistenceOptions = new TokenCachePersistenceOptions();
 
@@ -288,11 +269,13 @@ namespace Azure.Identity
 
         public virtual TokenCredential CreateVisualStudioCodeCredential()
         {
+#pragma warning disable CS0618 // Type or member is obsolete
             var options = Options.Clone<VisualStudioCodeCredentialOptions>();
             options.TenantId = Options.VisualStudioCodeTenantId;
             options.IsChainedCredential = true;
 
-            return new VisualStudioCodeCredential(options);
+            return new VisualStudioCodeCredential(options, Pipeline, default, default, default);
+#pragma warning restore CS0618 // Type or member is obsolete
         }
 
         public virtual TokenCredential CreateAzurePowerShellCredential()
@@ -319,29 +302,12 @@ namespace Azure.Identity
                 // AOT friendly.
 
                 // Try to get the options type
-                var optionsType = Type.GetType("Azure.Identity.Broker.DevelopmentBrokerOptions, Azure.Identity.Broker", throwOnError: false);
-                if (optionsType == null)
-                    return false;
+                Type optionsType = Type.GetType("Azure.Identity.Broker.DevelopmentBrokerOptions, Azure.Identity.Broker", throwOnError: false);
+                ConstructorInfo optionsCtor = optionsType?.GetConstructor(Type.EmptyTypes);
+                object optionsInstance = optionsCtor?.Invoke(null);
+                options = optionsInstance as InteractiveBrowserCredentialOptions;
 
-                var constructor = optionsType.GetConstructor(Type.EmptyTypes);
-                if (constructor == null)
-                    return false;
-
-                var instance = constructor.Invoke(null);
-                options = instance as InteractiveBrowserCredentialOptions;
-
-                if (options == null)
-                    return false;
-
-                options.IsChainedCredential = true;
-
-                // Set platform-specific options
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-                {
-                    options.RedirectUri = new Uri(Constants.MacBrokerRedirectUri);
-                }
-
-                return true;
+                return options != null;
             }
             catch
             {

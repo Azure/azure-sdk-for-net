@@ -9,11 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary> The AcknowledgeRequest. </summary>
+    /// <summary></summary>
     internal partial class AcknowledgeRequest : IJsonModel<AcknowledgeRequest>
     {
         /// <summary> Initializes a new instance of <see cref="AcknowledgeRequest"/> for deserialization. </summary>
@@ -169,9 +170,17 @@ namespace Azure.Messaging.EventGrid.Namespaces
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
             content.JsonWriter.WriteObjectValue(acknowledgeRequest, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="AcknowledgeRequest"/> from. </param>
+        public static explicit operator AcknowledgeRequest(Response result)
+        {
+            using Response response = result;
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeAcknowledgeRequest(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

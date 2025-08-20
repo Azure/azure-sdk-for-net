@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.OpenAI.Files;
@@ -28,9 +27,6 @@ internal partial class AzureOpenAIFile : OpenAIFile
     public new string StatusDetails => base.StatusDetails;
 
     [CodeGenMember("Bytes")]
-    public new long? SizeInBytesLong => base.SizeInBytesLong;
-
-    [EditorBrowsable(EditorBrowsableState.Never)]
     public new int? SizeInBytes => base.SizeInBytes;
 
     [CodeGenMember("Status")]
@@ -50,6 +46,8 @@ internal partial class AzureOpenAIFile : OpenAIFile
     [CodeGenMember("Object")]
     internal string _object;
 
+    internal InternalOpenAIFileObject Object => _object;
+
     internal new IDictionary<string, BinaryData> SerializedAdditionalRawData { get; }
 
     /// <summary> Initializes a new instance of <see cref="AzureOpenAIFile"/>. </summary>
@@ -60,7 +58,7 @@ internal partial class AzureOpenAIFile : OpenAIFile
     /// <param name="purpose"> The intended purpose of the file. Supported values are `assistants`, `assistants_output`, `batch`, `batch_output`, `fine-tune`, `fine-tune-results` and `vision`. </param>
     /// <param name="azureStatus"></param>
     /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="filename"/> or <paramref name="purpose"/> is null. </exception>
-    internal AzureOpenAIFile(string id, long? bytes, DateTimeOffset createdAt, string filename, string purpose, AzureOpenAIFileStatus azureStatus)
+    internal AzureOpenAIFile(string id, int? bytes, DateTimeOffset createdAt, string filename, string purpose, AzureOpenAIFileStatus azureStatus)
         : base(id, createdAt, filename, purpose.ToFilePurpose(), bytes, azureStatus.ToFileStatus())
     {
         _object = "file";
@@ -79,10 +77,10 @@ internal partial class AzureOpenAIFile : OpenAIFile
     /// <param name="azureStatus"></param>
     /// <param name="expiresAt"></param>
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-    internal AzureOpenAIFile(string id, long? bytes, DateTimeOffset createdAt, DateTimeOffset? expiresAt, string filename, string @object, string purpose, string statusDetails, AzureOpenAIFileStatus azureStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+    internal AzureOpenAIFile(string id, int? bytes, DateTimeOffset createdAt, DateTimeOffset? expiresAt, string filename, InternalOpenAIFileObject @object, string purpose, string statusDetails, AzureOpenAIFileStatus azureStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         : base(id, createdAt, expiresAt, filename, purpose.ToFilePurpose(), @object, bytes, azureStatus.ToFileStatus(), statusDetails, additionalBinaryDataProperties)
     {
-        _object = @object;
+        _object = @object.ToString();
         _purpose = purpose;
         _azureStatus = azureStatus;
     }

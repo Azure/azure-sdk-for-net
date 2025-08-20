@@ -16,7 +16,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary> The EventGridReceiverClient. </summary>
+    /// <summary></summary>
     public partial class EventGridReceiverClient
     {
         private readonly Uri _endpoint;

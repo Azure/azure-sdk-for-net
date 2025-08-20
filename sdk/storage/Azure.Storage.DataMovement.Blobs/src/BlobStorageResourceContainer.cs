@@ -156,22 +156,27 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             // Suffix the slash when searching if there's a prefix specified,
             // to only list blobs in the specified virtual directory.
-            string sourcePrefix = string.IsNullOrEmpty(DirectoryPrefix) ?
+            string fullPrefix = string.IsNullOrEmpty(DirectoryPrefix) ?
                 "" :
                 string.Concat(DirectoryPrefix, Constants.PathBackSlashDelimiter);
 
-            Queue<string> paths = new();
-            paths.Enqueue(sourcePrefix); // Start with the initial prefix
+            Queue<string> prefixes = new();
+            prefixes.Enqueue(fullPrefix); // Start with the initial prefix
 
-            while (paths.Count > 0)
+            while (prefixes.Count > 0)
             {
-                string currentPath = paths.Dequeue();
+                string currentPrefix = prefixes.Dequeue();
+
+                GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+                {
+                    Traits = BlobTraits.Metadata,
+                    Prefix = currentPrefix,
+                    Delimiter = Constants.PathBackSlashDelimiter
+                };
 
                 int childCount = 0;
                 await foreach (BlobHierarchyItem blobHierarchyItem in BlobContainerClient.GetBlobsByHierarchyAsync(
-                    traits: BlobTraits.Metadata,
-                    prefix: currentPath,
-                    delimiter: Constants.PathBackSlashDelimiter,
+                    options: options,
                     cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
                     childCount++;
@@ -186,9 +191,9 @@ namespace Azure.Storage.DataMovement.Blobs
                     else if (blobHierarchyItem.IsPrefix)
                     {
                         // Return the blob virtual directory as a StorageResourceContainer
-                        yield return GetChildStorageResourceContainer(blobHierarchyItem.Prefix.Substring(sourcePrefix.Length));
+                        yield return GetChildStorageResourceContainer(blobHierarchyItem.Prefix.Substring(fullPrefix.Length));
                         // Enqueue the prefix for further traversal
-                        paths.Enqueue(blobHierarchyItem.Prefix);
+                        prefixes.Enqueue(blobHierarchyItem.Prefix);
                     }
                 }
 
@@ -200,13 +205,10 @@ namespace Azure.Storage.DataMovement.Blobs
                 // with the folder metadata set which represents a directory stub on HNS accounts. No other
                 // properties will be copied from the source. We only do this for empty directories because non-empty
                 // directories are created automatically.
-                if (childCount == 0 &&
-                    currentPath != sourcePrefix && // If doing an empty copy
-                    destinationContainer is BlobStorageResourceContainer destBlobContainer)
+                if (childCount == 0 && destinationContainer is BlobStorageResourceContainer destBlobContainer)
                 {
-                    // Remove source prefix and add destination prefix
                     BlockBlobStorageResource destinationDirectoryResource = destBlobContainer.GetBlobAsStorageResource(
-                        destBlobContainer.ApplyOptionalPrefix(currentPath.Substring(sourcePrefix.Length)),
+                        currentPrefix,
                         BlobType.Block) as BlockBlobStorageResource;
                     await destinationDirectoryResource.CreateEmptyDirectoryStubAsync(cancellationToken).ConfigureAwait(false);
                 }
@@ -222,7 +224,7 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
             => new BlobDestinationCheckpointDetails(_options);
 
-        internal string ApplyOptionalPrefix(string path)
+        private string ApplyOptionalPrefix(string path)
             => IsDirectory
                 ? string.Join("/", DirectoryPrefix, path)
                 : path;

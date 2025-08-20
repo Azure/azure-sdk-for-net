@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedOn"u8);
-                writer.WriteStringValue(StartedOn.Value, "O");
+                writer.WriteStringValue(StartedOn);
             }
         }
 
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             IList<MigrateSchemaSqlServerSqlDBDatabaseInput> selectedDatabases = default;
             string encryptedKeyForSecureFields = default;
-            DateTimeOffset? startedOn = default;
-            DataMigrationSqlConnectionInfo sourceConnectionInfo = default;
-            DataMigrationSqlConnectionInfo targetConnectionInfo = default;
+            string startedOn = default;
+            SqlConnectionInfo sourceConnectionInfo = default;
+            SqlConnectionInfo targetConnectionInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,21 +100,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (property.NameEquals("startedOn"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    startedOn = property.Value.GetDateTimeOffset("O");
+                    startedOn = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = DataMigrationSqlConnectionInfo.DeserializeDataMigrationSqlConnectionInfo(property.Value, options);
+                    sourceConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = DataMigrationSqlConnectionInfo.DeserializeDataMigrationSqlConnectionInfo(property.Value, options);
+                    targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

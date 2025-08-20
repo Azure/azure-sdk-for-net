@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            DataMigrationReportableException error = default;
+            ReportableException error = default;
             IReadOnlyList<SyncMigrationDatabaseErrorEvent> events = default;
             string id = default;
             string resultType = default;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    error = DataMigrationReportableException.DeserializeDataMigrationReportableException(property.Value, options);
+                    error = ReportableException.DeserializeReportableException(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("events"u8))

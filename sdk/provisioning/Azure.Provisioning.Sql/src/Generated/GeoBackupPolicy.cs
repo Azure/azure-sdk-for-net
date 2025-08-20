@@ -37,16 +37,6 @@ public partial class GeoBackupPolicy : ProvisionableResource
     private BicepValue<GeoBackupPolicyState>? _state;
 
     /// <summary>
-    /// The state of the geo backup policy.
-    /// </summary>
-    public BicepValue<GeoBackupPolicyState> GeoBackupPolicyState 
-    {
-        get { Initialize(); return _geoBackupPolicyState!; }
-        set { Initialize(); _geoBackupPolicyState!.Assign(value); }
-    }
-    private BicepValue<GeoBackupPolicyState>? _geoBackupPolicyState;
-
-    /// <summary>
     /// Gets the Id.
     /// </summary>
     public BicepValue<ResourceIdentifier> Id 
@@ -113,7 +103,7 @@ public partial class GeoBackupPolicy : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the GeoBackupPolicy.</param>
     public GeoBackupPolicy(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Sql/servers/databases/geoBackupPolicies", resourceVersion ?? "2023-08-01")
+        : base(bicepIdentifier, "Microsoft.Sql/servers/databases/geoBackupPolicies", resourceVersion ?? "2021-11-01")
     {
     }
 
@@ -123,8 +113,7 @@ public partial class GeoBackupPolicy : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
-        _state = DefineProperty<GeoBackupPolicyState>("State", ["State"], isRequired: true);
-        _geoBackupPolicyState = DefineProperty<GeoBackupPolicyState>("GeoBackupPolicyState", ["properties", "state"]);
+        _state = DefineProperty<GeoBackupPolicyState>("State", ["properties", "state"], isRequired: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _kind = DefineProperty<string>("Kind", ["kind"], isOutput: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isOutput: true);
@@ -138,11 +127,6 @@ public partial class GeoBackupPolicy : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2023-08-01.
-        /// </summary>
-        public static readonly string V2023_08_01 = "2023-08-01";
-
         /// <summary>
         /// 2021-11-01.
         /// </summary>

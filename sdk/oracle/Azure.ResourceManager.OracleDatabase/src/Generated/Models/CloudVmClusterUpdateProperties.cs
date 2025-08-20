@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -48,14 +49,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Initializes a new instance of <see cref="CloudVmClusterUpdateProperties"/>. </summary>
         public CloudVmClusterUpdateProperties()
         {
-            FileSystemConfigurationDetails = new ChangeTrackingList<FileSystemConfigurationDetails>();
             SshPublicKeys = new ChangeTrackingList<string>();
-            ComputeNodeOcids = new ChangeTrackingList<string>();
+            ComputeNodes = new ChangeTrackingList<ResourceIdentifier>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudVmClusterUpdateProperties"/>. </summary>
         /// <param name="storageSizeInGbs"> The data disk group size to be allocated in GBs per VM. </param>
-        /// <param name="fileSystemConfigurationDetails"> Array of mount path and size. </param>
         /// <param name="dataStorageSizeInTbs"> The data disk group size to be allocated in TBs. </param>
         /// <param name="dbNodeStorageSizeInGbs"> The local node storage to be allocated in GBs. </param>
         /// <param name="memorySizeInGbs"> The memory to be allocated in GBs. </param>
@@ -65,12 +64,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="licenseModel"> The Oracle license model that applies to the cloud VM cluster. The default is LICENSE_INCLUDED. </param>
         /// <param name="dataCollectionOptions"> Indicates user preferences for the various diagnostic collection options for the VM cluster/Cloud VM cluster/VMBM DBCS. </param>
         /// <param name="displayName"> Display Name. </param>
-        /// <param name="computeNodeOcids"> The list of compute servers to be added to the cloud VM cluster. </param>
+        /// <param name="computeNodes"> The list of compute servers to be added to the cloud VM cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudVmClusterUpdateProperties(int? storageSizeInGbs, IList<FileSystemConfigurationDetails> fileSystemConfigurationDetails, double? dataStorageSizeInTbs, int? dbNodeStorageSizeInGbs, int? memorySizeInGbs, int? cpuCoreCount, float? ocpuCount, IList<string> sshPublicKeys, OracleLicenseModel? licenseModel, DiagnosticCollectionConfig dataCollectionOptions, string displayName, IList<string> computeNodeOcids, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CloudVmClusterUpdateProperties(int? storageSizeInGbs, double? dataStorageSizeInTbs, int? dbNodeStorageSizeInGbs, int? memorySizeInGbs, int? cpuCoreCount, float? ocpuCount, IList<string> sshPublicKeys, OracleLicenseModel? licenseModel, DiagnosticCollectionConfig dataCollectionOptions, string displayName, IList<ResourceIdentifier> computeNodes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageSizeInGbs = storageSizeInGbs;
-            FileSystemConfigurationDetails = fileSystemConfigurationDetails;
             DataStorageSizeInTbs = dataStorageSizeInTbs;
             DBNodeStorageSizeInGbs = dbNodeStorageSizeInGbs;
             MemorySizeInGbs = memorySizeInGbs;
@@ -80,16 +78,16 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             LicenseModel = licenseModel;
             DataCollectionOptions = dataCollectionOptions;
             DisplayName = displayName;
-            ComputeNodeOcids = computeNodeOcids;
+            ComputeNodes = computeNodes;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The data disk group size to be allocated in GBs per VM. </summary>
         public int? StorageSizeInGbs { get; set; }
-        /// <summary> Array of mount path and size. </summary>
-        public IList<FileSystemConfigurationDetails> FileSystemConfigurationDetails { get; }
         /// <summary> The data disk group size to be allocated in TBs. </summary>
         public double? DataStorageSizeInTbs { get; set; }
+        /// <summary> The local node storage to be allocated in GBs. </summary>
+        public int? DBNodeStorageSizeInGbs { get; set; }
         /// <summary> The memory to be allocated in GBs. </summary>
         public int? MemorySizeInGbs { get; set; }
         /// <summary> The number of CPU cores enabled on the cloud VM cluster. </summary>
@@ -105,6 +103,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Display Name. </summary>
         public string DisplayName { get; set; }
         /// <summary> The list of compute servers to be added to the cloud VM cluster. </summary>
-        public IList<string> ComputeNodeOcids { get; }
+        public IList<ResourceIdentifier> ComputeNodes { get; }
     }
 }

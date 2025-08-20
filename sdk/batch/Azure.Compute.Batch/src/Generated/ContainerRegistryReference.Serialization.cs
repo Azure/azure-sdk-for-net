@@ -44,10 +44,10 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsDefined(RegistryServerUri))
+            if (Optional.IsDefined(RegistryServer))
             {
                 writer.WritePropertyName("registryServer"u8);
-                writer.WriteStringValue(RegistryServerUri.AbsoluteUri);
+                writer.WriteStringValue(RegistryServer);
             }
             if (Optional.IsDefined(IdentityReference))
             {
@@ -93,7 +93,7 @@ namespace Azure.Compute.Batch
             }
             string username = default;
             string password = default;
-            Uri registryServer = default;
+            string registryServer = default;
             BatchNodeIdentityReference identityReference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -111,11 +111,7 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("registryServer"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    registryServer = new Uri(property.Value.GetString());
+                    registryServer = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("identityReference"u8))

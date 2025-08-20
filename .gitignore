@@ -69,7 +69,6 @@ ipch/
 # VS Code
 **/.vscode/*
 !.vscode/cspell.json
-!.vscode/mcp.json
 
 # Code analysis
 *.CodeAnalysisLog.xml

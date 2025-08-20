@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -57,17 +56,17 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(BackendAddressPool))
             {
                 writer.WritePropertyName("backendAddressPool"u8);
-                ((IJsonModel<WritableSubResource>)BackendAddressPool).Write(writer, options);
+                JsonSerializer.Serialize(writer, BackendAddressPool);
             }
             if (Optional.IsDefined(BackendSettings))
             {
                 writer.WritePropertyName("backendSettings"u8);
-                ((IJsonModel<WritableSubResource>)BackendSettings).Write(writer, options);
+                JsonSerializer.Serialize(writer, BackendSettings);
             }
             if (Optional.IsDefined(Listener))
             {
                 writer.WritePropertyName("listener"u8);
-                ((IJsonModel<WritableSubResource>)Listener).Write(writer, options);
+                JsonSerializer.Serialize(writer, Listener);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -176,7 +175,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            backendAddressPool = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            backendAddressPool = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("backendSettings"u8))
@@ -185,7 +184,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            backendSettings = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            backendSettings = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("listener"u8))
@@ -194,7 +193,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            listener = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            listener = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

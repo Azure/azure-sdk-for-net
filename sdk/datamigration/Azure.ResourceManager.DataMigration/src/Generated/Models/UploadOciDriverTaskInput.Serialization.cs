@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            DataMigrationFileShareInfo driverShare = default;
+            FileShare driverShare = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    driverShare = DataMigrationFileShareInfo.DeserializeDataMigrationFileShareInfo(property.Value, options);
+                    driverShare = FileShare.DeserializeFileShare(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

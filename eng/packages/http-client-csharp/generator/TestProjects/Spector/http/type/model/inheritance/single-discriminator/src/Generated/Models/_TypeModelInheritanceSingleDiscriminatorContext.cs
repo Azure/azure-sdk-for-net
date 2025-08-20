@@ -9,15 +9,6 @@ using System.ClientModel.Primitives;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator
 {
-    [ModelReaderWriterBuildable(typeof(Bird))]
-    [ModelReaderWriterBuildable(typeof(UnknownBird))]
-    [ModelReaderWriterBuildable(typeof(SeaGull))]
-    [ModelReaderWriterBuildable(typeof(Sparrow))]
-    [ModelReaderWriterBuildable(typeof(Goose))]
-    [ModelReaderWriterBuildable(typeof(Eagle))]
-    [ModelReaderWriterBuildable(typeof(Dinosaur))]
-    [ModelReaderWriterBuildable(typeof(UnknownDinosaur))]
-    [ModelReaderWriterBuildable(typeof(TRex))]
     public partial class _TypeModelInheritanceSingleDiscriminatorContext : ModelReaderWriterContext
     {
     }

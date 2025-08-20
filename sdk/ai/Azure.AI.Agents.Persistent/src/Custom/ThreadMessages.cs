@@ -8,7 +8,6 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure.AI.Agents.Persistent.Telemetry;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -26,89 +25,6 @@ namespace Azure.AI.Agents.Persistent
         *  - Allow direct file-path-based file upload (with inferred filename parameter placement) in lieu of requiring
         *     manual I/O prior to getting a byte array
         */
-        /// <summary>
-        /// [Protocol Method] Creates a new message on a specified thread.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateMessageAsync(string,MessageRole,BinaryData,IEnumerable{MessageAttachment},IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateMessageAsync(string threadId, RequestContent content, RequestContext context = null)
-        {
-            using var otelScope = OpenTelemetryScope.StartCreateMessage(threadId, content, _endpoint);
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            try
-            {
-                using HttpMessage message = CreateCreateMessageRequest(threadId, content, context);
-                var response = await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                otelScope?.RecordCreateMessageResponse(response);
-                return response;
-            }
-            catch (Exception e)
-            {
-                otelScope?.RecordError(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Creates a new message on a specified thread.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateMessage(string,MessageRole,BinaryData,IEnumerable{MessageAttachment},IReadOnlyDictionary{string,string},CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="threadId"> Identifier of the thread. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response CreateMessage(string threadId, RequestContent content, RequestContext context = null)
-        {
-            using var otelScope = OpenTelemetryScope.StartCreateMessage(threadId, content, _endpoint);
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNull(content, nameof(content));
-
-            try
-            {
-                using HttpMessage message = CreateCreateMessageRequest(threadId, content, context);
-                var response = _pipeline.ProcessMessage(message, context);
-                otelScope?.RecordCreateMessageResponse(response);
-                return response;
-            }
-            catch (Exception e)
-            {
-                otelScope?.RecordError(e);
-                throw;
-            }
-        }
 
         /// <summary>
         /// Creates a new message on a specified thread, accepting a simple textual content string.
@@ -337,29 +253,15 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetMessagesRequest(
-                threadId: threadId,
-                runId: runId,
-                limit: limit,
-                order: order?.ToString(),
-                after: continuationToken,
-                before: before,
-                context: context);
-            var asyncPageable = new ContinuationTokenPageableAsync<PersistentThreadMessage>(
+            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetMessagesRequest(threadId, runId, limit, order?.ToString(), continuationToken, before, context);
+            return new ContinuationTokenPageableAsync<PersistentThreadMessage>(
                 createPageRequest: PageRequest,
                 valueFactory: e => PersistentThreadMessage.DeserializePersistentThreadMessage(e),
                 pipeline: _pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
-                requestContext: context,
-                itemType: ContinuationItemType.ThreadMessage,
-                threadId: threadId,
-                runId: runId,
-                endpoint: _endpoint,
-                after: after
+                requestContext: context
             );
-
-            return asyncPageable;
         }
 
         /// <summary> Gets a list of messages that exist on a thread. </summary>
@@ -377,29 +279,15 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetMessagesRequest(
-                threadId: threadId,
-                runId: runId,
-                limit: limit,
-                order: order?.ToString(),
-                after: continuationToken,
-                before: before,
-                context: context);
-            var pageable = new ContinuationTokenPageable<PersistentThreadMessage>(
+            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetMessagesRequest(threadId, runId, limit, order?.ToString(), continuationToken, before, context);
+            return new ContinuationTokenPageable<PersistentThreadMessage>(
                 createPageRequest: PageRequest,
                 valueFactory: e => PersistentThreadMessage.DeserializePersistentThreadMessage(e),
                 pipeline: _pipeline,
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
-                requestContext: context,
-                itemType: ContinuationItemType.ThreadMessage,
-                threadId: threadId,
-                runId: runId,
-                endpoint: _endpoint,
-                after: after
+                requestContext: context
             );
-
-            return pageable;
         }
 
         /// <summary>
@@ -434,14 +322,7 @@ namespace Azure.AI.Agents.Persistent
             // which is currently do not support next token.
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMessagesRequest(
-                threadId: threadId,
-                runId: runId,
-                limit: limit,
-                order: order,
-                after: after,
-                before: before,
-                context:context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMessagesRequest(threadId, runId, limit, order, after, before, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ThreadMessagesClient.GetMessages", "data", null, context);
         }
 
@@ -477,14 +358,7 @@ namespace Azure.AI.Agents.Persistent
             // which is currently do not support next token.
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMessagesRequest(
-                threadId: threadId,
-                runId: runId,
-                limit: limit,
-                order: order,
-                after: after,
-                before: before,
-                context: context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMessagesRequest(threadId, runId, limit, order, after, before, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ThreadMessagesClient.GetMessages", "data", null, context);
         }
     }

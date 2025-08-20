@@ -38,19 +38,15 @@ parameters:
 
 variables:
   - template: /eng/pipelines/templates/variables/image.yml
-  - template: /eng/pipelines/templates/variables/globals.yml
 
 extends:
   template: /eng/common/pipelines/templates/archetype-typespec-emitter.yml
   parameters:
-    InitializationSteps:
-      - template: /eng/pipelines/templates/steps/install-dotnet.yml
-    EmitterPackageJsonOutputPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
+    EmitterPackageJsonOutputPath: eng/http-client-csharp-mgmt-emitter-package.json
     EmitterPackagePath: eng/packages/http-client-csharp-mgmt
     SparseCheckoutPaths:
       - /sdk/core/Azure.Core/src/Shared
       - /sdk/core/Azure.Core.TestFramework/src
-      - /sdk/resourcemanager/Azure.ResourceManager/src/Shared
     BuildPrereleaseVersion: true
     UseTypeSpecNext: ${{ parameters.UseTypeSpecNext }}
     ${{ if eq(variables['System.TeamProject'], 'internal') }}:

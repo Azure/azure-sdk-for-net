@@ -77,7 +77,6 @@ public partial class TagResource : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
-        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _tagValues = DefineDictionaryProperty<string>("TagValues", ["properties", "tags"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);

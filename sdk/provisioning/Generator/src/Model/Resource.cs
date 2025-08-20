@@ -19,7 +19,6 @@ public class Resource(Specification spec, Type armType)
     public string? ResourceNamespace { get; set; }
     public string? DefaultResourceVersion { get; set; }
     public IList<string>? ResourceVersions { get; set; }
-    public IList<string>? HiddenResourceVersions { get; set; }
     public NameRequirements? NameRequirements { get; set; }
     public bool GenerateRoleAssignment { get; set; } = false;
     public Resource? ParentResource { get; set; }
@@ -54,7 +53,7 @@ public class Resource(Specification spec, Type armType)
                 // Add the usings
                 HashSet<string> namespaces = CollectNamespaces();
                 if (FromExpression || GenerateRoleAssignment || GetKeysType is not null) { namespaces.Add("Azure.Provisioning.Expressions"); }
-                if (FromExpression || NameRequirements is not null || GetKeysType is not null || HiddenResourceVersions is not null) { namespaces.Add("System.ComponentModel"); }
+                if (FromExpression || NameRequirements is not null || GetKeysType is not null) { namespaces.Add("System.ComponentModel"); }
                 if (GenerateRoleAssignment) { namespaces.Add("Azure.Provisioning.Authorization"); namespaces.Add("Azure.Provisioning.Roles"); }
                 namespaces.Remove(Namespace!);
                 foreach (string ns in namespaces.Order())
@@ -68,7 +67,7 @@ public class Resource(Specification spec, Type armType)
                 writer.WriteLine($"/// <summary>");
                 writer.WriteWrapped(Description ?? (Name + "."));
                 writer.WriteLine($"/// </summary>");
-                writer.WriteLine($"public partial class {Name} : {(BaseType is not null ? BaseType.Name : "ProvisionableResource")}");
+                writer.WriteLine($"public partial class {Name} : ProvisionableResource");
                 using (writer.Scope("{", "}"))
                 {
                     var fence = new IndentWriter.Fenceposter();
@@ -141,14 +140,7 @@ public class Resource(Specification spec, Type armType)
                     writer.WriteLine($"/// </param>");
                     writer.WriteLine($"/// <param name=\"resourceVersion\">Version of the {Name}.</param>");
                     writer.WriteLine($"public {Name}(string bicepIdentifier, string? resourceVersion = default)");
-                    if (BaseType is not null)
-                    {
-                        writer.Write($"    : base(bicepIdentifier, resourceVersion");
-                    }
-                    else
-                    {
-                        writer.Write($"    : base(bicepIdentifier, \"{ResourceType}\", resourceVersion");
-                    }
+                    writer.Write($"    : base(bicepIdentifier, \"{ResourceType}\", resourceVersion");
                     if (DefaultResourceVersion is not null)
                     {
                         writer.Write($" ?? \"{DefaultResourceVersion}\"");
@@ -164,11 +156,6 @@ public class Resource(Specification spec, Type armType)
                     writer.WriteLine($"protected override void DefineProvisionableProperties()");
                     using (writer.Scope("{", "}"))
                     {
-                        writer.WriteLine("base.DefineProvisionableProperties();");
-                        if (DiscriminatorName is not null)
-                        {
-                            writer.WriteLine($"DefineProperty<string>(\"{DiscriminatorName}\", [\"{DiscriminatorName}\"], defaultValue: \"{DiscriminatorValue}\");");
-                        }
                         foreach (Property property in Properties)
                         {
                             writer.Write($"{property.FieldName} = ");
@@ -223,21 +210,6 @@ public class Resource(Specification spec, Type armType)
                                 writer.WriteLine($"/// {version}.");
                                 writer.WriteLine($"/// </summary>");
                                 writer.WriteLine($"public static readonly string {name} = \"{version}\";");
-                            }
-
-                            if (HiddenResourceVersions is not null)
-                            {
-                                foreach (string version in HiddenResourceVersions)
-                                {
-                                    if (fence.RequiresSeparator) { writer.WriteLine(); }
-
-                                    string name = $"V{version.Replace("-", "_")}";
-                                    writer.WriteLine($"/// <summary>");
-                                    writer.WriteLine($"/// {version}.");
-                                    writer.WriteLine($"/// </summary>");
-                                    writer.WriteLine($"[EditorBrowsable(EditorBrowsableState.Never)]");
-                                    writer.WriteLine($"public static readonly string {name} = \"{version}\";");
-                                }
                             }
                         }
                     }

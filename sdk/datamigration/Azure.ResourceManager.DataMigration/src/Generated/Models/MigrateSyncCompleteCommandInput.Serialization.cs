@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
             writer.WritePropertyName("databaseName"u8);
             writer.WriteStringValue(DatabaseName);
-            if (Optional.IsDefined(CompletedOn))
+            if (Optional.IsDefined(CommitTimeStamp))
             {
                 writer.WritePropertyName("commitTimeStamp"u8);
-                writer.WriteStringValue(CompletedOn.Value, "O");
+                writer.WriteStringValue(CommitTimeStamp.Value, "O");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

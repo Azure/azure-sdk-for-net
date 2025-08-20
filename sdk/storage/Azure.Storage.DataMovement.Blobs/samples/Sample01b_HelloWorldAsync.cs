@@ -13,7 +13,6 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs;
 using System.Collections.Generic;
 using System.Threading;
-using System.Linq;
 
 namespace Azure.Storage.DataMovement.Blobs.Samples
 {
@@ -845,10 +844,10 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
         }
 
         /// <summary>
-        /// Basic pause and resume flow from <see cref="TransferManager"/>.
+        /// Test to show pause and resume tests
         /// </summary>
         [Test]
-        public async Task PauseAndResumeAsync_TransferManager()
+        public async Task PauseAndResumeAsync_ManagerId()
         {
             string connectionString = ConnectionString;
             string containerName = Randomize("sample-container");
@@ -858,12 +857,16 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             await container.CreateIfNotExistsAsync();
             try
             {
-                // Get a temporary path on disk where we can download the file
                 string downloadPath = CreateTempPath();
+                // Get a temporary path on disk where we can download the file
+                //@@ string downloadPath = "hello.jpg";
 
-                // Copy the public MacBeth copy to a Blob
-                BlockBlobClient sourceBlob = container.GetBlockBlobClient("MacBeth.txt");
-                await sourceBlob.SyncUploadFromUriAsync(new Uri("https://www.gutenberg.org/cache/epub/1533/pg1533.txt"));
+                // Download the public MacBeth copy at https://www.gutenberg.org/cache/epub/1533/pg1533.txt
+                BlockBlobClient sourceBlob = new BlockBlobClient(new Uri("https://www.gutenberg.org/cache/epub/1533/pg1533.txt"));
+                await sourceBlob.DownloadToAsync(downloadPath);
+
+                // Create a token credential that can use our Azure Active
+                // Directory application to authenticate with Azure Storage
 
                 // Create transfer manager
                 #region Snippet:SetupTransferManagerForResume
@@ -890,6 +893,11 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 await transferManager.PauseTransferAsync(transferId);
                 #endregion
 
+                #region Snippet:ResumeAllTransfers
+                // Resume all transfers
+                List<TransferOperation> transfers = await transferManager.ResumeAllTransfersAsync();
+                #endregion
+
                 // Resume a single transfer
                 #region Snippet:DataMovement_ResumeSingle
                 TransferOperation resumedTransfer = await transferManager.ResumeTransferAsync(transferId);
@@ -905,10 +913,10 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
         }
 
         /// <summary>
-        /// Basic pause and resume flow from <see cref="TransferOperation"/>.
+        /// Test to show pause and resume tests
         /// </summary>
         [Test]
-        public async Task PauseAndResumeAsync_TransferOperation()
+        public async Task PauseAndResumeAsync_DataTransferPause()
         {
             string connectionString = ConnectionString;
             TokenCredential tokenCredential = new DefaultAzureCredential();
@@ -919,19 +927,19 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             await container.CreateIfNotExistsAsync();
             try
             {
-                // Get a temporary path on disk where we can download the file
                 string downloadPath = CreateTempPath();
+                // Get a temporary path on disk where we can download the file
+                //@@ string downloadPath = "hello.jpg";
 
-                // Copy the public MacBeth copy to a Blob
-                BlockBlobClient sourceBlob = container.GetBlockBlobClient("MacBeth.txt");
-                await sourceBlob.SyncUploadFromUriAsync(new Uri("https://www.gutenberg.org/cache/epub/1533/pg1533.txt"));
+                // Download the public MacBeth copy at https://www.gutenberg.org/cache/epub/1533/pg1533.txt
+                BlockBlobClient sourceBlob = new BlockBlobClient(new Uri("https://www.gutenberg.org/cache/epub/1533/pg1533.txt"));
+                await sourceBlob.DownloadToAsync(downloadPath);
 
                 // Create transfer manager
                 BlobsStorageResourceProvider blobs = new(tokenCredential);
-                TransferManager transferManager = new(new TransferManagerOptions()
-                {
-                    ProvidersForResuming = new List<StorageResourceProvider>() { blobs },
-                });
+                TransferManagerOptions options = new TransferManagerOptions();
+                options.ProvidersForResuming = new List<StorageResourceProvider>() { blobs };
+                TransferManager transferManager = new TransferManager(options);
 
                 // Create source and destination resource
                 StorageResource sourceResource = BlobsStorageResourceProvider.FromClient(sourceBlob);
@@ -947,7 +955,8 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 await transferOperation.PauseAsync();
                 #endregion
 
-                TransferOperation resumedTransfer = await transferManager.ResumeTransferAsync(transferOperation.Id);
+                TransferOperation resumedTransfer = await transferManager.ResumeTransferAsync(
+                transferId: transferOperation.Id);
 
                 // Wait for download to finish
                 await resumedTransfer.WaitForCompletionAsync();
@@ -956,32 +965,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             {
                 await container.DeleteIfExistsAsync();
             }
-        }
-
-        /// <summary>
-        /// Show show to resume all transfers from <see cref="TransferManager"/>.
-        /// </summary>
-        /// <returns></returns>
-        [Test]
-        public async Task PauseAndResumeAsync_ResumeAll()
-        {
-            TokenCredential tokenCredential = new DefaultAzureCredential();
-            BlobsStorageResourceProvider blobs = new(tokenCredential);
-            TransferManager transferManager = new(new TransferManagerOptions()
-            {
-                ProvidersForResuming = new List<StorageResourceProvider>() { blobs },
-            });
-
-            // ... start multiple transfers
-
-            #region Snippet:ResumeAllTransfers
-            // Resume all transfers
-            List<TransferOperation> transfers = await transferManager.ResumeAllTransfersAsync();
-            #endregion
-
-            // Wait for all transfers to finish
-            Task[] resumedTasks = transfers.Select(t => t.WaitForCompletionAsync()).ToArray();
-            await Task.WhenAll(resumedTasks);
         }
 
         /// <summary>

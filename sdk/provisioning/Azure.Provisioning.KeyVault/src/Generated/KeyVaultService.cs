@@ -92,7 +92,7 @@ public partial class KeyVaultService : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the KeyVaultService.</param>
     public KeyVaultService(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.KeyVault/vaults", resourceVersion ?? "2024-11-01")
+        : base(bicepIdentifier, "Microsoft.KeyVault/vaults", resourceVersion ?? "2023-07-01")
     {
     }
 
@@ -115,9 +115,9 @@ public partial class KeyVaultService : ProvisionableResource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-11-01.
+        /// 2023-08-01-PREVIEW.
         /// </summary>
-        public static readonly string V2024_11_01 = "2024-11-01";
+        public static readonly string V2023_08_01_PREVIEW = "2023-08-01-PREVIEW";
 
         /// <summary>
         /// 2023-07-01.
@@ -163,12 +163,6 @@ public partial class KeyVaultService : ProvisionableResource
         /// 2015-06-01.
         /// </summary>
         public static readonly string V2015_06_01 = "2015-06-01";
-
-        /// <summary>
-        /// 2023-08-01-PREVIEW.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static readonly string V2023_08_01_PREVIEW = "2023-08-01-PREVIEW";
     }
 
     /// <summary>

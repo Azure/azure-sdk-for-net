@@ -104,8 +104,7 @@ ToolOutput GetResolvedToolOutput(RequiredToolCall toolCall)
 
 Synchronous sample:
 ```C# Snippet:AgentsFunctionsSyncCreateAgentWithFunctionTools
-// NOTE: parallel function calling is only supported with newer models like gpt-4-1106-preview
-// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
+// note: parallel function calling is only supported with newer models like gpt-4-1106-preview
 PersistentAgent agent = client.Administration.CreateAgent(
     model: modelDeploymentName,
     name: "SDK Test Agent - Functions",
@@ -118,8 +117,7 @@ PersistentAgent agent = client.Administration.CreateAgent(
 
 Asynchronous sample:
 ```C# Snippet:AgentsFunctionsCreateAgentWithFunctionTools
-// NOTE: parallel function calling is only supported with newer models like gpt-4-1106-preview
-// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
+// note: parallel function calling is only supported with newer models like gpt-4-1106-preview
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "SDK Test Agent - Functions",
@@ -173,7 +171,7 @@ do
         {
             toolOutputs.Add(GetResolvedToolOutput(toolCall));
         }
-        run = client.Runs.SubmitToolOutputsToRun(run, toolOutputs, null);
+        run = client.Runs.SubmitToolOutputsToRun(run, toolOutputs);
     }
 }
 while (run.Status == RunStatus.Queued
@@ -266,14 +264,12 @@ await foreach (PersistentThreadMessage threadMessage in messages)
 
 Synchronous sample:
 ```C# Snippet:AgentsFunctionsSync_Cleanup
-// NOTE: Comment out these two lines if you plan to reuse the agent later.
 client.Threads.DeleteThread(thread.Id);
 client.Administration.DeleteAgent(agent.Id);
 ```
 
 Asynchronous sample:
 ```C# Snippet:AgentsFunctions_Cleanup
-// NOTE: Comment out these two lines if you plan to reuse the agent later.
 await client.Threads.DeleteThreadAsync(thread.Id);
 await client.Administration.DeleteAgentAsync(agent.Id);
 ```

@@ -34,10 +34,10 @@ namespace Azure.Compute.Batch
                 throw new FormatException($"The model {nameof(BatchTaskInfo)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(TaskUri))
+            if (Optional.IsDefined(TaskUrl))
             {
                 writer.WritePropertyName("taskUrl"u8);
-                writer.WriteStringValue(TaskUri.AbsoluteUri);
+                writer.WriteStringValue(TaskUrl);
             }
             if (Optional.IsDefined(JobId))
             {
@@ -98,7 +98,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            Uri taskUrl = default;
+            string taskUrl = default;
             string jobId = default;
             string taskId = default;
             int? subtaskId = default;
@@ -110,11 +110,7 @@ namespace Azure.Compute.Batch
             {
                 if (property.NameEquals("taskUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    taskUrl = new Uri(property.Value.GetString());
+                    taskUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("jobId"u8))

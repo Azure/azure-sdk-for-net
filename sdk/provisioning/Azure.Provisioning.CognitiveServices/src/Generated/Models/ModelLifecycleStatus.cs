@@ -19,19 +19,4 @@ public enum ModelLifecycleStatus
     /// Preview.
     /// </summary>
     Preview,
-
-    /// <summary>
-    /// Stable.
-    /// </summary>
-    Stable,
-
-    /// <summary>
-    /// Deprecating.
-    /// </summary>
-    Deprecating,
-
-    /// <summary>
-    /// Deprecated.
-    /// </summary>
-    Deprecated,
 }

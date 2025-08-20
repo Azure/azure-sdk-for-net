@@ -61,12 +61,12 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             var binaryData = new BinaryData(batchTaskAddCollectionJson);
             mockResponse.Setup(response => response.Content).Returns(binaryData);
 
-            var batchTaskAddCollectionResult = BatchCreateTaskCollectionResult.FromResponse(mockResponse.Object);
+            var batchTaskAddCollectionResult = BatchTaskAddCollectionResult.FromResponse(mockResponse.Object);
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.CreateTaskCollectionAsync(
                 It.IsAny<string>(),
                 It.IsAny<BatchTaskGroup>(),
-                It.IsAny<TimeSpan?>(),
+                It.IsAny<int?>(),
                 It.IsAny<DateTimeOffset?>(),
                 It.IsAny<CancellationToken>())
             )
@@ -75,17 +75,17 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             BatchClient batchClient = clientMock.Object;
             TasksWorkflowManager addTasksWorkflowManager = new TasksWorkflowManager(batchClient, "jobId", null);
 
-            List<BatchTaskCreateOptions> tasks = new List<BatchTaskCreateOptions>();
-            tasks.Add(new BatchTaskCreateOptions("task1", "cmd /c echo Hello World"));
-            tasks.Add(new BatchTaskCreateOptions("task2", "cmd /c echo Hello World"));
+            List<BatchTaskCreateContent> tasks = new List<BatchTaskCreateContent>();
+            tasks.Add(new BatchTaskCreateContent("task1", "cmd /c echo Hello World"));
+            tasks.Add(new BatchTaskCreateContent("task2", "cmd /c echo Hello World"));
 
             // Act
             CreateTasksResult result = await addTasksWorkflowManager.AddTasksAsync(tasks, "jobId");
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(2, result.PassCount);
-            Assert.AreEqual(0, result.FailCount);
+            Assert.AreEqual(2, result.Pass);
+            Assert.AreEqual(0, result.Fail);
         }
 
         [Test]
@@ -132,12 +132,12 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             var binaryData = new BinaryData(batchTaskAddCollectionJson);
             mockResponse.Setup(response => response.Content).Returns(binaryData);
 
-            var batchTaskAddCollectionResult = BatchCreateTaskCollectionResult.FromResponse(mockResponse.Object);
+            var batchTaskAddCollectionResult = BatchTaskAddCollectionResult.FromResponse(mockResponse.Object);
             Mock<BatchClient> clientMock = new Mock<BatchClient>();
             clientMock.Setup(c => c.CreateTaskCollectionAsync(
                 It.IsAny<string>(),
                 It.IsAny<BatchTaskGroup>(),
-                It.IsAny<TimeSpan?>(),
+                It.IsAny<int?>(),
                 It.IsAny<DateTimeOffset?>(),
                 It.IsAny<CancellationToken>())
             )
@@ -148,22 +148,22 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             CreateTasksOptions createTasksOptions = new CreateTasksOptions()
             {
                 CreateTaskResultHandler = new CustomTaskCollectionResultHandler(),
-                ReturnBatchTaskCreateResults = true
+                ReturnBatchTaskAddResults = true
             };
             TasksWorkflowManager addTasksWorkflowManager = new TasksWorkflowManager(batchClient, "jobId", createTasksOptions);
 
-            List<BatchTaskCreateOptions> tasks = new List<BatchTaskCreateOptions>();
-            tasks.Add(new BatchTaskCreateOptions("task1", "cmd /c echo Hello World"));
-            tasks.Add(new BatchTaskCreateOptions("task2", "cmd /c echo Hello World"));
+            List<BatchTaskCreateContent> tasks = new List<BatchTaskCreateContent>();
+            tasks.Add(new BatchTaskCreateContent("task1", "cmd /c echo Hello World"));
+            tasks.Add(new BatchTaskCreateContent("task2", "cmd /c echo Hello World"));
 
             // Act
             CreateTasksResult result = await addTasksWorkflowManager.AddTasksAsync(tasks, "jobId");
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(2, result.BatchTaskCreateResults.Count);
-            Assert.AreEqual(1, result.PassCount);
-            Assert.AreEqual(1, result.FailCount);
+            Assert.AreEqual(2, result.BatchTaskAddResults.Count);
+            Assert.AreEqual(1, result.Pass);
+            Assert.AreEqual(1, result.Fail);
         }
 
         [Test]
@@ -176,7 +176,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             clientMock.Setup(c => c.CreateTaskCollectionAsync(
                It.IsAny<string>(),
                It.IsAny<BatchTaskGroup>(),
-               It.IsAny<TimeSpan?>(),
+               It.IsAny<int?>(),
                It.IsAny<DateTimeOffset?>(),
                It.IsAny<CancellationToken>())
            )
@@ -184,13 +184,19 @@ namespace Azure.Compute.Batch.Tests.UnitTests
            {
                if (CreateTaskCollectionAsyncCall++ == 0)
                {
-                   throw new RequestFailedException(status: 413, message: "Bad Request", errorCode: "TooManyRequests", null);
+                   // mock the service call failing due to too many requests
+                   var mockResponse = new Mock<Response>();
+                   var batchErrorJson = "{\"code\":\"TooManyRequests\",\"message\":{\"value\":\"TooManyRequests\"},\"values\":[{\"key\": \"key1\",\"value\":\"value1\"},{\"key\": \"key2\",\"value\":\"value2\"}]}";
+                   var binaryData = new BinaryData(batchErrorJson);
+                   mockResponse.Setup(response => response.Content).Returns(binaryData);
+
+                   throw new RequestFailedException(mockResponse.Object);
                }
                else
                {
                    // one the second pass there should have have all the tasks requests
-                   Assert.AreEqual(2, taskCollection.Values.Count);
-                   BatchCreateTaskCollectionResult batchTaskAddCollectionResult = CreateBatchCreateTaskCollectionResult(taskCollection);
+                   Assert.AreEqual(2, taskCollection.Value.Count);
+                   BatchTaskAddCollectionResult batchTaskAddCollectionResult = CreateBatchTaskAddCollectionResult(taskCollection);
                    return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
                }
            }
@@ -199,17 +205,17 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             BatchClient batchClient = clientMock.Object;
             TasksWorkflowManager addTasksWorkflowManager = new TasksWorkflowManager(batchClient, "jobId", null);
 
-            List<BatchTaskCreateOptions> tasks = new List<BatchTaskCreateOptions>();
-            tasks.Add(new BatchTaskCreateOptions("task1", "cmd /c echo Hello World"));
-            tasks.Add(new BatchTaskCreateOptions("task2", "cmd /c echo Hello World"));
+            List<BatchTaskCreateContent> tasks = new List<BatchTaskCreateContent>();
+            tasks.Add(new BatchTaskCreateContent("task1", "cmd /c echo Hello World"));
+            tasks.Add(new BatchTaskCreateContent("task2", "cmd /c echo Hello World"));
 
             // Act
             CreateTasksResult result = await addTasksWorkflowManager.AddTasksAsync(tasks, "jobId");
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(2, result.PassCount);
-            Assert.AreEqual(0, result.FailCount);
+            Assert.AreEqual(2, result.Pass);
+            Assert.AreEqual(0, result.Fail);
         }
 
         [Test]
@@ -223,23 +229,28 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             clientMock.Setup(c => c.CreateTaskCollectionAsync(
                It.IsAny<string>(),
                It.IsAny<BatchTaskGroup>(),
-               It.IsAny<TimeSpan?>(),
+               It.IsAny<int?>(),
                It.IsAny<DateTimeOffset?>(),
                It.IsAny<CancellationToken>())
            )
-           .ReturnsAsync((string jobId, BatchTaskGroup taskCollection, int? timeOutInSeconds, DateTimeOffset? ocpdate, CancellationToken cancellationToken) =>
+           .ReturnsAsync((string jobId, BatchTaskGroup taskCollection, int? timeOutInSecondsl, DateTimeOffset? ocpdate, CancellationToken cancellationToken) =>
            {
                if (CreateTaskCollectionAsyncCall++ == 0)
                {
                    // mock the service call failing due to too many requests
-                   throw new RequestFailedException(status: 413, message: "Bad Request", errorCode: "RequestBodyTooLarge", null);
+                   var mockResponse = new Mock<Response>();
+                   var batchErrorJson = "{\"code\":\"RequestBodyTooLarge\",\"message\":{\"value\":\"RequestBodyTooLarge\"},\"values\":[{\"key\": \"key1\",\"value\":\"value1\"},{\"key\": \"key2\",\"value\":\"value2\"}]}";
+                   var binaryData = new BinaryData(batchErrorJson);
+                   mockResponse.Setup(response => response.Content).Returns(binaryData);
+
+                   throw new RequestFailedException(mockResponse.Object);
                }
                else
                {
                    // The quue should be 50 as we halved the request size
-                   Assert.AreEqual(50, taskCollection.Values.Count);
+                   Assert.AreEqual(50, taskCollection.Value.Count);
 
-                   BatchCreateTaskCollectionResult batchTaskAddCollectionResult = CreateBatchCreateTaskCollectionResult(taskCollection);
+                   BatchTaskAddCollectionResult batchTaskAddCollectionResult = CreateBatchTaskAddCollectionResult(taskCollection);
                    return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
                }
            }
@@ -248,10 +259,10 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             BatchClient batchClient = clientMock.Object;
             TasksWorkflowManager addTasksWorkflowManager = new TasksWorkflowManager(batchClient, "jobId", null);
 
-            List<BatchTaskCreateOptions> tasks = new List<BatchTaskCreateOptions>();
+            List<BatchTaskCreateContent> tasks = new List<BatchTaskCreateContent>();
             for (int i = 0; i < tasksCount; i++)
             {
-                tasks.Add(new BatchTaskCreateOptions($"task{i}", "cmd /c echo Hello World"));
+                tasks.Add(new BatchTaskCreateContent($"task{i}", "cmd /c echo Hello World"));
             }
 
             // Act
@@ -259,8 +270,8 @@ namespace Azure.Compute.Batch.Tests.UnitTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(tasksCount, result.PassCount);
-            Assert.AreEqual(0, result.FailCount);
+            Assert.AreEqual(tasksCount, result.Pass);
+            Assert.AreEqual(0, result.Fail);
         }
 
         [Test]
@@ -275,16 +286,16 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             clientMock.Setup(c => c.CreateTaskCollectionAsync(
                It.IsAny<string>(),
                It.IsAny<BatchTaskGroup>(),
-               It.IsAny<TimeSpan?>(),
+               It.IsAny<int?>(),
                It.IsAny<DateTimeOffset?>(),
                It.IsAny<CancellationToken>())
            )
            .ReturnsAsync((string jobId, BatchTaskGroup taskCollection, int? timeOutInSecondsl, DateTimeOffset? ocpdate, CancellationToken cancellationToken) =>
            {
                // The defaul size should be 100
-               Assert.AreEqual(100, taskCollection.Values.Count);
+               Assert.AreEqual(100, taskCollection.Value.Count);
 
-               BatchCreateTaskCollectionResult batchTaskAddCollectionResult = CreateBatchCreateTaskCollectionResult(taskCollection);
+               BatchTaskAddCollectionResult batchTaskAddCollectionResult = CreateBatchTaskAddCollectionResult(taskCollection);
                return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
            }
            );
@@ -293,15 +304,15 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             CreateTasksOptions createTasksOptions = new CreateTasksOptions()
             {
                 MaxDegreeOfParallelism = parrellelTasks,
-                ReturnBatchTaskCreateResults = true
+                ReturnBatchTaskAddResults = true
             };
 
             TasksWorkflowManager addTasksWorkflowManager = new TasksWorkflowManager(batchClient, "jobId", createTasksOptions);
 
-            List<BatchTaskCreateOptions> tasks = new List<BatchTaskCreateOptions>();
+            List<BatchTaskCreateContent> tasks = new List<BatchTaskCreateContent>();
             for (int i = 0; i < tasksCount; i++)
             {
-                tasks.Add(new BatchTaskCreateOptions($"task{i}", "cmd /c echo Hello World"));
+                tasks.Add(new BatchTaskCreateContent($"task{i}", "cmd /c echo Hello World"));
             }
 
             // Act
@@ -309,9 +320,9 @@ namespace Azure.Compute.Batch.Tests.UnitTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(tasksCount, result.BatchTaskCreateResults.Count);
-            Assert.AreEqual(tasksCount, result.PassCount);
-            Assert.AreEqual(0, result.FailCount);
+            Assert.AreEqual(tasksCount, result.BatchTaskAddResults.Count);
+            Assert.AreEqual(tasksCount, result.Pass);
+            Assert.AreEqual(0, result.Fail);
         }
 
         [Test]
@@ -326,16 +337,16 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             clientMock.Setup(c => c.CreateTaskCollectionAsync(
                It.IsAny<string>(),
                It.IsAny<BatchTaskGroup>(),
-               It.IsAny<TimeSpan?>(),
+               It.IsAny<int?>(),
                It.IsAny<DateTimeOffset?>(),
                It.IsAny<CancellationToken>())
            )
            .ReturnsAsync((string jobId, BatchTaskGroup taskCollection, int? timeOutInSecondsl, DateTimeOffset? ocpdate, CancellationToken cancellationToken) =>
            {
                // The defaul size should be 100
-               Assert.AreEqual(100, taskCollection.Values.Count);
+               Assert.AreEqual(100, taskCollection.Value.Count);
 
-               BatchCreateTaskCollectionResult batchTaskAddCollectionResult = CreateBatchCreateTaskCollectionResult(taskCollection);
+               BatchTaskAddCollectionResult batchTaskAddCollectionResult = CreateBatchTaskAddCollectionResult(taskCollection);
                return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
            }
            );
@@ -349,10 +360,10 @@ namespace Azure.Compute.Batch.Tests.UnitTests
 
             TasksWorkflowManager addTasksWorkflowManager = new TasksWorkflowManager(batchClient, "jobId", createTasksOptions, cancellationToken: cts.Token);
 
-            List<BatchTaskCreateOptions> tasks = new List<BatchTaskCreateOptions>();
+            List<BatchTaskCreateContent> tasks = new List<BatchTaskCreateContent>();
             for (int i = 0; i < tasksCount; i++)
             {
-                tasks.Add(new BatchTaskCreateOptions($"task{i}", "cmd /c echo Hello World"));
+                tasks.Add(new BatchTaskCreateContent($"task{i}", "cmd /c echo Hello World"));
             }
 
             // Act
@@ -387,16 +398,16 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             clientMock.Setup(c => c.CreateTaskCollectionAsync(
                It.IsAny<string>(),
                It.IsAny<BatchTaskGroup>(),
-               It.IsAny<TimeSpan?>(),
+               It.IsAny<int?>(),
                It.IsAny<DateTimeOffset?>(),
                It.IsAny<CancellationToken>())
            )
            .ReturnsAsync((string jobId, BatchTaskGroup taskCollection, int? timeOutInSecondsl, DateTimeOffset? ocpdate, CancellationToken cancellationToken) =>
            {
                // The defaul size should be 100
-               Assert.AreEqual(100, taskCollection.Values.Count);
+               Assert.AreEqual(100, taskCollection.Value.Count);
 
-               BatchCreateTaskCollectionResult batchTaskAddCollectionResult = CreateBatchCreateTaskCollectionResult(taskCollection);
+               BatchTaskAddCollectionResult batchTaskAddCollectionResult = CreateBatchTaskAddCollectionResult(taskCollection);
                return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
            }
            );
@@ -409,10 +420,10 @@ namespace Azure.Compute.Batch.Tests.UnitTests
 
             TasksWorkflowManager addTasksWorkflowManager = new TasksWorkflowManager(batchClient, "jobId", createTaskOptions);
 
-            List<BatchTaskCreateOptions> tasks = new List<BatchTaskCreateOptions>();
+            List<BatchTaskCreateContent> tasks = new List<BatchTaskCreateContent>();
             for (int i = 0; i < tasksCount; i++)
             {
-                tasks.Add(new BatchTaskCreateOptions($"task{i}", "cmd /c echo Hello World"));
+                tasks.Add(new BatchTaskCreateContent($"task{i}", "cmd /c echo Hello World"));
             }
 
             // Act
@@ -443,16 +454,16 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             clientMock.Setup(c => c.CreateTaskCollectionAsync(
                It.IsAny<string>(),
                It.IsAny<BatchTaskGroup>(),
-               It.IsAny<TimeSpan?>(),
+               It.IsAny<int?>(),
                It.IsAny<DateTimeOffset?>(),
                It.IsAny<CancellationToken>())
            )
            .ReturnsAsync((string jobId, BatchTaskGroup taskCollection, int? timeOutInSecondsl, DateTimeOffset? ocpdate, CancellationToken cancellationToken) =>
            {
                // The defaul size should be 100
-               Assert.AreEqual(100, taskCollection.Values.Count);
+               Assert.AreEqual(100, taskCollection.Value.Count);
 
-               BatchCreateTaskCollectionResult batchTaskAddCollectionResult = CreateBatchCreateTaskCollectionResult(taskCollection);
+               BatchTaskAddCollectionResult batchTaskAddCollectionResult = CreateBatchTaskAddCollectionResult(taskCollection);
                return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
            }
            );
@@ -461,15 +472,15 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             CreateTasksOptions createTaskOptions = new CreateTasksOptions()
             {
                 MaxDegreeOfParallelism = parrellelTasks,
-                ReturnBatchTaskCreateResults = true
+                ReturnBatchTaskAddResults = true
             };
 
             TasksWorkflowManager addTasksWorkflowManager = new TasksWorkflowManager(batchClient, "jobId", createTaskOptions);
 
-            List<BatchTaskCreateOptions> tasks = new List<BatchTaskCreateOptions>();
+            List<BatchTaskCreateContent> tasks = new List<BatchTaskCreateContent>();
             for (int i = 0; i < tasksCount; i++)
             {
-                tasks.Add(new BatchTaskCreateOptions($"task{i}", "cmd /c echo Hello World"));
+                tasks.Add(new BatchTaskCreateContent($"task{i}", "cmd /c echo Hello World"));
             }
 
             // Act
@@ -477,9 +488,9 @@ namespace Azure.Compute.Batch.Tests.UnitTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(tasksCount, result.BatchTaskCreateResults.Count);
-            Assert.AreEqual(tasksCount, result.PassCount);
-            Assert.AreEqual(0, result.FailCount);
+            Assert.AreEqual(tasksCount, result.BatchTaskAddResults.Count);
+            Assert.AreEqual(tasksCount, result.Pass);
+            Assert.AreEqual(0, result.Fail);
         }
 
         [Test]
@@ -494,14 +505,14 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             clientMock.Setup(c => c.CreateTaskCollectionAsync(
                It.IsAny<string>(),
                It.IsAny<BatchTaskGroup>(),
-               It.IsAny<TimeSpan?>(),
+               It.IsAny<int?>(),
                It.IsAny<DateTimeOffset?>(),
                It.IsAny<CancellationToken>())
            )
            .ReturnsAsync((string jobId, BatchTaskGroup taskCollection, int? timeOutInSecondsl, DateTimeOffset? ocpdate, CancellationToken cancellationToken) =>
            {
-               // creating a BatchCreateTaskCollectionResult with 50% success rate, should triger retries
-               BatchCreateTaskCollectionResult batchTaskAddCollectionResult = CreateBatchCreateTaskCollectionResult(taskCollection,0.5);
+               // creating a BatchTaskAddCollectionResult with 50% success rate, should triger retries
+               BatchTaskAddCollectionResult batchTaskAddCollectionResult = CreateBatchTaskAddCollectionResult(taskCollection,0.5);
                return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
            }
            );
@@ -510,15 +521,15 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             CreateTasksOptions createTaskOptions = new CreateTasksOptions()
             {
                 MaxDegreeOfParallelism = parrellelTasks,
-                ReturnBatchTaskCreateResults = true
+                ReturnBatchTaskAddResults = true
             };
 
             TasksWorkflowManager addTasksWorkflowManager = new TasksWorkflowManager(batchClient, "jobId", createTaskOptions);
 
-            List<BatchTaskCreateOptions> tasks = new List<BatchTaskCreateOptions>();
+            List<BatchTaskCreateContent> tasks = new List<BatchTaskCreateContent>();
             for (int i = 0; i < tasksCount; i++)
             {
-                tasks.Add(new BatchTaskCreateOptions($"task{i}", "cmd /c echo Hello World"));
+                tasks.Add(new BatchTaskCreateContent($"task{i}", "cmd /c echo Hello World"));
             }
 
             // Act
@@ -526,9 +537,9 @@ namespace Azure.Compute.Batch.Tests.UnitTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(tasksCount, result.BatchTaskCreateResults.Count);
-            Assert.AreEqual(tasksCount, result.PassCount);
-            Assert.AreEqual(0, result.FailCount);
+            Assert.AreEqual(tasksCount, result.BatchTaskAddResults.Count);
+            Assert.AreEqual(tasksCount, result.Pass);
+            Assert.AreEqual(0, result.Fail);
         }
 
         [Test]
@@ -543,7 +554,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             clientMock.Setup(c => c.CreateTaskCollectionAsync(
                It.IsAny<string>(),
                It.IsAny<BatchTaskGroup>(),
-               It.IsAny<TimeSpan?>(),
+               It.IsAny<int?>(),
                It.IsAny<DateTimeOffset?>(),
                It.IsAny<CancellationToken>())
            )
@@ -552,14 +563,20 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                var random = new Random();
                if (random.NextDouble() < 0.1) // 10% chance to execute
                {
-                   throw new RequestFailedException(status: 413, message: "Bad Request", errorCode: "TooManyRequests",null);
+                   // mock the service call failing due to too many requests
+                   var mockResponse = new Mock<Response>();
+                   var batchErrorJson = "{\"code\":\"TooManyRequests\",\"message\":{\"value\":\"TooManyRequests\"},\"values\":[{\"key\": \"key1\",\"value\":\"value1\"},{\"key\": \"key2\",\"value\":\"value2\"}]}";
+                   var binaryData = new BinaryData(batchErrorJson);
+                   mockResponse.Setup(response => response.Content).Returns(binaryData);
+
+                   throw new RequestFailedException(mockResponse.Object);
                }
                else
                {
                    // The defaul size should be 100
-                   Assert.AreEqual(100, taskCollection.Values.Count);
+                   Assert.AreEqual(100, taskCollection.Value.Count);
 
-                   BatchCreateTaskCollectionResult batchTaskAddCollectionResult = CreateBatchCreateTaskCollectionResult(taskCollection);
+                   BatchTaskAddCollectionResult batchTaskAddCollectionResult = CreateBatchTaskAddCollectionResult(taskCollection);
                    return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
                }
            }
@@ -570,15 +587,15 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             {
                 MaxDegreeOfParallelism = parrellelTasks,
                 MaxTimeBetweenCallsInSeconds = 0,
-                ReturnBatchTaskCreateResults = true
+                ReturnBatchTaskAddResults = true
             };
 
             TasksWorkflowManager addTasksWorkflowManager = new TasksWorkflowManager(batchClient, "jobId", createTaskOptions);
 
-            List<BatchTaskCreateOptions> tasks = new List<BatchTaskCreateOptions>();
+            List<BatchTaskCreateContent> tasks = new List<BatchTaskCreateContent>();
             for (int i = 0; i < tasksCount; i++)
             {
-                tasks.Add(new BatchTaskCreateOptions($"task{i}", "cmd /c echo Hello World"));
+                tasks.Add(new BatchTaskCreateContent($"task{i}", "cmd /c echo Hello World"));
             }
 
             // Act
@@ -586,9 +603,9 @@ namespace Azure.Compute.Batch.Tests.UnitTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(tasksCount, result.BatchTaskCreateResults.Count);
-            Assert.AreEqual(tasksCount, result.PassCount);
-            Assert.AreEqual(0, result.FailCount);
+            Assert.AreEqual(tasksCount, result.BatchTaskAddResults.Count);
+            Assert.AreEqual(tasksCount, result.Pass);
+            Assert.AreEqual(0, result.Fail);
         }
 
         [Test]
@@ -603,16 +620,16 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             clientMock.Setup(c => c.CreateTaskCollectionAsync(
                It.IsAny<string>(),
                It.IsAny<BatchTaskGroup>(),
-               It.IsAny<TimeSpan?>(),
+               It.IsAny<int?>(),
                It.IsAny<DateTimeOffset?>(),
                It.IsAny<CancellationToken>())
            )
            .ReturnsAsync((string jobId, BatchTaskGroup taskCollection, int? timeOutInSecondsl, DateTimeOffset? ocpdate, CancellationToken cancellationToken) =>
            {
                // The defaul size should be 100
-               Assert.AreEqual(100, taskCollection.Values.Count);
+               Assert.AreEqual(100, taskCollection.Value.Count);
 
-               BatchCreateTaskCollectionResult batchTaskAddCollectionResult = CreateBatchCreateTaskCollectionResult(taskCollection);
+               BatchTaskAddCollectionResult batchTaskAddCollectionResult = CreateBatchTaskAddCollectionResult(taskCollection);
                return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
            }
            );
@@ -625,10 +642,10 @@ namespace Azure.Compute.Batch.Tests.UnitTests
 
             TasksWorkflowManager addTasksWorkflowManager = new TasksWorkflowManager(batchClient, "jobId", createTaskOptions);
 
-            List<BatchTaskCreateOptions> tasks = new List<BatchTaskCreateOptions>();
+            List<BatchTaskCreateContent> tasks = new List<BatchTaskCreateContent>();
             for (int i = 0; i < tasksCount; i++)
             {
-                tasks.Add(new BatchTaskCreateOptions($"task{i}", "cmd /c echo Hello World"));
+                tasks.Add(new BatchTaskCreateContent($"task{i}", "cmd /c echo Hello World"));
             }
 
             // Act
@@ -636,9 +653,9 @@ namespace Azure.Compute.Batch.Tests.UnitTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(0, result.BatchTaskCreateResults.Count);
-            Assert.AreEqual(tasksCount, result.PassCount);
-            Assert.AreEqual(0, result.FailCount);
+            Assert.AreEqual(0, result.BatchTaskAddResults.Count);
+            Assert.AreEqual(tasksCount, result.Pass);
+            Assert.AreEqual(0, result.Fail);
         }
 
         [Test]
@@ -653,16 +670,16 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             clientMock.Setup(c => c.CreateTaskCollectionAsync(
                It.IsAny<string>(),
                It.IsAny<BatchTaskGroup>(),
-               It.IsAny<TimeSpan?>(),
+               It.IsAny<int?>(),
                It.IsAny<DateTimeOffset?>(),
                It.IsAny<CancellationToken>())
            )
            .ReturnsAsync((string jobId, BatchTaskGroup taskCollection, int? timeOutInSecondsl, DateTimeOffset? ocpdate, CancellationToken cancellationToken) =>
            {
                // The defaul size should be 100
-               Assert.AreEqual(100, taskCollection.Values.Count);
+               Assert.AreEqual(100, taskCollection.Value.Count);
 
-               BatchCreateTaskCollectionResult batchTaskAddCollectionResult = CreateBatchCreateTaskCollectionResult(taskCollection);
+               BatchTaskAddCollectionResult batchTaskAddCollectionResult = CreateBatchTaskAddCollectionResult(taskCollection);
                return Response.FromValue(batchTaskAddCollectionResult, Mock.Of<Response>());
            }
            );
@@ -671,15 +688,15 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             CreateTasksOptions createTaskOptions = new CreateTasksOptions()
             {
                 MaxDegreeOfParallelism = parrellelTasks,
-                ReturnBatchTaskCreateResults = true
+                ReturnBatchTaskAddResults = true
             };
 
             TasksWorkflowManager addTasksWorkflowManager = new TasksWorkflowManager(batchClient, "jobId", createTaskOptions);
 
-            List<BatchTaskCreateOptions> tasks = new List<BatchTaskCreateOptions>();
+            List<BatchTaskCreateContent> tasks = new List<BatchTaskCreateContent>();
             for (int i = 0; i < tasksCount; i++)
             {
-                tasks.Add(new BatchTaskCreateOptions($"task{i}", "cmd /c echo Hello World"));
+                tasks.Add(new BatchTaskCreateContent($"task{i}", "cmd /c echo Hello World"));
             }
 
             // Act
@@ -687,17 +704,17 @@ namespace Azure.Compute.Batch.Tests.UnitTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(tasksCount, result.BatchTaskCreateResults.Count);
-            Assert.AreEqual(tasksCount, result.PassCount);
-            Assert.AreEqual(0, result.FailCount);
+            Assert.AreEqual(tasksCount, result.BatchTaskAddResults.Count);
+            Assert.AreEqual(tasksCount, result.Pass);
+            Assert.AreEqual(0, result.Fail);
         }
 
         /// <summary>
-        /// Helper method to create a BatchCreateTaskCollectionResult
+        /// Helper method to create a BatchTaskAddCollectionResult
         /// </summary>
         /// <param name="batchTaskGroup"></param>
-        /// <returns>A BatchCreateTaskCollectionResult object</returns>
-        private BatchCreateTaskCollectionResult CreateBatchCreateTaskCollectionResult(BatchTaskGroup batchTaskGroup, double passPercentage=1)
+        /// <returns>A BatchTaskAddCollectionResult object</returns>
+        private BatchTaskAddCollectionResult CreateBatchTaskAddCollectionResult(BatchTaskGroup batchTaskGroup, double passPercentage=1)
         {
             var mockResponse = new Mock<Response>();
 
@@ -705,7 +722,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             {
               ""value"": [";
 
-            int v = batchTaskGroup.Values.Count;
+            int v = batchTaskGroup.Value.Count;
             for (int i = 0; i < v; i++)
             {
                 var random = new Random();
@@ -713,7 +730,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                 {
                     batchTaskAddCollectionJson += @"
                 {
-                  ""taskId"": """ + batchTaskGroup.Values[i].Id + @""",
+                  ""taskId"": """ + batchTaskGroup.Value[i].Id + @""",
                   ""status"": ""success"",
                   ""error"": null
                 }";
@@ -722,7 +739,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                 {
                     batchTaskAddCollectionJson += @"
                 {
-                  ""taskId"": """ + batchTaskGroup.Values[i].Id + @""",
+                  ""taskId"": """ + batchTaskGroup.Value[i].Id + @""",
                   ""status"": ""servererror"",
                   ""error"": {
                      ""code"": ""OperationTimedOut"",
@@ -755,13 +772,13 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             var binaryData = new BinaryData(batchTaskAddCollectionJson);
             mockResponse.Setup(response => response.Content).Returns(binaryData);
 
-            return BatchCreateTaskCollectionResult.FromResponse(mockResponse.Object);
+            return BatchTaskAddCollectionResult.FromResponse(mockResponse.Object);
         }
 
         /// <summary>
         ///  Custom TaskCollectionResultHandler to handle the result of a CreateTasksAsync operation.
         /// </summary>
-        private class CustomTaskCollectionResultHandler : TaskResultHandler
+        private class CustomTaskCollectionResultHandler : ICreateTaskResultHandler
         {
             /// <summary>
             /// This handler treats and result without errors as Success, 'TaskExists' errors as failures, retries server errors (HTTP 5xx),
@@ -772,7 +789,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             /// <param name="cancellationToken">The cancellation token associated with the AddTaskCollection operation.</param>
             /// <returns>An <see cref="CreateTaskResultStatus"/> which indicates whether the <paramref name="addTaskResult"/>
             /// is classified as a success or as requiring a retry.</returns>
-            public override CreateTaskResultStatus CreateTaskResultHandler(CreateTaskResult addTaskResult, CancellationToken cancellationToken)
+            public CreateTaskResultStatus CreateTaskResultHandler(CreateTaskResult addTaskResult, CancellationToken cancellationToken)
             {
                 if (addTaskResult == null)
                 {
@@ -787,7 +804,7 @@ namespace Azure.Compute.Batch.Tests.UnitTests
                     {
                         status = CreateTaskResultStatus.Retry;
                     }
-                    else if (addTaskResult.BatchTaskResult.Status == BatchTaskAddStatus.ClientError && addTaskResult.BatchTaskResult.Error.Code == BatchErrorCode.TaskExists)
+                    else if (addTaskResult.BatchTaskResult.Status == BatchTaskAddStatus.ClientError && addTaskResult.BatchTaskResult.Error.Code == BatchErrorCodeStrings.TaskExists)
                     {
                         status = CreateTaskResultStatus.Failure; //TaskExists mark as failure
                     }

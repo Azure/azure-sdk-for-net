@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    public partial class AcrRefreshToken
+    internal partial class AcrRefreshToken
     {
         internal static AcrRefreshToken DeserializeAcrRefreshToken(JsonElement element)
         {

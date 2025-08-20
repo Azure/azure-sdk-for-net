@@ -93,8 +93,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             IList<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput> selectedDatabases = default;
-            DataMigrationPostgreSqlConnectionInfo targetConnectionInfo = default;
-            DataMigrationPostgreSqlConnectionInfo sourceConnectionInfo = default;
+            PostgreSqlConnectionInfo targetConnectionInfo = default;
+            PostgreSqlConnectionInfo sourceConnectionInfo = default;
             string encryptedKeyForSecureFields = default;
             DateTimeOffset? startedOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -113,12 +113,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = DataMigrationPostgreSqlConnectionInfo.DeserializeDataMigrationPostgreSqlConnectionInfo(property.Value, options);
+                    targetConnectionInfo = PostgreSqlConnectionInfo.DeserializePostgreSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = DataMigrationPostgreSqlConnectionInfo.DeserializeDataMigrationPostgreSqlConnectionInfo(property.Value, options);
+                    sourceConnectionInfo = PostgreSqlConnectionInfo.DeserializePostgreSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("encryptedKeyForSecureFields"u8))

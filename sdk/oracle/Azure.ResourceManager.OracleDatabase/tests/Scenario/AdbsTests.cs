@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Scenario
             DisplayName = _adbsName,
             DBWorkload = AutonomousDatabaseWorkloadType.DW,
             ComputeCount = 2.0f,
-            DatabaseComputeModel = OracleDatabaseComputeModel.Ecpu,
+            ComputeModel = AutonomousDatabaseComputeModel.Ecpu,
             DBVersion = "19c",
             DataStorageSizeInTbs = 1,
             AdminPassword = "NetSdkTestPass123",

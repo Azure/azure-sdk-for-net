@@ -77,7 +77,7 @@ namespace Azure.Identity.Tests.Mock
                 AdditionallyAllowedTenants = Options.AdditionallyAllowedTenants,
             };
 
-            return new VisualStudioCodeCredential();
+            return new VisualStudioCodeCredential(options, Pipeline, default, _fileSystem, _vscAdapter);
         }
 
         public override TokenCredential CreateAzurePowerShellCredential()

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-03-15-preview";
+            _apiVersion = apiVersion ?? "2022-03-30-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlMigrationServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlMigrationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SqlMigrationAuthenticationKeys>> ListAuthKeysAsync(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName, CancellationToken cancellationToken = default)
+        public async Task<Response<AuthenticationKeys>> ListAuthKeysAsync(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -542,9 +542,9 @@ namespace Azure.ResourceManager.DataMigration
             {
                 case 200:
                     {
-                        SqlMigrationAuthenticationKeys value = default;
+                        AuthenticationKeys value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SqlMigrationAuthenticationKeys.DeserializeSqlMigrationAuthenticationKeys(document.RootElement);
+                        value = AuthenticationKeys.DeserializeAuthenticationKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlMigrationServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlMigrationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SqlMigrationAuthenticationKeys> ListAuthKeys(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName, CancellationToken cancellationToken = default)
+        public Response<AuthenticationKeys> ListAuthKeys(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -571,9 +571,9 @@ namespace Azure.ResourceManager.DataMigration
             {
                 case 200:
                     {
-                        SqlMigrationAuthenticationKeys value = default;
+                        AuthenticationKeys value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SqlMigrationAuthenticationKeys.DeserializeSqlMigrationAuthenticationKeys(document.RootElement);
+                        value = AuthenticationKeys.DeserializeAuthenticationKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.DataMigration
             }
         }
 
-        internal RequestUriBuilder CreateRegenerateAuthKeysRequestUri(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName, SqlMigrationRegenAuthKeys sqlMigrationRegenAuthKeys)
+        internal RequestUriBuilder CreateRegenerateAuthKeysRequestUri(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName, RegenAuthKeys regenAuthKeys)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.DataMigration
             return uri;
         }
 
-        internal HttpMessage CreateRegenerateAuthKeysRequest(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName, SqlMigrationRegenAuthKeys sqlMigrationRegenAuthKeys)
+        internal HttpMessage CreateRegenerateAuthKeysRequest(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName, RegenAuthKeys regenAuthKeys)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.DataMigration
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(sqlMigrationRegenAuthKeys, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(regenAuthKeys, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -625,26 +625,26 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="sqlMigrationServiceName"> Name of the SQL Migration Service. </param>
-        /// <param name="sqlMigrationRegenAuthKeys"> Details of SqlMigrationService resource. </param>
+        /// <param name="regenAuthKeys"> Details of SqlMigrationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlMigrationServiceName"/> or <paramref name="sqlMigrationRegenAuthKeys"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlMigrationServiceName"/> or <paramref name="regenAuthKeys"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlMigrationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SqlMigrationRegenAuthKeys>> RegenerateAuthKeysAsync(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName, SqlMigrationRegenAuthKeys sqlMigrationRegenAuthKeys, CancellationToken cancellationToken = default)
+        public async Task<Response<RegenAuthKeys>> RegenerateAuthKeysAsync(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName, RegenAuthKeys regenAuthKeys, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(sqlMigrationServiceName, nameof(sqlMigrationServiceName));
-            Argument.AssertNotNull(sqlMigrationRegenAuthKeys, nameof(sqlMigrationRegenAuthKeys));
+            Argument.AssertNotNull(regenAuthKeys, nameof(regenAuthKeys));
 
-            using var message = CreateRegenerateAuthKeysRequest(subscriptionId, resourceGroupName, sqlMigrationServiceName, sqlMigrationRegenAuthKeys);
+            using var message = CreateRegenerateAuthKeysRequest(subscriptionId, resourceGroupName, sqlMigrationServiceName, regenAuthKeys);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SqlMigrationRegenAuthKeys value = default;
+                        RegenAuthKeys value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = SqlMigrationRegenAuthKeys.DeserializeSqlMigrationRegenAuthKeys(document.RootElement);
+                        value = RegenAuthKeys.DeserializeRegenAuthKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -656,26 +656,26 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="sqlMigrationServiceName"> Name of the SQL Migration Service. </param>
-        /// <param name="sqlMigrationRegenAuthKeys"> Details of SqlMigrationService resource. </param>
+        /// <param name="regenAuthKeys"> Details of SqlMigrationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlMigrationServiceName"/> or <paramref name="sqlMigrationRegenAuthKeys"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlMigrationServiceName"/> or <paramref name="regenAuthKeys"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlMigrationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SqlMigrationRegenAuthKeys> RegenerateAuthKeys(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName, SqlMigrationRegenAuthKeys sqlMigrationRegenAuthKeys, CancellationToken cancellationToken = default)
+        public Response<RegenAuthKeys> RegenerateAuthKeys(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName, RegenAuthKeys regenAuthKeys, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(sqlMigrationServiceName, nameof(sqlMigrationServiceName));
-            Argument.AssertNotNull(sqlMigrationRegenAuthKeys, nameof(sqlMigrationRegenAuthKeys));
+            Argument.AssertNotNull(regenAuthKeys, nameof(regenAuthKeys));
 
-            using var message = CreateRegenerateAuthKeysRequest(subscriptionId, resourceGroupName, sqlMigrationServiceName, sqlMigrationRegenAuthKeys);
+            using var message = CreateRegenerateAuthKeysRequest(subscriptionId, resourceGroupName, sqlMigrationServiceName, regenAuthKeys);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        SqlMigrationRegenAuthKeys value = default;
+                        RegenAuthKeys value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = SqlMigrationRegenAuthKeys.DeserializeSqlMigrationRegenAuthKeys(document.RootElement);
+                        value = RegenAuthKeys.DeserializeRegenAuthKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -683,7 +683,7 @@ namespace Azure.ResourceManager.DataMigration
             }
         }
 
-        internal RequestUriBuilder CreateDeleteNodeRequestUri(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName, DeletedIntegrationRuntimeNodeResult deletedIntegrationRuntimeNodeResult)
+        internal RequestUriBuilder CreateDeleteNodeRequestUri(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName, DeleteNode deleteNode)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -698,7 +698,7 @@ namespace Azure.ResourceManager.DataMigration
             return uri;
         }
 
-        internal HttpMessage CreateDeleteNodeRequest(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName, DeletedIntegrationRuntimeNodeResult deletedIntegrationRuntimeNodeResult)
+        internal HttpMessage CreateDeleteNodeRequest(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName, DeleteNode deleteNode)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.DataMigration
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(deletedIntegrationRuntimeNodeResult, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(deleteNode, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -727,26 +727,26 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="sqlMigrationServiceName"> Name of the SQL Migration Service. </param>
-        /// <param name="deletedIntegrationRuntimeNodeResult"> Details of SqlMigrationService resource. </param>
+        /// <param name="deleteNode"> Details of SqlMigrationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlMigrationServiceName"/> or <paramref name="deletedIntegrationRuntimeNodeResult"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlMigrationServiceName"/> or <paramref name="deleteNode"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlMigrationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeletedIntegrationRuntimeNodeResult>> DeleteNodeAsync(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName, DeletedIntegrationRuntimeNodeResult deletedIntegrationRuntimeNodeResult, CancellationToken cancellationToken = default)
+        public async Task<Response<DeleteNode>> DeleteNodeAsync(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName, DeleteNode deleteNode, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(sqlMigrationServiceName, nameof(sqlMigrationServiceName));
-            Argument.AssertNotNull(deletedIntegrationRuntimeNodeResult, nameof(deletedIntegrationRuntimeNodeResult));
+            Argument.AssertNotNull(deleteNode, nameof(deleteNode));
 
-            using var message = CreateDeleteNodeRequest(subscriptionId, resourceGroupName, sqlMigrationServiceName, deletedIntegrationRuntimeNodeResult);
+            using var message = CreateDeleteNodeRequest(subscriptionId, resourceGroupName, sqlMigrationServiceName, deleteNode);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DeletedIntegrationRuntimeNodeResult value = default;
+                        DeleteNode value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = DeletedIntegrationRuntimeNodeResult.DeserializeDeletedIntegrationRuntimeNodeResult(document.RootElement);
+                        value = Models.DeleteNode.DeserializeDeleteNode(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -758,26 +758,26 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="sqlMigrationServiceName"> Name of the SQL Migration Service. </param>
-        /// <param name="deletedIntegrationRuntimeNodeResult"> Details of SqlMigrationService resource. </param>
+        /// <param name="deleteNode"> Details of SqlMigrationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlMigrationServiceName"/> or <paramref name="deletedIntegrationRuntimeNodeResult"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlMigrationServiceName"/> or <paramref name="deleteNode"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlMigrationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeletedIntegrationRuntimeNodeResult> DeleteNode(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName, DeletedIntegrationRuntimeNodeResult deletedIntegrationRuntimeNodeResult, CancellationToken cancellationToken = default)
+        public Response<DeleteNode> DeleteNode(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName, DeleteNode deleteNode, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(sqlMigrationServiceName, nameof(sqlMigrationServiceName));
-            Argument.AssertNotNull(deletedIntegrationRuntimeNodeResult, nameof(deletedIntegrationRuntimeNodeResult));
+            Argument.AssertNotNull(deleteNode, nameof(deleteNode));
 
-            using var message = CreateDeleteNodeRequest(subscriptionId, resourceGroupName, sqlMigrationServiceName, deletedIntegrationRuntimeNodeResult);
+            using var message = CreateDeleteNodeRequest(subscriptionId, resourceGroupName, sqlMigrationServiceName, deleteNode);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DeletedIntegrationRuntimeNodeResult value = default;
+                        DeleteNode value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = DeletedIntegrationRuntimeNodeResult.DeserializeDeletedIntegrationRuntimeNodeResult(document.RootElement);
+                        value = Models.DeleteNode.DeserializeDeleteNode(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -922,7 +922,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlMigrationServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlMigrationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IntegrationRuntimeMonitoringResult>> ListMonitoringDataAsync(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName, CancellationToken cancellationToken = default)
+        public async Task<Response<IntegrationRuntimeMonitoringData>> ListMonitoringDataAsync(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -934,9 +934,9 @@ namespace Azure.ResourceManager.DataMigration
             {
                 case 200:
                     {
-                        IntegrationRuntimeMonitoringResult value = default;
+                        IntegrationRuntimeMonitoringData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = IntegrationRuntimeMonitoringResult.DeserializeIntegrationRuntimeMonitoringResult(document.RootElement);
+                        value = IntegrationRuntimeMonitoringData.DeserializeIntegrationRuntimeMonitoringData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -951,7 +951,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlMigrationServiceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sqlMigrationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IntegrationRuntimeMonitoringResult> ListMonitoringData(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName, CancellationToken cancellationToken = default)
+        public Response<IntegrationRuntimeMonitoringData> ListMonitoringData(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -963,9 +963,9 @@ namespace Azure.ResourceManager.DataMigration
             {
                 case 200:
                     {
-                        IntegrationRuntimeMonitoringResult value = default;
+                        IntegrationRuntimeMonitoringData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = IntegrationRuntimeMonitoringResult.DeserializeIntegrationRuntimeMonitoringResult(document.RootElement);
+                        value = IntegrationRuntimeMonitoringData.DeserializeIntegrationRuntimeMonitoringData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

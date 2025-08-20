@@ -6,8 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure.ResourceManager.EdgeZones.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EdgeZones
 {
@@ -15,11 +13,6 @@ namespace Azure.ResourceManager.EdgeZones
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(ExtendedZoneData))]
-    [ModelReaderWriterBuildable(typeof(ExtendedZoneListResult))]
-    [ModelReaderWriterBuildable(typeof(ExtendedZoneResource))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerEdgeZonesContext : ModelReaderWriterContext
     {
     }

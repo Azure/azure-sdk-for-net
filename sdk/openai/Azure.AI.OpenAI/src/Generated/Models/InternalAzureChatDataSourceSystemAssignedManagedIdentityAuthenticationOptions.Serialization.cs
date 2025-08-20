@@ -3,6 +3,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -12,8 +13,6 @@ namespace Azure.AI.OpenAI.Chat
 {
     internal partial class InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions : IJsonModel<InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions>
     {
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -21,8 +20,6 @@ namespace Azure.AI.OpenAI.Chat
             writer.WriteEndObject();
         }
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions>)this).GetFormatFromOptions(options) : options.Format;
@@ -33,12 +30,8 @@ namespace Azure.AI.OpenAI.Chat
             base.JsonModelWriteCore(writer, options);
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions IJsonModel<InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions)JsonModelCreateCore(ref reader, options);
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataSourceAuthentication JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions>)this).GetFormatFromOptions(options) : options.Format;
@@ -50,21 +43,19 @@ namespace Azure.AI.OpenAI.Chat
             return DeserializeInternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         internal static InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions DeserializeInternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            InternalAzureChatDataSourceAuthenticationOptionsType kind = default;
+            string @type = "system_assigned_managed_identity";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    kind = new InternalAzureChatDataSourceAuthenticationOptionsType(prop.Value.GetString());
+                    @type = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -72,31 +63,25 @@ namespace Azure.AI.OpenAI.Chat
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions(kind, additionalBinaryDataProperties);
+            return new InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions(@type, additionalBinaryDataProperties);
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIOpenAIContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions IPersistableModel<InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions>.Create(BinaryData data, ModelReaderWriterOptions options) => (InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions)PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataSourceAuthentication PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions>)this).GetFormatFromOptions(options) : options.Format;
@@ -112,7 +97,22 @@ namespace Azure.AI.OpenAI.Chat
             }
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        public static implicit operator BinaryContent(InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions internalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions)
+        {
+            if (internalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions == null)
+            {
+                return null;
+            }
+            return BinaryContent.Create(internalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions, ModelSerializationExtensions.WireOptions);
+        }
+
+        public static explicit operator InternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions(ClientResult result)
+        {
+            using PipelineResponse response = result.GetRawResponse();
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeInternalAzureChatDataSourceSystemAssignedManagedIdentityAuthenticationOptions(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

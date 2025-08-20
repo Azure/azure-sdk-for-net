@@ -20,7 +20,6 @@ public class BasicSearchTests(bool async)
         await test.Define(
             ctx =>
             {
-                #region Snippet:SearchBasic
                 Infrastructure infra = new();
 
                 SearchService search =
@@ -32,7 +31,6 @@ public class BasicSearchTests(bool async)
                         HostingMode = SearchServiceHostingMode.Default,
                     };
                 infra.Add(search);
-                #endregion
 
                 return infra;
             })

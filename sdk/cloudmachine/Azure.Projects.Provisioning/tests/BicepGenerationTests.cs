@@ -27,7 +27,7 @@ public class BicepGenerationTests
         //File.WriteAllText(Path.Combine(Path.GetTempPath(), "minimal.bicep"), actualBicep);
 
         string expectedBicep = LoadTestFile("minimal.bicep");
-        AssertEqual(expectedBicep, actualBicep);
+        Assert.AreEqual(expectedBicep, actualBicep);
     }
 
     [Test]
@@ -44,7 +44,7 @@ public class BicepGenerationTests
         //File.WriteAllText(Path.Combine(Path.GetTempPath(), "developer.bicep"), actualBicep);
 
         string expectedBicep = LoadTestFile("developer.bicep");
-        AssertEqual(expectedBicep, actualBicep);
+        Assert.AreEqual(expectedBicep, actualBicep);
     }
 
     [Test]
@@ -58,7 +58,7 @@ public class BicepGenerationTests
         //File.WriteAllText(Path.Combine(Path.GetTempPath(), "kv.bicep"), actualBicep);
 
         string expectedBicep = LoadTestFile("kv.bicep");
-        AssertEqual(expectedBicep, actualBicep);
+        Assert.AreEqual(expectedBicep, actualBicep);
     }
 
     [Test]
@@ -72,7 +72,7 @@ public class BicepGenerationTests
         //File.WriteAllText(Path.Combine(Path.GetTempPath(), "blobs.bicep"), actualBicep);
 
         string expectedBicep = LoadTestFile("blobs.bicep");
-        AssertEqual(expectedBicep, actualBicep);
+        Assert.AreEqual(expectedBicep, actualBicep);
     }
 
     [Test]
@@ -87,7 +87,7 @@ public class BicepGenerationTests
         //File.WriteAllText(Path.Combine(Path.GetTempPath(), "blobs2Containers.bicep"), actualBicep);
 
         string expectedBicep = LoadTestFile("blobs2Containers.bicep");
-        AssertEqual(expectedBicep, actualBicep);
+        Assert.AreEqual(expectedBicep, actualBicep);
     }
 
     [Test]
@@ -101,7 +101,7 @@ public class BicepGenerationTests
         //File.WriteAllText(Path.Combine(Path.GetTempPath(), "blobsObservable.bicep"), actualBicep);
 
         string expectedBicep = LoadTestFile("blobsObservable.bicep");
-        AssertEqual(expectedBicep, actualBicep);
+        Assert.AreEqual(expectedBicep, actualBicep);
     }
 
     [Test]
@@ -116,7 +116,7 @@ public class BicepGenerationTests
         //File.WriteAllText(Path.Combine(Path.GetTempPath(), "openai.bicep"), actualBicep);
 
         string expectedBicep = LoadTestFile("openai.bicep");
-        AssertEqual(expectedBicep, actualBicep);
+        Assert.AreEqual(expectedBicep, actualBicep);
     }
 
     [Test]
@@ -131,7 +131,7 @@ public class BicepGenerationTests
         //File.WriteAllText(path, actualBicep);
 
         string expectedBicep = LoadTestFile("maas.bicep");
-        AssertEqual(expectedBicep, actualBicep);
+        Assert.AreEqual(expectedBicep, actualBicep);
     }
 
     [Test]
@@ -145,7 +145,7 @@ public class BicepGenerationTests
         //File.WriteAllText(Path.Combine(Path.GetTempPath(), "sb.bicep"), actualBicep);
 
         string expectedBicep = LoadTestFile("sb.bicep");
-        AssertEqual(expectedBicep, actualBicep);
+        Assert.AreEqual(expectedBicep, actualBicep);
     }
 
     [Test]
@@ -159,7 +159,7 @@ public class BicepGenerationTests
         //File.WriteAllText(Path.Combine(Path.GetTempPath(), "cm.bicep"), actualBicep);
 
         string expectedBicep = LoadTestFile("cm.bicep");
-        AssertEqual(expectedBicep, actualBicep);
+        Assert.AreEqual(expectedBicep, actualBicep);
     }
 
     [Test]
@@ -176,7 +176,7 @@ public class BicepGenerationTests
         //File.WriteAllText(Path.Combine(Path.GetTempPath(), "app.bicep"), actualBicep);
 
         string expectedBicep = LoadTestFile("app.bicep");
-        AssertEqual(expectedBicep, actualBicep);
+        Assert.AreEqual(expectedBicep, actualBicep);
     }
 
     private static string LoadTestFile(string filename)
@@ -187,10 +187,5 @@ public class BicepGenerationTests
             contents = contents.Substring(0, contents.Length - Environment.NewLine.Length);
         }
         return contents;
-    }
-
-    private static void AssertEqual(string expectedBicep, string actualBicep)
-    {
-        Assert.AreEqual(expectedBicep, actualBicep.Replace("\r\n", "\n"));
     }
 }

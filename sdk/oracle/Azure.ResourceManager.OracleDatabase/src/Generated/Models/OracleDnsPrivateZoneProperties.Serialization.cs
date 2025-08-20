@@ -34,27 +34,51 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 throw new FormatException($"The model {nameof(OracleDnsPrivateZoneProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("ocid"u8);
-            writer.WriteStringValue(ZoneOcid);
-            writer.WritePropertyName("isProtected"u8);
-            writer.WriteBooleanValue(IsProtected);
-            writer.WritePropertyName("lifecycleState"u8);
-            writer.WriteStringValue(DnsPrivateZoneLifecycleState.ToString());
-            writer.WritePropertyName("self"u8);
-            writer.WriteStringValue(Self);
-            writer.WritePropertyName("serial"u8);
-            writer.WriteNumberValue(Serial);
-            writer.WritePropertyName("version"u8);
-            writer.WriteStringValue(Version);
-            if (Optional.IsDefined(ViewOcid))
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("ocid"u8);
+                writer.WriteStringValue(Ocid);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("isProtected"u8);
+                writer.WriteBooleanValue(IsProtected);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LifecycleState))
+            {
+                writer.WritePropertyName("lifecycleState"u8);
+                writer.WriteStringValue(LifecycleState.Value.ToString());
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("self"u8);
+                writer.WriteStringValue(Self);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("serial"u8);
+                writer.WriteNumberValue(Serial);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ViewId))
             {
                 writer.WritePropertyName("viewId"u8);
-                writer.WriteStringValue(ViewOcid);
+                writer.WriteStringValue(ViewId);
             }
-            writer.WritePropertyName("zoneType"u8);
-            writer.WriteStringValue(ZoneType.ToString());
-            writer.WritePropertyName("timeCreated"u8);
-            writer.WriteStringValue(CreatedOn, "O");
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("zoneType"u8);
+                writer.WriteStringValue(ZoneType.ToString());
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("timeCreated"u8);
+                writer.WriteStringValue(CreatedOn, "O");
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -97,13 +121,13 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            string ocid = default;
+            ResourceIdentifier ocid = default;
             bool isProtected = default;
-            DnsPrivateZonesLifecycleState lifecycleState = default;
+            DnsPrivateZonesLifecycleState? lifecycleState = default;
             string self = default;
             int serial = default;
             string version = default;
-            string viewId = default;
+            ResourceIdentifier viewId = default;
             OracleDnsPrivateZoneType zoneType = default;
             DateTimeOffset timeCreated = default;
             OracleDatabaseResourceProvisioningState? provisioningState = default;
@@ -113,7 +137,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 if (property.NameEquals("ocid"u8))
                 {
-                    ocid = property.Value.GetString();
+                    ocid = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("isProtected"u8))
@@ -123,6 +147,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("lifecycleState"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     lifecycleState = new DnsPrivateZonesLifecycleState(property.Value.GetString());
                     continue;
                 }
@@ -143,7 +171,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("viewId"u8))
                 {
-                    viewId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    viewId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("zoneType"u8))

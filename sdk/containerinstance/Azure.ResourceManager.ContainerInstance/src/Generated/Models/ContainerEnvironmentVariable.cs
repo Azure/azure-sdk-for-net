@@ -59,14 +59,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="name"> The name of the environment variable. </param>
         /// <param name="value"> The value of the environment variable. </param>
         /// <param name="secureValue"> The value of the secure environment variable. </param>
-        /// <param name="secureValueReference"> The reference of the secure environment variable. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerEnvironmentVariable(string name, string value, string secureValue, string secureValueReference, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerEnvironmentVariable(string name, string value, string secureValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;
             SecureValue = secureValue;
-            SecureValueReference = secureValueReference;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -81,7 +79,5 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public string Value { get; set; }
         /// <summary> The value of the secure environment variable. </summary>
         public string SecureValue { get; set; }
-        /// <summary> The reference of the secure environment variable. </summary>
-        public string SecureValueReference { get; set; }
     }
 }

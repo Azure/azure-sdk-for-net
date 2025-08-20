@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             string databaseName = default;
-            DataMigrationState? state = default;
+            MigrationState? state = default;
             SchemaMigrationStage? stage = default;
             DateTimeOffset? startedOn = default;
             DateTimeOffset? endedOn = default;
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    state = new DataMigrationState(property.Value.GetString());
+                    state = new MigrationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("stage"u8))

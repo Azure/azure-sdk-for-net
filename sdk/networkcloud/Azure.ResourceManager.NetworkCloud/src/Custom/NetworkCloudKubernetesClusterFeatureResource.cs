@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <description>KubernetesClusterFeatures_Delete</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudKubernetesClusterFeatureResource"/></description>
         /// </item>
@@ -44,7 +48,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<NetworkCloudOperationStatusResult>> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken)
-            => await DeleteAsync(waitUntil, null, null, cancellationToken).ConfigureAwait(false);
+        {
+            return await DeleteAsync(waitUntil, null, null, cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Delete the provided Kubernetes cluster feature.
@@ -58,6 +64,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <description>KubernetesClusterFeatures_Delete</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudKubernetesClusterFeatureResource"/></description>
         /// </item>
@@ -65,8 +75,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<NetworkCloudOperationStatusResult> Delete(WaitUntil waitUntil, CancellationToken cancellationToken)
-            => Delete(waitUntil, null, null, cancellationToken);
+        public virtual ArmOperation<NetworkCloudOperationStatusResult> Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            return Delete(waitUntil, null, null, cancellationToken);
+        }
 
         /// <summary>
         /// Patch properties of the provided Kubernetes cluster feature.
@@ -78,6 +90,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KubernetesClusterFeatures_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -90,7 +106,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkCloudKubernetesClusterFeatureResource>> UpdateAsync(WaitUntil waitUntil, NetworkCloudKubernetesClusterFeaturePatch patch, CancellationToken cancellationToken)
-            => await UpdateAsync(waitUntil, patch, null, null, cancellationToken).ConfigureAwait(false);
+        {
+            return await UpdateAsync(waitUntil, patch, null, null, cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Patch properties of the provided Kubernetes cluster feature.
@@ -104,6 +122,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <description>KubernetesClusterFeatures_Update</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudKubernetesClusterFeatureResource"/></description>
         /// </item>
@@ -114,6 +136,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<NetworkCloudKubernetesClusterFeatureResource> Update(WaitUntil waitUntil, NetworkCloudKubernetesClusterFeaturePatch patch, CancellationToken cancellationToken)
-            => Update(waitUntil, patch, null, null, cancellationToken);
+        {
+            return Update(waitUntil, patch, null, null, cancellationToken);
+        }
     }
 }

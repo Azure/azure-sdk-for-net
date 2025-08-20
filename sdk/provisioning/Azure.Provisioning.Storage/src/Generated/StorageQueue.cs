@@ -102,7 +102,6 @@ public partial class StorageQueue : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
-        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _metadata = DefineDictionaryProperty<string>("Metadata", ["properties", "metadata"]);
         _approximateMessageCount = DefineProperty<int>("ApproximateMessageCount", ["properties", "approximateMessageCount"], isOutput: true);

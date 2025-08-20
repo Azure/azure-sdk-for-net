@@ -36,8 +36,13 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
             writer.WritePropertyName("dbServers"u8);
             writer.WriteStartArray();
-            foreach (var item in DBServerOcids)
+            foreach (var item in DBServers)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
@@ -78,17 +83,24 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            IList<string> dbServers = default;
+            IList<ResourceIdentifier> dbServers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dbServers"u8))
                 {
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
                     }
                     dbServers = array;
                     continue;

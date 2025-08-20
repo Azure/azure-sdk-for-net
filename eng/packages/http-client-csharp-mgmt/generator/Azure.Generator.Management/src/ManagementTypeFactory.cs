@@ -5,10 +5,8 @@ using Azure.Generator.Management.InputTransformation;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Providers.Abstraction;
-using Azure.Generator.Management.Snippets;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
-using Microsoft.TypeSpec.Generator.ClientModel.Snippets;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
@@ -19,7 +17,6 @@ using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
@@ -47,7 +44,7 @@ namespace Azure.Generator.Management
         }
 
         /// <inheritdoc/>
-        public override IClientPipelineApi ClientPipelineApi => ManagementHttpPipelineProvider.Instance;
+        public override IClientPipelineApi ClientPipelineApi => MgmtHttpPipelineProvider.Instance;
 
         /// <inheritdoc/>
         protected override IReadOnlyList<CSharpProjectWriter.CSProjDependencyPackage> AzureDependencyPackages =>
@@ -70,14 +67,9 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         protected override CSharpType? CreateCSharpTypeCore(InputType inputType)
         {
-            if (inputType is InputModelType model && (KnownManagementTypes.TryGetInheritableSystemType(model.CrossLanguageDefinitionId, out var replacedType) || KnownManagementTypes.TryGetSystemType(model.CrossLanguageDefinitionId, out replacedType)))
+            if (inputType is InputModelType model && KnownManagementTypes.TryGetManagementType(model.CrossLanguageDefinitionId, out var replacedType))
             {
                 return replacedType;
-            }
-
-            if (inputType is InputPrimitiveType primitiveType && KnownManagementTypes.TryGetPrimitiveType(primitiveType.CrossLanguageDefinitionId, out var csharpType))
-            {
-                return csharpType;
             }
             return base.CreateCSharpTypeCore(inputType);
         }
@@ -85,14 +77,9 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         protected override ModelProvider? CreateModelCore(InputModelType model)
         {
-            if (KnownManagementTypes.TryGetInheritableSystemType(model.CrossLanguageDefinitionId, out var replacedType))
+            if (KnownManagementTypes.TryGetManagementType(model.CrossLanguageDefinitionId, out var replacedType))
             {
                 return new InheritableSystemObjectModelProvider(replacedType.FrameworkType, model);
-            }
-
-            if (KnownManagementTypes.TryGetSystemType(model.CrossLanguageDefinitionId, out replacedType))
-            {
-                return new SystemObjectModelProvider(replacedType.FrameworkType, model);
             }
             return base.CreateModelCore(model);
         }
@@ -102,14 +89,8 @@ namespace Azure.Generator.Management
         {
             if (KnownManagementTypes.IsKnownManagementType(valueType))
             {
-                return value.CastTo(new CSharpType(typeof(IJsonModel<>), valueType)).Invoke(nameof(IJsonModel<object>.Write), [utf8JsonWriter, mrwOptionsParameter]).Terminate();
+                return Static(typeof(JsonSerializer)).Invoke(nameof(JsonSerializer.Serialize), [value]).Terminate();
             }
-
-            if (KnownManagementTypes.TryGetJsonSerializationExpression(valueType, out var serializationExpression))
-            {
-                return serializationExpression(value, utf8JsonWriter, mrwOptionsParameter, serializationFormat);
-            }
-
             return base.SerializeJsonValue(valueType, value, utf8JsonWriter, mrwOptionsParameter, serializationFormat);
         }
 
@@ -120,30 +101,8 @@ namespace Azure.Generator.Management
         {
             if (KnownManagementTypes.IsKnownManagementType(valueType))
             {
-                IReadOnlyList<ValueExpression> readBody =
-                [
-                    New.Instance(
-                    typeof(BinaryData),
-                    [
-                        new MemberExpression(typeof(Encoding), nameof(Encoding.UTF8)).Invoke(nameof(UTF8Encoding.GetBytes),
-                            [
-                                element.GetRawText()
-                            ])
-                    ]),
-                    ModelSerializationExtensionsSnippets.Wire
-                ];
-
-                return Static(typeof(ModelReaderWriter)).Invoke(
-                    nameof(ModelReaderWriter.Read),
-                    [.. readBody, ModelReaderWriterContextSnippets.Default],
-                    typeArgs: [valueType]);
+                return Static(typeof(JsonSerializer)).Invoke(nameof(JsonSerializer.Deserialize), [element], [valueType], false);
             }
-
-            if (KnownManagementTypes.TryGetJsonDeserializationExpression(valueType, out var deserializationExpression))
-            {
-                return deserializationExpression(valueType, element, format);
-            }
-
             return base.DeserializeJsonValue(valueType, element, format);
         }
 

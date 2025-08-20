@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.3.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,19 +9,6 @@
 ### Bugs Fixed
 
 ### Other Changes
-
-## 1.4.0 (2025-07-11)
-
-### Features Added
-
-- Upgraded api-version tag from 'package-2023-01-31' to 'package-2024-11-30'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/bf90cab9d5f6060ce1f7775ffac88ed8eda785ca/specification/msi/resource-manager/readme.md.
-    - Exposed User-Assigned Identity `IsolationScope` property.
-
-## 1.3.0 (2025-06-13)
-
-### Features Added
-
-- Updated dependencies.
 
 ## 1.3.0-beta.1 (2024-10-15)
 
@@ -45,14 +32,14 @@
 
 ### Features Added
 
-- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Added experimental Bicep serialization.
 
 ## 1.2.0 (2023-11-29)
 
 ### Features Added
 
-- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
 
@@ -62,7 +49,7 @@
 
 ### Features Added
 
-- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 
 ### Other Changes
 
@@ -72,16 +59,25 @@
 ## 1.1.0 (2023-02-20)
 
 ### Features Added
-
-- Upgraded to API version 2023-01-31.
+- Upgrade to API version 2023-01-31.
 - Create/Update/Delete federated identity credentials.
 - `ListAssociatedResources` method available in `1.1.0-beta.1` version is not added to this stable version.
+
+## 1.1.0-beta.2 (2022-10-19)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
 
 ## 1.1.0-beta.1 (2022-10-19)
 
 ### Features Added
 
-- Upgraded to API version 2022-01-31-preview.
+- Upgrade to API version 2022-01-31-preview.
 
 ## 1.0.0 (2022-07-21)
 
@@ -89,7 +85,7 @@ This release is the first stable release of the Azure Managed Service Identity m
 
 ### Features Added
 
-- Released stable version.
+- Release stable version.
 
 ## 1.0.0-beta.1 (2022-07-06)
 

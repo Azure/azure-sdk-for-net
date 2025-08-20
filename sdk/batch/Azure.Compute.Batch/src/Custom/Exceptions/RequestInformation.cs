@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 
-namespace Azure.Compute.Batch
+namespace Azure.Compute.Batch.Custom
 {
     /// <summary>
     /// A set of common information associated with a request.

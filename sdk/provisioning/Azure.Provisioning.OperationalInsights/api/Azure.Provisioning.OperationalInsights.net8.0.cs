@@ -22,7 +22,6 @@ namespace Azure.Provisioning.OperationalInsights
         {
             public static readonly string V2019_09_01;
             public static readonly string V2023_09_01;
-            public static readonly string V2025_02_01;
         }
     }
     public partial class LogAnalyticsQueryPack : Azure.Provisioning.Primitives.ProvisionableResource
@@ -43,7 +42,6 @@ namespace Azure.Provisioning.OperationalInsights
         {
             public static readonly string V2019_09_01;
             public static readonly string V2023_09_01;
-            public static readonly string V2025_02_01;
         }
     }
     public partial class LogAnalyticsQueryRelatedMetadata : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -83,7 +81,6 @@ namespace Azure.Provisioning.OperationalInsights
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.OperationalInsightsClusterEntityStatus> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.OperationalInsights.OperationalInsightsClusterReplicationProperties Replication { get { throw null; } set { } }
         public Azure.Provisioning.OperationalInsights.OperationalInsightsClusterSku Sku { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
@@ -98,7 +95,6 @@ namespace Azure.Provisioning.OperationalInsights
             public static readonly string V2021_06_01;
             public static readonly string V2022_10_01;
             public static readonly string V2023_09_01;
-            public static readonly string V2025_02_01;
         }
     }
     public partial class OperationalInsightsClusterAssociatedWorkspace : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -130,29 +126,6 @@ namespace Azure.Provisioning.OperationalInsights
         Deleting = 4,
         ProvisioningAccount = 5,
         Updating = 6,
-    }
-    public partial class OperationalInsightsClusterReplicationProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public OperationalInsightsClusterReplicationProperties() { }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<bool> IsAvailabilityZonesEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsReplicationEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastModifiedOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.OperationalInsightsClusterReplicationState> ProvisioningState { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public enum OperationalInsightsClusterReplicationState
-    {
-        Succeeded = 0,
-        EnableRequested = 1,
-        Enabling = 2,
-        DisableRequested = 3,
-        Disabling = 4,
-        RollbackRequested = 5,
-        RollingBack = 6,
-        Failed = 7,
-        Canceled = 8,
     }
     public partial class OperationalInsightsClusterSku : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -228,7 +201,6 @@ namespace Azure.Provisioning.OperationalInsights
         {
             public static readonly string V2020_08_01;
             public static readonly string V2023_09_01;
-            public static readonly string V2025_02_01;
         }
     }
     public enum OperationalInsightsDataExportDestinationType
@@ -262,7 +234,6 @@ namespace Azure.Provisioning.OperationalInsights
         {
             public static readonly string V2020_08_01;
             public static readonly string V2023_09_01;
-            public static readonly string V2025_02_01;
         }
     }
     public enum OperationalInsightsDataSourceKind
@@ -335,7 +306,6 @@ namespace Azure.Provisioning.OperationalInsights
         {
             public static readonly string V2020_08_01;
             public static readonly string V2023_09_01;
-            public static readonly string V2025_02_01;
         }
     }
     public enum OperationalInsightsLinkedServiceEntityStatus
@@ -360,7 +330,6 @@ namespace Azure.Provisioning.OperationalInsights
         {
             public static readonly string V2020_08_01;
             public static readonly string V2023_09_01;
-            public static readonly string V2025_02_01;
         }
     }
     public partial class OperationalInsightsPrivateLinkScopedResourceInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -400,7 +369,6 @@ namespace Azure.Provisioning.OperationalInsights
             public static readonly string V2021_06_01;
             public static readonly string V2022_10_01;
             public static readonly string V2023_09_01;
-            public static readonly string V2025_02_01;
         }
     }
     public partial class OperationalInsightsSchema : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -452,7 +420,6 @@ namespace Azure.Provisioning.OperationalInsights
             public static readonly string V2020_08_01;
             public static readonly string V2022_10_01;
             public static readonly string V2023_09_01;
-            public static readonly string V2025_02_01;
         }
     }
     public enum OperationalInsightsTableCreator
@@ -530,7 +497,6 @@ namespace Azure.Provisioning.OperationalInsights
         public Azure.Provisioning.BicepValue<System.Guid> CustomerId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> DefaultDataCollectionRuleResourceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } set { } }
-        public Azure.Provisioning.OperationalInsights.OperationalInsightsWorkspaceFailoverProperties Failover { get { throw null; } set { } }
         public Azure.Provisioning.OperationalInsights.OperationalInsightsWorkspaceFeatures Features { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> ForceCmkForQuery { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
@@ -542,7 +508,6 @@ namespace Azure.Provisioning.OperationalInsights
         public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.OperationalInsightsWorkspaceEntityStatus> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.OperationalInsightsPublicNetworkAccessType> PublicNetworkAccessForIngestion { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.OperationalInsightsPublicNetworkAccessType> PublicNetworkAccessForQuery { get { throw null; } set { } }
-        public Azure.Provisioning.OperationalInsights.OperationalInsightsWorkspaceReplicationProperties Replication { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> RetentionInDays { get { throw null; } set { } }
         public Azure.Provisioning.OperationalInsights.OperationalInsightsWorkspaceSku Sku { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -561,7 +526,6 @@ namespace Azure.Provisioning.OperationalInsights
             public static readonly string V2021_06_01;
             public static readonly string V2022_10_01;
             public static readonly string V2023_09_01;
-            public static readonly string V2025_02_01;
         }
     }
     public enum OperationalInsightsWorkspaceCapacityReservationLevel
@@ -582,12 +546,6 @@ namespace Azure.Provisioning.OperationalInsights
         TwoThousand = 6,
         [System.Runtime.Serialization.DataMemberAttribute(Name="5000")]
         FiveThousand = 7,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="10000")]
-        TenThousand = 8,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="25000")]
-        TwentyFiveThousand = 9,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="50000")]
-        FiftyThousand = 10,
     }
     public partial class OperationalInsightsWorkspaceCapping : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -607,21 +565,6 @@ namespace Azure.Provisioning.OperationalInsights
         ProvisioningAccount = 5,
         Updating = 6,
     }
-    public partial class OperationalInsightsWorkspaceFailoverProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public OperationalInsightsWorkspaceFailoverProperties() { }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastModifiedOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.OperationalInsightsWorkspaceFailoverState> State { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public enum OperationalInsightsWorkspaceFailoverState
-    {
-        Inactive = 0,
-        Activating = 1,
-        Active = 2,
-        Deactivating = 3,
-        Failed = 4,
-    }
     public partial class OperationalInsightsWorkspaceFeatures : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public OperationalInsightsWorkspaceFeatures() { }
@@ -631,30 +574,7 @@ namespace Azure.Provisioning.OperationalInsights
         public Azure.Provisioning.BicepValue<bool> IsDataExportEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsLocalAuthDisabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsLogAccessUsingOnlyResourcePermissionsEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> IsUnifiedSentinelBillingOnly { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-    }
-    public partial class OperationalInsightsWorkspaceReplicationProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public OperationalInsightsWorkspaceReplicationProperties() { }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<bool> IsReplicationEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastModifiedOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.OperationalInsights.OperationalInsightsWorkspaceReplicationState> ProvisioningState { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public enum OperationalInsightsWorkspaceReplicationState
-    {
-        Succeeded = 0,
-        EnableRequested = 1,
-        Enabling = 2,
-        DisableRequested = 3,
-        Disabling = 4,
-        RollbackRequested = 5,
-        RollingBack = 6,
-        Failed = 7,
-        Canceled = 8,
     }
     public partial class OperationalInsightsWorkspaceSharedKeys : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -707,7 +627,6 @@ namespace Azure.Provisioning.OperationalInsights
             public static readonly string V2015_03_20;
             public static readonly string V2020_08_01;
             public static readonly string V2023_09_01;
-            public static readonly string V2025_02_01;
         }
     }
     public enum StorageInsightState

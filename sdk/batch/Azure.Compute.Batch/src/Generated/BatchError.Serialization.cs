@@ -34,11 +34,8 @@ namespace Azure.Compute.Batch
                 throw new FormatException($"The model {nameof(BatchError)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Code))
-            {
-                writer.WritePropertyName("code"u8);
-                writer.WriteStringValue(Code);
-            }
+            writer.WritePropertyName("code"u8);
+            writer.WriteStringValue(Code);
             if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);

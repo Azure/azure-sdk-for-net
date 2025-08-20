@@ -41,11 +41,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
             writer.WritePropertyName("category"u8);
             writer.WriteStringValue(Category);
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -85,7 +80,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
             ExportedOrchestrationDetails orchestration = default;
             string category = default;
-            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,18 +98,13 @@ namespace Azure.AI.Language.Conversations.Authoring
                     category = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"u8))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new OrchestrationExportedIntent(orchestration, category, description, serializedAdditionalRawData);
+            return new OrchestrationExportedIntent(orchestration, category, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OrchestrationExportedIntent>.Write(ModelReaderWriterOptions options)

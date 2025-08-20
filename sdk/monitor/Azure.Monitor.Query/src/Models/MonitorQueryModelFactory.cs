@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net.Http.Headers;
@@ -19,8 +18,6 @@ namespace Azure.Monitor.Query.Models
     /// </summary>
     public static partial class MonitorQueryModelFactory
     {
-        private const string TrimmingUnsafeMessage = "This method uses JSON serialization that is incompatible with trimming.";
-
         /// <summary>
         /// Creates an instance of <see cref="MetricsQueryResult"/> to support <see href="https://aka.ms/azsdk/net/mocking">mocking</see>.
         /// </summary>
@@ -32,7 +29,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="metrics"> The value of the collection. </param>
         public static MetricsQueryResult MetricsQueryResult(int? cost, string timespan, TimeSpan? granularity, string @namespace, string resourceRegion, IReadOnlyList<MetricResult> metrics)
         {
-            return new MetricsQueryResult(cost, timespan, granularity, @namespace, resourceRegion, metrics.ToArray(), serializedAdditionalRawData: null);
+            return new MetricsQueryResult(cost, timespan, granularity, @namespace, resourceRegion, metrics.ToArray());
         }
 
         /// <summary>
@@ -58,10 +55,10 @@ namespace Azure.Monitor.Query.Models
             var metadataValueList = new List<MetadataValue>();
             foreach (var value in metadataValues)
             {
-                var metadataValue = new MetadataValue(new LocalizableString(value.Key), value.Value, serializedAdditionalRawData: null);
+                var metadataValue = new MetadataValue(new LocalizableString(value.Key), value.Value);
                 metadataValueList.Add(metadataValue);
             }
-            return new MetricTimeSeriesElement(metadataValueList, values.ToList(), serializedAdditionalRawData: null);
+            return new MetricTimeSeriesElement(metadataValueList, values.ToList());
         }
 
         /// <summary>
@@ -75,7 +72,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="count"> The number of samples in the time range. Can be used to determine the number of values that contributed to the average value. </param>
         public static MetricValue MetricValue(DateTimeOffset timeStamp = default, double? average = null, double? minimum = null, double? maximum = null, double? total = null, double? count = null)
         {
-            return new MetricValue(timeStamp, average, minimum, maximum, total, count, serializedAdditionalRawData: null);
+            return new MetricValue(timeStamp, average, minimum, maximum, total, count);
         }
 
         /// <summary>
@@ -85,14 +82,12 @@ namespace Azure.Monitor.Query.Models
         /// <param name="statistics"> Any object. </param>
         /// <param name="visualization"> Any object. </param>
         /// <param name="error"> Any object. </param>
-        [RequiresUnreferencedCode(TrimmingUnsafeMessage)]
-        [RequiresDynamicCode(TrimmingUnsafeMessage)]
         public static LogsQueryResult LogsQueryResult(IReadOnlyList<LogsTable> allTables, BinaryData statistics, BinaryData visualization, BinaryData error)
         {
             JsonElement statisticsJson = statistics.ToObjectFromJson<JsonElement>();
             JsonElement visualizationJson = visualization.ToObjectFromJson<JsonElement>();
             JsonElement errorJson = error.ToObjectFromJson<JsonElement>();
-            return new LogsQueryResult(allTables.ToArray(), statisticsJson, visualizationJson, errorJson, serializedAdditionalRawData: null);
+            return new LogsQueryResult(allTables.ToArray(), statisticsJson, visualizationJson, errorJson);
         }
 
         /// <summary>
@@ -100,8 +95,6 @@ namespace Azure.Monitor.Query.Models
         /// </summary>
         /// <param name="columns"> The list of columns. </param>
         /// <param name="values"> An object array representing the rows of the table. </param>
-        [RequiresUnreferencedCode(TrimmingUnsafeMessage)]
-        [RequiresDynamicCode(TrimmingUnsafeMessage)]
         public static LogsTableRow LogsTableRow(IEnumerable<LogsTableColumn> columns, IEnumerable<object> values)
         {
             var columnsList = columns.ToArray();
@@ -133,8 +126,6 @@ namespace Azure.Monitor.Query.Models
             return new LogsTable(name, columns, logsTableRow);
         }
 
-        [RequiresUnreferencedCode(TrimmingUnsafeMessage)]
-        [RequiresDynamicCode(TrimmingUnsafeMessage)]
         private static JsonElement JsonElementFromObject<TValue>(TValue value, JsonSerializerOptions options = default)
         {
             var bytes = JsonSerializer.SerializeToUtf8Bytes(value, options);

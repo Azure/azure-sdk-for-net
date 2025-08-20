@@ -69,7 +69,6 @@ internal class ModelReaderWriterSamples
 
     #region Snippet:ModelReaderWriterContext_AttributeUsage
     [ModelReaderWriterBuildable(typeof(List<MyPersistableModel>))]
-    [ModelReaderWriterBuildable(typeof(MyOtherPersistableModel))]
     #region Snippet:ModelReaderWriterContext_ContextClass
     public partial class MyContext : ModelReaderWriterContext { }
     #endregion
@@ -78,24 +77,6 @@ internal class ModelReaderWriterSamples
     #region Snippet:ModelReaderWriterContext_Example
     public partial class MyProjectContext : ModelReaderWriterContext { }
     #endregion
-
-    private class MyOtherPersistableModel : IPersistableModel<MyOtherPersistableModel>
-    {
-        MyOtherPersistableModel IPersistableModel<MyOtherPersistableModel>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            throw new NotImplementedException();
-        }
-
-        string IPersistableModel<MyOtherPersistableModel>.GetFormatFromOptions(ModelReaderWriterOptions options)
-        {
-            throw new NotImplementedException();
-        }
-
-        BinaryData IPersistableModel<MyOtherPersistableModel>.Write(ModelReaderWriterOptions options)
-        {
-            throw new NotImplementedException();
-        }
-    }
 
     public partial class MyProjectContext : ModelReaderWriterContext
     {

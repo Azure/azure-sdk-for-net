@@ -41,30 +41,30 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("checkPermissionsGroup"u8);
                 writer.WriteStringValue(CheckPermissionsGroup.Value.ToSerialString());
             }
-            if (Optional.IsDefined(ShouldCollectDatabases))
+            if (Optional.IsDefined(CollectDatabases))
             {
                 writer.WritePropertyName("collectDatabases"u8);
-                writer.WriteBooleanValue(ShouldCollectDatabases.Value);
+                writer.WriteBooleanValue(CollectDatabases.Value);
             }
-            if (Optional.IsDefined(ShouldCollectLogins))
+            if (Optional.IsDefined(CollectLogins))
             {
                 writer.WritePropertyName("collectLogins"u8);
-                writer.WriteBooleanValue(ShouldCollectLogins.Value);
+                writer.WriteBooleanValue(CollectLogins.Value);
             }
-            if (Optional.IsDefined(ShouldCollectAgentJobs))
+            if (Optional.IsDefined(CollectAgentJobs))
             {
                 writer.WritePropertyName("collectAgentJobs"u8);
-                writer.WriteBooleanValue(ShouldCollectAgentJobs.Value);
+                writer.WriteBooleanValue(CollectAgentJobs.Value);
             }
-            if (Optional.IsDefined(ShouldCollectTdeCertificateInfo))
+            if (Optional.IsDefined(CollectTdeCertificateInfo))
             {
                 writer.WritePropertyName("collectTdeCertificateInfo"u8);
-                writer.WriteBooleanValue(ShouldCollectTdeCertificateInfo.Value);
+                writer.WriteBooleanValue(CollectTdeCertificateInfo.Value);
             }
-            if (Optional.IsDefined(ShouldValidateSsisCatalogOnly))
+            if (Optional.IsDefined(ValidateSsisCatalogOnly))
             {
                 writer.WritePropertyName("validateSsisCatalogOnly"u8);
-                writer.WriteBooleanValue(ShouldValidateSsisCatalogOnly.Value);
+                writer.WriteBooleanValue(ValidateSsisCatalogOnly.Value);
             }
             if (Optional.IsDefined(EncryptedKeyForSecureFields))
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            DataMigrationSqlConnectionInfo sourceConnectionInfo = default;
+            SqlConnectionInfo sourceConnectionInfo = default;
             ServerLevelPermissionsGroup? checkPermissionsGroup = default;
             bool? collectDatabases = default;
             bool? collectLogins = default;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = DataMigrationSqlConnectionInfo.DeserializeDataMigrationSqlConnectionInfo(property.Value, options);
+                    sourceConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("checkPermissionsGroup"u8))

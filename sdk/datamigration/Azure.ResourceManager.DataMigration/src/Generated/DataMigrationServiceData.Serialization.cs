@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DataMigration.Models;
@@ -80,10 +79,10 @@ namespace Azure.ResourceManager.DataMigration
                 writer.WritePropertyName("autoStopDelay"u8);
                 writer.WriteStringValue(AutoStopDelay);
             }
-            if (Optional.IsDefined(ShouldDeleteResourcesOnStop))
+            if (Optional.IsDefined(DeleteResourcesOnStop))
             {
                 writer.WritePropertyName("deleteResourcesOnStop"u8);
-                writer.WriteBooleanValue(ShouldDeleteResourcesOnStop.Value);
+                writer.WriteBooleanValue(DeleteResourcesOnStop.Value);
             }
             writer.WriteEndObject();
         }
@@ -110,14 +109,14 @@ namespace Azure.ResourceManager.DataMigration
             }
             ETag? etag = default;
             string kind = default;
-            DataMigrationServiceSku sku = default;
+            ServiceSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             Core.ResourceType type = default;
             SystemData systemData = default;
-            DataMigrationServiceProvisioningState? provisioningState = default;
+            ServiceProvisioningState? provisioningState = default;
             string publicKey = default;
             string virtualSubnetId = default;
             string virtualNicId = default;
@@ -147,7 +146,7 @@ namespace Azure.ResourceManager.DataMigration
                     {
                         continue;
                     }
-                    sku = DataMigrationServiceSku.DeserializeDataMigrationServiceSku(property.Value, options);
+                    sku = ServiceSku.DeserializeServiceSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -190,7 +189,7 @@ namespace Azure.ResourceManager.DataMigration
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataMigrationContext.Default);
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -208,7 +207,7 @@ namespace Azure.ResourceManager.DataMigration
                             {
                                 continue;
                             }
-                            provisioningState = new DataMigrationServiceProvisioningState(property0.Value.GetString());
+                            provisioningState = new ServiceProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("publicKey"u8))

@@ -12,7 +12,6 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -40,16 +39,6 @@ namespace Azure.ResourceManager.Sql
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TimeBasedImmutability))
-            {
-                writer.WritePropertyName("timeBasedImmutability"u8);
-                writer.WriteStringValue(TimeBasedImmutability.Value.ToString());
-            }
-            if (Optional.IsDefined(TimeBasedImmutabilityMode))
-            {
-                writer.WritePropertyName("timeBasedImmutabilityMode"u8);
-                writer.WriteStringValue(TimeBasedImmutabilityMode.Value.ToString());
-            }
             if (Optional.IsDefined(WeeklyRetention))
             {
                 writer.WritePropertyName("weeklyRetention"u8);
@@ -97,8 +86,6 @@ namespace Azure.ResourceManager.Sql
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            TimeBasedImmutability? timeBasedImmutability = default;
-            TimeBasedImmutabilityMode? timeBasedImmutabilityMode = default;
             string weeklyRetention = default;
             string monthlyRetention = default;
             string yearlyRetention = default;
@@ -128,7 +115,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlContext.Default);
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -140,24 +127,6 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("timeBasedImmutability"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            timeBasedImmutability = new TimeBasedImmutability(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("timeBasedImmutabilityMode"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            timeBasedImmutabilityMode = new TimeBasedImmutabilityMode(property0.Value.GetString());
-                            continue;
-                        }
                         if (property0.NameEquals("weeklyRetention"u8))
                         {
                             weeklyRetention = property0.Value.GetString();
@@ -196,8 +165,6 @@ namespace Azure.ResourceManager.Sql
                 name,
                 type,
                 systemData,
-                timeBasedImmutability,
-                timeBasedImmutabilityMode,
                 weeklyRetention,
                 monthlyRetention,
                 yearlyRetention,
@@ -271,36 +238,6 @@ namespace Azure.ResourceManager.Sql
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeBasedImmutability), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    timeBasedImmutability: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TimeBasedImmutability))
-                {
-                    builder.Append("    timeBasedImmutability: ");
-                    builder.AppendLine($"'{TimeBasedImmutability.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeBasedImmutabilityMode), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    timeBasedImmutabilityMode: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TimeBasedImmutabilityMode))
-                {
-                    builder.Append("    timeBasedImmutabilityMode: ");
-                    builder.AppendLine($"'{TimeBasedImmutabilityMode.Value.ToString()}'");
-                }
-            }
-
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WeeklyRetention), out propertyOverride);
             if (hasPropertyOverride)
             {

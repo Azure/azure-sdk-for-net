@@ -6,8 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.MongoDBAtlas.Models;
 
 namespace Azure.ResourceManager.MongoDBAtlas
 {
@@ -15,20 +13,6 @@ namespace Azure.ResourceManager.MongoDBAtlas
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
-    [ModelReaderWriterBuildable(typeof(MongoDBAtlasMarketplaceDetails))]
-    [ModelReaderWriterBuildable(typeof(MongoDBAtlasOfferDetails))]
-    [ModelReaderWriterBuildable(typeof(MongoDBAtlasOrganizationData))]
-    [ModelReaderWriterBuildable(typeof(MongoDBAtlasOrganizationPatch))]
-    [ModelReaderWriterBuildable(typeof(MongoDBAtlasOrganizationProperties))]
-    [ModelReaderWriterBuildable(typeof(MongoDBAtlasOrganizationResource))]
-    [ModelReaderWriterBuildable(typeof(MongoDBAtlasOrganizationUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(MongoDBAtlasPartnerProperties))]
-    [ModelReaderWriterBuildable(typeof(MongoDBAtlasUserDetails))]
-    [ModelReaderWriterBuildable(typeof(OrganizationResourceListResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerMongoDBAtlasContext : ModelReaderWriterContext
     {
     }

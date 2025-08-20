@@ -28,7 +28,7 @@ With the BatchAccountResource you can create a pool with the [batchAccount.GetBa
 
 ```C# Snippet:Batch_Sample02_PoolCreation
 var poolName = "HelloWorldPool";
-var imageReference = new Azure.ResourceManager.Batch.Models.BatchImageReference()
+var imageReference = new BatchImageReference()
 {
     Publisher = "canonical",
     Offer = "0001-com-ubuntu-server-jammy",
@@ -71,7 +71,7 @@ new Uri("https://examplebatchaccount.eastus.batch.azure.com"), credential);
 Before we can create Batch Tasks, we first need to create a Job for the tasks to be associatd with, this can be done via the `CreateJobAsync` command. The basic elements needed are an id for job itself and the name of the pool that this job will run against. 
 
 ```C# Snippet:Batch_Sample02_CreateBatchJob
-await batchClient.CreateJobAsync(new BatchJobCreateOptions("jobId", new BatchPoolInfo() { PoolId = "poolName" }));
+await batchClient.CreateJobAsync(new BatchJobCreateContent("jobId", new BatchPoolInfo() { PoolId = "poolName" }));
 ```
 
 ### Task creation
@@ -107,27 +107,27 @@ In the following code example a list of 1000 tasks are created of type `BatchTas
 
 ```C# Snippet:Batch_Sample02_CreateTasks_Default
 int tasksCount = 1000;
-List<BatchTaskCreateOptions> tasks = new List<BatchTaskCreateOptions>();
+List<BatchTaskCreateContent> tasks = new List<BatchTaskCreateContent>();
 for (int i = 0; i < tasksCount; i++)
 {
-    tasks.Add(new BatchTaskCreateOptions($"task{i}", "cmd /c echo Hello World"));
+    tasks.Add(new BatchTaskCreateContent($"task{i}", "cmd /c echo Hello World"));
 }
 
 // Create 1000 tasks in a single request using the default settings
 CreateTasksResult result = await batchClient.CreateTasksAsync("jobId", tasks);
 
 // Print the results
-Console.WriteLine("{0} Tasks Passed, {1} Failed.", result.PassCount, result.FailCount);
+Console.WriteLine("{0} Tasks Passed, {1} Failed.", result.Pass, result.Fail);
 ```
 
 By default `CreateTasksResult` will only contain a count of the Pass/Fail results but if you want the list of the `BatchTaskAddResult` results returned by the service you can pass in a CreateTasksOptions to the AddTasks method with the field ReturnBatchTaskAddResults set to true.  This is disabled by default because the size of the list scales with the number of requests so memory constrants could be a factor.
 
 ```C# Snippet:Batch_Sample02_CreateTasks_ReturnBatchTaskAddResults
 int tasksCount = 1000;
-List<BatchTaskCreateOptions> tasks = new List<BatchTaskCreateOptions>();
+List<BatchTaskCreateContent> tasks = new List<BatchTaskCreateContent>();
 for (int i = 0; i < tasksCount; i++)
 {
-    tasks.Add(new BatchTaskCreateOptions($"task{i}", "cmd /c echo Hello World"));
+    tasks.Add(new BatchTaskCreateContent($"task{i}", "cmd /c echo Hello World"));
 }
 
 // Create a CreateTaskOptions object with custom settings for the BatchTaskAddResults to be returned.
@@ -136,7 +136,7 @@ CreateTasksOptions createTaskOptions = new CreateTasksOptions(returnBatchTaskAdd
 // Create 1000 tasks in a single request over 10 parallel requests
 CreateTasksResult result = await batchClient.CreateTasksAsync("jobId", tasks, createTaskOptions);
 
-foreach (BatchTaskCreateResult t in result.BatchTaskCreateResults)
+foreach (BatchTaskAddResult t in result.BatchTaskAddResults)
 {
     Console.WriteLine("Task {0} created with status {1}. ",
         t.TaskId, t.Status);
@@ -147,23 +147,23 @@ Alternatively you can call `CreateTasks()` with an instance of `CreateTasksOptio
 
 ```C# Snippet:Batch_Sample02_CreateTasks_ParallelOptions
 int tasksCount = 1000;
-List<BatchTaskCreateOptions> tasks = new List<BatchTaskCreateOptions>();
+List<BatchTaskCreateContent> tasks = new List<BatchTaskCreateContent>();
 for (int i = 0; i < tasksCount; i++)
 {
-    tasks.Add(new BatchTaskCreateOptions($"task{i}", "cmd /c echo Hello World"));
+    tasks.Add(new BatchTaskCreateContent($"task{i}", "cmd /c echo Hello World"));
 }
 
 // Create a CreateTaskOptions object with custom settings for parallelism
 CreateTasksOptions createTaskOptions = new CreateTasksOptions()
 {
     MaxDegreeOfParallelism = 10,
-    ReturnBatchTaskCreateResults = true
+    ReturnBatchTaskAddResults = true
 };
 
 // Create 1000 tasks in a single request over 10 parallel requests
 CreateTasksResult result = await batchClient.CreateTasksAsync("jobId", tasks, createTaskOptions);
 
-foreach (BatchTaskCreateResult t in result.BatchTaskCreateResults)
+foreach (BatchTaskAddResult t in result.BatchTaskAddResults)
 {
     Console.WriteLine("Task {0} created with status  {1}. ",
         t.TaskId, t.Status);
@@ -174,10 +174,10 @@ Addiontally you can call `CreateTasks()` with an instance of `CreateTasksOptions
 
 ```C# Snippet:Batch_Sample02_CreateTasks_MaxTimeBetweenCallsInSeconds
 int tasksCount = 1000;
-List<BatchTaskCreateOptions> tasks = new List<BatchTaskCreateOptions>();
+List<BatchTaskCreateContent> tasks = new List<BatchTaskCreateContent>();
 for (int i = 0; i < tasksCount; i++)
 {
-    tasks.Add(new BatchTaskCreateOptions($"task{i}", "cmd /c echo Hello World"));
+    tasks.Add(new BatchTaskCreateContent($"task{i}", "cmd /c echo Hello World"));
 }
 
 // Create a CreateTaskOptions object with custom settings for
@@ -187,13 +187,13 @@ CreateTasksOptions createTaskOptions = new CreateTasksOptions()
 {
     MaxDegreeOfParallelism = 10,
     MaxTimeBetweenCallsInSeconds = 60,
-    ReturnBatchTaskCreateResults = true
+    ReturnBatchTaskAddResults = true
 };
 
 // Create 1000 tasks in a single request over 10 parallel requests
 CreateTasksResult result = await batchClient.CreateTasksAsync("jobId", tasks, createTaskOptions);
 
-foreach (BatchTaskCreateResult t in result.BatchTaskCreateResults)
+foreach (BatchTaskAddResult t in result.BatchTaskAddResults)
 {
     Console.WriteLine("Task {0} created with status  {1}. ",
         t.TaskId, t.Status);
@@ -204,10 +204,10 @@ Addtional parameters to the `CreateTasks()` method can be set such as `timeOutIn
 
 ```C# Snippet:Batch_Sample02_CreateTasks_Non_Default
 int tasksCount = 1000;
-List<BatchTaskCreateOptions> tasks = new List<BatchTaskCreateOptions>();
+List<BatchTaskCreateContent> tasks = new List<BatchTaskCreateContent>();
 for (int i = 0; i < tasksCount; i++)
 {
-    tasks.Add(new BatchTaskCreateOptions($"task{i}", "cmd /c echo Hello World"));
+    tasks.Add(new BatchTaskCreateContent($"task{i}", "cmd /c echo Hello World"));
 }
 
 // Create a CancellationTokenSource object to cancel the operation if need be
@@ -218,7 +218,7 @@ var cts = new CancellationTokenSource();
 CreateTasksOptions createTaskOptions = new CreateTasksOptions()
 {
     MaxDegreeOfParallelism = 10,
-    ReturnBatchTaskCreateResults = true
+    ReturnBatchTaskAddResults = true
 };
 
 try
@@ -234,7 +234,7 @@ try
         );
 
     // Print the results
-    Console.WriteLine("{0} Tasks Passed, {1} Failed.", result.PassCount, result.FailCount);
+    Console.WriteLine("{0} Tasks Passed, {1} Failed.", result.Pass, result.Fail);
 }
 catch (ParallelOperationsException)
 {
@@ -254,7 +254,7 @@ Here's and example of a custom implmentation of `ICreateTaskResultHandler`
 /// <summary>
 ///  Custom TaskCollectionResultHandler to handle the result of a CreateTasksAsync operation.
 /// </summary>
-private class CustomTaskCollectionResultHandler : TaskResultHandler
+private class CustomTaskCollectionResultHandler : ICreateTaskResultHandler
 {
     /// <summary>
     /// This handler treats and result without errors as Success, 'TaskExists' errors as failures, retries server errors (HTTP 5xx),
@@ -265,7 +265,7 @@ private class CustomTaskCollectionResultHandler : TaskResultHandler
     /// <param name="cancellationToken">The cancellation token associated with the AddTaskCollection operation.</param>
     /// <returns>An <see cref="CreateTaskResultStatus"/> which indicates whether the <paramref name="addTaskResult"/>
     /// is classified as a success or as requiring a retry.</returns>
-    public override CreateTaskResultStatus CreateTaskResultHandler(CreateTaskResult addTaskResult, CancellationToken cancellationToken)
+    public CreateTaskResultStatus CreateTaskResultHandler(CreateTaskResult addTaskResult, CancellationToken cancellationToken)
     {
         if (addTaskResult == null)
         {
@@ -280,7 +280,7 @@ private class CustomTaskCollectionResultHandler : TaskResultHandler
             {
                 status = CreateTaskResultStatus.Retry;
             }
-            else if (addTaskResult.BatchTaskResult.Status == BatchTaskAddStatus.ClientError && addTaskResult.BatchTaskResult.Error.Code == BatchErrorCode.TaskExists)
+            else if (addTaskResult.BatchTaskResult.Status == BatchTaskAddStatus.ClientError && addTaskResult.BatchTaskResult.Error.Code == BatchErrorCodeStrings.TaskExists)
             {
                 status = CreateTaskResultStatus.Failure; //TaskExists mark as failure
             }
@@ -297,24 +297,24 @@ Here is an example of the custom CreateTaskResultHandler being used.
 
 ```C# Snippet:Batch_Sample02_CreateTasks_Custom_TaskCollectionResultHandler
 int tasksCount = 1000;
-List<BatchTaskCreateOptions> tasks = new List<BatchTaskCreateOptions>();
+List<BatchTaskCreateContent> tasks = new List<BatchTaskCreateContent>();
 for (int i = 0; i < tasksCount; i++)
 {
-    tasks.Add(new BatchTaskCreateOptions($"task{i}", "cmd /c echo Hello World"));
+    tasks.Add(new BatchTaskCreateContent($"task{i}", "cmd /c echo Hello World"));
 }
 
 // Create a CreateTaskOptions object with a custom CreateTaskResultHandler
 CreateTasksOptions createTaskOptions = new CreateTasksOptions()
 {
     CreateTaskResultHandler = new CustomTaskCollectionResultHandler(),
-    ReturnBatchTaskCreateResults = true
+    ReturnBatchTaskAddResults = true
 };
 
 // Create 1000 tasks in a single request using the default settings
 CreateTasksResult result = await batchClient.CreateTasksAsync("jobId", tasks, createTaskOptions);
 
 // Print the status of each task creation
-foreach (BatchTaskCreateResult t in result.BatchTaskCreateResults)
+foreach (BatchTaskAddResult t in result.BatchTaskAddResults)
 {
     Console.WriteLine("Task {0} created with status  {1}. ",
         t.TaskId, t.Status);

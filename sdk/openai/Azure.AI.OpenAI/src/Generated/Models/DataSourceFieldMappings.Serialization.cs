@@ -3,6 +3,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -10,11 +11,9 @@ using Azure.AI.OpenAI;
 
 namespace Azure.AI.OpenAI.Chat
 {
-    /// <summary> The DataSourceFieldMappings. </summary>
+    /// <summary></summary>
     public partial class DataSourceFieldMappings : IJsonModel<DataSourceFieldMappings>
     {
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataSourceFieldMappings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -117,8 +116,6 @@ namespace Azure.AI.OpenAI.Chat
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         DataSourceFieldMappings IJsonModel<DataSourceFieldMappings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
@@ -134,8 +131,6 @@ namespace Azure.AI.OpenAI.Chat
             return DeserializeDataSourceFieldMappings(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         internal static DataSourceFieldMappings DeserializeDataSourceFieldMappings(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -251,7 +246,6 @@ namespace Azure.AI.OpenAI.Chat
                 additionalBinaryDataProperties);
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DataSourceFieldMappings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -261,14 +255,12 @@ namespace Azure.AI.OpenAI.Chat
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIOpenAIContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(DataSourceFieldMappings)} does not support writing '{options.Format}' format.");
             }
         }
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         DataSourceFieldMappings IPersistableModel<DataSourceFieldMappings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
@@ -288,7 +280,24 @@ namespace Azure.AI.OpenAI.Chat
             }
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DataSourceFieldMappings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="dataSourceFieldMappings"> The <see cref="DataSourceFieldMappings"/> to serialize into <see cref="BinaryContent"/>. </param>
+        public static implicit operator BinaryContent(DataSourceFieldMappings dataSourceFieldMappings)
+        {
+            if (dataSourceFieldMappings == null)
+            {
+                return null;
+            }
+            return BinaryContent.Create(dataSourceFieldMappings, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="DataSourceFieldMappings"/> from. </param>
+        public static explicit operator DataSourceFieldMappings(ClientResult result)
+        {
+            using PipelineResponse response = result.GetRawResponse();
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeDataSourceFieldMappings(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

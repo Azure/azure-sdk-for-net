@@ -34,101 +34,116 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 throw new FormatException($"The model {nameof(CloudVmClusterDBNodeProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("ocid"u8);
-            writer.WriteStringValue(DBNodeOcid);
-            if (Optional.IsDefined(AdditionalDetails))
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("ocid"u8);
+                writer.WriteStringValue(Ocid);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AdditionalDetails))
             {
                 writer.WritePropertyName("additionalDetails"u8);
                 writer.WriteStringValue(AdditionalDetails);
             }
-            if (Optional.IsDefined(BackupIPOcid))
+            if (options.Format != "W" && Optional.IsDefined(BackupIPId))
             {
                 writer.WritePropertyName("backupIpId"u8);
-                writer.WriteStringValue(BackupIPOcid);
+                writer.WriteStringValue(BackupIPId);
             }
-            if (Optional.IsDefined(BackupVnic2Ocid))
+            if (options.Format != "W" && Optional.IsDefined(BackupVnic2Id))
             {
                 writer.WritePropertyName("backupVnic2Id"u8);
-                writer.WriteStringValue(BackupVnic2Ocid);
+                writer.WriteStringValue(BackupVnic2Id);
             }
-            if (Optional.IsDefined(BackupVnicOcid))
+            if (options.Format != "W" && Optional.IsDefined(BackupVnicId))
             {
                 writer.WritePropertyName("backupVnicId"u8);
-                writer.WriteStringValue(BackupVnicOcid);
+                writer.WriteStringValue(BackupVnicId);
             }
-            if (Optional.IsDefined(CpuCoreCount))
+            if (options.Format != "W" && Optional.IsDefined(CpuCoreCount))
             {
                 writer.WritePropertyName("cpuCoreCount"u8);
                 writer.WriteNumberValue(CpuCoreCount.Value);
             }
-            if (Optional.IsDefined(DBNodeStorageSizeInGbs))
+            if (options.Format != "W" && Optional.IsDefined(DBNodeStorageSizeInGbs))
             {
                 writer.WritePropertyName("dbNodeStorageSizeInGbs"u8);
                 writer.WriteNumberValue(DBNodeStorageSizeInGbs.Value);
             }
-            if (Optional.IsDefined(DBServerOcid))
+            if (options.Format != "W" && Optional.IsDefined(DBServerId))
             {
                 writer.WritePropertyName("dbServerId"u8);
-                writer.WriteStringValue(DBServerOcid);
+                writer.WriteStringValue(DBServerId);
             }
-            writer.WritePropertyName("dbSystemId"u8);
-            writer.WriteStringValue(DBSystemOcid);
-            if (Optional.IsDefined(FaultDomain))
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("dbSystemId"u8);
+                writer.WriteStringValue(DBSystemId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FaultDomain))
             {
                 writer.WritePropertyName("faultDomain"u8);
                 writer.WriteStringValue(FaultDomain);
             }
-            if (Optional.IsDefined(HostIPOcid))
+            if (options.Format != "W" && Optional.IsDefined(HostIPId))
             {
                 writer.WritePropertyName("hostIpId"u8);
-                writer.WriteStringValue(HostIPOcid);
+                writer.WriteStringValue(HostIPId);
             }
-            if (Optional.IsDefined(Hostname))
+            if (options.Format != "W" && Optional.IsDefined(Hostname))
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            writer.WritePropertyName("lifecycleState"u8);
-            writer.WriteStringValue(DBNodeLifecycleState.ToString());
-            if (Optional.IsDefined(LifecycleDetails))
+            if (options.Format != "W" && Optional.IsDefined(LifecycleState))
+            {
+                writer.WritePropertyName("lifecycleState"u8);
+                writer.WriteStringValue(LifecycleState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(LifecycleDetails))
             {
                 writer.WritePropertyName("lifecycleDetails"u8);
                 writer.WriteStringValue(LifecycleDetails);
             }
-            if (Optional.IsDefined(MaintenanceType))
+            if (options.Format != "W" && Optional.IsDefined(MaintenanceType))
             {
                 writer.WritePropertyName("maintenanceType"u8);
                 writer.WriteStringValue(MaintenanceType.Value.ToString());
             }
-            if (Optional.IsDefined(MemorySizeInGbs))
+            if (options.Format != "W" && Optional.IsDefined(MemorySizeInGbs))
             {
                 writer.WritePropertyName("memorySizeInGbs"u8);
                 writer.WriteNumberValue(MemorySizeInGbs.Value);
             }
-            if (Optional.IsDefined(SoftwareStorageSizeInGb))
+            if (options.Format != "W" && Optional.IsDefined(SoftwareStorageSizeInGb))
             {
                 writer.WritePropertyName("softwareStorageSizeInGb"u8);
                 writer.WriteNumberValue(SoftwareStorageSizeInGb.Value);
             }
-            writer.WritePropertyName("timeCreated"u8);
-            writer.WriteStringValue(CreatedOn, "O");
-            if (Optional.IsDefined(TimeMaintenanceWindowEnd))
+            if (options.Format != "W" && Optional.IsDefined(TimeCreated))
+            {
+                writer.WritePropertyName("timeCreated"u8);
+                writer.WriteStringValue(TimeCreated.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(TimeMaintenanceWindowEnd))
             {
                 writer.WritePropertyName("timeMaintenanceWindowEnd"u8);
                 writer.WriteStringValue(TimeMaintenanceWindowEnd.Value, "O");
             }
-            if (Optional.IsDefined(TimeMaintenanceWindowStart))
+            if (options.Format != "W" && Optional.IsDefined(TimeMaintenanceWindowStart))
             {
                 writer.WritePropertyName("timeMaintenanceWindowStart"u8);
                 writer.WriteStringValue(TimeMaintenanceWindowStart.Value, "O");
             }
-            if (Optional.IsDefined(Vnic2Ocid))
+            if (options.Format != "W" && Optional.IsDefined(Vnic2Id))
             {
                 writer.WritePropertyName("vnic2Id"u8);
-                writer.WriteStringValue(Vnic2Ocid);
+                writer.WriteStringValue(Vnic2Id);
             }
-            writer.WritePropertyName("vnicId"u8);
-            writer.WriteStringValue(VnicOcid);
+            if (options.Format != "W" && Optional.IsDefined(VnicId))
+            {
+                writer.WritePropertyName("vnicId"u8);
+                writer.WriteStringValue(VnicId);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -171,28 +186,28 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            string ocid = default;
+            ResourceIdentifier ocid = default;
             string additionalDetails = default;
-            string backupIPId = default;
-            string backupVnic2Id = default;
-            string backupVnicId = default;
+            ResourceIdentifier backupIPId = default;
+            ResourceIdentifier backupVnic2Id = default;
+            ResourceIdentifier backupVnicId = default;
             int? cpuCoreCount = default;
             int? dbNodeStorageSizeInGbs = default;
-            string dbServerId = default;
-            string dbSystemId = default;
+            ResourceIdentifier dbServerId = default;
+            ResourceIdentifier dbSystemId = default;
             string faultDomain = default;
-            string hostIPId = default;
+            ResourceIdentifier hostIPId = default;
             string hostname = default;
-            DBNodeProvisioningState lifecycleState = default;
+            DBNodeProvisioningState? lifecycleState = default;
             string lifecycleDetails = default;
             DBNodeMaintenanceType? maintenanceType = default;
             int? memorySizeInGbs = default;
             int? softwareStorageSizeInGb = default;
-            DateTimeOffset timeCreated = default;
+            DateTimeOffset? timeCreated = default;
             DateTimeOffset? timeMaintenanceWindowEnd = default;
             DateTimeOffset? timeMaintenanceWindowStart = default;
-            string vnic2Id = default;
-            string vnicId = default;
+            ResourceIdentifier vnic2Id = default;
+            ResourceIdentifier vnicId = default;
             OracleDatabaseResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -200,7 +215,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 if (property.NameEquals("ocid"u8))
                 {
-                    ocid = property.Value.GetString();
+                    ocid = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("additionalDetails"u8))
@@ -210,17 +225,29 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("backupIpId"u8))
                 {
-                    backupIPId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    backupIPId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("backupVnic2Id"u8))
                 {
-                    backupVnic2Id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    backupVnic2Id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("backupVnicId"u8))
                 {
-                    backupVnicId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    backupVnicId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("cpuCoreCount"u8))
@@ -243,12 +270,16 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("dbServerId"u8))
                 {
-                    dbServerId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dbServerId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dbSystemId"u8))
                 {
-                    dbSystemId = property.Value.GetString();
+                    dbSystemId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("faultDomain"u8))
@@ -258,7 +289,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("hostIpId"u8))
                 {
-                    hostIPId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    hostIPId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("hostname"u8))
@@ -268,6 +303,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("lifecycleState"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     lifecycleState = new DBNodeProvisioningState(property.Value.GetString());
                     continue;
                 }
@@ -305,6 +344,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("timeCreated"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     timeCreated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -328,12 +371,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("vnic2Id"u8))
                 {
-                    vnic2Id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vnic2Id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("vnicId"u8))
                 {
-                    vnicId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vnicId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

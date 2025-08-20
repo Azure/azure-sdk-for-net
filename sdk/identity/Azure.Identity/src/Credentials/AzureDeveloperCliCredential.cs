@@ -207,8 +207,8 @@ namespace Azure.Identity
             string scopeArgs = string.Join(" ", scopes.Select(scope => $"--scope {scope}"));
             string command = tenantId switch
             {
-                null => $"azd auth token --output json --no-prompt {scopeArgs}",
-                _ => $"azd auth token --output json --no-prompt {scopeArgs} --tenant-id {tenantId}"
+                null => $"azd auth token --output json {scopeArgs}",
+                _ => $"azd auth token --output json {scopeArgs} --tenant-id {tenantId}"
             };
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))

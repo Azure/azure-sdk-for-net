@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
         public CloudHsmClusterPrivateLinkResourceProperties Properties { get; set; }
     }
 }

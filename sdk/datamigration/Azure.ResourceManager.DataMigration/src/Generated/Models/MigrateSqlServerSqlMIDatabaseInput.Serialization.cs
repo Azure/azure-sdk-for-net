@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             string name = default;
             string restoreDatabaseName = default;
-            DataMigrationFileShareInfo backupFileShare = default;
+            FileShare backupFileShare = default;
             IList<string> backupFilePaths = default;
             string id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    backupFileShare = DataMigrationFileShareInfo.DeserializeDataMigrationFileShareInfo(property.Value, options);
+                    backupFileShare = FileShare.DeserializeFileShare(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("backupFilePaths"u8))

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Search.Models
                 throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationListResult)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(Value))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.Search.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(NextLink))
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink.AbsoluteUri);
+                writer.WriteStringValue(NextLink);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            IReadOnlyList<SearchServiceNetworkSecurityPerimeterConfigurationData> value = default;
-            Uri nextLink = default;
+            IReadOnlyList<NetworkSecurityPerimeterConfigurationData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,21 +100,17 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    List<SearchServiceNetworkSecurityPerimeterConfigurationData> array = new List<SearchServiceNetworkSecurityPerimeterConfigurationData>();
+                    List<NetworkSecurityPerimeterConfigurationData> array = new List<NetworkSecurityPerimeterConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchServiceNetworkSecurityPerimeterConfigurationData.DeserializeSearchServiceNetworkSecurityPerimeterConfigurationData(item, options));
+                        array.Add(NetworkSecurityPerimeterConfigurationData.DeserializeNetworkSecurityPerimeterConfigurationData(item, options));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    nextLink = new Uri(property.Value.GetString());
+                    nextLink = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -123,7 +119,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkSecurityPerimeterConfigurationListResult(value ?? new ChangeTrackingList<SearchServiceNetworkSecurityPerimeterConfigurationData>(), nextLink, serializedAdditionalRawData);
+            return new NetworkSecurityPerimeterConfigurationListResult(value ?? new ChangeTrackingList<NetworkSecurityPerimeterConfigurationData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -171,7 +167,15 @@ namespace Azure.ResourceManager.Search.Models
                 if (Optional.IsDefined(NextLink))
                 {
                     builder.Append("  nextLink: ");
-                    builder.AppendLine($"'{NextLink.AbsoluteUri}'");
+                    if (NextLink.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NextLink}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NextLink}'");
+                    }
                 }
             }
 

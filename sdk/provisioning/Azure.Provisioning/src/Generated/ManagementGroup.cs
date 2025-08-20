@@ -108,7 +108,6 @@ public partial class ManagementGroup : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
-        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"]);
         _details = DefineModelProperty<CreateManagementGroupDetails>("Details", ["properties", "details"]);
         _displayName = DefineProperty<string>("DisplayName", ["properties", "displayName"]);

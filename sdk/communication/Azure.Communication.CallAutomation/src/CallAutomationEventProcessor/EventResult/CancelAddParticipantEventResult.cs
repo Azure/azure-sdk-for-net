@@ -21,14 +21,29 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public CancelAddParticipantFailed FailureResult { get; }
 
+        /// <summary>
+        /// <see cref="CommunicationIdentifier"/> Participant whoose invitation was cancelled. Only applicable for
+        /// <see cref="CancelAddParticipantSucceeded"/> event
+        /// </summary>
+        public CommunicationIdentifier Participant { get; }
+
+        /// <summary>
+        /// Invitation ID used to cancel the request.
+        /// </summary>
+        public string InvitationId { get; }
+
         internal CancelAddParticipantEventResult(
             bool isSuccess,
             CancelAddParticipantSucceeded successResult,
-            CancelAddParticipantFailed failureResult)
+            CancelAddParticipantFailed failureResult,
+            string invitationId,
+            CommunicationIdentifier participant = null)
         {
             IsSuccess = isSuccess;
             SuccessResult = successResult;
             FailureResult = failureResult;
+            Participant = participant;
+            InvitationId = invitationId;
         }
     }
 }

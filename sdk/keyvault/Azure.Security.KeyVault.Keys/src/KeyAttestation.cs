@@ -18,24 +18,24 @@ namespace Azure.Security.KeyVault.Keys
         }
 
         /// <summary>
-        /// Gets a base64url-encoded string containing certificates in PEM format, used for attestation validation.
+        /// Gets or sets a base64url-encoded string containing certificates in PEM format, used for attestation validation.
         /// </summary>
-        public ReadOnlyMemory<byte> CertificatePemFile { get; internal set; }
+        public byte[] CertificatePemFile { get; set; }
 
         /// <summary>
-        /// Gets the attestation blob bytes encoded as a base64 URL string corresponding to the private key value.
+        /// Gets or sets the attestation blob bytes encoded as a base64 URL string corresponding to the private key value.
         /// </summary>
-        public ReadOnlyMemory<byte> PrivateKeyAttestation { get; internal set; }
+        public byte[] PrivateKeyAttestation { get; set; }
 
         /// <summary>
-        /// Gets the attestation blob bytes encoded as a base64 URL string.
+        /// Gets or sets the attestation blob bytes encoded as a base64 URL string.
         /// In the case of an asymmetric key, this corresponds to the public key value.
         /// </summary>
-        public ReadOnlyMemory<byte> PublicKeyAttestation { get; internal set; }
+        public byte[] PublicKeyAttestation { get; set; }
 
         /// <summary>
-        /// Gets the version of the attestation.
+        /// Gets or sets the version of the attestation.
         /// </summary>
-        public string Version { get; internal set; }
+        public string Version { get; set; }
     }
 }

@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("targetDatabaseName"u8);
                 writer.WriteStringValue(TargetDatabaseName);
             }
-            if (Optional.IsDefined(ShouldMakeSourceDBReadOnly))
+            if (Optional.IsDefined(MakeSourceDBReadOnly))
             {
                 writer.WritePropertyName("makeSourceDbReadOnly"u8);
-                writer.WriteBooleanValue(ShouldMakeSourceDBReadOnly.Value);
+                writer.WriteBooleanValue(MakeSourceDBReadOnly.Value);
             }
             if (Optional.IsCollectionDefined(TableMap))
             {

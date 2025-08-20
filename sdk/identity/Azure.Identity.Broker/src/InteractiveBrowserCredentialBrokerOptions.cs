@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Runtime.InteropServices;
 using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.Broker;
 
@@ -33,12 +32,6 @@ namespace Azure.Identity.Broker
         public InteractiveBrowserCredentialBrokerOptions(IntPtr parentWindowHandle) : base()
         {
             _parentWindowHandle = parentWindowHandle;
-
-            // Set default value for UseDefaultBrokerAccount on macOS
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-            {
-                RedirectUri = new(Constants.MacBrokerRedirectUri);
-            }
         }
 
         Action<PublicClientApplicationBuilder> IMsalPublicClientInitializerOptions.BeforeBuildClient => AddBroker;
@@ -46,7 +39,7 @@ namespace Azure.Identity.Broker
         private void AddBroker(PublicClientApplicationBuilder builder)
         {
             builder.WithParentActivityOrWindow(() => _parentWindowHandle);
-            var options = new BrokerOptions(BrokerOptions.OperatingSystems.Windows | BrokerOptions.OperatingSystems.Linux | BrokerOptions.OperatingSystems.OSX);
+            var options = new BrokerOptions(BrokerOptions.OperatingSystems.Windows | BrokerOptions.OperatingSystems.Linux);
             if (IsLegacyMsaPassthroughEnabled.HasValue)
             {
                 options.MsaPassthrough = IsLegacyMsaPassthroughEnabled.Value;

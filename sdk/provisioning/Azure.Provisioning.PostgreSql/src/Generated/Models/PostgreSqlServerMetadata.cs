@@ -44,13 +44,13 @@ public partial class PostgreSqlServerMetadata : ProvisionableConstruct
     private BicepValue<int>? _storageMb;
 
     /// <summary>
-    /// SKU for the database server. This object is empty for PG single server.
+    /// SKU for the database server.
     /// </summary>
-    public PostgreSqlFlexibleServersServerSku ServerSku 
+    public ServerSku Sku 
     {
-        get { Initialize(); return _serverSku!; }
+        get { Initialize(); return _sku!; }
     }
-    private PostgreSqlFlexibleServersServerSku? _serverSku;
+    private ServerSku? _sku;
 
     /// <summary>
     /// Creates a new PostgreSqlServerMetadata.
@@ -68,6 +68,6 @@ public partial class PostgreSqlServerMetadata : ProvisionableConstruct
         _location = DefineProperty<AzureLocation>("Location", ["location"], isOutput: true);
         _version = DefineProperty<string>("Version", ["version"], isOutput: true);
         _storageMb = DefineProperty<int>("StorageMb", ["storageMb"], isOutput: true);
-        _serverSku = DefineModelProperty<PostgreSqlFlexibleServersServerSku>("ServerSku", ["sku"], isOutput: true);
+        _sku = DefineModelProperty<ServerSku>("Sku", ["sku"], isOutput: true);
     }
 }

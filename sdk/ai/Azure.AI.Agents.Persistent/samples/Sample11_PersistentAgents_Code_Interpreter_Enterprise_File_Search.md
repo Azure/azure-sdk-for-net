@@ -14,7 +14,6 @@ PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential(
 Synchronous sample:
 ```C# Snippet:AgentsCodeInterpreterEnterpriseSearch_CreateAgent
 List<ToolDefinition> tools = [new CodeInterpreterToolDefinition()];
-// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = client.Administration.CreateAgent(
     model: modelDeploymentName,
     name: "my-agent",
@@ -26,7 +25,6 @@ PersistentAgent agent = client.Administration.CreateAgent(
 Asynchronous sample:
 ```C# Snippet:AgentsCodeInterpreterEnterpriseSearchAsync_CreateAgent
 List<ToolDefinition> tools = [ new CodeInterpreterToolDefinition() ];
-// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "my-agent",
@@ -62,8 +60,8 @@ PersistentThreadMessage message = client.Messages.CreateMessage(
 );
 
 ThreadRun run = client.Runs.CreateRun(
-    thread,
-    agent
+    thread.Id,
+    agent.Id
 );
 do
 {
@@ -90,8 +88,8 @@ PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
 );
 
 ThreadRun run = await client.Runs.CreateRunAsync(
-    thread,
-    agent
+    thread.Id,
+    agent.Id
 );
 do
 {
@@ -143,8 +141,8 @@ PersistentThreadMessage message = client.Messages.CreateMessage(
 );
 
 ThreadRun run = client.Runs.CreateRun(
-    thread,
-    agent
+    thread.Id,
+    agent.Id
 );
 do
 {
@@ -171,8 +169,8 @@ PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
 );
 
 ThreadRun run = await client.Runs.CreateRunAsync(
-    thread,
-    agent
+    thread.Id,
+    agent.Id
 );
 do
 {
@@ -212,14 +210,12 @@ WriteMessages(messages);
 
 Synchronous sample:
 ```C# Snippet:AgentsCodeInterpreterEnterpriseSearch_Cleanup
-// NOTE: Comment out these two lines if you plan to reuse the agent later.
 client.Threads.DeleteThread(thread.Id);
 client.Administration.DeleteAgent(agent.Id);
 ```
 
 Asynchronous sample:
 ```C# Snippet:AgentsCodeInterpreterEnterpriseSearchAsync_Cleanup
-// NOTE: Comment out these two lines if you plan to reuse the agent later.
 await client.Threads.DeleteThreadAsync(thread.Id);
 await client.Administration.DeleteAgentAsync(agent.Id);
 ```

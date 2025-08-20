@@ -41,7 +41,6 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // Step 1: Create an agent
             #region Snippet:AgentImageUrlInMessageCreateAgent
-            // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
             PersistentAgent agent = await client.Administration.CreateAgentAsync(
                 model: modelDeploymentName,
                 name: "Image Understanding Agent",
@@ -123,7 +122,6 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // Step 7: Cleanup
             #region Snippet:AgentImageUrlInMessageCleanup
-            // NOTE: Comment out these two lines if you plan to reuse the agent later.
             await client.Threads.DeleteThreadAsync(thread.Id);
             await client.Administration.DeleteAgentAsync(agent.Id);
             #endregion
@@ -145,7 +143,6 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // Step 1: Create an agent
             #region Snippet:AgentImageUrlInMessageCreateAgent_Sync
-            // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
             PersistentAgent agent = client.Administration.CreateAgent(
                 model: modelDeploymentName,
                 name: "Image Understanding Agent",
@@ -228,7 +225,6 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // Step 7: Cleanup
             #region Snippet:AgentImageUrlInMessageCleanup_Sync
-            // NOTE: Comment out these two lines if you plan to reuse the agent later.
             client.Threads.DeleteThread(thread.Id);
             client.Administration.DeleteAgent(agent.Id);
             #endregion

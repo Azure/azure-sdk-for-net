@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary> Represents the health policy used to evaluate the health of services belonging to a service type. </summary>
+    /// <summary>
+    /// Represents the health policy used to evaluate the health of services belonging to a service type.
+    ///
+    /// </summary>
     public partial class ServiceTypeHealthPolicy
     {
         /// <summary>
@@ -53,6 +56,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// If the percentage is respected but there is at least one unhealthy service, the health is evaluated as Warning.
         /// This is calculated by dividing the number of unhealthy services of the specific service type over the total number of services of the specific service type.
         /// The computation rounds up to tolerate one failure on small numbers of services.
+        ///
         /// </param>
         /// <param name="maxPercentUnhealthyPartitionsPerService">
         /// The maximum allowed percentage of unhealthy partitions per service.
@@ -61,6 +65,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// If the percentage is respected but there is at least one unhealthy partition, the health is evaluated as Warning.
         /// The percentage is calculated by dividing the number of unhealthy partitions over the total number of partitions in the service.
         /// The computation rounds up to tolerate one failure on small numbers of partitions.
+        ///
         /// </param>
         /// <param name="maxPercentUnhealthyReplicasPerPartition">
         /// The maximum allowed percentage of unhealthy replicas per partition.
@@ -69,6 +74,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// If the percentage is respected but there is at least one unhealthy replica, the health is evaluated as Warning.
         /// The percentage is calculated by dividing the number of unhealthy replicas over the total number of replicas in the partition.
         /// The computation rounds up to tolerate one failure on small numbers of replicas.
+        ///
         /// </param>
         public ServiceTypeHealthPolicy(int maxPercentUnhealthyServices, int maxPercentUnhealthyPartitionsPerService, int maxPercentUnhealthyReplicasPerPartition)
         {
@@ -85,6 +91,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// If the percentage is respected but there is at least one unhealthy service, the health is evaluated as Warning.
         /// This is calculated by dividing the number of unhealthy services of the specific service type over the total number of services of the specific service type.
         /// The computation rounds up to tolerate one failure on small numbers of services.
+        ///
         /// </param>
         /// <param name="maxPercentUnhealthyPartitionsPerService">
         /// The maximum allowed percentage of unhealthy partitions per service.
@@ -93,6 +100,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// If the percentage is respected but there is at least one unhealthy partition, the health is evaluated as Warning.
         /// The percentage is calculated by dividing the number of unhealthy partitions over the total number of partitions in the service.
         /// The computation rounds up to tolerate one failure on small numbers of partitions.
+        ///
         /// </param>
         /// <param name="maxPercentUnhealthyReplicasPerPartition">
         /// The maximum allowed percentage of unhealthy replicas per partition.
@@ -101,6 +109,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// If the percentage is respected but there is at least one unhealthy replica, the health is evaluated as Warning.
         /// The percentage is calculated by dividing the number of unhealthy replicas over the total number of replicas in the partition.
         /// The computation rounds up to tolerate one failure on small numbers of replicas.
+        ///
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ServiceTypeHealthPolicy(int maxPercentUnhealthyServices, int maxPercentUnhealthyPartitionsPerService, int maxPercentUnhealthyReplicasPerPartition, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -123,6 +132,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// If the percentage is respected but there is at least one unhealthy service, the health is evaluated as Warning.
         /// This is calculated by dividing the number of unhealthy services of the specific service type over the total number of services of the specific service type.
         /// The computation rounds up to tolerate one failure on small numbers of services.
+        ///
         /// </summary>
         public int MaxPercentUnhealthyServices { get; set; }
         /// <summary>
@@ -132,6 +142,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// If the percentage is respected but there is at least one unhealthy partition, the health is evaluated as Warning.
         /// The percentage is calculated by dividing the number of unhealthy partitions over the total number of partitions in the service.
         /// The computation rounds up to tolerate one failure on small numbers of partitions.
+        ///
         /// </summary>
         public int MaxPercentUnhealthyPartitionsPerService { get; set; }
         /// <summary>
@@ -141,6 +152,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// If the percentage is respected but there is at least one unhealthy replica, the health is evaluated as Warning.
         /// The percentage is calculated by dividing the number of unhealthy replicas over the total number of replicas in the partition.
         /// The computation rounds up to tolerate one failure on small numbers of replicas.
+        ///
         /// </summary>
         public int MaxPercentUnhealthyReplicasPerPartition { get; set; }
     }

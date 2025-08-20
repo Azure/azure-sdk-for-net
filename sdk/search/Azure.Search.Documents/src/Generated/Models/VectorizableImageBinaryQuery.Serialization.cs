@@ -5,59 +5,68 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    public partial class VectorizableImageBinaryQuery : IUtf8JsonSerializable, IJsonModel<VectorizableImageBinaryQuery>
+    public partial class VectorizableImageBinaryQuery : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VectorizableImageBinaryQuery>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<VectorizableImageBinaryQuery>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VectorizableImageBinaryQuery>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(VectorizableImageBinaryQuery)} does not support writing '{format}' format.");
-            }
-
-            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Base64Image))
             {
                 writer.WritePropertyName("base64Image"u8);
                 writer.WriteStringValue(Base64Image);
             }
-        }
-
-        VectorizableImageBinaryQuery IJsonModel<VectorizableImageBinaryQuery>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VectorizableImageBinaryQuery>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            if (Optional.IsDefined(KNearestNeighborsCount))
             {
-                throw new FormatException($"The model {nameof(VectorizableImageBinaryQuery)} does not support reading '{format}' format.");
+                writer.WritePropertyName("k"u8);
+                writer.WriteNumberValue(KNearestNeighborsCount.Value);
             }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVectorizableImageBinaryQuery(document.RootElement, options);
+            if (Optional.IsDefined(FieldsRaw))
+            {
+                writer.WritePropertyName("fields"u8);
+                writer.WriteStringValue(FieldsRaw);
+            }
+            if (Optional.IsDefined(Exhaustive))
+            {
+                writer.WritePropertyName("exhaustive"u8);
+                writer.WriteBooleanValue(Exhaustive.Value);
+            }
+            if (Optional.IsDefined(Oversampling))
+            {
+                writer.WritePropertyName("oversampling"u8);
+                writer.WriteNumberValue(Oversampling.Value);
+            }
+            if (Optional.IsDefined(Weight))
+            {
+                writer.WritePropertyName("weight"u8);
+                writer.WriteNumberValue(Weight.Value);
+            }
+            if (Optional.IsDefined(Threshold))
+            {
+                writer.WritePropertyName("threshold"u8);
+                writer.WriteObjectValue(Threshold);
+            }
+            if (Optional.IsDefined(FilterOverride))
+            {
+                writer.WritePropertyName("filterOverride"u8);
+                writer.WriteStringValue(FilterOverride);
+            }
+            if (Optional.IsDefined(PerDocumentVectorLimit))
+            {
+                writer.WritePropertyName("perDocumentVectorLimit"u8);
+                writer.WriteNumberValue(PerDocumentVectorLimit.Value);
+            }
+            writer.WriteEndObject();
         }
 
-        internal static VectorizableImageBinaryQuery DeserializeVectorizableImageBinaryQuery(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static VectorizableImageBinaryQuery DeserializeVectorizableImageBinaryQuery(JsonElement element)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -72,8 +81,6 @@ namespace Azure.Search.Documents.Models
             VectorThreshold threshold = default;
             string filterOverride = default;
             int? perDocumentVectorLimit = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("base64Image"u8))
@@ -133,7 +140,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    threshold = VectorThreshold.DeserializeVectorThreshold(property.Value, options);
+                    threshold = VectorThreshold.DeserializeVectorThreshold(property.Value);
                     continue;
                 }
                 if (property.NameEquals("filterOverride"u8))
@@ -150,12 +157,7 @@ namespace Azure.Search.Documents.Models
                     perDocumentVectorLimit = property.Value.GetInt32();
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new VectorizableImageBinaryQuery(
                 kind,
                 k,
@@ -166,40 +168,8 @@ namespace Azure.Search.Documents.Models
                 threshold,
                 filterOverride,
                 perDocumentVectorLimit,
-                serializedAdditionalRawData,
                 base64Image);
         }
-
-        BinaryData IPersistableModel<VectorizableImageBinaryQuery>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VectorizableImageBinaryQuery>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(VectorizableImageBinaryQuery)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        VectorizableImageBinaryQuery IPersistableModel<VectorizableImageBinaryQuery>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VectorizableImageBinaryQuery>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeVectorizableImageBinaryQuery(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VectorizableImageBinaryQuery)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<VectorizableImageBinaryQuery>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -213,7 +183,7 @@ namespace Azure.Search.Documents.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

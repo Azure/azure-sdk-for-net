@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DeviceProvisioningServices.Models;
@@ -43,25 +42,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Optional.IsDefined(ResourceGroup))
-            {
-                writer.WritePropertyName("resourcegroup"u8);
-                writer.WriteStringValue(ResourceGroup);
-            }
-            if (Optional.IsDefined(SubscriptionId))
-            {
-                writer.WritePropertyName("subscriptionid"u8);
-                writer.WriteStringValue(SubscriptionId);
-            }
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties, options);
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku, options);
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
-            }
         }
 
         DeviceProvisioningServiceData IJsonModel<DeviceProvisioningServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -85,11 +69,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 return null;
             }
             ETag? etag = default;
-            string resourcegroup = default;
-            string subscriptionid = default;
             DeviceProvisioningServiceProperties properties = default;
             DeviceProvisioningServicesSkuInfo sku = default;
-            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -109,16 +90,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                     etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourcegroup"u8))
-                {
-                    resourcegroup = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("subscriptionid"u8))
-                {
-                    subscriptionid = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("properties"u8))
                 {
                     properties = DeviceProvisioningServiceProperties.DeserializeDeviceProvisioningServiceProperties(property.Value, options);
@@ -127,15 +98,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 if (property.NameEquals("sku"u8))
                 {
                     sku = DeviceProvisioningServicesSkuInfo.DeserializeDeviceProvisioningServicesSkuInfo(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerDeviceProvisioningServicesContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -178,7 +140,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDeviceProvisioningServicesContext.Default);
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")
@@ -195,11 +157,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 etag,
-                resourcegroup,
-                subscriptionid,
                 properties,
                 sku,
-                identity,
                 serializedAdditionalRawData);
         }
 

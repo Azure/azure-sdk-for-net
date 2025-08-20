@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartArray();
             foreach (var item in PhysicalPartitionIds)
             {
-                ((IJsonModel<WritableSubResource>)item).Write(writer, options);
+                JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerCosmosDBContext.Default));
+                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                     }
                     physicalPartitionIds = array;
                     continue;

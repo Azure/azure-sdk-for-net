@@ -5,64 +5,14 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Agents.Models
 {
-    public partial class KnowledgeAgentSemanticRankerActivityRecord : IUtf8JsonSerializable, IJsonModel<KnowledgeAgentSemanticRankerActivityRecord>
+    public partial class KnowledgeAgentSemanticRankerActivityRecord
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KnowledgeAgentSemanticRankerActivityRecord>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<KnowledgeAgentSemanticRankerActivityRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        internal static KnowledgeAgentSemanticRankerActivityRecord DeserializeKnowledgeAgentSemanticRankerActivityRecord(JsonElement element)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgentSemanticRankerActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(KnowledgeAgentSemanticRankerActivityRecord)} does not support writing '{format}' format.");
-            }
-
-            base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(InputTokens))
-            {
-                writer.WritePropertyName("inputTokens"u8);
-                writer.WriteNumberValue(InputTokens.Value);
-            }
-            if (Optional.IsDefined(ElapsedMs))
-            {
-                writer.WritePropertyName("elapsedMs"u8);
-                writer.WriteNumberValue(ElapsedMs.Value);
-            }
-        }
-
-        KnowledgeAgentSemanticRankerActivityRecord IJsonModel<KnowledgeAgentSemanticRankerActivityRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgentSemanticRankerActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(KnowledgeAgentSemanticRankerActivityRecord)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKnowledgeAgentSemanticRankerActivityRecord(document.RootElement, options);
-        }
-
-        internal static KnowledgeAgentSemanticRankerActivityRecord DeserializeKnowledgeAgentSemanticRankerActivityRecord(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -71,8 +21,6 @@ namespace Azure.Search.Documents.Agents.Models
             int? elapsedMs = default;
             int id = default;
             string type = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inputTokens"u8))
@@ -103,45 +51,9 @@ namespace Azure.Search.Documents.Agents.Models
                     type = property.Value.GetString();
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new KnowledgeAgentSemanticRankerActivityRecord(id, type, serializedAdditionalRawData, inputTokens, elapsedMs);
+            return new KnowledgeAgentSemanticRankerActivityRecord(id, type, inputTokens, elapsedMs);
         }
-
-        BinaryData IPersistableModel<KnowledgeAgentSemanticRankerActivityRecord>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgentSemanticRankerActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(KnowledgeAgentSemanticRankerActivityRecord)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        KnowledgeAgentSemanticRankerActivityRecord IPersistableModel<KnowledgeAgentSemanticRankerActivityRecord>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KnowledgeAgentSemanticRankerActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeKnowledgeAgentSemanticRankerActivityRecord(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(KnowledgeAgentSemanticRankerActivityRecord)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<KnowledgeAgentSemanticRankerActivityRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -149,14 +61,6 @@ namespace Azure.Search.Documents.Agents.Models
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeKnowledgeAgentSemanticRankerActivityRecord(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

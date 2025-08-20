@@ -66,7 +66,7 @@ namespace Azure.Storage.Blobs.Test
             var accountName = "accountName";
             var blobEndpoint = new Uri("https://127.0.0.1/" + accountName);
             BlobClient blob1 = InstrumentClient(new BlobClient(blobEndpoint));
-            BlobClient blob2 = InstrumentClient(new BlobClient(blobEndpoint, new DefaultAzureCredential()));
+            BlobClient blob2 = InstrumentClient(new BlobClient(blobEndpoint, new SharedTokenCacheCredential()));
 
             var builder1 = new BlobUriBuilder(blob1.Uri);
             var builder2 = new BlobUriBuilder(blob2.Uri);

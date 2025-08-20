@@ -23,8 +23,10 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             var binaryData = new BinaryData(batchErrorJson);
             mockResponse.Setup(response => response.Content).Returns(binaryData);
 
+            var requestFailedException = new RequestFailedException(mockResponse.Object);
+
             // Act
-            var result = BatchError.FromResponse(mockResponse.Object);
+            var result = BatchError.FromException(requestFailedException);
 
             // Assert
             Assert.NotNull(result);
@@ -42,8 +44,10 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             var binaryData = new BinaryData(batchErrorJson);
             mockResponse.Setup(response => response.Content).Returns(binaryData);
 
+            var requestFailedException = new RequestFailedException(mockResponse.Object);
+
             // Act
-            var result = BatchError.FromResponse(mockResponse.Object);
+            var result = BatchError.FromException(requestFailedException);
 
             // Assert
             Assert.NotNull(result);
@@ -65,34 +69,16 @@ namespace Azure.Compute.Batch.Tests.UnitTests
             var binaryData = new BinaryData(batchErrorJson);
             mockResponse.Setup(response => response.Content).Returns(binaryData);
 
+            var requestFailedException = new RequestFailedException(mockResponse.Object);
+
             // Act
-            var result = BatchError.FromResponse(mockResponse.Object);
+            var result = BatchError.FromException(requestFailedException);
 
             // Assert
             Assert.NotNull(result);
             Assert.Null(result.Code);
             Assert.Null(result.Message);
             Assert.AreEqual(0, result.Values.Count);
-        }
-
-        [Test]
-        public void TestBatchErrorCode()
-        {
-            // Testing of BatchErrorCode comparison
-
-            // Act
-            var result1 = "TooManyRequests" == BatchErrorCode.TooManyRequests;
-            var result2 = "toomanyrequests" == BatchErrorCode.TooManyRequests;
-            var result3 = "TooManyRequestsExtraText" == BatchErrorCode.TooManyRequests;
-            var result4 = BatchErrorCode.TooManyRequests == "TooManyRequests";
-            var result5 = "TooManyRequestsExtraText" != BatchErrorCode.TooManyRequests;
-
-            // Assert
-            Assert.True(result1); // verify normal match
-            Assert.True(result2); // verify case insenstive
-            Assert.False(result3); // verify failure
-            Assert.True(result4); // verify order doesn't matter
-            Assert.True(result5); // verify not match
         }
     }
 }

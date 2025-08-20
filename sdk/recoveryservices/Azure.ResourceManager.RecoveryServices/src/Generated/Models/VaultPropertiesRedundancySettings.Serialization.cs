@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 throw new FormatException($"The model {nameof(VaultPropertiesRedundancySettings)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(StandardTierStorageRedundancy))
+            if (options.Format != "W" && Optional.IsDefined(StandardTierStorageRedundancy))
             {
                 writer.WritePropertyName("standardTierStorageRedundancy"u8);
                 writer.WriteStringValue(StandardTierStorageRedundancy.Value.ToString());
             }
-            if (Optional.IsDefined(CrossRegionRestore))
+            if (options.Format != "W" && Optional.IsDefined(CrossRegionRestore))
             {
                 writer.WritePropertyName("crossRegionRestore"u8);
                 writer.WriteStringValue(CrossRegionRestore.Value.ToString());

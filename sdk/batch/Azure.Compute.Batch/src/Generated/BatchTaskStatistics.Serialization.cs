@@ -35,7 +35,7 @@ namespace Azure.Compute.Batch
             }
 
             writer.WritePropertyName("url"u8);
-            writer.WriteStringValue(Uri.AbsoluteUri);
+            writer.WriteStringValue(Url);
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartTime, "O");
             writer.WritePropertyName("lastUpdateTime"u8);
@@ -47,13 +47,13 @@ namespace Azure.Compute.Batch
             writer.WritePropertyName("wallClockTime"u8);
             writer.WriteStringValue(WallClockTime, "P");
             writer.WritePropertyName("readIOps"u8);
-            writer.WriteStringValue(ReadIops.ToString());
+            writer.WriteStringValue(ReadIOps.ToString());
             writer.WritePropertyName("writeIOps"u8);
-            writer.WriteStringValue(WriteIops.ToString());
+            writer.WriteStringValue(WriteIOps.ToString());
             writer.WritePropertyName("readIOGiB"u8);
-            writer.WriteNumberValue(ReadIoGiB);
+            writer.WriteNumberValue(ReadIOGiB);
             writer.WritePropertyName("writeIOGiB"u8);
-            writer.WriteNumberValue(WriteIoGiB);
+            writer.WriteNumberValue(WriteIOGiB);
             writer.WritePropertyName("waitTime"u8);
             writer.WriteStringValue(WaitTime, "P");
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -93,7 +93,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            Uri url = default;
+            string url = default;
             DateTimeOffset startTime = default;
             DateTimeOffset lastUpdateTime = default;
             TimeSpan userCPUTime = default;
@@ -110,7 +110,7 @@ namespace Azure.Compute.Batch
             {
                 if (property.NameEquals("url"u8))
                 {
-                    url = new Uri(property.Value.GetString());
+                    url = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("startTime"u8))

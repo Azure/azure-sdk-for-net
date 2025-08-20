@@ -1,5 +1,8 @@
 {
-    "principalId": "",
-    "tenantId": "",
-    "type": "None"
-}
+    "identity": {
+      "principalId": "",
+      "tenantId": "",
+      "type": "None"
+    }
+  } 
+  

@@ -6,10 +6,9 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    [CodeGenType("RoleScope")]
+    [CodeGenModel("RoleScope")]
     public readonly partial struct KeyVaultRoleScope
     {
-        private readonly string _value;
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyVaultRoleScope"/> structure.
         /// </summary>

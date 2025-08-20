@@ -5,7 +5,6 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -334,8 +333,6 @@ namespace Azure.Storage.DataMovement
                     string subContainerPath = string.IsNullOrEmpty(containerUriPath)
                         ? current.Uri.GetPath()
                         : current.Uri.GetPath().Substring(containerUriPath.Length + 1);
-                    // Decode the container name as it was pulled from encoded Uri and will be re-encoded on destination.
-                    subContainerPath = Uri.UnescapeDataString(subContainerPath);
                     StorageResourceContainer subContainer =
                         _destinationResourceContainer.GetChildStorageResourceContainer(subContainerPath);
 
@@ -344,8 +341,7 @@ namespace Azure.Storage.DataMovement
                         StorageResourceContainer sourceContainer = (StorageResourceContainer)current;
                         StorageResourceContainerProperties sourceProperties =
                             await sourceContainer.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
-                        bool overwrite = _creationPreference == StorageResourceCreationMode.OverwriteIfExists;
-                        await subContainer.CreateAsync(overwrite, sourceProperties, _cancellationToken).ConfigureAwait(false);
+                        await subContainer.CreateIfNotExistsAsync(sourceProperties, _cancellationToken).ConfigureAwait(false);
                     }
                     catch (Exception ex)
                     {
@@ -372,8 +368,6 @@ namespace Azure.Storage.DataMovement
                             {
                                 string containerUriPath = _sourceResourceContainer.Uri.GetPath();
                                 sourceName = current.Uri.GetPath().Substring(containerUriPath.Length + 1);
-                                // Decode the resource name as it was pulled from encoded Uri and will be re-encoded on destination.
-                                sourceName = Uri.UnescapeDataString(sourceName);
                             }
 
                             StorageResourceItem sourceItem = (StorageResourceItem)current;

@@ -123,7 +123,7 @@ namespace Azure.Search.Documents
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(keysOrIds, ModelSerializationExtensions.WireOptions);
+                content.JsonWriter.WriteObjectValue(keysOrIds);
                 request.Content = content;
             }
             return message;
@@ -192,7 +192,7 @@ namespace Azure.Search.Documents
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(indexerResync, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(indexerResync);
             request.Content = content;
             return message;
         }
@@ -343,7 +343,7 @@ namespace Azure.Search.Documents
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(indexer, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(indexer);
             request.Content = content;
             return message;
         }
@@ -639,7 +639,7 @@ namespace Azure.Search.Documents
             request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(indexer, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(indexer);
             request.Content = content;
             return message;
         }

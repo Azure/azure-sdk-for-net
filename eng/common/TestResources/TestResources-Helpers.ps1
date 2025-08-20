@@ -264,10 +264,9 @@ function SetDeploymentOutputs(
 ) {
     $deploymentEnvironmentVariables = $environmentVariables.Clone()
     $deploymentOutputs = BuildDeploymentOutputs $serviceName $azContext $deployment $deploymentEnvironmentVariables
-    $isBicep = $templateFile.originalFilePath -and $templateFile.originalFilePath.EndsWith(".bicep")
 
-    # Azure SDK for .NET on Windows uses DPAPI-encrypted, JSON-encoded environment variables.
-    if ($OutFile -and $IsWindows -and $Language -eq 'dotnet') {
+    if ($OutFile) {
+        if ($IsWindows -and $Language -eq 'dotnet') {
             $outputFile = "$($templateFile.originalFilePath).env"
 
             $environmentText = $deploymentOutputs | ConvertTo-Json;
@@ -277,29 +276,29 @@ function SetDeploymentOutputs(
             Set-Content $outputFile -Value $protectedBytes -AsByteStream -Force
 
             Write-Host "Test environment settings`n$environmentText`nstored into encrypted $outputFile"
-    }
-    # Any Bicep template in a repo that has opted into .env files.
-    elseif ($OutFile -and $isBicep) {
-        $bicepTemplateFile = $templateFile.originalFilePath
-
-        # Make sure the file would not write secrets to .env file.
-        if (!(LintBicepFile $bicepTemplateFile)) {
-            Write-Error "$bicepTemplateFile may write secrets. No file written."
         }
-        $outputFile = $bicepTemplateFile | Split-Path | Join-Path -ChildPath '.env'
+        elseif ($templateFile.originalFilePath -and $templateFile.originalFilePath.EndsWith(".bicep")) {
+            $bicepTemplateFile = $templateFile.originalFilePath
 
-        # Make sure the file would be ignored.
-        git check-ignore -- "$outputFile" > $null
-        if ($?) {
-            $environmentText = foreach ($kv in $deploymentOutputs.GetEnumerator()) {
-                "$($kv.Key)=`"$($kv.Value)`""
+            # Make sure the file would not write secrets to .env file.
+            if (!(LintBicepFile $bicepTemplateFile)) {
+                Write-Error "$bicepTemplateFile may write secrets. No file written."
             }
+            $outputFile = $bicepTemplateFile | Split-Path | Join-Path -ChildPath '.env'
 
-            Set-Content $outputFile -Value $environmentText -Force
-            Write-Host "Test environment settings`n$environmentText`nstored in $outputFile"
-        }
-        else {
-            Write-Error "$outputFile is not ignored by .gitignore. No file written."
+            # Make sure the file would be ignored.
+            git check-ignore -- "$outputFile" > $null
+            if ($?) {
+                $environmentText = foreach ($kv in $deploymentOutputs.GetEnumerator()) {
+                    "$($kv.Key)=`"$($kv.Value)`""
+                }
+
+                Set-Content $outputFile -Value $environmentText -Force
+                Write-Host "Test environment settings`n$environmentText`nstored in $outputFile"
+            }
+            else {
+                Write-Error "$outputFile is not ignored by .gitignore. No file written."
+            }
         }
     }
     else {

@@ -40,10 +40,24 @@ public class EntraLifecycleTests
     {
         var token = TestUtilities.GetToken(new Dictionary<string, object>
         {
-            {"pwid", "account-id-guid"},
+            {"aid", "account-id-guid"},
         });
         var environment = new TestEnvironment();
         environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), token);
+        EntraLifecycle entraLifecycle = new(environment: environment);
+        Assert.That(entraLifecycle._entraIdAccessToken, Is.Null);
+    }
+
+    [Test]
+    public void Constructor_WhenAccessTokenEnvironmentIsSetAndTokenIsMPTCustomTokenWithAccountIdClaim_DoesNotInitializeEntraToken()
+    {
+        var token = TestUtilities.GetToken(new Dictionary<string, object>
+        {
+            {"accountId", "account-id-guid"},
+        });
+        var environment = new TestEnvironment();
+        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), token);
+
         EntraLifecycle entraLifecycle = new(environment: environment);
         Assert.That(entraLifecycle._entraIdAccessToken, Is.Null);
     }
@@ -84,7 +98,7 @@ public class EntraLifecycleTests
         DateTime expiry = DateTime.UtcNow.AddMinutes(10);
         var token = TestUtilities.GetToken(new Dictionary<string, object>
         {
-            {"pwid", "account-id-guid"},
+            {"accountId", "account-id-guid"},
         });
         var environment = new TestEnvironment();
         defaultAzureCredentialMock

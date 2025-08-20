@@ -1,5 +1,3 @@
-#!/usr/bin/env pwsh
-
 <#
 .SYNOPSIS
 Invokes cspell using dependencies defined in adjacent ./package*.json

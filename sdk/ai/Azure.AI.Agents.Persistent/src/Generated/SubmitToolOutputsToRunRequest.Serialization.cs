@@ -34,26 +34,13 @@ namespace Azure.AI.Agents.Persistent
                 throw new FormatException($"The model {nameof(SubmitToolOutputsToRunRequest)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(ToolOutputs))
+            writer.WritePropertyName("tool_outputs"u8);
+            writer.WriteStartArray();
+            foreach (var item in ToolOutputs)
             {
-                writer.WritePropertyName("tool_outputs"u8);
-                writer.WriteStartArray();
-                foreach (var item in ToolOutputs)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item, options);
             }
-            if (Optional.IsCollectionDefined(ToolApprovals))
-            {
-                writer.WritePropertyName("tool_approvals"u8);
-                writer.WriteStartArray();
-                foreach (var item in ToolApprovals)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
+            writer.WriteEndArray();
             if (Optional.IsDefined(Stream))
             {
                 if (Stream != null)
@@ -104,7 +91,6 @@ namespace Azure.AI.Agents.Persistent
                 return null;
             }
             IReadOnlyList<ToolOutput> toolOutputs = default;
-            IReadOnlyList<ToolApproval> toolApprovals = default;
             bool? stream = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -112,30 +98,12 @@ namespace Azure.AI.Agents.Persistent
             {
                 if (property.NameEquals("tool_outputs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<ToolOutput> array = new List<ToolOutput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(ToolOutput.DeserializeToolOutput(item, options));
                     }
                     toolOutputs = array;
-                    continue;
-                }
-                if (property.NameEquals("tool_approvals"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ToolApproval> array = new List<ToolApproval>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ToolApproval.DeserializeToolApproval(item, options));
-                    }
-                    toolApprovals = array;
                     continue;
                 }
                 if (property.NameEquals("stream"u8))
@@ -154,7 +122,7 @@ namespace Azure.AI.Agents.Persistent
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SubmitToolOutputsToRunRequest(toolOutputs ?? new ChangeTrackingList<ToolOutput>(), toolApprovals ?? new ChangeTrackingList<ToolApproval>(), stream, serializedAdditionalRawData);
+            return new SubmitToolOutputsToRunRequest(toolOutputs, stream, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SubmitToolOutputsToRunRequest>.Write(ModelReaderWriterOptions options)

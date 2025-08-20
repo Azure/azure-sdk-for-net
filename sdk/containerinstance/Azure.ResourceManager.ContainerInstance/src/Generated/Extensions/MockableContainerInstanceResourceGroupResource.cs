@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -109,75 +109,6 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             return GetContainerGroups().Get(containerGroupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NGroupResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NGroupResources and their operations over a NGroupResource. </returns>
-        public virtual NGroupCollection GetNGroups()
-        {
-            return GetCachedClient(client => new NGroupCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get the properties of the specified NGroups resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/ngroups/{ngroupsName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="ngroupsName"> The NGroups name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ngroupsName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ngroupsName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<NGroupResource>> GetNGroupAsync(string ngroupsName, CancellationToken cancellationToken = default)
-        {
-            return await GetNGroups().GetAsync(ngroupsName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the properties of the specified NGroups resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/ngroups/{ngroupsName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NGroups_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="ngroupsName"> The NGroups name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ngroupsName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="ngroupsName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<NGroupResource> GetNGroup(string ngroupsName, CancellationToken cancellationToken = default)
-        {
-            return GetNGroups().Get(ngroupsName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of ContainerGroupProfileResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ContainerGroupProfileResources and their operations over a ContainerGroupProfileResource. </returns>
         public virtual ContainerGroupProfileCollection GetContainerGroupProfiles()
@@ -186,7 +117,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         }
 
         /// <summary>
-        /// Get the properties of the specified container group profile.
+        /// Gets the properties of the specified container group profile in the specified subscription and resource group. The operation returns the properties of container group profile including containers, image registry credentials, restart policy, IP address type, OS type, volumes, current revision number, etc.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -194,11 +125,11 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CGProfile_Get</description>
+        /// <description>ContainerGroupProfiles_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -206,7 +137,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="containerGroupProfileName"> ContainerGroupProfile name. </param>
+        /// <param name="containerGroupProfileName"> The name of the container group profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerGroupProfileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerGroupProfileName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -217,7 +148,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         }
 
         /// <summary>
-        /// Get the properties of the specified container group profile.
+        /// Gets the properties of the specified container group profile in the specified subscription and resource group. The operation returns the properties of container group profile including containers, image registry credentials, restart policy, IP address type, OS type, volumes, current revision number, etc.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -225,11 +156,11 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CGProfile_Get</description>
+        /// <description>ContainerGroupProfiles_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -237,7 +168,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="containerGroupProfileName"> ContainerGroupProfile name. </param>
+        /// <param name="containerGroupProfileName"> The name of the container group profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerGroupProfileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="containerGroupProfileName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -260,7 +191,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -305,7 +236,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>

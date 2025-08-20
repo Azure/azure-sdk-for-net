@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("resultPrefix"u8);
                 writer.WriteStringValue(ResultPrefix);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastStorageUpdatedOn))
+            if (options.Format != "W" && Optional.IsDefined(LastStorageUpdate))
             {
                 writer.WritePropertyName("lastStorageUpdate"u8);
-                writer.WriteStringValue(LastStorageUpdatedOn.Value, "O");
+                writer.WriteStringValue(LastStorageUpdate.Value, "O");
             }
         }
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             string objectName = default;
             DateTimeOffset? startedOn = default;
             DateTimeOffset? endedOn = default;
-            DataMigrationState? state = default;
+            MigrationState? state = default;
             string statusMessage = default;
             long? itemsCount = default;
             long? itemsCompletedCount = default;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    state = new DataMigrationState(property.Value.GetString());
+                    state = new MigrationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("statusMessage"u8))

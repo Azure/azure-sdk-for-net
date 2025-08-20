@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
-using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 using System.ClientModel.Tests.ModelReaderWriterTests.Models.AvailabilitySetDatas;
 using System.Collections.Generic;
@@ -18,17 +17,6 @@ namespace System.ClientModel.SourceGeneration.Tests
     [ModelReaderWriterBuildable(typeof(SubNamespace.JsonModel[][]))]
     [ModelReaderWriterBuildable(typeof(ReadOnlyMemory<SubNamespace.JsonModel>))]
     [ModelReaderWriterBuildable(typeof(List<SubNamespace.AvailabilitySetData>))]
-    [ModelReaderWriterBuildable(typeof(PersistableModel))]
-    [ModelReaderWriterBuildable(typeof(AvailabilitySetData))]
-    [ModelReaderWriterBuildable(typeof(AvailabilitySetData[]))]
-    [ModelReaderWriterBuildable(typeof(Dictionary<string, AvailabilitySetData>))]
-    [ModelReaderWriterBuildable(typeof(AvailabilitySetData[][]))]
-    [ModelReaderWriterBuildable(typeof(List<List<AvailabilitySetData>>))]
-    [ModelReaderWriterBuildable(typeof(AvailabilitySetData[,]))]
-    [ModelReaderWriterBuildable(typeof(ReadOnlyMemory<AvailabilitySetData>))]
-#pragma warning disable TEST001
-    [ModelReaderWriterBuildable(typeof(ExperimentalModel))]
-#pragma warning restore TEST001
     public partial class BasicContext : ModelReaderWriterContext
     {
         partial void AddAdditionalFactories(Dictionary<Type, Func<ModelReaderWriterTypeBuilder>> factories)

@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Avs.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Avs.Samples
@@ -19,8 +20,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_WorkloadNetworksCreateSegments()
         {
-            // Generated from example definition: 2024-09-01/WorkloadNetworks_CreateSegments.json
-            // this example is just showing the usage of "WorkloadNetworkSegment_CreateSegments" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_CreateSegments.json
+            // this example is just showing the usage of "WorkloadNetworks_CreateSegments" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -40,7 +41,17 @@ namespace Azure.ResourceManager.Avs.Samples
 
             // invoke the operation
             string segmentId = "segment1";
-            WorkloadNetworkSegmentData data = new WorkloadNetworkSegmentData();
+            WorkloadNetworkSegmentData data = new WorkloadNetworkSegmentData
+            {
+                DisplayName = "segment1",
+                ConnectedGateway = "/infra/tier-1s/gateway",
+                Subnet = new WorkloadNetworkSegmentSubnet
+                {
+                    DhcpRanges = { "40.20.0.0-40.20.0.1" },
+                    GatewayAddress = "40.20.20.20/16",
+                },
+                Revision = 1L,
+            };
             ArmOperation<WorkloadNetworkSegmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, segmentId, data);
             WorkloadNetworkSegmentResource result = lro.Value;
 
@@ -55,8 +66,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_WorkloadNetworksGetSegment()
         {
-            // Generated from example definition: 2024-09-01/WorkloadNetworks_GetSegment.json
-            // this example is just showing the usage of "WorkloadNetworkSegment_GetSegment" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_GetSegment.json
+            // this example is just showing the usage of "WorkloadNetworks_GetSegment" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -89,8 +100,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_WorkloadNetworksListSegments()
         {
-            // Generated from example definition: 2024-09-01/WorkloadNetworks_ListSegments.json
-            // this example is just showing the usage of "WorkloadNetworkSegment_ListSegments" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_ListSegments.json
+            // this example is just showing the usage of "WorkloadNetworks_ListSegments" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -125,8 +136,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_WorkloadNetworksGetSegment()
         {
-            // Generated from example definition: 2024-09-01/WorkloadNetworks_GetSegment.json
-            // this example is just showing the usage of "WorkloadNetworkSegment_GetSegment" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_GetSegment.json
+            // this example is just showing the usage of "WorkloadNetworks_GetSegment" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -155,8 +166,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_WorkloadNetworksGetSegment()
         {
-            // Generated from example definition: 2024-09-01/WorkloadNetworks_GetSegment.json
-            // this example is just showing the usage of "WorkloadNetworkSegment_GetSegment" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_GetSegment.json
+            // this example is just showing the usage of "WorkloadNetworks_GetSegment" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

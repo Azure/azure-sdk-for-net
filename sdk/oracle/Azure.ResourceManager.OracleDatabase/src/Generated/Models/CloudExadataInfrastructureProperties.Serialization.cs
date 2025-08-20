@@ -34,20 +34,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 throw new FormatException($"The model {nameof(CloudExadataInfrastructureProperties)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsCollectionDefined(DefinedFileSystemConfiguration))
-            {
-                writer.WritePropertyName("definedFileSystemConfiguration"u8);
-                writer.WriteStartArray();
-                foreach (var item in DefinedFileSystemConfiguration)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(ExadataInfraOcid))
+            if (options.Format != "W" && Optional.IsDefined(Ocid))
             {
                 writer.WritePropertyName("ocid"u8);
-                writer.WriteStringValue(ExadataInfraOcid);
+                writer.WriteStringValue(Ocid);
             }
             if (Optional.IsDefined(ComputeCount))
             {
@@ -178,15 +168,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
             writer.WritePropertyName("displayName"u8);
             writer.WriteStringValue(DisplayName);
-            if (options.Format != "W" && Optional.IsDefined(LastMaintenanceRunOcid))
+            if (options.Format != "W" && Optional.IsDefined(LastMaintenanceRunId))
             {
                 writer.WritePropertyName("lastMaintenanceRunId"u8);
-                writer.WriteStringValue(LastMaintenanceRunOcid);
+                writer.WriteStringValue(LastMaintenanceRunId);
             }
-            if (options.Format != "W" && Optional.IsDefined(NextMaintenanceRunOcid))
+            if (options.Format != "W" && Optional.IsDefined(NextMaintenanceRunId))
             {
                 writer.WritePropertyName("nextMaintenanceRunId"u8);
-                writer.WriteStringValue(NextMaintenanceRunOcid);
+                writer.WriteStringValue(NextMaintenanceRunId);
             }
             if (options.Format != "W" && Optional.IsDefined(MonthlyDBServerVersion))
             {
@@ -197,21 +187,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 writer.WritePropertyName("monthlyStorageServerVersion"u8);
                 writer.WriteStringValue(MonthlyStorageServerVersion);
-            }
-            if (Optional.IsDefined(DatabaseServerType))
-            {
-                writer.WritePropertyName("databaseServerType"u8);
-                writer.WriteStringValue(DatabaseServerType);
-            }
-            if (Optional.IsDefined(StorageServerType))
-            {
-                writer.WritePropertyName("storageServerType"u8);
-                writer.WriteStringValue(StorageServerType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ComputeModel))
-            {
-                writer.WritePropertyName("computeModel"u8);
-                writer.WriteStringValue(ComputeModel.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -250,8 +225,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            IReadOnlyList<DefinedFileSystemConfiguration> definedFileSystemConfiguration = default;
-            string ocid = default;
+            ResourceIdentifier ocid = default;
             int? computeCount = default;
             int? storageCount = default;
             int? totalStorageSizeInGbs = default;
@@ -270,7 +244,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             int? memorySizeInGbs = default;
             int? maxMemoryInGbs = default;
             int? dbNodeStorageSizeInGbs = default;
-            int? maxDbNodeStorageSizeInGbs = default;
+            int? maxDBNodeStorageSizeInGbs = default;
             double? dataStorageSizeInTbs = default;
             double? maxDataStorageInTbs = default;
             string dbServerVersion = default;
@@ -278,34 +252,21 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             int? activatedStorageCount = default;
             int? additionalStorageCount = default;
             string displayName = default;
-            string lastMaintenanceRunId = default;
-            string nextMaintenanceRunId = default;
-            string monthlyDbServerVersion = default;
+            ResourceIdentifier lastMaintenanceRunId = default;
+            ResourceIdentifier nextMaintenanceRunId = default;
+            string monthlyDBServerVersion = default;
             string monthlyStorageServerVersion = default;
-            string databaseServerType = default;
-            string storageServerType = default;
-            OracleDatabaseComputeModel? computeModel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("definedFileSystemConfiguration"u8))
+                if (property.NameEquals("ocid"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<DefinedFileSystemConfiguration> array = new List<DefinedFileSystemConfiguration>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(Models.DefinedFileSystemConfiguration.DeserializeDefinedFileSystemConfiguration(item, options));
-                    }
-                    definedFileSystemConfiguration = array;
-                    continue;
-                }
-                if (property.NameEquals("ocid"u8))
-                {
-                    ocid = property.Value.GetString();
+                    ocid = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("computeCount"u8))
@@ -473,7 +434,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    maxDbNodeStorageSizeInGbs = property.Value.GetInt32();
+                    maxDBNodeStorageSizeInGbs = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("dataStorageSizeInTbs"u8))
@@ -529,41 +490,30 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("lastMaintenanceRunId"u8))
                 {
-                    lastMaintenanceRunId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastMaintenanceRunId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("nextMaintenanceRunId"u8))
-                {
-                    nextMaintenanceRunId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("monthlyDbServerVersion"u8))
-                {
-                    monthlyDbServerVersion = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("monthlyStorageServerVersion"u8))
-                {
-                    monthlyStorageServerVersion = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("databaseServerType"u8))
-                {
-                    databaseServerType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("storageServerType"u8))
-                {
-                    storageServerType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("computeModel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    computeModel = new OracleDatabaseComputeModel(property.Value.GetString());
+                    nextMaintenanceRunId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("monthlyDbServerVersion"u8))
+                {
+                    monthlyDBServerVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("monthlyStorageServerVersion"u8))
+                {
+                    monthlyStorageServerVersion = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -573,7 +523,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new CloudExadataInfrastructureProperties(
-                definedFileSystemConfiguration ?? new ChangeTrackingList<DefinedFileSystemConfiguration>(),
                 ocid,
                 computeCount,
                 storageCount,
@@ -593,7 +542,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 memorySizeInGbs,
                 maxMemoryInGbs,
                 dbNodeStorageSizeInGbs,
-                maxDbNodeStorageSizeInGbs,
+                maxDBNodeStorageSizeInGbs,
                 dataStorageSizeInTbs,
                 maxDataStorageInTbs,
                 dbServerVersion,
@@ -603,11 +552,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 displayName,
                 lastMaintenanceRunId,
                 nextMaintenanceRunId,
-                monthlyDbServerVersion,
+                monthlyDBServerVersion,
                 monthlyStorageServerVersion,
-                databaseServerType,
-                storageServerType,
-                computeModel,
                 serializedAdditionalRawData);
         }
 

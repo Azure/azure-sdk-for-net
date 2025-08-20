@@ -1,5 +1,11 @@
 namespace Azure.Communication.Email
 {
+    public partial class AzureCommunicationEmailContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureCommunicationEmailContext() { }
+        public static Azure.Communication.Email.AzureCommunicationEmailContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EmailAddress
     {

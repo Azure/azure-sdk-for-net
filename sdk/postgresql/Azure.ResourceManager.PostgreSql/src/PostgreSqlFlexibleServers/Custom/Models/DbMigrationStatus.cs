@@ -13,18 +13,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Number of tables queued for the migration of a DB. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("fullLoadQueuedTables")]
-        public int? NumFullLoadQueuedTables => FullLoadQueuedTables;
+        public int? NumFullLoadQueuedTables { get; }
         /// <summary> Number of tables errored out during the migration of a DB. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("fullLoadErroredTables")]
-        public int? NumFullLoadErroredTables => FullLoadErroredTables;
+        public int? NumFullLoadErroredTables { get; }
         /// <summary> Number of tables loading during the migration of a DB. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("fullLoadLoadingTables")]
-        public int? NumFullLoadLoadingTables => FullLoadLoadingTables;
+        public int? NumFullLoadLoadingTables { get; }
         /// <summary> Number of tables loaded during the migration of a DB. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("fullLoadCompletedTables")]
-        public int? NumFullLoadCompletedTables => FullLoadCompletedTables;
+        public int? NumFullLoadCompletedTables { get; }
     }
 }

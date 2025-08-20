@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -46,24 +47,17 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="OracleDnsPrivateZoneProperties"/>. </summary>
-        /// <param name="zoneOcid"> The OCID of the Zone. </param>
+        /// <param name="ocid"> The OCID of the Zone. </param>
         /// <param name="isProtected"> A Boolean flag indicating whether or not parts of the resource are unable to be explicitly managed. </param>
-        /// <param name="dnsPrivateZoneLifecycleState"> Zones lifecycleState. </param>
         /// <param name="self"> The canonical absolute URL of the resource. </param>
         /// <param name="serial"> The current serial of the zone. As seen in the zone's SOA record. </param>
         /// <param name="version"> Version is the never-repeating, totally-orderable, version of the zone, from which the serial field of the zone's SOA record is derived. </param>
         /// <param name="zoneType"> The type of the zone. Must be either PRIMARY or SECONDARY. SECONDARY is only supported for GLOBAL zones. </param>
         /// <param name="createdOn"> Zones timeCreated. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="zoneOcid"/>, <paramref name="self"/> or <paramref name="version"/> is null. </exception>
-        internal OracleDnsPrivateZoneProperties(string zoneOcid, bool isProtected, DnsPrivateZonesLifecycleState dnsPrivateZoneLifecycleState, string self, int serial, string version, OracleDnsPrivateZoneType zoneType, DateTimeOffset createdOn)
+        public OracleDnsPrivateZoneProperties(ResourceIdentifier ocid, bool isProtected, string self, int serial, string version, OracleDnsPrivateZoneType zoneType, DateTimeOffset createdOn)
         {
-            Argument.AssertNotNull(zoneOcid, nameof(zoneOcid));
-            Argument.AssertNotNull(self, nameof(self));
-            Argument.AssertNotNull(version, nameof(version));
-
-            ZoneOcid = zoneOcid;
+            Ocid = ocid;
             IsProtected = isProtected;
-            DnsPrivateZoneLifecycleState = dnsPrivateZoneLifecycleState;
             Self = self;
             Serial = serial;
             Version = version;
@@ -72,26 +66,26 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OracleDnsPrivateZoneProperties"/>. </summary>
-        /// <param name="zoneOcid"> The OCID of the Zone. </param>
+        /// <param name="ocid"> The OCID of the Zone. </param>
         /// <param name="isProtected"> A Boolean flag indicating whether or not parts of the resource are unable to be explicitly managed. </param>
-        /// <param name="dnsPrivateZoneLifecycleState"> Zones lifecycleState. </param>
+        /// <param name="lifecycleState"> Zones lifecycleState. </param>
         /// <param name="self"> The canonical absolute URL of the resource. </param>
         /// <param name="serial"> The current serial of the zone. As seen in the zone's SOA record. </param>
         /// <param name="version"> Version is the never-repeating, totally-orderable, version of the zone, from which the serial field of the zone's SOA record is derived. </param>
-        /// <param name="viewOcid"> The OCID of the private view containing the zone. This value will be null for zones in the global DNS, which are publicly resolvable and not part of a private view. </param>
+        /// <param name="viewId"> The OCID of the private view containing the zone. This value will be null for zones in the global DNS, which are publicly resolvable and not part of a private view. </param>
         /// <param name="zoneType"> The type of the zone. Must be either PRIMARY or SECONDARY. SECONDARY is only supported for GLOBAL zones. </param>
         /// <param name="createdOn"> Zones timeCreated. </param>
         /// <param name="provisioningState"> Azure resource provisioning state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OracleDnsPrivateZoneProperties(string zoneOcid, bool isProtected, DnsPrivateZonesLifecycleState dnsPrivateZoneLifecycleState, string self, int serial, string version, string viewOcid, OracleDnsPrivateZoneType zoneType, DateTimeOffset createdOn, OracleDatabaseResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OracleDnsPrivateZoneProperties(ResourceIdentifier ocid, bool isProtected, DnsPrivateZonesLifecycleState? lifecycleState, string self, int serial, string version, ResourceIdentifier viewId, OracleDnsPrivateZoneType zoneType, DateTimeOffset createdOn, OracleDatabaseResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ZoneOcid = zoneOcid;
+            Ocid = ocid;
             IsProtected = isProtected;
-            DnsPrivateZoneLifecycleState = dnsPrivateZoneLifecycleState;
+            LifecycleState = lifecycleState;
             Self = self;
             Serial = serial;
             Version = version;
-            ViewOcid = viewOcid;
+            ViewId = viewId;
             ZoneType = zoneType;
             CreatedOn = createdOn;
             ProvisioningState = provisioningState;
@@ -104,11 +98,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> The OCID of the Zone. </summary>
-        public string ZoneOcid { get; }
+        public ResourceIdentifier Ocid { get; }
         /// <summary> A Boolean flag indicating whether or not parts of the resource are unable to be explicitly managed. </summary>
         public bool IsProtected { get; }
         /// <summary> Zones lifecycleState. </summary>
-        public DnsPrivateZonesLifecycleState DnsPrivateZoneLifecycleState { get; }
+        public DnsPrivateZonesLifecycleState? LifecycleState { get; }
         /// <summary> The canonical absolute URL of the resource. </summary>
         public string Self { get; }
         /// <summary> The current serial of the zone. As seen in the zone's SOA record. </summary>
@@ -116,7 +110,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Version is the never-repeating, totally-orderable, version of the zone, from which the serial field of the zone's SOA record is derived. </summary>
         public string Version { get; }
         /// <summary> The OCID of the private view containing the zone. This value will be null for zones in the global DNS, which are publicly resolvable and not part of a private view. </summary>
-        public string ViewOcid { get; }
+        public ResourceIdentifier ViewId { get; }
         /// <summary> The type of the zone. Must be either PRIMARY or SECONDARY. SECONDARY is only supported for GLOBAL zones. </summary>
         public OracleDnsPrivateZoneType ZoneType { get; }
         /// <summary> Zones timeCreated. </summary>

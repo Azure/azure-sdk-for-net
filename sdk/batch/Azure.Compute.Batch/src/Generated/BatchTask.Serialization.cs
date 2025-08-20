@@ -44,15 +44,15 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Uri))
+            if (options.Format != "W" && Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Uri.AbsoluteUri);
+                writer.WriteStringValue(Url);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(ETag);
             }
             if (options.Format != "W" && Optional.IsDefined(LastModified))
             {
@@ -164,10 +164,10 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("multiInstanceSettings"u8);
                 writer.WriteObjectValue(MultiInstanceSettings, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(TaskStatistics))
+            if (options.Format != "W" && Optional.IsDefined(Stats))
             {
                 writer.WritePropertyName("stats"u8);
-                writer.WriteObjectValue(TaskStatistics, options);
+                writer.WriteObjectValue(Stats, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DependsOn))
             {
@@ -228,8 +228,8 @@ namespace Azure.Compute.Batch
             }
             string id = default;
             string displayName = default;
-            Uri url = default;
-            ETag? eTag = default;
+            string url = default;
+            string eTag = default;
             DateTimeOffset? lastModified = default;
             DateTimeOffset? creationTime = default;
             ExitConditions exitConditions = default;
@@ -242,7 +242,7 @@ namespace Azure.Compute.Batch
             IReadOnlyList<ResourceFile> resourceFiles = default;
             IReadOnlyList<OutputFile> outputFiles = default;
             IReadOnlyList<EnvironmentSetting> environmentSettings = default;
-            BatchAffinityInfo affinityInfo = default;
+            AffinityInfo affinityInfo = default;
             BatchTaskConstraints constraints = default;
             int? requiredSlots = default;
             UserIdentity userIdentity = default;
@@ -269,20 +269,12 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("url"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    url = new Uri(property.Value.GetString());
+                    url = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("eTag"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    eTag = new ETag(property.Value.GetString());
+                    eTag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("lastModified"u8))
@@ -410,7 +402,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    affinityInfo = BatchAffinityInfo.DeserializeBatchAffinityInfo(property.Value, options);
+                    affinityInfo = AffinityInfo.DeserializeAffinityInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("constraints"u8))

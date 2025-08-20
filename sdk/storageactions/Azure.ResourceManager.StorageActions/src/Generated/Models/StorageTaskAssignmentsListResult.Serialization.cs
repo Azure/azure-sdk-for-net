@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -36,20 +35,20 @@ namespace Azure.ResourceManager.StorageActions.Models
                 throw new FormatException($"The model {nameof(StorageTaskAssignmentsListResult)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W")
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    ((IJsonModel<SubResource>)item).Write(writer, options);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink.AbsoluteUri);
+                writer.WriteStringValue(NextLink);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -89,28 +88,28 @@ namespace Azure.ResourceManager.StorageActions.Models
                 return null;
             }
             IReadOnlyList<SubResource> value = default;
-            Uri nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<SubResource> array = new List<SubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerStorageActionsContext.Default));
+                        array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    nextLink = new Uri(property.Value.GetString());
+                    nextLink = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +118,7 @@ namespace Azure.ResourceManager.StorageActions.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StorageTaskAssignmentsListResult(value, nextLink, serializedAdditionalRawData);
+            return new StorageTaskAssignmentsListResult(value ?? new ChangeTrackingList<SubResource>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageTaskAssignmentsListResult>.Write(ModelReaderWriterOptions options)

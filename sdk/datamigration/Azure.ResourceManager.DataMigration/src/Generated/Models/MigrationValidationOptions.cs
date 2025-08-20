@@ -51,23 +51,23 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrationValidationOptions"/>. </summary>
-        /// <param name="isSchemaValidationEnabled"> Allows to compare the schema information between source and target. </param>
-        /// <param name="isDataIntegrityValidationEnabled"> Allows to perform a checksum based data integrity validation between source and target for the selected database / tables . </param>
-        /// <param name="isQueryAnalysisValidationEnabled"> Allows to perform a quick and intelligent query analysis by retrieving queries from the source database and executes them in the target. The result will have execution statistics for executions in source and target databases for the extracted queries. </param>
+        /// <param name="enableSchemaValidation"> Allows to compare the schema information between source and target. </param>
+        /// <param name="enableDataIntegrityValidation"> Allows to perform a checksum based data integrity validation between source and target for the selected database / tables . </param>
+        /// <param name="enableQueryAnalysisValidation"> Allows to perform a quick and intelligent query analysis by retrieving queries from the source database and executes them in the target. The result will have execution statistics for executions in source and target databases for the extracted queries. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationValidationOptions(bool? isSchemaValidationEnabled, bool? isDataIntegrityValidationEnabled, bool? isQueryAnalysisValidationEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MigrationValidationOptions(bool? enableSchemaValidation, bool? enableDataIntegrityValidation, bool? enableQueryAnalysisValidation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            IsSchemaValidationEnabled = isSchemaValidationEnabled;
-            IsDataIntegrityValidationEnabled = isDataIntegrityValidationEnabled;
-            IsQueryAnalysisValidationEnabled = isQueryAnalysisValidationEnabled;
+            EnableSchemaValidation = enableSchemaValidation;
+            EnableDataIntegrityValidation = enableDataIntegrityValidation;
+            EnableQueryAnalysisValidation = enableQueryAnalysisValidation;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Allows to compare the schema information between source and target. </summary>
-        public bool? IsSchemaValidationEnabled { get; set; }
+        public bool? EnableSchemaValidation { get; set; }
         /// <summary> Allows to perform a checksum based data integrity validation between source and target for the selected database / tables . </summary>
-        public bool? IsDataIntegrityValidationEnabled { get; set; }
+        public bool? EnableDataIntegrityValidation { get; set; }
         /// <summary> Allows to perform a quick and intelligent query analysis by retrieving queries from the source database and executes them in the target. The result will have execution statistics for executions in source and target databases for the extracted queries. </summary>
-        public bool? IsQueryAnalysisValidationEnabled { get; set; }
+        public bool? EnableQueryAnalysisValidation { get; set; }
     }
 }

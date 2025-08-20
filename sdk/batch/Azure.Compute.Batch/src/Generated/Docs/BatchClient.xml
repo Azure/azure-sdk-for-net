@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="GetApplicationAsync(string,TimeSpan?,DateTimeOffset?,CancellationToken)">
+    <member name="GetApplicationAsync(string,int?,DateTimeOffset?,CancellationToken)">
       <example>
 This sample shows how to call GetApplicationAsync.
 <code><![CDATA[
@@ -12,7 +12,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 Response<BatchApplication> response = await client.GetApplicationAsync("my_application_id");
 ]]></code></example>
     </member>
-    <member name="GetApplication(string,TimeSpan?,DateTimeOffset?,CancellationToken)">
+    <member name="GetApplication(string,int?,DateTimeOffset?,CancellationToken)">
       <example>
 This sample shows how to call GetApplication.
 <code><![CDATA[
@@ -23,7 +23,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 Response<BatchApplication> response = client.GetApplication("my_application_id");
 ]]></code></example>
     </member>
-    <member name="GetApplicationAsync(string,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="GetApplicationAsync(string,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call GetApplicationAsync and parse the result.
 <code><![CDATA[
@@ -39,7 +39,7 @@ Console.WriteLine(result.GetProperty("displayName").ToString());
 Console.WriteLine(result.GetProperty("versions")[0].ToString());
 ]]></code></example>
     </member>
-    <member name="GetApplication(string,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="GetApplication(string,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call GetApplication and parse the result.
 <code><![CDATA[
@@ -55,7 +55,7 @@ Console.WriteLine(result.GetProperty("displayName").ToString());
 Console.WriteLine(result.GetProperty("versions")[0].ToString());
 ]]></code></example>
     </member>
-    <member name="CreatePoolAsync(BatchPoolCreateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)">
+    <member name="CreatePoolAsync(BatchPoolCreateContent,int?,DateTimeOffset?,CancellationToken)">
       <example>
 This sample shows how to call CreatePoolAsync.
 <code><![CDATA[
@@ -63,9 +63,9 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool01", "Standard_D1_v2")
+BatchPoolCreateContent pool = new BatchPoolCreateContent("mypool01", "Standard_D1_v2")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
     {
         Publisher = "MicrosoftWindowsServer",
         Offer = "WindowsServer",
@@ -86,9 +86,9 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
+BatchPoolCreateContent pool = new BatchPoolCreateContent("pool2", "standard_a1")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
     {
         Publisher = "Canonical",
         Offer = "UbuntuServer",
@@ -108,7 +108,7 @@ BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
         },
     }, new MountConfiguration
     {
-        AzureFileShareConfiguration = new AzureFileShareConfiguration("accountName", "accountKey", new Uri("https://myaccount.file.core.windows.net/fileshare"), "filesharepath")
+        AzureFileShareConfiguration = new AzureFileShareConfiguration("accountName", "https://myaccount.file.core.windows.net/fileshare", "accountKey", "filesharepath")
         {
             MountOptions = "mount options ver=1.0",
         },
@@ -134,18 +134,18 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool001", "standard_d2s_v3")
+BatchPoolCreateContent pool = new BatchPoolCreateContent("mypool001", "standard_d2s_v3")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
     {
         Publisher = "Canonical",
         Offer = "0001-com-ubuntu-server-focal",
         Sku = "20_04-lts",
     }, "batch.node.ubuntu 20.04")
     {
-        OsDisk = new BatchOsDisk
+        OsDisk = new OSDisk
         {
-            EphemeralOSDiskSettings = new BatchDiffDiskSettings
+            EphemeralOSDiskSettings = new DiffDiskSettings
             {
                 Placement = DiffDiskPlacement.CacheDisk,
             },
@@ -171,9 +171,9 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool001", "STANDARD_DC2s_V2")
+BatchPoolCreateContent pool = new BatchPoolCreateContent("mypool001", "STANDARD_DC2s_V2")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
     {
         Publisher = "Canonical",
         Offer = "UbuntuServer",
@@ -195,9 +195,9 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool001", "STANDARD_DC2s_V2")
+BatchPoolCreateContent pool = new BatchPoolCreateContent("mypool001", "STANDARD_DC2s_V2")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
     {
         Publisher = "Canonical",
         Offer = "UbuntuServer",
@@ -205,15 +205,10 @@ BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool001", "STANDARD_
         Version = "latest",
     }, "batch.node.ubuntu 18.04")
     {
-        SecurityProfile = new SecurityProfile
+        SecurityProfile = new SecurityProfile(true, SecurityTypes.TrustedLaunch, new UefiSettings
         {
-            EncryptionAtHost = true,
-            SecurityType = SecurityTypes.TrustedLaunch,
-            UefiSettings = new BatchUefiSettings
-            {
-                SecureBootEnabled = false,
-            },
-        },
+            SecureBootEnabled = false,
+        }),
     },
     TargetDedicatedNodes = 1,
 };
@@ -225,9 +220,9 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
+BatchPoolCreateContent pool = new BatchPoolCreateContent("pool2", "standard_a1")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
     {
         Publisher = "Canonical",
         Offer = "0001-com-ubuntu-server-focal",
@@ -240,7 +235,7 @@ BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
     EnableInterNodeCommunication = true,
     TaskSlotsPerNode = 3,
     TaskSchedulingPolicy = new BatchTaskSchedulingPolicy(BatchNodeFillType.Spread),
-    Metadata = { new BatchMetadataItem("myproperty", "myvalue") },
+    Metadata = { new MetadataItem("myproperty", "myvalue") },
 };
 Response response = await client.CreatePoolAsync(pool);
 ]]></code>
@@ -250,16 +245,16 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
+BatchPoolCreateContent pool = new BatchPoolCreateContent("pool2", "standard_a1")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
     {
         Publisher = "Canonical",
         Offer = "0001-com-ubuntu-server-focal",
         Sku = "120_04-lts",
     }, "batch.node.ubuntu 20.04")
     {
-        ContainerConfiguration = new BatchContainerConfiguration(ContainerType.DockerCompatible)
+        ContainerConfiguration = new ContainerConfiguration(ContainerType.DockerCompatible)
         {
             ContainerImageNames = { "busybox" },
         },
@@ -279,9 +274,9 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
+BatchPoolCreateContent pool = new BatchPoolCreateContent("pool2", "standard_a1")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
     {
         Publisher = "Canonical",
         Offer = "0001-com-ubuntu-server-focal",
@@ -307,7 +302,7 @@ BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
     EnableInterNodeCommunication = true,
     TaskSlotsPerNode = 3,
     TaskSchedulingPolicy = new BatchTaskSchedulingPolicy(BatchNodeFillType.Spread),
-    Metadata = { new BatchMetadataItem("myproperty", "myvalue") },
+    Metadata = { new MetadataItem("myproperty", "myvalue") },
     TargetNodeCommunicationMode = BatchNodeCommunicationMode.Simplified,
 };
 Response response = await client.CreatePoolAsync(pool);
@@ -318,9 +313,9 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool002", "Standard_A1_v2")
+BatchPoolCreateContent pool = new BatchPoolCreateContent("mypool002", "Standard_A1_v2")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
     {
         Publisher = "MicrosoftWindowsServer",
         Offer = "WindowsServer",
@@ -339,7 +334,7 @@ BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool002", "Standard_
 Response response = await client.CreatePoolAsync(pool);
 ]]></code></example>
     </member>
-    <member name="CreatePool(BatchPoolCreateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)">
+    <member name="CreatePool(BatchPoolCreateContent,int?,DateTimeOffset?,CancellationToken)">
       <example>
 This sample shows how to call CreatePool.
 <code><![CDATA[
@@ -347,9 +342,9 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool01", "Standard_D1_v2")
+BatchPoolCreateContent pool = new BatchPoolCreateContent("mypool01", "Standard_D1_v2")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
     {
         Publisher = "MicrosoftWindowsServer",
         Offer = "WindowsServer",
@@ -370,9 +365,9 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
+BatchPoolCreateContent pool = new BatchPoolCreateContent("pool2", "standard_a1")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
     {
         Publisher = "Canonical",
         Offer = "UbuntuServer",
@@ -392,7 +387,7 @@ BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
         },
     }, new MountConfiguration
     {
-        AzureFileShareConfiguration = new AzureFileShareConfiguration("accountName", "accountKey", new Uri("https://myaccount.file.core.windows.net/fileshare"), "filesharepath")
+        AzureFileShareConfiguration = new AzureFileShareConfiguration("accountName", "https://myaccount.file.core.windows.net/fileshare", "accountKey", "filesharepath")
         {
             MountOptions = "mount options ver=1.0",
         },
@@ -418,18 +413,18 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool001", "standard_d2s_v3")
+BatchPoolCreateContent pool = new BatchPoolCreateContent("mypool001", "standard_d2s_v3")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
     {
         Publisher = "Canonical",
         Offer = "0001-com-ubuntu-server-focal",
         Sku = "20_04-lts",
     }, "batch.node.ubuntu 20.04")
     {
-        OsDisk = new BatchOsDisk
+        OsDisk = new OSDisk
         {
-            EphemeralOSDiskSettings = new BatchDiffDiskSettings
+            EphemeralOSDiskSettings = new DiffDiskSettings
             {
                 Placement = DiffDiskPlacement.CacheDisk,
             },
@@ -455,9 +450,9 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool001", "STANDARD_DC2s_V2")
+BatchPoolCreateContent pool = new BatchPoolCreateContent("mypool001", "STANDARD_DC2s_V2")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
     {
         Publisher = "Canonical",
         Offer = "UbuntuServer",
@@ -479,9 +474,9 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool001", "STANDARD_DC2s_V2")
+BatchPoolCreateContent pool = new BatchPoolCreateContent("mypool001", "STANDARD_DC2s_V2")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
     {
         Publisher = "Canonical",
         Offer = "UbuntuServer",
@@ -489,15 +484,10 @@ BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool001", "STANDARD_
         Version = "latest",
     }, "batch.node.ubuntu 18.04")
     {
-        SecurityProfile = new SecurityProfile
+        SecurityProfile = new SecurityProfile(true, SecurityTypes.TrustedLaunch, new UefiSettings
         {
-            EncryptionAtHost = true,
-            SecurityType = SecurityTypes.TrustedLaunch,
-            UefiSettings = new BatchUefiSettings
-            {
-                SecureBootEnabled = false,
-            },
-        },
+            SecureBootEnabled = false,
+        }),
     },
     TargetDedicatedNodes = 1,
 };
@@ -509,9 +499,9 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
+BatchPoolCreateContent pool = new BatchPoolCreateContent("pool2", "standard_a1")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
     {
         Publisher = "Canonical",
         Offer = "0001-com-ubuntu-server-focal",
@@ -524,7 +514,7 @@ BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
     EnableInterNodeCommunication = true,
     TaskSlotsPerNode = 3,
     TaskSchedulingPolicy = new BatchTaskSchedulingPolicy(BatchNodeFillType.Spread),
-    Metadata = { new BatchMetadataItem("myproperty", "myvalue") },
+    Metadata = { new MetadataItem("myproperty", "myvalue") },
 };
 Response response = client.CreatePool(pool);
 ]]></code>
@@ -534,16 +524,16 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
+BatchPoolCreateContent pool = new BatchPoolCreateContent("pool2", "standard_a1")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
     {
         Publisher = "Canonical",
         Offer = "0001-com-ubuntu-server-focal",
         Sku = "120_04-lts",
     }, "batch.node.ubuntu 20.04")
     {
-        ContainerConfiguration = new BatchContainerConfiguration(ContainerType.DockerCompatible)
+        ContainerConfiguration = new ContainerConfiguration(ContainerType.DockerCompatible)
         {
             ContainerImageNames = { "busybox" },
         },
@@ -563,9 +553,9 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
+BatchPoolCreateContent pool = new BatchPoolCreateContent("pool2", "standard_a1")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
     {
         Publisher = "Canonical",
         Offer = "0001-com-ubuntu-server-focal",
@@ -591,7 +581,7 @@ BatchPoolCreateOptions pool = new BatchPoolCreateOptions("pool2", "standard_a1")
     EnableInterNodeCommunication = true,
     TaskSlotsPerNode = 3,
     TaskSchedulingPolicy = new BatchTaskSchedulingPolicy(BatchNodeFillType.Spread),
-    Metadata = { new BatchMetadataItem("myproperty", "myvalue") },
+    Metadata = { new MetadataItem("myproperty", "myvalue") },
     TargetNodeCommunicationMode = BatchNodeCommunicationMode.Simplified,
 };
 Response response = client.CreatePool(pool);
@@ -602,9 +592,9 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool002", "Standard_A1_v2")
+BatchPoolCreateContent pool = new BatchPoolCreateContent("mypool002", "Standard_A1_v2")
 {
-    VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
+    VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
     {
         Publisher = "MicrosoftWindowsServer",
         Offer = "WindowsServer",
@@ -623,7 +613,7 @@ BatchPoolCreateOptions pool = new BatchPoolCreateOptions("mypool002", "Standard_
 Response response = client.CreatePool(pool);
 ]]></code></example>
     </member>
-    <member name="CreatePoolAsync(RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="CreatePoolAsync(RequestContent,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call CreatePoolAsync.
 <code><![CDATA[
@@ -1027,7 +1017,7 @@ Response response = await client.CreatePoolAsync(content);
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="CreatePool(RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="CreatePool(RequestContent,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call CreatePool.
 <code><![CDATA[
@@ -1431,7 +1421,33 @@ Response response = client.CreatePool(content);
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="GetPoolAsync(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)">
+    <member name="DeletePoolAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
+      <example>
+This sample shows how to call DeletePoolAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = await client.DeletePoolAsync("poolId");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeletePool(string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
+      <example>
+This sample shows how to call DeletePool.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = client.DeletePool("poolId");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetPoolAsync(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)">
       <example>
 This sample shows how to call GetPoolAsync.
 <code><![CDATA[
@@ -1482,7 +1498,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 Response<BatchPool> response = await client.GetPoolAsync("pool");
 ]]></code></example>
     </member>
-    <member name="GetPool(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)">
+    <member name="GetPool(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)">
       <example>
 This sample shows how to call GetPool.
 <code><![CDATA[
@@ -1533,7 +1549,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 Response<BatchPool> response = client.GetPool("pool");
 ]]></code></example>
     </member>
-    <member name="GetPoolAsync(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)">
+    <member name="GetPoolAsync(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)">
       <example>
 This sample shows how to call GetPoolAsync and parse the result.
 <code><![CDATA[
@@ -1602,7 +1618,7 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code></example>
     </member>
-    <member name="GetPool(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)">
+    <member name="GetPool(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)">
       <example>
 This sample shows how to call GetPool and parse the result.
 <code><![CDATA[
@@ -1671,7 +1687,7 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code></example>
     </member>
-    <member name="UpdatePoolAsync(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)">
+    <member name="UpdatePoolAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call UpdatePoolAsync.
 <code><![CDATA[
@@ -1691,7 +1707,7 @@ Response response = await client.UpdatePoolAsync("poolId", content);
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="UpdatePool(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)">
+    <member name="UpdatePool(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call UpdatePool.
 <code><![CDATA[
@@ -1711,7 +1727,7 @@ Response response = client.UpdatePool("poolId", content);
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="DisablePoolAutoScaleAsync(string,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="DisablePoolAutoScaleAsync(string,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call DisablePoolAutoScaleAsync.
 <code><![CDATA[
@@ -1724,7 +1740,7 @@ Response response = await client.DisablePoolAutoScaleAsync("poolId");
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="DisablePoolAutoScale(string,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="DisablePoolAutoScale(string,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call DisablePoolAutoScale.
 <code><![CDATA[
@@ -1737,7 +1753,7 @@ Response response = client.DisablePoolAutoScale("poolId");
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="EnablePoolAutoScaleAsync(string,BatchPoolEnableAutoScaleOptions,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)">
+    <member name="EnablePoolAutoScaleAsync(string,BatchPoolEnableAutoScaleContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)">
       <example>
 This sample shows how to call EnablePoolAutoScaleAsync.
 <code><![CDATA[
@@ -1745,15 +1761,15 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolEnableAutoScaleOptions enableAutoScaleOptions = new BatchPoolEnableAutoScaleOptions
+BatchPoolEnableAutoScaleContent content = new BatchPoolEnableAutoScaleContent
 {
     AutoScaleFormula = "$TargetDedicated=0",
     AutoScaleEvaluationInterval = XmlConvert.ToTimeSpan("PT8M"),
 };
-Response response = await client.EnablePoolAutoScaleAsync("poolId", enableAutoScaleOptions);
+Response response = await client.EnablePoolAutoScaleAsync("poolId", content);
 ]]></code></example>
     </member>
-    <member name="EnablePoolAutoScale(string,BatchPoolEnableAutoScaleOptions,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)">
+    <member name="EnablePoolAutoScale(string,BatchPoolEnableAutoScaleContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)">
       <example>
 This sample shows how to call EnablePoolAutoScale.
 <code><![CDATA[
@@ -1761,15 +1777,15 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolEnableAutoScaleOptions enableAutoScaleOptions = new BatchPoolEnableAutoScaleOptions
+BatchPoolEnableAutoScaleContent content = new BatchPoolEnableAutoScaleContent
 {
     AutoScaleFormula = "$TargetDedicated=0",
     AutoScaleEvaluationInterval = XmlConvert.ToTimeSpan("PT8M"),
 };
-Response response = client.EnablePoolAutoScale("poolId", enableAutoScaleOptions);
+Response response = client.EnablePoolAutoScale("poolId", content);
 ]]></code></example>
     </member>
-    <member name="EnablePoolAutoScaleAsync(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)">
+    <member name="EnablePoolAutoScaleAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call EnablePoolAutoScaleAsync.
 <code><![CDATA[
@@ -1787,7 +1803,7 @@ Response response = await client.EnablePoolAutoScaleAsync("poolId", content);
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="EnablePoolAutoScale(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)">
+    <member name="EnablePoolAutoScale(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call EnablePoolAutoScale.
 <code><![CDATA[
@@ -1805,7 +1821,7 @@ Response response = client.EnablePoolAutoScale("poolId", content);
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="EvaluatePoolAutoScaleAsync(string,BatchPoolEvaluateAutoScaleOptions,TimeSpan?,DateTimeOffset?,CancellationToken)">
+    <member name="EvaluatePoolAutoScaleAsync(string,BatchPoolEvaluateAutoScaleContent,int?,DateTimeOffset?,CancellationToken)">
       <example>
 This sample shows how to call EvaluatePoolAutoScaleAsync.
 <code><![CDATA[
@@ -1813,11 +1829,11 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolEvaluateAutoScaleOptions evaluateAutoScaleOptions = new BatchPoolEvaluateAutoScaleOptions("$TargetDedicated=1");
-Response<AutoScaleRun> response = await client.EvaluatePoolAutoScaleAsync("poolId", evaluateAutoScaleOptions);
+BatchPoolEvaluateAutoScaleContent content = new BatchPoolEvaluateAutoScaleContent("$TargetDedicated=1");
+Response<AutoScaleRun> response = await client.EvaluatePoolAutoScaleAsync("poolId", content);
 ]]></code></example>
     </member>
-    <member name="EvaluatePoolAutoScale(string,BatchPoolEvaluateAutoScaleOptions,TimeSpan?,DateTimeOffset?,CancellationToken)">
+    <member name="EvaluatePoolAutoScale(string,BatchPoolEvaluateAutoScaleContent,int?,DateTimeOffset?,CancellationToken)">
       <example>
 This sample shows how to call EvaluatePoolAutoScale.
 <code><![CDATA[
@@ -1825,11 +1841,11 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolEvaluateAutoScaleOptions evaluateAutoScaleOptions = new BatchPoolEvaluateAutoScaleOptions("$TargetDedicated=1");
-Response<AutoScaleRun> response = client.EvaluatePoolAutoScale("poolId", evaluateAutoScaleOptions);
+BatchPoolEvaluateAutoScaleContent content = new BatchPoolEvaluateAutoScaleContent("$TargetDedicated=1");
+Response<AutoScaleRun> response = client.EvaluatePoolAutoScale("poolId", content);
 ]]></code></example>
     </member>
-    <member name="EvaluatePoolAutoScaleAsync(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="EvaluatePoolAutoScaleAsync(string,RequestContent,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call EvaluatePoolAutoScaleAsync and parse the result.
 <code><![CDATA[
@@ -1847,7 +1863,7 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("timestamp").ToString());
 ]]></code></example>
     </member>
-    <member name="EvaluatePoolAutoScale(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="EvaluatePoolAutoScale(string,RequestContent,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call EvaluatePoolAutoScale and parse the result.
 <code><![CDATA[
@@ -1865,7 +1881,101 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("timestamp").ToString());
 ]]></code></example>
     </member>
-    <member name="ReplacePoolPropertiesAsync(string,BatchPoolReplaceOptions,TimeSpan?,DateTimeOffset?,CancellationToken)">
+    <member name="ResizePoolAsync(string,BatchPoolResizeContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)">
+      <example>
+This sample shows how to call ResizePoolAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+BatchPoolResizeContent content = new BatchPoolResizeContent
+{
+    TargetDedicatedNodes = 1,
+    TargetLowPriorityNodes = 0,
+};
+Response response = await client.ResizePoolAsync("resizePool", content);
+]]></code></example>
+    </member>
+    <member name="ResizePool(string,BatchPoolResizeContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)">
+      <example>
+This sample shows how to call ResizePool.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+BatchPoolResizeContent content = new BatchPoolResizeContent
+{
+    TargetDedicatedNodes = 1,
+    TargetLowPriorityNodes = 0,
+};
+Response response = client.ResizePool("resizePool", content);
+]]></code></example>
+    </member>
+    <member name="ResizePoolAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)">
+      <example>
+This sample shows how to call ResizePoolAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    targetDedicatedNodes = 1,
+    targetLowPriorityNodes = 0,
+});
+Response response = await client.ResizePoolAsync("resizePool", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="ResizePool(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)">
+      <example>
+This sample shows how to call ResizePool.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    targetDedicatedNodes = 1,
+    targetLowPriorityNodes = 0,
+});
+Response response = client.ResizePool("resizePool", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="StopPoolResizeAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
+      <example>
+This sample shows how to call StopPoolResizeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = await client.StopPoolResizeAsync("poolId");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="StopPoolResize(string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
+      <example>
+This sample shows how to call StopPoolResize.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = client.StopPoolResize("poolId");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="ReplacePoolPropertiesAsync(string,BatchPoolReplaceContent,int?,DateTimeOffset?,CancellationToken)">
       <example>
 This sample shows how to call ReplacePoolPropertiesAsync.
 <code><![CDATA[
@@ -1873,14 +1983,14 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolReplaceOptions pool = new BatchPoolReplaceOptions(Array.Empty<BatchCertificateReference>(), Array.Empty<BatchApplicationPackageReference>(), Array.Empty<BatchMetadataItem>())
+BatchPoolReplaceContent pool = new BatchPoolReplaceContent(Array.Empty<BatchCertificateReference>(), Array.Empty<BatchApplicationPackageReference>(), Array.Empty<MetadataItem>())
 {
     StartTask = new BatchStartTask("/bin/bash -c 'echo start task'"),
 };
 Response response = await client.ReplacePoolPropertiesAsync("poolId", pool);
 ]]></code></example>
     </member>
-    <member name="ReplacePoolProperties(string,BatchPoolReplaceOptions,TimeSpan?,DateTimeOffset?,CancellationToken)">
+    <member name="ReplacePoolProperties(string,BatchPoolReplaceContent,int?,DateTimeOffset?,CancellationToken)">
       <example>
 This sample shows how to call ReplacePoolProperties.
 <code><![CDATA[
@@ -1888,14 +1998,14 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchPoolReplaceOptions pool = new BatchPoolReplaceOptions(Array.Empty<BatchCertificateReference>(), Array.Empty<BatchApplicationPackageReference>(), Array.Empty<BatchMetadataItem>())
+BatchPoolReplaceContent pool = new BatchPoolReplaceContent(Array.Empty<BatchCertificateReference>(), Array.Empty<BatchApplicationPackageReference>(), Array.Empty<MetadataItem>())
 {
     StartTask = new BatchStartTask("/bin/bash -c 'echo start task'"),
 };
 Response response = client.ReplacePoolProperties("poolId", pool);
 ]]></code></example>
     </member>
-    <member name="ReplacePoolPropertiesAsync(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="ReplacePoolPropertiesAsync(string,RequestContent,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call ReplacePoolPropertiesAsync.
 <code><![CDATA[
@@ -1918,7 +2028,7 @@ Response response = await client.ReplacePoolPropertiesAsync("poolId", content);
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="ReplacePoolProperties(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="ReplacePoolProperties(string,RequestContent,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call ReplacePoolProperties.
 <code><![CDATA[
@@ -1941,7 +2051,99 @@ Response response = client.ReplacePoolProperties("poolId", content);
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="GetJobAsync(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)">
+    <member name="RemoveNodesAsync(string,BatchNodeRemoveContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)">
+      <example>
+This sample shows how to call RemoveNodesAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+BatchNodeRemoveContent content = new BatchNodeRemoveContent(new string[] { "tvm-1695681911_1-20161122t224741z", "tvm-1695681911_2-20161122t224741z" });
+Response response = await client.RemoveNodesAsync("poolId", content);
+]]></code></example>
+    </member>
+    <member name="RemoveNodes(string,BatchNodeRemoveContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)">
+      <example>
+This sample shows how to call RemoveNodes.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+BatchNodeRemoveContent content = new BatchNodeRemoveContent(new string[] { "tvm-1695681911_1-20161122t224741z", "tvm-1695681911_2-20161122t224741z" });
+Response response = client.RemoveNodes("poolId", content);
+]]></code></example>
+    </member>
+    <member name="RemoveNodesAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)">
+      <example>
+This sample shows how to call RemoveNodesAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    nodeList = new object[]
+    {
+        "tvm-1695681911_1-20161122t224741z",
+        "tvm-1695681911_2-20161122t224741z"
+    },
+});
+Response response = await client.RemoveNodesAsync("poolId", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="RemoveNodes(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)">
+      <example>
+This sample shows how to call RemoveNodes.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    nodeList = new object[]
+    {
+        "tvm-1695681911_1-20161122t224741z",
+        "tvm-1695681911_2-20161122t224741z"
+    },
+});
+Response response = client.RemoveNodes("poolId", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteJobAsync(string,int?,DateTimeOffset?,bool?,RequestConditions,RequestContext)">
+      <example>
+This sample shows how to call DeleteJobAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = await client.DeleteJobAsync("jobId");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteJob(string,int?,DateTimeOffset?,bool?,RequestConditions,RequestContext)">
+      <example>
+This sample shows how to call DeleteJob.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = client.DeleteJob("jobId");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetJobAsync(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)">
       <example>
 This sample shows how to call GetJobAsync.
 <code><![CDATA[
@@ -1952,7 +2154,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 Response<BatchJob> response = await client.GetJobAsync("jobId");
 ]]></code></example>
     </member>
-    <member name="GetJob(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)">
+    <member name="GetJob(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)">
       <example>
 This sample shows how to call GetJob.
 <code><![CDATA[
@@ -1963,7 +2165,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 Response<BatchJob> response = client.GetJob("jobId");
 ]]></code></example>
     </member>
-    <member name="GetJobAsync(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)">
+    <member name="GetJobAsync(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)">
       <example>
 This sample shows how to call GetJobAsync and parse the result.
 <code><![CDATA[
@@ -1977,7 +2179,7 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("poolInfo").ToString());
 ]]></code></example>
     </member>
-    <member name="GetJob(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)">
+    <member name="GetJob(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)">
       <example>
 This sample shows how to call GetJob and parse the result.
 <code><![CDATA[
@@ -1991,7 +2193,7 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("poolInfo").ToString());
 ]]></code></example>
     </member>
-    <member name="UpdateJobAsync(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)">
+    <member name="UpdateJobAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call UpdateJobAsync.
 <code><![CDATA[
@@ -2017,7 +2219,7 @@ Response response = await client.UpdateJobAsync("jobId", content);
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="UpdateJob(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)">
+    <member name="UpdateJob(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call UpdateJob.
 <code><![CDATA[
@@ -2043,7 +2245,7 @@ Response response = client.UpdateJob("jobId", content);
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="ReplaceJobAsync(string,BatchJob,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)">
+    <member name="ReplaceJobAsync(string,BatchJob,int?,DateTimeOffset?,RequestConditions,CancellationToken)">
       <example>
 This sample shows how to call ReplaceJobAsync.
 <code><![CDATA[
@@ -2066,7 +2268,7 @@ BatchJob job = new BatchJob(new BatchPoolInfo
 Response response = await client.ReplaceJobAsync("jobId", job);
 ]]></code></example>
     </member>
-    <member name="ReplaceJob(string,BatchJob,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)">
+    <member name="ReplaceJob(string,BatchJob,int?,DateTimeOffset?,RequestConditions,CancellationToken)">
       <example>
 This sample shows how to call ReplaceJob.
 <code><![CDATA[
@@ -2089,7 +2291,7 @@ BatchJob job = new BatchJob(new BatchPoolInfo
 Response response = client.ReplaceJob("jobId", job);
 ]]></code></example>
     </member>
-    <member name="ReplaceJobAsync(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)">
+    <member name="ReplaceJobAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call ReplaceJobAsync.
 <code><![CDATA[
@@ -2115,7 +2317,7 @@ Response response = await client.ReplaceJobAsync("jobId", content);
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="ReplaceJob(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)">
+    <member name="ReplaceJob(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call ReplaceJob.
 <code><![CDATA[
@@ -2141,7 +2343,141 @@ Response response = client.ReplaceJob("jobId", content);
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="CreateJobAsync(BatchJobCreateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)">
+    <member name="DisableJobAsync(string,BatchJobDisableContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)">
+      <example>
+This sample shows how to call DisableJobAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+BatchJobDisableContent content = new BatchJobDisableContent(DisableBatchJobOption.Terminate);
+Response response = await client.DisableJobAsync("jobId", content);
+]]></code></example>
+    </member>
+    <member name="DisableJob(string,BatchJobDisableContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)">
+      <example>
+This sample shows how to call DisableJob.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+BatchJobDisableContent content = new BatchJobDisableContent(DisableBatchJobOption.Terminate);
+Response response = client.DisableJob("jobId", content);
+]]></code></example>
+    </member>
+    <member name="DisableJobAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)">
+      <example>
+This sample shows how to call DisableJobAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    disableTasks = "terminate",
+});
+Response response = await client.DisableJobAsync("jobId", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DisableJob(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)">
+      <example>
+This sample shows how to call DisableJob.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    disableTasks = "terminate",
+});
+Response response = client.DisableJob("jobId", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="EnableJobAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
+      <example>
+This sample shows how to call EnableJobAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = await client.EnableJobAsync("jobId");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="EnableJob(string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
+      <example>
+This sample shows how to call EnableJob.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = client.EnableJob("jobId");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="TerminateJobAsync(string,BatchJobTerminateContent,int?,DateTimeOffset?,bool?,RequestConditions,CancellationToken)">
+      <example>
+This sample shows how to call TerminateJobAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = await client.TerminateJobAsync("jobId");
+]]></code></example>
+    </member>
+    <member name="TerminateJob(string,BatchJobTerminateContent,int?,DateTimeOffset?,bool?,RequestConditions,CancellationToken)">
+      <example>
+This sample shows how to call TerminateJob.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = client.TerminateJob("jobId");
+]]></code></example>
+    </member>
+    <member name="TerminateJobAsync(string,RequestContent,int?,DateTimeOffset?,bool?,RequestConditions,RequestContext)">
+      <example>
+This sample shows how to call TerminateJobAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+using RequestContent content = null;
+Response response = await client.TerminateJobAsync("jobId", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="TerminateJob(string,RequestContent,int?,DateTimeOffset?,bool?,RequestConditions,RequestContext)">
+      <example>
+This sample shows how to call TerminateJob.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+using RequestContent content = null;
+Response response = client.TerminateJob("jobId", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="CreateJobAsync(BatchJobCreateContent,int?,DateTimeOffset?,CancellationToken)">
       <example>
 This sample shows how to call CreateJobAsync.
 <code><![CDATA[
@@ -2149,7 +2485,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchJobCreateOptions job = new BatchJobCreateOptions("jobId", new BatchPoolInfo
+BatchJobCreateContent job = new BatchJobCreateContent("jobId", new BatchPoolInfo
 {
     PoolId = "poolId",
 })
@@ -2164,14 +2500,14 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchJobCreateOptions job = new BatchJobCreateOptions("jobId", new BatchPoolInfo
+BatchJobCreateContent job = new BatchJobCreateContent("jobId", new BatchPoolInfo
 {
     AutoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.Job)
     {
         AutoPoolIdPrefix = "mypool",
         Pool = new BatchPoolSpecification("STANDARD_D2S_V3")
         {
-            VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
+            VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
             {
                 Publisher = "MicrosoftWindowsServer",
                 Offer = "WindowsServer",
@@ -2199,7 +2535,7 @@ BatchJobCreateOptions job = new BatchJobCreateOptions("jobId", new BatchPoolInfo
             {
                 ResourceFiles = {new ResourceFile
                 {
-                    HttpUri = new Uri("http://mystorage1.blob.core.windows.net/scripts/myprogram2.exe?sas"),
+                    HttpUrl = "http://mystorage1.blob.core.windows.net/scripts/myprogram2.exe?sas",
                     FilePath = "myprogram2.exe",
                 }},
                 EnvironmentSettings = {new EnvironmentSetting("myvariable")
@@ -2223,7 +2559,7 @@ BatchJobCreateOptions job = new BatchJobCreateOptions("jobId", new BatchPoolInfo
                 StoreName = "Root",
                 Visibility = {BatchCertificateVisibility.Task},
             }},
-            Metadata = { new BatchMetadataItem("myproperty", "myvalue") },
+            Metadata = { new MetadataItem("myproperty", "myvalue") },
             TargetNodeCommunicationMode = BatchNodeCommunicationMode.Default,
         },
     },
@@ -2239,11 +2575,11 @@ BatchJobCreateOptions job = new BatchJobCreateOptions("jobId", new BatchPoolInfo
     {
         ResourceFiles = {new ResourceFile
         {
-            HttpUri = new Uri("http://mystorage1.blob.core.windows.net/scripts/myprogram.exe?sas"),
+            HttpUrl = "http://mystorage1.blob.core.windows.net/scripts/myprogram.exe?sas",
             FilePath = "myprogram.exe",
         }, new ResourceFile
         {
-            StorageContainerUri = new Uri("http://mystorage1.blob.core.windows.net/data?sas"),
+            StorageContainerUrl = "http://mystorage1.blob.core.windows.net/data?sas",
             FilePath = "datafolder",
         }},
         EnvironmentSettings = {new EnvironmentSetting("myvariable")
@@ -2268,12 +2604,12 @@ BatchJobCreateOptions job = new BatchJobCreateOptions("jobId", new BatchPoolInfo
         },
         RunExclusive = true,
     },
-    Metadata = { new BatchMetadataItem("myproperty", "myvalue") },
+    Metadata = { new MetadataItem("myproperty", "myvalue") },
 };
 Response response = await client.CreateJobAsync(job);
 ]]></code></example>
     </member>
-    <member name="CreateJob(BatchJobCreateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)">
+    <member name="CreateJob(BatchJobCreateContent,int?,DateTimeOffset?,CancellationToken)">
       <example>
 This sample shows how to call CreateJob.
 <code><![CDATA[
@@ -2281,7 +2617,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchJobCreateOptions job = new BatchJobCreateOptions("jobId", new BatchPoolInfo
+BatchJobCreateContent job = new BatchJobCreateContent("jobId", new BatchPoolInfo
 {
     PoolId = "poolId",
 })
@@ -2296,14 +2632,14 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchJobCreateOptions job = new BatchJobCreateOptions("jobId", new BatchPoolInfo
+BatchJobCreateContent job = new BatchJobCreateContent("jobId", new BatchPoolInfo
 {
     AutoPoolSpecification = new BatchAutoPoolSpecification(BatchPoolLifetimeOption.Job)
     {
         AutoPoolIdPrefix = "mypool",
         Pool = new BatchPoolSpecification("STANDARD_D2S_V3")
         {
-            VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
+            VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
             {
                 Publisher = "MicrosoftWindowsServer",
                 Offer = "WindowsServer",
@@ -2331,7 +2667,7 @@ BatchJobCreateOptions job = new BatchJobCreateOptions("jobId", new BatchPoolInfo
             {
                 ResourceFiles = {new ResourceFile
                 {
-                    HttpUri = new Uri("http://mystorage1.blob.core.windows.net/scripts/myprogram2.exe?sas"),
+                    HttpUrl = "http://mystorage1.blob.core.windows.net/scripts/myprogram2.exe?sas",
                     FilePath = "myprogram2.exe",
                 }},
                 EnvironmentSettings = {new EnvironmentSetting("myvariable")
@@ -2355,7 +2691,7 @@ BatchJobCreateOptions job = new BatchJobCreateOptions("jobId", new BatchPoolInfo
                 StoreName = "Root",
                 Visibility = {BatchCertificateVisibility.Task},
             }},
-            Metadata = { new BatchMetadataItem("myproperty", "myvalue") },
+            Metadata = { new MetadataItem("myproperty", "myvalue") },
             TargetNodeCommunicationMode = BatchNodeCommunicationMode.Default,
         },
     },
@@ -2371,11 +2707,11 @@ BatchJobCreateOptions job = new BatchJobCreateOptions("jobId", new BatchPoolInfo
     {
         ResourceFiles = {new ResourceFile
         {
-            HttpUri = new Uri("http://mystorage1.blob.core.windows.net/scripts/myprogram.exe?sas"),
+            HttpUrl = "http://mystorage1.blob.core.windows.net/scripts/myprogram.exe?sas",
             FilePath = "myprogram.exe",
         }, new ResourceFile
         {
-            StorageContainerUri = new Uri("http://mystorage1.blob.core.windows.net/data?sas"),
+            StorageContainerUrl = "http://mystorage1.blob.core.windows.net/data?sas",
             FilePath = "datafolder",
         }},
         EnvironmentSettings = {new EnvironmentSetting("myvariable")
@@ -2400,12 +2736,12 @@ BatchJobCreateOptions job = new BatchJobCreateOptions("jobId", new BatchPoolInfo
         },
         RunExclusive = true,
     },
-    Metadata = { new BatchMetadataItem("myproperty", "myvalue") },
+    Metadata = { new MetadataItem("myproperty", "myvalue") },
 };
 Response response = client.CreateJob(job);
 ]]></code></example>
     </member>
-    <member name="CreateJobAsync(RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="CreateJobAsync(RequestContent,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call CreateJobAsync.
 <code><![CDATA[
@@ -2592,7 +2928,7 @@ Response response = await client.CreateJobAsync(content);
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="CreateJob(RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="CreateJob(RequestContent,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call CreateJob.
 <code><![CDATA[
@@ -2779,7 +3115,7 @@ Response response = client.CreateJob(content);
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="GetJobTaskCountsAsync(string,TimeSpan?,DateTimeOffset?,CancellationToken)">
+    <member name="GetJobTaskCountsAsync(string,int?,DateTimeOffset?,CancellationToken)">
       <example>
 This sample shows how to call GetJobTaskCountsAsync.
 <code><![CDATA[
@@ -2790,7 +3126,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 Response<BatchTaskCountsResult> response = await client.GetJobTaskCountsAsync("jobId");
 ]]></code></example>
     </member>
-    <member name="GetJobTaskCounts(string,TimeSpan?,DateTimeOffset?,CancellationToken)">
+    <member name="GetJobTaskCounts(string,int?,DateTimeOffset?,CancellationToken)">
       <example>
 This sample shows how to call GetJobTaskCounts.
 <code><![CDATA[
@@ -2801,7 +3137,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 Response<BatchTaskCountsResult> response = client.GetJobTaskCounts("jobId");
 ]]></code></example>
     </member>
-    <member name="GetJobTaskCountsAsync(string,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="GetJobTaskCountsAsync(string,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call GetJobTaskCountsAsync and parse the result.
 <code><![CDATA[
@@ -2824,7 +3160,7 @@ Console.WriteLine(result.GetProperty("taskSlotCounts").GetProperty("succeeded").
 Console.WriteLine(result.GetProperty("taskSlotCounts").GetProperty("failed").ToString());
 ]]></code></example>
     </member>
-    <member name="GetJobTaskCounts(string,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="GetJobTaskCounts(string,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call GetJobTaskCounts and parse the result.
 <code><![CDATA[
@@ -2847,7 +3183,7 @@ Console.WriteLine(result.GetProperty("taskSlotCounts").GetProperty("succeeded").
 Console.WriteLine(result.GetProperty("taskSlotCounts").GetProperty("failed").ToString());
 ]]></code></example>
     </member>
-    <member name="CreateCertificateAsync(BatchCertificate,TimeSpan?,DateTimeOffset?,CancellationToken)">
+    <member name="CreateCertificateAsync(BatchCertificate,int?,DateTimeOffset?,CancellationToken)">
       <example>
 This sample shows how to call CreateCertificateAsync.
 <code><![CDATA[
@@ -2855,7 +3191,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchCertificate certificate = new BatchCertificate("0123456789abcdef0123456789abcdef01234567", "sha1", BinaryData.FromObjectAsJson("U3dhZ2dlciByb2Nrcw=="))
+BatchCertificate certificate = new BatchCertificate("0123456789abcdef0123456789abcdef01234567", "sha1", "#####...")
 {
     CertificateFormat = BatchCertificateFormat.Pfx,
     Password = "<ExamplePassword>",
@@ -2863,7 +3199,7 @@ BatchCertificate certificate = new BatchCertificate("0123456789abcdef0123456789a
 Response response = await client.CreateCertificateAsync(certificate);
 ]]></code></example>
     </member>
-    <member name="CreateCertificate(BatchCertificate,TimeSpan?,DateTimeOffset?,CancellationToken)">
+    <member name="CreateCertificate(BatchCertificate,int?,DateTimeOffset?,CancellationToken)">
       <example>
 This sample shows how to call CreateCertificate.
 <code><![CDATA[
@@ -2871,7 +3207,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchCertificate certificate = new BatchCertificate("0123456789abcdef0123456789abcdef01234567", "sha1", BinaryData.FromObjectAsJson("U3dhZ2dlciByb2Nrcw=="))
+BatchCertificate certificate = new BatchCertificate("0123456789abcdef0123456789abcdef01234567", "sha1", "#####...")
 {
     CertificateFormat = BatchCertificateFormat.Pfx,
     Password = "<ExamplePassword>",
@@ -2879,7 +3215,7 @@ BatchCertificate certificate = new BatchCertificate("0123456789abcdef0123456789a
 Response response = client.CreateCertificate(certificate);
 ]]></code></example>
     </member>
-    <member name="CreateCertificateAsync(RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="CreateCertificateAsync(RequestContent,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call CreateCertificateAsync.
 <code><![CDATA[
@@ -2891,7 +3227,7 @@ using RequestContent content = RequestContent.Create(new
 {
     thumbprintAlgorithm = "sha1",
     thumbprint = "0123456789abcdef0123456789abcdef01234567",
-    data = "U3dhZ2dlciByb2Nrcw==",
+    data = "#####...",
     certificateFormat = "pfx",
     password = "<ExamplePassword>",
 });
@@ -2900,7 +3236,7 @@ Response response = await client.CreateCertificateAsync(content);
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="CreateCertificate(RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="CreateCertificate(RequestContent,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call CreateCertificate.
 <code><![CDATA[
@@ -2912,7 +3248,7 @@ using RequestContent content = RequestContent.Create(new
 {
     thumbprintAlgorithm = "sha1",
     thumbprint = "0123456789abcdef0123456789abcdef01234567",
-    data = "U3dhZ2dlciByb2Nrcw==",
+    data = "#####...",
     certificateFormat = "pfx",
     password = "<ExamplePassword>",
 });
@@ -2921,7 +3257,7 @@ Response response = client.CreateCertificate(content);
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="CancelCertificateDeletionAsync(string,string,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="CancelCertificateDeletionAsync(string,string,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call CancelCertificateDeletionAsync.
 <code><![CDATA[
@@ -2934,7 +3270,7 @@ Response response = await client.CancelCertificateDeletionAsync("sha1", "0123456
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="CancelCertificateDeletion(string,string,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="CancelCertificateDeletion(string,string,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call CancelCertificateDeletion.
 <code><![CDATA[
@@ -2947,7 +3283,33 @@ Response response = client.CancelCertificateDeletion("sha1", "0123456789abcdef01
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="GetCertificateAsync(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},CancellationToken)">
+    <member name="DeleteCertificateAsync(string,string,int?,DateTimeOffset?,RequestContext)">
+      <example>
+This sample shows how to call DeleteCertificateAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = await client.DeleteCertificateAsync("sha1", "0123456789abcdef0123456789abcdef01234567");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteCertificate(string,string,int?,DateTimeOffset?,RequestContext)">
+      <example>
+This sample shows how to call DeleteCertificate.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = client.DeleteCertificate("sha1", "0123456789abcdef0123456789abcdef01234567");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetCertificateAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)">
       <example>
 This sample shows how to call GetCertificateAsync.
 <code><![CDATA[
@@ -2958,7 +3320,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 Response<BatchCertificate> response = await client.GetCertificateAsync("sha1", "0123456789abcdef0123456789abcdef01234567");
 ]]></code></example>
     </member>
-    <member name="GetCertificate(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},CancellationToken)">
+    <member name="GetCertificate(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)">
       <example>
 This sample shows how to call GetCertificate.
 <code><![CDATA[
@@ -2969,7 +3331,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 Response<BatchCertificate> response = client.GetCertificate("sha1", "0123456789abcdef0123456789abcdef01234567");
 ]]></code></example>
     </member>
-    <member name="GetCertificateAsync(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},RequestContext)">
+    <member name="GetCertificateAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)">
       <example>
 This sample shows how to call GetCertificateAsync and parse the result.
 <code><![CDATA[
@@ -2985,7 +3347,7 @@ Console.WriteLine(result.GetProperty("thumbprintAlgorithm").ToString());
 Console.WriteLine(result.GetProperty("data").ToString());
 ]]></code></example>
     </member>
-    <member name="GetCertificate(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},RequestContext)">
+    <member name="GetCertificate(string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)">
       <example>
 This sample shows how to call GetCertificate and parse the result.
 <code><![CDATA[
@@ -3001,7 +3363,33 @@ Console.WriteLine(result.GetProperty("thumbprintAlgorithm").ToString());
 Console.WriteLine(result.GetProperty("data").ToString());
 ]]></code></example>
     </member>
-    <member name="GetJobScheduleAsync(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)">
+    <member name="DeleteJobScheduleAsync(string,int?,DateTimeOffset?,bool?,RequestConditions,RequestContext)">
+      <example>
+This sample shows how to call DeleteJobScheduleAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = await client.DeleteJobScheduleAsync("jobScheduleId");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteJobSchedule(string,int?,DateTimeOffset?,bool?,RequestConditions,RequestContext)">
+      <example>
+This sample shows how to call DeleteJobSchedule.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = client.DeleteJobSchedule("jobScheduleId");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetJobScheduleAsync(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)">
       <example>
 This sample shows how to call GetJobScheduleAsync.
 <code><![CDATA[
@@ -3012,7 +3400,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 Response<BatchJobSchedule> response = await client.GetJobScheduleAsync("jobScheduleId");
 ]]></code></example>
     </member>
-    <member name="GetJobSchedule(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)">
+    <member name="GetJobSchedule(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)">
       <example>
 This sample shows how to call GetJobSchedule.
 <code><![CDATA[
@@ -3023,7 +3411,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 Response<BatchJobSchedule> response = client.GetJobSchedule("jobScheduleId");
 ]]></code></example>
     </member>
-    <member name="GetJobScheduleAsync(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)">
+    <member name="GetJobScheduleAsync(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)">
       <example>
 This sample shows how to call GetJobScheduleAsync and parse the result.
 <code><![CDATA[
@@ -3037,7 +3425,7 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").ToString());
 ]]></code></example>
     </member>
-    <member name="GetJobSchedule(string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)">
+    <member name="GetJobSchedule(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)">
       <example>
 This sample shows how to call GetJobSchedule and parse the result.
 <code><![CDATA[
@@ -3051,7 +3439,7 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobSpecification").GetProperty("poolInfo").ToString());
 ]]></code></example>
     </member>
-    <member name="UpdateJobScheduleAsync(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)">
+    <member name="UpdateJobScheduleAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call UpdateJobScheduleAsync.
 <code><![CDATA[
@@ -3085,7 +3473,7 @@ Response response = await client.UpdateJobScheduleAsync("jobScheduleId", content
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="UpdateJobSchedule(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)">
+    <member name="UpdateJobSchedule(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call UpdateJobSchedule.
 <code><![CDATA[
@@ -3119,7 +3507,7 @@ Response response = client.UpdateJobSchedule("jobScheduleId", content);
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="ReplaceJobScheduleAsync(string,BatchJobSchedule,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)">
+    <member name="ReplaceJobScheduleAsync(string,BatchJobSchedule,int?,DateTimeOffset?,RequestConditions,CancellationToken)">
       <example>
 This sample shows how to call ReplaceJobScheduleAsync.
 <code><![CDATA[
@@ -3149,7 +3537,7 @@ BatchJobSchedule jobSchedule = new BatchJobSchedule(new BatchJobSpecification(ne
 Response response = await client.ReplaceJobScheduleAsync("jobScheduleId", jobSchedule);
 ]]></code></example>
     </member>
-    <member name="ReplaceJobSchedule(string,BatchJobSchedule,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)">
+    <member name="ReplaceJobSchedule(string,BatchJobSchedule,int?,DateTimeOffset?,RequestConditions,CancellationToken)">
       <example>
 This sample shows how to call ReplaceJobSchedule.
 <code><![CDATA[
@@ -3179,7 +3567,7 @@ BatchJobSchedule jobSchedule = new BatchJobSchedule(new BatchJobSpecification(ne
 Response response = client.ReplaceJobSchedule("jobScheduleId", jobSchedule);
 ]]></code></example>
     </member>
-    <member name="ReplaceJobScheduleAsync(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)">
+    <member name="ReplaceJobScheduleAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call ReplaceJobScheduleAsync.
 <code><![CDATA[
@@ -3213,7 +3601,7 @@ Response response = await client.ReplaceJobScheduleAsync("jobScheduleId", conten
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="ReplaceJobSchedule(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)">
+    <member name="ReplaceJobSchedule(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call ReplaceJobSchedule.
 <code><![CDATA[
@@ -3247,7 +3635,7 @@ Response response = client.ReplaceJobSchedule("jobScheduleId", content);
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="DisableJobScheduleAsync(string,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)">
+    <member name="DisableJobScheduleAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call DisableJobScheduleAsync.
 <code><![CDATA[
@@ -3260,7 +3648,7 @@ Response response = await client.DisableJobScheduleAsync("jobScheduleId");
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="DisableJobSchedule(string,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)">
+    <member name="DisableJobSchedule(string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call DisableJobSchedule.
 <code><![CDATA[
@@ -3273,7 +3661,7 @@ Response response = client.DisableJobSchedule("jobScheduleId");
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="EnableJobScheduleAsync(string,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)">
+    <member name="EnableJobScheduleAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call EnableJobScheduleAsync.
 <code><![CDATA[
@@ -3286,7 +3674,7 @@ Response response = await client.EnableJobScheduleAsync("jobScheduleId");
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="EnableJobSchedule(string,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)">
+    <member name="EnableJobSchedule(string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call EnableJobSchedule.
 <code><![CDATA[
@@ -3299,7 +3687,33 @@ Response response = client.EnableJobSchedule("jobScheduleId");
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="CreateJobScheduleAsync(BatchJobScheduleCreateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)">
+    <member name="TerminateJobScheduleAsync(string,int?,DateTimeOffset?,bool?,RequestConditions,RequestContext)">
+      <example>
+This sample shows how to call TerminateJobScheduleAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = await client.TerminateJobScheduleAsync("jobScheduleId");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="TerminateJobSchedule(string,int?,DateTimeOffset?,bool?,RequestConditions,RequestContext)">
+      <example>
+This sample shows how to call TerminateJobSchedule.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = client.TerminateJobSchedule("jobScheduleId");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="CreateJobScheduleAsync(BatchJobScheduleCreateContent,int?,DateTimeOffset?,CancellationToken)">
       <example>
 This sample shows how to call CreateJobScheduleAsync.
 <code><![CDATA[
@@ -3307,7 +3721,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions("jobScheduleId", new BatchJobScheduleConfiguration
+BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("jobScheduleId", new BatchJobScheduleConfiguration
 {
     RecurrenceInterval = XmlConvert.ToTimeSpan("PT5M"),
 }, new BatchJobSpecification(new BatchPoolInfo
@@ -3322,7 +3736,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions("jobScheduleId", new BatchJobScheduleConfiguration
+BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("jobScheduleId", new BatchJobScheduleConfiguration
 {
     DoNotRunUntil = DateTimeOffset.Parse("2014-09-10T02:30:00.000Z"),
     DoNotRunAfter = DateTimeOffset.Parse("2014-09-10T06:30:00.000Z"),
@@ -3335,7 +3749,7 @@ BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions("j
         AutoPoolIdPrefix = "mypool",
         Pool = new BatchPoolSpecification("STANDARD_D2S_V3")
         {
-            VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
+            VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
             {
                 Publisher = "MicrosoftWindowsServer",
                 Offer = "WindowsServer",
@@ -3363,7 +3777,7 @@ BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions("j
             {
                 ResourceFiles = {new ResourceFile
                 {
-                    HttpUri = new Uri("http://mystorage1.blob.core.windows.net/scripts/myprogram2.exe?sas"),
+                    HttpUrl = "http://mystorage1.blob.core.windows.net/scripts/myprogram2.exe?sas",
                     FilePath = "myprogram2.exe",
                 }},
                 EnvironmentSettings = {new EnvironmentSetting("myvariable")
@@ -3387,7 +3801,7 @@ BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions("j
                 StoreName = "Root",
                 Visibility = {BatchCertificateVisibility.Task},
             }},
-            Metadata = { new BatchMetadataItem("myproperty", "myvalue") },
+            Metadata = { new MetadataItem("myproperty", "myvalue") },
             TargetNodeCommunicationMode = BatchNodeCommunicationMode.Default,
         },
     },
@@ -3403,11 +3817,11 @@ BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions("j
     {
         ResourceFiles = {new ResourceFile
         {
-            HttpUri = new Uri("http://mystorage1.blob.core.windows.net/scripts/myprogram.exe?sas"),
+            HttpUrl = "http://mystorage1.blob.core.windows.net/scripts/myprogram.exe?sas",
             FilePath = "myprogram.exe",
         }, new ResourceFile
         {
-            HttpUri = new Uri("http://mystorage1.blob.core.windows.net/scripts/test.txt?sas"),
+            HttpUrl = "http://mystorage1.blob.core.windows.net/scripts/test.txt?sas",
             FilePath = "test.txt",
         }},
         EnvironmentSettings = {new EnvironmentSetting("myvariable")
@@ -3434,12 +3848,12 @@ BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions("j
     },
 })
 {
-    Metadata = { new BatchMetadataItem("myproperty", "myvalue") },
+    Metadata = { new MetadataItem("myproperty", "myvalue") },
 };
 Response response = await client.CreateJobScheduleAsync(jobSchedule);
 ]]></code></example>
     </member>
-    <member name="CreateJobSchedule(BatchJobScheduleCreateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)">
+    <member name="CreateJobSchedule(BatchJobScheduleCreateContent,int?,DateTimeOffset?,CancellationToken)">
       <example>
 This sample shows how to call CreateJobSchedule.
 <code><![CDATA[
@@ -3447,7 +3861,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions("jobScheduleId", new BatchJobScheduleConfiguration
+BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("jobScheduleId", new BatchJobScheduleConfiguration
 {
     RecurrenceInterval = XmlConvert.ToTimeSpan("PT5M"),
 }, new BatchJobSpecification(new BatchPoolInfo
@@ -3462,7 +3876,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions("jobScheduleId", new BatchJobScheduleConfiguration
+BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("jobScheduleId", new BatchJobScheduleConfiguration
 {
     DoNotRunUntil = DateTimeOffset.Parse("2014-09-10T02:30:00.000Z"),
     DoNotRunAfter = DateTimeOffset.Parse("2014-09-10T06:30:00.000Z"),
@@ -3475,7 +3889,7 @@ BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions("j
         AutoPoolIdPrefix = "mypool",
         Pool = new BatchPoolSpecification("STANDARD_D2S_V3")
         {
-            VirtualMachineConfiguration = new VirtualMachineConfiguration(new BatchVmImageReference
+            VirtualMachineConfiguration = new VirtualMachineConfiguration(new ImageReference
             {
                 Publisher = "MicrosoftWindowsServer",
                 Offer = "WindowsServer",
@@ -3503,7 +3917,7 @@ BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions("j
             {
                 ResourceFiles = {new ResourceFile
                 {
-                    HttpUri = new Uri("http://mystorage1.blob.core.windows.net/scripts/myprogram2.exe?sas"),
+                    HttpUrl = "http://mystorage1.blob.core.windows.net/scripts/myprogram2.exe?sas",
                     FilePath = "myprogram2.exe",
                 }},
                 EnvironmentSettings = {new EnvironmentSetting("myvariable")
@@ -3527,7 +3941,7 @@ BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions("j
                 StoreName = "Root",
                 Visibility = {BatchCertificateVisibility.Task},
             }},
-            Metadata = { new BatchMetadataItem("myproperty", "myvalue") },
+            Metadata = { new MetadataItem("myproperty", "myvalue") },
             TargetNodeCommunicationMode = BatchNodeCommunicationMode.Default,
         },
     },
@@ -3543,11 +3957,11 @@ BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions("j
     {
         ResourceFiles = {new ResourceFile
         {
-            HttpUri = new Uri("http://mystorage1.blob.core.windows.net/scripts/myprogram.exe?sas"),
+            HttpUrl = "http://mystorage1.blob.core.windows.net/scripts/myprogram.exe?sas",
             FilePath = "myprogram.exe",
         }, new ResourceFile
         {
-            HttpUri = new Uri("http://mystorage1.blob.core.windows.net/scripts/test.txt?sas"),
+            HttpUrl = "http://mystorage1.blob.core.windows.net/scripts/test.txt?sas",
             FilePath = "test.txt",
         }},
         EnvironmentSettings = {new EnvironmentSetting("myvariable")
@@ -3574,12 +3988,12 @@ BatchJobScheduleCreateOptions jobSchedule = new BatchJobScheduleCreateOptions("j
     },
 })
 {
-    Metadata = { new BatchMetadataItem("myproperty", "myvalue") },
+    Metadata = { new MetadataItem("myproperty", "myvalue") },
 };
 Response response = client.CreateJobSchedule(jobSchedule);
 ]]></code></example>
     </member>
-    <member name="CreateJobScheduleAsync(RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="CreateJobScheduleAsync(RequestContent,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call CreateJobScheduleAsync.
 <code><![CDATA[
@@ -3782,7 +4196,7 @@ Response response = await client.CreateJobScheduleAsync(content);
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="CreateJobSchedule(RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="CreateJobSchedule(RequestContent,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call CreateJobSchedule.
 <code><![CDATA[
@@ -3985,7 +4399,7 @@ Response response = client.CreateJobSchedule(content);
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="CreateTaskAsync(string,BatchTaskCreateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)">
+    <member name="CreateTaskAsync(string,BatchTaskCreateContent,int?,DateTimeOffset?,CancellationToken)">
       <example>
 This sample shows how to call CreateTaskAsync.
 <code><![CDATA[
@@ -3993,7 +4407,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchTaskCreateOptions task = new BatchTaskCreateOptions("task1", "cmd /c echo task1");
+BatchTaskCreateContent task = new BatchTaskCreateContent("task1", "cmd /c echo task1");
 Response response = await client.CreateTaskAsync("jobId", task);
 ]]></code>
 This sample shows how to call CreateTaskAsync.
@@ -4002,7 +4416,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchTaskCreateOptions task = new BatchTaskCreateOptions("taskId", "bash -c 'echo hello'")
+BatchTaskCreateContent task = new BatchTaskCreateContent("taskId", "bash -c 'echo hello'")
 {
     ContainerSettings = new BatchTaskContainerSettings("ubuntu")
     {
@@ -4025,7 +4439,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchTaskCreateOptions task = new BatchTaskCreateOptions("taskId", "bash -c 'echo hello'")
+BatchTaskCreateContent task = new BatchTaskCreateContent("taskId", "bash -c 'echo hello'")
 {
     ContainerSettings = new BatchTaskContainerSettings("ubuntu")
     {
@@ -4052,7 +4466,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchTaskCreateOptions task = new BatchTaskCreateOptions("taskId", "bash -c 'echo hello'")
+BatchTaskCreateContent task = new BatchTaskCreateContent("taskId", "bash -c 'echo hello'")
 {
     ContainerSettings = new BatchTaskContainerSettings("ubuntu")
     {
@@ -4083,13 +4497,13 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchTaskCreateOptions task = new BatchTaskCreateOptions("taskId", "cmd /c exit 3")
+BatchTaskCreateContent task = new BatchTaskCreateContent("taskId", "cmd /c exit 3")
 {
     ExitConditions = new ExitConditions
     {
         ExitCodeRanges = {new ExitCodeRangeMapping(2, 4, new ExitOptions
         {
-            JobAction = BatchJobActionKind.Terminate,
+            JobAction = BatchJobAction.Terminate,
         })},
     },
     UserIdentity = new UserIdentity
@@ -4109,14 +4523,14 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchTaskCreateOptions task = new BatchTaskCreateOptions("task1", "cmd /c echo task1")
+BatchTaskCreateContent task = new BatchTaskCreateContent("task1", "cmd /c echo task1")
 {
     RequiredSlots = 2,
 };
 Response response = await client.CreateTaskAsync("jobId", task);
 ]]></code></example>
     </member>
-    <member name="CreateTask(string,BatchTaskCreateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)">
+    <member name="CreateTask(string,BatchTaskCreateContent,int?,DateTimeOffset?,CancellationToken)">
       <example>
 This sample shows how to call CreateTask.
 <code><![CDATA[
@@ -4124,7 +4538,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchTaskCreateOptions task = new BatchTaskCreateOptions("task1", "cmd /c echo task1");
+BatchTaskCreateContent task = new BatchTaskCreateContent("task1", "cmd /c echo task1");
 Response response = client.CreateTask("jobId", task);
 ]]></code>
 This sample shows how to call CreateTask.
@@ -4133,7 +4547,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchTaskCreateOptions task = new BatchTaskCreateOptions("taskId", "bash -c 'echo hello'")
+BatchTaskCreateContent task = new BatchTaskCreateContent("taskId", "bash -c 'echo hello'")
 {
     ContainerSettings = new BatchTaskContainerSettings("ubuntu")
     {
@@ -4156,7 +4570,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchTaskCreateOptions task = new BatchTaskCreateOptions("taskId", "bash -c 'echo hello'")
+BatchTaskCreateContent task = new BatchTaskCreateContent("taskId", "bash -c 'echo hello'")
 {
     ContainerSettings = new BatchTaskContainerSettings("ubuntu")
     {
@@ -4183,7 +4597,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchTaskCreateOptions task = new BatchTaskCreateOptions("taskId", "bash -c 'echo hello'")
+BatchTaskCreateContent task = new BatchTaskCreateContent("taskId", "bash -c 'echo hello'")
 {
     ContainerSettings = new BatchTaskContainerSettings("ubuntu")
     {
@@ -4214,13 +4628,13 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchTaskCreateOptions task = new BatchTaskCreateOptions("taskId", "cmd /c exit 3")
+BatchTaskCreateContent task = new BatchTaskCreateContent("taskId", "cmd /c exit 3")
 {
     ExitConditions = new ExitConditions
     {
         ExitCodeRanges = {new ExitCodeRangeMapping(2, 4, new ExitOptions
         {
-            JobAction = BatchJobActionKind.Terminate,
+            JobAction = BatchJobAction.Terminate,
         })},
     },
     UserIdentity = new UserIdentity
@@ -4240,14 +4654,14 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchTaskCreateOptions task = new BatchTaskCreateOptions("task1", "cmd /c echo task1")
+BatchTaskCreateContent task = new BatchTaskCreateContent("task1", "cmd /c echo task1")
 {
     RequiredSlots = 2,
 };
 Response response = client.CreateTask("jobId", task);
 ]]></code></example>
     </member>
-    <member name="CreateTaskAsync(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="CreateTaskAsync(string,RequestContent,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call CreateTaskAsync.
 <code><![CDATA[
@@ -4422,7 +4836,7 @@ Response response = await client.CreateTaskAsync("jobId", content);
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="CreateTask(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="CreateTask(string,RequestContent,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call CreateTask.
 <code><![CDATA[
@@ -4597,7 +5011,7 @@ Response response = client.CreateTask("jobId", content);
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="CreateTaskCollectionAsync(string,BatchTaskGroup,TimeSpan?,DateTimeOffset?,CancellationToken)">
+    <member name="CreateTaskCollectionAsync(string,BatchTaskGroup,int?,DateTimeOffset?,CancellationToken)">
       <example>
 This sample shows how to call CreateTaskCollectionAsync.
 <code><![CDATA[
@@ -4605,12 +5019,12 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateOptions[]
+BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateContent[]
 {
-    new BatchTaskCreateOptions("simple1", "cmd /c dir /s"),
-    new BatchTaskCreateOptions("simple2", "cmd /c dir /s")
+    new BatchTaskCreateContent("simple1", "cmd /c dir /s"),
+    new BatchTaskCreateContent("simple2", "cmd /c dir /s")
 });
-Response<BatchCreateTaskCollectionResult> response = await client.CreateTaskCollectionAsync("jobId", taskCollection);
+Response<BatchTaskAddCollectionResult> response = await client.CreateTaskCollectionAsync("jobId", taskCollection);
 ]]></code>
 This sample shows how to call CreateTaskCollectionAsync.
 <code><![CDATA[
@@ -4618,9 +5032,9 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateOptions[]
+BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateContent[]
 {
-    new BatchTaskCreateOptions("complex1", "cmd /c dir /s")
+    new BatchTaskCreateContent("complex1", "cmd /c dir /s")
     {
         ResourceFiles = {new ResourceFile
         {
@@ -4634,7 +5048,7 @@ BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateOptions[]
         {
             Value = "value2",
         }},
-        AffinityInfo = new BatchAffinityInfo("affinityId"),
+        AffinityInfo = new AffinityInfo("affinityId"),
         Constraints = new BatchTaskConstraints
         {
             MaxWallClockTime = XmlConvert.ToTimeSpan("P1D"),
@@ -4647,17 +5061,17 @@ BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateOptions[]
             NumberOfInstances = 3,
             CommonResourceFiles = {new ResourceFile
             {
-                HttpUri = new Uri("https://common.blob.core.windows.net/"),
+                HttpUrl = "https://common.blob.core.windows.net/",
                 FilePath = "common.exe",
             }},
         },
     },
-    new BatchTaskCreateOptions("simple3", "cmd /c dir /s")
+    new BatchTaskCreateContent("simple3", "cmd /c dir /s")
 });
-Response<BatchCreateTaskCollectionResult> response = await client.CreateTaskCollectionAsync("jobId", taskCollection);
+Response<BatchTaskAddCollectionResult> response = await client.CreateTaskCollectionAsync("jobId", taskCollection);
 ]]></code></example>
     </member>
-    <member name="CreateTaskCollection(string,BatchTaskGroup,TimeSpan?,DateTimeOffset?,CancellationToken)">
+    <member name="CreateTaskCollection(string,BatchTaskGroup,int?,DateTimeOffset?,CancellationToken)">
       <example>
 This sample shows how to call CreateTaskCollection.
 <code><![CDATA[
@@ -4665,12 +5079,12 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateOptions[]
+BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateContent[]
 {
-    new BatchTaskCreateOptions("simple1", "cmd /c dir /s"),
-    new BatchTaskCreateOptions("simple2", "cmd /c dir /s")
+    new BatchTaskCreateContent("simple1", "cmd /c dir /s"),
+    new BatchTaskCreateContent("simple2", "cmd /c dir /s")
 });
-Response<BatchCreateTaskCollectionResult> response = client.CreateTaskCollection("jobId", taskCollection);
+Response<BatchTaskAddCollectionResult> response = client.CreateTaskCollection("jobId", taskCollection);
 ]]></code>
 This sample shows how to call CreateTaskCollection.
 <code><![CDATA[
@@ -4678,9 +5092,9 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateOptions[]
+BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateContent[]
 {
-    new BatchTaskCreateOptions("complex1", "cmd /c dir /s")
+    new BatchTaskCreateContent("complex1", "cmd /c dir /s")
     {
         ResourceFiles = {new ResourceFile
         {
@@ -4694,7 +5108,7 @@ BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateOptions[]
         {
             Value = "value2",
         }},
-        AffinityInfo = new BatchAffinityInfo("affinityId"),
+        AffinityInfo = new AffinityInfo("affinityId"),
         Constraints = new BatchTaskConstraints
         {
             MaxWallClockTime = XmlConvert.ToTimeSpan("P1D"),
@@ -4707,17 +5121,17 @@ BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateOptions[]
             NumberOfInstances = 3,
             CommonResourceFiles = {new ResourceFile
             {
-                HttpUri = new Uri("https://common.blob.core.windows.net/"),
+                HttpUrl = "https://common.blob.core.windows.net/",
                 FilePath = "common.exe",
             }},
         },
     },
-    new BatchTaskCreateOptions("simple3", "cmd /c dir /s")
+    new BatchTaskCreateContent("simple3", "cmd /c dir /s")
 });
-Response<BatchCreateTaskCollectionResult> response = client.CreateTaskCollection("jobId", taskCollection);
+Response<BatchTaskAddCollectionResult> response = client.CreateTaskCollection("jobId", taskCollection);
 ]]></code></example>
     </member>
-    <member name="CreateTaskCollectionAsync(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="CreateTaskCollectionAsync(string,RequestContent,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call CreateTaskCollectionAsync and parse the result.
 <code><![CDATA[
@@ -4819,7 +5233,7 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code></example>
     </member>
-    <member name="CreateTaskCollection(string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="CreateTaskCollection(string,RequestContent,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call CreateTaskCollection and parse the result.
 <code><![CDATA[
@@ -4921,7 +5335,7 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code></example>
     </member>
-    <member name="DeleteTaskAsync(string,string,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)">
+    <member name="DeleteTaskAsync(string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call DeleteTaskAsync.
 <code><![CDATA[
@@ -4934,7 +5348,7 @@ Response response = await client.DeleteTaskAsync("jobId", "taskId");
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="DeleteTask(string,string,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)">
+    <member name="DeleteTask(string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call DeleteTask.
 <code><![CDATA[
@@ -4947,7 +5361,7 @@ Response response = client.DeleteTask("jobId", "taskId");
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="GetTaskAsync(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)">
+    <member name="GetTaskAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)">
       <example>
 This sample shows how to call GetTaskAsync.
 <code><![CDATA[
@@ -4958,7 +5372,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 Response<BatchTask> response = await client.GetTaskAsync("jobId", "taskId");
 ]]></code></example>
     </member>
-    <member name="GetTask(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)">
+    <member name="GetTask(string,string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)">
       <example>
 This sample shows how to call GetTask.
 <code><![CDATA[
@@ -4969,7 +5383,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 Response<BatchTask> response = client.GetTask("jobId", "taskId");
 ]]></code></example>
     </member>
-    <member name="GetTaskAsync(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)">
+    <member name="GetTaskAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)">
       <example>
 This sample shows how to call GetTaskAsync and parse the result.
 <code><![CDATA[
@@ -4983,7 +5397,7 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code></example>
     </member>
-    <member name="GetTask(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)">
+    <member name="GetTask(string,string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)">
       <example>
 This sample shows how to call GetTask and parse the result.
 <code><![CDATA[
@@ -4997,7 +5411,7 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code></example>
     </member>
-    <member name="ReplaceTaskAsync(string,string,BatchTask,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)">
+    <member name="ReplaceTaskAsync(string,string,BatchTask,int?,DateTimeOffset?,RequestConditions,CancellationToken)">
       <example>
 This sample shows how to call ReplaceTaskAsync.
 <code><![CDATA[
@@ -5017,7 +5431,7 @@ BatchTask task = new BatchTask
 Response response = await client.ReplaceTaskAsync("jobId", "taskId", task);
 ]]></code></example>
     </member>
-    <member name="ReplaceTask(string,string,BatchTask,TimeSpan?,DateTimeOffset?,RequestConditions,CancellationToken)">
+    <member name="ReplaceTask(string,string,BatchTask,int?,DateTimeOffset?,RequestConditions,CancellationToken)">
       <example>
 This sample shows how to call ReplaceTask.
 <code><![CDATA[
@@ -5037,7 +5451,7 @@ BatchTask task = new BatchTask
 Response response = client.ReplaceTask("jobId", "taskId", task);
 ]]></code></example>
     </member>
-    <member name="ReplaceTaskAsync(string,string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)">
+    <member name="ReplaceTaskAsync(string,string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call ReplaceTaskAsync.
 <code><![CDATA[
@@ -5059,7 +5473,7 @@ Response response = await client.ReplaceTaskAsync("jobId", "taskId", content);
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="ReplaceTask(string,string,RequestContent,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)">
+    <member name="ReplaceTask(string,string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call ReplaceTask.
 <code><![CDATA[
@@ -5081,7 +5495,7 @@ Response response = client.ReplaceTask("jobId", "taskId", content);
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="TerminateTaskAsync(string,string,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)">
+    <member name="TerminateTaskAsync(string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call TerminateTaskAsync.
 <code><![CDATA[
@@ -5094,7 +5508,7 @@ Response response = await client.TerminateTaskAsync("jobId", "taskId");
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="TerminateTask(string,string,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)">
+    <member name="TerminateTask(string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call TerminateTask.
 <code><![CDATA[
@@ -5107,7 +5521,7 @@ Response response = client.TerminateTask("jobId", "taskId");
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="ReactivateTaskAsync(string,string,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)">
+    <member name="ReactivateTaskAsync(string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call ReactivateTaskAsync.
 <code><![CDATA[
@@ -5120,7 +5534,7 @@ Response response = await client.ReactivateTaskAsync("jobId", "taskId");
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="ReactivateTask(string,string,TimeSpan?,DateTimeOffset?,RequestConditions,RequestContext)">
+    <member name="ReactivateTask(string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call ReactivateTask.
 <code><![CDATA[
@@ -5133,7 +5547,7 @@ Response response = client.ReactivateTask("jobId", "taskId");
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="DeleteTaskFileAsync(string,string,string,TimeSpan?,DateTimeOffset?,bool?,RequestContext)">
+    <member name="DeleteTaskFileAsync(string,string,string,int?,DateTimeOffset?,bool?,RequestContext)">
       <example>
 This sample shows how to call DeleteTaskFileAsync.
 <code><![CDATA[
@@ -5146,7 +5560,7 @@ Response response = await client.DeleteTaskFileAsync("jobId", "task1", "wd\\test
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="DeleteTaskFile(string,string,string,TimeSpan?,DateTimeOffset?,bool?,RequestContext)">
+    <member name="DeleteTaskFile(string,string,string,int?,DateTimeOffset?,bool?,RequestContext)">
       <example>
 This sample shows how to call DeleteTaskFile.
 <code><![CDATA[
@@ -5159,7 +5573,7 @@ Response response = client.DeleteTaskFile("jobId", "task1", "wd\\testFile.txt");
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="GetTaskFileAsync(string,string,string,TimeSpan?,DateTimeOffset?,string,RequestConditions,CancellationToken)">
+    <member name="GetTaskFileAsync(string,string,string,int?,DateTimeOffset?,string,RequestConditions,CancellationToken)">
       <example>
 This sample shows how to call GetTaskFileAsync.
 <code><![CDATA[
@@ -5170,7 +5584,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 Response<BinaryData> response = await client.GetTaskFileAsync("jobId", "task1", "wd\\testFile.txt");
 ]]></code></example>
     </member>
-    <member name="GetTaskFile(string,string,string,TimeSpan?,DateTimeOffset?,string,RequestConditions,CancellationToken)">
+    <member name="GetTaskFile(string,string,string,int?,DateTimeOffset?,string,RequestConditions,CancellationToken)">
       <example>
 This sample shows how to call GetTaskFile.
 <code><![CDATA[
@@ -5181,7 +5595,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 Response<BinaryData> response = client.GetTaskFile("jobId", "task1", "wd\\testFile.txt");
 ]]></code></example>
     </member>
-    <member name="GetTaskFileAsync(string,string,string,TimeSpan?,DateTimeOffset?,string,RequestConditions,RequestContext)">
+    <member name="GetTaskFileAsync(string,string,string,int?,DateTimeOffset?,string,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call GetTaskFileAsync and parse the result.
 <code><![CDATA[
@@ -5195,7 +5609,7 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code></example>
     </member>
-    <member name="GetTaskFile(string,string,string,TimeSpan?,DateTimeOffset?,string,RequestConditions,RequestContext)">
+    <member name="GetTaskFile(string,string,string,int?,DateTimeOffset?,string,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call GetTaskFile and parse the result.
 <code><![CDATA[
@@ -5209,7 +5623,7 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code></example>
     </member>
-    <member name="CreateNodeUserAsync(string,string,BatchNodeUserCreateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)">
+    <member name="CreateNodeUserAsync(string,string,BatchNodeUserCreateContent,int?,DateTimeOffset?,CancellationToken)">
       <example>
 This sample shows how to call CreateNodeUserAsync.
 <code><![CDATA[
@@ -5217,7 +5631,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchNodeUserCreateOptions user = new BatchNodeUserCreateOptions("userName")
+BatchNodeUserCreateContent user = new BatchNodeUserCreateContent("userName")
 {
     IsAdmin = false,
     ExpiryTime = DateTimeOffset.Parse("2017-08-01T00:00:00Z"),
@@ -5226,7 +5640,7 @@ BatchNodeUserCreateOptions user = new BatchNodeUserCreateOptions("userName")
 Response response = await client.CreateNodeUserAsync("poolId", "tvm-1695681911_1-20161121t182739z", user);
 ]]></code></example>
     </member>
-    <member name="CreateNodeUser(string,string,BatchNodeUserCreateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)">
+    <member name="CreateNodeUser(string,string,BatchNodeUserCreateContent,int?,DateTimeOffset?,CancellationToken)">
       <example>
 This sample shows how to call CreateNodeUser.
 <code><![CDATA[
@@ -5234,7 +5648,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchNodeUserCreateOptions user = new BatchNodeUserCreateOptions("userName")
+BatchNodeUserCreateContent user = new BatchNodeUserCreateContent("userName")
 {
     IsAdmin = false,
     ExpiryTime = DateTimeOffset.Parse("2017-08-01T00:00:00Z"),
@@ -5243,7 +5657,7 @@ BatchNodeUserCreateOptions user = new BatchNodeUserCreateOptions("userName")
 Response response = client.CreateNodeUser("poolId", "tvm-1695681911_1-20161121t182739z", user);
 ]]></code></example>
     </member>
-    <member name="CreateNodeUserAsync(string,string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="CreateNodeUserAsync(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call CreateNodeUserAsync.
 <code><![CDATA[
@@ -5263,7 +5677,7 @@ Response response = await client.CreateNodeUserAsync("poolId", "tvm-1695681911_1
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="CreateNodeUser(string,string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="CreateNodeUser(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call CreateNodeUser.
 <code><![CDATA[
@@ -5283,7 +5697,7 @@ Response response = client.CreateNodeUser("poolId", "tvm-1695681911_1-20161121t1
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="DeleteNodeUserAsync(string,string,string,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="DeleteNodeUserAsync(string,string,string,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call DeleteNodeUserAsync.
 <code><![CDATA[
@@ -5296,7 +5710,7 @@ Response response = await client.DeleteNodeUserAsync("poolId", "tvm-1695681911_1
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="DeleteNodeUser(string,string,string,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="DeleteNodeUser(string,string,string,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call DeleteNodeUser.
 <code><![CDATA[
@@ -5309,7 +5723,7 @@ Response response = client.DeleteNodeUser("poolId", "tvm-1695681911_1-20161121t1
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="ReplaceNodeUserAsync(string,string,string,BatchNodeUserUpdateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)">
+    <member name="ReplaceNodeUserAsync(string,string,string,BatchNodeUserUpdateContent,int?,DateTimeOffset?,CancellationToken)">
       <example>
 This sample shows how to call ReplaceNodeUserAsync.
 <code><![CDATA[
@@ -5317,15 +5731,15 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchNodeUserUpdateOptions updateOptions = new BatchNodeUserUpdateOptions
+BatchNodeUserUpdateContent content = new BatchNodeUserUpdateContent
 {
     Password = "12345",
     ExpiryTime = DateTimeOffset.Parse("2016-11-27T00:45:48.7320857Z"),
 };
-Response response = await client.ReplaceNodeUserAsync("poolId", "tvm-1695681911_1-20161121t182739z", "userName", updateOptions);
+Response response = await client.ReplaceNodeUserAsync("poolId", "tvm-1695681911_1-20161121t182739z", "userName", content);
 ]]></code></example>
     </member>
-    <member name="ReplaceNodeUser(string,string,string,BatchNodeUserUpdateOptions,TimeSpan?,DateTimeOffset?,CancellationToken)">
+    <member name="ReplaceNodeUser(string,string,string,BatchNodeUserUpdateContent,int?,DateTimeOffset?,CancellationToken)">
       <example>
 This sample shows how to call ReplaceNodeUser.
 <code><![CDATA[
@@ -5333,15 +5747,15 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-BatchNodeUserUpdateOptions updateOptions = new BatchNodeUserUpdateOptions
+BatchNodeUserUpdateContent content = new BatchNodeUserUpdateContent
 {
     Password = "12345",
     ExpiryTime = DateTimeOffset.Parse("2016-11-27T00:45:48.7320857Z"),
 };
-Response response = client.ReplaceNodeUser("poolId", "tvm-1695681911_1-20161121t182739z", "userName", updateOptions);
+Response response = client.ReplaceNodeUser("poolId", "tvm-1695681911_1-20161121t182739z", "userName", content);
 ]]></code></example>
     </member>
-    <member name="ReplaceNodeUserAsync(string,string,string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="ReplaceNodeUserAsync(string,string,string,RequestContent,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call ReplaceNodeUserAsync.
 <code><![CDATA[
@@ -5359,7 +5773,7 @@ Response response = await client.ReplaceNodeUserAsync("poolId", "tvm-1695681911_
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="ReplaceNodeUser(string,string,string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="ReplaceNodeUser(string,string,string,RequestContent,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call ReplaceNodeUser.
 <code><![CDATA[
@@ -5377,7 +5791,7 @@ Response response = client.ReplaceNodeUser("poolId", "tvm-1695681911_1-20161121t
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="GetNodeAsync(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},CancellationToken)">
+    <member name="GetNodeAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)">
       <example>
 This sample shows how to call GetNodeAsync.
 <code><![CDATA[
@@ -5388,7 +5802,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 Response<BatchNode> response = await client.GetNodeAsync("poolId", "tvm-1695681911_2-20161122t193202z");
 ]]></code></example>
     </member>
-    <member name="GetNode(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},CancellationToken)">
+    <member name="GetNode(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)">
       <example>
 This sample shows how to call GetNode.
 <code><![CDATA[
@@ -5399,7 +5813,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 Response<BatchNode> response = client.GetNode("poolId", "tvm-1695681911_2-20161122t193202z");
 ]]></code></example>
     </member>
-    <member name="GetNodeAsync(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},RequestContext)">
+    <member name="GetNodeAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)">
       <example>
 This sample shows how to call GetNodeAsync and parse the result.
 <code><![CDATA[
@@ -5413,7 +5827,7 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code></example>
     </member>
-    <member name="GetNode(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},RequestContext)">
+    <member name="GetNode(string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)">
       <example>
 This sample shows how to call GetNode and parse the result.
 <code><![CDATA[
@@ -5427,7 +5841,183 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code></example>
     </member>
-    <member name="DisableNodeSchedulingAsync(string,string,BatchNodeDisableSchedulingOptions,TimeSpan?,DateTimeOffset?,CancellationToken)">
+    <member name="RebootNodeAsync(string,string,BatchNodeRebootContent,int?,DateTimeOffset?,CancellationToken)">
+      <example>
+This sample shows how to call RebootNodeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = await client.RebootNodeAsync("poolId", "tvm-1695681911_1-20161122t193202z");
+]]></code></example>
+    </member>
+    <member name="RebootNode(string,string,BatchNodeRebootContent,int?,DateTimeOffset?,CancellationToken)">
+      <example>
+This sample shows how to call RebootNode.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = client.RebootNode("poolId", "tvm-1695681911_1-20161122t193202z");
+]]></code></example>
+    </member>
+    <member name="RebootNodeAsync(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)">
+      <example>
+This sample shows how to call RebootNodeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+using RequestContent content = null;
+Response response = await client.RebootNodeAsync("poolId", "tvm-1695681911_1-20161122t193202z", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="RebootNode(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)">
+      <example>
+This sample shows how to call RebootNode.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+using RequestContent content = null;
+Response response = client.RebootNode("poolId", "tvm-1695681911_1-20161122t193202z", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="StartNodeAsync(string,string,int?,DateTimeOffset?,RequestContext)">
+      <example>
+This sample shows how to call StartNodeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = await client.StartNodeAsync("poolId", "tvm-1695681911_1-20161122t193202z");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="StartNode(string,string,int?,DateTimeOffset?,RequestContext)">
+      <example>
+This sample shows how to call StartNode.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = client.StartNode("poolId", "tvm-1695681911_1-20161122t193202z");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="ReimageNodeAsync(string,string,BatchNodeReimageContent,int?,DateTimeOffset?,CancellationToken)">
+      <example>
+This sample shows how to call ReimageNodeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = await client.ReimageNodeAsync("poolId", "tvm-1695681911_1-20161122t193202z");
+]]></code></example>
+    </member>
+    <member name="ReimageNode(string,string,BatchNodeReimageContent,int?,DateTimeOffset?,CancellationToken)">
+      <example>
+This sample shows how to call ReimageNode.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = client.ReimageNode("poolId", "tvm-1695681911_1-20161122t193202z");
+]]></code></example>
+    </member>
+    <member name="ReimageNodeAsync(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)">
+      <example>
+This sample shows how to call ReimageNodeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+using RequestContent content = null;
+Response response = await client.ReimageNodeAsync("poolId", "tvm-1695681911_1-20161122t193202z", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="ReimageNode(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)">
+      <example>
+This sample shows how to call ReimageNode.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+using RequestContent content = null;
+Response response = client.ReimageNode("poolId", "tvm-1695681911_1-20161122t193202z", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeallocateNodeAsync(string,string,BatchNodeDeallocateContent,int?,DateTimeOffset?,CancellationToken)">
+      <example>
+This sample shows how to call DeallocateNodeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = await client.DeallocateNodeAsync("poolId", "tvm-1695681911_1-20161122t193202z");
+]]></code></example>
+    </member>
+    <member name="DeallocateNode(string,string,BatchNodeDeallocateContent,int?,DateTimeOffset?,CancellationToken)">
+      <example>
+This sample shows how to call DeallocateNode.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+Response response = client.DeallocateNode("poolId", "tvm-1695681911_1-20161122t193202z");
+]]></code></example>
+    </member>
+    <member name="DeallocateNodeAsync(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)">
+      <example>
+This sample shows how to call DeallocateNodeAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+using RequestContent content = null;
+Response response = await client.DeallocateNodeAsync("poolId", "tvm-1695681911_1-20161122t193202z", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeallocateNode(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)">
+      <example>
+This sample shows how to call DeallocateNode.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+BatchClient client = new BatchClient(endpoint, credential);
+
+using RequestContent content = null;
+Response response = client.DeallocateNode("poolId", "tvm-1695681911_1-20161122t193202z", content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DisableNodeSchedulingAsync(string,string,BatchNodeDisableSchedulingContent,int?,DateTimeOffset?,CancellationToken)">
       <example>
 This sample shows how to call DisableNodeSchedulingAsync.
 <code><![CDATA[
@@ -5438,7 +6028,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 Response response = await client.DisableNodeSchedulingAsync("poolId", "tvm-1695681911_1-20161122t193202z");
 ]]></code></example>
     </member>
-    <member name="DisableNodeScheduling(string,string,BatchNodeDisableSchedulingOptions,TimeSpan?,DateTimeOffset?,CancellationToken)">
+    <member name="DisableNodeScheduling(string,string,BatchNodeDisableSchedulingContent,int?,DateTimeOffset?,CancellationToken)">
       <example>
 This sample shows how to call DisableNodeScheduling.
 <code><![CDATA[
@@ -5449,7 +6039,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 Response response = client.DisableNodeScheduling("poolId", "tvm-1695681911_1-20161122t193202z");
 ]]></code></example>
     </member>
-    <member name="DisableNodeSchedulingAsync(string,string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="DisableNodeSchedulingAsync(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call DisableNodeSchedulingAsync.
 <code><![CDATA[
@@ -5463,7 +6053,7 @@ Response response = await client.DisableNodeSchedulingAsync("poolId", "tvm-16956
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="DisableNodeScheduling(string,string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="DisableNodeScheduling(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call DisableNodeScheduling.
 <code><![CDATA[
@@ -5477,7 +6067,7 @@ Response response = client.DisableNodeScheduling("poolId", "tvm-1695681911_1-201
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="EnableNodeSchedulingAsync(string,string,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="EnableNodeSchedulingAsync(string,string,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call EnableNodeSchedulingAsync.
 <code><![CDATA[
@@ -5490,7 +6080,7 @@ Response response = await client.EnableNodeSchedulingAsync("poolId", "tvm-169568
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="EnableNodeScheduling(string,string,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="EnableNodeScheduling(string,string,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call EnableNodeScheduling.
 <code><![CDATA[
@@ -5503,7 +6093,7 @@ Response response = client.EnableNodeScheduling("poolId", "tvm-1695681911_1-2016
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="GetNodeRemoteLoginSettingsAsync(string,string,TimeSpan?,DateTimeOffset?,CancellationToken)">
+    <member name="GetNodeRemoteLoginSettingsAsync(string,string,int?,DateTimeOffset?,CancellationToken)">
       <example>
 This sample shows how to call GetNodeRemoteLoginSettingsAsync.
 <code><![CDATA[
@@ -5514,7 +6104,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 Response<BatchNodeRemoteLoginSettings> response = await client.GetNodeRemoteLoginSettingsAsync("poolId", "tvm-1695681911_1-20161121t182739z");
 ]]></code></example>
     </member>
-    <member name="GetNodeRemoteLoginSettings(string,string,TimeSpan?,DateTimeOffset?,CancellationToken)">
+    <member name="GetNodeRemoteLoginSettings(string,string,int?,DateTimeOffset?,CancellationToken)">
       <example>
 This sample shows how to call GetNodeRemoteLoginSettings.
 <code><![CDATA[
@@ -5525,7 +6115,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 Response<BatchNodeRemoteLoginSettings> response = client.GetNodeRemoteLoginSettings("poolId", "tvm-1695681911_1-20161121t182739z");
 ]]></code></example>
     </member>
-    <member name="GetNodeRemoteLoginSettingsAsync(string,string,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="GetNodeRemoteLoginSettingsAsync(string,string,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call GetNodeRemoteLoginSettingsAsync and parse the result.
 <code><![CDATA[
@@ -5540,7 +6130,7 @@ Console.WriteLine(result.GetProperty("remoteLoginIPAddress").ToString());
 Console.WriteLine(result.GetProperty("remoteLoginPort").ToString());
 ]]></code></example>
     </member>
-    <member name="GetNodeRemoteLoginSettings(string,string,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="GetNodeRemoteLoginSettings(string,string,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call GetNodeRemoteLoginSettings and parse the result.
 <code><![CDATA[
@@ -5555,7 +6145,7 @@ Console.WriteLine(result.GetProperty("remoteLoginIPAddress").ToString());
 Console.WriteLine(result.GetProperty("remoteLoginPort").ToString());
 ]]></code></example>
     </member>
-    <member name="UploadNodeLogsAsync(string,string,UploadBatchServiceLogsOptions,TimeSpan?,DateTimeOffset?,CancellationToken)">
+    <member name="UploadNodeLogsAsync(string,string,UploadBatchServiceLogsContent,int?,DateTimeOffset?,CancellationToken)">
       <example>
 This sample shows how to call UploadNodeLogsAsync.
 <code><![CDATA[
@@ -5563,11 +6153,11 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-UploadBatchServiceLogsOptions uploadOptions = new UploadBatchServiceLogsOptions(new Uri("https://somestorageacct.blob.core.windows.net/batch-compute-node-logs?se=2017-12-09T18%3A51%3A00Z&sp=w&sv=2016-05-31&sr=c&sig"), DateTimeOffset.Parse("2017-11-27T00:00:00Z"));
-Response<UploadBatchServiceLogsResult> response = await client.UploadNodeLogsAsync("poolId", "tvm-1695681911_1-20161121t182739z", uploadOptions);
+UploadBatchServiceLogsContent content = new UploadBatchServiceLogsContent("https://somestorageacct.blob.core.windows.net/batch-compute-node-logs?se=2017-12-09T18%3A51%3A00Z&sp=w&sv=2016-05-31&sr=c&sig", DateTimeOffset.Parse("2017-11-27T00:00:00Z"));
+Response<UploadBatchServiceLogsResult> response = await client.UploadNodeLogsAsync("poolId", "tvm-1695681911_1-20161121t182739z", content);
 ]]></code></example>
     </member>
-    <member name="UploadNodeLogs(string,string,UploadBatchServiceLogsOptions,TimeSpan?,DateTimeOffset?,CancellationToken)">
+    <member name="UploadNodeLogs(string,string,UploadBatchServiceLogsContent,int?,DateTimeOffset?,CancellationToken)">
       <example>
 This sample shows how to call UploadNodeLogs.
 <code><![CDATA[
@@ -5575,11 +6165,11 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 BatchClient client = new BatchClient(endpoint, credential);
 
-UploadBatchServiceLogsOptions uploadOptions = new UploadBatchServiceLogsOptions(new Uri("https://somestorageacct.blob.core.windows.net/batch-compute-node-logs?se=2017-12-09T18%3A51%3A00Z&sp=w&sv=2016-05-31&sr=c&sig"), DateTimeOffset.Parse("2017-11-27T00:00:00Z"));
-Response<UploadBatchServiceLogsResult> response = client.UploadNodeLogs("poolId", "tvm-1695681911_1-20161121t182739z", uploadOptions);
+UploadBatchServiceLogsContent content = new UploadBatchServiceLogsContent("https://somestorageacct.blob.core.windows.net/batch-compute-node-logs?se=2017-12-09T18%3A51%3A00Z&sp=w&sv=2016-05-31&sr=c&sig", DateTimeOffset.Parse("2017-11-27T00:00:00Z"));
+Response<UploadBatchServiceLogsResult> response = client.UploadNodeLogs("poolId", "tvm-1695681911_1-20161121t182739z", content);
 ]]></code></example>
     </member>
-    <member name="UploadNodeLogsAsync(string,string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="UploadNodeLogsAsync(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call UploadNodeLogsAsync and parse the result.
 <code><![CDATA[
@@ -5599,7 +6189,7 @@ Console.WriteLine(result.GetProperty("virtualDirectoryName").ToString());
 Console.WriteLine(result.GetProperty("numberOfFilesUploaded").ToString());
 ]]></code></example>
     </member>
-    <member name="UploadNodeLogs(string,string,RequestContent,TimeSpan?,DateTimeOffset?,RequestContext)">
+    <member name="UploadNodeLogs(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)">
       <example>
 This sample shows how to call UploadNodeLogs and parse the result.
 <code><![CDATA[
@@ -5619,7 +6209,7 @@ Console.WriteLine(result.GetProperty("virtualDirectoryName").ToString());
 Console.WriteLine(result.GetProperty("numberOfFilesUploaded").ToString());
 ]]></code></example>
     </member>
-    <member name="GetNodeExtensionAsync(string,string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},CancellationToken)">
+    <member name="GetNodeExtensionAsync(string,string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)">
       <example>
 This sample shows how to call GetNodeExtensionAsync.
 <code><![CDATA[
@@ -5630,7 +6220,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 Response<BatchNodeVMExtension> response = await client.GetNodeExtensionAsync("poolId", "tvm-1695681911_2-20161122t193202z", "batchNodeExtension");
 ]]></code></example>
     </member>
-    <member name="GetNodeExtension(string,string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},CancellationToken)">
+    <member name="GetNodeExtension(string,string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)">
       <example>
 This sample shows how to call GetNodeExtension.
 <code><![CDATA[
@@ -5641,7 +6231,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 Response<BatchNodeVMExtension> response = client.GetNodeExtension("poolId", "tvm-1695681911_2-20161122t193202z", "batchNodeExtension");
 ]]></code></example>
     </member>
-    <member name="GetNodeExtensionAsync(string,string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},RequestContext)">
+    <member name="GetNodeExtensionAsync(string,string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)">
       <example>
 This sample shows how to call GetNodeExtensionAsync and parse the result.
 <code><![CDATA[
@@ -5655,7 +6245,7 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code></example>
     </member>
-    <member name="GetNodeExtension(string,string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},RequestContext)">
+    <member name="GetNodeExtension(string,string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)">
       <example>
 This sample shows how to call GetNodeExtension and parse the result.
 <code><![CDATA[
@@ -5669,7 +6259,7 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code></example>
     </member>
-    <member name="DeleteNodeFileAsync(string,string,string,TimeSpan?,DateTimeOffset?,bool?,RequestContext)">
+    <member name="DeleteNodeFileAsync(string,string,string,int?,DateTimeOffset?,bool?,RequestContext)">
       <example>
 This sample shows how to call DeleteNodeFileAsync.
 <code><![CDATA[
@@ -5682,7 +6272,7 @@ Response response = await client.DeleteNodeFileAsync("poolId", "tvm-1695681911_1
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="DeleteNodeFile(string,string,string,TimeSpan?,DateTimeOffset?,bool?,RequestContext)">
+    <member name="DeleteNodeFile(string,string,string,int?,DateTimeOffset?,bool?,RequestContext)">
       <example>
 This sample shows how to call DeleteNodeFile.
 <code><![CDATA[
@@ -5695,7 +6285,7 @@ Response response = client.DeleteNodeFile("poolId", "tvm-1695681911_1-20161122t1
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="GetNodeFileAsync(string,string,string,TimeSpan?,DateTimeOffset?,string,RequestConditions,CancellationToken)">
+    <member name="GetNodeFileAsync(string,string,string,int?,DateTimeOffset?,string,RequestConditions,CancellationToken)">
       <example>
 This sample shows how to call GetNodeFileAsync.
 <code><![CDATA[
@@ -5706,7 +6296,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 Response<BinaryData> response = await client.GetNodeFileAsync("poolId", "nodeId", "workitems\\jobId\\job-1\\task1\\wd\\testFile.txt");
 ]]></code></example>
     </member>
-    <member name="GetNodeFile(string,string,string,TimeSpan?,DateTimeOffset?,string,RequestConditions,CancellationToken)">
+    <member name="GetNodeFile(string,string,string,int?,DateTimeOffset?,string,RequestConditions,CancellationToken)">
       <example>
 This sample shows how to call GetNodeFile.
 <code><![CDATA[
@@ -5717,7 +6307,7 @@ BatchClient client = new BatchClient(endpoint, credential);
 Response<BinaryData> response = client.GetNodeFile("poolId", "nodeId", "workitems\\jobId\\job-1\\task1\\wd\\testFile.txt");
 ]]></code></example>
     </member>
-    <member name="GetNodeFileAsync(string,string,string,TimeSpan?,DateTimeOffset?,string,RequestConditions,RequestContext)">
+    <member name="GetNodeFileAsync(string,string,string,int?,DateTimeOffset?,string,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call GetNodeFileAsync and parse the result.
 <code><![CDATA[
@@ -5731,7 +6321,7 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code></example>
     </member>
-    <member name="GetNodeFile(string,string,string,TimeSpan?,DateTimeOffset?,string,RequestConditions,RequestContext)">
+    <member name="GetNodeFile(string,string,string,int?,DateTimeOffset?,string,RequestConditions,RequestContext)">
       <example>
 This sample shows how to call GetNodeFile and parse the result.
 <code><![CDATA[
@@ -5745,7 +6335,7 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code></example>
     </member>
-    <member name="GetApplicationsAsync(TimeSpan?,DateTimeOffset?,int?,CancellationToken)">
+    <member name="GetApplicationsAsync(int?,DateTimeOffset?,int?,CancellationToken)">
       <example>
 This sample shows how to call GetApplicationsAsync.
 <code><![CDATA[
@@ -5758,7 +6348,7 @@ await foreach (BatchApplication item in client.GetApplicationsAsync())
 }
 ]]></code></example>
     </member>
-    <member name="GetApplications(TimeSpan?,DateTimeOffset?,int?,CancellationToken)">
+    <member name="GetApplications(int?,DateTimeOffset?,int?,CancellationToken)">
       <example>
 This sample shows how to call GetApplications.
 <code><![CDATA[
@@ -5771,7 +6361,7 @@ foreach (BatchApplication item in client.GetApplications())
 }
 ]]></code></example>
     </member>
-    <member name="GetApplicationsAsync(TimeSpan?,DateTimeOffset?,int?,RequestContext)">
+    <member name="GetApplicationsAsync(int?,DateTimeOffset?,int?,RequestContext)">
       <example>
 This sample shows how to call GetApplicationsAsync and parse the result.
 <code><![CDATA[
@@ -5788,7 +6378,7 @@ await foreach (BinaryData item in client.GetApplicationsAsync(null, DateTimeOffs
 }
 ]]></code></example>
     </member>
-    <member name="GetApplications(TimeSpan?,DateTimeOffset?,int?,RequestContext)">
+    <member name="GetApplications(int?,DateTimeOffset?,int?,RequestContext)">
       <example>
 This sample shows how to call GetApplications and parse the result.
 <code><![CDATA[
@@ -5805,7 +6395,7 @@ foreach (BinaryData item in client.GetApplications(null, DateTimeOffset.Parse("F
 }
 ]]></code></example>
     </member>
-    <member name="GetPoolUsageMetricsAsync(TimeSpan?,DateTimeOffset?,int?,DateTimeOffset?,DateTimeOffset?,string,CancellationToken)">
+    <member name="GetPoolUsageMetricsAsync(int?,DateTimeOffset?,int?,DateTimeOffset?,DateTimeOffset?,string,CancellationToken)">
       <example>
 This sample shows how to call GetPoolUsageMetricsAsync.
 <code><![CDATA[
@@ -5818,7 +6408,7 @@ await foreach (BatchPoolUsageMetrics item in client.GetPoolUsageMetricsAsync())
 }
 ]]></code></example>
     </member>
-    <member name="GetPoolUsageMetrics(TimeSpan?,DateTimeOffset?,int?,DateTimeOffset?,DateTimeOffset?,string,CancellationToken)">
+    <member name="GetPoolUsageMetrics(int?,DateTimeOffset?,int?,DateTimeOffset?,DateTimeOffset?,string,CancellationToken)">
       <example>
 This sample shows how to call GetPoolUsageMetrics.
 <code><![CDATA[
@@ -5831,7 +6421,7 @@ foreach (BatchPoolUsageMetrics item in client.GetPoolUsageMetrics())
 }
 ]]></code></example>
     </member>
-    <member name="GetPoolUsageMetricsAsync(TimeSpan?,DateTimeOffset?,int?,DateTimeOffset?,DateTimeOffset?,string,RequestContext)">
+    <member name="GetPoolUsageMetricsAsync(int?,DateTimeOffset?,int?,DateTimeOffset?,DateTimeOffset?,string,RequestContext)">
       <example>
 This sample shows how to call GetPoolUsageMetricsAsync and parse the result.
 <code><![CDATA[
@@ -5850,7 +6440,7 @@ await foreach (BinaryData item in client.GetPoolUsageMetricsAsync(null, DateTime
 }
 ]]></code></example>
     </member>
-    <member name="GetPoolUsageMetrics(TimeSpan?,DateTimeOffset?,int?,DateTimeOffset?,DateTimeOffset?,string,RequestContext)">
+    <member name="GetPoolUsageMetrics(int?,DateTimeOffset?,int?,DateTimeOffset?,DateTimeOffset?,string,RequestContext)">
       <example>
 This sample shows how to call GetPoolUsageMetrics and parse the result.
 <code><![CDATA[
@@ -5869,7 +6459,7 @@ foreach (BinaryData item in client.GetPoolUsageMetrics(null, DateTimeOffset.Pars
 }
 ]]></code></example>
     </member>
-    <member name="GetPoolsAsync(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)">
+    <member name="GetPoolsAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)">
       <example>
 This sample shows how to call GetPoolsAsync.
 <code><![CDATA[
@@ -5882,7 +6472,7 @@ await foreach (BatchPool item in client.GetPoolsAsync())
 }
 ]]></code></example>
     </member>
-    <member name="GetPools(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)">
+    <member name="GetPools(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)">
       <example>
 This sample shows how to call GetPools.
 <code><![CDATA[
@@ -5895,7 +6485,7 @@ foreach (BatchPool item in client.GetPools())
 }
 ]]></code></example>
     </member>
-    <member name="GetPoolsAsync(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)">
+    <member name="GetPoolsAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)">
       <example>
 This sample shows how to call GetPoolsAsync and parse the result.
 <code><![CDATA[
@@ -5910,7 +6500,7 @@ await foreach (BinaryData item in client.GetPoolsAsync(null, DateTimeOffset.Pars
 }
 ]]></code></example>
     </member>
-    <member name="GetPools(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)">
+    <member name="GetPools(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)">
       <example>
 This sample shows how to call GetPools and parse the result.
 <code><![CDATA[
@@ -5925,7 +6515,7 @@ foreach (BinaryData item in client.GetPools(null, DateTimeOffset.Parse("Fri, 17 
 }
 ]]></code></example>
     </member>
-    <member name="GetSupportedImagesAsync(TimeSpan?,DateTimeOffset?,int?,string,CancellationToken)">
+    <member name="GetSupportedImagesAsync(int?,DateTimeOffset?,int?,string,CancellationToken)">
       <example>
 This sample shows how to call GetSupportedImagesAsync.
 <code><![CDATA[
@@ -5938,7 +6528,7 @@ await foreach (BatchSupportedImage item in client.GetSupportedImagesAsync())
 }
 ]]></code></example>
     </member>
-    <member name="GetSupportedImages(TimeSpan?,DateTimeOffset?,int?,string,CancellationToken)">
+    <member name="GetSupportedImages(int?,DateTimeOffset?,int?,string,CancellationToken)">
       <example>
 This sample shows how to call GetSupportedImages.
 <code><![CDATA[
@@ -5951,7 +6541,7 @@ foreach (BatchSupportedImage item in client.GetSupportedImages())
 }
 ]]></code></example>
     </member>
-    <member name="GetSupportedImagesAsync(TimeSpan?,DateTimeOffset?,int?,string,RequestContext)">
+    <member name="GetSupportedImagesAsync(int?,DateTimeOffset?,int?,string,RequestContext)">
       <example>
 This sample shows how to call GetSupportedImagesAsync and parse the result.
 <code><![CDATA[
@@ -5969,7 +6559,7 @@ await foreach (BinaryData item in client.GetSupportedImagesAsync(null, DateTimeO
 }
 ]]></code></example>
     </member>
-    <member name="GetSupportedImages(TimeSpan?,DateTimeOffset?,int?,string,RequestContext)">
+    <member name="GetSupportedImages(int?,DateTimeOffset?,int?,string,RequestContext)">
       <example>
 This sample shows how to call GetSupportedImages and parse the result.
 <code><![CDATA[
@@ -5987,7 +6577,7 @@ foreach (BinaryData item in client.GetSupportedImages(null, DateTimeOffset.Parse
 }
 ]]></code></example>
     </member>
-    <member name="GetPoolNodeCountsAsync(TimeSpan?,DateTimeOffset?,int?,string,CancellationToken)">
+    <member name="GetPoolNodeCountsAsync(int?,DateTimeOffset?,int?,string,CancellationToken)">
       <example>
 This sample shows how to call GetPoolNodeCountsAsync.
 <code><![CDATA[
@@ -6000,7 +6590,7 @@ await foreach (BatchPoolNodeCounts item in client.GetPoolNodeCountsAsync())
 }
 ]]></code></example>
     </member>
-    <member name="GetPoolNodeCounts(TimeSpan?,DateTimeOffset?,int?,string,CancellationToken)">
+    <member name="GetPoolNodeCounts(int?,DateTimeOffset?,int?,string,CancellationToken)">
       <example>
 This sample shows how to call GetPoolNodeCounts.
 <code><![CDATA[
@@ -6013,7 +6603,7 @@ foreach (BatchPoolNodeCounts item in client.GetPoolNodeCounts())
 }
 ]]></code></example>
     </member>
-    <member name="GetPoolNodeCountsAsync(TimeSpan?,DateTimeOffset?,int?,string,RequestContext)">
+    <member name="GetPoolNodeCountsAsync(int?,DateTimeOffset?,int?,string,RequestContext)">
       <example>
 This sample shows how to call GetPoolNodeCountsAsync and parse the result.
 <code><![CDATA[
@@ -6028,7 +6618,7 @@ await foreach (BinaryData item in client.GetPoolNodeCountsAsync(null, DateTimeOf
 }
 ]]></code></example>
     </member>
-    <member name="GetPoolNodeCounts(TimeSpan?,DateTimeOffset?,int?,string,RequestContext)">
+    <member name="GetPoolNodeCounts(int?,DateTimeOffset?,int?,string,RequestContext)">
       <example>
 This sample shows how to call GetPoolNodeCounts and parse the result.
 <code><![CDATA[
@@ -6043,7 +6633,7 @@ foreach (BinaryData item in client.GetPoolNodeCounts(null, DateTimeOffset.Parse(
 }
 ]]></code></example>
     </member>
-    <member name="GetJobsAsync(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)">
+    <member name="GetJobsAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)">
       <example>
 This sample shows how to call GetJobsAsync.
 <code><![CDATA[
@@ -6056,7 +6646,7 @@ await foreach (BatchJob item in client.GetJobsAsync())
 }
 ]]></code></example>
     </member>
-    <member name="GetJobs(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)">
+    <member name="GetJobs(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)">
       <example>
 This sample shows how to call GetJobs.
 <code><![CDATA[
@@ -6069,7 +6659,7 @@ foreach (BatchJob item in client.GetJobs())
 }
 ]]></code></example>
     </member>
-    <member name="GetJobsAsync(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)">
+    <member name="GetJobsAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)">
       <example>
 This sample shows how to call GetJobsAsync and parse the result.
 <code><![CDATA[
@@ -6084,7 +6674,7 @@ await foreach (BinaryData item in client.GetJobsAsync(null, DateTimeOffset.Parse
 }
 ]]></code></example>
     </member>
-    <member name="GetJobs(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)">
+    <member name="GetJobs(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)">
       <example>
 This sample shows how to call GetJobs and parse the result.
 <code><![CDATA[
@@ -6099,7 +6689,7 @@ foreach (BinaryData item in client.GetJobs(null, DateTimeOffset.Parse("Fri, 17 F
 }
 ]]></code></example>
     </member>
-    <member name="GetJobsFromSchedulesAsync(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)">
+    <member name="GetJobsFromSchedulesAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)">
       <example>
 This sample shows how to call GetJobsFromSchedulesAsync.
 <code><![CDATA[
@@ -6112,7 +6702,7 @@ await foreach (BatchJob item in client.GetJobsFromSchedulesAsync("jobScheduleId"
 }
 ]]></code></example>
     </member>
-    <member name="GetJobsFromSchedules(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)">
+    <member name="GetJobsFromSchedules(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)">
       <example>
 This sample shows how to call GetJobsFromSchedules.
 <code><![CDATA[
@@ -6125,7 +6715,7 @@ foreach (BatchJob item in client.GetJobsFromSchedules("jobScheduleId"))
 }
 ]]></code></example>
     </member>
-    <member name="GetJobsFromSchedulesAsync(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)">
+    <member name="GetJobsFromSchedulesAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)">
       <example>
 This sample shows how to call GetJobsFromSchedulesAsync and parse the result.
 <code><![CDATA[
@@ -6140,7 +6730,7 @@ await foreach (BinaryData item in client.GetJobsFromSchedulesAsync("jobScheduleI
 }
 ]]></code></example>
     </member>
-    <member name="GetJobsFromSchedules(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)">
+    <member name="GetJobsFromSchedules(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)">
       <example>
 This sample shows how to call GetJobsFromSchedules and parse the result.
 <code><![CDATA[
@@ -6155,7 +6745,7 @@ foreach (BinaryData item in client.GetJobsFromSchedules("jobScheduleId", null, D
 }
 ]]></code></example>
     </member>
-    <member name="GetJobPreparationAndReleaseTaskStatusesAsync(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)">
+    <member name="GetJobPreparationAndReleaseTaskStatusesAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)">
       <example>
 This sample shows how to call GetJobPreparationAndReleaseTaskStatusesAsync.
 <code><![CDATA[
@@ -6168,7 +6758,7 @@ await foreach (BatchJobPreparationAndReleaseTaskStatus item in client.GetJobPrep
 }
 ]]></code></example>
     </member>
-    <member name="GetJobPreparationAndReleaseTaskStatuses(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)">
+    <member name="GetJobPreparationAndReleaseTaskStatuses(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)">
       <example>
 This sample shows how to call GetJobPreparationAndReleaseTaskStatuses.
 <code><![CDATA[
@@ -6181,7 +6771,7 @@ foreach (BatchJobPreparationAndReleaseTaskStatus item in client.GetJobPreparatio
 }
 ]]></code></example>
     </member>
-    <member name="GetJobPreparationAndReleaseTaskStatusesAsync(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)">
+    <member name="GetJobPreparationAndReleaseTaskStatusesAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)">
       <example>
 This sample shows how to call GetJobPreparationAndReleaseTaskStatusesAsync and parse the result.
 <code><![CDATA[
@@ -6196,7 +6786,7 @@ await foreach (BinaryData item in client.GetJobPreparationAndReleaseTaskStatuses
 }
 ]]></code></example>
     </member>
-    <member name="GetJobPreparationAndReleaseTaskStatuses(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)">
+    <member name="GetJobPreparationAndReleaseTaskStatuses(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)">
       <example>
 This sample shows how to call GetJobPreparationAndReleaseTaskStatuses and parse the result.
 <code><![CDATA[
@@ -6211,7 +6801,7 @@ foreach (BinaryData item in client.GetJobPreparationAndReleaseTaskStatuses("jobI
 }
 ]]></code></example>
     </member>
-    <member name="GetCertificatesAsync(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)">
+    <member name="GetCertificatesAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)">
       <example>
 This sample shows how to call GetCertificatesAsync.
 <code><![CDATA[
@@ -6224,7 +6814,7 @@ await foreach (BatchCertificate item in client.GetCertificatesAsync())
 }
 ]]></code></example>
     </member>
-    <member name="GetCertificates(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)">
+    <member name="GetCertificates(int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)">
       <example>
 This sample shows how to call GetCertificates.
 <code><![CDATA[
@@ -6237,7 +6827,7 @@ foreach (BatchCertificate item in client.GetCertificates())
 }
 ]]></code></example>
     </member>
-    <member name="GetCertificatesAsync(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)">
+    <member name="GetCertificatesAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)">
       <example>
 This sample shows how to call GetCertificatesAsync and parse the result.
 <code><![CDATA[
@@ -6254,7 +6844,7 @@ await foreach (BinaryData item in client.GetCertificatesAsync(null, DateTimeOffs
 }
 ]]></code></example>
     </member>
-    <member name="GetCertificates(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)">
+    <member name="GetCertificates(int?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)">
       <example>
 This sample shows how to call GetCertificates and parse the result.
 <code><![CDATA[
@@ -6271,7 +6861,7 @@ foreach (BinaryData item in client.GetCertificates(null, DateTimeOffset.Parse("F
 }
 ]]></code></example>
     </member>
-    <member name="GetJobSchedulesAsync(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)">
+    <member name="GetJobSchedulesAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)">
       <example>
 This sample shows how to call GetJobSchedulesAsync.
 <code><![CDATA[
@@ -6284,7 +6874,7 @@ await foreach (BatchJobSchedule item in client.GetJobSchedulesAsync())
 }
 ]]></code></example>
     </member>
-    <member name="GetJobSchedules(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)">
+    <member name="GetJobSchedules(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)">
       <example>
 This sample shows how to call GetJobSchedules.
 <code><![CDATA[
@@ -6297,7 +6887,7 @@ foreach (BatchJobSchedule item in client.GetJobSchedules())
 }
 ]]></code></example>
     </member>
-    <member name="GetJobSchedulesAsync(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)">
+    <member name="GetJobSchedulesAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)">
       <example>
 This sample shows how to call GetJobSchedulesAsync and parse the result.
 <code><![CDATA[
@@ -6312,7 +6902,7 @@ await foreach (BinaryData item in client.GetJobSchedulesAsync(null, DateTimeOffs
 }
 ]]></code></example>
     </member>
-    <member name="GetJobSchedules(TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)">
+    <member name="GetJobSchedules(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)">
       <example>
 This sample shows how to call GetJobSchedules and parse the result.
 <code><![CDATA[
@@ -6327,7 +6917,7 @@ foreach (BinaryData item in client.GetJobSchedules(null, DateTimeOffset.Parse("F
 }
 ]]></code></example>
     </member>
-    <member name="GetTasksAsync(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)">
+    <member name="GetTasksAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)">
       <example>
 This sample shows how to call GetTasksAsync.
 <code><![CDATA[
@@ -6340,7 +6930,7 @@ await foreach (BatchTask item in client.GetTasksAsync("jobId"))
 }
 ]]></code></example>
     </member>
-    <member name="GetTasks(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)">
+    <member name="GetTasks(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)">
       <example>
 This sample shows how to call GetTasks.
 <code><![CDATA[
@@ -6353,7 +6943,7 @@ foreach (BatchTask item in client.GetTasks("jobId"))
 }
 ]]></code></example>
     </member>
-    <member name="GetTasksAsync(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)">
+    <member name="GetTasksAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)">
       <example>
 This sample shows how to call GetTasksAsync and parse the result.
 <code><![CDATA[
@@ -6368,7 +6958,7 @@ await foreach (BinaryData item in client.GetTasksAsync("jobId", null, DateTimeOf
 }
 ]]></code></example>
     </member>
-    <member name="GetTasks(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)">
+    <member name="GetTasks(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)">
       <example>
 This sample shows how to call GetTasks and parse the result.
 <code><![CDATA[
@@ -6383,7 +6973,7 @@ foreach (BinaryData item in client.GetTasks("jobId", null, DateTimeOffset.Parse(
 }
 ]]></code></example>
     </member>
-    <member name="GetSubTasksAsync(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},CancellationToken)">
+    <member name="GetSubTasksAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)">
       <example>
 This sample shows how to call GetSubTasksAsync.
 <code><![CDATA[
@@ -6396,7 +6986,7 @@ await foreach (BatchSubtask item in client.GetSubTasksAsync("jobId", "taskId"))
 }
 ]]></code></example>
     </member>
-    <member name="GetSubTasks(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},CancellationToken)">
+    <member name="GetSubTasks(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)">
       <example>
 This sample shows how to call GetSubTasks.
 <code><![CDATA[
@@ -6409,7 +6999,7 @@ foreach (BatchSubtask item in client.GetSubTasks("jobId", "taskId"))
 }
 ]]></code></example>
     </member>
-    <member name="GetSubTasksAsync(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},RequestContext)">
+    <member name="GetSubTasksAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)">
       <example>
 This sample shows how to call GetSubTasksAsync and parse the result.
 <code><![CDATA[
@@ -6424,7 +7014,7 @@ await foreach (BinaryData item in client.GetSubTasksAsync("jobId", "taskId", nul
 }
 ]]></code></example>
     </member>
-    <member name="GetSubTasks(string,string,TimeSpan?,DateTimeOffset?,IEnumerable{string},RequestContext)">
+    <member name="GetSubTasks(string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)">
       <example>
 This sample shows how to call GetSubTasks and parse the result.
 <code><![CDATA[
@@ -6439,7 +7029,7 @@ foreach (BinaryData item in client.GetSubTasks("jobId", "taskId", null, DateTime
 }
 ]]></code></example>
     </member>
-    <member name="GetTaskFilesAsync(string,string,TimeSpan?,DateTimeOffset?,int?,string,bool?,CancellationToken)">
+    <member name="GetTaskFilesAsync(string,string,int?,DateTimeOffset?,int?,string,bool?,CancellationToken)">
       <example>
 This sample shows how to call GetTaskFilesAsync.
 <code><![CDATA[
@@ -6452,7 +7042,7 @@ await foreach (BatchNodeFile item in client.GetTaskFilesAsync("jobId", "taskId")
 }
 ]]></code></example>
     </member>
-    <member name="GetTaskFiles(string,string,TimeSpan?,DateTimeOffset?,int?,string,bool?,CancellationToken)">
+    <member name="GetTaskFiles(string,string,int?,DateTimeOffset?,int?,string,bool?,CancellationToken)">
       <example>
 This sample shows how to call GetTaskFiles.
 <code><![CDATA[
@@ -6465,7 +7055,7 @@ foreach (BatchNodeFile item in client.GetTaskFiles("jobId", "taskId"))
 }
 ]]></code></example>
     </member>
-    <member name="GetTaskFilesAsync(string,string,TimeSpan?,DateTimeOffset?,int?,string,bool?,RequestContext)">
+    <member name="GetTaskFilesAsync(string,string,int?,DateTimeOffset?,int?,string,bool?,RequestContext)">
       <example>
 This sample shows how to call GetTaskFilesAsync and parse the result.
 <code><![CDATA[
@@ -6480,7 +7070,7 @@ await foreach (BinaryData item in client.GetTaskFilesAsync("jobId", "taskId", nu
 }
 ]]></code></example>
     </member>
-    <member name="GetTaskFiles(string,string,TimeSpan?,DateTimeOffset?,int?,string,bool?,RequestContext)">
+    <member name="GetTaskFiles(string,string,int?,DateTimeOffset?,int?,string,bool?,RequestContext)">
       <example>
 This sample shows how to call GetTaskFiles and parse the result.
 <code><![CDATA[
@@ -6495,7 +7085,7 @@ foreach (BinaryData item in client.GetTaskFiles("jobId", "taskId", null, DateTim
 }
 ]]></code></example>
     </member>
-    <member name="GetNodesAsync(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)">
+    <member name="GetNodesAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)">
       <example>
 This sample shows how to call GetNodesAsync.
 <code><![CDATA[
@@ -6508,7 +7098,7 @@ await foreach (BatchNode item in client.GetNodesAsync("poolId"))
 }
 ]]></code></example>
     </member>
-    <member name="GetNodes(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)">
+    <member name="GetNodes(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)">
       <example>
 This sample shows how to call GetNodes.
 <code><![CDATA[
@@ -6521,7 +7111,7 @@ foreach (BatchNode item in client.GetNodes("poolId"))
 }
 ]]></code></example>
     </member>
-    <member name="GetNodesAsync(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)">
+    <member name="GetNodesAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)">
       <example>
 This sample shows how to call GetNodesAsync and parse the result.
 <code><![CDATA[
@@ -6536,7 +7126,7 @@ await foreach (BinaryData item in client.GetNodesAsync("poolId", null, DateTimeO
 }
 ]]></code></example>
     </member>
-    <member name="GetNodes(string,TimeSpan?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)">
+    <member name="GetNodes(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)">
       <example>
 This sample shows how to call GetNodes and parse the result.
 <code><![CDATA[
@@ -6551,7 +7141,7 @@ foreach (BinaryData item in client.GetNodes("poolId", null, DateTimeOffset.Parse
 }
 ]]></code></example>
     </member>
-    <member name="GetNodeExtensionsAsync(string,string,TimeSpan?,DateTimeOffset?,int?,IEnumerable{string},CancellationToken)">
+    <member name="GetNodeExtensionsAsync(string,string,int?,DateTimeOffset?,int?,IEnumerable{string},CancellationToken)">
       <example>
 This sample shows how to call GetNodeExtensionsAsync.
 <code><![CDATA[
@@ -6564,7 +7154,7 @@ await foreach (BatchNodeVMExtension item in client.GetNodeExtensionsAsync("poolI
 }
 ]]></code></example>
     </member>
-    <member name="GetNodeExtensions(string,string,TimeSpan?,DateTimeOffset?,int?,IEnumerable{string},CancellationToken)">
+    <member name="GetNodeExtensions(string,string,int?,DateTimeOffset?,int?,IEnumerable{string},CancellationToken)">
       <example>
 This sample shows how to call GetNodeExtensions.
 <code><![CDATA[
@@ -6577,7 +7167,7 @@ foreach (BatchNodeVMExtension item in client.GetNodeExtensions("poolId", "tvm-16
 }
 ]]></code></example>
     </member>
-    <member name="GetNodeExtensionsAsync(string,string,TimeSpan?,DateTimeOffset?,int?,IEnumerable{string},RequestContext)">
+    <member name="GetNodeExtensionsAsync(string,string,int?,DateTimeOffset?,int?,IEnumerable{string},RequestContext)">
       <example>
 This sample shows how to call GetNodeExtensionsAsync and parse the result.
 <code><![CDATA[
@@ -6592,7 +7182,7 @@ await foreach (BinaryData item in client.GetNodeExtensionsAsync("poolId", "tvm-1
 }
 ]]></code></example>
     </member>
-    <member name="GetNodeExtensions(string,string,TimeSpan?,DateTimeOffset?,int?,IEnumerable{string},RequestContext)">
+    <member name="GetNodeExtensions(string,string,int?,DateTimeOffset?,int?,IEnumerable{string},RequestContext)">
       <example>
 This sample shows how to call GetNodeExtensions and parse the result.
 <code><![CDATA[
@@ -6607,7 +7197,7 @@ foreach (BinaryData item in client.GetNodeExtensions("poolId", "tvm-1695681911_2
 }
 ]]></code></example>
     </member>
-    <member name="GetNodeFilesAsync(string,string,TimeSpan?,DateTimeOffset?,int?,string,bool?,CancellationToken)">
+    <member name="GetNodeFilesAsync(string,string,int?,DateTimeOffset?,int?,string,bool?,CancellationToken)">
       <example>
 This sample shows how to call GetNodeFilesAsync.
 <code><![CDATA[
@@ -6620,7 +7210,7 @@ await foreach (BatchNodeFile item in client.GetNodeFilesAsync("poolId", "tvm-169
 }
 ]]></code></example>
     </member>
-    <member name="GetNodeFiles(string,string,TimeSpan?,DateTimeOffset?,int?,string,bool?,CancellationToken)">
+    <member name="GetNodeFiles(string,string,int?,DateTimeOffset?,int?,string,bool?,CancellationToken)">
       <example>
 This sample shows how to call GetNodeFiles.
 <code><![CDATA[
@@ -6633,7 +7223,7 @@ foreach (BatchNodeFile item in client.GetNodeFiles("poolId", "tvm-1695681911_1-2
 }
 ]]></code></example>
     </member>
-    <member name="GetNodeFilesAsync(string,string,TimeSpan?,DateTimeOffset?,int?,string,bool?,RequestContext)">
+    <member name="GetNodeFilesAsync(string,string,int?,DateTimeOffset?,int?,string,bool?,RequestContext)">
       <example>
 This sample shows how to call GetNodeFilesAsync and parse the result.
 <code><![CDATA[
@@ -6648,7 +7238,7 @@ await foreach (BinaryData item in client.GetNodeFilesAsync("poolId", "tvm-169568
 }
 ]]></code></example>
     </member>
-    <member name="GetNodeFiles(string,string,TimeSpan?,DateTimeOffset?,int?,string,bool?,RequestContext)">
+    <member name="GetNodeFiles(string,string,int?,DateTimeOffset?,int?,string,bool?,RequestContext)">
       <example>
 This sample shows how to call GetNodeFiles and parse the result.
 <code><![CDATA[

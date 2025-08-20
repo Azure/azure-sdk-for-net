@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Redis.Models
                         }
                         else
                         {
-                            array.Add(ModelReaderWriter.Read<OperationStatusResult>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRedisContext.Default));
+                            array.Add(JsonSerializer.Deserialize<OperationStatusResult>(item.GetRawText()));
                         }
                     }
                     operations = array;
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Redis.Models
                     {
                         continue;
                     }
-                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRedisContext.Default);
+                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")

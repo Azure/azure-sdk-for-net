@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DiagnosticResource_Get</description>
+        /// <description>Diagnostics_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DiagnosticResource_Get</description>
+        /// <description>Diagnostics_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SolutionResource_Get</description>
+        /// <description>Solution_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SolutionResource_Get</description>
+        /// <description>Solution_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SimplifiedSolutionsResource_Get</description>
+        /// <description>SimplifiedSolutions_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SimplifiedSolutionsResource_Get</description>
+        /// <description>SimplifiedSolutions_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TroubleshooterResource_Get</description>
+        /// <description>Troubleshooters_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TroubleshooterResource_Get</description>
+        /// <description>Troubleshooters_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CheckNameAvailabilityOperationGroup_CheckSelfHelpNameAvailability</description>
+        /// <description>CheckNameAvailability_CheckAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
             scope0.Start();
             try
             {
-                var response = await CheckNameAvailabilityRestClient.CheckSelfHelpNameAvailabilityAsync(scope, content, cancellationToken).ConfigureAwait(false);
+                var response = await CheckNameAvailabilityRestClient.CheckAvailabilityAsync(scope, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CheckNameAvailabilityOperationGroup_CheckSelfHelpNameAvailability</description>
+        /// <description>CheckNameAvailability_CheckAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
             scope0.Start();
             try
             {
-                var response = CheckNameAvailabilityRestClient.CheckSelfHelpNameAvailability(scope, content, cancellationToken);
+                var response = CheckNameAvailabilityRestClient.CheckAvailability(scope, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

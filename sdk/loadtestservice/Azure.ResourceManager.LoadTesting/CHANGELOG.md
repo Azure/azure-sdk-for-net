@@ -10,12 +10,6 @@
 
 ### Other Changes
 
-## 1.1.2 (2025-07-28)
-
-### Features Added
-
-- Make `Azure.ResourceManager.LoadTesting` AOT-compatible
-
 ## 1.1.1 (2025-03-11)
 
 ### Features Added

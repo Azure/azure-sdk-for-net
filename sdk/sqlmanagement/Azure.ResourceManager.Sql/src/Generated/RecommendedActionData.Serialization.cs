@@ -188,7 +188,19 @@ namespace Azure.ResourceManager.Sql
                 foreach (var item in ActionDetails)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndObject();
             }
@@ -243,7 +255,7 @@ namespace Azure.ResourceManager.Sql
             IReadOnlyList<RecommendedActionImpactRecord> observedImpact = default;
             IReadOnlyList<RecommendedActionMetricInfo> timeSeries = default;
             IReadOnlyList<string> linkedObjects = default;
-            IReadOnlyDictionary<string, string> details = default;
+            IReadOnlyDictionary<string, BinaryData> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -283,7 +295,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlContext.Default);
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -515,10 +527,17 @@ namespace Azure.ResourceManager.Sql
                             {
                                 continue;
                             }
-                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, property1.Value.GetString());
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                }
                             }
                             details = dictionary;
                             continue;
@@ -561,7 +580,7 @@ namespace Azure.ResourceManager.Sql
                 observedImpact ?? new ChangeTrackingList<RecommendedActionImpactRecord>(),
                 timeSeries ?? new ChangeTrackingList<RecommendedActionMetricInfo>(),
                 linkedObjects ?? new ChangeTrackingList<string>(),
-                details ?? new ChangeTrackingDictionary<string, string>(),
+                details ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 serializedAdditionalRawData);
         }
 
@@ -1085,15 +1104,7 @@ namespace Azure.ResourceManager.Sql
                                 builder.Append("null");
                                 continue;
                             }
-                            if (item.Value.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("'''");
-                                builder.AppendLine($"{item.Value}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"'{item.Value}'");
-                            }
+                            builder.AppendLine($"'{item.Value.ToString()}'");
                         }
                         builder.AppendLine("    }");
                     }

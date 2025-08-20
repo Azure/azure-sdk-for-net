@@ -9,16 +9,20 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs
 {
     internal sealed class ConfigureKeyManagementBlobClientOptions : IConfigureOptions<KeyManagementOptions>
     {
-        private readonly AzureBlobXmlRepository _azureBlobXmlRepository;
+        private readonly IServiceScopeFactory _serviceScopeFactory;
 
-        public ConfigureKeyManagementBlobClientOptions(AzureBlobXmlRepository azureBlobXmlRepository)
+        public ConfigureKeyManagementBlobClientOptions(IServiceScopeFactory serviceScopeFactory)
         {
-            _azureBlobXmlRepository = azureBlobXmlRepository;
+            _serviceScopeFactory = serviceScopeFactory;
         }
 
         public void Configure(KeyManagementOptions options)
         {
-            options.XmlRepository = _azureBlobXmlRepository;
+            using var scope = _serviceScopeFactory.CreateScope();
+
+            var provider = scope.ServiceProvider;
+
+            options.XmlRepository = provider.GetRequiredService<AzureBlobXmlRepository>();
         }
     }
 }

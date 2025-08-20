@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -46,12 +45,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(VirtualNetwork))
             {
                 writer.WritePropertyName("virtualNetwork"u8);
-                ((IJsonModel<WritableSubResource>)VirtualNetwork).Write(writer, options);
+                JsonSerializer.Serialize(writer, VirtualNetwork);
             }
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                ((IJsonModel<WritableSubResource>)Subnet).Write(writer, options);
+                JsonSerializer.Serialize(writer, Subnet);
             }
             if (Optional.IsDefined(IPAddress))
             {
@@ -61,12 +60,12 @@ namespace Azure.ResourceManager.Network.Models
             if (options.Format != "W" && Optional.IsDefined(NetworkInterfaceIPConfiguration))
             {
                 writer.WritePropertyName("networkInterfaceIPConfiguration"u8);
-                ((IJsonModel<WritableSubResource>)NetworkInterfaceIPConfiguration).Write(writer, options);
+                JsonSerializer.Serialize(writer, NetworkInterfaceIPConfiguration);
             }
             if (Optional.IsDefined(LoadBalancerFrontendIPConfiguration))
             {
                 writer.WritePropertyName("loadBalancerFrontendIPConfiguration"u8);
-                ((IJsonModel<WritableSubResource>)LoadBalancerFrontendIPConfiguration).Write(writer, options);
+                JsonSerializer.Serialize(writer, LoadBalancerFrontendIPConfiguration);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(InboundNatRulesPortMapping))
             {
@@ -153,7 +152,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            virtualNetwork = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            virtualNetwork = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("subnet"u8))
@@ -162,7 +161,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            subnet = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            subnet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("ipAddress"u8))
@@ -176,7 +175,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            networkInterfaceIPConfiguration = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            networkInterfaceIPConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("loadBalancerFrontendIPConfiguration"u8))
@@ -185,7 +184,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            loadBalancerFrontendIPConfiguration = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            loadBalancerFrontendIPConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("inboundNatRulesPortMapping"u8))

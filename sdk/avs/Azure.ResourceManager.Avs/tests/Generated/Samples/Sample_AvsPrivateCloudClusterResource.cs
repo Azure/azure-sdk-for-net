@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ClustersGet()
         {
-            // Generated from example definition: 2024-09-01/Clusters_Get.json
-            // this example is just showing the usage of "Cluster_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/Clusters_Get.json
+            // this example is just showing the usage of "Clusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ClustersDelete()
         {
-            // Generated from example definition: 2024-09-01/Clusters_Delete.json
-            // this example is just showing the usage of "Cluster_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/Clusters_Delete.json
+            // this example is just showing the usage of "Clusters_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ClustersUpdate()
         {
-            // Generated from example definition: 2024-09-01/Clusters_Update.json
-            // this example is just showing the usage of "Cluster_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/Clusters_Update.json
+            // this example is just showing the usage of "Clusters_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -96,7 +96,10 @@ namespace Azure.ResourceManager.Avs.Samples
             AvsPrivateCloudClusterResource avsPrivateCloudCluster = client.GetAvsPrivateCloudClusterResource(avsPrivateCloudClusterResourceId);
 
             // invoke the operation
-            AvsPrivateCloudClusterPatch patch = new AvsPrivateCloudClusterPatch();
+            AvsPrivateCloudClusterPatch patch = new AvsPrivateCloudClusterPatch
+            {
+                ClusterSize = 4,
+            };
             ArmOperation<AvsPrivateCloudClusterResource> lro = await avsPrivateCloudCluster.UpdateAsync(WaitUntil.Completed, patch);
             AvsPrivateCloudClusterResource result = lro.Value;
 
@@ -109,10 +112,10 @@ namespace Azure.ResourceManager.Avs.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetClusterZones_ClustersListZones()
+        public async Task GetZones_ClustersListZones()
         {
-            // Generated from example definition: 2024-09-01/Clusters_ListZones.json
-            // this example is just showing the usage of "Clusters_GetClusterZones" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/Clusters_ListZones.json
+            // this example is just showing the usage of "Clusters_ListZones" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -128,18 +131,21 @@ namespace Azure.ResourceManager.Avs.Samples
             ResourceIdentifier avsPrivateCloudClusterResourceId = AvsPrivateCloudClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName, clusterName);
             AvsPrivateCloudClusterResource avsPrivateCloudCluster = client.GetAvsPrivateCloudClusterResource(avsPrivateCloudClusterResourceId);
 
-            // invoke the operation
-            AvsClusterZoneListResult result = await avsPrivateCloudCluster.GetClusterZonesAsync();
+            // invoke the operation and iterate over the result
+            await foreach (AvsClusterZone item in avsPrivateCloudCluster.GetZonesAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetClusterZones_ClustersListZonesStretched()
+        public async Task GetZones_ClustersListZonesStretched()
         {
-            // Generated from example definition: 2024-09-01/Clusters_ListZones_Stretched.json
-            // this example is just showing the usage of "Clusters_GetClusterZones" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/Clusters_ListZones_Stretched.json
+            // this example is just showing the usage of "Clusters_ListZones" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -155,10 +161,13 @@ namespace Azure.ResourceManager.Avs.Samples
             ResourceIdentifier avsPrivateCloudClusterResourceId = AvsPrivateCloudClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateCloudName, clusterName);
             AvsPrivateCloudClusterResource avsPrivateCloudCluster = client.GetAvsPrivateCloudClusterResource(avsPrivateCloudClusterResourceId);
 
-            // invoke the operation
-            AvsClusterZoneListResult result = await avsPrivateCloudCluster.GetClusterZonesAsync();
+            // invoke the operation and iterate over the result
+            await foreach (AvsClusterZone item in avsPrivateCloudCluster.GetZonesAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
 
-            Console.WriteLine($"Succeeded: {result}");
+            Console.WriteLine("Succeeded");
         }
     }
 }

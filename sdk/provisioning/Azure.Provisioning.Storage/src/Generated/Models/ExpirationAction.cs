@@ -6,11 +6,7 @@
 namespace Azure.Provisioning.Storage;
 
 /// <summary>
-/// The SAS Expiration Action defines the action to be performed when
-/// sasPolicy.sasExpirationPeriod is violated. The &apos;Log&apos; action can
-/// be used for audit purposes and the &apos;Block&apos; action can be used to
-/// block and deny the usage of SAS tokens that do not adhere to the sas
-/// policy expiration period.
+/// The SAS expiration action. Can only be Log.
 /// </summary>
 public enum ExpirationAction
 {
@@ -18,9 +14,4 @@ public enum ExpirationAction
     /// Log.
     /// </summary>
     Log,
-
-    /// <summary>
-    /// Block.
-    /// </summary>
-    Block,
 }

@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -75,7 +74,7 @@ namespace Azure.Developer.DevCenter.Models
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                ((IJsonModel<ResponseError>)Error).Write(writer, options);
+                JsonSerializer.Serialize(writer, Error);
             }
             if (options.Format != "W" && Optional.IsDefined(Location))
             {
@@ -112,7 +111,7 @@ namespace Azure.Developer.DevCenter.Models
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedTime.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LocalAdministratorStatus))
+            if (Optional.IsDefined(LocalAdministratorStatus))
             {
                 writer.WritePropertyName("localAdministrator"u8);
                 writer.WriteStringValue(LocalAdministratorStatus.Value.ToString());
@@ -237,7 +236,7 @@ namespace Azure.Developer.DevCenter.Models
                     {
                         continue;
                     }
-                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureDeveloperDevCenterContext.Default);
+                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("location"u8))

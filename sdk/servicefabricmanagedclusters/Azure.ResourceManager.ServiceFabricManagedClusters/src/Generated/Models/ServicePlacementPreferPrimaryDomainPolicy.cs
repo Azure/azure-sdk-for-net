@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// be located in a particular fault domain, which in geo-distributed scenarios usually aligns with regional
     /// or datacenter boundaries. Note that since this is an optimization it is possible that the Primary replica
     /// may not end up located in this domain due to failures, capacity limits, or other constraints.
+    ///
     /// </summary>
     public partial class ServicePlacementPreferPrimaryDomainPolicy : ManagedServicePlacementPolicy
     {
@@ -30,17 +31,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Argument.AssertNotNull(domainName, nameof(domainName));
 
             DomainName = domainName;
-            Type = ServicePlacementPolicyType.PreferredPrimaryDomain;
+            ServicePlacementPolicyType = ServicePlacementPolicyType.PreferredPrimaryDomain;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServicePlacementPreferPrimaryDomainPolicy"/>. </summary>
-        /// <param name="type"></param>
+        /// <param name="servicePlacementPolicyType"> The type of placement policy for a service fabric service. Following are the possible values. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="domainName"> The name of the domain that should used for placement as per this policy. </param>
-        internal ServicePlacementPreferPrimaryDomainPolicy(ServicePlacementPolicyType type, IDictionary<string, BinaryData> serializedAdditionalRawData, string domainName) : base(type, serializedAdditionalRawData)
+        internal ServicePlacementPreferPrimaryDomainPolicy(ServicePlacementPolicyType servicePlacementPolicyType, IDictionary<string, BinaryData> serializedAdditionalRawData, string domainName) : base(servicePlacementPolicyType, serializedAdditionalRawData)
         {
             DomainName = domainName;
-            Type = type;
+            ServicePlacementPolicyType = servicePlacementPolicyType;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServicePlacementPreferPrimaryDomainPolicy"/> for deserialization. </summary>

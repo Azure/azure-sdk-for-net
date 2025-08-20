@@ -36,20 +36,20 @@ namespace Azure.ResourceManager.DataMigration.Models
 
             writer.WritePropertyName("targetConnectionInfo"u8);
             writer.WriteObjectValue(TargetConnectionInfo, options);
-            if (Optional.IsDefined(ShouldCollectLogins))
+            if (Optional.IsDefined(CollectLogins))
             {
                 writer.WritePropertyName("collectLogins"u8);
-                writer.WriteBooleanValue(ShouldCollectLogins.Value);
+                writer.WriteBooleanValue(CollectLogins.Value);
             }
-            if (Optional.IsDefined(ShouldCollectAgentJobs))
+            if (Optional.IsDefined(CollectAgentJobs))
             {
                 writer.WritePropertyName("collectAgentJobs"u8);
-                writer.WriteBooleanValue(ShouldCollectAgentJobs.Value);
+                writer.WriteBooleanValue(CollectAgentJobs.Value);
             }
-            if (Optional.IsDefined(ShouldValidateSsisCatalogOnly))
+            if (Optional.IsDefined(ValidateSsisCatalogOnly))
             {
                 writer.WritePropertyName("validateSsisCatalogOnly"u8);
-                writer.WriteBooleanValue(ShouldValidateSsisCatalogOnly.Value);
+                writer.WriteBooleanValue(ValidateSsisCatalogOnly.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            DataMigrationSqlConnectionInfo targetConnectionInfo = default;
+            SqlConnectionInfo targetConnectionInfo = default;
             bool? collectLogins = default;
             bool? collectAgentJobs = default;
             bool? validateSsisCatalogOnly = default;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = DataMigrationSqlConnectionInfo.DeserializeDataMigrationSqlConnectionInfo(property.Value, options);
+                    targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("collectLogins"u8))

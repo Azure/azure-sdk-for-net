@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Search.Tests
     {
         protected ArmClient Client { get; private set; }
 
-        public AzureLocation DefaultLocation => "westus";
+        public AzureLocation DefaultLocation => "eastus2euap";
 
         public SubscriptionResource DefaultLSubscription { get; set; }
 

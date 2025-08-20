@@ -91,10 +91,7 @@ namespace Azure.AI.Agents.Persistent
         /// Supported types:
         /// <list type="bullet">
         /// <item>
-        /// <description><see cref="CodeInterpreterToolDefinition"/></description>
-        /// </item>
-        /// <item>
-        /// <description><see cref="FileSearchToolDefinition"/></description>
+        /// <description><see cref="BinaryData"/></description>
         /// </item>
         /// </list>
         /// </remarks>

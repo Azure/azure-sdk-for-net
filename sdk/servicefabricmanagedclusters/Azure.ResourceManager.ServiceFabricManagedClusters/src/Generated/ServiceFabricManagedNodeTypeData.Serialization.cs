@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -38,6 +37,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku"u8);
+                writer.WriteObjectValue(Sku, options);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -48,11 +52,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(Sku))
-            {
-                writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -293,11 +292,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("securityType"u8);
                 writer.WriteStringValue(SecurityType.Value.ToString());
             }
-            if (Optional.IsDefined(SecurityEncryptionType))
-            {
-                writer.WritePropertyName("securityEncryptionType"u8);
-                writer.WriteStringValue(SecurityEncryptionType.Value.ToString());
-            }
             if (Optional.IsDefined(IsSecureBootEnabled))
             {
                 writer.WritePropertyName("secureBootEnabled"u8);
@@ -373,11 +367,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsZoneBalanceEnabled))
-            {
-                writer.WritePropertyName("zoneBalance"u8);
-                writer.WriteBooleanValue(IsZoneBalanceEnabled.Value);
-            }
             writer.WriteEndObject();
         }
 
@@ -401,8 +390,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 return null;
             }
-            IDictionary<string, string> tags = default;
             NodeTypeSku sku = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -445,7 +434,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             ResourceIdentifier subnetId = default;
             IList<VmSetupAction> vmSetupActions = default;
             ServiceFabricManagedClusterSecurityType? securityType = default;
-            NodeTypeSecurityEncryptionType? securityEncryptionType = default;
             bool? secureBootEnabled = default;
             bool? enableNodePublicIP = default;
             bool? enableNodePublicIPv6 = default;
@@ -458,11 +446,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             IList<AdditionalNetworkInterfaceConfiguration> additionalNetworkInterfaceConfigurations = default;
             string computerNamePrefix = default;
             IList<ServiceFabricManagedVmApplication> vmApplications = default;
-            bool? zoneBalance = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("sku"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sku = NodeTypeSku.DeserializeNodeTypeSku(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -475,15 +471,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("sku"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sku = NodeTypeSku.DeserializeNodeTypeSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -507,7 +494,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceFabricManagedClustersContext.Default);
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -835,7 +822,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         }
                         if (property0.NameEquals("vmImageResourceId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
                             {
                                 continue;
                             }
@@ -844,7 +831,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         }
                         if (property0.NameEquals("subnetId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
                             {
                                 continue;
                             }
@@ -872,15 +859,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                                 continue;
                             }
                             securityType = new ServiceFabricManagedClusterSecurityType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("securityEncryptionType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            securityEncryptionType = new NodeTypeSecurityEncryptionType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("secureBootEnabled"u8))
@@ -912,7 +890,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         }
                         if (property0.NameEquals("vmSharedGalleryImageId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
                             {
                                 continue;
                             }
@@ -921,7 +899,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         }
                         if (property0.NameEquals("natGatewayId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
                             {
                                 continue;
                             }
@@ -953,7 +931,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         }
                         if (property0.NameEquals("serviceArtifactReferenceId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
                             {
                                 continue;
                             }
@@ -962,7 +940,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         }
                         if (property0.NameEquals("dscpConfigurationId"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
                             {
                                 continue;
                             }
@@ -1002,15 +980,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             vmApplications = array;
                             continue;
                         }
-                        if (property0.NameEquals("zoneBalance"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            zoneBalance = property0.Value.GetBoolean();
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -1025,6 +994,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 name,
                 type,
                 systemData,
+                sku,
                 isPrimary,
                 vmInstanceCount,
                 dataDiskSizeGB,
@@ -1063,7 +1033,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 subnetId,
                 vmSetupActions ?? new ChangeTrackingList<VmSetupAction>(),
                 securityType,
-                securityEncryptionType,
                 secureBootEnabled,
                 enableNodePublicIP,
                 enableNodePublicIPv6,
@@ -1076,9 +1045,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 additionalNetworkInterfaceConfigurations ?? new ChangeTrackingList<AdditionalNetworkInterfaceConfiguration>(),
                 computerNamePrefix,
                 vmApplications ?? new ChangeTrackingList<ServiceFabricManagedVmApplication>(),
-                zoneBalance,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                sku,
                 serializedAdditionalRawData);
         }
 

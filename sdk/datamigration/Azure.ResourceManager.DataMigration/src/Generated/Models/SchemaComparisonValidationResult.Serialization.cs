@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             SchemaComparisonValidationResultType schemaDifferences = default;
-            MigrationValidationError validationErrors = default;
+            ValidationError validationErrors = default;
             IReadOnlyDictionary<string, long> sourceDatabaseObjectCount = default;
             IReadOnlyDictionary<string, long> targetDatabaseObjectCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    validationErrors = MigrationValidationError.DeserializeMigrationValidationError(property.Value, options);
+                    validationErrors = ValidationError.DeserializeValidationError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceDatabaseObjectCount"u8))

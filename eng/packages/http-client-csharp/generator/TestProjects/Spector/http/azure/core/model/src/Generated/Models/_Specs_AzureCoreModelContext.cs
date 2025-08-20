@@ -9,7 +9,6 @@ using System.ClientModel.Primitives;
 
 namespace _Specs_.Azure.Core.Model
 {
-    [ModelReaderWriterBuildable(typeof(AzureEmbeddingModel))]
     public partial class _Specs_AzureCoreModelContext : ModelReaderWriterContext
     {
     }

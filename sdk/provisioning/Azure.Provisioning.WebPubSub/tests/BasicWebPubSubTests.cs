@@ -21,7 +21,6 @@ public class BasicWebPubSubTests(bool async)
         await test.Define(
             ctx =>
             {
-                #region Snippet:WebPubSubBasic
                 Infrastructure infra = new();
 
                 WebPubSubService webpubsub =
@@ -73,7 +72,6 @@ public class BasicWebPubSubTests(bool async)
                     };
 
                 infra.Add(webpubsub);
-                #endregion
 
                 return infra;
             })

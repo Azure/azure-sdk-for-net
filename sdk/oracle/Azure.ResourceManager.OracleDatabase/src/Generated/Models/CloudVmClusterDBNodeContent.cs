@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -47,21 +48,21 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CloudVmClusterDBNodeContent"/>. </summary>
-        /// <param name="dbServerOcids"> Db servers ocids. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dbServerOcids"/> is null. </exception>
-        public CloudVmClusterDBNodeContent(IEnumerable<string> dbServerOcids)
+        /// <param name="dbServers"> Db servers ocids. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dbServers"/> is null. </exception>
+        public CloudVmClusterDBNodeContent(IEnumerable<ResourceIdentifier> dbServers)
         {
-            Argument.AssertNotNull(dbServerOcids, nameof(dbServerOcids));
+            Argument.AssertNotNull(dbServers, nameof(dbServers));
 
-            DBServerOcids = dbServerOcids.ToList();
+            DBServers = dbServers.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudVmClusterDBNodeContent"/>. </summary>
-        /// <param name="dbServerOcids"> Db servers ocids. </param>
+        /// <param name="dbServers"> Db servers ocids. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudVmClusterDBNodeContent(IList<string> dbServerOcids, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CloudVmClusterDBNodeContent(IList<ResourceIdentifier> dbServers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            DBServerOcids = dbServerOcids;
+            DBServers = dbServers;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -71,6 +72,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> Db servers ocids. </summary>
-        public IList<string> DBServerOcids { get; }
+        public IList<ResourceIdentifier> DBServers { get; }
     }
 }

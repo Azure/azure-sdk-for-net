@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 throw new FormatException($"The model {nameof(CloudVmClusterProperties)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsDefined(CloudVmClusterOcid))
+            if (options.Format != "W" && Optional.IsDefined(Ocid))
             {
                 writer.WritePropertyName("ocid"u8);
-                writer.WriteStringValue(CloudVmClusterOcid);
+                writer.WriteStringValue(Ocid);
             }
             if (options.Format != "W" && Optional.IsDefined(ListenerPort))
             {
@@ -53,16 +53,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 writer.WritePropertyName("storageSizeInGbs"u8);
                 writer.WriteNumberValue(StorageSizeInGbs.Value);
-            }
-            if (Optional.IsCollectionDefined(FileSystemConfigurationDetails))
-            {
-                writer.WritePropertyName("fileSystemConfigurationDetails"u8);
-                writer.WriteStartArray();
-                foreach (var item in FileSystemConfigurationDetails)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
             }
             if (Optional.IsDefined(DataStorageSizeInTbs))
             {
@@ -94,10 +84,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (Optional.IsDefined(ZoneOcid))
+            if (Optional.IsDefined(ZoneId))
             {
                 writer.WritePropertyName("zoneId"u8);
-                writer.WriteStringValue(ZoneOcid);
+                writer.WriteStringValue(ZoneId);
             }
             writer.WritePropertyName("hostname"u8);
             writer.WriteStringValue(Hostname);
@@ -192,10 +182,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("scanListenerPortTcpSsl"u8);
                 writer.WriteNumberValue(ScanListenerPortTcpSsl.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ScanDnsRecordOcid))
+            if (options.Format != "W" && Optional.IsDefined(ScanDnsRecordId))
             {
                 writer.WritePropertyName("scanDnsRecordId"u8);
-                writer.WriteStringValue(ScanDnsRecordOcid);
+                writer.WriteStringValue(ScanDnsRecordId);
             }
             if (options.Format != "W" && Optional.IsDefined(Shape))
             {
@@ -250,12 +240,17 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             }
             writer.WritePropertyName("displayName"u8);
             writer.WriteStringValue(DisplayName);
-            if (Optional.IsCollectionDefined(ComputeNodeOcids))
+            if (Optional.IsCollectionDefined(ComputeNodes))
             {
                 writer.WritePropertyName("computeNodes"u8);
                 writer.WriteStartArray();
-                foreach (var item in ComputeNodeOcids)
+                foreach (var item in ComputeNodes)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -265,35 +260,35 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("iormConfigCache"u8);
                 writer.WriteObjectValue(IormConfigCache, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdateHistoryEntryOcid))
+            if (options.Format != "W" && Optional.IsDefined(LastUpdateHistoryEntryId))
             {
                 writer.WritePropertyName("lastUpdateHistoryEntryId"u8);
-                writer.WriteStringValue(LastUpdateHistoryEntryOcid);
+                writer.WriteStringValue(LastUpdateHistoryEntryId);
             }
-            if (Optional.IsCollectionDefined(DBServerOcids))
+            if (Optional.IsCollectionDefined(DBServers))
             {
                 writer.WritePropertyName("dbServers"u8);
                 writer.WriteStartArray();
-                foreach (var item in DBServerOcids)
+                foreach (var item in DBServers)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CompartmentOcid))
+            if (options.Format != "W" && Optional.IsDefined(CompartmentId))
             {
                 writer.WritePropertyName("compartmentId"u8);
-                writer.WriteStringValue(CompartmentOcid);
+                writer.WriteStringValue(CompartmentId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ClusterSubnetOcid))
+            if (options.Format != "W" && Optional.IsDefined(SubnetOcid))
             {
                 writer.WritePropertyName("subnetOcid"u8);
-                writer.WriteStringValue(ClusterSubnetOcid);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ComputeModel))
-            {
-                writer.WritePropertyName("computeModel"u8);
-                writer.WriteStringValue(ComputeModel.Value.ToString());
+                writer.WriteStringValue(SubnetOcid);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -332,18 +327,17 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            string ocid = default;
+            ResourceIdentifier ocid = default;
             long? listenerPort = default;
             int? nodeCount = default;
             int? storageSizeInGbs = default;
-            IList<FileSystemConfigurationDetails> fileSystemConfigurationDetails = default;
             double? dataStorageSizeInTbs = default;
             int? dbNodeStorageSizeInGbs = default;
             int? memorySizeInGbs = default;
             DateTimeOffset? timeCreated = default;
             string lifecycleDetails = default;
             string timeZone = default;
-            string zoneId = default;
+            ResourceIdentifier zoneId = default;
             string hostname = default;
             string domain = default;
             int cpuCoreCount = default;
@@ -362,7 +356,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string scanDnsName = default;
             int? scanListenerPortTcp = default;
             int? scanListenerPortTcpSsl = default;
-            string scanDnsRecordId = default;
+            ResourceIdentifier scanDnsRecordId = default;
             string shape = default;
             OracleDatabaseProvisioningState? provisioningState = default;
             CloudVmClusterLifecycleState? lifecycleState = default;
@@ -375,20 +369,23 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             IList<CloudVmClusterNsgCidr> nsgCidrs = default;
             DiagnosticCollectionConfig dataCollectionOptions = default;
             string displayName = default;
-            IList<string> computeNodes = default;
+            IList<ResourceIdentifier> computeNodes = default;
             ExadataIormConfig iormConfigCache = default;
-            string lastUpdateHistoryEntryId = default;
-            IList<string> dbServers = default;
-            string compartmentId = default;
-            string subnetOcid = default;
-            OracleDatabaseComputeModel? computeModel = default;
+            ResourceIdentifier lastUpdateHistoryEntryId = default;
+            IList<ResourceIdentifier> dbServers = default;
+            ResourceIdentifier compartmentId = default;
+            ResourceIdentifier subnetOcid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ocid"u8))
                 {
-                    ocid = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ocid = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("listenerPort"u8))
@@ -416,20 +413,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                         continue;
                     }
                     storageSizeInGbs = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("fileSystemConfigurationDetails"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<FileSystemConfigurationDetails> array = new List<FileSystemConfigurationDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(Models.FileSystemConfigurationDetails.DeserializeFileSystemConfigurationDetails(item, options));
-                    }
-                    fileSystemConfigurationDetails = array;
                     continue;
                 }
                 if (property.NameEquals("dataStorageSizeInTbs"u8))
@@ -480,7 +463,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("zoneId"u8))
                 {
-                    zoneId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    zoneId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("hostname"u8))
@@ -630,7 +617,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("scanDnsRecordId"u8))
                 {
-                    scanDnsRecordId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scanDnsRecordId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("shape"u8))
@@ -728,10 +719,17 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
                     }
                     computeNodes = array;
                     continue;
@@ -747,7 +745,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("lastUpdateHistoryEntryId"u8))
                 {
-                    lastUpdateHistoryEntryId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastUpdateHistoryEntryId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dbServers"u8))
@@ -756,31 +758,37 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
                     }
                     dbServers = array;
                     continue;
                 }
                 if (property.NameEquals("compartmentId"u8))
                 {
-                    compartmentId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    compartmentId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("subnetOcid"u8))
-                {
-                    subnetOcid = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("computeModel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    computeModel = new OracleDatabaseComputeModel(property.Value.GetString());
+                    subnetOcid = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -794,7 +802,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 listenerPort,
                 nodeCount,
                 storageSizeInGbs,
-                fileSystemConfigurationDetails ?? new ChangeTrackingList<FileSystemConfigurationDetails>(),
                 dataStorageSizeInTbs,
                 dbNodeStorageSizeInGbs,
                 memorySizeInGbs,
@@ -833,13 +840,12 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 nsgCidrs ?? new ChangeTrackingList<CloudVmClusterNsgCidr>(),
                 dataCollectionOptions,
                 displayName,
-                computeNodes ?? new ChangeTrackingList<string>(),
+                computeNodes ?? new ChangeTrackingList<ResourceIdentifier>(),
                 iormConfigCache,
                 lastUpdateHistoryEntryId,
-                dbServers ?? new ChangeTrackingList<string>(),
+                dbServers ?? new ChangeTrackingList<ResourceIdentifier>(),
                 compartmentId,
                 subnetOcid,
-                computeModel,
                 serializedAdditionalRawData);
         }
 

@@ -30,19 +30,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         private const string AHValue = "ah";
         private const string EspValue = "esp";
 
-        /// <summary> Protocol applies to HTTP. </summary>
+        /// <summary> http. </summary>
         public static ServiceFabricManagedNsgProtocol Http { get; } = new ServiceFabricManagedNsgProtocol(HttpValue);
-        /// <summary> Protocol applies to HTTPS. </summary>
+        /// <summary> https. </summary>
         public static ServiceFabricManagedNsgProtocol Https { get; } = new ServiceFabricManagedNsgProtocol(HttpsValue);
-        /// <summary> Protocol applies to TCP. </summary>
+        /// <summary> tcp. </summary>
         public static ServiceFabricManagedNsgProtocol Tcp { get; } = new ServiceFabricManagedNsgProtocol(TcpValue);
-        /// <summary> Protocol applies to UDP. </summary>
+        /// <summary> udp. </summary>
         public static ServiceFabricManagedNsgProtocol Udp { get; } = new ServiceFabricManagedNsgProtocol(UdpValue);
-        /// <summary> Protocol applies to ICMP. </summary>
+        /// <summary> icmp. </summary>
         public static ServiceFabricManagedNsgProtocol Icmp { get; } = new ServiceFabricManagedNsgProtocol(IcmpValue);
-        /// <summary> Protocol applies to AH. </summary>
+        /// <summary> ah. </summary>
         public static ServiceFabricManagedNsgProtocol AH { get; } = new ServiceFabricManagedNsgProtocol(AHValue);
-        /// <summary> Protocol applies to ESP. </summary>
+        /// <summary> esp. </summary>
         public static ServiceFabricManagedNsgProtocol Esp { get; } = new ServiceFabricManagedNsgProtocol(EspValue);
         /// <summary> Determines if two <see cref="ServiceFabricManagedNsgProtocol"/> values are the same. </summary>
         public static bool operator ==(ServiceFabricManagedNsgProtocol left, ServiceFabricManagedNsgProtocol right) => left.Equals(right);

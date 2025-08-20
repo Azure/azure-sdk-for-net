@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
@@ -47,31 +46,25 @@ namespace Azure.ResourceManager.ElasticSan.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ElasticSanSkuInformationList"/>. </summary>
-        /// <param name="value"> The SkuInformation items on this page. </param>
-        internal ElasticSanSkuInformationList(IEnumerable<ElasticSanSkuInformation> value)
+        internal ElasticSanSkuInformationList()
         {
-            Value = value.ToList();
+            Value = new ChangeTrackingList<ElasticSanSkuInformation>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ElasticSanSkuInformationList"/>. </summary>
-        /// <param name="value"> The SkuInformation items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value"> List of ResourceType Sku. </param>
+        /// <param name="nextLink"> URI to fetch the next section of the paginated response. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticSanSkuInformationList(IReadOnlyList<ElasticSanSkuInformation> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticSanSkuInformationList(IReadOnlyList<ElasticSanSkuInformation> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ElasticSanSkuInformationList"/> for deserialization. </summary>
-        internal ElasticSanSkuInformationList()
-        {
-        }
-
-        /// <summary> The SkuInformation items on this page. </summary>
+        /// <summary> List of ResourceType Sku. </summary>
         public IReadOnlyList<ElasticSanSkuInformation> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> URI to fetch the next section of the paginated response. </summary>
+        public string NextLink { get; }
     }
 }

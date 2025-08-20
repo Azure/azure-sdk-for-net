@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace _Specs_.Azure.ClientGenerator.Core.Usage._ModelInOperation
 {
@@ -33,6 +34,9 @@ namespace _Specs_.Azure.ClientGenerator.Core.Usage._ModelInOperation
         protected virtual OutputModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<OutputModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        /// <param name="outputModel"> The <see cref="OutputModel"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(OutputModel outputModel) => throw null;
 
         public static explicit operator OutputModel(Response result) => throw null;
     }

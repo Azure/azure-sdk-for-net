@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(BackendPool))
             {
                 writer.WritePropertyName("backendPool"u8);
-                ((IJsonModel<WritableSubResource>)BackendPool).Write(writer, options);
+                JsonSerializer.Serialize(writer, BackendPool);
             }
         }
 
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     {
                         continue;
                     }
-                    backendPool = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerFrontDoorContext.Default);
+                    backendPool = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("@odata.type"u8))

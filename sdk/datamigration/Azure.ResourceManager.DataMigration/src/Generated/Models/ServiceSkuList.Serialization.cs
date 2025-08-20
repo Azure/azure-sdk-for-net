@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            IReadOnlyList<DataMigrationAvailableServiceSku> value = default;
+            IReadOnlyList<AvailableServiceSku> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<DataMigrationAvailableServiceSku> array = new List<DataMigrationAvailableServiceSku>();
+                    List<AvailableServiceSku> array = new List<AvailableServiceSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataMigrationAvailableServiceSku.DeserializeDataMigrationAvailableServiceSku(item, options));
+                        array.Add(AvailableServiceSku.DeserializeAvailableServiceSku(item, options));
                     }
                     value = array;
                     continue;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ServiceSkuList(value ?? new ChangeTrackingList<DataMigrationAvailableServiceSku>(), nextLink, serializedAdditionalRawData);
+            return new ServiceSkuList(value ?? new ChangeTrackingList<AvailableServiceSku>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceSkuList>.Write(ModelReaderWriterOptions options)

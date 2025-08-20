@@ -9,36 +9,6 @@ using System.ClientModel.Primitives;
 
 namespace _Type.Property.ValueTypes
 {
-    [ModelReaderWriterBuildable(typeof(BooleanProperty))]
-    [ModelReaderWriterBuildable(typeof(StringProperty))]
-    [ModelReaderWriterBuildable(typeof(BytesProperty))]
-    [ModelReaderWriterBuildable(typeof(IntProperty))]
-    [ModelReaderWriterBuildable(typeof(FloatProperty))]
-    [ModelReaderWriterBuildable(typeof(DecimalProperty))]
-    [ModelReaderWriterBuildable(typeof(Decimal128Property))]
-    [ModelReaderWriterBuildable(typeof(DatetimeProperty))]
-    [ModelReaderWriterBuildable(typeof(DurationProperty))]
-    [ModelReaderWriterBuildable(typeof(EnumProperty))]
-    [ModelReaderWriterBuildable(typeof(ExtensibleEnumProperty))]
-    [ModelReaderWriterBuildable(typeof(ModelProperty))]
-    [ModelReaderWriterBuildable(typeof(InnerModel))]
-    [ModelReaderWriterBuildable(typeof(CollectionsStringProperty))]
-    [ModelReaderWriterBuildable(typeof(CollectionsIntProperty))]
-    [ModelReaderWriterBuildable(typeof(CollectionsModelProperty))]
-    [ModelReaderWriterBuildable(typeof(DictionaryStringProperty))]
-    [ModelReaderWriterBuildable(typeof(NeverProperty))]
-    [ModelReaderWriterBuildable(typeof(UnknownStringProperty))]
-    [ModelReaderWriterBuildable(typeof(UnknownIntProperty))]
-    [ModelReaderWriterBuildable(typeof(UnknownDictProperty))]
-    [ModelReaderWriterBuildable(typeof(UnknownArrayProperty))]
-    [ModelReaderWriterBuildable(typeof(StringLiteralProperty))]
-    [ModelReaderWriterBuildable(typeof(IntLiteralProperty))]
-    [ModelReaderWriterBuildable(typeof(FloatLiteralProperty))]
-    [ModelReaderWriterBuildable(typeof(BooleanLiteralProperty))]
-    [ModelReaderWriterBuildable(typeof(UnionStringLiteralProperty))]
-    [ModelReaderWriterBuildable(typeof(UnionIntLiteralProperty))]
-    [ModelReaderWriterBuildable(typeof(UnionFloatLiteralProperty))]
-    [ModelReaderWriterBuildable(typeof(UnionEnumValueProperty))]
     public partial class _TypePropertyValueTypesContext : ModelReaderWriterContext
     {
     }

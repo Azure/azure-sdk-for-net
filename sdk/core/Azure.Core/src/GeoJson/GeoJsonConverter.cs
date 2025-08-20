@@ -121,7 +121,7 @@ namespace Azure.Core.GeoJson
             }
         }
 
-        internal static GeoBoundingBox? ReadBoundingBox(in JsonElement element)
+        private static GeoBoundingBox? ReadBoundingBox(in JsonElement element)
         {
             GeoBoundingBox? bbox = null;
 
@@ -172,7 +172,7 @@ namespace Azure.Core.GeoJson
             return bbox;
         }
 
-        internal static IReadOnlyDictionary<string, object?> ReadAdditionalProperties(in JsonElement element, string knownProperty = CoordinatesProperty)
+        private static IReadOnlyDictionary<string, object?> ReadAdditionalProperties(in JsonElement element, string knownProperty = CoordinatesProperty)
         {
             Dictionary<string, object?>? additionalProperties = null;
             foreach (var property in element.EnumerateObject())
@@ -234,7 +234,7 @@ namespace Azure.Core.GeoJson
             }
         }
 
-        internal static IReadOnlyList<GeoPosition> ReadCoordinates(JsonElement coordinatesElement)
+        private static IReadOnlyList<GeoPosition> ReadCoordinates(JsonElement coordinatesElement)
         {
             GeoPosition[] coordinates = new GeoPosition[coordinatesElement.GetArrayLength()];
 
@@ -248,7 +248,7 @@ namespace Azure.Core.GeoJson
             return coordinates;
         }
 
-        internal static GeoPosition ReadCoordinate(JsonElement coordinate)
+        private static GeoPosition ReadCoordinate(JsonElement coordinate)
         {
             var arrayLength = coordinate.GetArrayLength();
             if (arrayLength < 2 || arrayLength > 3)
@@ -415,7 +415,7 @@ namespace Azure.Core.GeoJson
 
             writer.WriteEndObject();
         }
-        internal static void WriteAdditionalPropertyValue(Utf8JsonWriter writer, object? value)
+        private static void WriteAdditionalPropertyValue(Utf8JsonWriter writer, object? value)
         {
             switch (value)
             {
@@ -463,7 +463,7 @@ namespace Azure.Core.GeoJson
             }
         }
 
-        internal static JsonElement GetRequiredProperty(JsonElement element, string name)
+        private static JsonElement GetRequiredProperty(JsonElement element, string name)
         {
             if (!element.TryGetProperty(name, out JsonElement property))
             {

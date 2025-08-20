@@ -49,9 +49,9 @@ namespace Azure.Compute.Batch
             writer.WritePropertyName("peakDiskGiB"u8);
             writer.WriteNumberValue(PeakDiskGiB);
             writer.WritePropertyName("diskReadIOps"u8);
-            writer.WriteStringValue(DiskReadIops.ToString());
+            writer.WriteStringValue(DiskReadIOps.ToString());
             writer.WritePropertyName("diskWriteIOps"u8);
-            writer.WriteStringValue(DiskWriteIops.ToString());
+            writer.WriteStringValue(DiskWriteIOps.ToString());
             writer.WritePropertyName("diskReadGiB"u8);
             writer.WriteNumberValue(DiskReadGiB);
             writer.WritePropertyName("diskWriteGiB"u8);

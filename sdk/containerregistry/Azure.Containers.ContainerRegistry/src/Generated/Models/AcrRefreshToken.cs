@@ -8,7 +8,7 @@
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> The AcrRefreshToken. </summary>
-    public partial class AcrRefreshToken
+    internal partial class AcrRefreshToken
     {
         /// <summary> Initializes a new instance of <see cref="AcrRefreshToken"/>. </summary>
         internal AcrRefreshToken()

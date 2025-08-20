@@ -34,8 +34,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 throw new FormatException($"The model {nameof(AutonomousDatabaseCharacterSetProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("characterSet"u8);
-            writer.WriteStringValue(CharacterSet);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("characterSet"u8);
+                writer.WriteStringValue(CharacterSet);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

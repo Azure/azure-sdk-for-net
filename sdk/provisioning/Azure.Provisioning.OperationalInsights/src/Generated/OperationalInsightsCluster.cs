@@ -70,7 +70,8 @@ public partial class OperationalInsightsCluster : ProvisionableResource
     private OperationalInsightsCapacityReservationProperties? _capacityReservationProperties;
 
     /// <summary>
-    /// Resource&apos;s identity.
+    /// The identity of the resource. Current supported identity types: None,
+    /// SystemAssigned, UserAssigned.
     /// </summary>
     public ManagedServiceIdentity Identity 
     {
@@ -114,16 +115,6 @@ public partial class OperationalInsightsCluster : ProvisionableResource
         set { Initialize(); AssignOrReplace(ref _keyVaultProperties, value); }
     }
     private OperationalInsightsKeyVaultProperties? _keyVaultProperties;
-
-    /// <summary>
-    /// Cluster&apos;s replication properties.
-    /// </summary>
-    public OperationalInsightsClusterReplicationProperties Replication 
-    {
-        get { Initialize(); return _replication!; }
-        set { Initialize(); AssignOrReplace(ref _replication, value); }
-    }
-    private OperationalInsightsClusterReplicationProperties? _replication;
 
     /// <summary>
     /// The sku properties.
@@ -210,7 +201,7 @@ public partial class OperationalInsightsCluster : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the OperationalInsightsCluster.</param>
     public OperationalInsightsCluster(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.OperationalInsights/clusters", resourceVersion ?? "2025-02-01")
+        : base(bicepIdentifier, "Microsoft.OperationalInsights/clusters", resourceVersion ?? "2023-09-01")
     {
     }
 
@@ -228,7 +219,6 @@ public partial class OperationalInsightsCluster : ProvisionableResource
         _isAvailabilityZonesEnabled = DefineProperty<bool>("IsAvailabilityZonesEnabled", ["properties", "isAvailabilityZonesEnabled"]);
         _isDoubleEncryptionEnabled = DefineProperty<bool>("IsDoubleEncryptionEnabled", ["properties", "isDoubleEncryptionEnabled"]);
         _keyVaultProperties = DefineModelProperty<OperationalInsightsKeyVaultProperties>("KeyVaultProperties", ["properties", "keyVaultProperties"]);
-        _replication = DefineModelProperty<OperationalInsightsClusterReplicationProperties>("Replication", ["properties", "replication"]);
         _sku = DefineModelProperty<OperationalInsightsClusterSku>("Sku", ["sku"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _clusterId = DefineProperty<Guid>("ClusterId", ["properties", "clusterId"], isOutput: true);
@@ -244,11 +234,6 @@ public partial class OperationalInsightsCluster : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2025-02-01.
-        /// </summary>
-        public static readonly string V2025_02_01 = "2025-02-01";
-
         /// <summary>
         /// 2023-09-01.
         /// </summary>

@@ -76,7 +76,6 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     builder.AddInMemoryCollection(new Dictionary<string, string>()
                     {
                         {"webjobstesthub", _eventHubScope.EventHubName},
-                        {"AzureWebJobsStorage__accountName", StorageTestEnvironment.Instance.StorageAccountName}
                     });
                 })
                 .ConfigureDefaultTestHost<T>(b =>

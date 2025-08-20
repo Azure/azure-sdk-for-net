@@ -32,15 +32,14 @@ namespace Azure.Identity.Tests
             TokenCredential[] sources = cred._sources();
 
             Assert.NotNull(sources);
-            Assert.AreEqual(8, sources.Length);
+            Assert.AreEqual(sources.Length, 7);
             Assert.IsInstanceOf(typeof(EnvironmentCredential), sources[0]);
             Assert.IsInstanceOf(typeof(WorkloadIdentityCredential), sources[1]);
             Assert.IsInstanceOf(typeof(ManagedIdentityCredential), sources[2]);
             Assert.IsInstanceOf(typeof(VisualStudioCredential), sources[3]);
-            Assert.IsInstanceOf(typeof(VisualStudioCodeCredential), sources[4]);
-            Assert.IsInstanceOf(typeof(AzureCliCredential), sources[5]);
-            Assert.IsInstanceOf(typeof(AzurePowerShellCredential), sources[6]);
-            Assert.IsInstanceOf(typeof(AzureDeveloperCliCredential), sources[7]);
+            Assert.IsInstanceOf(typeof(AzureCliCredential), sources[4]);
+            Assert.IsInstanceOf(typeof(AzurePowerShellCredential), sources[5]);
+            Assert.IsInstanceOf(typeof(AzureDeveloperCliCredential), sources[6]);
         }
 
         [Test]
@@ -51,20 +50,19 @@ namespace Azure.Identity.Tests
             TokenCredential[] sources = cred._sources();
 
             Assert.NotNull(sources);
-            Assert.AreEqual(includeInteractive ? 9 : 8, sources.Length);
+            Assert.AreEqual(sources.Length, includeInteractive ? 8 : 7);
 
             Assert.IsInstanceOf(typeof(EnvironmentCredential), sources[0]);
             Assert.IsInstanceOf(typeof(WorkloadIdentityCredential), sources[1]);
             Assert.IsInstanceOf(typeof(ManagedIdentityCredential), sources[2]);
             Assert.IsInstanceOf(typeof(VisualStudioCredential), sources[3]);
-            Assert.IsInstanceOf(typeof(VisualStudioCodeCredential), sources[4]);
-            Assert.IsInstanceOf(typeof(AzureCliCredential), sources[5]);
-            Assert.IsInstanceOf(typeof(AzurePowerShellCredential), sources[6]);
-            Assert.IsInstanceOf(typeof(AzureDeveloperCliCredential), sources[7]);
+            Assert.IsInstanceOf(typeof(AzureCliCredential), sources[4]);
+            Assert.IsInstanceOf(typeof(AzurePowerShellCredential), sources[5]);
+            Assert.IsInstanceOf(typeof(AzureDeveloperCliCredential), sources[6]);
 
             if (includeInteractive)
             {
-                Assert.IsInstanceOf(typeof(InteractiveBrowserCredential), sources[8]);
+                Assert.IsInstanceOf(typeof(InteractiveBrowserCredential), sources[7]);
             }
         }
 

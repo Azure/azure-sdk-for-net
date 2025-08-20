@@ -11,17 +11,17 @@ namespace Azure.Communication.CallAutomation
     public class AudioData : StreamingData
     {
         /// <summary>
-        /// The audio data, encoded as a ReadOnlyMemory of bytes
+        /// The audio data, encoded as a base64 string
         /// </summary>
         /// <param name="data"></param>
-        public AudioData(ReadOnlyMemory<byte> data)
+        public AudioData(byte[] data)
         {
             Data = data;
         }
 
         internal AudioData(string data, DateTime timestamp, string participantId, bool silent)
         {
-            Data = !string.IsNullOrWhiteSpace(data) ? Convert.FromBase64String(data).AsMemory() : default;
+            Data = !string.IsNullOrWhiteSpace(data) ? Convert.FromBase64String(data) : default;
             Timestamp = timestamp;
             if (participantId != null)
             {
@@ -31,9 +31,9 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// The audio data in ReadOnlyMemory byte.
+        /// The audio data in base64 byte.
         /// </summary>
-        public ReadOnlyMemory<byte> Data { get; }
+        public byte[] Data { get; }
 
         /// <summary>
         /// The timestamp indicating when the media content was received by the bot,

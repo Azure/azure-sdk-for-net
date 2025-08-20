@@ -21,7 +21,6 @@ public class BasicSignalRTests(bool async)
         await test.Define(
             ctx =>
             {
-                #region Snippet:SignalRBasic
                 Infrastructure infra = new();
 
                 ProvisioningParameter endpointName =
@@ -87,7 +86,6 @@ public class BasicSignalRTests(bool async)
                         }
                     };
                 infra.Add(signalr);
-                #endregion
 
                 return infra;
             })

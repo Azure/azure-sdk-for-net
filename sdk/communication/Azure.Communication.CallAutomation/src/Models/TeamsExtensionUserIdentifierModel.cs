@@ -1,11 +1,13 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-namespace Azure.Communication
+using System;
+
+namespace Azure.Communication.CallAutomation
 {
-    [CodeGenModel("TeamsExtensionUserIdentifierModel", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
-    internal partial class TeamsExtensionUserIdentifierModel
+    /// <summary> A Microsoft Teams Phone user who is using a Communication Services resource to extend their Teams Phone set up. </summary>
+    public partial class TeamsExtensionUserIdentifierModel
     {
+        internal CommunicationCloudEnvironmentModel? Cloud { get; set; }
     }
 }

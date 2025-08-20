@@ -5,59 +5,30 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class AzureMachineLearningVectorizer : IUtf8JsonSerializable, IJsonModel<AzureMachineLearningVectorizer>
+    public partial class AzureMachineLearningVectorizer : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureMachineLearningVectorizer>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<AzureMachineLearningVectorizer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureMachineLearningVectorizer>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(AzureMachineLearningVectorizer)} does not support writing '{format}' format.");
-            }
-
-            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(AMLParameters))
             {
                 writer.WritePropertyName("amlParameters"u8);
-                writer.WriteObjectValue(AMLParameters, options);
+                writer.WriteObjectValue(AMLParameters);
             }
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(VectorizerName);
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            writer.WriteEndObject();
         }
 
-        AzureMachineLearningVectorizer IJsonModel<AzureMachineLearningVectorizer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        internal static AzureMachineLearningVectorizer DeserializeAzureMachineLearningVectorizer(JsonElement element)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureMachineLearningVectorizer>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(AzureMachineLearningVectorizer)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureMachineLearningVectorizer(document.RootElement, options);
-        }
-
-        internal static AzureMachineLearningVectorizer DeserializeAzureMachineLearningVectorizer(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -65,8 +36,6 @@ namespace Azure.Search.Documents.Indexes.Models
             AzureMachineLearningParameters amlParameters = default;
             string name = default;
             VectorSearchVectorizerKind kind = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("amlParameters"u8))
@@ -75,7 +44,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    amlParameters = AzureMachineLearningParameters.DeserializeAzureMachineLearningParameters(property.Value, options);
+                    amlParameters = AzureMachineLearningParameters.DeserializeAzureMachineLearningParameters(property.Value);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -88,45 +57,9 @@ namespace Azure.Search.Documents.Indexes.Models
                     kind = new VectorSearchVectorizerKind(property.Value.GetString());
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new AzureMachineLearningVectorizer(name, kind, serializedAdditionalRawData, amlParameters);
+            return new AzureMachineLearningVectorizer(name, kind, amlParameters);
         }
-
-        BinaryData IPersistableModel<AzureMachineLearningVectorizer>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureMachineLearningVectorizer>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AzureMachineLearningVectorizer)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AzureMachineLearningVectorizer IPersistableModel<AzureMachineLearningVectorizer>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureMachineLearningVectorizer>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAzureMachineLearningVectorizer(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AzureMachineLearningVectorizer)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AzureMachineLearningVectorizer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -140,7 +73,7 @@ namespace Azure.Search.Documents.Indexes.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

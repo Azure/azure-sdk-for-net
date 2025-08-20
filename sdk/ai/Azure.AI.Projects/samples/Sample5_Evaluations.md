@@ -25,6 +25,7 @@ AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredentia
 //Console.WriteLine(dataset);
 
 Console.WriteLine("Create an evaluation");
+Evaluations evaluations = projectClient.GetEvaluationsClient();
 
 var evaluatorConfig = new EvaluatorConfiguration(
     id: EvaluatorIDs.Relevance // TODO: Update this to use the correct evaluator ID
@@ -39,15 +40,15 @@ evaluation.DisplayName = "Sample Evaluation";
 evaluation.Description = "Sample evaluation for testing"; // TODO: Make optional once bug 4115256 is fixed
 
 Console.WriteLine("Create the evaluation run");
-Evaluation evaluationResponse = projectClient.Evaluations.Create(evaluation: evaluation);
+Evaluation evaluationResponse = evaluations.Create(evaluation: evaluation);
 Console.WriteLine(evaluationResponse);
 
 Console.WriteLine("Get evaluation");
-Evaluation getEvaluationResponse = projectClient.Evaluations.Get(evaluationResponse.Name);
+Evaluation getEvaluationResponse = evaluations.GetEvaluation(evaluationResponse.Name);
 Console.WriteLine(getEvaluationResponse);
 
 Console.WriteLine("List evaluations");
-foreach (var eval in projectClient.Evaluations.GetAll())
+foreach (var eval in evaluations.GetEvaluations())
 {
     Console.WriteLine(eval);
 }
@@ -69,6 +70,7 @@ AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredentia
 //Console.WriteLine(dataset);
 
 Console.WriteLine("Create an evaluation");
+Evaluations evaluations = projectClient.GetEvaluationsClient();
 
 var evaluatorConfig = new EvaluatorConfiguration(
     id: EvaluatorIDs.Relevance // TODO: Update this to use the correct evaluator ID
@@ -83,15 +85,15 @@ evaluation.DisplayName = "Sample Evaluation";
 evaluation.Description = "Sample evaluation for testing"; // TODO: Make optional once bug 4115256 is fixed
 
 Console.WriteLine("Create the evaluation run");
-Evaluation evaluationResponse = await projectClient.Evaluations.CreateAsync(evaluation: evaluation);
+Evaluation evaluationResponse = await evaluations.CreateAsync(evaluation: evaluation);
 Console.WriteLine(evaluationResponse);
 
 Console.WriteLine("Get evaluation");
-Evaluation getEvaluationResponse = await projectClient.Evaluations.GetAsync(evaluationResponse.Name);
+Evaluation getEvaluationResponse = await evaluations.GetEvaluationAsync(evaluationResponse.Name);
 Console.WriteLine(getEvaluationResponse);
 
 Console.WriteLine("List evaluations");
-await foreach (var eval in projectClient.Evaluations.GetAllAsync())
+await foreach (var eval in evaluations.GetEvaluationsAsync())
 {
     Console.WriteLine(eval);
 }

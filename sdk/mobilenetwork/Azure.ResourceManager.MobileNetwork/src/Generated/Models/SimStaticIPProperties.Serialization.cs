@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(AttachedDataNetwork))
             {
                 writer.WritePropertyName("attachedDataNetwork"u8);
-                ((IJsonModel<WritableSubResource>)AttachedDataNetwork).Write(writer, options);
+                JsonSerializer.Serialize(writer, AttachedDataNetwork);
             }
             if (Optional.IsDefined(Slice))
             {
                 writer.WritePropertyName("slice"u8);
-                ((IJsonModel<WritableSubResource>)Slice).Write(writer, options);
+                JsonSerializer.Serialize(writer, Slice);
             }
             if (Optional.IsDefined(StaticIP))
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    attachedDataNetwork = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerMobileNetworkContext.Default);
+                    attachedDataNetwork = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("slice"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    slice = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerMobileNetworkContext.Default);
+                    slice = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("staticIp"u8))

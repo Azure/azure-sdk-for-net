@@ -4,10 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Health.Insights.RadiologyInsights.Tests.Infrastructure;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Health.Insights.RadiologyInsights.Tests
@@ -19,10 +17,11 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
         {
             // Read endpoint and apiKey
             string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
 
             Uri endpointUri = new Uri(endpoint);
-            TokenCredential cred = new DefaultAzureCredential();
-            RadiologyInsightsClient client = new RadiologyInsightsClient(endpointUri, cred);
+            AzureKeyCredential credential = new AzureKeyCredential(apiKey);
+            RadiologyInsightsClient client = new RadiologyInsightsClient(endpointUri, credential);
 
             PatientRecord patientRecord = RadiologyInsightsClientTests.CreatePatientRecord();
             patientRecord.PatientDocuments[0].AdministrativeMetadata = CreateDocumentAdministrativeMetadata();
@@ -64,8 +63,6 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.FollowupCommunication);
             radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.FollowupRecommendation);
             radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.RadiologyProcedure);
-            radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.QualityMeasure);
-            radiologyInsightsModelConfiguration.InferenceTypes.Add(RadiologyInsightsInferenceType.ScoringAndAssessment);
 
             return radiologyInsightsModelConfiguration;
         }

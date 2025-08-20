@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -48,7 +47,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(GatewayLoadBalancer))
             {
                 writer.WritePropertyName("gatewayLoadBalancer"u8);
-                ((IJsonModel<WritableSubResource>)GatewayLoadBalancer).Write(writer, options);
+                JsonSerializer.Serialize(writer, GatewayLoadBalancer);
             }
             if (Optional.IsCollectionDefined(VirtualNetworkTaps))
             {
@@ -245,7 +244,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            gatewayLoadBalancer = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            gatewayLoadBalancer = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("virtualNetworkTaps"u8))

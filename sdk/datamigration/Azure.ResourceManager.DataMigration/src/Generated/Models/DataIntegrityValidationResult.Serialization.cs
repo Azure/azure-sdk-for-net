@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             IReadOnlyDictionary<string, string> failedObjects = default;
-            MigrationValidationError validationErrors = default;
+            ValidationError validationErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    validationErrors = MigrationValidationError.DeserializeMigrationValidationError(property.Value, options);
+                    validationErrors = ValidationError.DeserializeValidationError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -21,7 +21,6 @@ public partial class PostgreSqlFlexibleServerNetwork : ProvisionableConstruct
     public BicepValue<PostgreSqlFlexibleServerPublicNetworkAccessState> PublicNetworkAccess 
     {
         get { Initialize(); return _publicNetworkAccess!; }
-        set { Initialize(); _publicNetworkAccess!.Assign(value); }
     }
     private BicepValue<PostgreSqlFlexibleServerPublicNetworkAccessState>? _publicNetworkAccess;
 
@@ -65,7 +64,7 @@ public partial class PostgreSqlFlexibleServerNetwork : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _publicNetworkAccess = DefineProperty<PostgreSqlFlexibleServerPublicNetworkAccessState>("PublicNetworkAccess", ["publicNetworkAccess"]);
+        _publicNetworkAccess = DefineProperty<PostgreSqlFlexibleServerPublicNetworkAccessState>("PublicNetworkAccess", ["publicNetworkAccess"], isOutput: true);
         _delegatedSubnetResourceId = DefineProperty<ResourceIdentifier>("DelegatedSubnetResourceId", ["delegatedSubnetResourceId"]);
         _privateDnsZoneArmResourceId = DefineProperty<ResourceIdentifier>("PrivateDnsZoneArmResourceId", ["privateDnsZoneArmResourceId"]);
     }

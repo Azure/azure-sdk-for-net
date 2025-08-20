@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Type of action of the operation. </summary>
-    [CodeGenType("AppAction")]
+    [CodeGenModel("AppAction")]
     public readonly partial struct AppAction
     {
     }

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="sourceConnectionInfo"> Connection information for source PostgreSQL server. </param>
         /// <param name="targetConnectionInfo"> Connection information for target Azure Database for PostgreSQL server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/> or <paramref name="targetConnectionInfo"/> is null. </exception>
-        public ConnectToTargetAzureDBForPostgreSqlSyncTaskInput(DataMigrationPostgreSqlConnectionInfo sourceConnectionInfo, DataMigrationPostgreSqlConnectionInfo targetConnectionInfo)
+        public ConnectToTargetAzureDBForPostgreSqlSyncTaskInput(PostgreSqlConnectionInfo sourceConnectionInfo, PostgreSqlConnectionInfo targetConnectionInfo)
         {
             Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
             Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="sourceConnectionInfo"> Connection information for source PostgreSQL server. </param>
         /// <param name="targetConnectionInfo"> Connection information for target Azure Database for PostgreSQL server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectToTargetAzureDBForPostgreSqlSyncTaskInput(DataMigrationPostgreSqlConnectionInfo sourceConnectionInfo, DataMigrationPostgreSqlConnectionInfo targetConnectionInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectToTargetAzureDBForPostgreSqlSyncTaskInput(PostgreSqlConnectionInfo sourceConnectionInfo, PostgreSqlConnectionInfo targetConnectionInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceConnectionInfo = sourceConnectionInfo;
             TargetConnectionInfo = targetConnectionInfo;
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Connection information for source PostgreSQL server. </summary>
-        public DataMigrationPostgreSqlConnectionInfo SourceConnectionInfo { get; set; }
+        public PostgreSqlConnectionInfo SourceConnectionInfo { get; set; }
         /// <summary> Connection information for target Azure Database for PostgreSQL server. </summary>
-        public DataMigrationPostgreSqlConnectionInfo TargetConnectionInfo { get; set; }
+        public PostgreSqlConnectionInfo TargetConnectionInfo { get; set; }
     }
 }

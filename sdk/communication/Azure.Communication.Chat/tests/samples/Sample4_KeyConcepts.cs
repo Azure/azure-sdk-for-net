@@ -28,14 +28,7 @@ namespace Azure.Communication.Chat.Tests.samples
                 new CommunicationTokenCredential(userToken));
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread_KeyConcepts
-            CreateChatThreadOptions createChatThreadOptions = new CreateChatThreadOptions("Hello world!");
-
-            createChatThreadOptions.Metadata.Add("MetadataKey1", "MetadataValue1");
-            createChatThreadOptions.Metadata.Add("MetadataKey2", "MetadataValue2");
-
-            createChatThreadOptions.RetentionPolicy = ChatRetentionPolicy.ThreadCreationDate(40);
-
-            CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(createChatThreadOptions);
+            CreateChatThreadResult createChatThreadResult = await chatClient.CreateChatThreadAsync(topic: "Hello world!", participants: new ChatParticipant[] { });
             ChatThreadProperties chatThread = createChatThreadResult.ChatThread;
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_CreateThread_KeyConcepts
 
@@ -44,13 +37,7 @@ namespace Azure.Communication.Chat.Tests.samples
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_GetChatThreadClient_KeyConcepts
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_UpdateThread_KeyConcepts
-            UpdateChatThreadPropertiesOptions updateChatThreadPropertiesOptions = new UpdateChatThreadPropertiesOptions();
-            updateChatThreadPropertiesOptions.Topic = "Launch meeting";
-            updateChatThreadPropertiesOptions.Metadata.Add("UpdateMetadataKey", "UpdateMetadataValue");
-
-            updateChatThreadPropertiesOptions.RetentionPolicy = ChatRetentionPolicy.None();
-
-            await chatThreadClient.UpdatePropertiesAsync(updateChatThreadPropertiesOptions);
+            chatThreadClient.UpdateTopic(topic: "Launch meeting");
             #endregion Snippet:Azure_Communication_Chat_Tests_Samples_UpdateThread_KeyConcepts
 
             #region Snippet:Azure_Communication_Chat_Tests_Samples_GetChatThread_KeyConcepts

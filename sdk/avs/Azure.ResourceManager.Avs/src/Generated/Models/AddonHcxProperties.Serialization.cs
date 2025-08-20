@@ -37,16 +37,6 @@ namespace Azure.ResourceManager.Avs.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("offer"u8);
             writer.WriteStringValue(Offer);
-            if (Optional.IsDefined(ManagementNetwork))
-            {
-                writer.WritePropertyName("managementNetwork"u8);
-                writer.WriteStringValue(ManagementNetwork);
-            }
-            if (Optional.IsDefined(UplinkNetwork))
-            {
-                writer.WritePropertyName("uplinkNetwork"u8);
-                writer.WriteStringValue(UplinkNetwork);
-            }
         }
 
         AddonHcxProperties IJsonModel<AddonHcxProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -70,8 +60,6 @@ namespace Azure.ResourceManager.Avs.Models
                 return null;
             }
             string offer = default;
-            string managementNetwork = default;
-            string uplinkNetwork = default;
             AddonType addonType = default;
             AddonProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -81,16 +69,6 @@ namespace Azure.ResourceManager.Avs.Models
                 if (property.NameEquals("offer"u8))
                 {
                     offer = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("managementNetwork"u8))
-                {
-                    managementNetwork = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("uplinkNetwork"u8))
-                {
-                    uplinkNetwork = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("addonType"u8))
@@ -113,13 +91,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AddonHcxProperties(
-                addonType,
-                provisioningState,
-                serializedAdditionalRawData,
-                offer,
-                managementNetwork,
-                uplinkNetwork);
+            return new AddonHcxProperties(addonType, provisioningState, serializedAdditionalRawData, offer);
         }
 
         BinaryData IPersistableModel<AddonHcxProperties>.Write(ModelReaderWriterOptions options)

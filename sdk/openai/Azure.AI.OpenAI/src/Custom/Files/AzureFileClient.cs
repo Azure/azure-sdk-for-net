@@ -51,6 +51,7 @@ internal partial class AzureFileClient : OpenAIFileClient
 
         using MultiPartFormDataBinaryContent content = CreateMultiPartContentWithMimeType(file, filename, purpose);
         ClientResult clientResult = UploadFile(content, content.ContentType, new() { CancellationToken = cancellationToken });
+
         return GetAzureFileResult(clientResult);
     }
 
@@ -144,6 +145,6 @@ internal partial class AzureFileClient : OpenAIFileClient
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    internal static ClientResult<OpenAIFile> GetAzureFileResult(ClientResult protocolResult)
+    private static ClientResult<OpenAIFile> GetAzureFileResult(ClientResult protocolResult)
         => GetTypedResult<OpenAIFile, AzureOpenAIFile>(protocolResult, AzureOpenAIFile.FromResponse);
 }

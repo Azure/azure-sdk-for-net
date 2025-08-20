@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
@@ -542,14 +541,17 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void BinaryDataCanHandleNonObjectsValues()
         {
-            var dfeString = Deserialize<BinaryData>(StringJson).Literal!;
-            Assert.AreEqual(StringJson, GetSerializedString<BinaryData>(dfeString));
+            var docString = JsonDocument.Parse(StringJson);
+            var dfeString = DataFactoryElementJsonConverter.Deserialize<BinaryData>(docString.RootElement)!;
+            Assert.AreEqual(StringJson, JsonSerializer.Serialize(dfeString));
 
-            var dfeBool = Deserialize<BinaryData>(BoolJson).Literal!;
-            Assert.AreEqual(BoolJson, GetSerializedString<BinaryData>(dfeBool));
+            var docBool = JsonDocument.Parse(BoolJson);
+            var dfeBool = DataFactoryElementJsonConverter.Deserialize<BinaryData>(docBool.RootElement)!;
+            Assert.AreEqual(BoolJson, JsonSerializer.Serialize(dfeBool));
 
-            var dfeInt = Deserialize<BinaryData>(IntJson).Literal!;
-            Assert.AreEqual(IntJson, GetSerializedString<BinaryData>(dfeInt));
+            var docInt = JsonDocument.Parse(IntJson);
+            var dfeInt = DataFactoryElementJsonConverter.Deserialize<BinaryData>(docInt.RootElement)!;
+            Assert.AreEqual(IntJson, JsonSerializer.Serialize(dfeInt));
         }
 
         [Test]
@@ -655,7 +657,8 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void DeserializationOfIntValue()
         {
-            var dfe = Deserialize<int>(IntJson)!;
+            var doc = JsonDocument.Parse(IntJson);
+            var dfe = DataFactoryElementJsonConverter.Deserialize<int>(doc.RootElement)!;
             AssertIntDfe(dfe);
         }
 
@@ -669,14 +672,16 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void DeserializationOfBoolValue()
         {
-            var dfe = Deserialize<bool>(BoolJson)!;
+            var doc = JsonDocument.Parse(BoolJson);
+            var dfe = DataFactoryElementJsonConverter.Deserialize<bool>(doc.RootElement)!;
             AssertBoolDfe(dfe);
         }
 
         [Test]
         public void DeserializationOfNullIntoBool()
         {
-            var dfe = Deserialize<bool?>(NullJson);
+            var doc = JsonDocument.Parse(NullJson);
+            var dfe = DataFactoryElementJsonConverter.Deserialize<bool?>(doc.RootElement);
             Assert.IsNull(dfe);
         }
 
@@ -685,7 +690,8 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         {
             var dfe = new DataFactoryElement<bool?>(null);
             var actual = GetSerializedString(dfe);
-            dfe = Deserialize<bool?>(actual);
+            var doc = JsonDocument.Parse(actual);
+            dfe = DataFactoryElementJsonConverter.Deserialize<bool?>(doc.RootElement);
             Assert.IsNull(dfe);
         }
 
@@ -699,14 +705,16 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void DeserializationOfStringValue()
         {
-            var dfe = Deserialize<string?>(StringJson)!;
+            var doc = JsonDocument.Parse(StringJson);
+            var dfe = DataFactoryElementJsonConverter.Deserialize<string?>(doc.RootElement)!;
             AssertStringDfe(dfe, StringValue, DataFactoryElementKind.Literal);
         }
 
         [Test]
         public void DeserializationOfNullIntoString()
         {
-            var dfe = Deserialize<string>(NullJson)!;
+            var doc = JsonDocument.Parse(NullJson);
+            var dfe = DataFactoryElementJsonConverter.Deserialize<string>(doc.RootElement)!;
             Assert.IsNull(dfe);
         }
 
@@ -715,21 +723,24 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         {
             var dfe = DataFactoryElement<string?>.FromLiteral(null);
             var actual = GetSerializedString(dfe);
-            dfe = Deserialize<string?>(actual);
+            var doc = JsonDocument.Parse(actual);
+            dfe = DataFactoryElementJsonConverter.Deserialize<string?>(doc.RootElement);
             Assert.IsNull(dfe);
         }
 
         [Test]
         public void DeserializationOfTimeSpanValue()
         {
-            var dfe = Deserialize<TimeSpan>(TimeSpanJson)!;
+            var doc = JsonDocument.Parse(TimeSpanJson);
+            var dfe = DataFactoryElementJsonConverter.Deserialize<TimeSpan>(doc.RootElement)!;
             Assert.AreEqual(dfe.Literal, TimeSpanValue);
         }
 
         [Test]
         public void DeserializationOfNullIntoTimeSpan()
         {
-            var dfe = Deserialize<TimeSpan>(NullJson)!;
+            var doc = JsonDocument.Parse(NullJson);
+            var dfe = DataFactoryElementJsonConverter.Deserialize<TimeSpan>(doc.RootElement)!;
             Assert.IsNull(dfe);
         }
 
@@ -738,21 +749,24 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         {
             var dfe = DataFactoryElement<TimeSpan?>.FromLiteral(null);
             var actual = GetSerializedString(dfe);
-            dfe = Deserialize<TimeSpan?>(actual);
+            var doc = JsonDocument.Parse(actual);
+            dfe = DataFactoryElementJsonConverter.Deserialize<TimeSpan?>(doc.RootElement);
             Assert.IsNull(dfe);
         }
 
         [Test]
         public void DeserializationOfDateTimeOffsetValue()
         {
-            var dfe = Deserialize<DateTimeOffset>(DateTimeOffsetJson)!;
+            var doc = JsonDocument.Parse(DateTimeOffsetJson);
+            var dfe = DataFactoryElementJsonConverter.Deserialize<DateTimeOffset>(doc.RootElement)!;
             Assert.AreEqual(DateTimeOffsetValue, dfe.Literal);
         }
 
         [Test]
         public void DeserializationOfNullIntoUri()
         {
-            var dfe = Deserialize<Uri?>(NullJson)!;
+            var doc = JsonDocument.Parse(NullJson);
+            var dfe = DataFactoryElementJsonConverter.Deserialize<Uri?>(doc.RootElement)!;
             Assert.IsNull(dfe);
         }
 
@@ -761,21 +775,24 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         {
             var dfe = DataFactoryElement<Uri?>.FromLiteral(null);
             var actual = GetSerializedString(dfe);
-            dfe = Deserialize<Uri?>(actual);
+            var doc = JsonDocument.Parse(actual);
+            dfe = DataFactoryElementJsonConverter.Deserialize<Uri?>(doc.RootElement);
             Assert.IsNull(dfe);
         }
 
         [Test]
         public void DeserializationOfUriValue()
         {
-            var dfe = Deserialize<Uri>(UriJson)!;
+            var doc = JsonDocument.Parse(UriJson);
+            var dfe = DataFactoryElementJsonConverter.Deserialize<Uri>(doc.RootElement)!;
             Assert.AreEqual(dfe.Literal, UriValue);
         }
 
         [Test]
         public void DeserializationOfNullIntoDateTimeOffset()
         {
-            var dfe = Deserialize<DateTimeOffset?>(NullJson)!;
+            var doc = JsonDocument.Parse(NullJson);
+            var dfe = DataFactoryElementJsonConverter.Deserialize<DateTimeOffset>(doc.RootElement)!;
             Assert.IsNull(dfe);
         }
 
@@ -784,7 +801,8 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         {
             var dfe = DataFactoryElement<DateTimeOffset?>.FromLiteral(null);
             var actual = GetSerializedString(dfe);
-            dfe = Deserialize<DateTimeOffset?>(actual);
+            var doc = JsonDocument.Parse(actual);
+            dfe = DataFactoryElementJsonConverter.Deserialize<DateTimeOffset?>(doc.RootElement);
             Assert.IsNull(dfe);
         }
 
@@ -793,7 +811,8 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         {
             var dfe = DataFactoryElement<BinaryData?>.FromLiteral(BinaryDataValue1);
             var actual = GetSerializedString(dfe);
-            dfe = Deserialize<BinaryData?>(actual);
+            var doc = JsonDocument.Parse(actual);
+            dfe = DataFactoryElementJsonConverter.Deserialize<BinaryData?>(doc.RootElement);
             AssertBinaryDataDfe(dfe!);
         }
 
@@ -807,7 +826,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             };
             var dfe = DataFactoryElement<IList<TestModel>>.FromLiteral(elements);
             var actual = GetSerializedString(dfe);
-            dfe = Deserialize<IList<TestModel>>(actual)!;
+            dfe = JsonSerializer.Deserialize<DataFactoryElement<IList<TestModel>>>(actual)!;
             Assert.AreEqual(1, dfe!.Literal![0]!.A);
             Assert.AreEqual(true, dfe.Literal[0].B);
             Assert.AreEqual(2, dfe.Literal[1].A);
@@ -821,7 +840,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             var elements = new List<TestModel>();
             var dfe = DataFactoryElement<IList<TestModel>>.FromLiteral(elements);
             var actual = GetSerializedString(dfe);
-            dfe = Deserialize<IList<TestModel>>(actual);
+            dfe = JsonSerializer.Deserialize<DataFactoryElement<IList<TestModel>>>(actual);
             Assert.IsEmpty(dfe!.Literal!);
         }
 
@@ -830,7 +849,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         {
             var dfe = DataFactoryElement<IList<TestModel?>>.FromLiteral(null);
             var actual = GetSerializedString(dfe);
-            dfe = Deserialize<IList<TestModel?>>(actual);
+            dfe = JsonSerializer.Deserialize<DataFactoryElement<IList<TestModel?>>>(actual);
             Assert.IsNull(dfe);
         }
 
@@ -839,7 +858,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         {
             var dfe = DataFactoryElement<IList<TestModel>>.FromExpression("some expression");
             var serialized = GetSerializedString(dfe);
-            dfe = Deserialize<IList<TestModel>>(serialized)!;
+            dfe = JsonSerializer.Deserialize<DataFactoryElement<IList<TestModel>>>(serialized)!;
             Assert.AreEqual(DataFactoryElementKind.Expression, dfe.Kind);
             Assert.AreEqual("some expression", dfe.ExpressionString);
         }
@@ -854,7 +873,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             };
             var dfe = DataFactoryElement<IList<TestModel?>>.FromLiteral(elements);
             var actual = GetSerializedString(dfe);
-            dfe = Deserialize<IList<TestModel?>>(actual)!;
+            dfe = JsonSerializer.Deserialize<DataFactoryElement<IList<TestModel?>>>(actual)!;
             Assert.AreEqual(1, dfe!.Literal![0]!.A);
             Assert.AreEqual(true, dfe.Literal[0]!.B);
             Assert.IsNull(dfe.Literal[1]);
@@ -883,14 +902,14 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void DeserializationOfDoubleValue()
         {
-            var dfe = Deserialize<double>(DoubleJson)!;
+            var dfe = JsonSerializer.Deserialize<DataFactoryElement<double>>(DoubleJson)!;
             AssertDoubleDfe(dfe);
         }
 
         [Test]
         public void DeserializationOfNullIntoDouble()
         {
-            var dfe = Deserialize<double?>(NullJson)!;
+            var dfe = JsonSerializer.Deserialize<DataFactoryElement<double?>>(NullJson)!;
             Assert.IsNull(dfe);
         }
 
@@ -899,7 +918,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         {
             var dfe = DataFactoryElement<double?>.FromLiteral(null);
             var actual = GetSerializedString(dfe);
-            dfe = Deserialize<double?>(actual);
+            dfe = JsonSerializer.Deserialize<DataFactoryElement<double?>>(actual);
             Assert.IsNull(dfe);
         }
 
@@ -913,21 +932,22 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void DeserializationOfListOfStringValue()
         {
-            var dfe = Deserialize<IList<string>>(ListOfStringJson)!;
+            var dfe = JsonSerializer.Deserialize<DataFactoryElement<IList<string>>>(ListOfStringJson)!;
             AssertListOfStringDfe(dfe);
         }
 
         [Test]
         public void DeserializationOfEmptyArrayValue()
         {
-            var dfe = Deserialize<IList<string>>(EmptyListJson)!;
+            var dfe = JsonSerializer.Deserialize<DataFactoryElement<IList<string>>>(EmptyListJson)!;
             AssertEmptyListOfStringDfe(dfe);
         }
 
         [Test]
         public void DeserializationOfNullIntoArray()
         {
-            var dfe = Deserialize<IList<DataFactoryElement<int?>>>(NullJson)!;
+            var doc = JsonDocument.Parse(NullJson);
+            var dfe = DataFactoryElementJsonConverter.Deserialize<Array?>(doc.RootElement)!;
             Assert.IsNull(dfe);
         }
 
@@ -936,21 +956,21 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         {
             var dfe = DataFactoryElement<IList<string?>?>.FromLiteral(null);
             var actual = GetSerializedString(dfe);
-            dfe = Deserialize<IList<string?>?>(actual);
+            dfe = JsonSerializer.Deserialize<DataFactoryElement<IList<string?>?>>(actual);
             Assert.IsNull(dfe);
         }
 
         [Test]
         public void DeserializationOfKeyValuePairs()
         {
-            var dfe = Deserialize<IDictionary<string, string?>?>(DictionaryJson)!;
+            var dfe = JsonSerializer.Deserialize<DataFactoryElement<IDictionary<string, string?>?>>(DictionaryJson)!;
             AssertDictionaryDfe(dfe);
         }
 
         [Test]
         public void DeserializationOfKeyBinaryDataValuePairs()
         {
-            var dfe = Deserialize<IDictionary<string, BinaryData?>?>(BinaryDataDictionaryJson)!;
+            var dfe = JsonSerializer.Deserialize<DataFactoryElement<IDictionary<string, BinaryData?>?>>(BinaryDataDictionaryJson)!;
             AssertBinaryDataDictionaryDfe(dfe);
         }
 
@@ -967,7 +987,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             Assert.AreEqual(DataFactoryElementKind.Literal, input.Kind);
             var serialized = GetSerializedString(input);
 
-            var output = Deserialize<IDictionary<string, string?>?>(serialized)!;
+            var output = JsonSerializer.Deserialize<DataFactoryElement<IDictionary<string, string?>?>>(serialized)!;
             Assert.AreEqual(DataFactoryElementKind.Literal, output.Kind);
         }
 
@@ -1010,21 +1030,24 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void DeserializationOfExpression()
         {
-            var dfe = Deserialize<string?>(ExpressionJson)!;
+            var doc = JsonDocument.Parse(ExpressionJson);
+            var dfe = DataFactoryElementJsonConverter.Deserialize<string>(doc.RootElement)!;
             AssertExpressionDfe(dfe);
         }
 
         [Test]
         public void DeserializationOfKeyVaultReference()
         {
-            var dfe = Deserialize<string?>(KeyVaultSecretReferenceJson)!;
+            var doc = JsonDocument.Parse(KeyVaultSecretReferenceJson);
+            var dfe = DataFactoryElementJsonConverter.Deserialize<string>(doc.RootElement)!;
             AssertKeyVaultReferenceDfe(dfe);
         }
 
         [Test]
         public void DeserializationOfSecretString()
         {
-            var dfe = Deserialize<string?>(SecretStringJson)!;
+            var doc = JsonDocument.Parse(SecretStringJson);
+            var dfe = DataFactoryElementJsonConverter.Deserialize<string>(doc.RootElement)!;
             Assert.AreEqual(SecretStringValue, dfe.ToString());
             AssertStringDfe(dfe, SecretStringValue, DataFactoryElementKind.SecretString);
         }
@@ -1033,7 +1056,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         public void DeserializationOfUnknownType()
         {
             var doc = JsonDocument.Parse(UnknownTypeJson);
-            var dfe = Deserialize<string?>(UnknownTypeJson)!;
+            var dfe = DataFactoryElementJsonConverter.Deserialize<string>(doc.RootElement)!;
             // the value is not retained for unknown Type
             AssertStringDfe(dfe, null, new DataFactoryElementKind("Unknown"));
         }
@@ -1041,7 +1064,8 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void DeserializationOfOtherType()
         {
-            var dfe = Deserialize<string?>(OtherTypeJson)!;
+            var doc = JsonDocument.Parse(OtherTypeJson);
+            var dfe = DataFactoryElementJsonConverter.Deserialize<string>(doc.RootElement)!;
             // the value is not retained for unknown Type
             AssertStringDfe(dfe, null, new DataFactoryElementKind(OtherSecretType));
         }
@@ -1060,19 +1084,21 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             Assert.AreEqual(KeyVaultSecretName, dfe.ToString());
         }
 
-        private string GetSerializedString<T>(DataFactoryElement<T> payload) => ModelReaderWriter.Write(payload).ToString();
-
-        private ModelReaderWriterOptions s_options = new ModelReaderWriterOptions("W");
-        private DataFactoryElement<T> Deserialize<T>(string json)
+        private string GetSerializedString<T>(DataFactoryElement<T> payload)
         {
-            var instance = new DataFactoryElement<T>(default);
-            return ((IJsonModel<DataFactoryElement<T>>)instance).Create(BinaryData.FromString($"{json}"), s_options)!;
+            using var ms = new MemoryStream();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(ms);
+            JsonSerializer.Serialize(writer, payload);
+            writer.Flush();
+            ms.Position = 0;
+            using var sr = new StreamReader(ms);
+            return sr.ReadToEnd();
         }
 
         [Test]
         public void SerializationFromJsonConverterForInt()
         {
-            var dfe = Deserialize<int>(IntJson);
+            var dfe = JsonSerializer.Deserialize<DataFactoryElement<int>>(IntJson);
             var actual = GetSerializedString(dfe!);
             Assert.AreEqual(IntJson, actual);
         }
@@ -1080,7 +1106,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void SerializationFromJsonConverterForListOfString()
         {
-            var dfe = Deserialize<IList<string>>(ListOfStringJson);
+            var dfe = JsonSerializer.Deserialize<DataFactoryElement<IList<string>>>(ListOfStringJson);
             var actual = GetSerializedString(dfe!);
             Assert.AreEqual(ListOfStringJson, actual);
         }
@@ -1088,7 +1114,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void SerializationFromJsonConverterForBool()
         {
-            var dfe = Deserialize<bool>(BoolJson);
+            var dfe = JsonSerializer.Deserialize<DataFactoryElement<bool>>(BoolJson);
             var actual = GetSerializedString(dfe!);
             Assert.AreEqual(BoolJson, actual);
         }
@@ -1096,7 +1122,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void SerializationFromJsonConverterForDouble()
         {
-            var dfe = Deserialize<double>(DoubleJson);
+            var dfe = JsonSerializer.Deserialize<DataFactoryElement<double>>(DoubleJson);
             var actual = GetSerializedString(dfe!);
 #if NET462
             Assert.AreEqual("1.1000000000000001", actual);
@@ -1108,7 +1134,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void SerializationFromJsonConverterForEmptyArray()
         {
-            var dfe = Deserialize<IList<string>>(EmptyListJson);
+            var dfe = JsonSerializer.Deserialize<DataFactoryElement<IList<string>>>(EmptyListJson);
             var actual = GetSerializedString(dfe!);
             Assert.AreEqual(EmptyListJson, actual);
         }
@@ -1116,7 +1142,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void SerializationFromJsonConverterForString()
         {
-            var dfe = Deserialize<string>(StringJson);
+            var dfe = JsonSerializer.Deserialize<DataFactoryElement<string>>(StringJson);
             var actual = GetSerializedString(dfe!);
             Assert.AreEqual(StringJson, actual);
         }
@@ -1124,78 +1150,26 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void SerializationFromJsonConverterForExpression()
         {
-            var dfe = Deserialize<int>(ExpressionJson);
+            var dfe = JsonSerializer.Deserialize<DataFactoryElement<int>>(ExpressionJson);
             var actual = GetSerializedString(dfe!);
             Assert.AreEqual(ExpressionJson, actual);
         }
 
+        [Test]
+        public void FailsIfCanConvertIsFalse()
+        {
+            var exception = Assert.Throws<InvalidOperationException>(() => JsonSerializer.Deserialize<DataFactoryElement<long>>(ExpressionJson));
+            Assert.IsTrue(exception!.Message.StartsWith("The converter specified on"));
+        }
+
         [JsonConverter(typeof(TestModelConverter))]
-        public class TestModel : IJsonModel<TestModel>
+        public class TestModel
         {
             public int A { get; set; }
 
             public bool B { get; set; }
 
-            void IJsonModel<TestModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-            {
-                var format = options.Format == "W" ? ((IPersistableModel<TestModel>)this).GetFormatFromOptions(options) : options.Format;
-                if (format != "J")
-                {
-                    throw new FormatException($"The model {nameof(TestModel)} does not support '{format}' format.");
-                }
-
-                writer.WriteStartObject();
-                writer.WritePropertyName("A");
-                writer.WriteNumberValue(A);
-                writer.WritePropertyName("B");
-                writer.WriteBooleanValue(B);
-                writer.WriteEndObject();
-            }
-
-            TestModel IJsonModel<TestModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-            {
-                var format = options.Format == "W" ? ((IPersistableModel<TestModel>)this).GetFormatFromOptions(options) : options.Format;
-                if (format != "J")
-                {
-                    throw new FormatException($"The model {nameof(TestModel)} does not support '{format}' format.");
-                }
-
-                using var document = JsonDocument.ParseValue(ref reader);
-                return new TestModel()
-                {
-                    A = document.RootElement.GetProperty("A").GetInt32(),
-                    B = document.RootElement.GetProperty("B").GetBoolean()
-                };
-            }
-
-            BinaryData IPersistableModel<TestModel>.Write(ModelReaderWriterOptions options)
-            {
-                var format = options.Format == "W" ? ((IPersistableModel<TestModel>)this).GetFormatFromOptions(options) : options.Format;
-                if (format != "J")
-                {
-                    throw new FormatException($"The model {nameof(TestModel)} does not support '{format}' format.");
-                }
-
-                return ModelReaderWriter.Write(this, options, DataFactoryContext.Default);
-            }
-
-            TestModel IPersistableModel<TestModel>.Create(BinaryData data, ModelReaderWriterOptions options)
-            {
-                var format = options.Format == "W" ? ((IPersistableModel<TestModel>)this).GetFormatFromOptions(options) : options.Format;
-                if (format != "J")
-                {
-                    throw new FormatException($"The model {nameof(TestModel)} does not support '{format}' format.");
-                }
-
-                using var document = JsonDocument.Parse(data);
-                return new TestModel()
-                {
-                    A = document.RootElement.GetProperty("A").GetInt32(),
-                    B = document.RootElement.GetProperty("B").GetBoolean()
-                };
-            }
-
-            string IPersistableModel<TestModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+            public override string ToString() => $"A: {A},B: {B}";
         }
 
         private class TestModelConverter : JsonConverter<TestModel>

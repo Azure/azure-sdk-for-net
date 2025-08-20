@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="status"> Contains the results of script execution. </param>
         /// <param name="outputs"> List of script outputs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArmDeploymentScriptPropertiesBase(ScriptContainerConfiguration containerSettings, ScriptStorageConfiguration storageAccountSettings, ScriptCleanupOptions? cleanupPreference, ScriptProvisioningState? provisioningState, ScriptStatus status, BinaryData outputs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ArmDeploymentScriptPropertiesBase(ContainerConfiguration containerSettings, ScriptStorageConfiguration storageAccountSettings, ScriptCleanupOptions? cleanupPreference, ScriptProvisioningState? provisioningState, ScriptStatus status, BinaryData outputs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContainerSettings = containerSettings;
             StorageAccountSettings = storageAccountSettings;
@@ -70,7 +70,8 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Container settings. </summary>
-        public ScriptContainerConfiguration ContainerSettings { get; }
+        internal ContainerConfiguration ContainerSettings { get; }
+
         /// <summary> Storage Account settings. </summary>
         public ScriptStorageConfiguration StorageAccountSettings { get; }
         /// <summary> The clean up preference when the script execution gets in a terminal state. Default setting is 'Always'. </summary>

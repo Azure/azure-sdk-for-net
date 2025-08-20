@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -42,7 +44,7 @@ namespace MgmtTypeSpec
         /// <param name="clientDiagnostics"> The instance of <see cref="ClientDiagnostics"/>. </param>
         /// <param name="pipeline"> The instance of <see cref="HttpPipeline"/>. </param>
         /// <param name="request"> The operation request. </param>
-        /// <param name="response"> The operation response. </param>
+        /// <param name="response"> The opertion response. </param>
         /// <param name="finalStateVia"> The finalStateVia of the operation. </param>
         /// <param name="skipApiVersionOverride"> If should skip Api version override. </param>
         /// <param name="apiVersionOverrideValue"> The Api version override value. </param>
@@ -83,7 +85,12 @@ namespace MgmtTypeSpec
         /// <param name="rehydrationToken"> The token to rehydrate a long-running operation. </param>
         private string GetOperationId(RehydrationToken? rehydrationToken)
         {
-            return rehydrationToken?.Id;
+            if (rehydrationToken is null)
+            {
+                return null;
+            }
+            Dictionary<string, string> lroDetails = ModelReaderWriter.Write(rehydrationToken, ModelReaderWriterOptions.Json).ToObjectFromJson<Dictionary<string, string>>();
+            return lroDetails["id"];
         }
 
         /// <inheritdoc/>

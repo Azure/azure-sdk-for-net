@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using Azure.Search.Documents.Agents.Models;
 
 namespace Azure.Search.Documents.Models
@@ -16,15 +14,9 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownKnowledgeAgentMessageContent"/>. </summary>
         /// <param name="type"> The type of the message. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownKnowledgeAgentMessageContent(KnowledgeAgentMessageContentType type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
+        internal UnknownKnowledgeAgentMessageContent(KnowledgeAgentMessageContentType type) : base(type)
         {
             Type = type;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownKnowledgeAgentMessageContent"/> for deserialization. </summary>
-        internal UnknownKnowledgeAgentMessageContent()
-        {
         }
     }
 }

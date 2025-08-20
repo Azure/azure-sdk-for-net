@@ -43,8 +43,11 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            writer.WritePropertyName("partnerProperties"u8);
-            writer.WriteObjectValue(PartnerProperties, options);
+            if (Optional.IsDefined(PartnerProperties))
+            {
+                writer.WritePropertyName("partnerProperties"u8);
+                writer.WriteObjectValue(PartnerProperties, options);
+            }
             if (Optional.IsDefined(SingleSignOnProperties))
             {
                 writer.WritePropertyName("singleSignOnProperties"u8);
@@ -117,6 +120,10 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
                 }
                 if (property.NameEquals("partnerProperties"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     partnerProperties = ArizeAIObservabilityEvalOfferPartnerProperties.DeserializeArizeAIObservabilityEvalOfferPartnerProperties(property.Value, options);
                     continue;
                 }

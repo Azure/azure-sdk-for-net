@@ -49,7 +49,7 @@ namespace Azure.Search.Documents.Models
         /// <returns> A new <see cref="Models.DebugInfo"/> instance for mocking. </returns>
         public static DebugInfo DebugInfo(QueryRewritesDebugInfo queryRewrites = null)
         {
-            return new DebugInfo(queryRewrites, serializedAdditionalRawData: null);
+            return new DebugInfo(queryRewrites);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QueryRewritesDebugInfo"/>. </summary>
@@ -60,7 +60,7 @@ namespace Azure.Search.Documents.Models
         {
             vectors ??= new List<QueryRewritesValuesDebugInfo>();
 
-            return new QueryRewritesDebugInfo(text, vectors?.ToList(), serializedAdditionalRawData: null);
+            return new QueryRewritesDebugInfo(text, vectors?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QueryRewritesValuesDebugInfo"/>. </summary>
@@ -71,7 +71,7 @@ namespace Azure.Search.Documents.Models
         {
             rewrites ??= new List<string>();
 
-            return new QueryRewritesValuesDebugInfo(inputQuery, rewrites?.ToList(), serializedAdditionalRawData: null);
+            return new QueryRewritesValuesDebugInfo(inputQuery, rewrites?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QueryCaptionResult"/>. </summary>
@@ -95,7 +95,7 @@ namespace Azure.Search.Documents.Models
         {
             innerHits ??= new Dictionary<string, IList<QueryResultDocumentInnerHit>>();
 
-            return new DocumentDebugInfo(semantic, vectors, innerHits, serializedAdditionalRawData: null);
+            return new DocumentDebugInfo(semantic, vectors, innerHits);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SemanticDebugInfo"/>. </summary>
@@ -109,7 +109,7 @@ namespace Azure.Search.Documents.Models
             contentFields ??= new List<QueryResultDocumentSemanticField>();
             keywordFields ??= new List<QueryResultDocumentSemanticField>();
 
-            return new SemanticDebugInfo(titleField, contentFields?.ToList(), keywordFields?.ToList(), rerankerInput, serializedAdditionalRawData: null);
+            return new SemanticDebugInfo(titleField, contentFields?.ToList(), keywordFields?.ToList(), rerankerInput);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QueryResultDocumentSemanticField"/>. </summary>
@@ -118,7 +118,7 @@ namespace Azure.Search.Documents.Models
         /// <returns> A new <see cref="Models.QueryResultDocumentSemanticField"/> instance for mocking. </returns>
         public static QueryResultDocumentSemanticField QueryResultDocumentSemanticField(string name = null, SemanticFieldState? state = null)
         {
-            return new QueryResultDocumentSemanticField(name, state, serializedAdditionalRawData: null);
+            return new QueryResultDocumentSemanticField(name, state);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QueryResultDocumentRerankerInput"/>. </summary>
@@ -128,7 +128,7 @@ namespace Azure.Search.Documents.Models
         /// <returns> A new <see cref="Models.QueryResultDocumentRerankerInput"/> instance for mocking. </returns>
         public static QueryResultDocumentRerankerInput QueryResultDocumentRerankerInput(string title = null, string content = null, string keywords = null)
         {
-            return new QueryResultDocumentRerankerInput(title, content, keywords, serializedAdditionalRawData: null);
+            return new QueryResultDocumentRerankerInput(title, content, keywords);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VectorsDebugInfo"/>. </summary>
@@ -136,7 +136,7 @@ namespace Azure.Search.Documents.Models
         /// <returns> A new <see cref="Models.VectorsDebugInfo"/> instance for mocking. </returns>
         public static VectorsDebugInfo VectorsDebugInfo(QueryResultDocumentSubscores subscores = null)
         {
-            return new VectorsDebugInfo(subscores, serializedAdditionalRawData: null);
+            return new VectorsDebugInfo(subscores);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QueryResultDocumentSubscores"/>. </summary>
@@ -148,7 +148,7 @@ namespace Azure.Search.Documents.Models
         {
             vectors ??= new List<IDictionary<string, SingleVectorFieldResult>>();
 
-            return new QueryResultDocumentSubscores(text, vectors?.ToList(), documentBoost, serializedAdditionalRawData: null);
+            return new QueryResultDocumentSubscores(text, vectors?.ToList(), documentBoost);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TextResult"/>. </summary>
@@ -156,7 +156,7 @@ namespace Azure.Search.Documents.Models
         /// <returns> A new <see cref="Models.TextResult"/> instance for mocking. </returns>
         public static TextResult TextResult(double? searchScore = null)
         {
-            return new TextResult(searchScore, serializedAdditionalRawData: null);
+            return new TextResult(searchScore);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SingleVectorFieldResult"/>. </summary>
@@ -165,7 +165,7 @@ namespace Azure.Search.Documents.Models
         /// <returns> A new <see cref="Models.SingleVectorFieldResult"/> instance for mocking. </returns>
         public static SingleVectorFieldResult SingleVectorFieldResult(double? searchScore = null, double? vectorSimilarity = null)
         {
-            return new SingleVectorFieldResult(searchScore, vectorSimilarity, serializedAdditionalRawData: null);
+            return new SingleVectorFieldResult(searchScore, vectorSimilarity);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QueryResultDocumentInnerHit"/>. </summary>
@@ -176,7 +176,7 @@ namespace Azure.Search.Documents.Models
         {
             vectors ??= new List<IDictionary<string, SingleVectorFieldResult>>();
 
-            return new QueryResultDocumentInnerHit(ordinal, vectors?.ToList(), serializedAdditionalRawData: null);
+            return new QueryResultDocumentInnerHit(ordinal, vectors?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AutocompleteResults"/>. </summary>
@@ -187,7 +187,7 @@ namespace Azure.Search.Documents.Models
         {
             results ??= new List<AutocompleteItem>();
 
-            return new AutocompleteResults(coverage, results?.ToList(), serializedAdditionalRawData: null);
+            return new AutocompleteResults(coverage, results?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchIndexerStatus"/>. </summary>
@@ -201,13 +201,7 @@ namespace Azure.Search.Documents.Models
         {
             executionHistory ??= new List<IndexerExecutionResult>();
 
-            return new SearchIndexerStatus(
-                status,
-                lastResult,
-                executionHistory?.ToList(),
-                limits,
-                currentState,
-                serializedAdditionalRawData: null);
+            return new SearchIndexerStatus(status, lastResult, executionHistory?.ToList(), limits, currentState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.IndexerExecutionResult"/>. </summary>
@@ -241,8 +235,7 @@ namespace Azure.Search.Documents.Models
                 itemCount,
                 failedItemCount,
                 initialTrackingState,
-                finalTrackingState,
-                serializedAdditionalRawData: null);
+                finalTrackingState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.IndexerState"/>. </summary>
@@ -270,8 +263,7 @@ namespace Azure.Search.Documents.Models
                 resetDocumentKeys?.ToList(),
                 resetDataSourceDocumentIds?.ToList(),
                 resyncInitialTrackingState,
-                resyncFinalTrackingState,
-                serializedAdditionalRawData: null);
+                resyncFinalTrackingState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchIndexStatistics"/>. </summary>
@@ -281,30 +273,7 @@ namespace Azure.Search.Documents.Models
         /// <returns> A new <see cref="Indexes.Models.SearchIndexStatistics"/> instance for mocking. </returns>
         public static SearchIndexStatistics SearchIndexStatistics(long documentCount = default, long storageSize = default, long vectorIndexSize = default)
         {
-            return new SearchIndexStatistics(documentCount, storageSize, vectorIndexSize, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Indexes.Models.AnalyzeTextOptions"/>. </summary>
-        /// <param name="text"> The text to break into tokens. </param>
-        /// <param name="analyzerName"> The name of the analyzer to use to break the given text. If this parameter is not specified, you must specify a tokenizer instead. The tokenizer and analyzer parameters are mutually exclusive. </param>
-        /// <param name="tokenizerName"> The name of the tokenizer to use to break the given text. If this parameter is not specified, you must specify an analyzer instead. The tokenizer and analyzer parameters are mutually exclusive. </param>
-        /// <param name="normalizerName"> The name of the normalizer to use to normalize the given text. </param>
-        /// <param name="tokenFilters"> An optional list of token filters to use when breaking the given text. This parameter can only be set when using the tokenizer parameter. </param>
-        /// <param name="charFilters"> An optional list of character filters to use when breaking the given text. This parameter can only be set when using the tokenizer parameter. </param>
-        /// <returns> A new <see cref="Indexes.Models.AnalyzeTextOptions"/> instance for mocking. </returns>
-        public static AnalyzeTextOptions AnalyzeTextOptions(string text = null, LexicalAnalyzerName? analyzerName = null, LexicalTokenizerName? tokenizerName = null, LexicalNormalizerName? normalizerName = null, IEnumerable<TokenFilterName> tokenFilters = null, IEnumerable<string> charFilters = null)
-        {
-            tokenFilters ??= new List<TokenFilterName>();
-            charFilters ??= new List<string>();
-
-            return new AnalyzeTextOptions(
-                text,
-                analyzerName,
-                tokenizerName,
-                normalizerName,
-                tokenFilters?.ToList(),
-                charFilters?.ToList(),
-                serializedAdditionalRawData: null);
+            return new SearchIndexStatistics(documentCount, storageSize, vectorIndexSize);
         }
 
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchServiceCounters"/>. </summary>
@@ -317,9 +286,47 @@ namespace Azure.Search.Documents.Models
         /// <param name="synonymMapCounter"> Total number of synonym maps. </param>
         /// <param name="skillsetCounter"> Total number of skillsets. </param>
         /// <param name="vectorIndexSizeCounter"> Total memory consumption of all vector indexes within the service, in bytes. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="aliasCounter"/>, <paramref name="documentCounter"/>, <paramref name="indexCounter"/>, <paramref name="indexerCounter"/>, <paramref name="dataSourceCounter"/>, <paramref name="storageSizeCounter"/>, <paramref name="synonymMapCounter"/>, <paramref name="skillsetCounter"/> or <paramref name="vectorIndexSizeCounter"/> is null. </exception>
         /// <returns> A new <see cref="Indexes.Models.SearchServiceCounters"/> instance for mocking. </returns>
         public static SearchServiceCounters SearchServiceCounters(SearchResourceCounter aliasCounter = null, SearchResourceCounter documentCounter = null, SearchResourceCounter indexCounter = null, SearchResourceCounter indexerCounter = null, SearchResourceCounter dataSourceCounter = null, SearchResourceCounter storageSizeCounter = null, SearchResourceCounter synonymMapCounter = null, SearchResourceCounter skillsetCounter = null, SearchResourceCounter vectorIndexSizeCounter = null)
         {
+            if (aliasCounter == null)
+            {
+                throw new ArgumentNullException(nameof(aliasCounter));
+            }
+            if (documentCounter == null)
+            {
+                throw new ArgumentNullException(nameof(documentCounter));
+            }
+            if (indexCounter == null)
+            {
+                throw new ArgumentNullException(nameof(indexCounter));
+            }
+            if (indexerCounter == null)
+            {
+                throw new ArgumentNullException(nameof(indexerCounter));
+            }
+            if (dataSourceCounter == null)
+            {
+                throw new ArgumentNullException(nameof(dataSourceCounter));
+            }
+            if (storageSizeCounter == null)
+            {
+                throw new ArgumentNullException(nameof(storageSizeCounter));
+            }
+            if (synonymMapCounter == null)
+            {
+                throw new ArgumentNullException(nameof(synonymMapCounter));
+            }
+            if (skillsetCounter == null)
+            {
+                throw new ArgumentNullException(nameof(skillsetCounter));
+            }
+            if (vectorIndexSizeCounter == null)
+            {
+                throw new ArgumentNullException(nameof(vectorIndexSizeCounter));
+            }
+
             return new SearchServiceCounters(
                 aliasCounter,
                 documentCounter,
@@ -329,8 +336,7 @@ namespace Azure.Search.Documents.Models
                 storageSizeCounter,
                 synonymMapCounter,
                 skillsetCounter,
-                vectorIndexSizeCounter,
-                serializedAdditionalRawData: null);
+                vectorIndexSizeCounter);
         }
 
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.SearchServiceLimits"/>. </summary>
@@ -342,13 +348,7 @@ namespace Azure.Search.Documents.Models
         /// <returns> A new <see cref="Indexes.Models.SearchServiceLimits"/> instance for mocking. </returns>
         public static SearchServiceLimits SearchServiceLimits(int? maxFieldsPerIndex = null, int? maxFieldNestingDepthPerIndex = null, int? maxComplexCollectionFieldsPerIndex = null, int? maxComplexObjectsInCollectionsPerDocument = null, long? maxStoragePerIndexInBytes = null)
         {
-            return new SearchServiceLimits(
-                maxFieldsPerIndex,
-                maxFieldNestingDepthPerIndex,
-                maxComplexCollectionFieldsPerIndex,
-                maxComplexObjectsInCollectionsPerDocument,
-                maxStoragePerIndexInBytes,
-                serializedAdditionalRawData: null);
+            return new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument, maxStoragePerIndexInBytes);
         }
 
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.ListIndexStatsSummary"/>. </summary>
@@ -358,7 +358,7 @@ namespace Azure.Search.Documents.Models
         {
             indexesStatistics ??= new List<IndexStatisticsSummary>();
 
-            return new ListIndexStatsSummary(indexesStatistics?.ToList(), serializedAdditionalRawData: null);
+            return new ListIndexStatsSummary(indexesStatistics?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Indexes.Models.IndexStatisticsSummary"/>. </summary>
@@ -366,10 +366,16 @@ namespace Azure.Search.Documents.Models
         /// <param name="documentCount"> The number of documents in the index. </param>
         /// <param name="storageSize"> The amount of storage in bytes consumed by the index. </param>
         /// <param name="vectorIndexSize"> The amount of memory in bytes consumed by vectors in the index. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <returns> A new <see cref="Indexes.Models.IndexStatisticsSummary"/> instance for mocking. </returns>
         public static IndexStatisticsSummary IndexStatisticsSummary(string name = null, long documentCount = default, long storageSize = default, long vectorIndexSize = default)
         {
-            return new IndexStatisticsSummary(name, documentCount, storageSize, vectorIndexSize, serializedAdditionalRawData: null);
+            if (name == null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            return new IndexStatisticsSummary(name, documentCount, storageSize, vectorIndexSize);
         }
 
         /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentRetrievalResponse"/>. </summary>
@@ -391,7 +397,7 @@ namespace Azure.Search.Documents.Models
             activity ??= new List<KnowledgeAgentActivityRecord>();
             references ??= new List<KnowledgeAgentReference>();
 
-            return new KnowledgeAgentRetrievalResponse(response?.ToList(), activity?.ToList(), references?.ToList(), serializedAdditionalRawData: null);
+            return new KnowledgeAgentRetrievalResponse(response?.ToList(), activity?.ToList(), references?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentActivityRecord"/>. </summary>
@@ -400,7 +406,7 @@ namespace Azure.Search.Documents.Models
         /// <returns> A new <see cref="Agents.Models.KnowledgeAgentActivityRecord"/> instance for mocking. </returns>
         public static KnowledgeAgentActivityRecord KnowledgeAgentActivityRecord(int id = default, string type = null)
         {
-            return new UnknownKnowledgeAgentActivityRecord(id, type, serializedAdditionalRawData: null);
+            return new UnknownKnowledgeAgentActivityRecord(id, type);
         }
 
         /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentReference"/>. </summary>
@@ -410,7 +416,7 @@ namespace Azure.Search.Documents.Models
         /// <returns> A new <see cref="Agents.Models.KnowledgeAgentReference"/> instance for mocking. </returns>
         public static KnowledgeAgentReference KnowledgeAgentReference(string type = null, string id = null, int activitySource = default)
         {
-            return new UnknownKnowledgeAgentReference(type, id, activitySource, serializedAdditionalRawData: null);
+            return new UnknownKnowledgeAgentReference(type, id, activitySource);
         }
 
         /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentSearchActivityRecord"/>. </summary>
@@ -426,7 +432,6 @@ namespace Azure.Search.Documents.Models
             return new KnowledgeAgentSearchActivityRecord(
                 id,
                 "AzureSearchQuery",
-                serializedAdditionalRawData: null,
                 targetIndex,
                 query,
                 queryTime,
@@ -440,7 +445,7 @@ namespace Azure.Search.Documents.Models
         /// <returns> A new <see cref="Models.KnowledgeAgentSearchActivityRecordQuery"/> instance for mocking. </returns>
         public static KnowledgeAgentSearchActivityRecordQuery KnowledgeAgentSearchActivityRecordQuery(string search = null, string filter = null)
         {
-            return new KnowledgeAgentSearchActivityRecordQuery(search, filter, serializedAdditionalRawData: null);
+            return new KnowledgeAgentSearchActivityRecordQuery(search, filter);
         }
 
         /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentModelQueryPlanningActivityRecord"/>. </summary>
@@ -451,13 +456,7 @@ namespace Azure.Search.Documents.Models
         /// <returns> A new <see cref="Agents.Models.KnowledgeAgentModelQueryPlanningActivityRecord"/> instance for mocking. </returns>
         public static KnowledgeAgentModelQueryPlanningActivityRecord KnowledgeAgentModelQueryPlanningActivityRecord(int id = default, int? inputTokens = null, int? outputTokens = null, int? elapsedMs = null)
         {
-            return new KnowledgeAgentModelQueryPlanningActivityRecord(
-                id,
-                "ModelQueryPlanning",
-                serializedAdditionalRawData: null,
-                inputTokens,
-                outputTokens,
-                elapsedMs);
+            return new KnowledgeAgentModelQueryPlanningActivityRecord(id, "ModelQueryPlanning", inputTokens, outputTokens, elapsedMs);
         }
 
         /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentSemanticRankerActivityRecord"/>. </summary>
@@ -467,7 +466,7 @@ namespace Azure.Search.Documents.Models
         /// <returns> A new <see cref="Agents.Models.KnowledgeAgentSemanticRankerActivityRecord"/> instance for mocking. </returns>
         public static KnowledgeAgentSemanticRankerActivityRecord KnowledgeAgentSemanticRankerActivityRecord(int id = default, int? inputTokens = null, int? elapsedMs = null)
         {
-            return new KnowledgeAgentSemanticRankerActivityRecord(id, "AzureSearchSemanticRanker", serializedAdditionalRawData: null, inputTokens, elapsedMs);
+            return new KnowledgeAgentSemanticRankerActivityRecord(id, "AzureSearchSemanticRanker", inputTokens, elapsedMs);
         }
 
         /// <summary> Initializes a new instance of <see cref="Agents.Models.KnowledgeAgentAzureSearchDocReference"/>. </summary>
@@ -480,13 +479,7 @@ namespace Azure.Search.Documents.Models
         {
             sourceData ??= new Dictionary<string, object>();
 
-            return new KnowledgeAgentAzureSearchDocReference(
-                "AzureSearchDoc",
-                id,
-                activitySource,
-                serializedAdditionalRawData: null,
-                docKey,
-                sourceData);
+            return new KnowledgeAgentAzureSearchDocReference("AzureSearchDoc", id, activitySource, docKey, sourceData);
         }
     }
 }

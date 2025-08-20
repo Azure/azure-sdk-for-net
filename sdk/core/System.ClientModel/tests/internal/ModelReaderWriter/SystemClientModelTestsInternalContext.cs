@@ -6,7 +6,6 @@ using System.Collections.Generic;
 
 namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
 {
-    [ModelReaderWriterBuildable(typeof(int))]
     internal partial class SystemClientModelTestsInternalContext : ModelReaderWriterContext
     {
         partial void AddAdditionalFactories(Dictionary<Type, Func<ModelReaderWriterTypeBuilder>> factories)

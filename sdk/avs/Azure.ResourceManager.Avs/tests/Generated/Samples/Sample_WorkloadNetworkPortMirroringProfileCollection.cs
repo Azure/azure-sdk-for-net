@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Avs.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Avs.Samples
@@ -19,8 +20,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_WorkloadNetworksCreatePortMirroring()
         {
-            // Generated from example definition: 2024-09-01/WorkloadNetworks_CreatePortMirroring.json
-            // this example is just showing the usage of "WorkloadNetworkPortMirroring_CreatePortMirroring" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_CreatePortMirroring.json
+            // this example is just showing the usage of "WorkloadNetworks_CreatePortMirroring" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -40,7 +41,14 @@ namespace Azure.ResourceManager.Avs.Samples
 
             // invoke the operation
             string portMirroringId = "portMirroring1";
-            WorkloadNetworkPortMirroringProfileData data = new WorkloadNetworkPortMirroringProfileData();
+            WorkloadNetworkPortMirroringProfileData data = new WorkloadNetworkPortMirroringProfileData
+            {
+                DisplayName = "portMirroring1",
+                Direction = PortMirroringProfileDirection.Bidirectional,
+                Source = "vmGroup1",
+                Destination = "vmGroup2",
+                Revision = 1L,
+            };
             ArmOperation<WorkloadNetworkPortMirroringProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, portMirroringId, data);
             WorkloadNetworkPortMirroringProfileResource result = lro.Value;
 
@@ -55,8 +63,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_WorkloadNetworksGetPortMirroring()
         {
-            // Generated from example definition: 2024-09-01/WorkloadNetworks_GetPortMirroring.json
-            // this example is just showing the usage of "WorkloadNetworkPortMirroring_GetPortMirroring" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_GetPortMirroring.json
+            // this example is just showing the usage of "WorkloadNetworks_GetPortMirroring" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -89,8 +97,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_WorkloadNetworksListPortMirroring()
         {
-            // Generated from example definition: 2024-09-01/WorkloadNetworks_ListPortMirroring.json
-            // this example is just showing the usage of "WorkloadNetworkPortMirroring_ListPortMirroring" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_ListPortMirroring.json
+            // this example is just showing the usage of "WorkloadNetworks_ListPortMirroring" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -125,8 +133,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_WorkloadNetworksGetPortMirroring()
         {
-            // Generated from example definition: 2024-09-01/WorkloadNetworks_GetPortMirroring.json
-            // this example is just showing the usage of "WorkloadNetworkPortMirroring_GetPortMirroring" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_GetPortMirroring.json
+            // this example is just showing the usage of "WorkloadNetworks_GetPortMirroring" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -155,8 +163,8 @@ namespace Azure.ResourceManager.Avs.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_WorkloadNetworksGetPortMirroring()
         {
-            // Generated from example definition: 2024-09-01/WorkloadNetworks_GetPortMirroring.json
-            // this example is just showing the usage of "WorkloadNetworkPortMirroring_GetPortMirroring" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-09-01/examples/WorkloadNetworks_GetPortMirroring.json
+            // this example is just showing the usage of "WorkloadNetworks_GetPortMirroring" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

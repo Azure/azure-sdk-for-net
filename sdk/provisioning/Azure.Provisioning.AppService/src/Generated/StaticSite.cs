@@ -93,9 +93,7 @@ public partial class StaticSite : ProvisionableResource
     private ManagedServiceIdentity? _identity;
 
     /// <summary>
-    /// Kind of resource. If the resource is an app, you can refer to
-    /// https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference
-    /// for details supported values for kind.
+    /// Kind of resource.
     /// </summary>
     public BicepValue<string> Kind 
     {
@@ -290,7 +288,7 @@ public partial class StaticSite : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the StaticSite.</param>
     public StaticSite(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Web/staticSites", resourceVersion ?? "2024-11-01")
+        : base(bicepIdentifier, "Microsoft.Web/staticSites", resourceVersion ?? "2024-04-01")
     {
     }
 
@@ -332,11 +330,6 @@ public partial class StaticSite : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2024-11-01.
-        /// </summary>
-        public static readonly string V2024_11_01 = "2024-11-01";
-
         /// <summary>
         /// 2024-04-01.
         /// </summary>

@@ -284,82 +284,28 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateGetWithNextLinkRequest(RequestContext context)
+        internal HttpMessage CreateListWithNextLinkRequest(Uri nextPage, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/link", false);
-            request.Uri = uri;
-            request.Headers.SetValue("Accept", "application/json");
+            if (nextPage != null)
+            {
+                uri.Reset(nextPage);
+                request.Uri = uri;
+            }
+            else
+            {
+                uri.Reset(_endpoint);
+                uri.AppendPath("/link", false);
+                request.Uri = uri;
+                request.Headers.SetValue("Accept", "application/json");
+            }
             return message;
         }
 
-        internal HttpMessage CreateNextGetWithNextLinkRequest(Uri nextPage, RequestContext context)
-        {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            request.Uri = uri;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetWithStringNextLinkRequest(RequestContext context)
-        {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/linkString", false);
-            request.Uri = uri;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateNextGetWithStringNextLinkRequest(Uri nextPage, RequestContext context)
-        {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            request.Uri = uri;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetWithHeaderNextLinkRequest(RequestContext context)
-        {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/linkHeader", false);
-            request.Uri = uri;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateNextGetWithHeaderNextLinkRequest(Uri nextPage, RequestContext context)
-        {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
-            request.Uri = uri;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetWithContinuationTokenRequest(string token, RequestContext context)
+        internal HttpMessage CreateListWithContinuationTokenRequest(string token, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -376,7 +322,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateGetWithContinuationTokenHeaderResponseRequest(string token, RequestContext context)
+        internal HttpMessage CreateListWithContinuationTokenHeaderResponseRequest(string token, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -393,7 +339,7 @@ namespace BasicTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateGetWithPagingRequest(RequestContext context)
+        internal HttpMessage CreateListWithPagingRequest(RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -403,38 +349,6 @@ namespace BasicTypeSpec
             uri.AppendPath("/list/paging", false);
             request.Uri = uri;
             request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateConditionalRequestRequest(MatchConditions matchConditions, RequestContext context)
-        {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/conditionalrequest", false);
-            request.Uri = uri;
-            if (matchConditions != null)
-            {
-                request.Headers.Add(matchConditions);
-            }
-            return message;
-        }
-
-        internal HttpMessage CreateConditionalRequestDateRequest(RequestConditions requestConditions, RequestContext context)
-        {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
-            Request request = message.Request;
-            request.Method = RequestMethod.Get;
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/conditionalrequest/date", false);
-            request.Uri = uri;
-            if (requestConditions != null)
-            {
-                request.Headers.Add(requestConditions);
-            }
             return message;
         }
     }

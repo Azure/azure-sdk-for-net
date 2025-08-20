@@ -29,19 +29,13 @@ namespace Azure.Search.Documents.Agents.Models
         /// <param name="type"> The type of the reference. </param>
         /// <param name="id"> The ID of the reference. </param>
         /// <param name="activitySource"> The source activity ID for the reference. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="docKey"> The document key for the reference. </param>
         /// <param name="sourceData"> Dictionary of &lt;any&gt;. </param>
-        internal KnowledgeAgentAzureSearchDocReference(string type, string id, int activitySource, IDictionary<string, BinaryData> serializedAdditionalRawData, string docKey, IReadOnlyDictionary<string, object> sourceData) : base(type, id, activitySource, serializedAdditionalRawData)
+        internal KnowledgeAgentAzureSearchDocReference(string type, string id, int activitySource, string docKey, IReadOnlyDictionary<string, object> sourceData) : base(type, id, activitySource)
         {
             DocKey = docKey;
             SourceData = sourceData;
             Type = type ?? "AzureSearchDoc";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="KnowledgeAgentAzureSearchDocReference"/> for deserialization. </summary>
-        internal KnowledgeAgentAzureSearchDocReference()
-        {
         }
 
         /// <summary> The document key for the reference. </summary>

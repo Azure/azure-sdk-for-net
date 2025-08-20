@@ -6,8 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.WeightsAndBiases.Models;
 
 namespace Azure.ResourceManager.WeightsAndBiases
 {
@@ -15,20 +13,6 @@ namespace Azure.ResourceManager.WeightsAndBiases
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(InstanceResourceListResult))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
-    [ModelReaderWriterBuildable(typeof(WeightsAndBiasesInstanceData))]
-    [ModelReaderWriterBuildable(typeof(WeightsAndBiasesInstancePatch))]
-    [ModelReaderWriterBuildable(typeof(WeightsAndBiasesInstanceProperties))]
-    [ModelReaderWriterBuildable(typeof(WeightsAndBiasesInstanceResource))]
-    [ModelReaderWriterBuildable(typeof(WeightsAndBiasesMarketplaceDetails))]
-    [ModelReaderWriterBuildable(typeof(WeightsAndBiasesOfferDetails))]
-    [ModelReaderWriterBuildable(typeof(WeightsAndBiasesPartnerProperties))]
-    [ModelReaderWriterBuildable(typeof(WeightsAndBiasesSingleSignOnPropertiesV2))]
-    [ModelReaderWriterBuildable(typeof(WeightsAndBiasesUserDetails))]
     public partial class AzureResourceManagerWeightsAndBiasesContext : ModelReaderWriterContext
     {
     }

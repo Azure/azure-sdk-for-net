@@ -10,73 +10,79 @@ using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Jobs;
-using BenchmarkDotNet.Running;
 
-namespace Azure.Core.Perf
+namespace Azure.Core.Perf;
+
+[SimpleJob(RuntimeMoniker.Net60)]
+[MemoryDiagnoser]
+public class PipelineBenchmark
 {
-    [SimpleJob(RuntimeMoniker.Net80)]
+    // Azure.Core pipeline
+    private HttpPipeline _httpPipeline;
 
-    [MemoryDiagnoser]
-    public class PipelineBenchmark
+    // System.ClientModel pipeline
+    private ClientPipeline _clientPipeline;
+
+    [GlobalSetup]
+    public void SetUp()
     {
-        /// <summary>
-        /// The HTTP pipeline used for sending requests in the benchmark scenario.
-        /// </summary>
-        public HttpPipeline _pipeline;
-        private HttpMessage[] _messages;
-        private int _messageIndex;
-
-        [GlobalSetup]
-        public void SetUp()
+        ClientOptions clientOptions = new BenchmarkOptions
         {
-            int messageCount = 1000;
-            var options = new BenchmarkClientOptions
+            Transport = new HttpClientTransport(new HttpClient(new MockHttpMessageHandler()))
+        };
+
+        _httpPipeline = HttpPipelineBuilder.Build(clientOptions);
+
+        ClientPipelineOptions pipelineOptions = new()
+        {
+            Transport = new HttpClientPipelineTransport(new HttpClient(new MockHttpMessageHandler()))
+        };
+
+        _clientPipeline = ClientPipeline.Create(pipelineOptions);
+    }
+
+    [Benchmark]
+    public async Task CreateAndSendAzureCoreMessage()
+    {
+        HttpMessage message = _httpPipeline.CreateMessage();
+        message.Request.Uri.Reset(new Uri("https://www.example.com"));
+        await _httpPipeline.SendAsync(message, CancellationToken.None);
+    }
+
+    [Benchmark]
+    public async Task CreateAndSendClientModelMessage()
+    {
+        PipelineMessage message = _clientPipeline.CreateMessage();
+        message.Request.Uri = new Uri("https://www.example.com");
+        await _clientPipeline.SendAsync(message);
+    }
+
+    #region Helpers
+
+    /// <summary>
+    /// Mock out the network to isolate the performance test to only
+    /// Core library pipeline code.
+    /// </summary>
+    private class MockHttpMessageHandler : HttpMessageHandler
+    {
+        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            HttpResponseMessage httpResponse = new()
             {
-                Transport = new HttpClientTransport(new HttpClient(new MockHttpMessageHandler()))
+                StatusCode = HttpStatusCode.OK,
+                Content = new StringContent("Mock Content")
             };
 
-            _pipeline = HttpPipelineBuilder.Build(options);
+            httpResponse.Headers.Add("MockHeader1", "Mock Header Value");
+            httpResponse.Headers.Add("MockHeader2", "Mock Header Value");
 
-            // Pre-create messages
-
-            _messages = new HttpMessage[messageCount];
-
-            for (int i = 0; i < messageCount; i++)
-            {
-                var message = _pipeline.CreateMessage();
-
-                message.Request.Uri.Reset(new Uri("https://www.example.com"));
-
-                _messages[i] = message;
-            }
-
-            _messageIndex = 0;
-        }
-        [GlobalCleanup]
-        public void CleanUp()
-        {
-            if (_messages != null)
-            {
-                foreach (var msg in _messages)
-                {
-                    msg?.Dispose();
-                }
-                _messages = Array.Empty<HttpMessage>();
-            }
-        }
-
-        [Benchmark]
-        public async Task<Response> SendMessageWithPipeline()
-        {
-            // Use round-robin to avoid always sending the same message
-
-            var message = _messages[_messageIndex];
-
-            _messageIndex = (_messageIndex + 1) % _messages.Length;
-
-            await _pipeline.SendAsync(message, CancellationToken.None).ConfigureAwait(false);
-
-            return message.Response;
+            return Task.FromResult(httpResponse);
         }
     }
+
+    private class BenchmarkOptions : ClientOptions
+    {
+    }
+
+    #endregion
 }

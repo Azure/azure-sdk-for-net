@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
@@ -48,39 +49,39 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Initializes a new instance of <see cref="PrivateIPAddressResult"/>. </summary>
         /// <param name="displayName"> PrivateIpAddresses displayName. </param>
         /// <param name="hostnameLabel"> PrivateIpAddresses hostnameLabel. </param>
-        /// <param name="privateIPAddressesOcid"> PrivateIpAddresses Id. </param>
+        /// <param name="ocid"> PrivateIpAddresses Id. </param>
         /// <param name="ipAddress"> PrivateIpAddresses ipAddress. </param>
-        /// <param name="subnetOcid"> PrivateIpAddresses subnetId. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/>, <paramref name="hostnameLabel"/>, <paramref name="privateIPAddressesOcid"/>, <paramref name="ipAddress"/> or <paramref name="subnetOcid"/> is null. </exception>
-        internal PrivateIPAddressResult(string displayName, string hostnameLabel, string privateIPAddressesOcid, string ipAddress, string subnetOcid)
+        /// <param name="subnetId"> PrivateIpAddresses subnetId. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/>, <paramref name="hostnameLabel"/>, <paramref name="ocid"/>, <paramref name="ipAddress"/> or <paramref name="subnetId"/> is null. </exception>
+        internal PrivateIPAddressResult(string displayName, string hostnameLabel, ResourceIdentifier ocid, string ipAddress, ResourceIdentifier subnetId)
         {
             Argument.AssertNotNull(displayName, nameof(displayName));
             Argument.AssertNotNull(hostnameLabel, nameof(hostnameLabel));
-            Argument.AssertNotNull(privateIPAddressesOcid, nameof(privateIPAddressesOcid));
+            Argument.AssertNotNull(ocid, nameof(ocid));
             Argument.AssertNotNull(ipAddress, nameof(ipAddress));
-            Argument.AssertNotNull(subnetOcid, nameof(subnetOcid));
+            Argument.AssertNotNull(subnetId, nameof(subnetId));
 
             DisplayName = displayName;
             HostnameLabel = hostnameLabel;
-            PrivateIPAddressesOcid = privateIPAddressesOcid;
+            Ocid = ocid;
             IPAddress = ipAddress;
-            SubnetOcid = subnetOcid;
+            SubnetId = subnetId;
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateIPAddressResult"/>. </summary>
         /// <param name="displayName"> PrivateIpAddresses displayName. </param>
         /// <param name="hostnameLabel"> PrivateIpAddresses hostnameLabel. </param>
-        /// <param name="privateIPAddressesOcid"> PrivateIpAddresses Id. </param>
+        /// <param name="ocid"> PrivateIpAddresses Id. </param>
         /// <param name="ipAddress"> PrivateIpAddresses ipAddress. </param>
-        /// <param name="subnetOcid"> PrivateIpAddresses subnetId. </param>
+        /// <param name="subnetId"> PrivateIpAddresses subnetId. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateIPAddressResult(string displayName, string hostnameLabel, string privateIPAddressesOcid, string ipAddress, string subnetOcid, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PrivateIPAddressResult(string displayName, string hostnameLabel, ResourceIdentifier ocid, string ipAddress, ResourceIdentifier subnetId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayName = displayName;
             HostnameLabel = hostnameLabel;
-            PrivateIPAddressesOcid = privateIPAddressesOcid;
+            Ocid = ocid;
             IPAddress = ipAddress;
-            SubnetOcid = subnetOcid;
+            SubnetId = subnetId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -94,10 +95,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> PrivateIpAddresses hostnameLabel. </summary>
         public string HostnameLabel { get; }
         /// <summary> PrivateIpAddresses Id. </summary>
-        public string PrivateIPAddressesOcid { get; }
+        public ResourceIdentifier Ocid { get; }
         /// <summary> PrivateIpAddresses ipAddress. </summary>
         public string IPAddress { get; }
         /// <summary> PrivateIpAddresses subnetId. </summary>
-        public string SubnetOcid { get; }
+        public ResourceIdentifier SubnetId { get; }
     }
 }

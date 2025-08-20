@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Resources.Models
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            ScriptContainerConfiguration containerSettings = default;
+            ContainerConfiguration containerSettings = default;
             ScriptStorageConfiguration storageAccountSettings = default;
             ScriptCleanupOptions? cleanupPreference = default;
             ScriptProvisioningState? provisioningState = default;
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerResourcesContext.Default);
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Resources.Models
                             {
                                 continue;
                             }
-                            containerSettings = ScriptContainerConfiguration.DeserializeScriptContainerConfiguration(property0.Value, options);
+                            containerSettings = ContainerConfiguration.DeserializeContainerConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("storageAccountSettings"u8))
@@ -557,11 +557,16 @@ namespace Azure.ResourceManager.Resources.Models
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerSettings), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ContainerGroupName", out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    containerSettings: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      containerSettings: {");
+                builder.Append("        containerGroupName: ");
                 builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
             }
             else
             {

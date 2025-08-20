@@ -5,7 +5,6 @@
 
 #nullable enable
 
-using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using System;
 
@@ -35,13 +34,13 @@ public partial class PostgreSqlMigrationStatus : ProvisionableConstruct
     private BicepValue<string>? _error;
 
     /// <summary>
-    /// Current Migration sub state details.
+    /// Migration sub state.
     /// </summary>
-    public PostgreSqlMigrationSubStateDetails CurrentSubStateDetails 
+    public BicepValue<PostgreSqlMigrationSubState> CurrentSubState 
     {
-        get { Initialize(); return _currentSubStateDetails!; }
+        get { Initialize(); return _currentSubState!; }
     }
-    private PostgreSqlMigrationSubStateDetails? _currentSubStateDetails;
+    private BicepValue<PostgreSqlMigrationSubState>? _currentSubState;
 
     /// <summary>
     /// Creates a new PostgreSqlMigrationStatus.
@@ -58,6 +57,6 @@ public partial class PostgreSqlMigrationStatus : ProvisionableConstruct
         base.DefineProvisionableProperties();
         _state = DefineProperty<PostgreSqlMigrationState>("State", ["state"], isOutput: true);
         _error = DefineProperty<string>("Error", ["error"], isOutput: true);
-        _currentSubStateDetails = DefineModelProperty<PostgreSqlMigrationSubStateDetails>("CurrentSubStateDetails", ["currentSubStateDetails"], isOutput: true);
+        _currentSubState = DefineProperty<PostgreSqlMigrationSubState>("CurrentSubState", ["currentSubStateDetails", "currentSubState"], isOutput: true);
     }
 }

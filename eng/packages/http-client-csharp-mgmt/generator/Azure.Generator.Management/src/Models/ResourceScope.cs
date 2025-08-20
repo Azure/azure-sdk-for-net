@@ -7,7 +7,6 @@ namespace Azure.Generator.Management.Models
     {
         Tenant,
         Subscription,
-        ResourceGroup,
-        ManagementGroup,
+        ResourceGroup
     }
 }

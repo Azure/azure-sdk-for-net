@@ -120,7 +120,6 @@ public partial class AuthorizationRoleDefinition : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
-        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true, defaultValue: GetNameDefaultValue());
         _assignableScopes = DefineListProperty<string>("AssignableScopes", ["properties", "assignableScopes"]);
         _description = DefineProperty<string>("Description", ["properties", "description"]);

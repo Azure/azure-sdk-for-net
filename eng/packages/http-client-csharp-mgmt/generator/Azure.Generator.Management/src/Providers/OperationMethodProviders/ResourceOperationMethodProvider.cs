@@ -2,13 +2,10 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Generator.Management.Extensions;
-using Azure.Generator.Management.Models;
+using Azure.Core.Pipeline;
 using Azure.Generator.Management.Primitives;
-using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
-using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -17,6 +14,8 @@ using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers.OperationMethodProviders
@@ -26,105 +25,27 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
     /// </summary>
     internal class ResourceOperationMethodProvider
     {
-        public bool IsLongRunningOperation { get; }
-
-        protected readonly TypeProvider _enclosingType;
-        protected readonly RequestPathPattern _contextualPath;
-        protected readonly ClientProvider _restClient;
+        protected readonly ResourceClientProvider _resourceClientProvider;
         protected readonly InputServiceMethod _serviceMethod;
         protected readonly MethodProvider _convenienceMethod;
         protected readonly bool _isAsync;
         protected readonly ValueExpression _clientDiagnosticsField;
-        protected readonly ValueExpression _restClientField;
         protected readonly MethodSignature _signature;
         protected readonly MethodBodyStatement[] _bodyStatements;
 
-        private readonly string _methodName;
-        private protected readonly CSharpType? _originalBodyType;
-        private protected readonly CSharpType? _returnBodyType;
-        private protected readonly ResourceClientProvider? _returnBodyResourceClient;
-        private readonly bool _isFakeLongRunningOperation;
-        private readonly FormattableString? _description;
-
-        /// <summary>
-        /// Creates a new instance of <see cref="ResourceOperationMethodProvider"/> which represents a method on a client
-        /// </summary>
-        /// <param name="enclosingType">The enclosing type of this operation. </param>
-        /// <param name="contextualPath">The contextual path of the enclosing type. </param>
-        /// <param name="restClientInfo">The rest client information containing the client provider and related fields. </param>
-        /// <param name="method">The input service method that we are building from. </param>
-        /// <param name="isAsync">Whether this method is an async method. </param>
-        /// <param name="methodName">Optional override for the method name. If not provided, uses the convenience method name. </param>
-        /// <param name="description">Optional override for the method description. If not provided, uses the convenience method description.</param>
-        /// <param name="forceLro">Generate this method in LRO signature even if it is not an actual LRO</param>
         public ResourceOperationMethodProvider(
-            TypeProvider enclosingType,
-            RequestPathPattern contextualPath,
-            RestClientInfo restClientInfo,
+            ResourceClientProvider resourceClientProvider,
             InputServiceMethod method,
-            bool isAsync,
-            string? methodName = null,
-            FormattableString? description = null,
-            bool forceLro = false)
+            MethodProvider convenienceMethod,
+            bool isAsync)
         {
-            _enclosingType = enclosingType;
-            _contextualPath = contextualPath;
-            _restClient = restClientInfo.RestClientProvider;
+            _resourceClientProvider = resourceClientProvider;
             _serviceMethod = method;
+            _convenienceMethod = convenienceMethod;
             _isAsync = isAsync;
-            _convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, isAsync);
-            bool isLongRunningOperation = false;
-            InitializeLroFlags(
-                _serviceMethod,
-                forceLro: forceLro,
-                ref isLongRunningOperation,
-                ref _isFakeLongRunningOperation);
-            IsLongRunningOperation = isLongRunningOperation;
-            _methodName = methodName ?? _convenienceMethod.Signature.Name;
-            _description = description ?? _convenienceMethod.Signature.Description;
-            InitializeTypeInfo(
-                _serviceMethod,
-                ref _originalBodyType,
-                ref _returnBodyType,
-                ref _returnBodyResourceClient);
-            _clientDiagnosticsField = restClientInfo.Diagnostics;
-            _restClientField = restClientInfo.RestClient;
+            _clientDiagnosticsField = resourceClientProvider.GetClientDiagnosticsField();
             _signature = CreateSignature();
             _bodyStatements = BuildBodyStatements();
-        }
-
-        private static void InitializeLroFlags(
-            in InputServiceMethod serviceMethod,
-            in bool forceLro,
-            ref bool isLongRunningOperation,
-            ref bool isFakeLongRunningOperation)
-        {
-            isLongRunningOperation = serviceMethod.IsLongRunningOperation();
-            // when the method is not a real LRO, but we have to force it to be an LRO, the fake lro flag is true.
-            isFakeLongRunningOperation = forceLro && !isLongRunningOperation;
-        }
-
-        private static void InitializeTypeInfo(
-            in InputServiceMethod serviceMethod,
-            ref CSharpType? originalBodyType,
-            ref CSharpType? returnBodyType,
-            ref ResourceClientProvider? wrappedResourceClient)
-        {
-            originalBodyType = serviceMethod.GetResponseBodyType();
-            // see if the body type could be wrapped into a resource client
-            returnBodyType = originalBodyType;
-            if (originalBodyType != null && ManagementClientGenerator.Instance.OutputLibrary.TryGetResourceClientProvider(originalBodyType, out wrappedResourceClient))
-            {
-                returnBodyType = wrappedResourceClient.Type;
-            }
-        }
-
-        private CSharpType? _returnType;
-        public CSharpType ReturnType => _returnType ??= BuildReturnType();
-
-        protected virtual CSharpType BuildReturnType()
-        {
-            return _returnBodyType.WrapResponse(IsLongRunningOperation || _isFakeLongRunningOperation).WrapAsync(_isAsync);
         }
 
         public static implicit operator MethodProvider(ResourceOperationMethodProvider resourceOperationMethodProvider)
@@ -132,34 +53,30 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             return new MethodProvider(
                 resourceOperationMethodProvider._signature,
                 resourceOperationMethodProvider._bodyStatements,
-                resourceOperationMethodProvider._enclosingType);
+                resourceOperationMethodProvider._resourceClientProvider.Source);
         }
 
         protected virtual MethodBodyStatement[] BuildBodyStatements()
         {
-            var scopeName = _signature.Name.EndsWith("Async") ? _signature.Name.Substring(0, _signature.Name.Length - "Async".Length) : _signature.Name;
-            var scopeStatements = ResourceMethodSnippets.CreateDiagnosticScopeStatements(_enclosingType, _clientDiagnosticsField, scopeName, out var scopeVariable);
-            return [
-                .. scopeStatements,
+            var scopeDeclaration = BuildDiagnosticScopeDeclaration(out var scopeVariable);
+            return
+            [
+                scopeDeclaration,
+                scopeVariable.Invoke(nameof(DiagnosticScope.Start)).Terminate(),
                 new TryCatchFinallyStatement(
                     BuildTryExpression(),
-                    ResourceMethodSnippets.CreateDiagnosticCatchBlock(scopeVariable)
+                    BuildCatchExpression(scopeVariable)
                 )
             ];
-        }
-
-        protected IReadOnlyList<ParameterProvider> GetOperationMethodParameters()
-        {
-            return OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _contextualPath, _isFakeLongRunningOperation);
         }
 
         protected virtual MethodSignature CreateSignature()
         {
             return new MethodSignature(
-                _methodName,
-                _description,
+                _convenienceMethod.Signature.Name,
+                _convenienceMethod.Signature.Description,
                 _convenienceMethod.Signature.Modifiers,
-                ReturnType,
+                _serviceMethod.GetOperationMethodReturnType(_isAsync, _resourceClientProvider.ResourceClientCSharpType, _resourceClientProvider.ResourceData.Type),
                 _convenienceMethod.Signature.ReturnDescription,
                 GetOperationMethodParameters(),
                 _convenienceMethod.Signature.Attributes,
@@ -169,29 +86,36 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _convenienceMethod.Signature.NonDocumentComment);
         }
 
+        private MethodBodyStatement BuildDiagnosticScopeDeclaration(out VariableExpression scopeVariable)
+        {
+            return UsingDeclare(
+                "scope",
+                typeof(DiagnosticScope),
+                _clientDiagnosticsField.Invoke(
+                    nameof(ClientDiagnostics.CreateScope),
+                    [Literal($"{_resourceClientProvider.Name}.{_signature.Name}")]),
+                out scopeVariable);
+        }
+
         private TryExpression BuildTryExpression()
         {
-            var cancellationTokenParameter = KnownParameters.CancellationTokenParameter;
+            var cancellationTokenParameter = _convenienceMethod.Signature.Parameters.Single(p => p.Type.Equals(typeof(CancellationToken)));
 
-            var requestMethod = _restClient.GetRequestMethodByOperation(_serviceMethod.Operation);
             var tryStatements = new List<MethodBodyStatement>
             {
-                ResourceMethodSnippets.CreateRequestContext(cancellationTokenParameter, out var contextVariable)
+                BuildRequestContextInitialization(cancellationTokenParameter, out var contextVariable),
+                BuildHttpMessageInitialization(contextVariable, out var messageVariable)
             };
-
-            // Populate arguments for the REST client method call
-            var arguments = _contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters);
-
-            tryStatements.Add(ResourceMethodSnippets.CreateHttpMessage(_restClientField, requestMethod.Signature.Name, arguments, out var messageVariable));
 
             tryStatements.AddRange(BuildClientPipelineProcessing(messageVariable, contextVariable, out var responseVariable));
 
-            if (IsLongRunningOperation || _isFakeLongRunningOperation)
+            if (_serviceMethod.IsLongRunningOperation())
             {
                 tryStatements.AddRange(
-                    _isFakeLongRunningOperation ?
-                    BuildFakeLroHandling(messageVariable, responseVariable, cancellationTokenParameter) :
-                    BuildLroHandling(messageVariable, responseVariable, cancellationTokenParameter));
+                BuildLroHandling(
+                    messageVariable,
+                    responseVariable,
+                    cancellationTokenParameter));
             }
             else
             {
@@ -200,96 +124,119 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             return new TryExpression(tryStatements);
         }
 
+        private CatchExpression BuildCatchExpression(VariableExpression scopeVariable)
+        {
+            return Catch(
+                Declare<Exception>("e", out var exceptionVariable),
+                [
+                    scopeVariable.Invoke(nameof(DiagnosticScope.Failed), exceptionVariable).Terminate(),
+                    Throw()
+                ]);
+        }
+
+        private MethodBodyStatement BuildRequestContextInitialization(ParameterProvider cancellationTokenParameter, out VariableExpression contextVariable)
+        {
+            var requestContextParams = new Dictionary<ValueExpression, ValueExpression>
+            {
+                { Identifier(nameof(RequestContext.CancellationToken)), cancellationTokenParameter }
+            };
+            return Declare(
+                "context",
+                typeof(RequestContext),
+                New.Instance(typeof(RequestContext), requestContextParams),
+                out contextVariable);
+        }
+
+        private MethodBodyStatement BuildHttpMessageInitialization(VariableExpression contextVariable, out VariableExpression messageVariable)
+        {
+            var requestMethod = _serviceMethod.GetCorrespondingRequestMethod(_resourceClientProvider);
+
+            var arguments = PopulateArguments(
+                requestMethod.Signature.Parameters,
+                contextVariable);
+
+            var invokeExpression = _resourceClientProvider
+                .GetRestClientField()
+                .Invoke(requestMethod.Signature.Name, arguments);
+
+            return Declare(
+                "message",
+                typeof(HttpMessage),
+                invokeExpression,
+                out messageVariable);
+        }
+
         private IReadOnlyList<MethodBodyStatement> BuildClientPipelineProcessing(
             VariableExpression messageVariable,
             VariableExpression contextVariable,
-            out ScopedApi<Response> responseVariable)
+            out VariableExpression responseVariable)
         {
-            if (_originalBodyType != null && !IsLongRunningOperation)
+            var statements = new List<MethodBodyStatement>();
+            var responseType = _convenienceMethod.Signature.ReturnType!.UnWrapAsync();
+            VariableExpression declaredResponseVariable;
+            var pipelineInvoke = _isAsync ? "ProcessMessageAsync" : "ProcessMessage";
+
+            if (!responseType.Equals(typeof(Response)))
             {
-                return ResourceMethodSnippets.CreateGenericResponsePipelineProcessing(
-                    messageVariable,
-                    contextVariable,
-                    _originalBodyType,
-                    _isAsync,
-                    out responseVariable);
+                var resultDeclaration = Declare(
+                    "result",
+                    typeof(Response),
+                    Identifier("this")
+                        .Property("Pipeline")
+                        .Invoke(pipelineInvoke, [messageVariable, contextVariable], null, _isAsync),
+                    out var resultVariable);
+                statements.Add(resultDeclaration);
+
+                var responseDeclaration = Declare(
+                    "response",
+                    responseType,
+                    Static(typeof(Response)).Invoke(
+                        nameof(Response.FromValue),
+                        [resultVariable.CastTo(responseType.Arguments[0]), resultVariable]),
+                    out declaredResponseVariable);
+                statements.Add(responseDeclaration);
             }
             else
             {
-                return ResourceMethodSnippets.CreateNonGenericResponsePipelineProcessing(
-                    messageVariable,
-                    contextVariable,
-                    _isAsync,
-                    out responseVariable);
+                var responseDeclaration = Declare(
+                    "response",
+                    typeof(Response),
+                    Identifier("this")
+                        .Property("Pipeline")
+                        .Invoke(pipelineInvoke, [messageVariable, contextVariable], null, _isAsync),
+                    out declaredResponseVariable);
+                statements.Add(responseDeclaration);
             }
-        }
-
-        private IReadOnlyList<MethodBodyStatement> BuildFakeLroHandling(
-            VariableExpression messageVariable,
-            ScopedApi<Response> responseVariable,
-            ParameterProvider cancellationTokenParameter)
-        {
-            var statements = new List<MethodBodyStatement>();
-
-            var armOperationType = _returnBodyType != null
-                ? ManagementClientGenerator.Instance.OutputLibrary.ArmOperationOfT.Type
-                    .MakeGenericType([_returnBodyType])
-                : ManagementClientGenerator.Instance.OutputLibrary.ArmOperation.Type;
-
-            var uriDeclaration = ResourceMethodSnippets.CreateUriFromMessage(messageVariable, out var uriVariable);
-            statements.Add(uriDeclaration);
-            var rehydrationTokenDeclaration = NextLinkOperationImplementationSnippets.CreateRehydrationToken(uriVariable.As<RequestUriBuilder>(), _serviceMethod.Operation.HttpMethod, out var rehydrationTokenVariable);
-            statements.Add(rehydrationTokenDeclaration);
-
-            ValueExpression responseValueExpression = responseVariable;
-            // when the response is wrapped by a resource, we need to construct it from the response value.
-            if (_returnBodyResourceClient != null)
-            {
-                responseValueExpression = ResponseSnippets.FromValue(
-                    New.Instance(
-                            _returnBodyResourceClient.Type,
-                            This.As<ArmResource>().Client(),
-                            responseVariable.Value()),
-                    responseVariable.GetRawResponse());
-            }
-
-            ValueExpression[] armOperationArguments = [responseValueExpression, rehydrationTokenVariable];
-            var operationDeclaration = Declare(
-                "operation",
-                armOperationType,
-                New.Instance(armOperationType, armOperationArguments),
-                out var operationVariable);
-            statements.Add(operationDeclaration);
-
-            AddWaitCompletionLogic(statements, operationVariable, cancellationTokenParameter);
+            responseVariable = declaredResponseVariable;
             return statements;
         }
 
         private IReadOnlyList<MethodBodyStatement> BuildLroHandling(
             VariableExpression messageVariable,
-            ScopedApi<Response> responseVariable,
+            VariableExpression responseVariable,
             ParameterProvider cancellationTokenParameter)
         {
             var statements = new List<MethodBodyStatement>();
 
             var finalStateVia = _serviceMethod.GetOperationFinalStateVia();
+            bool isGeneric = _serviceMethod.GetResponseBodyType() != null;
 
-            var armOperationType = _returnBodyType != null
-                ? ManagementClientGenerator.Instance.OutputLibrary.ArmOperationOfT.Type
-                    .MakeGenericType([_returnBodyType])
+            var armOperationType = isGeneric
+                ? ManagementClientGenerator.Instance.OutputLibrary.GenericArmOperation.Type
+                    .MakeGenericType([_resourceClientProvider.ResourceClientCSharpType])
                 : ManagementClientGenerator.Instance.OutputLibrary.ArmOperation.Type;
 
             ValueExpression[] armOperationArguments = [
                 _clientDiagnosticsField,
-                This.As<ArmResource>().Pipeline(),
+                This.Property("Pipeline"),
                 messageVariable.Property("Request"),
-                responseVariable,
+                isGeneric ? responseVariable.Invoke("GetRawResponse") : responseVariable,
                 Static(typeof(OperationFinalStateVia)).Property(finalStateVia.ToString())
             ];
 
-            var operationInstanceArguments = _returnBodyResourceClient != null
+            var operationInstanceArguments = isGeneric
                 ? [
-                    New.Instance(_returnBodyResourceClient.Source.Type, This.As<ArmResource>().Client()),
+                    New.Instance(_resourceClientProvider.Source.Type, This.Property("Client")),
                     .. armOperationArguments
                   ]
                 : armOperationArguments;
@@ -301,23 +248,13 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 out var operationVariable);
             statements.Add(operationDeclaration);
 
-            AddWaitCompletionLogic(statements, operationVariable, cancellationTokenParameter);
-
-            return statements;
-        }
-
-        private void AddWaitCompletionLogic(
-            List<MethodBodyStatement> statements,
-            VariableExpression operationVariable,
-            ParameterProvider cancellationTokenParameter)
-        {
-            var waitMethod = _returnBodyType != null
+            var waitMethod = isGeneric
                 ? (_isAsync ? "WaitForCompletionAsync" : "WaitForCompletion")
                 : (_isAsync ? "WaitForCompletionResponseAsync" : "WaitForCompletionResponse");
 
             var waitInvocation = _isAsync
-                           ? operationVariable.Invoke(waitMethod, [cancellationTokenParameter], null, _isAsync).Terminate()
-                           : operationVariable.Invoke(waitMethod, cancellationTokenParameter).Terminate();
+                ? operationVariable.Invoke(waitMethod, [cancellationTokenParameter], null, _isAsync).Terminate()
+                : operationVariable.Invoke(waitMethod, cancellationTokenParameter).Terminate();
 
             var waitIfCompletedStatement = new IfStatement(
                 KnownAzureParameters.WaitUntil.Equal(
@@ -327,41 +264,102 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             };
             statements.Add(waitIfCompletedStatement);
             statements.Add(Return(operationVariable));
+            return statements;
         }
 
         // TODO: re-examine if this method need to be virtual or not after tags related method providers are implmented.
-        protected virtual IReadOnlyList<MethodBodyStatement> BuildReturnStatements(ScopedApi<Response> responseVariable, MethodSignature signature)
+        protected virtual IReadOnlyList<MethodBodyStatement> BuildReturnStatements(ValueExpression responseVariable, MethodSignature signature)
         {
             var nullCheckStatement = new IfStatement(
-                responseVariable.Value().Equal(Null))
+                responseVariable.Property("Value").Equal(Null))
             {
                 ((KeywordExpression)ThrowExpression(
                     New.Instance(
                         typeof(RequestFailedException),
-                        responseVariable.GetRawResponse()))).Terminate()
+                        responseVariable.Invoke("GetRawResponse")))).Terminate()
             };
 
             List<MethodBodyStatement> statements = [nullCheckStatement];
 
-            // If the return type has been wrapped by a resource client, we need to return the resource client type.
-            if (_returnBodyResourceClient != null)
-            {
-                var returnValueExpression = New.Instance(
-                    _returnBodyResourceClient.Type,
-                    This.As<ArmResource>().Client(),
-                    responseVariable.Value());
-                var returnStatement = Return(
-                    ResponseSnippets.FromValue(
-                        returnValueExpression,
-                        responseVariable.GetRawResponse()));
-                statements.Add(returnStatement);
-            }
-            else
-            {
-                statements.Add(Return(responseVariable));
-            }
+            var resourceType = typeof(ArmResource);
+            var returnValueExpression = New.Instance(
+                _resourceClientProvider.ResourceClientCSharpType,
+                This.Property("Client"),
+                responseVariable.Property("Value"));
+
+            var returnStatement = Return(
+                Static(typeof(Response)).Invoke(
+                    nameof(Response.FromValue),
+                    returnValueExpression,
+                    responseVariable.Invoke("GetRawResponse")));
+            statements.Add(returnStatement);
 
             return statements;
+        }
+
+        private ValueExpression[] PopulateArguments(
+            IReadOnlyList<ParameterProvider> parameters,
+            VariableExpression contextVariable)
+        {
+            var arguments = new List<ValueExpression>();
+            foreach (var parameter in parameters)
+            {
+                if (parameter.Name.Equals("subscriptionId", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    arguments.Add(
+                        Static(typeof(Guid)).Invoke(
+                            nameof(Guid.Parse),
+                            This.Property(nameof(ArmResource.Id)).Property(nameof(ResourceIdentifier.SubscriptionId))));
+                }
+                else if (parameter.Name.Equals("resourceGroupName", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    arguments.Add(
+                        This.Property(nameof(ArmResource.Id)).Property(nameof(ResourceIdentifier.ResourceGroupName)));
+                }
+                // TODO: handle parents
+                // Handle resource name - the last contextual parameter
+                else if (parameter.Name.Equals(_resourceClientProvider.ContextualParameters.Last(), StringComparison.InvariantCultureIgnoreCase))
+                {
+                    arguments.Add(
+                        This.Property(nameof(ArmResource.Id)).Property(nameof(ResourceIdentifier.Name)));
+                }
+                else if (parameter.Type.Equals(typeof(RequestContent)))
+                {
+                    var resource = _convenienceMethod.Signature.Parameters
+                        .Single(p => p.Type.Equals(_resourceClientProvider.ResourceData.Type));
+                    arguments.Add(resource);
+                }
+                else if (parameter.Type.Equals(typeof(RequestContext)))
+                {
+                    var cancellationToken = _convenienceMethod.Signature.Parameters
+                        .Single(p => p.Type.Equals(typeof(CancellationToken)));
+                    arguments.Add(contextVariable);
+                }
+                else
+                {
+                    arguments.Add(parameter);
+                }
+            }
+            return [.. arguments];
+        }
+
+        protected IReadOnlyList<ParameterProvider> GetOperationMethodParameters()
+        {
+            var result = new List<ParameterProvider>();
+            if (_serviceMethod.IsLongRunningOperation())
+            {
+                result.Add(KnownAzureParameters.WaitUntil);
+            }
+
+            foreach (var parameter in _convenienceMethod.Signature.Parameters)
+            {
+                if (!_resourceClientProvider.ImplicitParameterNames.Contains(parameter.Name))
+                {
+                    result.Add(parameter);
+                }
+            }
+
+            return result;
         }
     }
 }

@@ -10,11 +10,7 @@ namespace Azure.AI.OpenAI.Chat
 {
     internal partial class InternalAzureChatDataSourceUsernameAndPasswordAuthenticationOptions : DataSourceAuthentication
     {
-        /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceUsernameAndPasswordAuthenticationOptions"/>. </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="username"/> or <paramref name="password"/> is null. </exception>
-        public InternalAzureChatDataSourceUsernameAndPasswordAuthenticationOptions(string username, string password) : base(InternalAzureChatDataSourceAuthenticationOptionsType.UsernameAndPassword)
+        public InternalAzureChatDataSourceUsernameAndPasswordAuthenticationOptions(string username, string password) : base("username_and_password")
         {
             Argument.AssertNotNull(username, nameof(username));
             Argument.AssertNotNull(password, nameof(password));
@@ -23,21 +19,16 @@ namespace Azure.AI.OpenAI.Chat
             Password = password;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceUsernameAndPasswordAuthenticationOptions"/>. </summary>
-        /// <param name="kind"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        internal InternalAzureChatDataSourceUsernameAndPasswordAuthenticationOptions(InternalAzureChatDataSourceAuthenticationOptionsType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string username, string password) : base(kind, additionalBinaryDataProperties)
+        internal InternalAzureChatDataSourceUsernameAndPasswordAuthenticationOptions(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string username, string password) : base(@type, additionalBinaryDataProperties)
         {
             Username = username;
             Password = password;
         }
 
-        /// <summary> Gets or sets the Username. </summary>
+        /// <summary> Gets the Username. </summary>
         public string Username { get; set; }
 
-        /// <summary> Gets or sets the Password. </summary>
+        /// <summary> Gets the Password. </summary>
         public string Password { get; set; }
     }
 }

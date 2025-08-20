@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Grafana.Models
 
         /// <summary> Gets or sets the sku. </summary>
         internal ManagedGrafanaSku Sku { get; set; }
-        /// <summary> The name of the SKU. </summary>
+        /// <summary> Gets or sets the sku name. </summary>
         public string SkuName
         {
             get => Sku is null ? default : Sku.Name;

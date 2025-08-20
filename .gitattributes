@@ -1,4 +1,4 @@
-* text=auto eol=lf
+* text=auto
 
 *.bmp binary
 *.dll binary
@@ -12,12 +12,10 @@
 *.ismv binary
 *.isma binary
 
-*.cs     text eol=lf diff=csharp
-*.csproj text eol=lf
-*.sln    text eol=lf
-*.sh     text eol=lf
-*.json   text eol=lf
-*.bicep  text eol=lf
+*.cs text diff=csharp
+*.csproj text=auto
+*.sln text=auto eol=crlf
+*.sh text=auto eol=lf
 
 # Automatically collapse Track 2 test recordings in github PRs
 **/SessionRecords/**/*.json linguist-generated=true

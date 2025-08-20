@@ -70,17 +70,6 @@ public partial class ContainerAppJobScaleRule : ProvisionableConstruct
     private BicepList<ContainerAppScaleRuleAuth>? _auth;
 
     /// <summary>
-    /// The resource ID of a user-assigned managed identity that is assigned to
-    /// the Container App, or &apos;system&apos; for system-assigned identity.
-    /// </summary>
-    public BicepValue<string> Identity 
-    {
-        get { Initialize(); return _identity!; }
-        set { Initialize(); _identity!.Assign(value); }
-    }
-    private BicepValue<string>? _identity;
-
-    /// <summary>
     /// Creates a new ContainerAppJobScaleRule.
     /// </summary>
     public ContainerAppJobScaleRule()
@@ -97,6 +86,5 @@ public partial class ContainerAppJobScaleRule : ProvisionableConstruct
         _jobScaleRuleType = DefineProperty<string>("JobScaleRuleType", ["type"]);
         _metadata = DefineProperty<BinaryData>("Metadata", ["metadata"]);
         _auth = DefineListProperty<ContainerAppScaleRuleAuth>("Auth", ["auth"]);
-        _identity = DefineProperty<string>("Identity", ["identity"]);
     }
 }

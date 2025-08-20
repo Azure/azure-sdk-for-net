@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="ConnectToTargetSqlMITaskInput"/>. </summary>
         /// <param name="targetConnectionInfo"> Connection information for target SQL Server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetConnectionInfo"/> is null. </exception>
-        public ConnectToTargetSqlMITaskInput(DataMigrationSqlConnectionInfo targetConnectionInfo)
+        public ConnectToTargetSqlMITaskInput(SqlConnectionInfo targetConnectionInfo)
         {
             Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
 
@@ -57,16 +57,16 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Initializes a new instance of <see cref="ConnectToTargetSqlMITaskInput"/>. </summary>
         /// <param name="targetConnectionInfo"> Connection information for target SQL Server. </param>
-        /// <param name="shouldCollectLogins"> Flag for whether to collect logins from target SQL MI server. </param>
-        /// <param name="shouldCollectAgentJobs"> Flag for whether to collect agent jobs from target SQL MI server. </param>
-        /// <param name="shouldValidateSsisCatalogOnly"> Flag for whether to validate SSIS catalog is reachable on the target SQL MI server. </param>
+        /// <param name="collectLogins"> Flag for whether to collect logins from target SQL MI server. </param>
+        /// <param name="collectAgentJobs"> Flag for whether to collect agent jobs from target SQL MI server. </param>
+        /// <param name="validateSsisCatalogOnly"> Flag for whether to validate SSIS catalog is reachable on the target SQL MI server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectToTargetSqlMITaskInput(DataMigrationSqlConnectionInfo targetConnectionInfo, bool? shouldCollectLogins, bool? shouldCollectAgentJobs, bool? shouldValidateSsisCatalogOnly, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectToTargetSqlMITaskInput(SqlConnectionInfo targetConnectionInfo, bool? collectLogins, bool? collectAgentJobs, bool? validateSsisCatalogOnly, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetConnectionInfo = targetConnectionInfo;
-            ShouldCollectLogins = shouldCollectLogins;
-            ShouldCollectAgentJobs = shouldCollectAgentJobs;
-            ShouldValidateSsisCatalogOnly = shouldValidateSsisCatalogOnly;
+            CollectLogins = collectLogins;
+            CollectAgentJobs = collectAgentJobs;
+            ValidateSsisCatalogOnly = validateSsisCatalogOnly;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Connection information for target SQL Server. </summary>
-        public DataMigrationSqlConnectionInfo TargetConnectionInfo { get; set; }
+        public SqlConnectionInfo TargetConnectionInfo { get; set; }
         /// <summary> Flag for whether to collect logins from target SQL MI server. </summary>
-        public bool? ShouldCollectLogins { get; set; }
+        public bool? CollectLogins { get; set; }
         /// <summary> Flag for whether to collect agent jobs from target SQL MI server. </summary>
-        public bool? ShouldCollectAgentJobs { get; set; }
+        public bool? CollectAgentJobs { get; set; }
         /// <summary> Flag for whether to validate SSIS catalog is reachable on the target SQL MI server. </summary>
-        public bool? ShouldValidateSsisCatalogOnly { get; set; }
+        public bool? ValidateSsisCatalogOnly { get; set; }
     }
 }

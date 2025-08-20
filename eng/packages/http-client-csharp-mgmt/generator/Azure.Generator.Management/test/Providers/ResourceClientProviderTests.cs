@@ -5,6 +5,7 @@ using Azure.Core;
 using Azure.Generator.Management.Providers;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
+using Azure.Generator.Tests.Common;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -21,9 +22,9 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = validateIdMethod.Signature;
-            Assert.AreEqual(MethodSignatureModifiers.Internal | MethodSignatureModifiers.Static, signature.Modifiers);
-            Assert.AreEqual(1, signature.Parameters.Count);
-            Assert.AreEqual(typeof(ResourceIdentifier), signature.Parameters[0].Type.FrameworkType);
+            Assert.IsTrue(signature.Modifiers.Equals(MethodSignatureModifiers.Internal | MethodSignatureModifiers.Static));
+            Assert.IsTrue(signature.Parameters.Count == 1);
+            Assert.IsTrue(signature.Parameters[0].Type.FrameworkType.Equals(typeof(ResourceIdentifier)));
             Assert.Null(signature.ReturnType?.FrameworkType);
 
             // verify the method body
@@ -65,10 +66,10 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = getMethod.Signature;
-            Assert.AreEqual(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual, signature.Modifiers);
-            Assert.AreEqual(1, signature.Parameters.Count);
-            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[0].Type.FrameworkType);
-            Assert.AreEqual(typeof(Response<>), signature.ReturnType?.FrameworkType);
+            Assert.IsTrue(signature.Modifiers.Equals(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual));
+            Assert.IsTrue(signature.Parameters.Count == 1);
+            Assert.IsTrue(signature.Parameters[0].Type.FrameworkType.Equals(typeof(CancellationToken)));
+            Assert.AreEqual(signature.ReturnType?.FrameworkType, typeof(Response<>));
 
             // verify the method body
             var bodyStatements = getMethod.BodyStatements?.ToDisplayString();
@@ -84,10 +85,10 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the method signature
             var signature = getMethod.Signature;
-            Assert.AreEqual(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async, signature.Modifiers);
-            Assert.AreEqual(1, signature.Parameters.Count);
-            Assert.AreEqual(typeof(CancellationToken), signature.Parameters[0].Type.FrameworkType);
-            Assert.AreEqual(typeof(Task<>), signature.ReturnType?.FrameworkType);
+            Assert.IsTrue(signature.Modifiers.Equals(MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual | MethodSignatureModifiers.Async));
+            Assert.IsTrue(signature.Parameters.Count == 1);
+            Assert.IsTrue(signature.Parameters[0].Type.FrameworkType.Equals(typeof(CancellationToken)));
+            Assert.AreEqual(signature.ReturnType?.FrameworkType, typeof(Task<>));
 
             // verify the method body
             var bodyStatements = getMethod.BodyStatements?.ToDisplayString();
@@ -103,9 +104,9 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the constructor signature
             var signature = constructor.Signature;
-            Assert.AreEqual(MethodSignatureModifiers.Internal, signature.Modifiers);
-            Assert.AreEqual(2, signature.Parameters.Count);
-            Assert.AreEqual(typeof(ArmClient), signature.Parameters.Single(p => p.Name == "client").Type.FrameworkType);
+            Assert.IsTrue(signature.Modifiers.Equals(MethodSignatureModifiers.Internal));
+            Assert.IsTrue(signature.Parameters.Count == 2);
+            Assert.AreEqual(signature.Parameters.Single(p => p.Name == "client").Type.FrameworkType, typeof(ArmClient));
 
             // verify the method body
             var bodyStatements = constructor.BodyStatements?.ToDisplayString();
@@ -121,41 +122,12 @@ namespace Azure.Generator.Management.Tests.Providers
 
             // verify the constructor signature
             var signature = constructor.Signature;
-            Assert.AreEqual(MethodSignatureModifiers.Internal, signature.Modifiers);
-            Assert.AreEqual(2, signature.Parameters.Count);
-            Assert.AreEqual(typeof(ArmClient), signature.Parameters.Single(p => p.Name == "client").Type.FrameworkType);
+            Assert.IsTrue(signature.Modifiers.Equals(MethodSignatureModifiers.Internal));
+            Assert.IsTrue(signature.Parameters.Count == 2);
+            Assert.AreEqual(signature.Parameters.Single(p => p.Name == "client").Type.FrameworkType, typeof(ArmClient));
 
             // verify the method body
             var bodyStatements = constructor.BodyStatements?.ToDisplayString();
-            Assert.NotNull(bodyStatements);
-            var exptected = Helpers.GetExpectedFromFile();
-            Assert.AreEqual(exptected, bodyStatements);
-        }
-
-        [TestCase]
-        public void Verify_CreateResourceIdentifierMethod()
-        {
-            MethodProvider createResourceIdentifierMethod = GetResourceClientProviderMethodByName("CreateResourceIdentifier");
-
-            var signature = createResourceIdentifierMethod.Signature;
-            Assert.AreEqual(MethodSignatureModifiers.Public | MethodSignatureModifiers.Static, signature.Modifiers);
-            Assert.AreEqual(typeof(ResourceIdentifier), signature.ReturnType?.FrameworkType);
-
-            Assert.AreEqual(3, signature.Parameters.Count);
-
-            var subscriptionIdParam = signature.Parameters.FirstOrDefault(p => p.Name == "subscriptionId");
-            Assert.NotNull(subscriptionIdParam);
-            Assert.AreEqual(typeof(string), subscriptionIdParam!.Type.FrameworkType);
-
-            var resourceGroupParam = signature.Parameters.FirstOrDefault(p => p.Name == "resourceGroupName");
-            Assert.NotNull(resourceGroupParam);
-            Assert.AreEqual(typeof(string), resourceGroupParam!.Type.FrameworkType);
-
-            var testNameParam = signature.Parameters.FirstOrDefault(p => p.Name == "testName");
-            Assert.NotNull(testNameParam);
-            Assert.AreEqual(typeof(string), testNameParam!.Type.FrameworkType);
-
-            var bodyStatements = createResourceIdentifierMethod.BodyStatements?.ToDisplayString();
             Assert.NotNull(bodyStatements);
             var exptected = Helpers.GetExpectedFromFile();
             Assert.AreEqual(exptected, bodyStatements);

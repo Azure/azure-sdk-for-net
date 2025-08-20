@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -114,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ServiceArtifactReference))
             {
                 writer.WritePropertyName("serviceArtifactReference"u8);
-                ((IJsonModel<WritableSubResource>)ServiceArtifactReference).Write(writer, options);
+                JsonSerializer.Serialize(writer, ServiceArtifactReference);
             }
             if (Optional.IsDefined(SecurityPostureReference))
             {
@@ -318,7 +317,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    serviceArtifactReference = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default);
+                    serviceArtifactReference = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("securityPostureReference"u8))

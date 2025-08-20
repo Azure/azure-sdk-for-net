@@ -96,7 +96,8 @@ namespace Azure.Communication.CallAutomation
                         return new CancelAddParticipantEventResult(
                             true,
                             successEvent,
-                            null);
+                            null,
+                            successEvent?.InvitationId);
                     }
 
                 case CancelAddParticipantFailed:
@@ -106,7 +107,8 @@ namespace Azure.Communication.CallAutomation
                         return new CancelAddParticipantEventResult(
                             false,
                             null,
-                            failedEvent);
+                            failedEvent,
+                            failedEvent?.InvitationId);
                     }
 
                 default:

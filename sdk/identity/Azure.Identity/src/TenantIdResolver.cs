@@ -21,9 +21,9 @@ namespace Azure.Identity
         {
             bool disableMultiTenantAuth = IdentityCompatSwitches.DisableTenantDiscovery;
 
-            if (!string.Equals(context.TenantId, explicitTenantId, StringComparison.OrdinalIgnoreCase) && context.TenantId != null && explicitTenantId != null)
+            if (context.TenantId != explicitTenantId && context.TenantId != null && explicitTenantId != null)
             {
-                if (disableMultiTenantAuth || string.Equals(explicitTenantId, Constants.AdfsTenantId, StringComparison.OrdinalIgnoreCase))
+                if (disableMultiTenantAuth || explicitTenantId == Constants.AdfsTenantId)
                 {
                     AzureIdentityEventSource.Singleton.TenantIdDiscoveredAndNotUsed(explicitTenantId, context.TenantId);
                 }
@@ -36,11 +36,11 @@ namespace Azure.Identity
             string resolvedTenantId = disableMultiTenantAuth switch
             {
                 true => explicitTenantId,
-                false when string.Equals(explicitTenantId, Constants.AdfsTenantId, StringComparison.OrdinalIgnoreCase) => explicitTenantId,
+                false when explicitTenantId == Constants.AdfsTenantId => explicitTenantId,
                 _ => context.TenantId ?? explicitTenantId
             };
 
-            if (explicitTenantId != null && !string.Equals(resolvedTenantId, explicitTenantId, StringComparison.OrdinalIgnoreCase) && additionallyAllowedTenantIds != AllTenants && Array.BinarySearch(additionallyAllowedTenantIds, resolvedTenantId, StringComparer.OrdinalIgnoreCase) < 0)
+            if (explicitTenantId != null && resolvedTenantId != explicitTenantId && additionallyAllowedTenantIds != AllTenants && Array.BinarySearch(additionallyAllowedTenantIds, resolvedTenantId, StringComparer.OrdinalIgnoreCase) < 0)
             {
                 throw new AuthenticationFailedException($"The current credential is not configured to acquire tokens for tenant {resolvedTenantId}. To enable acquiring tokens for this tenant add it to the AdditionallyAllowedTenants on the credential options, or add \"*\" to AdditionallyAllowedTenants to allow acquiring tokens for any tenant. See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/multitenant/troubleshoot");
             }

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.StorageActions
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageTask_Get</description>
+        /// <description>StorageTasks_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.StorageActions
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageTask_Get</description>
+        /// <description>StorageTasks_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.StorageActions
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageTask_ListBySubscription</description>
+        /// <description>StorageTasks_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.StorageActions
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageTask_ListBySubscription</description>
+        /// <description>StorageTasks_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.StorageActions
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageTasksOperationGroup_PreviewActions</description>
+        /// <description>StorageTasks_PreviewActions</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.StorageActions
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
+        /// <param name="location"> The location to perform preview of the actions. </param>
         /// <param name="storageTaskPreviewAction"> The parameters to preview action condition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="storageTaskPreviewAction"/> is null. </exception>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.StorageActions
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageTasksOperationGroup_PreviewActions</description>
+        /// <description>StorageTasks_PreviewActions</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.StorageActions
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
+        /// <param name="location"> The location to perform preview of the actions. </param>
         /// <param name="storageTaskPreviewAction"> The parameters to preview action condition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="storageTaskPreviewAction"/> is null. </exception>

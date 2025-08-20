@@ -50,13 +50,13 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     PoolId = pool.Id
                 };
-                BatchJobCreateOptions batchTaskCreateOptions = new BatchJobCreateOptions(jobID, batchPoolInfo);
-                Response response = await client.CreateJobAsync(batchTaskCreateOptions);
+                BatchJobCreateContent batchJobCreateContent = new BatchJobCreateContent(jobID, batchPoolInfo);
+                Response response = await client.CreateJobAsync(batchJobCreateContent);
 
                 var job = await client.GetJobAsync(jobID);
                 Assert.IsNotNull(job);
 
-                BatchTaskCreateOptions taskCreateContent = new BatchTaskCreateOptions(taskID, commandLine)
+                BatchTaskCreateContent taskCreateContent = new BatchTaskCreateContent(taskID, commandLine)
                 {
                     ContainerSettings = new BatchTaskContainerSettings("ubuntu")
                     {
@@ -100,22 +100,22 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     PoolId = pool.Id
                 };
-                BatchJobCreateOptions batchTaskCreateOptions = new BatchJobCreateOptions(jobID, batchPoolInfo);
-                Response response = await client.CreateJobAsync(batchTaskCreateOptions);
+                BatchJobCreateContent batchJobCreateContent = new BatchJobCreateContent(jobID, batchPoolInfo);
+                Response response = await client.CreateJobAsync(batchJobCreateContent);
 
                 var job = await client.GetJobAsync(jobID);
                 Assert.IsNotNull(job);
 
-                BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateOptions[]
+                BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateContent[]
                 {
-                    new BatchTaskCreateOptions(taskID, commandLine)
+                    new BatchTaskCreateContent(taskID, commandLine)
                 });
 
-                BatchCreateTaskCollectionResult batchTaskAddCollectionResult = await client.CreateTaskCollectionAsync(jobID, taskCollection);
+                BatchTaskAddCollectionResult batchTaskAddCollectionResult = await client.CreateTaskCollectionAsync(jobID, taskCollection);
 
                 Assert.IsNotNull(batchTaskAddCollectionResult);
-                BatchTaskCreateResult batchTaskAddResult = null;
-                foreach (BatchTaskCreateResult item in batchTaskAddCollectionResult.Values)
+                BatchTaskAddResult batchTaskAddResult = null;
+                foreach (BatchTaskAddResult item in batchTaskAddCollectionResult.Value)
                 {
                     batchTaskAddResult = item;
                 }
@@ -149,21 +149,21 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     PoolId = pool.Id
                 };
-                BatchJobCreateOptions batchTaskCreateOptions = new BatchJobCreateOptions(jobID, batchPoolInfo);
-                Response response = await client.CreateJobAsync(batchTaskCreateOptions);
+                BatchJobCreateContent batchJobCreateContent = new BatchJobCreateContent(jobID, batchPoolInfo);
+                Response response = await client.CreateJobAsync(batchJobCreateContent);
 
                 var job = await client.GetJobAsync(jobID);
                 Assert.IsNotNull(job);
 
-                List<BatchTaskCreateOptions> tasks = new List<BatchTaskCreateOptions>();
+                List<BatchTaskCreateContent> tasks = new List<BatchTaskCreateContent>();
                 for (int i = 0; i < taskCount; i++)
                 {
-                    tasks.Add(new BatchTaskCreateOptions($"{taskID}_{i}", commandLine));
+                    tasks.Add(new BatchTaskCreateContent($"{taskID}_{i}", commandLine));
                 }
 
                 CreateTasksResult taskResult = await client.CreateTasksAsync(jobID, tasks);
                 Assert.IsNotNull(taskResult);
-                Assert.AreEqual(taskCount, taskResult.PassCount);
+                Assert.AreEqual(taskCount, taskResult.Pass);
 
                 for (int i = 0; i < taskCount; i++)
                 {
@@ -198,26 +198,26 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     PoolId = pool.Id
                 };
-                BatchJobCreateOptions batchTaskCreateOptions = new BatchJobCreateOptions(jobID, batchPoolInfo);
-                Response response = await client.CreateJobAsync(batchTaskCreateOptions);
+                BatchJobCreateContent batchJobCreateContent = new BatchJobCreateContent(jobID, batchPoolInfo);
+                Response response = await client.CreateJobAsync(batchJobCreateContent);
 
                 var job = await client.GetJobAsync(jobID);
                 Assert.IsNotNull(job);
 
-                List<BatchTaskCreateOptions> tasks = new List<BatchTaskCreateOptions>();
+                List<BatchTaskCreateContent> tasks = new List<BatchTaskCreateContent>();
                 for (int i = 0; i < taskCount; i++)
                 {
-                    tasks.Add(new BatchTaskCreateOptions($"{taskID}_{i}", commandLine));
+                    tasks.Add(new BatchTaskCreateContent($"{taskID}_{i}", commandLine));
                 }
                 CreateTasksOptions createTaskOptions = new CreateTasksOptions()
                 {
                     MaxTimeBetweenCallsInSeconds = IsPlayBack() ? 0 : 30,
-                    ReturnBatchTaskCreateResults = true,
+                    ReturnBatchTaskAddResults = true,
                 };
 
                 CreateTasksResult taskResult = await client.CreateTasksAsync(jobID, tasks, createTaskOptions);
                 Assert.IsNotNull(taskResult);
-                Assert.AreEqual(taskCount, taskResult.BatchTaskCreateResults.Count);
+                Assert.AreEqual(taskCount, taskResult.BatchTaskAddResults.Count);
 
                 // verify sample set of tasks
                 BatchTask task1 = await client.GetTaskAsync(jobID, $"{taskID}_0");
@@ -257,16 +257,16 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     PoolId = pool.Id
                 };
-                BatchJobCreateOptions batchTaskCreateOptions = new BatchJobCreateOptions(jobID, batchPoolInfo);
-                Response response = await client.CreateJobAsync(batchTaskCreateOptions);
+                BatchJobCreateContent batchJobCreateContent = new BatchJobCreateContent(jobID, batchPoolInfo);
+                Response response = await client.CreateJobAsync(batchJobCreateContent);
 
                 var job = await client.GetJobAsync(jobID);
                 Assert.IsNotNull(job);
 
-                List<BatchTaskCreateOptions> tasks = new List<BatchTaskCreateOptions>();
+                List<BatchTaskCreateContent> tasks = new List<BatchTaskCreateContent>();
                 for (int i = 0; i < taskCount; i++)
                 {
-                    tasks.Add(new BatchTaskCreateOptions($"{taskID}_{i}", commandLine));
+                    tasks.Add(new BatchTaskCreateContent($"{taskID}_{i}", commandLine));
                 }
                 CreateTasksOptions createTaskOptions = new CreateTasksOptions()
                 {
@@ -276,7 +276,7 @@ namespace Azure.Compute.Batch.Tests.Integration
 
                 CreateTasksResult taskResult = await client.CreateTasksAsync(jobID, tasks, createTaskOptions);
                 Assert.IsNotNull(taskResult);
-                Assert.AreEqual(taskCount, taskResult.PassCount);
+                Assert.AreEqual(taskCount, taskResult.Pass);
 
                 // verify sample set of tasks
                 BatchTask task1 = await client.GetTaskAsync(jobID, $"{taskID}_0");
@@ -319,23 +319,23 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     PoolId = pool.Id
                 };
-                BatchJobCreateOptions batchTaskCreateOptions = new BatchJobCreateOptions(jobID, batchPoolInfo);
-                Response response = await client.CreateJobAsync(batchTaskCreateOptions);
+                BatchJobCreateContent batchJobCreateContent = new BatchJobCreateContent(jobID, batchPoolInfo);
+                Response response = await client.CreateJobAsync(batchJobCreateContent);
 
                 var job = await client.GetJobAsync(jobID);
                 Assert.IsNotNull(job);
 
-                List<BatchTaskCreateOptions> tasks = new List<BatchTaskCreateOptions>();
+                List<BatchTaskCreateContent> tasks = new List<BatchTaskCreateContent>();
                 for (int i = 0; i < taskCount; i++)
                 {
-                    tasks.Add(new BatchTaskCreateOptions($"{taskID}_{i}", commandLine));
+                    tasks.Add(new BatchTaskCreateContent($"{taskID}_{i}", commandLine));
                 }
 
                 CreateTasksOptions createTaskOptions = new CreateTasksOptions()
                 {
                     MaxDegreeOfParallelism = parallelCount,
                     MaxTimeBetweenCallsInSeconds = IsPlayBack() ? 0 : 30,
-                    ReturnBatchTaskCreateResults = true,
+                    ReturnBatchTaskAddResults = true,
                 };
                 // Measure memory usage before creating taskResult
                 long memoryBefore = GC.GetTotalMemory(true);
@@ -350,8 +350,8 @@ namespace Azure.Compute.Batch.Tests.Integration
                 Console.WriteLine($"Size of taskResult in memory: {taskResultSize} bytes");
 
                 Assert.IsNotNull(taskResult);
-                Assert.AreEqual(taskCount, taskResult.BatchTaskCreateResults.Count);
-                var failedTaskResults = taskResult.BatchTaskCreateResults
+                Assert.AreEqual(taskCount, taskResult.BatchTaskAddResults.Count);
+                var failedTaskResults = taskResult.BatchTaskAddResults
                     .Where(result => result.Status != BatchTaskAddStatus.Success)
                     .ToList();
                 Assert.AreEqual(0, failedTaskResults.Count);
@@ -394,32 +394,32 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     PoolId = pool.Id
                 };
-                BatchJobCreateOptions batchTaskCreateOptions = new BatchJobCreateOptions(jobID, batchPoolInfo);
-                Response response = await client.CreateJobAsync(batchTaskCreateOptions);
+                BatchJobCreateContent batchJobCreateContent = new BatchJobCreateContent(jobID, batchPoolInfo);
+                Response response = await client.CreateJobAsync(batchJobCreateContent);
 
                 var job = await client.GetJobAsync(jobID);
                 Assert.IsNotNull(job);
 
-                List<BatchTaskCreateOptions> tasks = new List<BatchTaskCreateOptions>();
+                List<BatchTaskCreateContent> tasks = new List<BatchTaskCreateContent>();
                 for (int i = 0; i < taskCount; i++)
                 {
-                    tasks.Add(new BatchTaskCreateOptions($"{taskID}_{i}", commandLine));
+                    tasks.Add(new BatchTaskCreateContent($"{taskID}_{i}", commandLine));
                 }
 
                 CreateTasksOptions createTaskOptions = new CreateTasksOptions()
                 {
                     MaxDegreeOfParallelism = parallelCount,
                     MaxTimeBetweenCallsInSeconds = IsPlayBack() ? 0 : 30,
-                    ReturnBatchTaskCreateResults = true,
+                    ReturnBatchTaskAddResults = true,
                 };
 
                 CreateTasksResult taskResult = await client.CreateTasksAsync(jobID, tasks, createTaskOptions);
 
                 // verify all the tasks got processed
                 Assert.IsNotNull(taskResult);
-                Assert.AreEqual(taskCount, taskResult.BatchTaskCreateResults.Count);
+                Assert.AreEqual(taskCount, taskResult.BatchTaskAddResults.Count);
 
-                var failedTaskResults = taskResult.BatchTaskCreateResults
+                var failedTaskResults = taskResult.BatchTaskAddResults
                     .Where(result => result.Status != BatchTaskAddStatus.Success)
                     .ToList();
                 Assert.AreEqual(0, failedTaskResults.Count);
@@ -460,13 +460,13 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     PoolId = pool.Id
                 };
-                BatchJobCreateOptions batchTaskCreateOptions = new BatchJobCreateOptions(jobID, batchPoolInfo);
-                Response response = await client.CreateJobAsync(batchTaskCreateOptions);
+                BatchJobCreateContent batchJobCreateContent = new BatchJobCreateContent(jobID, batchPoolInfo);
+                Response response = await client.CreateJobAsync(batchJobCreateContent);
 
                 var job = await client.GetJobAsync(jobID);
                 Assert.IsNotNull(job);
 
-                BatchTaskCreateOptions taskCreateContent = new BatchTaskCreateOptions(taskID, commandLine);
+                BatchTaskCreateContent taskCreateContent = new BatchTaskCreateContent(taskID, commandLine);
 
                 response = await client.CreateTaskAsync(jobID, taskCreateContent);
                 Assert.AreEqual(201, response.Status);
@@ -515,7 +515,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             try
             {
                 // create a pool to verify we have something to query for
-                BatchPoolCreateOptions batchPoolCreateOptions = iaasWindowsPoolFixture.CreatePoolOptions();
+                BatchPoolCreateContent batchPoolCreateOptions = iaasWindowsPoolFixture.CreatePoolOptions();
                 batchPoolCreateOptions.TargetDedicatedNodes = 3;
                 batchPoolCreateOptions.TaskSlotsPerNode = 1;
                 batchPoolCreateOptions.EnableInterNodeCommunication = true;
@@ -526,13 +526,13 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     PoolId = pool.Id
                 };
-                BatchJobCreateOptions batchTaskCreateOptions = new BatchJobCreateOptions(jobID, batchPoolInfo);
-                response = await client.CreateJobAsync(batchTaskCreateOptions);
+                BatchJobCreateContent batchJobCreateContent = new BatchJobCreateContent(jobID, batchPoolInfo);
+                response = await client.CreateJobAsync(batchJobCreateContent);
 
                 var job = await client.GetJobAsync(jobID);
                 Assert.IsNotNull(job);
 
-                BatchTaskCreateOptions taskCreateContent = new BatchTaskCreateOptions(taskID, commandLine)
+                BatchTaskCreateContent taskCreateContent = new BatchTaskCreateContent(taskID, commandLine)
                 {
                     RequiredSlots = 1,
                     MultiInstanceSettings = new MultiInstanceSettings(commandLine)
@@ -577,13 +577,13 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     PoolId = pool.Id
                 };
-                BatchJobCreateOptions batchTaskCreateOptions = new BatchJobCreateOptions(jobID, batchPoolInfo);
-                Response response = await client.CreateJobAsync(batchTaskCreateOptions);
+                BatchJobCreateContent batchJobCreateContent = new BatchJobCreateContent(jobID, batchPoolInfo);
+                Response response = await client.CreateJobAsync(batchJobCreateContent);
 
                 var job = await client.GetJobAsync(jobID);
                 Assert.IsNotNull(job);
 
-                BatchTaskCreateOptions taskCreateContent = new BatchTaskCreateOptions(taskID, commandLine);
+                BatchTaskCreateContent taskCreateContent = new BatchTaskCreateContent(taskID, commandLine);
                 response = await client.CreateTaskAsync(jobID, taskCreateContent);
 
                 BatchTask task = await client.GetTaskAsync(jobID, taskID);

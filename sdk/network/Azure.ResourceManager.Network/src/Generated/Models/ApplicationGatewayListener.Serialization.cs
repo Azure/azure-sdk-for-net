@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -47,12 +46,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(FrontendIPConfiguration))
             {
                 writer.WritePropertyName("frontendIPConfiguration"u8);
-                ((IJsonModel<WritableSubResource>)FrontendIPConfiguration).Write(writer, options);
+                JsonSerializer.Serialize(writer, FrontendIPConfiguration);
             }
             if (Optional.IsDefined(FrontendPort))
             {
                 writer.WritePropertyName("frontendPort"u8);
-                ((IJsonModel<WritableSubResource>)FrontendPort).Write(writer, options);
+                JsonSerializer.Serialize(writer, FrontendPort);
             }
             if (Optional.IsDefined(Protocol))
             {
@@ -62,12 +61,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(SslCertificate))
             {
                 writer.WritePropertyName("sslCertificate"u8);
-                ((IJsonModel<WritableSubResource>)SslCertificate).Write(writer, options);
+                JsonSerializer.Serialize(writer, SslCertificate);
             }
             if (Optional.IsDefined(SslProfile))
             {
                 writer.WritePropertyName("sslProfile"u8);
-                ((IJsonModel<WritableSubResource>)SslProfile).Write(writer, options);
+                JsonSerializer.Serialize(writer, SslProfile);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -169,7 +168,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            frontendIPConfiguration = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            frontendIPConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("frontendPort"u8))
@@ -178,7 +177,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            frontendPort = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            frontendPort = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("protocol"u8))
@@ -196,7 +195,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            sslCertificate = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            sslCertificate = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sslProfile"u8))
@@ -205,7 +204,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            sslProfile = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            sslProfile = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

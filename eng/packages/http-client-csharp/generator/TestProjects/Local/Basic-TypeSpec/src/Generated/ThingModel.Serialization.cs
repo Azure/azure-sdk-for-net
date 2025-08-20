@@ -14,7 +14,7 @@ using Azure.Core;
 
 namespace BasicTypeSpec
 {
-    /// <summary> A model with a few properties of literal types. </summary>
+    /// <summary></summary>
     public partial class ThingModel : IJsonModel<ThingModel>
     {
         /// <summary> Initializes a new instance of <see cref="ThingModel"/> for deserialization. </summary>
@@ -328,7 +328,7 @@ namespace BasicTypeSpec
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
             content.JsonWriter.WriteObjectValue(thingModel, ModelSerializationExtensions.WireOptions);
             return content;
         }

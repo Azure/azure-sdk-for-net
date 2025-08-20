@@ -97,8 +97,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             string schemaName = default;
-            IReadOnlyList<DataMigrationDatabaseTable> tables = default;
-            IReadOnlyList<DataMigrationReportableException> validationErrors = default;
+            IReadOnlyList<DatabaseTable> tables = default;
+            IReadOnlyList<ReportableException> validationErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<DataMigrationDatabaseTable> array = new List<DataMigrationDatabaseTable>();
+                    List<DatabaseTable> array = new List<DatabaseTable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataMigrationDatabaseTable.DeserializeDataMigrationDatabaseTable(item, options));
+                        array.Add(DatabaseTable.DeserializeDatabaseTable(item, options));
                     }
                     tables = array;
                     continue;
@@ -128,10 +128,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<DataMigrationReportableException> array = new List<DataMigrationReportableException>();
+                    List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataMigrationReportableException.DeserializeDataMigrationReportableException(item, options));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     validationErrors = array;
                     continue;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new GetUserTablesOracleTaskOutput(schemaName, tables ?? new ChangeTrackingList<DataMigrationDatabaseTable>(), validationErrors ?? new ChangeTrackingList<DataMigrationReportableException>(), serializedAdditionalRawData);
+            return new GetUserTablesOracleTaskOutput(schemaName, tables ?? new ChangeTrackingList<DatabaseTable>(), validationErrors ?? new ChangeTrackingList<ReportableException>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GetUserTablesOracleTaskOutput>.Write(ModelReaderWriterOptions options)

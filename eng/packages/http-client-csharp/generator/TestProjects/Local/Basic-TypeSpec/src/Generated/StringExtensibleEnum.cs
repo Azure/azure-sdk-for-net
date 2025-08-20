@@ -51,10 +51,6 @@ namespace BasicTypeSpec
         /// <param name="value"> The value. </param>
         public static implicit operator StringExtensibleEnum(string value) => new StringExtensibleEnum(value);
 
-        /// <summary> Converts a string to a <see cref="StringExtensibleEnum"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator StringExtensibleEnum?(string value) => value == null ? null : new StringExtensibleEnum(value);
-
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StringExtensibleEnum other && Equals(other);

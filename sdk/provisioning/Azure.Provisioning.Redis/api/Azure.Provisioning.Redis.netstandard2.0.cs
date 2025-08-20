@@ -79,7 +79,6 @@ namespace Azure.Provisioning.Redis
             public static readonly string V2023_04_01;
             public static readonly string V2023_08_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_11_01;
         }
     }
     public partial class RedisCacheAccessPolicyAssignment : Azure.Provisioning.Primitives.ProvisionableResource
@@ -113,7 +112,6 @@ namespace Azure.Provisioning.Redis
             public static readonly string V2023_04_01;
             public static readonly string V2023_08_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_11_01;
         }
     }
     public partial class RedisCommonConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -184,7 +182,6 @@ namespace Azure.Provisioning.Redis
             public static readonly string V2023_04_01;
             public static readonly string V2023_08_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_11_01;
         }
     }
     public partial class RedisInstanceDetails : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -236,7 +233,6 @@ namespace Azure.Provisioning.Redis
             public static readonly string V2023_04_01;
             public static readonly string V2023_08_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_11_01;
         }
     }
     public partial class RedisPatchSchedule : Azure.Provisioning.Primitives.ProvisionableResource
@@ -268,7 +264,6 @@ namespace Azure.Provisioning.Redis
             public static readonly string V2023_04_01;
             public static readonly string V2023_08_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_11_01;
         }
     }
     public enum RedisPatchScheduleDefaultName
@@ -307,7 +302,6 @@ namespace Azure.Provisioning.Redis
             public static readonly string V2023_04_01;
             public static readonly string V2023_08_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_11_01;
         }
     }
     public partial class RedisPrivateEndpointConnectionData : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -394,7 +388,6 @@ namespace Azure.Provisioning.Redis
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepDictionary<string> TenantSettings { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Redis.UpdateChannel> UpdateChannel { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Redis.ZonalAllocationPolicy> ZonalAllocationPolicy { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> Zones { get { throw null; } set { } }
         public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.Redis.RedisBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string? bicepIdentifierSuffix = null) { throw null; }
         public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.Redis.RedisBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
@@ -421,7 +414,6 @@ namespace Azure.Provisioning.Redis
             public static readonly string V2023_04_01;
             public static readonly string V2023_08_01;
             public static readonly string V2024_03_01;
-            public static readonly string V2024_11_01;
         }
     }
     public partial class RedisSku : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -458,11 +450,5 @@ namespace Azure.Provisioning.Redis
     {
         Stable = 0,
         Preview = 1,
-    }
-    public enum ZonalAllocationPolicy
-    {
-        Automatic = 0,
-        UserDefined = 1,
-        NoZones = 2,
     }
 }

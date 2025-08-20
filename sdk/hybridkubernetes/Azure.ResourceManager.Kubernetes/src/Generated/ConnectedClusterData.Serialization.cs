@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Kubernetes
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("identity"u8);
-            ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+            JsonSerializer.Serialize(writer, Identity);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("agentPublicKeyCertificate"u8);
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Kubernetes
             {
                 if (property.NameEquals("identity"u8))
                 {
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerKubernetesContext.Default);
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Kubernetes
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerKubernetesContext.Default);
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

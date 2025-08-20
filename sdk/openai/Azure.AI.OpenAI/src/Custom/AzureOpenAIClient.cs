@@ -14,7 +14,7 @@ global using OpenAI.Models;
 global using OpenAI.Moderations;
 global using OpenAI.VectorStores;
 #if !AZURE_OPENAI_GA
-global using OpenAI.Realtime;
+global using OpenAI.RealtimeConversation;
 global using OpenAI.Responses;
 #endif
 
@@ -33,11 +33,9 @@ using Azure.Core;
 #if !AZURE_OPENAI_GA
 using Azure.AI.OpenAI.Assistants;
 using Azure.AI.OpenAI.FineTuning;
-using Azure.AI.OpenAI.Realtime;
+using Azure.AI.OpenAI.RealtimeConversation;
 using Azure.AI.OpenAI.VectorStores;
 using Azure.AI.OpenAI.Responses;
-using OpenAI.Evals;
-using Azure.AI.OpenAI.Evals;
 #endif
 
 #pragma warning disable AZC0007
@@ -201,14 +199,6 @@ public partial class AzureOpenAIClient : OpenAIClient
         => new AzureEmbeddingClient(Pipeline, deploymentName, _endpoint, _options);
 
     /// <summary>
-    /// Gets a new <see cref="EvaluationClient"/> instance configured for batch operation use with the Azure OpenAI service.
-    /// </summary>
-    /// <returns> A new <see cref="EvaluationClient"/> instance. </returns>
-    [Experimental("OPENAI001")]
-    public override EvaluationClient GetEvaluationClient()
-        => new AzureEvaluationClient(Pipeline, _endpoint, _options);
-
-    /// <summary>
     /// Gets a new <see cref="OpenAIFileClient"/> instance configured for file operation use with the Azure OpenAI service.
     /// </summary>
     /// <returns> A new <see cref="OpenAIFileClient"/> instance. </returns>
@@ -274,20 +264,25 @@ public partial class AzureOpenAIClient : OpenAIClient
 
 #if !AZURE_OPENAI_GA
     [Experimental("OPENAI002")]
-    public override RealtimeClient GetRealtimeClient()
+    public override RealtimeConversationClient GetRealtimeConversationClient(string deploymentName)
     {
         if (_tokenCredential is not null)
         {
-            return new AzureRealtimeClient(_endpoint, _tokenCredential, _options);
+            return new AzureRealtimeConversationClient(_endpoint, deploymentName, _tokenCredential, _options);
         }
         else
         {
-            return new AzureRealtimeClient(_endpoint, _keyCredential, _options);
+            return new AzureRealtimeConversationClient(_endpoint, deploymentName, _keyCredential, _options);
         }
     }
 #else
     // Not yet present in OpenAI GA dependency
 #endif
+
+    public override OpenAIResponseClient GetOpenAIResponseClient()
+    {
+        return new AzureOpenAIResponseClient(Pipeline, null, _endpoint, _options);
+    }
 
     public override OpenAIResponseClient GetOpenAIResponseClient(string deploymentName)
     {

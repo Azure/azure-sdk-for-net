@@ -14,7 +14,7 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary>
     /// The rest client for the KeyVault service.
     /// </summary>
-    [CodeGenType("KeyVaultRestClient")]
+    [CodeGenClient("KeyVaultRestClient")]
     internal partial class KeyVaultRestClient
     {
         /// <summary> Initializes a new instance of KeyVaultRestClient. </summary>
@@ -38,7 +38,7 @@ namespace Azure.Security.KeyVault.Administration
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
-            Pipeline = HttpPipelineBuilder.Build(options,
+            _pipeline = HttpPipelineBuilder.Build(options,
                     new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification));
             _endpoint = endpoint;
             _apiVersion = options.GetVersionString();

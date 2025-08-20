@@ -4,7 +4,6 @@
 #nullable disable
 
 using System;
-using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Health.Deidentification.Tests;
@@ -15,9 +14,9 @@ namespace Azure.Health.Deidentification.Samples
     public partial class Samples_DeidentificationClient : SamplesBase<DeidentificationTestEnvironment>
     {
         [Test]
-        public async Task HelloWorldAsync()
+        public async void HelloWorldAsync()
         {
-            string serviceEndpoint = TestEnvironment.Endpoint;
+            const string serviceEndpoint = "https://example.api.cac001.deid.azure.com";
             TokenCredential credential = TestEnvironment.Credential;
 
             #region Snippet:AzHealthDeidSample1Async_HelloWorld

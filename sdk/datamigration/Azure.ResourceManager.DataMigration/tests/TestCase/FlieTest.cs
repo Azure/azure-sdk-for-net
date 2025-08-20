@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.DataMigration.Tests
             var serviceInput = ResourceDataHelpers.GetServiceData(subnet.Id);
             var serviceResource = (await serviceCollection.CreateOrUpdateAsync(WaitUntil.Completed, serviceName, serviceInput)).Value;
             //Create Project
-            var projectCollection = serviceResource.GetDataMigrationProjects();
+            var projectCollection = serviceResource.GetProjects();
             var projectInput = ResourceDataHelpers.GetProject();
             var projectResource = (await projectCollection.CreateOrUpdateAsync(WaitUntil.Completed, projectName, projectInput)).Value;
             //Create
-            var collection = projectResource.GetDataMigrationProjectFiles();
+            var collection = projectResource.GetProjectFiles();
             var input = ResourceDataHelpers.GetProjectFileData();
             var resource = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, fileName, input)).Value;
             Assert.AreEqual(fileName, resource.Data.Name);
@@ -94,9 +94,9 @@ namespace Azure.ResourceManager.DataMigration.Tests
             var resource3 = (await collection.GetAsync(fileName)).Value;
             ResourceDataHelpers.AssertFlieData(resource.Data, resource3.Data);
             //2.Update
-            var updateData = new DataMigrationProjectFileData()
+            var updateData = new ProjectFileData()
             {
-                Properties = new DataMigrationProjectFileProperties()
+                Properties = new ProjectFileProperties()
                 {
                     FilePath = "aad"
                 }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -26,17 +25,11 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Initializes a new instance of <see cref="HighWaterMarkChangeDetectionPolicy"/>. </summary>
         /// <param name="oDataType"> A URI fragment specifying the type of data change detection policy. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="highWaterMarkColumnName"> The name of the high water mark column. </param>
-        internal HighWaterMarkChangeDetectionPolicy(string oDataType, IDictionary<string, BinaryData> serializedAdditionalRawData, string highWaterMarkColumnName) : base(oDataType, serializedAdditionalRawData)
+        internal HighWaterMarkChangeDetectionPolicy(string oDataType, string highWaterMarkColumnName) : base(oDataType)
         {
             HighWaterMarkColumnName = highWaterMarkColumnName;
             ODataType = oDataType ?? "#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="HighWaterMarkChangeDetectionPolicy"/> for deserialization. </summary>
-        internal HighWaterMarkChangeDetectionPolicy()
-        {
         }
 
         /// <summary> The name of the high water mark column. </summary>

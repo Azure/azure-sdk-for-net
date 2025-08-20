@@ -55,15 +55,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedServicePlacementPolicy"/>. </summary>
-        /// <param name="type"></param>
+        /// <param name="servicePlacementPolicyType"> The type of placement policy for a service fabric service. Following are the possible values. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedServicePlacementPolicy(ServicePlacementPolicyType type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedServicePlacementPolicy(ServicePlacementPolicyType servicePlacementPolicyType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Type = type;
+            ServicePlacementPolicyType = servicePlacementPolicyType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the type. </summary>
-        internal ServicePlacementPolicyType Type { get; set; }
+        /// <summary> The type of placement policy for a service fabric service. Following are the possible values. </summary>
+        internal ServicePlacementPolicyType ServicePlacementPolicyType { get; set; }
     }
 }

@@ -142,7 +142,6 @@ public partial class EncryptionScope : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
-        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _keyVaultProperties = DefineModelProperty<EncryptionScopeKeyVaultProperties>("KeyVaultProperties", ["properties", "keyVaultProperties"]);
         _requireInfrastructureEncryption = DefineProperty<bool>("RequireInfrastructureEncryption", ["properties", "requireInfrastructureEncryption"]);

@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(LastStorageUpdatedOn))
+            if (options.Format != "W" && Optional.IsDefined(LastStorageUpdate))
             {
                 writer.WritePropertyName("lastStorageUpdate"u8);
-                writer.WriteStringValue(LastStorageUpdatedOn.Value, "O");
+                writer.WriteStringValue(LastStorageUpdate.Value, "O");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             DateTimeOffset? startedOn = default;
             DateTimeOffset? endedOn = default;
             long? durationInSeconds = default;
-            DataMigrationStatus? status = default;
+            MigrationStatus? status = default;
             string statusMessage = default;
             string message = default;
             string databases = default;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             string sourceServerBrandVersion = default;
             string targetServerVersion = default;
             string targetServerBrandVersion = default;
-            IReadOnlyList<DataMigrationReportableException> exceptionsAndWarnings = default;
+            IReadOnlyList<ReportableException> exceptionsAndWarnings = default;
             DateTimeOffset? lastStorageUpdate = default;
             string id = default;
             string resultType = default;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    status = new DataMigrationStatus(property.Value.GetString());
+                    status = new MigrationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("statusMessage"u8))
@@ -249,10 +249,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<DataMigrationReportableException> array = new List<DataMigrationReportableException>();
+                    List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataMigrationReportableException.DeserializeDataMigrationReportableException(item, options));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     exceptionsAndWarnings = array;
                     continue;
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 sourceServerBrandVersion,
                 targetServerVersion,
                 targetServerBrandVersion,
-                exceptionsAndWarnings ?? new ChangeTrackingList<DataMigrationReportableException>(),
+                exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>(),
                 lastStorageUpdate);
         }
 

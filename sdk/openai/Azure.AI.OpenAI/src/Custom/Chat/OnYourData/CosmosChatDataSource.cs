@@ -8,50 +8,49 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.OpenAI.Chat;
 
 [CodeGenType("AzureCosmosDBChatDataSource")]
-[CodeGenSuppress(nameof(CosmosChatDataSource), typeof(InternalAzureCosmosDBChatDataSourceParameters))]
 [Experimental("AOAI001")]
-public partial class CosmosChatDataSource
+public partial class CosmosChatDataSource : ChatDataSource
 {
     [CodeGenMember("Parameters")]
     internal InternalAzureCosmosDBChatDataSourceParameters InternalParameters { get; }
 
     /// <inheritdoc cref="InternalAzureCosmosDBChatDataSourceParameters.ContainerName"/>
-    public string ContainerName
+    required public string ContainerName
     {
         get => InternalParameters.ContainerName;
         set => InternalParameters.ContainerName = value;
     }
 
     /// <inheritdoc cref="InternalAzureCosmosDBChatDataSourceParameters.DatabaseName"/>
-    public string DatabaseName
+    required public string DatabaseName
     {
         get => InternalParameters.DatabaseName;
         set => InternalParameters.DatabaseName = value;
     }
 
     /// <inheritdoc cref="InternalAzureCosmosDBChatDataSourceParameters.IndexName"/>
-    public string IndexName
+    required public string IndexName
     {
         get => InternalParameters.IndexName;
         set => InternalParameters.IndexName = value;
     }
 
     /// <inheritdoc cref="InternalAzureCosmosDBChatDataSourceParameters.Authentication"/>
-    public DataSourceAuthentication Authentication
+    required public DataSourceAuthentication Authentication
     {
         get => InternalParameters.Authentication;
         set => InternalParameters.Authentication = value;
     }
 
     /// <inheritdoc cref="InternalAzureCosmosDBChatDataSourceParameters.VectorizationSource"/>
-    public DataSourceVectorizer VectorizationSource
+    required public DataSourceVectorizer VectorizationSource
     {
         get => InternalParameters.VectorizationSource;
         set => InternalParameters.VectorizationSource = value;
     }
 
     /// <inheritdoc cref="InternalAzureCosmosDBChatDataSourceParameters.FieldMappings"/>
-    public DataSourceFieldMappings FieldMappings
+    required public DataSourceFieldMappings FieldMappings
     {
         get => InternalParameters.FieldMappings;
         set => InternalParameters.FieldMappings = value;
@@ -102,19 +101,29 @@ public partial class CosmosChatDataSource
     /// <summary>
     /// Initializes a new instance of <see cref="CosmosChatDataSource"/>.
     /// </summary>
-    public CosmosChatDataSource() : base(InternalAzureChatDataSourceKind.AzureCosmosDb, null)
+    public CosmosChatDataSource() : base(type: "azure_cosmos_db", additionalBinaryDataProperties: null)
     {
         InternalParameters = new();
     }
 
+    // CUSTOM: Made internal.
     /// <summary> Initializes a new instance of <see cref="CosmosChatDataSource"/>. </summary>
-    /// <param name="kind"></param>
+    /// <param name="internalParameters"> The parameter information to control the use of the Azure CosmosDB data source. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="internalParameters"/> is null. </exception>
+    internal CosmosChatDataSource(InternalAzureCosmosDBChatDataSourceParameters internalParameters) : this()
+    {
+        Argument.AssertNotNull(internalParameters, nameof(internalParameters));
+        InternalParameters = internalParameters;
+    }
+
+    /// <summary> Initializes a new instance of <see cref="CosmosChatDataSource"/>. </summary>
+    /// <param name="type"></param>
     /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
     /// <param name="internalParameters"> The parameter information to control the use of the Azure Search data source. </param>
     [SetsRequiredMembers]
-    internal CosmosChatDataSource(InternalAzureChatDataSourceKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, InternalAzureCosmosDBChatDataSourceParameters internalParameters)
-        : base(kind, additionalBinaryDataProperties)
+    internal CosmosChatDataSource(string type, IDictionary<string, BinaryData> additionalBinaryDataProperties, InternalAzureCosmosDBChatDataSourceParameters internalParameters)
+        : base(type, additionalBinaryDataProperties)
     {
-        InternalParameters = internalParameters ?? new();
+        InternalParameters = internalParameters;
     }
 }

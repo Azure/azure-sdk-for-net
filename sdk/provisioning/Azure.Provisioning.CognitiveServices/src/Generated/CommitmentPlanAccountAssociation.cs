@@ -7,7 +7,6 @@
 
 using Azure;
 using Azure.Core;
-using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using System;
@@ -39,16 +38,6 @@ public partial class CommitmentPlanAccountAssociation : ProvisionableResource
         set { Initialize(); _accountId!.Assign(value); }
     }
     private BicepValue<string>? _accountId;
-
-    /// <summary>
-    /// Resource tags.
-    /// </summary>
-    public BicepDictionary<string> Tags 
-    {
-        get { Initialize(); return _tags!; }
-        set { Initialize(); _tags!.Assign(value); }
-    }
-    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// Resource Etag.
@@ -110,7 +99,6 @@ public partial class CommitmentPlanAccountAssociation : ProvisionableResource
     {
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _accountId = DefineProperty<string>("AccountId", ["properties", "accountId"]);
-        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);

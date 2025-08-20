@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.OracleDatabase
     /// </summary>
     public partial class OracleDBSystemShapeCollection : ArmCollection, IEnumerable<OracleDBSystemShapeResource>, IAsyncEnumerable<OracleDBSystemShapeResource>
     {
-        private readonly ClientDiagnostics _oracleDBSystemShapeDbSystemShapesClientDiagnostics;
-        private readonly DbSystemShapesRestOperations _oracleDBSystemShapeDbSystemShapesRestClient;
+        private readonly ClientDiagnostics _oracleDBSystemShapeDBSystemShapesClientDiagnostics;
+        private readonly DbSystemShapesRestOperations _oracleDBSystemShapeDBSystemShapesRestClient;
         private readonly AzureLocation _location;
 
         /// <summary> Initializes a new instance of the <see cref="OracleDBSystemShapeCollection"/> class for mocking. </summary>
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.OracleDatabase
         internal OracleDBSystemShapeCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
         {
             _location = location;
-            _oracleDBSystemShapeDbSystemShapesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleDBSystemShapeResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(OracleDBSystemShapeResource.ResourceType, out string oracleDBSystemShapeDbSystemShapesApiVersion);
-            _oracleDBSystemShapeDbSystemShapesRestClient = new DbSystemShapesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, oracleDBSystemShapeDbSystemShapesApiVersion);
+            _oracleDBSystemShapeDBSystemShapesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleDBSystemShapeResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(OracleDBSystemShapeResource.ResourceType, out string oracleDBSystemShapeDBSystemShapesApiVersion);
+            _oracleDBSystemShapeDBSystemShapesRestClient = new DbSystemShapesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, oracleDBSystemShapeDBSystemShapesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DbSystemShape_Get</description>
+        /// <description>DbSystemShapes_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -84,11 +84,11 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             Argument.AssertNotNullOrEmpty(dbsystemshapename, nameof(dbsystemshapename));
 
-            using var scope = _oracleDBSystemShapeDbSystemShapesClientDiagnostics.CreateScope("OracleDBSystemShapeCollection.Get");
+            using var scope = _oracleDBSystemShapeDBSystemShapesClientDiagnostics.CreateScope("OracleDBSystemShapeCollection.Get");
             scope.Start();
             try
             {
-                var response = await _oracleDBSystemShapeDbSystemShapesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), dbsystemshapename, cancellationToken).ConfigureAwait(false);
+                var response = await _oracleDBSystemShapeDBSystemShapesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), dbsystemshapename, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new OracleDBSystemShapeResource(Client, response.Value), response.GetRawResponse());
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DbSystemShape_Get</description>
+        /// <description>DbSystemShapes_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -129,11 +129,11 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             Argument.AssertNotNullOrEmpty(dbsystemshapename, nameof(dbsystemshapename));
 
-            using var scope = _oracleDBSystemShapeDbSystemShapesClientDiagnostics.CreateScope("OracleDBSystemShapeCollection.Get");
+            using var scope = _oracleDBSystemShapeDBSystemShapesClientDiagnostics.CreateScope("OracleDBSystemShapeCollection.Get");
             scope.Start();
             try
             {
-                var response = _oracleDBSystemShapeDbSystemShapesRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), dbsystemshapename, cancellationToken);
+                var response = _oracleDBSystemShapeDBSystemShapesRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), dbsystemshapename, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new OracleDBSystemShapeResource(Client, response.Value), response.GetRawResponse());
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.OracleDatabase
         }
 
         /// <summary>
-        /// List DbSystemShape resources by SubscriptionLocationResource
+        /// List DbSystemShape resources by Location
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -154,11 +154,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DbSystemShape_ListByLocation</description>
+        /// <description>DbSystemShapes_ListByLocation</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -166,18 +166,17 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="zone"> Filters the result for the given Azure Availability Zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="OracleDBSystemShapeResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OracleDBSystemShapeResource> GetAllAsync(string zone = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<OracleDBSystemShapeResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleDBSystemShapeDbSystemShapesRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_location), zone);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleDBSystemShapeDbSystemShapesRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location), zone);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OracleDBSystemShapeResource(Client, OracleDBSystemShapeData.DeserializeOracleDBSystemShapeData(e)), _oracleDBSystemShapeDbSystemShapesClientDiagnostics, Pipeline, "OracleDBSystemShapeCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleDBSystemShapeDBSystemShapesRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_location));
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleDBSystemShapeDBSystemShapesRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new OracleDBSystemShapeResource(Client, OracleDBSystemShapeData.DeserializeOracleDBSystemShapeData(e)), _oracleDBSystemShapeDBSystemShapesClientDiagnostics, Pipeline, "OracleDBSystemShapeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// List DbSystemShape resources by SubscriptionLocationResource
+        /// List DbSystemShape resources by Location
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -185,11 +184,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DbSystemShape_ListByLocation</description>
+        /// <description>DbSystemShapes_ListByLocation</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -197,14 +196,13 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="zone"> Filters the result for the given Azure Availability Zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="OracleDBSystemShapeResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OracleDBSystemShapeResource> GetAll(string zone = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<OracleDBSystemShapeResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleDBSystemShapeDbSystemShapesRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_location), zone);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleDBSystemShapeDbSystemShapesRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location), zone);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OracleDBSystemShapeResource(Client, OracleDBSystemShapeData.DeserializeOracleDBSystemShapeData(e)), _oracleDBSystemShapeDbSystemShapesClientDiagnostics, Pipeline, "OracleDBSystemShapeCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _oracleDBSystemShapeDBSystemShapesRestClient.CreateListByLocationRequest(Id.SubscriptionId, new AzureLocation(_location));
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _oracleDBSystemShapeDBSystemShapesRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new OracleDBSystemShapeResource(Client, OracleDBSystemShapeData.DeserializeOracleDBSystemShapeData(e)), _oracleDBSystemShapeDBSystemShapesClientDiagnostics, Pipeline, "OracleDBSystemShapeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -216,11 +214,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DbSystemShape_Get</description>
+        /// <description>DbSystemShapes_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -236,11 +234,11 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             Argument.AssertNotNullOrEmpty(dbsystemshapename, nameof(dbsystemshapename));
 
-            using var scope = _oracleDBSystemShapeDbSystemShapesClientDiagnostics.CreateScope("OracleDBSystemShapeCollection.Exists");
+            using var scope = _oracleDBSystemShapeDBSystemShapesClientDiagnostics.CreateScope("OracleDBSystemShapeCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _oracleDBSystemShapeDbSystemShapesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), dbsystemshapename, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _oracleDBSystemShapeDBSystemShapesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), dbsystemshapename, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -259,11 +257,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DbSystemShape_Get</description>
+        /// <description>DbSystemShapes_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -279,11 +277,11 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             Argument.AssertNotNullOrEmpty(dbsystemshapename, nameof(dbsystemshapename));
 
-            using var scope = _oracleDBSystemShapeDbSystemShapesClientDiagnostics.CreateScope("OracleDBSystemShapeCollection.Exists");
+            using var scope = _oracleDBSystemShapeDBSystemShapesClientDiagnostics.CreateScope("OracleDBSystemShapeCollection.Exists");
             scope.Start();
             try
             {
-                var response = _oracleDBSystemShapeDbSystemShapesRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), dbsystemshapename, cancellationToken: cancellationToken);
+                var response = _oracleDBSystemShapeDBSystemShapesRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), dbsystemshapename, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -302,11 +300,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DbSystemShape_Get</description>
+        /// <description>DbSystemShapes_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -322,11 +320,11 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             Argument.AssertNotNullOrEmpty(dbsystemshapename, nameof(dbsystemshapename));
 
-            using var scope = _oracleDBSystemShapeDbSystemShapesClientDiagnostics.CreateScope("OracleDBSystemShapeCollection.GetIfExists");
+            using var scope = _oracleDBSystemShapeDBSystemShapesClientDiagnostics.CreateScope("OracleDBSystemShapeCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _oracleDBSystemShapeDbSystemShapesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), dbsystemshapename, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _oracleDBSystemShapeDBSystemShapesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), dbsystemshapename, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<OracleDBSystemShapeResource>(response.GetRawResponse());
                 return Response.FromValue(new OracleDBSystemShapeResource(Client, response.Value), response.GetRawResponse());
@@ -347,11 +345,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DbSystemShape_Get</description>
+        /// <description>DbSystemShapes_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -367,11 +365,11 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             Argument.AssertNotNullOrEmpty(dbsystemshapename, nameof(dbsystemshapename));
 
-            using var scope = _oracleDBSystemShapeDbSystemShapesClientDiagnostics.CreateScope("OracleDBSystemShapeCollection.GetIfExists");
+            using var scope = _oracleDBSystemShapeDBSystemShapesClientDiagnostics.CreateScope("OracleDBSystemShapeCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _oracleDBSystemShapeDbSystemShapesRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), dbsystemshapename, cancellationToken: cancellationToken);
+                var response = _oracleDBSystemShapeDBSystemShapesRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), dbsystemshapename, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<OracleDBSystemShapeResource>(response.GetRawResponse());
                 return Response.FromValue(new OracleDBSystemShapeResource(Client, response.Value), response.GetRawResponse());

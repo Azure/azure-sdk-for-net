@@ -25,8 +25,7 @@ function Get-Mgmt-TspCommand {
         [string]$specFile,
         [string]$generationDir,
         [bool]$generateStub = $false,
-        [string]$apiVersion = $null,
-        [bool]$debug = $false
+        [string]$apiVersion = $null
     )
     $command = "npx tsp compile $specFile"
     $command += " --trace @azure-typespec/http-client-csharp-mgmt"
@@ -46,10 +45,6 @@ function Get-Mgmt-TspCommand {
     }
 
     $command += " --option @azure-typespec/http-client-csharp-mgmt.new-project=true"
-
-    if ($debug) {
-        $command += " --option @azure-typespec/http-client-csharp-mgmt.debug=true"
-    }
 
     return $command
 }

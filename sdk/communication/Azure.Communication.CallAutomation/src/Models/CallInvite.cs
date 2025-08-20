@@ -21,7 +21,7 @@ namespace Azure.Communication.CallAutomation
         {
             Target = targetPhoneNumberIdentity;
             SourceCallerIdNumber = callerIdNumber;
-            CustomCallingContext = new CustomCallingContext(sipHeaders: new Dictionary<string, string>(), voipHeaders: null);
+            CustomCallingContext = new CustomCallingContext(sipHeaders: new Dictionary<string, string>(), voipHeaders: null, teamsPhoneCallDetails:null);
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Azure.Communication.CallAutomation
         public CallInvite(CommunicationUserIdentifier targetIdentity)
         {
             Target = targetIdentity;
-            CustomCallingContext = new CustomCallingContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>());
+            CustomCallingContext = new CustomCallingContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>(), teamsPhoneCallDetails: null);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Azure.Communication.CallAutomation
         public CallInvite(MicrosoftTeamsUserIdentifier targetIdentity)
         {
             Target = targetIdentity;
-            CustomCallingContext = new CustomCallingContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>());
+            CustomCallingContext = new CustomCallingContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>(), teamsPhoneCallDetails: null);
         }
 
         /// <summary>
@@ -51,10 +51,10 @@ namespace Azure.Communication.CallAutomation
         /// Sip Headers are not supported. Voip Headers are supported for Microsoft Teams Apps.
         /// </summary>
         /// <param name="targetIdentity"></param>
-        public CallInvite(TeamsExtensionUserIdentifier targetIdentity)
+        public CallInvite(MicrosoftTeamsAppIdentifier targetIdentity)
         {
             Target = targetIdentity;
-            CustomCallingContext = new CustomCallingContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>());
+            CustomCallingContext = new CustomCallingContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>(), teamsPhoneCallDetails: null);
         }
 
         /// <summary>

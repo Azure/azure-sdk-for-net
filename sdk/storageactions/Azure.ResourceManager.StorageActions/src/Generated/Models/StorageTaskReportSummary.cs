@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.StorageActions.Models
 {
@@ -47,31 +46,25 @@ namespace Azure.ResourceManager.StorageActions.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskReportSummary"/>. </summary>
-        /// <param name="value"> Gets storage tasks run result summary. </param>
-        internal StorageTaskReportSummary(IEnumerable<StorageTaskReportInstance> value)
+        internal StorageTaskReportSummary()
         {
-            Value = value.ToList();
+            Value = new ChangeTrackingList<StorageTaskReportInstance>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskReportSummary"/>. </summary>
         /// <param name="value"> Gets storage tasks run result summary. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="nextLink"> Request URL that can be used to query next page of storage task run results summary. Returned when the number of run instances and summary reports exceed maximum page size. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTaskReportSummary(IReadOnlyList<StorageTaskReportInstance> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageTaskReportSummary(IReadOnlyList<StorageTaskReportInstance> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageTaskReportSummary"/> for deserialization. </summary>
-        internal StorageTaskReportSummary()
-        {
-        }
-
         /// <summary> Gets storage tasks run result summary. </summary>
         public IReadOnlyList<StorageTaskReportInstance> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> Request URL that can be used to query next page of storage task run results summary. Returned when the number of run instances and summary reports exceed maximum page size. </summary>
+        public string NextLink { get; }
     }
 }

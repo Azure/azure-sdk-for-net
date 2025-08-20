@@ -381,6 +381,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 uri.AppendQuery("forceDelete", forceDelete.Value, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }

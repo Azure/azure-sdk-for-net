@@ -77,7 +77,6 @@ namespace Azure.AI.Language.Conversations.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ConversationalAIResult": return ConversationalAITaskResult.DeserializeConversationalAITaskResult(element, options);
                     case "ConversationResult": return ConversationActionResult.DeserializeConversationActionResult(element, options);
                 }
             }

@@ -21,8 +21,5 @@ namespace Azure.Developer.DevCenter.Models
             Name = name;
             PoolName = poolName;
         }
-
-        /// <summary> Indicates whether the owner of the Dev Box is a local administrator. </summary>
-        public LocalAdministratorStatus? LocalAdministratorStatus { get; set; }
     }
 }

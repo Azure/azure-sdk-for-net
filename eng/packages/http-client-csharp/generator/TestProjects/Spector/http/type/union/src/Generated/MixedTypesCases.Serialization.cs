@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure;
+using Azure.Core;
 
 namespace _Type.Union
 {
@@ -32,5 +34,10 @@ namespace _Type.Union
         protected virtual MixedTypesCases PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<MixedTypesCases>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        /// <param name="mixedTypesCases"> The <see cref="MixedTypesCases"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(MixedTypesCases mixedTypesCases) => throw null;
+
+        public static explicit operator MixedTypesCases(Response result) => throw null;
     }
 }

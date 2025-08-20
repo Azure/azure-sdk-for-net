@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedCluster_Get</description>
+        /// <description>ManagedClusters_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2024-09-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedCluster_Get</description>
+        /// <description>ManagedClusters_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2024-09-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

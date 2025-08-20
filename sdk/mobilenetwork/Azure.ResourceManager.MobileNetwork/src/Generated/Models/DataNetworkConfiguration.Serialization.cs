@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WritePropertyName("dataNetwork"u8);
-            ((IJsonModel<WritableSubResource>)DataNetwork).Write(writer, options);
+            JsonSerializer.Serialize(writer, DataNetwork);
             writer.WritePropertyName("sessionAmbr"u8);
             writer.WriteObjectValue(SessionAmbr, options);
             if (Optional.IsDefined(FiveQi))
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartArray();
             foreach (var item in AllowedServices)
             {
-                ((IJsonModel<WritableSubResource>)item).Write(writer, options);
+                JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(MaximumNumberOfBufferedPackets))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 if (property.NameEquals("dataNetwork"u8))
                 {
-                    dataNetwork = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerMobileNetworkContext.Default);
+                    dataNetwork = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("sessionAmbr"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerMobileNetworkContext.Default));
+                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                     }
                     allowedServices = array;
                     continue;

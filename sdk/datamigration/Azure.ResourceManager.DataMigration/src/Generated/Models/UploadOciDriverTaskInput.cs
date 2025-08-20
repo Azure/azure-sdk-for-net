@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="UploadOciDriverTaskInput"/>. </summary>
         /// <param name="driverShare"> File share information for the OCI driver archive. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UploadOciDriverTaskInput(DataMigrationFileShareInfo driverShare, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UploadOciDriverTaskInput(FileShare driverShare, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DriverShare = driverShare;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> File share information for the OCI driver archive. </summary>
-        public DataMigrationFileShareInfo DriverShare { get; set; }
+        public FileShare DriverShare { get; set; }
     }
 }

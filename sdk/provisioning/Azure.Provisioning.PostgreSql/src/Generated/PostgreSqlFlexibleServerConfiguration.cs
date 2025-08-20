@@ -28,7 +28,7 @@ public partial class PostgreSqlFlexibleServerConfiguration : ProvisionableResour
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// Source of the configuration. Required to update the configuration.
+    /// Source of the configuration.
     /// </summary>
     public BicepValue<string> Source 
     {
@@ -38,7 +38,7 @@ public partial class PostgreSqlFlexibleServerConfiguration : ProvisionableResour
     private BicepValue<string>? _source;
 
     /// <summary>
-    /// Value of the configuration. Required to update the configuration.
+    /// Value of the configuration.
     /// </summary>
     public BicepValue<string> Value 
     {

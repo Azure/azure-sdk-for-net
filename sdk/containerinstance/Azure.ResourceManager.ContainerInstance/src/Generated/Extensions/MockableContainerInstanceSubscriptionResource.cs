@@ -20,10 +20,8 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         private ContainerGroupsRestOperations _containerGroupRestClient;
         private ClientDiagnostics _locationClientDiagnostics;
         private LocationRestOperations _locationRestClient;
-        private ClientDiagnostics _nGroupClientDiagnostics;
-        private NGroupsRestOperations _nGroupRestClient;
-        private ClientDiagnostics _containerGroupProfileCGProfilesClientDiagnostics;
-        private CGProfilesRestOperations _containerGroupProfileCGProfilesRestClient;
+        private ClientDiagnostics _containerGroupProfileClientDiagnostics;
+        private ContainerGroupProfilesRestOperations _containerGroupProfileRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableContainerInstanceSubscriptionResource"/> class for mocking. </summary>
         protected MockableContainerInstanceSubscriptionResource()
@@ -41,10 +39,8 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         private ContainerGroupsRestOperations ContainerGroupRestClient => _containerGroupRestClient ??= new ContainerGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerGroupResource.ResourceType));
         private ClientDiagnostics LocationClientDiagnostics => _locationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private LocationRestOperations LocationRestClient => _locationRestClient ??= new LocationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics NGroupClientDiagnostics => _nGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", NGroupResource.ResourceType.Namespace, Diagnostics);
-        private NGroupsRestOperations NGroupRestClient => _nGroupRestClient ??= new NGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NGroupResource.ResourceType));
-        private ClientDiagnostics ContainerGroupProfileCGProfilesClientDiagnostics => _containerGroupProfileCGProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ContainerGroupProfileResource.ResourceType.Namespace, Diagnostics);
-        private CGProfilesRestOperations ContainerGroupProfileCGProfilesRestClient => _containerGroupProfileCGProfilesRestClient ??= new CGProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerGroupProfileResource.ResourceType));
+        private ClientDiagnostics ContainerGroupProfileClientDiagnostics => _containerGroupProfileClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", ContainerGroupProfileResource.ResourceType.Namespace, Diagnostics);
+        private ContainerGroupProfilesRestOperations ContainerGroupProfileRestClient => _containerGroupProfileRestClient ??= new ContainerGroupProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerGroupProfileResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -65,7 +61,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -95,7 +91,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -125,7 +121,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -151,7 +147,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +173,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -204,7 +200,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -231,7 +227,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -258,7 +254,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -273,67 +269,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         }
 
         /// <summary>
-        /// Gets a list of all NGroups resources under a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/ngroups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NGroups_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NGroupResource> GetNGroupsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NGroupRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NGroupResource(Client, NGroupData.DeserializeNGroupData(e)), NGroupClientDiagnostics, Pipeline, "MockableContainerInstanceSubscriptionResource.GetNGroups", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of all NGroups resources under a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ContainerInstance/ngroups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NGroups_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NGroupResource> GetNGroups(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => NGroupRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NGroupResource(Client, NGroupData.DeserializeNGroupData(e)), NGroupClientDiagnostics, Pipeline, "MockableContainerInstanceSubscriptionResource.GetNGroups", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of all container group profiles under a subscription.
+        /// Get a list of container group profiles in the specified subscription. This operation returns properties of each container group profile including containers, image registry credentials, restart policy, IP address type, OS type,volumes,current revision number, etc.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -341,11 +277,11 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CGProfiles_ListBySubscription</description>
+        /// <description>ContainerGroupProfiles_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -357,13 +293,13 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <returns> An async collection of <see cref="ContainerGroupProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerGroupProfileResource> GetContainerGroupProfilesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerGroupProfileCGProfilesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerGroupProfileCGProfilesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerGroupProfileResource(Client, ContainerGroupProfileData.DeserializeContainerGroupProfileData(e)), ContainerGroupProfileCGProfilesClientDiagnostics, Pipeline, "MockableContainerInstanceSubscriptionResource.GetContainerGroupProfiles", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerGroupProfileRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerGroupProfileRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerGroupProfileResource(Client, ContainerGroupProfileData.DeserializeContainerGroupProfileData(e)), ContainerGroupProfileClientDiagnostics, Pipeline, "MockableContainerInstanceSubscriptionResource.GetContainerGroupProfiles", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Gets a list of all container group profiles under a subscription.
+        /// Get a list of container group profiles in the specified subscription. This operation returns properties of each container group profile including containers, image registry credentials, restart policy, IP address type, OS type,volumes,current revision number, etc.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -371,11 +307,11 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CGProfiles_ListBySubscription</description>
+        /// <description>ContainerGroupProfiles_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2024-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -387,9 +323,9 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <returns> A collection of <see cref="ContainerGroupProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerGroupProfileResource> GetContainerGroupProfiles(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerGroupProfileCGProfilesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerGroupProfileCGProfilesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerGroupProfileResource(Client, ContainerGroupProfileData.DeserializeContainerGroupProfileData(e)), ContainerGroupProfileCGProfilesClientDiagnostics, Pipeline, "MockableContainerInstanceSubscriptionResource.GetContainerGroupProfiles", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerGroupProfileRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerGroupProfileRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerGroupProfileResource(Client, ContainerGroupProfileData.DeserializeContainerGroupProfileData(e)), ContainerGroupProfileClientDiagnostics, Pipeline, "MockableContainerInstanceSubscriptionResource.GetContainerGroupProfiles", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -35,20 +35,20 @@ namespace Azure.Compute.Batch
             }
 
             writer.WritePropertyName("url"u8);
-            writer.WriteStringValue(Uri.AbsoluteUri);
+            writer.WriteStringValue(Url);
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartTime, "O");
             writer.WritePropertyName("lastUpdateTime"u8);
             writer.WriteStringValue(LastUpdateTime, "O");
-            if (Optional.IsDefined(UsageStatistics))
+            if (Optional.IsDefined(UsageStats))
             {
                 writer.WritePropertyName("usageStats"u8);
-                writer.WriteObjectValue(UsageStatistics, options);
+                writer.WriteObjectValue(UsageStats, options);
             }
-            if (Optional.IsDefined(ResourceStatistics))
+            if (Optional.IsDefined(ResourceStats))
             {
                 writer.WritePropertyName("resourceStats"u8);
-                writer.WriteObjectValue(ResourceStatistics, options);
+                writer.WriteObjectValue(ResourceStats, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            Uri url = default;
+            string url = default;
             DateTimeOffset startTime = default;
             DateTimeOffset lastUpdateTime = default;
             BatchPoolUsageStatistics usageStats = default;
@@ -98,7 +98,7 @@ namespace Azure.Compute.Batch
             {
                 if (property.NameEquals("url"u8))
                 {
-                    url = new Uri(property.Value.GetString());
+                    url = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("startTime"u8))

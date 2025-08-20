@@ -27,7 +27,6 @@ PersistentAgentsVectorStore vectorStore = client.VectorStores.CreateVectorStore(
 FileSearchToolResource fileSearchResource = new([vectorStore.Id], null);
 
 List<ToolDefinition> tools = [new FileSearchToolDefinition()];
-// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = client.Administration.CreateAgent(
     model: modelDeploymentName,
     name: "my-agent",
@@ -53,7 +52,6 @@ PersistentAgentsVectorStore vectorStore = await client.VectorStores.CreateVector
 FileSearchToolResource fileSearchResource = new([vectorStore.Id], null);
 
 List<ToolDefinition> tools = [new FileSearchToolDefinition()];
-// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelDeploymentName,
     name: "my-agent",
@@ -76,8 +74,8 @@ PersistentThreadMessage message = client.Messages.CreateMessage(
 );
 
 ThreadRun run = client.Runs.CreateRun(
-    thread,
-    agent
+    thread.Id,
+    agent.Id
 );
 
 do
@@ -104,8 +102,8 @@ PersistentThreadMessage message = await client.Messages.CreateMessageAsync(
     );
 
 ThreadRun run = await client.Runs.CreateRunAsync(
-    thread,
-    agent
+    thread.Id,
+    agent.Id
 );
 
 do
@@ -225,7 +223,6 @@ else
 {
     Console.WriteLine($"Unable to delete vector store {vectorStore.Id}");
 }
-// NOTE: Comment out these two lines if you plan to reuse the agent later.
 client.Threads.DeleteThread(thread.Id);
 client.Administration.DeleteAgent(agent.Id);
 ```
@@ -241,7 +238,6 @@ else
 {
     Console.WriteLine($"Unable to delete vector store {vectorStore.Id}");
 }
-// NOTE: Comment out these two lines if you plan to reuse the agent later.
 await client.Threads.DeleteThreadAsync(thread.Id);
 await client.Administration.DeleteAgentAsync(agent.Id);
 ```

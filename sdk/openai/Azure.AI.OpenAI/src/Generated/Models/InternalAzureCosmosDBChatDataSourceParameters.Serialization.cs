@@ -3,6 +3,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -12,13 +13,10 @@ namespace Azure.AI.OpenAI.Chat
 {
     internal partial class InternalAzureCosmosDBChatDataSourceParameters : IJsonModel<InternalAzureCosmosDBChatDataSourceParameters>
     {
-        /// <summary> Initializes a new instance of <see cref="InternalAzureCosmosDBChatDataSourceParameters"/> for deserialization. </summary>
-        internal InternalAzureCosmosDBChatDataSourceParameters() : this(default, default, default, default, default, null, null, null, null, null, null, null, null)
+        internal InternalAzureCosmosDBChatDataSourceParameters()
         {
         }
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InternalAzureCosmosDBChatDataSourceParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -26,8 +24,6 @@ namespace Azure.AI.OpenAI.Chat
             writer.WriteEndObject();
         }
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalAzureCosmosDBChatDataSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
@@ -126,12 +122,8 @@ namespace Azure.AI.OpenAI.Chat
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         InternalAzureCosmosDBChatDataSourceParameters IJsonModel<InternalAzureCosmosDBChatDataSourceParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual InternalAzureCosmosDBChatDataSourceParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalAzureCosmosDBChatDataSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
@@ -143,8 +135,6 @@ namespace Azure.AI.OpenAI.Chat
             return DeserializeInternalAzureCosmosDBChatDataSourceParameters(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         internal static InternalAzureCosmosDBChatDataSourceParameters DeserializeInternalAzureCosmosDBChatDataSourceParameters(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -283,28 +273,22 @@ namespace Azure.AI.OpenAI.Chat
                 additionalBinaryDataProperties);
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<InternalAzureCosmosDBChatDataSourceParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalAzureCosmosDBChatDataSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIOpenAIContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(InternalAzureCosmosDBChatDataSourceParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         InternalAzureCosmosDBChatDataSourceParameters IPersistableModel<InternalAzureCosmosDBChatDataSourceParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual InternalAzureCosmosDBChatDataSourceParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalAzureCosmosDBChatDataSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
@@ -320,7 +304,22 @@ namespace Azure.AI.OpenAI.Chat
             }
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<InternalAzureCosmosDBChatDataSourceParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        public static implicit operator BinaryContent(InternalAzureCosmosDBChatDataSourceParameters internalAzureCosmosDBChatDataSourceParameters)
+        {
+            if (internalAzureCosmosDBChatDataSourceParameters == null)
+            {
+                return null;
+            }
+            return BinaryContent.Create(internalAzureCosmosDBChatDataSourceParameters, ModelSerializationExtensions.WireOptions);
+        }
+
+        public static explicit operator InternalAzureCosmosDBChatDataSourceParameters(ClientResult result)
+        {
+            using PipelineResponse response = result.GetRawResponse();
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeInternalAzureCosmosDBChatDataSourceParameters(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

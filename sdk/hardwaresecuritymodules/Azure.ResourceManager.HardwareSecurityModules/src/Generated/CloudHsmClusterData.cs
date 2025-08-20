@@ -82,10 +82,13 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary> Properties of the Cloud HSM Cluster. </summary>
+        [WirePath("properties")]
         public CloudHsmClusterProperties Properties { get; set; }
         /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> SKU details. </summary>
+        [WirePath("sku")]
         public CloudHsmClusterSku Sku { get; set; }
     }
 }

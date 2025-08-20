@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <description>MetricsConfigurations_CreateOrUpdate</description>
         /// </item>
         /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
+        /// </item>
+        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudClusterMetricsConfigurationResource"/></description>
         /// </item>
@@ -46,7 +50,9 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="metricsConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metricsConfigurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkCloudClusterMetricsConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string metricsConfigurationName, NetworkCloudClusterMetricsConfigurationData data, CancellationToken cancellationToken)
-            => await CreateOrUpdateAsync(waitUntil, metricsConfigurationName, data, null, null, cancellationToken).ConfigureAwait(false);
+        {
+            return await CreateOrUpdateAsync(waitUntil, metricsConfigurationName, data, null, null, cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Create new or update the existing metrics configuration of the provided cluster.
@@ -58,6 +64,10 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MetricsConfigurations_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -72,6 +82,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="metricsConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="metricsConfigurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkCloudClusterMetricsConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string metricsConfigurationName, NetworkCloudClusterMetricsConfigurationData data, CancellationToken cancellationToken)
-            => CreateOrUpdate(waitUntil, metricsConfigurationName, data, null, null, cancellationToken);
+        {
+            return CreateOrUpdate(waitUntil, metricsConfigurationName, data, null, null, cancellationToken);
+        }
     }
 }

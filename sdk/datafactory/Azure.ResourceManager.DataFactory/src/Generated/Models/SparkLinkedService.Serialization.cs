@@ -74,11 +74,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("enableSsl"u8);
                 JsonSerializer.Serialize(writer, EnableSsl);
             }
-            if (Optional.IsDefined(EnableServerCertificateValidation))
-            {
-                writer.WritePropertyName("enableServerCertificateValidation"u8);
-                JsonSerializer.Serialize(writer, EnableServerCertificateValidation);
-            }
             if (Optional.IsDefined(TrustedCertPath))
             {
                 writer.WritePropertyName("trustedCertPath"u8);
@@ -154,7 +149,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactorySecret password = default;
             DataFactoryElement<string> httpPath = default;
             DataFactoryElement<bool> enableSsl = default;
-            DataFactoryElement<bool> enableServerCertificateValidation = default;
             DataFactoryElement<string> trustedCertPath = default;
             DataFactoryElement<bool> useSystemTrustStore = default;
             DataFactoryElement<bool> allowHostNameCNMismatch = default;
@@ -301,15 +295,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                             enableSsl = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("enableServerCertificateValidation"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableServerCertificateValidation = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
-                            continue;
-                        }
                         if (property0.NameEquals("trustedCertPath"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -374,7 +359,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 password,
                 httpPath,
                 enableSsl,
-                enableServerCertificateValidation,
                 trustedCertPath,
                 useSystemTrustStore,
                 allowHostNameCNMismatch,

@@ -10,26 +10,19 @@ namespace Azure.AI.OpenAI.Chat
 {
     internal partial class InternalAzureChatDataSourceUserAssignedManagedIdentityAuthenticationOptions : DataSourceAuthentication
     {
-        /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceUserAssignedManagedIdentityAuthenticationOptions"/>. </summary>
-        /// <param name="managedIdentityResourceId"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedIdentityResourceId"/> is null. </exception>
-        public InternalAzureChatDataSourceUserAssignedManagedIdentityAuthenticationOptions(string managedIdentityResourceId) : base(InternalAzureChatDataSourceAuthenticationOptionsType.UserAssignedManagedIdentity)
+        public InternalAzureChatDataSourceUserAssignedManagedIdentityAuthenticationOptions(string managedIdentityResourceId) : base("user_assigned_managed_identity")
         {
             Argument.AssertNotNull(managedIdentityResourceId, nameof(managedIdentityResourceId));
 
             ManagedIdentityResourceId = managedIdentityResourceId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceUserAssignedManagedIdentityAuthenticationOptions"/>. </summary>
-        /// <param name="kind"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="managedIdentityResourceId"></param>
-        internal InternalAzureChatDataSourceUserAssignedManagedIdentityAuthenticationOptions(InternalAzureChatDataSourceAuthenticationOptionsType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string managedIdentityResourceId) : base(kind, additionalBinaryDataProperties)
+        internal InternalAzureChatDataSourceUserAssignedManagedIdentityAuthenticationOptions(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string managedIdentityResourceId) : base(@type, additionalBinaryDataProperties)
         {
             ManagedIdentityResourceId = managedIdentityResourceId;
         }
 
-        /// <summary> Gets or sets the ManagedIdentityResourceId. </summary>
+        /// <summary> Gets the ManagedIdentityResourceId. </summary>
         public string ManagedIdentityResourceId { get; set; }
     }
 }

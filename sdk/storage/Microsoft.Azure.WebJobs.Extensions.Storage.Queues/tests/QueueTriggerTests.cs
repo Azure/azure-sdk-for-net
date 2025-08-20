@@ -127,7 +127,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         }
 
         [Test]
-        [Ignore("Flaky test, see:#51941")]
         public async Task QueueTrigger_IfBoundToStringAndMessageIsNotUtf8ByteArray_DoesNotBind()
         {
             // Arrange
@@ -261,7 +260,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         }
 
         [Test]
-        [Ignore("Flaky test, see:#51941")]
         public async Task QueueTrigger_IfBoundToPocoAndMessageIsNotJson_DoesNotBind()
         {
             // Arrange
@@ -288,7 +286,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         }
 
         [Test]
-        [Ignore("Flaky test, see:#51941")]
         public async Task QueueTrigger_IfBoundToPocoAndMessageIsIncompatibleJson_DoesNotBind()
         {
             // Arrange
@@ -365,7 +362,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         }
 
         [Test]
-        [Ignore("Flaky test, see:#51941")]
         public async Task QueueTrigger_IfMessageIsNonUtf8ByteArray_DoesNotProvideQueueTriggerBindingData()
         {
             // Arrange

@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Xml.Linq;
 using Azure.Core;
 
@@ -12,7 +11,6 @@ namespace Azure.Messaging.ServiceBus.Administration
     /// <summary>
     /// Represents the static properties of the queue.
     /// </summary>
-    [SuppressMessage("Usage", "AZC0034:Type name 'QueueProperties' conflicts with 'Azure.Storage.Queues.Models.QueueProperties (from Azure.Storage.Queues)'. Consider renaming to 'AdministrationQueuePropertiesClient' or 'AdministrationQueuePropertiesService' to avoid confusion.", Justification = "The type name is already approved in a stable version.")]
     public class QueueProperties : IEquatable<QueueProperties>
     {
         private TimeSpan _duplicateDetectionHistoryTimeWindow = TimeSpan.FromMinutes(1);

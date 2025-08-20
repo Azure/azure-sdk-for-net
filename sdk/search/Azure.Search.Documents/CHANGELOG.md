@@ -1,6 +1,6 @@
 # Release History
 
-## 11.7.0-beta.7 (Unreleased)
+## 11.7.0-beta.5 (Unreleased)
 
 ### Features Added
 
@@ -9,23 +9,6 @@
 ### Bugs Fixed
 
 ### Other Changes
-
-## 11.7.0-beta.6 (2025-08-11)
-
-### Features Added
-
-- Enable the new model serialization using System.ClientModel, refer to this [document](https://aka.ms/azsdk/net/mrw) for more details.
-- Added new AOT-compatible overloads for `Search<T>` and `SearchAsync<T>` that take `JsonTypeInfo<T>`.
-
-## 11.7.0-beta.5 (2025-06-17)
-
-### Bugs Fixed
-- Fixed a failure in the search response when the service returned a 206(Partial Content) status code.
-
-## 11.6.1 (2025-06-17)
-
-### Bugs Fixed
-- Added support for HTTP status code 206 (Partial Content) in the `Search` method to handle partial results returned by the service.
 
 ## 11.7.0-beta.4 (2025-05-14)
 

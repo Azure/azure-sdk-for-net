@@ -49,15 +49,15 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("usesTaskDependencies"u8);
                 writer.WriteBooleanValue(UsesTaskDependencies.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Uri))
+            if (options.Format != "W" && Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Uri.AbsoluteUri);
+                writer.WriteStringValue(Url);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(ETag);
             }
             if (options.Format != "W" && Optional.IsDefined(LastModified))
             {
@@ -136,15 +136,15 @@ namespace Azure.Compute.Batch
             }
             writer.WritePropertyName("poolInfo"u8);
             writer.WriteObjectValue(PoolInfo, options);
-            if (Optional.IsDefined(AllTasksCompleteMode))
+            if (Optional.IsDefined(OnAllTasksComplete))
             {
                 writer.WritePropertyName("onAllTasksComplete"u8);
-                writer.WriteStringValue(AllTasksCompleteMode.Value.ToString());
+                writer.WriteStringValue(OnAllTasksComplete.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(TaskFailureMode))
+            if (options.Format != "W" && Optional.IsDefined(OnTaskFailure))
             {
                 writer.WritePropertyName("onTaskFailure"u8);
-                writer.WriteStringValue(TaskFailureMode.Value.ToString());
+                writer.WriteStringValue(OnTaskFailure.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(NetworkConfiguration))
             {
@@ -166,10 +166,10 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("executionInfo"u8);
                 writer.WriteObjectValue(ExecutionInfo, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(JobStatistics))
+            if (options.Format != "W" && Optional.IsDefined(Stats))
             {
                 writer.WritePropertyName("stats"u8);
-                writer.WriteObjectValue(JobStatistics, options);
+                writer.WriteObjectValue(Stats, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -211,8 +211,8 @@ namespace Azure.Compute.Batch
             string id = default;
             string displayName = default;
             bool? usesTaskDependencies = default;
-            Uri url = default;
-            ETag? eTag = default;
+            string url = default;
+            string eTag = default;
             DateTimeOffset? lastModified = default;
             DateTimeOffset? creationTime = default;
             BatchJobState? state = default;
@@ -228,10 +228,10 @@ namespace Azure.Compute.Batch
             BatchJobReleaseTask jobReleaseTask = default;
             IReadOnlyList<EnvironmentSetting> commonEnvironmentSettings = default;
             BatchPoolInfo poolInfo = default;
-            BatchAllTasksCompleteMode? onAllTasksComplete = default;
-            BatchTaskFailureMode? onTaskFailure = default;
+            OnAllBatchTasksComplete? onAllTasksComplete = default;
+            OnBatchTaskFailure? onTaskFailure = default;
             BatchJobNetworkConfiguration networkConfiguration = default;
-            IList<BatchMetadataItem> metadata = default;
+            IList<MetadataItem> metadata = default;
             BatchJobExecutionInfo executionInfo = default;
             BatchJobStatistics stats = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -259,20 +259,12 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("url"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    url = new Uri(property.Value.GetString());
+                    url = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("eTag"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    eTag = new ETag(property.Value.GetString());
+                    eTag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("lastModified"u8))
@@ -417,7 +409,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    onAllTasksComplete = new BatchAllTasksCompleteMode(property.Value.GetString());
+                    onAllTasksComplete = new OnAllBatchTasksComplete(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("onTaskFailure"u8))
@@ -426,7 +418,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    onTaskFailure = new BatchTaskFailureMode(property.Value.GetString());
+                    onTaskFailure = new OnBatchTaskFailure(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("networkConfiguration"u8))
@@ -444,10 +436,10 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    List<BatchMetadataItem> array = new List<BatchMetadataItem>();
+                    List<MetadataItem> array = new List<MetadataItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchMetadataItem.DeserializeBatchMetadataItem(item, options));
+                        array.Add(MetadataItem.DeserializeMetadataItem(item, options));
                     }
                     metadata = array;
                     continue;
@@ -500,7 +492,7 @@ namespace Azure.Compute.Batch
                 onAllTasksComplete,
                 onTaskFailure,
                 networkConfiguration,
-                metadata ?? new ChangeTrackingList<BatchMetadataItem>(),
+                metadata ?? new ChangeTrackingList<MetadataItem>(),
                 executionInfo,
                 stats,
                 serializedAdditionalRawData);

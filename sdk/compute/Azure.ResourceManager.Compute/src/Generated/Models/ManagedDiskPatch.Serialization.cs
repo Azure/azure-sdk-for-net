@@ -152,11 +152,6 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("optimizedForFrequentAttach"u8);
                 writer.WriteBooleanValue(IsOptimizedForFrequentAttach.Value);
             }
-            if (Optional.IsDefined(AvailabilityPolicy))
-            {
-                writer.WritePropertyName("availabilityPolicy"u8);
-                writer.WriteObjectValue(AvailabilityPolicy, options);
-            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -217,7 +212,6 @@ namespace Azure.ResourceManager.Compute.Models
             DiskPublicNetworkAccess? publicNetworkAccess = default;
             DataAccessAuthMode? dataAccessAuthMode = default;
             bool? optimizedForFrequentAttach = default;
-            AvailabilityPolicy availabilityPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -430,15 +424,6 @@ namespace Azure.ResourceManager.Compute.Models
                             optimizedForFrequentAttach = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("availabilityPolicy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            availabilityPolicy = AvailabilityPolicy.DeserializeAvailabilityPolicy(property0.Value, options);
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -471,7 +456,6 @@ namespace Azure.ResourceManager.Compute.Models
                 publicNetworkAccess,
                 dataAccessAuthMode,
                 optimizedForFrequentAttach,
-                availabilityPolicy,
                 serializedAdditionalRawData);
         }
 

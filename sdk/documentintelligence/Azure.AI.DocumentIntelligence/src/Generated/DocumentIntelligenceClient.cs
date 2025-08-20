@@ -226,6 +226,7 @@ namespace Azure.AI.DocumentIntelligence
                 uri.AppendQueryDelimited("output", output, ",", true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -284,6 +285,7 @@ namespace Azure.AI.DocumentIntelligence
             uri.AppendPath(resultId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -328,6 +330,7 @@ namespace Azure.AI.DocumentIntelligence
                 uri.AppendQueryDelimited("output", output, ",", true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -364,6 +367,7 @@ namespace Azure.AI.DocumentIntelligence
             uri.AppendPath(resultId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -410,6 +414,7 @@ namespace Azure.AI.DocumentIntelligence
                 uri.AppendQuery("pages", pages, true);
             }
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;

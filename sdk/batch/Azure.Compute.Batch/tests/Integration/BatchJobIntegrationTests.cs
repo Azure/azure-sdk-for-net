@@ -55,12 +55,12 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     PoolId = pool.Id
                 };
-                BatchJobCreateOptions batchTaskCreateOptions = new BatchJobCreateOptions(jobID, batchPoolInfo)
+                BatchJobCreateContent batchJobCreateContent = new BatchJobCreateContent(jobID, batchPoolInfo)
                 {
                     JobPreparationTask = new BatchJobPreparationTask(commandLine),
                     JobReleaseTask = new BatchJobReleaseTask(commandLine),
                 };
-                Response response = await client.CreateJobAsync(batchTaskCreateOptions);
+                Response response = await client.CreateJobAsync(batchJobCreateContent);
 
                 // verify list jobs
                 BatchJob job = null;
@@ -73,18 +73,18 @@ namespace Azure.Compute.Batch.Tests.Integration
                 }
 
                 Assert.IsNotNull(job);
-                Assert.AreEqual(job.AllTasksCompleteMode, BatchAllTasksCompleteMode.NoAction);
+                Assert.AreEqual(job.OnAllTasksComplete, OnAllBatchTasksComplete.NoAction);
 
                 // verify update job
-                job.AllTasksCompleteMode = BatchAllTasksCompleteMode.TerminateJob;
+                job.OnAllTasksComplete = OnAllBatchTasksComplete.TerminateJob;
                 response = await client.ReplaceJobAsync(jobID, job);
                 job = await client.GetJobAsync(jobID);
 
                 Assert.IsNotNull(job);
-                Assert.AreEqual(job.AllTasksCompleteMode, BatchAllTasksCompleteMode.TerminateJob);
+                Assert.AreEqual(job.OnAllTasksComplete, OnAllBatchTasksComplete.TerminateJob);
 
                 // create a task
-                BatchTaskCreateOptions taskCreateContent = new BatchTaskCreateOptions(taskID, commandLine);
+                BatchTaskCreateContent taskCreateContent = new BatchTaskCreateContent(taskID, commandLine);
                 response = await client.CreateTaskAsync(jobID, taskCreateContent);
                 Assert.IsFalse(response.IsError);
 
@@ -95,21 +95,13 @@ namespace Azure.Compute.Batch.Tests.Integration
                 //Assert.AreEqual(batchTaskCountsResult.TaskCounts.Active, 1);
 
                 // disable a job
-                BatchJobDisableOptions content = new BatchJobDisableOptions(DisableBatchJobOption.Requeue);
-                DisableJobOperation jobOperation = await client.DisableJobAsync(jobID, content);
-                await jobOperation.WaitForCompletionAsync().ConfigureAwait(false);
-                Assert.IsTrue(jobOperation.HasCompleted);
-                Assert.IsTrue(jobOperation.HasValue);
-                Assert.AreEqual(jobOperation.Value.State, BatchJobState.Disabled);
-                Assert.IsFalse(jobOperation.GetRawResponse().IsError);
+                BatchJobDisableContent content = new BatchJobDisableContent(DisableBatchJobOption.Requeue);
+                response = await client.DisableJobAsync(jobID, content);
+                Assert.IsFalse(response.IsError);
 
                 // enable a job
-                EnableJobOperation enableJobOperation = await client.EnableJobAsync(jobID);
-                await enableJobOperation.WaitForCompletionAsync().ConfigureAwait(false);
-                Assert.IsTrue(enableJobOperation.HasCompleted);
-                Assert.IsTrue(enableJobOperation.HasValue);
-                Assert.AreEqual(enableJobOperation.Value.State, BatchJobState.Active);
-                Assert.IsFalse(enableJobOperation.GetRawResponse().IsError);
+                response = await client.EnableJobAsync(jobID);
+                Assert.IsFalse(response.IsError);
 
                 await WaitForTasksToComplete(client, jobID, IsPlayBack());
 
@@ -122,14 +114,12 @@ namespace Azure.Compute.Batch.Tests.Integration
                 Assert.AreNotEqual(0, count);
 
                 // job terminate
-                BatchJobTerminateOptions parameters = new BatchJobTerminateOptions
+                BatchJobTerminateContent parameters = new BatchJobTerminateContent
                 {
                     TerminationReason = "<terminateReason>",
                 };
-                TerminateJobOperation terminateJobOperation = await client.TerminateJobAsync(jobID, parameters, force: true);
-                await terminateJobOperation.WaitForCompletionAsync().ConfigureAwait(false);
-                Assert.IsTrue(terminateJobOperation.HasCompleted);
-                Assert.IsTrue(terminateJobOperation.HasValue);
+                response = await client.TerminateJobAsync(jobID, parameters, force: true);
+                Assert.IsFalse(response.IsError);
             }
             finally
             {
@@ -156,17 +146,17 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     PoolId = pool.Id
                 };
-                BatchJobCreateOptions batchTaskCreateOptions = new BatchJobCreateOptions(jobID, batchPoolInfo)
+                BatchJobCreateContent batchJobCreateContent = new BatchJobCreateContent(jobID, batchPoolInfo)
                 {
                     JobPreparationTask = new BatchJobPreparationTask(commandLine),
                     JobReleaseTask = new BatchJobReleaseTask(commandLine),
                 };
-                Response response = await client.CreateJobAsync(batchTaskCreateOptions);
+                Response response = await client.CreateJobAsync(batchJobCreateContent);
                 Assert.AreEqual(201, response.Status);
 
                 // verify update job
-                BatchJobUpdateOptions batchUpdateContent = new BatchJobUpdateOptions();
-                batchUpdateContent.Metadata.Add(new BatchMetadataItem("name", "value"));
+                BatchJobUpdateContent batchUpdateContent = new BatchJobUpdateContent();
+                batchUpdateContent.Metadata.Add(new MetadataItem("name", "value"));
 
                 // todo need to setup specific account for this to be set
                 //batchUpdateContent.NetworkConfiguration = new BatchJobNetworkConfiguration(subnetID, false);
@@ -205,12 +195,12 @@ namespace Azure.Compute.Batch.Tests.Integration
                 {
                     PoolId = pool.Id
                 };
-                BatchJobCreateOptions batchTaskCreateOptions = new BatchJobCreateOptions(jobID, batchPoolInfo)
+                BatchJobCreateContent batchJobCreateContent = new BatchJobCreateContent(jobID, batchPoolInfo)
                 {
                     JobPreparationTask = new BatchJobPreparationTask(commandLine),
                     JobReleaseTask = new BatchJobReleaseTask(commandLine),
                 };
-                Response response = await client.CreateJobAsync(batchTaskCreateOptions);
+                Response response = await client.CreateJobAsync(batchJobCreateContent);
                 Assert.AreEqual(201, response.Status);
 
                 // get the job
@@ -232,73 +222,6 @@ namespace Azure.Compute.Batch.Tests.Integration
             {
                 await client.DeletePoolAsync(poolID);
                 await client.DeleteJobAsync(jobID);
-            }
-        }
-
-        [RecordedTest]
-        public async Task DeleteJob()
-        {
-            var client = CreateBatchClient();
-            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "DeleteJob", IsPlayBack());
-            string poolID = iaasWindowsPoolFixture.PoolId;
-            string jobID = "deleteJob";
-            string commandLine = "cmd /c echo Hello World";
-            string taskID = "Task1";
-            int taskCount = 20;
-            try
-            {
-                // create a pool to verify we have something to query for
-                BatchPool pool = await iaasWindowsPoolFixture.CreatePoolAsync(1);
-
-                BatchPoolInfo batchPoolInfo = new BatchPoolInfo()
-                {
-                    PoolId = pool.Id
-                };
-                BatchJobCreateOptions batchTaskCreateOptions = new BatchJobCreateOptions(jobID, batchPoolInfo)
-                {
-                    JobPreparationTask = new BatchJobPreparationTask(commandLine),
-                    JobReleaseTask = new BatchJobReleaseTask(commandLine),
-                };
-                Response response = await client.CreateJobAsync(batchTaskCreateOptions);
-                Assert.AreEqual(201, response.Status);
-
-                List<BatchTaskCreateOptions> tasks = new List<BatchTaskCreateOptions>();
-                for (int i = 0; i < taskCount; i++)
-                {
-                    tasks.Add(new BatchTaskCreateOptions($"{taskID}_{i}", commandLine));
-                }
-                CreateTasksOptions createTaskOptions = new CreateTasksOptions()
-                {
-                    MaxTimeBetweenCallsInSeconds = IsPlayBack() ? 0 : 30,
-                    ReturnBatchTaskCreateResults = true,
-                };
-
-                CreateTasksResult taskResult = await client.CreateTasksAsync(jobID, tasks, createTaskOptions);
-                Assert.IsNotNull(taskResult);
-                Assert.AreEqual(taskCount, taskResult.BatchTaskCreateResults.Count);
-
-                // get the job
-                BatchJob job = await client.GetJobAsync(jobID);
-                Assert.AreEqual(BatchJobState.Active, job.State);
-
-                DeleteJobOperation operation = await client.DeleteJobAsync(jobID, force: true);
-
-                Assert.IsNotNull(operation);
-
-                await operation.WaitForCompletionAsync().ConfigureAwait(false);
-
-                Assert.IsTrue(operation.HasCompleted);
-                Assert.IsTrue(operation.HasValue);
-                Assert.IsTrue(operation.Value);
-
-                DeleteJobOperation operation2 = new DeleteJobOperation(client, operation.Id);
-                await operation2.WaitForCompletionAsync().ConfigureAwait(false);
-                Assert.IsTrue(operation2.HasValue);
-                Assert.IsTrue(operation2.HasCompleted);
-            }
-            finally
-            {
-                await client.DeletePoolAsync(poolID);
             }
         }
     }

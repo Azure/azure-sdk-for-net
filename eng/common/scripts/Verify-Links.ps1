@@ -11,6 +11,9 @@
   .PARAMETER ignoreLinksFile
   Specifies the file that contains a set of links to ignore when verifying.
 
+  .PARAMETER devOpsLogging
+  Switch that will enable devops specific logging for warnings.
+
   .PARAMETER recursive
   Check the links recurisvely. Applies to links starting with 'baseUrl' parameter. Defaults to true.
 
@@ -67,6 +70,7 @@
 param (
   [string[]] $urls,
   [string] $ignoreLinksFile = "$PSScriptRoot/ignore-links.txt",
+  [switch] $devOpsLogging = $false,
   [switch] $recursive = $true,
   [string] $baseUrl = "",
   [string] $rootUrl = "",
@@ -84,8 +88,6 @@ param (
 )
 
 Set-StrictMode -Version 3.0
-
-. "$PSScriptRoot/logging.ps1"
 
 $ProgressPreference = "SilentlyContinue"; # Disable invoke-webrequest progress dialog
 
@@ -207,6 +209,30 @@ function NormalizeUrl([string]$url) {
     }
   }
   return $uri
+}
+
+function LogWarning
+{
+  if ($devOpsLogging)
+  {
+    Write-Host "##vso[task.LogIssue type=warning;]$args"
+  }
+  else
+  {
+    Write-Warning "$args"
+  }
+}
+
+function LogError
+{
+  if ($devOpsLogging)
+  {
+    Write-Host "##vso[task.logissue type=error]$args"
+  }
+  else
+  {
+    Write-Error "$args"
+  }
 }
 
 function ResolveUri ([System.Uri]$referralUri, [string]$link)
@@ -528,8 +554,9 @@ foreach ($url in $urls) {
   $pageUrisToCheck.Enqueue($uri);
 }
 
-LogGroupStart "Link checking details"
-
+if ($devOpsLogging) {
+  Write-Host "##[group]Link checking details"
+}
 while ($pageUrisToCheck.Count -ne 0)
 {
   $pageUri = $pageUrisToCheck.Dequeue();
@@ -565,7 +592,9 @@ while ($pageUrisToCheck.Count -ne 0)
 }
 
 try {
-  LogGroupEnd
+  if ($devOpsLogging) {
+    Write-Host "##[endgroup]"
+  }
 
   if ($badLinks.Count -gt 0) {
     Write-Host "Summary of broken links:"

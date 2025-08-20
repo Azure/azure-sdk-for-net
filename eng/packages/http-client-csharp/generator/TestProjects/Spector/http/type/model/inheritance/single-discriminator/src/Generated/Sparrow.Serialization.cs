@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure;
+using Azure.Core;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator
 {
@@ -32,5 +34,10 @@ namespace _Type.Model.Inheritance.SingleDiscriminator
         protected override Bird PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<Sparrow>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        /// <param name="sparrow"> The <see cref="Sparrow"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(Sparrow sparrow) => throw null;
+
+        public static explicit operator Sparrow(Response result) => throw null;
     }
 }

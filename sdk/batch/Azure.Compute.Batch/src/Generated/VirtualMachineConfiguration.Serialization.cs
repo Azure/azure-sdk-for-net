@@ -135,16 +135,16 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            BatchVmImageReference imageReference = default;
+            ImageReference imageReference = default;
             string nodeAgentSKUId = default;
             WindowsConfiguration windowsConfiguration = default;
             IList<DataDisk> dataDisks = default;
             string licenseType = default;
-            BatchContainerConfiguration containerConfiguration = default;
+            ContainerConfiguration containerConfiguration = default;
             DiskEncryptionConfiguration diskEncryptionConfiguration = default;
             BatchNodePlacementConfiguration nodePlacementConfiguration = default;
             IList<VMExtension> extensions = default;
-            BatchOsDisk osDisk = default;
+            OSDisk osDisk = default;
             SecurityProfile securityProfile = default;
             ServiceArtifactReference serviceArtifactReference = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -153,7 +153,7 @@ namespace Azure.Compute.Batch
             {
                 if (property.NameEquals("imageReference"u8))
                 {
-                    imageReference = BatchVmImageReference.DeserializeBatchVmImageReference(property.Value, options);
+                    imageReference = ImageReference.DeserializeImageReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nodeAgentSKUId"u8))
@@ -195,7 +195,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    containerConfiguration = BatchContainerConfiguration.DeserializeBatchContainerConfiguration(property.Value, options);
+                    containerConfiguration = ContainerConfiguration.DeserializeContainerConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("diskEncryptionConfiguration"u8))
@@ -236,7 +236,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    osDisk = BatchOsDisk.DeserializeBatchOsDisk(property.Value, options);
+                    osDisk = OSDisk.DeserializeOSDisk(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("securityProfile"u8))

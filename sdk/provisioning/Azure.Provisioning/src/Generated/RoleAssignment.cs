@@ -190,7 +190,6 @@ public partial class RoleAssignment : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
-        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true, defaultValue: GetNameDefaultValue());
         _principalId = DefineProperty<Guid>("PrincipalId", ["properties", "principalId"], isRequired: true);
         _roleDefinitionId = DefineProperty<ResourceIdentifier>("RoleDefinitionId", ["properties", "roleDefinitionId"], isRequired: true);

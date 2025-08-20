@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
 
             writer.WritePropertyName("slice"u8);
-            ((IJsonModel<WritableSubResource>)Slice).Write(writer, options);
+            JsonSerializer.Serialize(writer, Slice);
             writer.WritePropertyName("defaultDataNetwork"u8);
-            ((IJsonModel<WritableSubResource>)DefaultDataNetwork).Write(writer, options);
+            JsonSerializer.Serialize(writer, DefaultDataNetwork);
             writer.WritePropertyName("dataNetworkConfigurations"u8);
             writer.WriteStartArray();
             foreach (var item in DataNetworkConfigurations)
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 if (property.NameEquals("slice"u8))
                 {
-                    slice = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerMobileNetworkContext.Default);
+                    slice = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("defaultDataNetwork"u8))
                 {
-                    defaultDataNetwork = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerMobileNetworkContext.Default);
+                    defaultDataNetwork = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("dataNetworkConfigurations"u8))

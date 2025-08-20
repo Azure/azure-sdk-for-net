@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MobileNetwork
             if (Optional.IsDefined(MobileNetwork))
             {
                 writer.WritePropertyName("mobileNetwork"u8);
-                ((IJsonModel<WritableSubResource>)MobileNetwork).Write(writer, options);
+                JsonSerializer.Serialize(writer, MobileNetwork);
             }
             writer.WriteEndObject();
         }
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMobileNetworkContext.Default);
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            mobileNetwork = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerMobileNetworkContext.Default);
+                            mobileNetwork = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                     }

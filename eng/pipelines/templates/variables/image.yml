@@ -2,16 +2,18 @@
 
 variables:
   - name: LINUXPOOL
-    value: azsdk-pool
+    value: azsdk-pool-mms-ubuntu-2004-general
   - name: WINDOWSPOOL
-    value: azsdk-pool
+    value: azsdk-pool-mms-win-2022-general
   - name: MACPOOL
     value: Azure Pipelines
 
   - name: LINUXVMIMAGE
-    value: ubuntu-24.04
+    value: azsdk-pool-mms-ubuntu-2004-1espt
+  - name: LINUXNEXTVMIMAGE
+    value: ubuntu-22.04
   - name: WINDOWSVMIMAGE
-    value: windows-2022
+    value: azsdk-pool-mms-win-2022-1espt
   - name: MACVMIMAGE
     value: macos-latest
 
@@ -22,3 +24,6 @@ variables:
     value: windows
   - name: MACOS
     value: macOS
+
+  - name: LinuxImageDemand
+    value: ImageOverride -equals $(LINUXVMIMAGE)

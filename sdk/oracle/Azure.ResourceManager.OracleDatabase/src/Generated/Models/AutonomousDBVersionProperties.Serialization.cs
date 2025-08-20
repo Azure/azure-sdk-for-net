@@ -34,29 +34,32 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 throw new FormatException($"The model {nameof(AutonomousDBVersionProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("version"u8);
-            writer.WriteStringValue(Version);
-            if (Optional.IsDefined(DBWorkload))
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DBWorkload))
             {
                 writer.WritePropertyName("dbWorkload"u8);
                 writer.WriteStringValue(DBWorkload.Value.ToString());
             }
-            if (Optional.IsDefined(IsDefaultForFree))
+            if (options.Format != "W" && Optional.IsDefined(IsDefaultForFree))
             {
                 writer.WritePropertyName("isDefaultForFree"u8);
                 writer.WriteBooleanValue(IsDefaultForFree.Value);
             }
-            if (Optional.IsDefined(IsDefaultForPaid))
+            if (options.Format != "W" && Optional.IsDefined(IsDefaultForPaid))
             {
                 writer.WritePropertyName("isDefaultForPaid"u8);
                 writer.WriteBooleanValue(IsDefaultForPaid.Value);
             }
-            if (Optional.IsDefined(IsFreeTierEnabled))
+            if (options.Format != "W" && Optional.IsDefined(IsFreeTierEnabled))
             {
                 writer.WritePropertyName("isFreeTierEnabled"u8);
                 writer.WriteBooleanValue(IsFreeTierEnabled.Value);
             }
-            if (Optional.IsDefined(IsPaidEnabled))
+            if (options.Format != "W" && Optional.IsDefined(IsPaidEnabled))
             {
                 writer.WritePropertyName("isPaidEnabled"u8);
                 writer.WriteBooleanValue(IsPaidEnabled.Value);

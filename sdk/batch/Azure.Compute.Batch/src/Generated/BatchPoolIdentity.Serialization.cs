@@ -84,7 +84,7 @@ namespace Azure.Compute.Batch
                 return null;
             }
             BatchPoolIdentityType type = default;
-            IReadOnlyList<BatchUserAssignedIdentity> userAssignedIdentities = default;
+            IReadOnlyList<UserAssignedIdentity> userAssignedIdentities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,10 +100,10 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    List<BatchUserAssignedIdentity> array = new List<BatchUserAssignedIdentity>();
+                    List<UserAssignedIdentity> array = new List<UserAssignedIdentity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchUserAssignedIdentity.DeserializeBatchUserAssignedIdentity(item, options));
+                        array.Add(UserAssignedIdentity.DeserializeUserAssignedIdentity(item, options));
                     }
                     userAssignedIdentities = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.Compute.Batch
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BatchPoolIdentity(type, userAssignedIdentities ?? new ChangeTrackingList<BatchUserAssignedIdentity>(), serializedAdditionalRawData);
+            return new BatchPoolIdentity(type, userAssignedIdentities ?? new ChangeTrackingList<UserAssignedIdentity>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchPoolIdentity>.Write(ModelReaderWriterOptions options)

@@ -11,7 +11,11 @@ namespace Azure.Data.AppConfiguration
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, ModelSerializationExtensions.WireOptions);
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status");
+                writer.WriteStringValue(Status.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 

@@ -10,7 +10,6 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -31,8 +30,6 @@ namespace Azure.Generator.Management.Providers
         protected override string BuildName() => $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}Extensions";
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", "Extensions", $"{Name}.cs");
-
-        protected override FormattableString BuildDescription() => $"A class to add extension methods to {ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace}.";
 
         protected override MethodProvider[] BuildMethods()
         {
@@ -67,7 +64,7 @@ namespace Azure.Generator.Management.Providers
             var methodSignature = new MethodSignature(
                 $"Get{mockableResource.Name}",
                 null,
-                MethodSignatureModifiers.Private | MethodSignatureModifiers.Static,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
                 mockableResource.Type,
                 null,
                 [parameter]);
@@ -93,7 +90,7 @@ namespace Azure.Generator.Management.Providers
                 validation: ParameterValidationType.AssertNotNull);
             IReadOnlyList<ParameterProvider> parameters = [
                 extensionParameter,
-                ..target.Parameters.Select(DuplicateParameter)
+                ..target.Parameters
                 ];
             var modifiers = (target.Modifiers & ~MethodSignatureModifiers.Virtual) | MethodSignatureModifiers.Static | MethodSignatureModifiers.Extension;
             var methodSignature = new MethodSignature(
@@ -102,32 +99,14 @@ namespace Azure.Generator.Management.Providers
                 modifiers,
                 target.ReturnType,
                 target.ReturnDescription,
-                parameters,
-                Attributes: target.Attributes);
+                parameters);
 
-            IReadOnlyList<ValueExpression> arguments = [.. parameters.Skip(1).Select(p => (ValueExpression)p)];
             var body = new MethodBodyStatement[]
             {
-                Return(Static().Invoke(getCachedClientMethod.Signature, [extensionParameter]).Invoke(target.Name, arguments, async: target.Modifiers.HasFlag(MethodSignatureModifiers.Async)))
+                Return(Static().Invoke(getCachedClientMethod.Signature, [extensionParameter]).Invoke(target))
             };
 
             return new MethodProvider(methodSignature, body, this);
-
-            static ParameterProvider DuplicateParameter(ParameterProvider original)
-            {
-                return new ParameterProvider(
-                    original.Name,
-                    original.Description,
-                    original.Type,
-                    defaultValue: original.DefaultValue,
-                    isRef: original.IsRef,
-                    isOut: original.IsOut,
-                    isParams: original.IsParams,
-                    attributes: original.Attributes,
-                    initializationValue: original.InitializationValue,
-                    location: original.Location,
-                    validation: null);
-            }
         }
 
         private string GetArmCoreTypeVariableName(CSharpType armCoreType)

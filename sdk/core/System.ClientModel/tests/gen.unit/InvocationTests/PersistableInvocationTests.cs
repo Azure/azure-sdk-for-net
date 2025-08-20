@@ -18,7 +18,6 @@ using System.ClientModel.Primitives;
 
 namespace TestProject
 {
-    [ModelReaderWriterBuildable(typeof(JsonModel))]
     public partial class LocalContext : ModelReaderWriterContext { }
 
     public class Caller
@@ -70,7 +69,6 @@ using System.ClientModel.Primitives;
 
 namespace TestProject
 {
-    [ModelReaderWriterBuildable(typeof(JsonModel))]
     public partial class LocalContext : ModelReaderWriterContext { }
 
     public class Caller
@@ -125,7 +123,6 @@ using System.ClientModel.Primitives;
 
 namespace TestProject
 {
-    [ModelReaderWriterBuildable(typeof(JsonModel))]
     public partial class LocalContext : ModelReaderWriterContext { }
 
     public class Caller
@@ -179,7 +176,6 @@ using System.Runtime.CompilerServices;
 
 namespace TestDependency
 {
-    [ModelReaderWriterBuildable(typeof(JsonModel))]
     public partial class LocalContext : ModelReaderWriterContext { }
 
     internal class JsonModel : IJsonModel<JsonModel>
@@ -221,7 +217,6 @@ using TestDependency;
 
 namespace TestProject
 {
-    [ModelReaderWriterBuildable(typeof(JsonModel))]
     public partial class LocalContext : ModelReaderWriterContext { }
 
     public class Caller
@@ -291,7 +286,6 @@ using TestDependency;
 
 namespace TestProject
 {
-    [ModelReaderWriterBuildable(typeof(JsonModel))]
     public partial class LocalContext : ModelReaderWriterContext { }
 
     public class Caller

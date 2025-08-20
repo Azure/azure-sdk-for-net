@@ -53,13 +53,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="AccessUri"/>. </summary>
         /// <param name="accessSas"> A SAS uri for accessing a disk. </param>
         /// <param name="securityDataAccessSas"> A SAS uri for accessing a VM guest state. </param>
-        /// <param name="securityMetadataAccessSas"> A SAS uri for accessing a VM metadata. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AccessUri(string accessSas, string securityDataAccessSas, string securityMetadataAccessSas, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AccessUri(string accessSas, string securityDataAccessSas, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AccessSas = accessSas;
             SecurityDataAccessSas = securityDataAccessSas;
-            SecurityMetadataAccessSas = securityMetadataAccessSas;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -67,7 +65,5 @@ namespace Azure.ResourceManager.Compute.Models
         public string AccessSas { get; }
         /// <summary> A SAS uri for accessing a VM guest state. </summary>
         public string SecurityDataAccessSas { get; }
-        /// <summary> A SAS uri for accessing a VM metadata. </summary>
-        public string SecurityMetadataAccessSas { get; }
     }
 }

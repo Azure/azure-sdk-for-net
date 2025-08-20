@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
 {
     /// <summary> Partner's specific Properties. </summary>
-    public partial class ArizeAIObservabilityEvalOfferPartnerProperties
+    internal partial class ArizeAIObservabilityEvalOfferPartnerProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

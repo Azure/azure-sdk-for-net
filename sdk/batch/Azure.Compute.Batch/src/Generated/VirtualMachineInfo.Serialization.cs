@@ -81,7 +81,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            BatchVmImageReference imageReference = default;
+            ImageReference imageReference = default;
             string scaleSetVmResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    imageReference = BatchVmImageReference.DeserializeBatchVmImageReference(property.Value, options);
+                    imageReference = ImageReference.DeserializeImageReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scaleSetVmResourceId"u8))

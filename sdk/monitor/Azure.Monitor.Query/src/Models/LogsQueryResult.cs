@@ -2,12 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Text.Json.Serialization.Metadata;
 using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
@@ -64,9 +61,7 @@ namespace Azure.Monitor.Query.Models
         /// <summary>
         /// Gets the error that occurred during query processing. The value is <c>null</c> if the query succeeds.
         /// </summary>
-        public ResponseError Error => _error.ValueKind == JsonValueKind.Undefined
-                    ? null
-                    : ModelReaderWriter.Read<ResponseError>(BinaryData.FromString(_error.GetRawText()), ModelReaderWriterOptions.Json, AzureMonitorQueryContext.Default);
+        public ResponseError Error => _error.ValueKind == JsonValueKind.Undefined ? null : JsonSerializer.Deserialize<ResponseError>(_error.GetRawText());
 
         internal Exception CreateExceptionForErrorResponse(int status)
         {

@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         }
 
         /// <summary> The domain name of the dependency. </summary>
+        [WirePath("domainName")]
         public string DomainName { get; }
         /// <summary> The Ports and Protocols used when connecting to domainName. </summary>
+        [WirePath("endpointDetails")]
         public IReadOnlyList<DedicatedHsmEndpointDetail> EndpointDetails { get; }
     }
 }

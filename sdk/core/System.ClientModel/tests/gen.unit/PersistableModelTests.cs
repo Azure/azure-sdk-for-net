@@ -19,7 +19,6 @@ using System.ClientModel.Primitives;
 
 namespace TestProject
 {
-    [ModelReaderWriterBuildable(typeof(PersistableModel))]
     {{modifier}} partial class LocalContext : ModelReaderWriterContext
     {
     }
@@ -61,7 +60,6 @@ using System.Text.Json;
 
 namespace TestProject
 {
-    [ModelReaderWriterBuildable(typeof(JsonModel))]
     {{modifier}} partial class LocalContext : ModelReaderWriterContext
     {
     }
@@ -171,7 +169,6 @@ using System.Text.Json;
 
 namespace TestProject
 {
-    [ModelReaderWriterBuildable(typeof(Wrapper.JsonModel))]
     public partial class LocalContext : ModelReaderWriterContext
     {
     }
@@ -225,7 +222,6 @@ using System.Text.Json;
 
 namespace TestProject
 {
-    [ModelReaderWriterBuildable(typeof(int))]
     public partial class LocalContext : ModelReaderWriterContext
     {
     }
@@ -295,7 +291,6 @@ using TestDependency;
 
 namespace TestProject
 {
-    [ModelReaderWriterBuildable(typeof(MyCollection))]
     public partial class LocalContext : ModelReaderWriterContext { }
 
     public class MyCollection : CustomCollection, IJsonModel<MyCollection>

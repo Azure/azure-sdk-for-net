@@ -5,17 +5,13 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using Azure.Security.KeyVault.Administration;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
+    /// <summary> Role assignment list operation result. </summary>
     internal partial class RoleAssignmentListResult
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="RoleAssignmentListResult"/>. </summary>
         internal RoleAssignmentListResult()
         {
@@ -25,17 +21,14 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <summary> Initializes a new instance of <see cref="RoleAssignmentListResult"/>. </summary>
         /// <param name="value"> Role assignment list. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoleAssignmentListResult(IList<KeyVaultRoleAssignment> value, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoleAssignmentListResult(IReadOnlyList<KeyVaultRoleAssignment> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Role assignment list. </summary>
-        public IList<KeyVaultRoleAssignment> Value { get; }
-
+        public IReadOnlyList<KeyVaultRoleAssignment> Value { get; }
         /// <summary> The URL to use for getting the next set of results. </summary>
         public string NextLink { get; }
     }

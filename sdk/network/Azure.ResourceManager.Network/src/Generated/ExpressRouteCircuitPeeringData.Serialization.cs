@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(RouteFilter))
             {
                 writer.WritePropertyName("routeFilter"u8);
-                ((IJsonModel<WritableSubResource>)RouteFilter).Write(writer, options);
+                JsonSerializer.Serialize(writer, RouteFilter);
             }
             if (Optional.IsDefined(IPv6PeeringConfig))
             {
@@ -133,7 +132,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ExpressRouteConnection))
             {
                 writer.WritePropertyName("expressRouteConnection"u8);
-                ((IJsonModel<SubResource>)ExpressRouteConnection).Write(writer, options);
+                JsonSerializer.Serialize(writer, ExpressRouteConnection);
             }
             if (Optional.IsCollectionDefined(Connections))
             {
@@ -360,7 +359,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            routeFilter = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            routeFilter = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("ipv6PeeringConfig"u8))
@@ -378,7 +377,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            expressRouteConnection = ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
+                            expressRouteConnection = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("connections"u8))

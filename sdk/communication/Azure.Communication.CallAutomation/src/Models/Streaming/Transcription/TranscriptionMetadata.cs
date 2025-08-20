@@ -10,37 +10,28 @@ namespace Azure.Communication.CallAutomation
     /// </summary>
     public class TranscriptionMetadata : StreamingData
     {
-        internal TranscriptionMetadata(TranscriptionMetadataInternal transcriptionMetadataInternal)
-        {
-            TranscriptionSubscriptionId = transcriptionMetadataInternal.TranscriptionSubscriptionId;
-            Locale = transcriptionMetadataInternal.Locale;
-            CallConnectionId = transcriptionMetadataInternal.CallConnectionId;
-            CorrelationId = transcriptionMetadataInternal.CorrelationId;
-            SpeechRecognitionModelEndpointId = transcriptionMetadataInternal.SpeechRecognitionModelEndpointId;
-        }
         /// <summary>
         /// Transcription Subscription Id.
         /// </summary>
-        public string TranscriptionSubscriptionId { get; }
+        [JsonPropertyName("subscriptionId")]
+        public string TranscriptionSubscriptionId { get; set; }
 
         /// <summary>
         /// The target locale in which the translated text needs to be
         /// </summary>
-        public string Locale { get; }
+        [JsonPropertyName("locale")]
+        public string Locale { get; set; }
 
         /// <summary>
         /// call connection Id.
         /// </summary>
-        public string CallConnectionId { get; }
+        [JsonPropertyName("callConnectionId")]
+        public string CallConnectionId { get; set; }
 
         /// <summary>
         /// correlation Id.
         /// </summary>
-        public string CorrelationId { get; }
-
-        /// <summary>
-        /// The custom speech recognition model endpoint id
-        /// </summary>
-        public string SpeechRecognitionModelEndpointId { get; }
+        [JsonPropertyName("correlationId")]
+        public string CorrelationId { get; set; }
     }
 }

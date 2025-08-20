@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
@@ -13,38 +12,6 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Common language model parameters for Chat Completions. If omitted, default values are used. </summary>
     public partial class CommonModelParameters
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="CommonModelParameters"/>. </summary>
         public CommonModelParameters()
         {
@@ -59,8 +26,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="temperature"> Sampling temperature. Default is 0.7. </param>
         /// <param name="seed"> Random seed for controlling deterministic outputs. If omitted, randomization is used. </param>
         /// <param name="stop"> List of stop sequences that will cut off text generation. Default is none. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CommonModelParameters(string model, float? frequencyPenalty, float? presencePenalty, int? maxTokens, float? temperature, int? seed, IList<string> stop, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CommonModelParameters(string model, float? frequencyPenalty, float? presencePenalty, int? maxTokens, float? temperature, int? seed, IList<string> stop)
         {
             Model = model;
             FrequencyPenalty = frequencyPenalty;
@@ -69,7 +35,6 @@ namespace Azure.Search.Documents.Indexes.Models
             Temperature = temperature;
             Seed = seed;
             Stop = stop;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the model to use (e.g., 'gpt-4o', etc.). Default is null if not specified. </summary>

@@ -14,9 +14,4 @@ public enum ManagedHsmSkuFamily
     /// B.
     /// </summary>
     B,
-
-    /// <summary>
-    /// C.
-    /// </summary>
-    C,
 }

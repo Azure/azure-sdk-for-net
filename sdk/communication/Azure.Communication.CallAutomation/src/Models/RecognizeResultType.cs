@@ -21,9 +21,12 @@ namespace Azure.Communication.CallAutomation
         }
 
         private const string DtmfResultValue = "DtmfResultValue";
+        private const string CollectTonesResultValue = "CollectTonesResultValue";
         private const string ChoiceResultValue = "ChoiceResultValue";
         private const string SpeechResultValue = "SpeechResultValue";
 
+        /// <summary> CollectTonesResult. </summary>
+        public static RecognizeResultType CollectTonesResult { get; } = new RecognizeResultType(CollectTonesResultValue);
         /// <summary> DtmfResult. </summary>
         public static RecognizeResultType DtmfResult { get; } = new RecognizeResultType(DtmfResultValue);
         /// <summary> ChoiceResult. </summary>

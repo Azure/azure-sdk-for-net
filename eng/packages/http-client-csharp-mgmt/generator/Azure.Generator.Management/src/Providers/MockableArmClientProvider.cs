@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Snippets;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -15,9 +14,7 @@ namespace Azure.Generator.Management.Providers
 {
     internal sealed class MockableArmClientProvider : MockableResourceProvider
     {
-        // TODO -- we also need to put operations here when we want to support scope resources/operations https://github.com/Azure/azure-sdk-for-net/issues/51821
-        public MockableArmClientProvider(IReadOnlyList<ResourceClientProvider> resources)
-            : base(typeof(ArmClient), RequestPathPattern.Tenant, resources, new Dictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>>(), [])
+        public MockableArmClientProvider(CSharpType armCoreType, IReadOnlyList<ResourceClientProvider> resources) : base(armCoreType, resources)
         {
         }
 
@@ -46,7 +43,7 @@ namespace Azure.Generator.Management.Providers
 
             var body = new MethodBodyStatement[]
             {
-                Static(resource.Type).Invoke("ValidateResourceId", idParameter).Terminate(),
+                Static(resource.Type).Invoke(ResourceClientProvider.ValidateResourceIdMethodName, idParameter).Terminate(),
                 Return(New.Instance(resource.Type,
                     [
                         This.As<ArmResource>().Client(),

@@ -250,9 +250,6 @@ namespace Azure.AI.OpenAI
             writer.WriteObjectValue<object>(value, options);
         }
 
-        /// <summary></summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
         internal static bool IsSentinelValue(BinaryData value)
         {
             ReadOnlySpan<byte> sentinelSpan = _sentinelValue.ToMemory().Span;

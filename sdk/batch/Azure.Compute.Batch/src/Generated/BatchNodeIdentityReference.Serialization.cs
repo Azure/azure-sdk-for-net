@@ -76,18 +76,14 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            ResourceIdentifier resourceId = default;
+            string resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceId = new ResourceIdentifier(property.Value.GetString());
+                    resourceId = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

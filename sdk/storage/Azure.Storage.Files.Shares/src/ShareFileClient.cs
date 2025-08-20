@@ -536,59 +536,7 @@ namespace Azure.Storage.Files.Shares
             }
             return default;
         }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ShareFileClient"/>
-        /// class with identical configurations but with additional Http Pipeline Policies.
-        /// </summary>
-        /// <param name="client">
-        /// The storage client which to clone the configurations from.
-        /// </param>
-        /// <param name="policies">
-        /// The additional policies and its pipeline position to add to the client.
-        /// </param>
-        /// <returns></returns>
-        protected static ShareFileClient WithAdditionalPolicies(
-            ShareFileClient client,
-            params (HttpPipelinePolicy Policy, HttpPipelinePosition Position)[] policies)
-        {
-            Argument.AssertNotNullOrEmpty(policies, nameof(policies));
-
-            // Update the client options with the provided additional policies.
-            ShareClientOptions existingOptions = client?.ClientConfiguration?.ClientOptions;
-            ShareClientOptions options = existingOptions != default ? new(existingOptions) : new ShareClientOptions();
-            foreach ((HttpPipelinePolicy policy, HttpPipelinePosition position) in policies)
-            {
-                options.AddPolicy(policy, HttpPipelinePosition.PerCall);
-            }
-
-            // Create a deep copy of the ShareDirectoryClient but with updated client options
-            // and the provided additional pipeline policies.
-            if (client.ClientConfiguration?.TokenCredential != default)
-            {
-                return new ShareFileClient(
-                    client.Uri,
-                    client.ClientConfiguration.TokenCredential,
-                    options);
-            }
-            else if (client.ClientConfiguration?.SasCredential != default)
-            {
-                return new ShareFileClient(
-                    client.Uri,
-                    client.ClientConfiguration.SasCredential,
-                    options);
-            }
-            else if (client.ClientConfiguration?.SharedKeyCredential != default)
-            {
-                return new ShareFileClient(
-                    client.Uri,
-                    client.ClientConfiguration.SharedKeyCredential,
-                    options);
-            }
-
-            return new ShareFileClient(client.Uri, options);
-        }
-        #endregion internal static accessors for Azure.Storage.DataMovement.Files.Shares
+        #endregion internal static accessors for Azure.Storage.DataMovement.Blobs
 
         #region Create
         /// <summary>

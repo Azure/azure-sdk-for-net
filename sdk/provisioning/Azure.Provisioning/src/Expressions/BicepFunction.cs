@@ -5,7 +5,6 @@ using System;
 using System.Linq;
 using Azure.Core;
 using Azure.Provisioning.Resources;
-using Azure.Provisioning.Utilities;
 
 namespace Azure.Provisioning.Expressions;
 
@@ -294,7 +293,8 @@ public static class BicepFunction
     /// Combines multiple string values <paramref name="values"/> and returns
     /// the concatenated string.  This represents the <c>concat</c> Bicep
     /// function.  To improve readability, prefer
-    /// <see cref="Interpolate"/> instead of <see cref="Concat"/>.
+    /// <see cref="BicepFunction.Interpolate"/> instead of
+    /// <see cref="Concat"/>.
     /// </summary>
     /// <param name="values">Strings in sequential order for concatenation.</param>
     /// <returns>A string or array of concatenated values.</returns>
@@ -310,17 +310,11 @@ public static class BicepFunction
     }
 
     /// <summary>
-    /// Builds a Bicep interpolated string expression from C# interpolated string syntax
-    /// or a <see cref="FormattableString"/> instance.
-    /// Use this method to combine literal text, C# expressions and Bicep expressions
-    /// into a single Bicep string value.
+    /// Convert a formattable string with literal text, C# expressions, and
+    /// Bicep expressions into an interpolated Bicep string.
     /// </summary>
-    /// <param name="handler">
-    /// The <see cref="BicepInterpolatedStringHandler"/> that collects literal and formatted segments from the interpolated string.
-    /// </param>
-    /// <returns>
-    /// A <see cref="BicepValue{String}"/> representing the constructed Bicep interpolated string expression of type <c>string</c>.
-    /// </returns>
+    /// <param name="handler">A bicep interpolated string handler.</param>
+    /// <returns>An interpolated string.</returns>
     public static BicepValue<string> Interpolate(BicepInterpolatedStringHandler handler) =>
         handler.Build();
 }

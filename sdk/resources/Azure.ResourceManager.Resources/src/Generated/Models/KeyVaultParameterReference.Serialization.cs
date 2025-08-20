@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             writer.WritePropertyName("keyVault"u8);
-            ((IJsonModel<WritableSubResource>)KeyVault).Write(writer, options);
+            JsonSerializer.Serialize(writer, KeyVault);
             writer.WritePropertyName("secretName"u8);
             writer.WriteStringValue(SecretName);
             if (Optional.IsDefined(SecretVersion))
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 if (property.NameEquals("keyVault"u8))
                 {
-                    keyVault = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerResourcesContext.Default);
+                    keyVault = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("secretName"u8))

@@ -123,7 +123,6 @@ public partial class Subscription : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
-        base.DefineProvisionableProperties();
         _authorizationSource = DefineProperty<string>("AuthorizationSource", ["authorizationSource"], isOutput: true);
         _displayName = DefineProperty<string>("DisplayName", ["displayName"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);

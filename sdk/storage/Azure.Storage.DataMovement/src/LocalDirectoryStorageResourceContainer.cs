@@ -29,7 +29,13 @@ namespace Azure.Storage.DataMovement
         public LocalDirectoryStorageResourceContainer(string path)
         {
             Argument.AssertNotNullOrWhiteSpace(path, nameof(path));
-            _uri = PathScanner.GetEncodedUriFromPath(path);
+            UriBuilder uriBuilder= new UriBuilder()
+            {
+                Scheme = Uri.UriSchemeFile,
+                Host = "",
+                Path = path,
+            };
+            _uri = uriBuilder.Uri;
         }
 
         /// <summary>
@@ -101,8 +107,9 @@ namespace Azure.Storage.DataMovement
 
         protected internal override StorageResourceContainer GetChildStorageResourceContainer(string path)
         {
-            Uri concatPath = _uri.AppendToPath(path);
-            return new LocalDirectoryStorageResourceContainer(concatPath);
+            UriBuilder uri = new UriBuilder(_uri);
+            uri.Path = Path.Combine(uri.Path, path);
+            return new LocalDirectoryStorageResourceContainer(uri.Uri);
         }
 
         protected internal override Task<StorageResourceContainerProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)

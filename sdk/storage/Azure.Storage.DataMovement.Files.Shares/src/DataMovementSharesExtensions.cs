@@ -79,7 +79,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             return default;
         }
 
-        public static string GetDirectoryPermission(
+        public static string GetFilePermission(
             this ShareFileStorageResourceOptions options,
             StorageResourceContainerProperties sourceProperties)
         {

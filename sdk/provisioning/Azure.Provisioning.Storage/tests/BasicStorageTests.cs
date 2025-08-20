@@ -20,22 +20,12 @@ public class BasicStorageTests(bool async)
     {
         await using Trycep test = CreateBicepTest();
         await test.Define(
-            ctx =>
+            new StorageAccount("storage", StorageAccount.ResourceVersions.V2023_01_01)
             {
-                #region Snippet:StorageAccountBasic
-                Infrastructure infra = new();
-
-                StorageAccount storage = new("storage", StorageAccount.ResourceVersions.V2023_01_01)
-                {
-                    Kind = StorageKind.StorageV2,
-                    Sku = { Name = StorageSkuName.StandardLrs },
-                    IsHnsEnabled = true,
-                    AllowBlobPublicAccess = false
-                };
-                infra.Add(storage);
-                #endregion
-
-                return infra;
+                Kind = StorageKind.StorageV2,
+                Sku = { Name = StorageSkuName.StandardLrs },
+                IsHnsEnabled = true,
+                AllowBlobPublicAccess = false
             })
         .Compare(
             """

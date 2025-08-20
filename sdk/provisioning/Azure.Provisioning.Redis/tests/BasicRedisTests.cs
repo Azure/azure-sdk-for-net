@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
@@ -18,7 +20,6 @@ public class BasicRedisTests(bool async)
         await test.Define(
             ctx =>
             {
-                #region Snippet:RedisBasic
                 Infrastructure infra = new();
 
                 RedisResource cache =
@@ -35,7 +36,6 @@ public class BasicRedisTests(bool async)
                             },
                     };
                 infra.Add(cache);
-                #endregion
 
                 return infra;
             })

@@ -6,10 +6,9 @@
 namespace Azure.Provisioning.Storage;
 
 /// <summary>
-/// Allow, disallow, or let Network Security Perimeter configuration to
-/// evaluate public network access to Storage Account. Value is optional but
-/// if passed in, must be &apos;Enabled&apos;, &apos;Disabled&apos; or
-/// &apos;SecuredByPerimeter&apos;.
+/// Allow or disallow public network access to Storage Account. Value is
+/// optional but if passed in, must be &apos;Enabled&apos; or
+/// &apos;Disabled&apos;.
 /// </summary>
 public enum StoragePublicNetworkAccess
 {
@@ -22,9 +21,4 @@ public enum StoragePublicNetworkAccess
     /// Disabled.
     /// </summary>
     Disabled,
-
-    /// <summary>
-    /// SecuredByPerimeter.
-    /// </summary>
-    SecuredByPerimeter,
 }

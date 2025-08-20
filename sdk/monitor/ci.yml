@@ -51,7 +51,3 @@ extends:
     AOTTestInputs:
     - ArtifactName: Azure.Monitor.OpenTelemetry.Exporter
       ExpectedWarningsFilepath: None
-    - ArtifactName: Azure.Monitor.Ingestion
-      ExpectedWarningsFilepath: None
-    - ArtifactName: Azure.Monitor.Query
-      ExpectedWarningsFilepath: None

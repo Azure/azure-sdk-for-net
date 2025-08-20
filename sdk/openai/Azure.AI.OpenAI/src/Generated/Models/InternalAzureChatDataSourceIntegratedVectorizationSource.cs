@@ -9,15 +9,11 @@ namespace Azure.AI.OpenAI.Chat
 {
     internal partial class InternalAzureChatDataSourceIntegratedVectorizationSource : DataSourceVectorizer
     {
-        /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceIntegratedVectorizationSource"/>. </summary>
-        public InternalAzureChatDataSourceIntegratedVectorizationSource() : this(InternalAzureChatDataSourceVectorizationSourceType.Integrated, null)
+        public InternalAzureChatDataSourceIntegratedVectorizationSource() : base("integrated")
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="InternalAzureChatDataSourceIntegratedVectorizationSource"/>. </summary>
-        /// <param name="kind"> The differentiating identifier for the concrete vectorization source. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalAzureChatDataSourceIntegratedVectorizationSource(InternalAzureChatDataSourceVectorizationSourceType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, additionalBinaryDataProperties)
+        internal InternalAzureChatDataSourceIntegratedVectorizationSource(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
         {
         }
     }

@@ -30,16 +30,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="callbackUri"> The callback URI. </param>
         /// <param name="operationContext"> Used by customers to correlate the request to the response event. </param>
         /// <param name="callIntelligenceOptions"> AI options for the call. </param>
-        /// <param name="mediaStreamingOptions">
-        /// Media Streaming Options.
-        /// Please note <see cref="MediaStreamingOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="WebSocketMediaStreamingOptionsInternal"/>.
-        /// </param>
-        /// <param name="transcriptionOptions">
-        /// Transcription Options.
-        /// Please note <see cref="TranscriptionOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="WebSocketTranscriptionOptionsInternal"/>.
-        /// </param>
+        /// <param name="mediaStreamingOptions"> Media Streaming Options. </param>
+        /// <param name="transcriptionOptions"> Transcription Options. </param>
         internal ConnectRequestInternal(CallLocatorInternal callLocator, string callbackUri, string operationContext, CallIntelligenceOptionsInternal callIntelligenceOptions, MediaStreamingOptionsInternal mediaStreamingOptions, TranscriptionOptionsInternal transcriptionOptions)
         {
             CallLocator = callLocator;
@@ -58,17 +50,9 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get; set; }
         /// <summary> AI options for the call. </summary>
         public CallIntelligenceOptionsInternal CallIntelligenceOptions { get; set; }
-        /// <summary>
-        /// Media Streaming Options.
-        /// Please note <see cref="MediaStreamingOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="WebSocketMediaStreamingOptionsInternal"/>.
-        /// </summary>
+        /// <summary> Media Streaming Options. </summary>
         public MediaStreamingOptionsInternal MediaStreamingOptions { get; set; }
-        /// <summary>
-        /// Transcription Options.
-        /// Please note <see cref="TranscriptionOptionsInternal"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="WebSocketTranscriptionOptionsInternal"/>.
-        /// </summary>
+        /// <summary> Transcription Options. </summary>
         public TranscriptionOptionsInternal TranscriptionOptions { get; set; }
     }
 }

@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             GetUserTablesOracleTaskInput input = default;
             IReadOnlyList<GetUserTablesOracleTaskOutput> output = default;
-            DataMigrationTaskType taskType = default;
-            IReadOnlyList<DataMigrationODataError> errors = default;
-            DataMigrationTaskState? state = default;
-            IReadOnlyList<DataMigrationCommandProperties> commands = default;
+            TaskType taskType = default;
+            IReadOnlyList<ODataError> errors = default;
+            TaskState? state = default;
+            IReadOnlyList<CommandProperties> commands = default;
             IDictionary<string, string> clientData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (property.NameEquals("taskType"u8))
                 {
-                    taskType = new DataMigrationTaskType(property.Value.GetString());
+                    taskType = new TaskType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errors"u8))
@@ -117,10 +117,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<DataMigrationODataError> array = new List<DataMigrationODataError>();
+                    List<ODataError> array = new List<ODataError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataMigrationODataError.DeserializeDataMigrationODataError(item, options));
+                        array.Add(ODataError.DeserializeODataError(item, options));
                     }
                     errors = array;
                     continue;
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    state = new DataMigrationTaskState(property.Value.GetString());
+                    state = new TaskState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("commands"u8))
@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<DataMigrationCommandProperties> array = new List<DataMigrationCommandProperties>();
+                    List<CommandProperties> array = new List<CommandProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataMigrationCommandProperties.DeserializeDataMigrationCommandProperties(item, options));
+                        array.Add(CommandProperties.DeserializeCommandProperties(item, options));
                     }
                     commands = array;
                     continue;
@@ -170,9 +170,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new GetUserTablesOracleTaskProperties(
                 taskType,
-                errors ?? new ChangeTrackingList<DataMigrationODataError>(),
+                errors ?? new ChangeTrackingList<ODataError>(),
                 state,
-                commands ?? new ChangeTrackingList<DataMigrationCommandProperties>(),
+                commands ?? new ChangeTrackingList<CommandProperties>(),
                 clientData ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
                 input,

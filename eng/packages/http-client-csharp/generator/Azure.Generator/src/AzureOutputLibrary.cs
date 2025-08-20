@@ -6,7 +6,6 @@ using System.Linq;
 using Azure.Generator.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
-using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 
 namespace Azure.Generator
@@ -18,13 +17,12 @@ namespace Azure.Generator
         protected override TypeProvider[] BuildTypeProviders()
         {
             var types = base.BuildTypeProviders();
-            var publicClients = types.OfType<ClientProvider>().Where(
-                client => client.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public)).ToList();
+            var clients = types.OfType<ClientProvider>().ToList();
             return
             [
                 .. types,
                 new RequestContextExtensionsDefinition(),
-                .. publicClients.Count > 0 ? [new ClientBuilderExtensionsDefinition(publicClients)] : Array.Empty<TypeProvider>()
+                .. clients.Count > 0 ? [new ClientBuilderExtensionsDefinition(clients)] : Array.Empty<TypeProvider>()
             ];
         }
     }

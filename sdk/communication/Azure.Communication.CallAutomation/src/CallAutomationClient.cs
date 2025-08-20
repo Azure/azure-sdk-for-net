@@ -25,6 +25,7 @@ namespace Azure.Communication.CallAutomation
         internal AzureCommunicationServicesRestClient AzureCommunicationServicesRestClient { get; }
         internal CallMediaRestClient CallMediaRestClient { get; }
         internal CallRecordingRestClient CallRecordingRestClient { get; }
+        internal CallDialogRestClient CallDialogRestClient { get; }
         internal CallAutomationEventProcessor EventProcessor { get; }
 
         /// <summary>
@@ -62,6 +63,31 @@ namespace Azure.Communication.CallAutomation
                 Argument.CheckNotNull(credential, nameof(credential)),
                 options ?? new CallAutomationClientOptions())
         { }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomationClient"/> with custom PMA endpoint.</summary>
+        /// <param name="pmaEndpoint">Endpoint for PMA</param>
+        /// <param name="connectionString">Connection string acquired from the Azure Communication Services resource.</param>
+        /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
+        public CallAutomationClient(Uri pmaEndpoint, string connectionString, CallAutomationClientOptions options = default)
+        : this(
+              pmaEndpoint,
+              options ?? new CallAutomationClientOptions(),
+              ConnectionString.Parse(connectionString))
+        { }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomationClient"/>.</summary>
+        /// <param name="pmaEndpoint">Endpoint for PMA</param>
+        /// <param name="acsEndpoint">The URI of the Azure Communication Services resource.</param>
+        /// <param name="credential">The TokenCredential used to authenticate requests, such as DefaultAzureCredential.</param>
+        /// <param name="options">Client option exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
+        public CallAutomationClient(Uri pmaEndpoint, Uri acsEndpoint, TokenCredential credential, CallAutomationClientOptions options = default)
+        : this(
+              pmaEndpoint,
+              acsEndpoint,
+              options ?? new CallAutomationClientOptions(),
+              credential
+              )
+        { }
         #endregion
 
         #region private constructors
@@ -73,6 +99,13 @@ namespace Azure.Communication.CallAutomation
             : this(new Uri(endpoint), options.BuildHttpPipeline(tokenCredential), options)
         { }
 
+        private CallAutomationClient(Uri endpoint, CallAutomationClientOptions options, ConnectionString connectionString)
+        : this(
+        endpoint: endpoint,
+        httpPipeline: options.CustomBuildHttpPipeline(connectionString),
+        options: options)
+        { }
+
         private CallAutomationClient(Uri endpoint, HttpPipeline httpPipeline, CallAutomationClientOptions options)
         {
             _pipeline = httpPipeline;
@@ -82,9 +115,18 @@ namespace Azure.Communication.CallAutomation
             CallConnectionRestClient = new CallConnectionRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             CallMediaRestClient = new CallMediaRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             CallRecordingRestClient = new CallRecordingRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
+            CallDialogRestClient = new CallDialogRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             EventProcessor = new CallAutomationEventProcessor();
             Source = options.Source;
         }
+
+        private CallAutomationClient(
+            Uri pmaEndpoint,
+            Uri acsEndpoint,
+            CallAutomationClientOptions options,
+            TokenCredential tokenCredential)
+            : this(pmaEndpoint, options.CustomBuildHttpPipeline(acsEndpoint, tokenCredential), options)
+        { }
         #endregion
 
         /// <summary>Initializes a new instance of <see cref="CallAutomationClient"/> for mocking.</summary>
@@ -200,15 +242,25 @@ namespace Azure.Communication.CallAutomation
             AnswerCallRequestInternal request = new AnswerCallRequestInternal(options.IncomingCallContext, options.CallbackUri.AbsoluteUri);
 
             // Add CallIntelligenceOptions such as custom cognitive service domain name
-            request.CallIntelligenceOptions = new()
+            string cognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri;
+            string backupCognitiveServicesEndpoint = options.CallIntelligenceOptions?.BackupCognitiveServicesEndpoint?.AbsoluteUri;
+            if (!string.IsNullOrWhiteSpace(cognitiveServicesEndpoint))
             {
-                CognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri
-            };
+                request.CallIntelligenceOptions = new()
+                {
+                    CognitiveServicesEndpoint = cognitiveServicesEndpoint,
+                    BackupCognitiveServicesEndpoint = backupCognitiveServicesEndpoint
+                };
+            }
 
             request.MediaStreamingOptions = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
             request.TranscriptionOptions = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
             request.AnsweredBy = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id);
             request.OperationContext = options.OperationContext;
+            request.CustomCallingContext = new CustomCallingContextInternal(
+                options.CustomCallingContext?.VoipHeaders ?? new ChangeTrackingDictionary<string, string>(),
+                options.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>(),
+                CustomCallContextHelpers.CreateTeamsPhoneCallDetailsInternal(options.CustomCallingContext?.TeamsPhoneCallDetails));
 
             return request;
         }
@@ -241,7 +293,13 @@ namespace Azure.Communication.CallAutomation
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
 
-                RedirectCallRequestInternal request = new RedirectCallRequestInternal(options.IncomingCallContext, CommunicationIdentifierSerializer_2025_06_30.Serialize(options.CallInvite.Target));
+                RedirectCallRequestInternal request = new RedirectCallRequestInternal(options.IncomingCallContext, CommunicationIdentifierSerializer.Serialize(options.CallInvite.Target));
+
+                request.CustomCallingContext = new CustomCallingContextInternal(
+                   options.CallInvite?.CustomCallingContext?.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite?.CustomCallingContext?.VoipHeaders,
+                   options.CallInvite?.CustomCallingContext?.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite?.CustomCallingContext?.SipHeaders,
+                   CustomCallContextHelpers.CreateTeamsPhoneCallDetailsInternal(options.CallInvite?.CustomCallingContext?.TeamsPhoneCallDetails));
+
                 return await AzureCommunicationServicesRestClient.RedirectCallAsync(request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
@@ -279,7 +337,12 @@ namespace Azure.Communication.CallAutomation
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
 
-                RedirectCallRequestInternal request = new RedirectCallRequestInternal(options.IncomingCallContext, CommunicationIdentifierSerializer_2025_06_30.Serialize(options.CallInvite.Target));
+                RedirectCallRequestInternal request = new RedirectCallRequestInternal(options.IncomingCallContext, CommunicationIdentifierSerializer.Serialize(options.CallInvite.Target));
+
+                request.CustomCallingContext = new CustomCallingContextInternal(
+                                   options.CallInvite?.CustomCallingContext?.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.CustomCallingContext.VoipHeaders,
+                                   options.CallInvite?.CustomCallingContext?.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.CustomCallingContext.SipHeaders,
+                                   CustomCallContextHelpers.CreateTeamsPhoneCallDetailsInternal(options.CallInvite?.CustomCallingContext?.TeamsPhoneCallDetails));
 
                 return AzureCommunicationServicesRestClient.RedirectCall(request, cancellationToken);
             }
@@ -657,7 +720,7 @@ namespace Azure.Communication.CallAutomation
         private CreateCallRequestInternal CreateCallRequest(CreateCallOptions options)
         {
             CreateCallRequestInternal request = new(
-                targets: new List<CommunicationIdentifierModel>() { { CommunicationIdentifierSerializer_2025_06_30.Serialize(options.CallInvite.Target) } },
+                targets: new List<CommunicationIdentifierModel>() { { CommunicationIdentifierSerializer.Serialize(options.CallInvite.Target) } },
                 callbackUri: options.CallbackUri.AbsoluteUri)
             {
                 SourceCallerIdNumber = options?.CallInvite?.SourceCallerIdNumber == null
@@ -668,10 +731,23 @@ namespace Azure.Communication.CallAutomation
                 TeamsAppSource = options.TeamsAppSource == null ? null : new MicrosoftTeamsAppIdentifierModel(options.TeamsAppSource.AppId),
             };
 
-            request.CallIntelligenceOptions = new()
+            request.CustomCallingContext = new CustomCallingContextInternal(
+               options.CallInvite?.CustomCallingContext?.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite?.CustomCallingContext?.VoipHeaders,
+               options.CallInvite?.CustomCallingContext?.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CallInvite.CustomCallingContext.SipHeaders,
+               CustomCallContextHelpers.CreateTeamsPhoneCallDetailsInternal(options.CallInvite?.CustomCallingContext?.TeamsPhoneCallDetails));
+
+            // Add CallIntelligenceOptions such as custom cognitive service domain name
+            string cognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri;
+            string backupCognitiveServicesEndpoint = options.CallIntelligenceOptions?.BackupCognitiveServicesEndpoint?.AbsoluteUri;
+            if (!string.IsNullOrWhiteSpace(cognitiveServicesEndpoint))
             {
-                CognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri
-            };
+                request.CallIntelligenceOptions = new()
+                {
+                    CognitiveServicesEndpoint = cognitiveServicesEndpoint,
+                    BackupCognitiveServicesEndpoint = backupCognitiveServicesEndpoint
+                };
+            }
+
             request.OperationContext = options.OperationContext;
             request.MediaStreamingOptions = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
             request.TranscriptionOptions = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
@@ -682,7 +758,7 @@ namespace Azure.Communication.CallAutomation
         private CreateCallRequestInternal CreateCallRequest(CreateGroupCallOptions options)
         {
             CreateCallRequestInternal request = new(
-                targets: options.Targets.Select(t => CommunicationIdentifierSerializer_2025_06_30.Serialize(t)),
+                targets: options.Targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
                 callbackUri: options.CallbackUri.AbsoluteUri)
             {
                 SourceCallerIdNumber = options?.SourceCallerIdNumber == null
@@ -690,13 +766,25 @@ namespace Azure.Communication.CallAutomation
                     : new PhoneNumberIdentifierModel(options?.SourceCallerIdNumber?.PhoneNumber),
                 SourceDisplayName = options?.SourceDisplayName,
                 Source = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id),
-                TeamsAppSource = options.TeamsAppSource == null ? null : new MicrosoftTeamsAppIdentifierModel(options.TeamsAppSource.AppId),
+                TeamsAppSource = options.TeamsAppSource == null ? null : new MicrosoftTeamsAppIdentifierModel(options.TeamsAppSource.AppId)
             };
 
-            request.CallIntelligenceOptions = new()
+            request.CustomCallingContext = new CustomCallingContextInternal(
+               options.CustomCallingContext?.VoipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CustomCallingContext?.VoipHeaders,
+               options.CustomCallingContext?.SipHeaders == null ? new ChangeTrackingDictionary<string, string>() : options.CustomCallingContext?.SipHeaders,
+               CustomCallContextHelpers.CreateTeamsPhoneCallDetailsInternal(options.CustomCallingContext?.TeamsPhoneCallDetails));
+
+            // Add CallIntelligenceOptions such as custom cognitive service domain name
+            string cognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri;
+            string backupCognitiveServicesEndpoint = options.CallIntelligenceOptions?.BackupCognitiveServicesEndpoint?.AbsoluteUri;
+            if (!string.IsNullOrWhiteSpace(cognitiveServicesEndpoint))
             {
-                CognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri
-            };
+                request.CallIntelligenceOptions = new()
+                {
+                    CognitiveServicesEndpoint = cognitiveServicesEndpoint,
+                    BackupCognitiveServicesEndpoint = backupCognitiveServicesEndpoint
+                };
+            }
 
             request.OperationContext = options.OperationContext;
             request.MediaStreamingOptions = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
@@ -712,41 +800,49 @@ namespace Azure.Communication.CallAutomation
             connectRequest.OperationContext = options.OperationContext;
             connectRequest.MediaStreamingOptions = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
             connectRequest.TranscriptionOptions = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
-            connectRequest.CallIntelligenceOptions = new()
+
+            string cognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri;
+            string backupCognitiveServicesEndpoint = options.CallIntelligenceOptions?.BackupCognitiveServicesEndpoint?.AbsoluteUri;
+            if (!string.IsNullOrWhiteSpace(cognitiveServicesEndpoint))
             {
-                CognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri
-            };
+                connectRequest.CallIntelligenceOptions = new()
+                {
+                    CognitiveServicesEndpoint = cognitiveServicesEndpoint,
+                    BackupCognitiveServicesEndpoint = backupCognitiveServicesEndpoint
+                };
+            }
 
             return connectRequest;
         }
 
-        private static WebSocketMediaStreamingOptionsInternal CreateMediaStreamingOptionsInternal(MediaStreamingOptions configuration)
+        /// <summary>
+        /// Validates an Https Uri.
+        /// </summary>
+        /// <param name="uri"></param>
+        /// <returns></returns>
+        private static bool IsValidHttpsUri(Uri uri)
         {
-            return configuration == default
-                ? default
-                : new WebSocketMediaStreamingOptionsInternal(configuration.MediaStreamingAudioChannel)
-                {
-                    AudioFormat = configuration.AudioFormat,
-                    TransportUrl = configuration.TransportUri?.AbsoluteUri,
-                    TransportType = configuration.MediaStreamingTransport,
-                    ContentType = configuration.MediaStreamingContent,
-                    EnableBidirectional = configuration.EnableBidirectional,
-                    EnableDtmfTones = configuration.EnableDtmfTones,
-                    StartMediaStreaming = configuration.StartMediaStreaming,
-                };
+            if (uri == null)
+                return false;
+            var uriString = uri.AbsoluteUri;
+            return Uri.IsWellFormedUriString(uriString, UriKind.Absolute) && new Uri(uriString).Scheme == Uri.UriSchemeHttps;
         }
 
-        private static WebSocketTranscriptionOptionsInternal CreateTranscriptionOptionsInternal(TranscriptionOptions configuration)
+        private static MediaStreamingOptionsInternal CreateMediaStreamingOptionsInternal(MediaStreamingOptions configuration)
         {
             return configuration == default
                 ? default
-                : new WebSocketTranscriptionOptionsInternal(
-                configuration.Locale)
+                : new MediaStreamingOptionsInternal(configuration.TransportUri.AbsoluteUri, configuration.MediaStreamingTransport,
+                configuration.MediaStreamingContent, configuration.MediaStreamingAudioChannel, configuration.StartMediaStreaming,
+                configuration.EnableBidirectional, configuration.AudioFormat);
+        }
+        private static TranscriptionOptionsInternal CreateTranscriptionOptionsInternal(TranscriptionOptions configuration)
+        {
+            return configuration == default
+                ? default
+                : new TranscriptionOptionsInternal(configuration.TransportUrl.AbsoluteUri, configuration.TranscriptionTransport, configuration.Locale,
+                configuration.StartTranscription.GetValueOrDefault())
                 {
-                    SpeechModelEndpointId = configuration.SpeechRecognitionModelEndpointId,
-                    StartTranscription = configuration.StartTranscription,
-                    TransportUrl = configuration.TransportUri?.AbsoluteUri,
-                    TransportType = configuration.TranscriptionTransport,
                     EnableIntermediateResults = configuration.EnableIntermediateResults,
                     SpeechRecognitionModelEndpointId = configuration.SpeechRecognitionModelEndpointId
                 };
@@ -760,7 +856,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                return new CallConnection(callConnectionId, CallConnectionRestClient, CallMediaRestClient, _clientDiagnostics, EventProcessor);
+                return new CallConnection(callConnectionId, CallConnectionRestClient, CallMediaRestClient, CallDialogRestClient, _clientDiagnostics, EventProcessor);
             }
             catch (Exception ex)
             {

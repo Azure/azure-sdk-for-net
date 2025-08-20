@@ -77,16 +77,6 @@ public partial class CosmosDBIndexingPolicy : ProvisionableConstruct
     private BicepList<SpatialSpec>? _spatialIndexes;
 
     /// <summary>
-    /// List of paths to include in the vector indexing.
-    /// </summary>
-    public BicepList<CosmosDBVectorIndex> VectorIndexes 
-    {
-        get { Initialize(); return _vectorIndexes!; }
-        set { Initialize(); _vectorIndexes!.Assign(value); }
-    }
-    private BicepList<CosmosDBVectorIndex>? _vectorIndexes;
-
-    /// <summary>
     /// Creates a new CosmosDBIndexingPolicy.
     /// </summary>
     public CosmosDBIndexingPolicy()
@@ -105,6 +95,5 @@ public partial class CosmosDBIndexingPolicy : ProvisionableConstruct
         _excludedPaths = DefineListProperty<CosmosDBExcludedPath>("ExcludedPaths", ["excludedPaths"]);
         _compositeIndexes = DefineListProperty<BicepList<CosmosDBCompositePath>>("CompositeIndexes", ["compositeIndexes"]);
         _spatialIndexes = DefineListProperty<SpatialSpec>("SpatialIndexes", ["spatialIndexes"]);
-        _vectorIndexes = DefineListProperty<CosmosDBVectorIndex>("VectorIndexes", ["vectorIndexes"]);
     }
 }

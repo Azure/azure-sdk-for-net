@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             string databaseName = default;
             DateTimeOffset? startedOn = default;
             DateTimeOffset? endedOn = default;
-            DataMigrationState? state = default;
+            MigrationState? state = default;
             DatabaseMigrationStage? stage = default;
             string statusMessage = default;
             string message = default;
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             long? errorCount = default;
             string errorPrefix = default;
             string resultPrefix = default;
-            IReadOnlyList<DataMigrationReportableException> exceptionsAndWarnings = default;
+            IReadOnlyList<ReportableException> exceptionsAndWarnings = default;
             string objectSummary = default;
             string id = default;
             string resultType = default;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    state = new DataMigrationState(property.Value.GetString());
+                    state = new MigrationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("stage"u8))
@@ -246,10 +246,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    List<DataMigrationReportableException> array = new List<DataMigrationReportableException>();
+                    List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataMigrationReportableException.DeserializeDataMigrationReportableException(item, options));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     exceptionsAndWarnings = array;
                     continue;
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 errorCount,
                 errorPrefix,
                 resultPrefix,
-                exceptionsAndWarnings ?? new ChangeTrackingList<DataMigrationReportableException>(),
+                exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>(),
                 objectSummary);
         }
 

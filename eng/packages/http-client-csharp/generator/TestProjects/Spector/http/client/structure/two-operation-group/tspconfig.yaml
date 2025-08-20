@@ -1,3 +1,0 @@
-options:
-  "@azure-typespec/http-client-csharp":
-    package-name: Client.Structure.Service.TwoOperationGroup

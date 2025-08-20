@@ -18,17 +18,6 @@ namespace Azure.Provisioning.Resources;
 public partial class ArmDeploymentContent : ProvisionableConstruct
 {
     /// <summary>
-    /// The Managed Identity configuration for a deployment.             The
-    /// supported types are: None, UserAssigned
-    /// </summary>
-    public ManagedServiceIdentity Identity 
-    {
-        get { Initialize(); return _identity!; }
-        set { Initialize(); AssignOrReplace(ref _identity, value); }
-    }
-    private ManagedServiceIdentity? _identity;
-
-    /// <summary>
     /// The location to store the deployment data.
     /// </summary>
     public BicepValue<AzureLocation> Location 
@@ -70,7 +59,6 @@ public partial class ArmDeploymentContent : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _properties = DefineModelProperty<ArmDeploymentProperties>("Properties", ["properties"], isOutput: true);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);

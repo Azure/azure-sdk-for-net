@@ -40,7 +40,6 @@ namespace Azure.Identity.Tests
             Assert.AreEqual("Successfully acquired a token from ManagedIdentityCredential", response.Content.ToString(), response.Content.ToString());
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/50550")]
         [RecordedTest]
         [SyncOnly]
         // This test leverages the test app found in Azure.Identity\integration\Integration.Identity.Func
@@ -52,7 +51,7 @@ namespace Azure.Identity.Tests
             request.Uri.Reset(testEndpoint);
             Response response = await _pipeline.SendRequestAsync(request, default);
 
-            Assert.AreEqual((int)HttpStatusCode.OK, response.Status, $"Expected status code 200, got {response.Content}");
+            Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
             Assert.AreEqual("Successfully acquired a token from ManagedIdentityCredential", response.Content.ToString(), response.Content.ToString());
         }
     }

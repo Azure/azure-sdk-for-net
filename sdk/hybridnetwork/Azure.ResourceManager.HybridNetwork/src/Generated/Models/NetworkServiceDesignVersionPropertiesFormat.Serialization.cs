@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 foreach (var item in ConfigurationGroupSchemaReferences)
                 {
                     writer.WritePropertyName(item.Key);
-                    ((IJsonModel<WritableSubResource>)item.Value).Write(writer, options);
+                    JsonSerializer.Serialize(writer, item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -162,7 +161,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     Dictionary<string, WritableSubResource> dictionary = new Dictionary<string, WritableSubResource>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerHybridNetworkContext.Default));
+                        dictionary.Add(property0.Name, JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText()));
                     }
                     configurationGroupSchemaReferences = dictionary;
                     continue;

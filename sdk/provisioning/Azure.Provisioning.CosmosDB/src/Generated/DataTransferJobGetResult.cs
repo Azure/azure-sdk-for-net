@@ -47,8 +47,7 @@ public partial class DataTransferJobGetResult : ProvisionableResource
     /// Azure.ResourceManager.CosmosDB.Models.AzureBlobDataTransferDataSourceSink,
     /// Azure.ResourceManager.CosmosDB.Models.BaseCosmosDataTransferDataSourceSink,
     /// Azure.ResourceManager.CosmosDB.Models.CosmosCassandraDataTransferDataSourceSink,
-    /// Azure.ResourceManager.CosmosDB.Models.CosmosMongoDataTransferDataSourceSink,
-    /// Azure.ResourceManager.CosmosDB.Models.CosmosMongoVCoreDataTransferDataSourceSink
+    /// Azure.ResourceManager.CosmosDB.Models.CosmosMongoDataTransferDataSourceSink
     /// and
     /// Azure.ResourceManager.CosmosDB.Models.CosmosSqlDataTransferDataSourceSink.
     /// </summary>
@@ -70,11 +69,11 @@ public partial class DataTransferJobGetResult : ProvisionableResource
     /// <summary>
     /// Error response for Faulted job.
     /// </summary>
-    public CosmosDBErrorResult ErrorResult 
+    public ErrorResponse Error 
     {
-        get { Initialize(); return _errorResult!; }
+        get { Initialize(); return _error!; }
     }
-    private CosmosDBErrorResult? _errorResult;
+    private ErrorResponse? _error;
 
     /// <summary>
     /// Gets the Id.
@@ -131,8 +130,7 @@ public partial class DataTransferJobGetResult : ProvisionableResource
     /// Azure.ResourceManager.CosmosDB.Models.AzureBlobDataTransferDataSourceSink,
     /// Azure.ResourceManager.CosmosDB.Models.BaseCosmosDataTransferDataSourceSink,
     /// Azure.ResourceManager.CosmosDB.Models.CosmosCassandraDataTransferDataSourceSink,
-    /// Azure.ResourceManager.CosmosDB.Models.CosmosMongoDataTransferDataSourceSink,
-    /// Azure.ResourceManager.CosmosDB.Models.CosmosMongoVCoreDataTransferDataSourceSink
+    /// Azure.ResourceManager.CosmosDB.Models.CosmosMongoDataTransferDataSourceSink
     /// and
     /// Azure.ResourceManager.CosmosDB.Models.CosmosSqlDataTransferDataSourceSink.
     /// </summary>
@@ -199,7 +197,7 @@ public partial class DataTransferJobGetResult : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the DataTransferJobGetResult.</param>
     public DataTransferJobGetResult(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/dataTransferJobs", resourceVersion ?? "2025-04-15")
+        : base(bicepIdentifier, "Microsoft.DocumentDB/databaseAccounts/dataTransferJobs", resourceVersion ?? "2024-08-15")
     {
     }
 
@@ -212,7 +210,7 @@ public partial class DataTransferJobGetResult : ProvisionableResource
         _properties = DefineModelProperty<DataTransferJobProperties>("Properties", ["properties"], isRequired: true);
         _destination = DefineModelProperty<DataTransferDataSourceSink>("Destination", ["properties", "destination"], isOutput: true);
         _duration = DefineProperty<TimeSpan>("Duration", ["properties", "duration"], isOutput: true);
-        _errorResult = DefineModelProperty<CosmosDBErrorResult>("ErrorResult", ["properties", "error"], isOutput: true);
+        _error = DefineModelProperty<ErrorResponse>("Error", ["properties", "error"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _jobName = DefineProperty<string>("JobName", ["properties", "jobName"], isOutput: true);
         _lastUpdatedUtcOn = DefineProperty<DateTimeOffset>("LastUpdatedUtcOn", ["properties", "lastUpdatedUtcTime"], isOutput: true);
@@ -231,16 +229,6 @@ public partial class DataTransferJobGetResult : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2025-04-15.
-        /// </summary>
-        public static readonly string V2025_04_15 = "2025-04-15";
-
-        /// <summary>
-        /// 2024-11-15.
-        /// </summary>
-        public static readonly string V2024_11_15 = "2024-11-15";
-
         /// <summary>
         /// 2024-08-15.
         /// </summary>

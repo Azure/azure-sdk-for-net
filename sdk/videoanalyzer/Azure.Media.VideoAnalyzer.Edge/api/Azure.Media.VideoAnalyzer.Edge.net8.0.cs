@@ -1,3 +1,12 @@
+namespace Azure.Media.VideoAnalyzer.Edge
+{
+    public partial class AzureMediaVideoAnalyzerEdgeContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureMediaVideoAnalyzerEdgeContext() { }
+        public static Azure.Media.VideoAnalyzer.Edge.AzureMediaVideoAnalyzerEdgeContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
+}
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     public abstract partial class CertificateSource

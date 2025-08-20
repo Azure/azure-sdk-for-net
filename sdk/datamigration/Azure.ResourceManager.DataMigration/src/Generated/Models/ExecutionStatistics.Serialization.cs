@@ -39,15 +39,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("executionCount"u8);
                 writer.WriteNumberValue(ExecutionCount.Value);
             }
-            if (Optional.IsDefined(CpuTimeInMilliseconds))
+            if (Optional.IsDefined(CpuTimeMs))
             {
                 writer.WritePropertyName("cpuTimeMs"u8);
-                writer.WriteNumberValue(CpuTimeInMilliseconds.Value);
+                writer.WriteNumberValue(CpuTimeMs.Value);
             }
-            if (Optional.IsDefined(ElapsedTimeInMilliseconds))
+            if (Optional.IsDefined(ElapsedTimeMs))
             {
                 writer.WritePropertyName("elapsedTimeMs"u8);
-                writer.WriteNumberValue(ElapsedTimeInMilliseconds.Value);
+                writer.WriteNumberValue(ElapsedTimeMs.Value);
             }
             if (Optional.IsCollectionDefined(WaitStats))
             {
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             long? executionCount = default;
             float? cpuTimeMs = default;
             float? elapsedTimeMs = default;
-            IReadOnlyDictionary<string, MigrationValidationWaitStatistics> waitStats = default;
+            IReadOnlyDictionary<string, WaitStatistics> waitStats = default;
             bool? hasErrors = default;
             IReadOnlyList<string> sqlErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    Dictionary<string, MigrationValidationWaitStatistics> dictionary = new Dictionary<string, MigrationValidationWaitStatistics>();
+                    Dictionary<string, WaitStatistics> dictionary = new Dictionary<string, WaitStatistics>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MigrationValidationWaitStatistics.DeserializeMigrationValidationWaitStatistics(property0.Value, options));
+                        dictionary.Add(property0.Name, WaitStatistics.DeserializeWaitStatistics(property0.Value, options));
                     }
                     waitStats = dictionary;
                     continue;
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 executionCount,
                 cpuTimeMs,
                 elapsedTimeMs,
-                waitStats ?? new ChangeTrackingDictionary<string, MigrationValidationWaitStatistics>(),
+                waitStats ?? new ChangeTrackingDictionary<string, WaitStatistics>(),
                 hasErrors,
                 sqlErrors ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);

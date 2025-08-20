@@ -11,7 +11,6 @@ using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using System;
-using System.ComponentModel;
 
 namespace Azure.Provisioning.KeyVault;
 
@@ -39,17 +38,6 @@ public partial class ManagedHsm : ProvisionableResource
         set { Initialize(); _location!.Assign(value); }
     }
     private BicepValue<AzureLocation>? _location;
-
-    /// <summary>
-    /// Managed service identity (system assigned and/or user assigned
-    /// identities).
-    /// </summary>
-    public ManagedServiceIdentity Identity 
-    {
-        get { Initialize(); return _identity!; }
-        set { Initialize(); AssignOrReplace(ref _identity, value); }
-    }
-    private ManagedServiceIdentity? _identity;
 
     /// <summary>
     /// Properties of the managed HSM.
@@ -110,7 +98,7 @@ public partial class ManagedHsm : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedHsm.</param>
     public ManagedHsm(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.KeyVault/managedHSMs", resourceVersion ?? "2024-11-01")
+        : base(bicepIdentifier, "Microsoft.KeyVault/managedHSMs", resourceVersion ?? "2023-07-01")
     {
     }
 
@@ -121,7 +109,6 @@ public partial class ManagedHsm : ProvisionableResource
     {
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
-        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
         _properties = DefineModelProperty<ManagedHsmProperties>("Properties", ["properties"]);
         _sku = DefineModelProperty<ManagedHsmSku>("Sku", ["sku"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
@@ -135,9 +122,9 @@ public partial class ManagedHsm : ProvisionableResource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-11-01.
+        /// 2023-08-01-PREVIEW.
         /// </summary>
-        public static readonly string V2024_11_01 = "2024-11-01";
+        public static readonly string V2023_08_01_PREVIEW = "2023-08-01-PREVIEW";
 
         /// <summary>
         /// 2023-07-01.
@@ -163,12 +150,6 @@ public partial class ManagedHsm : ProvisionableResource
         /// 2021-10-01.
         /// </summary>
         public static readonly string V2021_10_01 = "2021-10-01";
-
-        /// <summary>
-        /// 2023-08-01-PREVIEW.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static readonly string V2023_08_01_PREVIEW = "2023-08-01-PREVIEW";
     }
 
     /// <summary>

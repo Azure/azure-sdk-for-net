@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.Grafana.Models
         private const string ApprovedValue = "Approved";
         private const string RejectedValue = "Rejected";
 
-        /// <summary> Connection waiting for approval or rejection. </summary>
+        /// <summary> Pending. </summary>
         public static GrafanaPrivateEndpointServiceConnectionStatus Pending { get; } = new GrafanaPrivateEndpointServiceConnectionStatus(PendingValue);
-        /// <summary> Connection approved. </summary>
+        /// <summary> Approved. </summary>
         public static GrafanaPrivateEndpointServiceConnectionStatus Approved { get; } = new GrafanaPrivateEndpointServiceConnectionStatus(ApprovedValue);
-        /// <summary> Connection Rejected. </summary>
+        /// <summary> Rejected. </summary>
         public static GrafanaPrivateEndpointServiceConnectionStatus Rejected { get; } = new GrafanaPrivateEndpointServiceConnectionStatus(RejectedValue);
         /// <summary> Determines if two <see cref="GrafanaPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(GrafanaPrivateEndpointServiceConnectionStatus left, GrafanaPrivateEndpointServiceConnectionStatus right) => left.Equals(right);

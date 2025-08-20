@@ -19,7 +19,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Microsoft Azure LambdaTest HyperExecute management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.LambdaTestHyperExecute
+dotnet add package Azure.ResourceManager.LambdaTestHyperExecute --prerelease
 ```
 
 ### Prerequisites

@@ -14,11 +14,11 @@ namespace Azure.Compute.Batch
     /// </summary>
     public class CreateTaskResult
     {
-        private readonly BatchTaskCreateOptions task;
+        private readonly BatchTaskCreateContent task;
         private readonly int retryCount;
-        private readonly BatchTaskCreateResult batchTaskResult;
+        private readonly BatchTaskAddResult batchTaskResult;
 
-        internal CreateTaskResult(BatchTaskCreateOptions task, int retryCount, BatchTaskCreateResult addTaskResult)
+        internal CreateTaskResult(BatchTaskCreateContent task, int retryCount, BatchTaskAddResult addTaskResult)
         {
             this.task = task;
             this.retryCount = retryCount;
@@ -28,7 +28,7 @@ namespace Azure.Compute.Batch
         /// <summary>
         /// Gets details of the task.
         /// </summary>
-        public BatchTaskCreateOptions Task
+        public BatchTaskCreateContent Task
         {
             get { return this.task; }
         }
@@ -44,7 +44,7 @@ namespace Azure.Compute.Batch
         /// <summary>
         /// Gets the result of the Add Task operation.
         /// </summary>
-        public BatchTaskCreateResult BatchTaskResult
+        public BatchTaskAddResult BatchTaskResult
         {
             get { return this.batchTaskResult; }
         }

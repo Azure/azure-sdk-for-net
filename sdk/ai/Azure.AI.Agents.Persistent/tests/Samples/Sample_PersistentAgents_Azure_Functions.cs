@@ -70,7 +70,6 @@ public partial class Sample_PersistentAgents_Azure_Functions : SamplesBase<AIAge
         #endregion
 
         #region Snippet:AgentsAzureFunctionsCreateAgentWithFunctionTools
-        // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
         PersistentAgent agent = await client.Administration.CreateAgentAsync(
             model: modelDeploymentName,
             name: "azure-function-agent-foo",
@@ -130,7 +129,6 @@ public partial class Sample_PersistentAgents_Azure_Functions : SamplesBase<AIAge
         }
         #endregion
         #region Snippet:AgentsAzureFunctionsCleanup
-        // NOTE: Comment out these two lines if you plan to reuse the agent later.
         await client.Threads.DeleteThreadAsync(thread.Id);
         await client.Administration.DeleteAgentAsync(agent.Id);
         #endregion
@@ -190,7 +188,6 @@ public partial class Sample_PersistentAgents_Azure_Functions : SamplesBase<AIAge
         );
 
         #region Snippet:AgentsAzureFunctionsCreateAgentWithFunctionToolsSync
-        // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
         PersistentAgent agent = client.Administration.CreateAgent(
             model: modelDeploymentName,
             name: "azure-function-agent-foo",
@@ -250,7 +247,6 @@ public partial class Sample_PersistentAgents_Azure_Functions : SamplesBase<AIAge
         }
         #endregion
         #region Snippet:AgentsAzureFunctionsCleanupSync
-        // NOTE: Comment out these two lines if you plan to reuse the agent later.
         client.Threads.DeleteThread(thread.Id);
         client.Administration.DeleteAgent(agent.Id);
         #endregion

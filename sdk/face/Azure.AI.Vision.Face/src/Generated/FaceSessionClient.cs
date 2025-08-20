@@ -1583,6 +1583,7 @@ namespace Azure.AI.Vision.Face
             uri.AppendPath("/detectLiveness/singleModal/sessions/", false);
             uri.AppendPath(sessionId, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1696,6 +1697,7 @@ namespace Azure.AI.Vision.Face
             uri.AppendPath("/detectLivenessWithVerify/singleModal/sessions/", false);
             uri.AppendPath(sessionId, true);
             request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

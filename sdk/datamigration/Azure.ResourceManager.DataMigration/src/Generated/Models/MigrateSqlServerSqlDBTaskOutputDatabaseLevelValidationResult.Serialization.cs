@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             DataIntegrityValidationResult dataIntegrityValidationResult = default;
             SchemaComparisonValidationResult schemaValidationResult = default;
             QueryAnalysisValidationResult queryAnalysisValidationResult = default;
-            MigrationValidationStatus? status = default;
+            ValidationStatus? status = default;
             string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    status = new MigrationValidationStatus(property.Value.GetString());
+                    status = new ValidationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))

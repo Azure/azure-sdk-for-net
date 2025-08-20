@@ -429,14 +429,6 @@
       ]
     },
     {
-      "filename": "**/sdk/connectedcache/**/*",
-      "words": [
-        "Gbps",
-        "Mbps",
-        "Eflow"
-      ]
-    },
-    {
       "filename": "**/sdk/connectedvmwarevsphere/**/*",
       "words": [
         "Cpus",
@@ -1133,7 +1125,6 @@
         "dnsprivateviewocid",
         "Ords",
         "Ocid",
-        "Ocids",
         "ncharacter",
         "ocpu",
         "Iorm",
@@ -1144,11 +1135,7 @@
         "Tcps",
         "Ezconnect",
         "Ezconnectplus",
-        "Oltp",
-        "exadb",
-        "Exadb",
-        "Exascale",
-        "exascale"
+        "Oltp"
       ]
     },
     {
@@ -1228,14 +1215,6 @@
       ]
     },
     {
-      "filename": "**/sdk/provisioning/**/*.cs",
-      "words": [
-        "Awsec",
-        "Freemium",
-        "Mibps"
-      ]
-    },
-    {
       "filename": "**/sdk/qumulo/**/*",
       "words": [
         "qumulo"
@@ -1247,12 +1226,6 @@
         "hana",
         "msrp",
         "unprovisioning"
-      ]
-    },
-    {
-      "filename": "**/sdk/recoveryservices/**/*.cs",
-      "words": [
-        "bcdr",
       ]
     },
     {
@@ -1629,9 +1602,8 @@
     {
       "filename": "**/sdk/containerinstance/**/*.cs",
       "words": [
-        "noreuse",
-        "ngroups",
-        "unsecure"
+        "Noreuse",
+        "Unsecure"
       ]
     },
     {
@@ -1741,8 +1713,7 @@
       "filename": "**/sdk/openai/**/*.cs",
       "words": [
         "AOAI",
-        "Rerank",
-        "Evals"
+        "Rerank"
       ]
     },
     {
@@ -1755,23 +1726,6 @@
       "filename": "**/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/api/*.cs",
       "words": [
         "prebuilts"
-      ]
-    },
-    {
-      "filename": "**/sdk/healthinsights/Azure.Health.Insights.RadiologyInsights/**",
-      "words": [
-        "Ceus",
-        "Tonnis",
-        "Hnpcc",
-        "Ascvd",
-        "Mednax",
-        "Cusick",
-        "Acrad",
-        "Kellgren",
-        "Frax",
-        "Birads",
-        "Agatston",
-        "Tyrer"
       ]
     },
     {

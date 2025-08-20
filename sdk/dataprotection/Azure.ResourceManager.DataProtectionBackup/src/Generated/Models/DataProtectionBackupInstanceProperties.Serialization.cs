@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (options.Format != "W" && Optional.IsDefined(ProtectionErrorDetails))
             {
                 writer.WritePropertyName("protectionErrorDetails"u8);
-                ((IJsonModel<ResponseError>)ProtectionErrorDetails).Write(writer, options);
+                JsonSerializer.Serialize(writer, ProtectionErrorDetails);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -212,7 +211,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    protectionErrorDetails = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerDataProtectionBackupContext.Default);
+                    protectionErrorDetails = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -36,7 +35,7 @@ namespace Azure.Compute.Batch
             }
 
             writer.WritePropertyName("remoteLoginIPAddress"u8);
-            writer.WriteStringValue(RemoteLoginIpAddress.ToString());
+            writer.WriteStringValue(RemoteLoginIpAddress);
             writer.WritePropertyName("remoteLoginPort"u8);
             writer.WriteNumberValue(RemoteLoginPort);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -76,7 +75,7 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
-            IPAddress remoteLoginIPAddress = default;
+            string remoteLoginIPAddress = default;
             int remoteLoginPort = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -84,7 +83,7 @@ namespace Azure.Compute.Batch
             {
                 if (property.NameEquals("remoteLoginIPAddress"u8))
                 {
-                    remoteLoginIPAddress = IPAddress.Parse(property.Value.GetString());
+                    remoteLoginIPAddress = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("remoteLoginPort"u8))

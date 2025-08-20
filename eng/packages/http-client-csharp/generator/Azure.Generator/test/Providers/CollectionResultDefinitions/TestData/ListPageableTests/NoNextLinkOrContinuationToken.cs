@@ -25,10 +25,9 @@ namespace Samples
         /// <param name="animalKind"> animalKind description. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="global::System.ArgumentNullException"> <paramref name="animalKind"/> is null. </exception>
-        /// <exception cref="global::System.ArgumentException"> <paramref name="animalKind"/> is an empty string, and was expected to be non-empty. </exception>
         public CatClientGetCatsCollectionResult(global::Samples.CatClient client, string animalKind, global::Azure.RequestContext context) : base((context?.CancellationToken ?? default))
         {
-            global::Samples.Argument.AssertNotNullOrEmpty(animalKind, nameof(animalKind));
+            global::Samples.Argument.AssertNotNull(animalKind, nameof(animalKind));
 
             _client = client;
             _animalKind = animalKind;
@@ -42,9 +41,9 @@ namespace Samples
         public override global::System.Collections.Generic.IEnumerable<global::Azure.Page<global::System.BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             global::Azure.Response response = this.GetNextResponse(pageSizeHint, null);
-            global::Samples.Models.Page result = ((global::Samples.Models.Page)response);
+            global::Samples.Models.Page responseWithType = ((global::Samples.Models.Page)response);
             global::System.Collections.Generic.List<global::System.BinaryData> items = new global::System.Collections.Generic.List<global::System.BinaryData>();
-            foreach (var item in result.Cats)
+            foreach (var item in responseWithType.Cats)
             {
                 items.Add(global::System.BinaryData.FromObjectAsJson(item));
             }
@@ -61,7 +60,12 @@ namespace Samples
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                _client.Pipeline.Send(message, this.CancellationToken);
+                if ((message.Response.IsError && (_context.ErrorOptions != global::Azure.ErrorOptions.NoThrow)))
+                {
+                    throw new global::Azure.RequestFailedException(message.Response);
+                }
+                return message.Response;
             }
             catch (global::System.Exception e)
             {
