@@ -31,7 +31,7 @@ namespace Azure.Communication.PhoneNumbers
             /// <summary> Service version "2025-04-01". </summary>
             V2025_04_01 = 5,
             /// <summary> Service version "2025-06-01". </summary>
-            V2025_06_01= 6
+            V2025_06_01 = 6
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
