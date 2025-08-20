@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    - Q:\src\azure-rest-api-specs\specification\storage\data-plane\Microsoft.BlobStorage\stable\2026-02-06\blob.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/e411a14d34d5ef8b236f073babbeb588a3c5b87a/specification/storage/data-plane/Microsoft.BlobStorage/stable/2026-02-06/blob.json
 generation1-convenience-client: true
 # https://github.com/Azure/autorest/issues/4075
 skip-semantics-validation: true
@@ -93,6 +93,10 @@ directive:
     delete $.IfSequenceNumberLessThanOrEqualTo["x-ms-parameter-grouping"];
     delete $.IfSequenceNumberLessThan["x-ms-parameter-grouping"];
     delete $.IfSequenceNumberEqualTo["x-ms-parameter-grouping"];
+    delete $.IfBlobMatch["x-ms-parameter-grouping"];
+    delete $.IfBlobModifiedSince["x-ms-parameter-grouping"];
+    delete $.IfBlobNoneMatch["x-ms-parameter-grouping"];
+    delete $.IfBlobUnmodifiedSince["x-ms-parameter-grouping"];
 ```
 
 ### Remove blob-Http-Headers parameter grouping
