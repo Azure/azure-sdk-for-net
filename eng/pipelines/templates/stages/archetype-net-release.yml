@@ -194,15 +194,10 @@ stages:
                         ArtifactName: ${{parameters.ArtifactName}}
                         PackageName: ${{artifact.name}}
                         SourceRootPath: $(sdk-repo-path)
-                    - task: Powershell@2
-                      inputs:
-                        filePath: eng/common/scripts/Mark-ReleasePlanCompletion.ps1
-                        arguments: >
-                          -PackageInfoFilePath '$(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo/${{artifact.name}}.json'
-                        pwsh: true
-                      displayName: Mark package as released
-                      continueOnError: true
-                      condition: and(succeeded(), ne(variables['Skip.MarkReleaseCompletion'], 'true'))
+                    - template: /eng/common/pipelines/templates/steps/mark-release-completion.yml
+                      parameters:
+                        ConfigFileDir: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo'
+                        PackageArtifactName: ${{artifact.name}}
 
               - ${{if ne(artifact.skipPublishDocMs, 'true')}}:
                 - job: PublicDocsMS
