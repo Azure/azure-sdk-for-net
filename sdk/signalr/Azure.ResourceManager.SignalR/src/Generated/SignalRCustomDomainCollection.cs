@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.SignalR
     /// </summary>
     public partial class SignalRCustomDomainCollection : ArmCollection, IEnumerable<SignalRCustomDomainResource>, IAsyncEnumerable<SignalRCustomDomainResource>
     {
-        private readonly ClientDiagnostics _signalRCustomDomainClientDiagnostics;
-        private readonly SignalRCustomDomainsRestOperations _signalRCustomDomainRestClient;
+        private readonly ClientDiagnostics _signalRCustomDomainCustomDomainsClientDiagnostics;
+        private readonly CustomDomainsRestOperations _signalRCustomDomainCustomDomainsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SignalRCustomDomainCollection"/> class for mocking. </summary>
         protected SignalRCustomDomainCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SignalRCustomDomainCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _signalRCustomDomainClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SignalR", SignalRCustomDomainResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SignalRCustomDomainResource.ResourceType, out string signalRCustomDomainApiVersion);
-            _signalRCustomDomainRestClient = new SignalRCustomDomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, signalRCustomDomainApiVersion);
+            _signalRCustomDomainCustomDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SignalR", SignalRCustomDomainResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SignalRCustomDomainResource.ResourceType, out string signalRCustomDomainCustomDomainsApiVersion);
+            _signalRCustomDomainCustomDomainsRestClient = new CustomDomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, signalRCustomDomainCustomDomainsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRCustomDomains_CreateOrUpdate</description>
+        /// <description>CustomDomain_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.SignalR
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _signalRCustomDomainClientDiagnostics.CreateScope("SignalRCustomDomainCollection.CreateOrUpdate");
+            using var scope = _signalRCustomDomainCustomDomainsClientDiagnostics.CreateScope("SignalRCustomDomainCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _signalRCustomDomainRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SignalRArmOperation<SignalRCustomDomainResource>(new SignalRCustomDomainOperationSource(Client), _signalRCustomDomainClientDiagnostics, Pipeline, _signalRCustomDomainRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _signalRCustomDomainCustomDomainsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SignalRArmOperation<SignalRCustomDomainResource>(new SignalRCustomDomainOperationSource(Client), _signalRCustomDomainCustomDomainsClientDiagnostics, Pipeline, _signalRCustomDomainCustomDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRCustomDomains_CreateOrUpdate</description>
+        /// <description>CustomDomain_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -132,12 +132,12 @@ namespace Azure.ResourceManager.SignalR
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _signalRCustomDomainClientDiagnostics.CreateScope("SignalRCustomDomainCollection.CreateOrUpdate");
+            using var scope = _signalRCustomDomainCustomDomainsClientDiagnostics.CreateScope("SignalRCustomDomainCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _signalRCustomDomainRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
-                var operation = new SignalRArmOperation<SignalRCustomDomainResource>(new SignalRCustomDomainOperationSource(Client), _signalRCustomDomainClientDiagnostics, Pipeline, _signalRCustomDomainRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.Location);
+                var response = _signalRCustomDomainCustomDomainsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
+                var operation = new SignalRArmOperation<SignalRCustomDomainResource>(new SignalRCustomDomainOperationSource(Client), _signalRCustomDomainCustomDomainsClientDiagnostics, Pipeline, _signalRCustomDomainCustomDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -158,11 +158,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRCustomDomains_Get</description>
+        /// <description>CustomDomain_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.SignalR
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _signalRCustomDomainClientDiagnostics.CreateScope("SignalRCustomDomainCollection.Get");
+            using var scope = _signalRCustomDomainCustomDomainsClientDiagnostics.CreateScope("SignalRCustomDomainCollection.Get");
             scope.Start();
             try
             {
-                var response = await _signalRCustomDomainRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
+                var response = await _signalRCustomDomainCustomDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SignalRCustomDomainResource(Client, response.Value), response.GetRawResponse());
@@ -203,11 +203,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRCustomDomains_Get</description>
+        /// <description>CustomDomain_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -223,11 +223,11 @@ namespace Azure.ResourceManager.SignalR
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _signalRCustomDomainClientDiagnostics.CreateScope("SignalRCustomDomainCollection.Get");
+            using var scope = _signalRCustomDomainCustomDomainsClientDiagnostics.CreateScope("SignalRCustomDomainCollection.Get");
             scope.Start();
             try
             {
-                var response = _signalRCustomDomainRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
+                var response = _signalRCustomDomainCustomDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SignalRCustomDomainResource(Client, response.Value), response.GetRawResponse());
@@ -248,11 +248,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRCustomDomains_List</description>
+        /// <description>CustomDomain_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -264,9 +264,9 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> An async collection of <see cref="SignalRCustomDomainResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SignalRCustomDomainResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRCustomDomainRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _signalRCustomDomainRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SignalRCustomDomainResource(Client, SignalRCustomDomainData.DeserializeSignalRCustomDomainData(e)), _signalRCustomDomainClientDiagnostics, Pipeline, "SignalRCustomDomainCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRCustomDomainCustomDomainsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _signalRCustomDomainCustomDomainsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SignalRCustomDomainResource(Client, SignalRCustomDomainData.DeserializeSignalRCustomDomainData(e)), _signalRCustomDomainCustomDomainsClientDiagnostics, Pipeline, "SignalRCustomDomainCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -278,11 +278,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRCustomDomains_List</description>
+        /// <description>CustomDomain_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -294,9 +294,9 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> A collection of <see cref="SignalRCustomDomainResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SignalRCustomDomainResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRCustomDomainRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _signalRCustomDomainRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SignalRCustomDomainResource(Client, SignalRCustomDomainData.DeserializeSignalRCustomDomainData(e)), _signalRCustomDomainClientDiagnostics, Pipeline, "SignalRCustomDomainCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRCustomDomainCustomDomainsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _signalRCustomDomainCustomDomainsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SignalRCustomDomainResource(Client, SignalRCustomDomainData.DeserializeSignalRCustomDomainData(e)), _signalRCustomDomainCustomDomainsClientDiagnostics, Pipeline, "SignalRCustomDomainCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -308,11 +308,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRCustomDomains_Get</description>
+        /// <description>CustomDomain_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -328,11 +328,11 @@ namespace Azure.ResourceManager.SignalR
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _signalRCustomDomainClientDiagnostics.CreateScope("SignalRCustomDomainCollection.Exists");
+            using var scope = _signalRCustomDomainCustomDomainsClientDiagnostics.CreateScope("SignalRCustomDomainCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _signalRCustomDomainRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _signalRCustomDomainCustomDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -351,11 +351,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRCustomDomains_Get</description>
+        /// <description>CustomDomain_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -371,11 +371,11 @@ namespace Azure.ResourceManager.SignalR
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _signalRCustomDomainClientDiagnostics.CreateScope("SignalRCustomDomainCollection.Exists");
+            using var scope = _signalRCustomDomainCustomDomainsClientDiagnostics.CreateScope("SignalRCustomDomainCollection.Exists");
             scope.Start();
             try
             {
-                var response = _signalRCustomDomainRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                var response = _signalRCustomDomainCustomDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -394,11 +394,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRCustomDomains_Get</description>
+        /// <description>CustomDomain_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -414,11 +414,11 @@ namespace Azure.ResourceManager.SignalR
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _signalRCustomDomainClientDiagnostics.CreateScope("SignalRCustomDomainCollection.GetIfExists");
+            using var scope = _signalRCustomDomainCustomDomainsClientDiagnostics.CreateScope("SignalRCustomDomainCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _signalRCustomDomainRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _signalRCustomDomainCustomDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<SignalRCustomDomainResource>(response.GetRawResponse());
                 return Response.FromValue(new SignalRCustomDomainResource(Client, response.Value), response.GetRawResponse());
@@ -439,11 +439,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRCustomDomains_Get</description>
+        /// <description>CustomDomain_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -459,11 +459,11 @@ namespace Azure.ResourceManager.SignalR
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _signalRCustomDomainClientDiagnostics.CreateScope("SignalRCustomDomainCollection.GetIfExists");
+            using var scope = _signalRCustomDomainCustomDomainsClientDiagnostics.CreateScope("SignalRCustomDomainCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _signalRCustomDomainRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                var response = _signalRCustomDomainCustomDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<SignalRCustomDomainResource>(response.GetRawResponse());
                 return Response.FromValue(new SignalRCustomDomainResource(Client, response.Value), response.GetRawResponse());

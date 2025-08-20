@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SignalR
 {
     /// <summary>
     /// A class representing the SignalR data model.
-    /// A class represent a resource.
+    /// A class representing a resource.
     /// </summary>
     public partial class SignalRData : TrackedResourceData
     {
@@ -67,9 +67,6 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="sku"> The billing information of the resource. </param>
-        /// <param name="kind"> The kind of the service, it can be SignalR or RawWebSockets. </param>
-        /// <param name="identity"> A class represent managed identities used for request and response. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="externalIP"> The publicly accessible IP of the resource. </param>
         /// <param name="hostName"> FQDN of the service instance. </param>
@@ -91,8 +88,10 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="liveTraceConfiguration"> Live trace configuration of a Microsoft.SignalRService resource. </param>
         /// <param name="resourceLogConfiguration"> Resource log configuration of a Microsoft.SignalRService resource. </param>
         /// <param name="cors"> Cross-Origin Resource Sharing (CORS) settings. </param>
+        /// <param name="serverless"> Serverless settings. </param>
         /// <param name="upstream"> The settings for the Upstream when the service is in server-less mode. </param>
         /// <param name="networkACLs"> Network ACLs for the resource. </param>
+        /// <param name="applicationFirewall"> Application firewall settings for the resource. </param>
         /// <param name="publicNetworkAccess">
         /// Enable or disable public network access. Default to "Enabled".
         /// When it's Enabled, network ACLs still apply.
@@ -108,12 +107,23 @@ namespace Azure.ResourceManager.SignalR
         /// Enable or disable aad auth
         /// When set as true, connection with AuthType=aad won't work.
         /// </param>
+        /// <param name="regionEndpointEnabled">
+        /// Enable or disable the regional endpoint. Default to "Enabled".
+        /// When it's Disabled, new connections will not be routed to this endpoint, however existing connections will not be affected.
+        /// This property is replica specific. Disable the regional endpoint without replica is not allowed.
+        /// </param>
+        /// <param name="resourceStopped">
+        /// Stop or start the resource.  Default to "False".
+        /// When it's true, the data plane of the resource is shutdown.
+        /// When it's false, the data plane of the resource is started.
+        /// </param>
+        /// <param name="routeSettings"> Route settings for the resource. </param>
+        /// <param name="sku"> The billing information of the resource. </param>
+        /// <param name="kind"> The kind of the service. </param>
+        /// <param name="identity"> A class represent managed identities used for request and response. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SignalRData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SignalRResourceSku sku, SignalRServiceKind? kind, ManagedServiceIdentity identity, SignalRProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<SignalRPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SignalRSharedPrivateLinkResourceData> sharedPrivateLinkResources, SignalRTlsSettings tls, string hostNamePrefix, IList<SignalRFeature> features, SignalRLiveTraceConfiguration liveTraceConfiguration, SignalRResourceLogCategoryListResult resourceLogConfiguration, SignalRCorsSettings cors, ServerlessUpstreamSettings upstream, SignalRNetworkAcls networkACLs, string publicNetworkAccess, bool? disableLocalAuth, bool? disableAadAuth, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal SignalRData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SignalRProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<SignalRPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SignalRSharedPrivateLinkResourceData> sharedPrivateLinkResources, SignalRTlsSettings tls, string hostNamePrefix, IList<SignalRFeature> features, SignalRLiveTraceConfiguration liveTraceConfiguration, SignalRResourceLogConfiguration resourceLogConfiguration, SignalRCorsSettings cors, ServerlessSettings serverless, ServerlessUpstreamSettings upstream, SignalRNetworkAcls networkACLs, ApplicationFirewallSettings applicationFirewall, string publicNetworkAccess, bool? disableLocalAuth, bool? disableAadAuth, string regionEndpointEnabled, string resourceStopped, RouteSettings routeSettings, SignalRResourceSku sku, SignalRServiceKind? kind, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Sku = sku;
-            Kind = kind;
-            Identity = identity;
             ProvisioningState = provisioningState;
             ExternalIP = externalIP;
             HostName = hostName;
@@ -128,11 +138,19 @@ namespace Azure.ResourceManager.SignalR
             LiveTraceConfiguration = liveTraceConfiguration;
             ResourceLogConfiguration = resourceLogConfiguration;
             Cors = cors;
+            Serverless = serverless;
             Upstream = upstream;
             NetworkACLs = networkACLs;
+            ApplicationFirewall = applicationFirewall;
             PublicNetworkAccess = publicNetworkAccess;
             DisableLocalAuth = disableLocalAuth;
             DisableAadAuth = disableAadAuth;
+            RegionEndpointEnabled = regionEndpointEnabled;
+            ResourceStopped = resourceStopped;
+            RouteSettings = routeSettings;
+            Sku = sku;
+            Kind = kind;
+            Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -141,15 +159,6 @@ namespace Azure.ResourceManager.SignalR
         {
         }
 
-        /// <summary> The billing information of the resource. </summary>
-        [WirePath("sku")]
-        public SignalRResourceSku Sku { get; set; }
-        /// <summary> The kind of the service, it can be SignalR or RawWebSockets. </summary>
-        [WirePath("kind")]
-        public SignalRServiceKind? Kind { get; set; }
-        /// <summary> A class represent managed identities used for request and response. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
-        [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Provisioning state of the resource. </summary>
         [WirePath("properties.provisioningState")]
         public SignalRProvisioningState? ProvisioningState { get; }
@@ -176,7 +185,7 @@ namespace Azure.ResourceManager.SignalR
         public IReadOnlyList<SignalRSharedPrivateLinkResourceData> SharedPrivateLinkResources { get; }
         /// <summary> TLS settings for the resource. </summary>
         internal SignalRTlsSettings Tls { get; set; }
-        /// <summary> Request client certificate during TLS handshake if enabled. </summary>
+        /// <summary> Request client certificate during TLS handshake if enabled. Not supported for free tier. Any input will be ignored for free tier. </summary>
         [WirePath("properties.tls.clientCertEnabled")]
         public bool? IsClientCertEnabled
         {
@@ -206,7 +215,7 @@ namespace Azure.ResourceManager.SignalR
         [WirePath("properties.liveTraceConfiguration")]
         public SignalRLiveTraceConfiguration LiveTraceConfiguration { get; set; }
         /// <summary> Resource log configuration of a Microsoft.SignalRService resource. </summary>
-        internal SignalRResourceLogCategoryListResult ResourceLogConfiguration { get; set; }
+        internal SignalRResourceLogConfiguration ResourceLogConfiguration { get; set; }
         /// <summary> Gets or sets the list of category configurations. </summary>
         [WirePath("properties.resourceLogConfiguration.categories")]
         public IList<SignalRResourceLogCategory> ResourceLogCategories
@@ -214,7 +223,7 @@ namespace Azure.ResourceManager.SignalR
             get
             {
                 if (ResourceLogConfiguration is null)
-                    ResourceLogConfiguration = new SignalRResourceLogCategoryListResult();
+                    ResourceLogConfiguration = new SignalRResourceLogConfiguration();
                 return ResourceLogConfiguration.Categories;
             }
         }
@@ -233,6 +242,9 @@ namespace Azure.ResourceManager.SignalR
             }
         }
 
+        /// <summary> Serverless settings. </summary>
+        [WirePath("properties.serverless")]
+        public ServerlessSettings Serverless { get; set; }
         /// <summary> The settings for the Upstream when the service is in server-less mode. </summary>
         internal ServerlessUpstreamSettings Upstream { get; set; }
         /// <summary> Gets or sets the list of Upstream URL templates. Order matters, and the first matching template takes effects. </summary>
@@ -250,6 +262,9 @@ namespace Azure.ResourceManager.SignalR
         /// <summary> Network ACLs for the resource. </summary>
         [WirePath("properties.networkACLs")]
         public SignalRNetworkAcls NetworkACLs { get; set; }
+        /// <summary> Application firewall settings for the resource. </summary>
+        [WirePath("properties.applicationFirewall")]
+        public ApplicationFirewallSettings ApplicationFirewall { get; set; }
         /// <summary>
         /// Enable or disable public network access. Default to "Enabled".
         /// When it's Enabled, network ACLs still apply.
@@ -271,5 +286,31 @@ namespace Azure.ResourceManager.SignalR
         /// </summary>
         [WirePath("properties.disableAadAuth")]
         public bool? DisableAadAuth { get; set; }
+        /// <summary>
+        /// Enable or disable the regional endpoint. Default to "Enabled".
+        /// When it's Disabled, new connections will not be routed to this endpoint, however existing connections will not be affected.
+        /// This property is replica specific. Disable the regional endpoint without replica is not allowed.
+        /// </summary>
+        [WirePath("properties.regionEndpointEnabled")]
+        public string RegionEndpointEnabled { get; set; }
+        /// <summary>
+        /// Stop or start the resource.  Default to "False".
+        /// When it's true, the data plane of the resource is shutdown.
+        /// When it's false, the data plane of the resource is started.
+        /// </summary>
+        [WirePath("properties.resourceStopped")]
+        public string ResourceStopped { get; set; }
+        /// <summary> Route settings for the resource. </summary>
+        [WirePath("properties.routeSettings")]
+        public RouteSettings RouteSettings { get; set; }
+        /// <summary> The billing information of the resource. </summary>
+        [WirePath("sku")]
+        public SignalRResourceSku Sku { get; set; }
+        /// <summary> The kind of the service. </summary>
+        [WirePath("kind")]
+        public SignalRServiceKind? Kind { get; set; }
+        /// <summary> A class represent managed identities used for request and response. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        [WirePath("identity")]
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

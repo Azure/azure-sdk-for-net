@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.SignalR
     /// </summary>
     public partial class SignalRCustomCertificateCollection : ArmCollection, IEnumerable<SignalRCustomCertificateResource>, IAsyncEnumerable<SignalRCustomCertificateResource>
     {
-        private readonly ClientDiagnostics _signalRCustomCertificateClientDiagnostics;
-        private readonly SignalRCustomCertificatesRestOperations _signalRCustomCertificateRestClient;
+        private readonly ClientDiagnostics _signalRCustomCertificateCustomCertificatesClientDiagnostics;
+        private readonly CustomCertificatesRestOperations _signalRCustomCertificateCustomCertificatesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SignalRCustomCertificateCollection"/> class for mocking. </summary>
         protected SignalRCustomCertificateCollection()
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SignalRCustomCertificateCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _signalRCustomCertificateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SignalR", SignalRCustomCertificateResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SignalRCustomCertificateResource.ResourceType, out string signalRCustomCertificateApiVersion);
-            _signalRCustomCertificateRestClient = new SignalRCustomCertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, signalRCustomCertificateApiVersion);
+            _signalRCustomCertificateCustomCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SignalR", SignalRCustomCertificateResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SignalRCustomCertificateResource.ResourceType, out string signalRCustomCertificateCustomCertificatesApiVersion);
+            _signalRCustomCertificateCustomCertificatesRestClient = new CustomCertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, signalRCustomCertificateCustomCertificatesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRCustomCertificates_CreateOrUpdate</description>
+        /// <description>CustomCertificate_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.SignalR
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _signalRCustomCertificateClientDiagnostics.CreateScope("SignalRCustomCertificateCollection.CreateOrUpdate");
+            using var scope = _signalRCustomCertificateCustomCertificatesClientDiagnostics.CreateScope("SignalRCustomCertificateCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _signalRCustomCertificateRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SignalRArmOperation<SignalRCustomCertificateResource>(new SignalRCustomCertificateOperationSource(Client), _signalRCustomCertificateClientDiagnostics, Pipeline, _signalRCustomCertificateRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _signalRCustomCertificateCustomCertificatesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SignalRArmOperation<SignalRCustomCertificateResource>(new SignalRCustomCertificateOperationSource(Client), _signalRCustomCertificateCustomCertificatesClientDiagnostics, Pipeline, _signalRCustomCertificateCustomCertificatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRCustomCertificates_CreateOrUpdate</description>
+        /// <description>CustomCertificate_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -132,12 +132,12 @@ namespace Azure.ResourceManager.SignalR
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _signalRCustomCertificateClientDiagnostics.CreateScope("SignalRCustomCertificateCollection.CreateOrUpdate");
+            using var scope = _signalRCustomCertificateCustomCertificatesClientDiagnostics.CreateScope("SignalRCustomCertificateCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _signalRCustomCertificateRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, cancellationToken);
-                var operation = new SignalRArmOperation<SignalRCustomCertificateResource>(new SignalRCustomCertificateOperationSource(Client), _signalRCustomCertificateClientDiagnostics, Pipeline, _signalRCustomCertificateRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data).Request, response, OperationFinalStateVia.Location);
+                var response = _signalRCustomCertificateCustomCertificatesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, cancellationToken);
+                var operation = new SignalRArmOperation<SignalRCustomCertificateResource>(new SignalRCustomCertificateOperationSource(Client), _signalRCustomCertificateCustomCertificatesClientDiagnostics, Pipeline, _signalRCustomCertificateCustomCertificatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -158,11 +158,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRCustomCertificates_Get</description>
+        /// <description>CustomCertificate_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.SignalR
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using var scope = _signalRCustomCertificateClientDiagnostics.CreateScope("SignalRCustomCertificateCollection.Get");
+            using var scope = _signalRCustomCertificateCustomCertificatesClientDiagnostics.CreateScope("SignalRCustomCertificateCollection.Get");
             scope.Start();
             try
             {
-                var response = await _signalRCustomCertificateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken).ConfigureAwait(false);
+                var response = await _signalRCustomCertificateCustomCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SignalRCustomCertificateResource(Client, response.Value), response.GetRawResponse());
@@ -203,11 +203,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRCustomCertificates_Get</description>
+        /// <description>CustomCertificate_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -223,11 +223,11 @@ namespace Azure.ResourceManager.SignalR
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using var scope = _signalRCustomCertificateClientDiagnostics.CreateScope("SignalRCustomCertificateCollection.Get");
+            using var scope = _signalRCustomCertificateCustomCertificatesClientDiagnostics.CreateScope("SignalRCustomCertificateCollection.Get");
             scope.Start();
             try
             {
-                var response = _signalRCustomCertificateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken);
+                var response = _signalRCustomCertificateCustomCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SignalRCustomCertificateResource(Client, response.Value), response.GetRawResponse());
@@ -248,11 +248,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRCustomCertificates_List</description>
+        /// <description>CustomCertificate_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -264,9 +264,9 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> An async collection of <see cref="SignalRCustomCertificateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SignalRCustomCertificateResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRCustomCertificateRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _signalRCustomCertificateRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SignalRCustomCertificateResource(Client, SignalRCustomCertificateData.DeserializeSignalRCustomCertificateData(e)), _signalRCustomCertificateClientDiagnostics, Pipeline, "SignalRCustomCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRCustomCertificateCustomCertificatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _signalRCustomCertificateCustomCertificatesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SignalRCustomCertificateResource(Client, SignalRCustomCertificateData.DeserializeSignalRCustomCertificateData(e)), _signalRCustomCertificateCustomCertificatesClientDiagnostics, Pipeline, "SignalRCustomCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -278,11 +278,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRCustomCertificates_List</description>
+        /// <description>CustomCertificate_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -294,9 +294,9 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> A collection of <see cref="SignalRCustomCertificateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SignalRCustomCertificateResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRCustomCertificateRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _signalRCustomCertificateRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SignalRCustomCertificateResource(Client, SignalRCustomCertificateData.DeserializeSignalRCustomCertificateData(e)), _signalRCustomCertificateClientDiagnostics, Pipeline, "SignalRCustomCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _signalRCustomCertificateCustomCertificatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _signalRCustomCertificateCustomCertificatesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SignalRCustomCertificateResource(Client, SignalRCustomCertificateData.DeserializeSignalRCustomCertificateData(e)), _signalRCustomCertificateCustomCertificatesClientDiagnostics, Pipeline, "SignalRCustomCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -308,11 +308,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRCustomCertificates_Get</description>
+        /// <description>CustomCertificate_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -328,11 +328,11 @@ namespace Azure.ResourceManager.SignalR
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using var scope = _signalRCustomCertificateClientDiagnostics.CreateScope("SignalRCustomCertificateCollection.Exists");
+            using var scope = _signalRCustomCertificateCustomCertificatesClientDiagnostics.CreateScope("SignalRCustomCertificateCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _signalRCustomCertificateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _signalRCustomCertificateCustomCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -351,11 +351,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRCustomCertificates_Get</description>
+        /// <description>CustomCertificate_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -371,11 +371,11 @@ namespace Azure.ResourceManager.SignalR
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using var scope = _signalRCustomCertificateClientDiagnostics.CreateScope("SignalRCustomCertificateCollection.Exists");
+            using var scope = _signalRCustomCertificateCustomCertificatesClientDiagnostics.CreateScope("SignalRCustomCertificateCollection.Exists");
             scope.Start();
             try
             {
-                var response = _signalRCustomCertificateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken: cancellationToken);
+                var response = _signalRCustomCertificateCustomCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -394,11 +394,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRCustomCertificates_Get</description>
+        /// <description>CustomCertificate_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -414,11 +414,11 @@ namespace Azure.ResourceManager.SignalR
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using var scope = _signalRCustomCertificateClientDiagnostics.CreateScope("SignalRCustomCertificateCollection.GetIfExists");
+            using var scope = _signalRCustomCertificateCustomCertificatesClientDiagnostics.CreateScope("SignalRCustomCertificateCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _signalRCustomCertificateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _signalRCustomCertificateCustomCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<SignalRCustomCertificateResource>(response.GetRawResponse());
                 return Response.FromValue(new SignalRCustomCertificateResource(Client, response.Value), response.GetRawResponse());
@@ -439,11 +439,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRCustomCertificates_Get</description>
+        /// <description>CustomCertificate_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -459,11 +459,11 @@ namespace Azure.ResourceManager.SignalR
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using var scope = _signalRCustomCertificateClientDiagnostics.CreateScope("SignalRCustomCertificateCollection.GetIfExists");
+            using var scope = _signalRCustomCertificateCustomCertificatesClientDiagnostics.CreateScope("SignalRCustomCertificateCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _signalRCustomCertificateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken: cancellationToken);
+                var response = _signalRCustomCertificateCustomCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<SignalRCustomCertificateResource>(response.GetRawResponse());
                 return Response.FromValue(new SignalRCustomCertificateResource(Client, response.Value), response.GetRawResponse());

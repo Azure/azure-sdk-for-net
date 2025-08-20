@@ -33,6 +33,11 @@ namespace Azure.ResourceManager.SignalR
             return resource.GetCachedClient(client => new MockableSignalRSubscriptionResource(client, resource.Id));
         }
 
+        private static MockableSignalRTenantResource GetMockableSignalRTenantResource(ArmResource resource)
+        {
+            return resource.GetCachedClient(client => new MockableSignalRTenantResource(client, resource.Id));
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="SignalRResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SignalRResource.CreateResourceIdentifier" /> to create a <see cref="SignalRResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -110,6 +115,44 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ReplicaResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ReplicaResource.CreateResourceIdentifier" /> to create a <see cref="ReplicaResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSignalRArmClient.GetReplicaResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ReplicaResource"/> object. </returns>
+        public static ReplicaResource GetReplicaResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSignalRArmClient(client).GetReplicaResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SignalRReplicaSharedPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SignalRReplicaSharedPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="SignalRReplicaSharedPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSignalRArmClient.GetSignalRReplicaSharedPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SignalRReplicaSharedPrivateLinkResource"/> object. </returns>
+        public static SignalRReplicaSharedPrivateLinkResource GetSignalRReplicaSharedPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableSignalRArmClient(client).GetSignalRReplicaSharedPrivateLinkResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="SignalRSharedPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SignalRSharedPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="SignalRSharedPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -154,11 +197,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalR_Get</description>
+        /// <description>SignalRResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -192,11 +235,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalR_Get</description>
+        /// <description>SignalRResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -222,80 +265,6 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary>
-        /// Checks that the resource name is valid and is not already in use.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SignalR_CheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SignalRResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSignalRSubscriptionResource.CheckSignalRNameAvailability(AzureLocation,SignalRNameAvailabilityContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> the region. </param>
-        /// <param name="content"> Parameters supplied to the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<SignalRNameAvailabilityResult>> CheckSignalRNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SignalRNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableSignalRSubscriptionResource(subscriptionResource).CheckSignalRNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Checks that the resource name is valid and is not already in use.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SignalR_CheckNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SignalRResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableSignalRSubscriptionResource.CheckSignalRNameAvailability(AzureLocation,SignalRNameAvailabilityContent,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> the region. </param>
-        /// <param name="content"> Parameters supplied to the operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<SignalRNameAvailabilityResult> CheckSignalRNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, SignalRNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableSignalRSubscriptionResource(subscriptionResource).CheckSignalRNameAvailability(location, content, cancellationToken);
-        }
-
-        /// <summary>
         /// Handles requests to list all resources in a subscription.
         /// <list type="bullet">
         /// <item>
@@ -304,11 +273,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalR_ListBySubscription</description>
+        /// <description>SignalRResource_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -340,11 +309,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalR_ListBySubscription</description>
+        /// <description>SignalRResource_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -368,6 +337,72 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary>
+        /// Checks that the resource name is valid and is not already in use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SignalROperationGroup_CheckSignalRNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSignalRSubscriptionResource.CheckSignalRNameAvailability(AzureLocation,SignalRNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<Response<SignalRNameAvailabilityResult>> CheckSignalRNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SignalRNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableSignalRSubscriptionResource(subscriptionResource).CheckSignalRNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Checks that the resource name is valid and is not already in use.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SignalRService/locations/{location}/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SignalROperationGroup_CheckSignalRNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSignalRSubscriptionResource.CheckSignalRNameAvailability(AzureLocation,SignalRNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static Response<SignalRNameAvailabilityResult> CheckSignalRNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, SignalRNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableSignalRSubscriptionResource(subscriptionResource).CheckSignalRNameAvailability(location, content, cancellationToken);
+        }
+
+        /// <summary>
         /// List resource usage quotas by location.
         /// <list type="bullet">
         /// <item>
@@ -376,11 +411,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Usages_List</description>
+        /// <description>UsagesOperationGroup_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -389,7 +424,7 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> the location like "eastus". </param>
+        /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An async collection of <see cref="SignalRUsage"/> that may take multiple service requests to iterate over. </returns>
@@ -409,11 +444,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Usages_List</description>
+        /// <description>UsagesOperationGroup_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -422,7 +457,7 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> the location like "eastus". </param>
+        /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="SignalRUsage"/> that may take multiple service requests to iterate over. </returns>
@@ -431,6 +466,70 @@ namespace Azure.ResourceManager.SignalR
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableSignalRSubscriptionResource(subscriptionResource).GetUsages(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// List the operations for the provider
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.SignalRService/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Operations_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSignalRTenantResource.GetOperations(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="SignalROperationInfo"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SignalROperationInfo> GetOperationsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableSignalRTenantResource(tenantResource).GetOperationsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List the operations for the provider
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.SignalRService/operations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Operations_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-01-01-preview</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSignalRTenantResource.GetOperations(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="SignalROperationInfo"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SignalROperationInfo> GetOperations(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableSignalRTenantResource(tenantResource).GetOperations(cancellationToken);
         }
     }
 }

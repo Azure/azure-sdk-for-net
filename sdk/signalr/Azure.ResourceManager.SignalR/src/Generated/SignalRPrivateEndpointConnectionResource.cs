@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.SignalR
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _signalRPrivateEndpointConnectionClientDiagnostics;
-        private readonly SignalRPrivateEndpointConnectionsRestOperations _signalRPrivateEndpointConnectionRestClient;
+        private readonly ClientDiagnostics _signalRPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics;
+        private readonly PrivateEndpointConnectionsRestOperations _signalRPrivateEndpointConnectionPrivateEndpointConnectionsRestClient;
         private readonly SignalRPrivateEndpointConnectionData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -59,9 +59,9 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SignalRPrivateEndpointConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _signalRPrivateEndpointConnectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SignalR", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string signalRPrivateEndpointConnectionApiVersion);
-            _signalRPrivateEndpointConnectionRestClient = new SignalRPrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, signalRPrivateEndpointConnectionApiVersion);
+            _signalRPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SignalR", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string signalRPrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
+            _signalRPrivateEndpointConnectionPrivateEndpointConnectionsRestClient = new PrivateEndpointConnectionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, signalRPrivateEndpointConnectionPrivateEndpointConnectionsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRPrivateEndpointConnections_Get</description>
+        /// <description>PrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SignalRPrivateEndpointConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _signalRPrivateEndpointConnectionClientDiagnostics.CreateScope("SignalRPrivateEndpointConnectionResource.Get");
+            using var scope = _signalRPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("SignalRPrivateEndpointConnectionResource.Get");
             scope.Start();
             try
             {
-                var response = await _signalRPrivateEndpointConnectionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _signalRPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SignalRPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -137,11 +137,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRPrivateEndpointConnections_Get</description>
+        /// <description>PrivateEndpointConnection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -152,11 +152,11 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SignalRPrivateEndpointConnectionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _signalRPrivateEndpointConnectionClientDiagnostics.CreateScope("SignalRPrivateEndpointConnectionResource.Get");
+            using var scope = _signalRPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("SignalRPrivateEndpointConnectionResource.Get");
             scope.Start();
             try
             {
-                var response = _signalRPrivateEndpointConnectionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _signalRPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SignalRPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
@@ -177,11 +177,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRPrivateEndpointConnections_Delete</description>
+        /// <description>PrivateEndpointConnection_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -193,12 +193,12 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _signalRPrivateEndpointConnectionClientDiagnostics.CreateScope("SignalRPrivateEndpointConnectionResource.Delete");
+            using var scope = _signalRPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("SignalRPrivateEndpointConnectionResource.Delete");
             scope.Start();
             try
             {
-                var response = await _signalRPrivateEndpointConnectionRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SignalRArmOperation(_signalRPrivateEndpointConnectionClientDiagnostics, Pipeline, _signalRPrivateEndpointConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _signalRPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new SignalRArmOperation(_signalRPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _signalRPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -219,11 +219,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRPrivateEndpointConnections_Delete</description>
+        /// <description>PrivateEndpointConnection_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -235,12 +235,12 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _signalRPrivateEndpointConnectionClientDiagnostics.CreateScope("SignalRPrivateEndpointConnectionResource.Delete");
+            using var scope = _signalRPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("SignalRPrivateEndpointConnectionResource.Delete");
             scope.Start();
             try
             {
-                var response = _signalRPrivateEndpointConnectionRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SignalRArmOperation(_signalRPrivateEndpointConnectionClientDiagnostics, Pipeline, _signalRPrivateEndpointConnectionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _signalRPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new SignalRArmOperation(_signalRPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _signalRPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -261,11 +261,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRPrivateEndpointConnections_Update</description>
+        /// <description>PrivateEndpointConnection_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -281,12 +281,12 @@ namespace Azure.ResourceManager.SignalR
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _signalRPrivateEndpointConnectionClientDiagnostics.CreateScope("SignalRPrivateEndpointConnectionResource.Update");
+            using var scope = _signalRPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("SignalRPrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {
-                var response = await _signalRPrivateEndpointConnectionRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _signalRPrivateEndpointConnectionRestClient.CreateUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var response = await _signalRPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var uri = _signalRPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new SignalRArmOperation<SignalRPrivateEndpointConnectionResource>(Response.FromValue(new SignalRPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -309,11 +309,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRPrivateEndpointConnections_Update</description>
+        /// <description>PrivateEndpointConnection_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -329,12 +329,12 @@ namespace Azure.ResourceManager.SignalR
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _signalRPrivateEndpointConnectionClientDiagnostics.CreateScope("SignalRPrivateEndpointConnectionResource.Update");
+            using var scope = _signalRPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("SignalRPrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {
-                var response = _signalRPrivateEndpointConnectionRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var uri = _signalRPrivateEndpointConnectionRestClient.CreateUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
+                var response = _signalRPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var uri = _signalRPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new SignalRArmOperation<SignalRPrivateEndpointConnectionResource>(Response.FromValue(new SignalRPrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)

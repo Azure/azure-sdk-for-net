@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.SignalR
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _signalRCustomDomainClientDiagnostics;
-        private readonly SignalRCustomDomainsRestOperations _signalRCustomDomainRestClient;
+        private readonly ClientDiagnostics _signalRCustomDomainCustomDomainsClientDiagnostics;
+        private readonly CustomDomainsRestOperations _signalRCustomDomainCustomDomainsRestClient;
         private readonly SignalRCustomDomainData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -59,9 +59,9 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SignalRCustomDomainResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _signalRCustomDomainClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SignalR", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string signalRCustomDomainApiVersion);
-            _signalRCustomDomainRestClient = new SignalRCustomDomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, signalRCustomDomainApiVersion);
+            _signalRCustomDomainCustomDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SignalR", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string signalRCustomDomainCustomDomainsApiVersion);
+            _signalRCustomDomainCustomDomainsRestClient = new CustomDomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, signalRCustomDomainCustomDomainsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRCustomDomains_Get</description>
+        /// <description>CustomDomain_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SignalRCustomDomainResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _signalRCustomDomainClientDiagnostics.CreateScope("SignalRCustomDomainResource.Get");
+            using var scope = _signalRCustomDomainCustomDomainsClientDiagnostics.CreateScope("SignalRCustomDomainResource.Get");
             scope.Start();
             try
             {
-                var response = await _signalRCustomDomainRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _signalRCustomDomainCustomDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SignalRCustomDomainResource(Client, response.Value), response.GetRawResponse());
@@ -137,11 +137,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRCustomDomains_Get</description>
+        /// <description>CustomDomain_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -152,11 +152,11 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SignalRCustomDomainResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _signalRCustomDomainClientDiagnostics.CreateScope("SignalRCustomDomainResource.Get");
+            using var scope = _signalRCustomDomainCustomDomainsClientDiagnostics.CreateScope("SignalRCustomDomainResource.Get");
             scope.Start();
             try
             {
-                var response = _signalRCustomDomainRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _signalRCustomDomainCustomDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SignalRCustomDomainResource(Client, response.Value), response.GetRawResponse());
@@ -177,11 +177,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRCustomDomains_Delete</description>
+        /// <description>CustomDomain_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -193,12 +193,12 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _signalRCustomDomainClientDiagnostics.CreateScope("SignalRCustomDomainResource.Delete");
+            using var scope = _signalRCustomDomainCustomDomainsClientDiagnostics.CreateScope("SignalRCustomDomainResource.Delete");
             scope.Start();
             try
             {
-                var response = await _signalRCustomDomainRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SignalRArmOperation(_signalRCustomDomainClientDiagnostics, Pipeline, _signalRCustomDomainRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _signalRCustomDomainCustomDomainsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new SignalRArmOperation(_signalRCustomDomainCustomDomainsClientDiagnostics, Pipeline, _signalRCustomDomainCustomDomainsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -219,11 +219,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRCustomDomains_Delete</description>
+        /// <description>CustomDomain_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -235,12 +235,12 @@ namespace Azure.ResourceManager.SignalR
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _signalRCustomDomainClientDiagnostics.CreateScope("SignalRCustomDomainResource.Delete");
+            using var scope = _signalRCustomDomainCustomDomainsClientDiagnostics.CreateScope("SignalRCustomDomainResource.Delete");
             scope.Start();
             try
             {
-                var response = _signalRCustomDomainRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SignalRArmOperation(_signalRCustomDomainClientDiagnostics, Pipeline, _signalRCustomDomainRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _signalRCustomDomainCustomDomainsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new SignalRArmOperation(_signalRCustomDomainCustomDomainsClientDiagnostics, Pipeline, _signalRCustomDomainCustomDomainsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -261,11 +261,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRCustomDomains_CreateOrUpdate</description>
+        /// <description>CustomDomain_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -281,12 +281,12 @@ namespace Azure.ResourceManager.SignalR
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _signalRCustomDomainClientDiagnostics.CreateScope("SignalRCustomDomainResource.Update");
+            using var scope = _signalRCustomDomainCustomDomainsClientDiagnostics.CreateScope("SignalRCustomDomainResource.Update");
             scope.Start();
             try
             {
-                var response = await _signalRCustomDomainRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SignalRArmOperation<SignalRCustomDomainResource>(new SignalRCustomDomainOperationSource(Client), _signalRCustomDomainClientDiagnostics, Pipeline, _signalRCustomDomainRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _signalRCustomDomainCustomDomainsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SignalRArmOperation<SignalRCustomDomainResource>(new SignalRCustomDomainOperationSource(Client), _signalRCustomDomainCustomDomainsClientDiagnostics, Pipeline, _signalRCustomDomainCustomDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -307,11 +307,11 @@ namespace Azure.ResourceManager.SignalR
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SignalRCustomDomains_CreateOrUpdate</description>
+        /// <description>CustomDomain_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -327,12 +327,12 @@ namespace Azure.ResourceManager.SignalR
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _signalRCustomDomainClientDiagnostics.CreateScope("SignalRCustomDomainResource.Update");
+            using var scope = _signalRCustomDomainCustomDomainsClientDiagnostics.CreateScope("SignalRCustomDomainResource.Update");
             scope.Start();
             try
             {
-                var response = _signalRCustomDomainRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SignalRArmOperation<SignalRCustomDomainResource>(new SignalRCustomDomainOperationSource(Client), _signalRCustomDomainClientDiagnostics, Pipeline, _signalRCustomDomainRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = _signalRCustomDomainCustomDomainsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new SignalRArmOperation<SignalRCustomDomainResource>(new SignalRCustomDomainOperationSource(Client), _signalRCustomDomainCustomDomainsClientDiagnostics, Pipeline, _signalRCustomDomainCustomDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
