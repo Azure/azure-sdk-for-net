@@ -42,6 +42,12 @@ namespace Azure.Storage.Queues
         public virtual System.Uri GenerateSasUri(Azure.Storage.Sas.QueueSasPermissions permissions, System.DateTimeOffset expiresOn) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Uri GenerateSasUri(Azure.Storage.Sas.QueueSasPermissions permissions, System.DateTimeOffset expiresOn, out string stringToSign) { throw null; }
+        public virtual System.Uri GenerateUserDelegationSasUri(Azure.Storage.Sas.QueueSasBuilder builder, Azure.Storage.Queues.Models.UserDelegationKey userDelegationKey) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual System.Uri GenerateUserDelegationSasUri(Azure.Storage.Sas.QueueSasBuilder builder, Azure.Storage.Queues.Models.UserDelegationKey userDelegationKey, out string stringToSign) { throw null; }
+        public virtual System.Uri GenerateUserDelegationSasUri(Azure.Storage.Sas.QueueSasPermissions permissions, System.DateTimeOffset expiresOn, Azure.Storage.Queues.Models.UserDelegationKey userDelegationKey) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public virtual System.Uri GenerateUserDelegationSasUri(Azure.Storage.Sas.QueueSasPermissions permissions, System.DateTimeOffset expiresOn, Azure.Storage.Queues.Models.UserDelegationKey userDelegationKey, out string stringToSign) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.QueueSignedIdentifier>> GetAccessPolicy(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IEnumerable<Azure.Storage.Queues.Models.QueueSignedIdentifier>>> GetAccessPolicyAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected internal virtual Azure.Storage.Queues.QueueServiceClient GetParentQueueServiceClientCore() { throw null; }
@@ -161,6 +167,8 @@ namespace Azure.Storage.Queues
         public virtual Azure.AsyncPageable<Azure.Storage.Queues.Models.QueueItem> GetQueuesAsync(Azure.Storage.Queues.Models.QueueTraits traits = Azure.Storage.Queues.Models.QueueTraits.None, string prefix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Queues.Models.QueueServiceStatistics> GetStatistics(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Queues.Models.QueueServiceStatistics>> GetStatisticsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Queues.Models.UserDelegationKey> GetUserDelegationKey(System.DateTimeOffset? startsOn, System.DateTimeOffset expiresOn, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Queues.Models.UserDelegationKey>> GetUserDelegationKeyAsync(System.DateTimeOffset? startsOn, System.DateTimeOffset expiresOn, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response SetProperties(Azure.Storage.Queues.Models.QueueServiceProperties properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SetPropertiesAsync(Azure.Storage.Queues.Models.QueueServiceProperties properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -425,6 +433,17 @@ namespace Azure.Storage.Queues.Models
         public System.DateTimeOffset NextVisibleOn { get { throw null; } }
         public string PopReceipt { get { throw null; } }
     }
+    public partial class UserDelegationKey
+    {
+        internal UserDelegationKey() { }
+        public System.DateTimeOffset SignedExpiresOn { get { throw null; } }
+        public string SignedObjectId { get { throw null; } }
+        public string SignedService { get { throw null; } }
+        public System.DateTimeOffset SignedStartsOn { get { throw null; } }
+        public string SignedTenantId { get { throw null; } }
+        public string SignedVersion { get { throw null; } }
+        public string Value { get { throw null; } }
+    }
 }
 namespace Azure.Storage.Queues.Specialized
 {
@@ -469,6 +488,7 @@ namespace Azure.Storage.Sas
         public QueueSasBuilder() { }
         public QueueSasBuilder(Azure.Storage.Sas.QueueAccountSasPermissions permissions, System.DateTimeOffset expiresOn) { }
         public QueueSasBuilder(Azure.Storage.Sas.QueueSasPermissions permissions, System.DateTimeOffset expiresOn) { }
+        public string DelegatedUserObjectId { get { throw null; } set { } }
         public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
         public string Identifier { get { throw null; } set { } }
         public Azure.Storage.Sas.SasIPRange IPRange { get { throw null; } set { } }
@@ -486,6 +506,8 @@ namespace Azure.Storage.Sas
         public void SetPermissions(Azure.Storage.Sas.QueueSasPermissions permissions) { }
         public void SetPermissions(string rawPermissions) { }
         public void SetPermissions(string rawPermissions, bool normalize = false) { }
+        public Azure.Storage.Sas.QueueSasQueryParameters ToSasQueryParameters(Azure.Storage.Queues.Models.UserDelegationKey userDelegationKey, string accountName) { throw null; }
+        public Azure.Storage.Sas.QueueSasQueryParameters ToSasQueryParameters(Azure.Storage.Queues.Models.UserDelegationKey userDelegationKey, string accountName, out string stringToSign) { throw null; }
         public Azure.Storage.Sas.SasQueryParameters ToSasQueryParameters(Azure.Storage.StorageSharedKeyCredential sharedKeyCredential) { throw null; }
         public Azure.Storage.Sas.SasQueryParameters ToSasQueryParameters(Azure.Storage.StorageSharedKeyCredential sharedKeyCredential, out string stringToSign) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -499,6 +521,18 @@ namespace Azure.Storage.Sas
         Add = 2,
         Update = 4,
         Process = 8,
+    }
+    public sealed partial class QueueSasQueryParameters : Azure.Storage.Sas.SasQueryParameters
+    {
+        internal QueueSasQueryParameters() { }
+        public static new Azure.Storage.Sas.QueueSasQueryParameters Empty { get { throw null; } }
+        public System.DateTimeOffset KeyExpiresOn { get { throw null; } }
+        public string KeyObjectId { get { throw null; } }
+        public string KeyService { get { throw null; } }
+        public System.DateTimeOffset KeyStartsOn { get { throw null; } }
+        public string KeyTenantId { get { throw null; } }
+        public string KeyVersion { get { throw null; } }
+        public override string ToString() { throw null; }
     }
 }
 namespace Microsoft.Extensions.Azure

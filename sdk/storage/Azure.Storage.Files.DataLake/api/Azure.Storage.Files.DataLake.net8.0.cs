@@ -1358,6 +1358,7 @@ namespace Azure.Storage.Sas
         public string ContentLanguage { get { throw null; } set { } }
         public string ContentType { get { throw null; } set { } }
         public string CorrelationId { get { throw null; } set { } }
+        public string DelegatedUserObjectId { get { throw null; } set { } }
         public string EncryptionScope { get { throw null; } set { } }
         public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
         public string FileSystemName { get { throw null; } set { } }

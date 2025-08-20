@@ -17,6 +17,7 @@
     <PackageReference Include="Azure.Security.KeyVault.Keys" />
     <PackageReference Include="Microsoft.Azure.KeyVault.Core" />
     <PackageReference Include="Microsoft.Azure.Storage.Queue" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Storage.Queues.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
   </ItemGroup>

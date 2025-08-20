@@ -30,7 +30,7 @@ namespace Azure.Storage.Queues
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, queue or message that is the target of the desired operation. </param>
-        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2018-03-28". </param>
+        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2026-02-06". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
         public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version)
         {
@@ -244,6 +244,94 @@ namespace Azure.Storage.Queues
                         if (document.Element("StorageServiceStats") is XElement storageServiceStatsElement)
                         {
                             value = QueueServiceStatistics.DeserializeQueueServiceStatistics(storageServiceStatsElement);
+                        }
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetUserDelegationKeyRequest(KeyInfo keyInfo, int? timeout)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendQuery("restype", "service", true);
+            uri.AppendQuery("comp", "userdelegationkey", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("x-ms-version", _version);
+            request.Headers.Add("Accept", "application/xml");
+            request.Headers.Add("Content-Type", "application/xml");
+            var content = new XmlWriterContent();
+            content.XmlWriter.WriteObjectValue(keyInfo, "KeyInfo");
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Retrieves a user delegation key for the Queue service. This is only a valid operation when using bearer token authentication. </summary>
+        /// <param name="keyInfo"> Key information. </param>
+        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyInfo"/> is null. </exception>
+        public async Task<ResponseWithHeaders<UserDelegationKey, ServiceGetUserDelegationKeyHeaders>> GetUserDelegationKeyAsync(KeyInfo keyInfo, int? timeout = null, CancellationToken cancellationToken = default)
+        {
+            if (keyInfo == null)
+            {
+                throw new ArgumentNullException(nameof(keyInfo));
+            }
+
+            using var message = CreateGetUserDelegationKeyRequest(keyInfo, timeout);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            var headers = new ServiceGetUserDelegationKeyHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        UserDelegationKey value = default;
+                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
+                        if (document.Element("UserDelegationKey") is XElement userDelegationKeyElement)
+                        {
+                            value = UserDelegationKey.DeserializeUserDelegationKey(userDelegationKeyElement);
+                        }
+                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Retrieves a user delegation key for the Queue service. This is only a valid operation when using bearer token authentication. </summary>
+        /// <param name="keyInfo"> Key information. </param>
+        /// <param name="timeout"> The The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-queue-service-operations&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyInfo"/> is null. </exception>
+        public ResponseWithHeaders<UserDelegationKey, ServiceGetUserDelegationKeyHeaders> GetUserDelegationKey(KeyInfo keyInfo, int? timeout = null, CancellationToken cancellationToken = default)
+        {
+            if (keyInfo == null)
+            {
+                throw new ArgumentNullException(nameof(keyInfo));
+            }
+
+            using var message = CreateGetUserDelegationKeyRequest(keyInfo, timeout);
+            _pipeline.Send(message, cancellationToken);
+            var headers = new ServiceGetUserDelegationKeyHeaders(message.Response);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        UserDelegationKey value = default;
+                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
+                        if (document.Element("UserDelegationKey") is XElement userDelegationKeyElement)
+                        {
+                            value = UserDelegationKey.DeserializeUserDelegationKey(userDelegationKeyElement);
                         }
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
