@@ -446,7 +446,12 @@ v12
 
 v12 has explicit methods for listing by hierarchy.
 ```C# Snippet:SampleSnippetsBlobMigration_ListHierarchy
-IAsyncEnumerable<BlobHierarchyItem> results = containerClient.GetBlobsByHierarchyAsync(prefix: blobPrefix, delimiter: delimiter);
+GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
+{
+    Prefix = blobPrefix,
+    Delimiter = delimiter
+};
+IAsyncEnumerable<BlobHierarchyItem> results = containerClient.GetBlobsByHierarchyAsync(options);
 await foreach (BlobHierarchyItem item in results)
 {
     MyConsumeBlobItemFunc(item);

@@ -917,6 +917,7 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: options?.PaidBurstingMaxBandwidthMibps,
                 provisionedMaxIops: options?.PaidBurstingMaxIops,
                 provisionedMaxBandwidthMibps: options?.ProvisionedMaxBandwidthMibps,
+                enableDirectoryLease: options?.EnableDirectoryLease,
                 async: false,
                 cancellationToken: cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -973,6 +974,7 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: options?.PaidBurstingMaxBandwidthMibps,
                 provisionedMaxIops: options?.PaidBurstingMaxIops,
                 provisionedMaxBandwidthMibps: options?.ProvisionedMaxBandwidthMibps,
+                enableDirectoryLease: options?.EnableDirectoryLease,
                 async: true,
                 cancellationToken: cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -1034,6 +1036,7 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: default,
                 provisionedMaxIops: default,
                 provisionedMaxBandwidthMibps: default,
+                enableDirectoryLease: default,
                 async: false,
                 cancellationToken: cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")
@@ -1095,6 +1098,7 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: default,
                 provisionedMaxIops: default,
                 provisionedMaxBandwidthMibps: default,
+                enableDirectoryLease: default,
                 async: true,
                 cancellationToken: cancellationToken,
                 operationName: $"{nameof(ShareServiceClient)}.{nameof(CreateShare)}")

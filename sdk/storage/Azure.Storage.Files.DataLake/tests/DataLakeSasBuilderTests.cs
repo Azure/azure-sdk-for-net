@@ -314,7 +314,12 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             DataLakeFileSystemClient sasFileSystemClient = InstrumentClient(new DataLakeFileSystemClient(dataLakeUriBuilder.ToUri(), GetOptions()));
 
-            await foreach (PathItem pathItem in sasFileSystemClient.GetPathsAsync(directory.Path))
+            DataLakeGetPathsOptions options = new DataLakeGetPathsOptions
+            {
+                Path = directory.Path,
+            };
+
+            await foreach (PathItem pathItem in sasFileSystemClient.GetPathsAsync(options))
             {
                 // Just make sure the call succeeds.
             }
