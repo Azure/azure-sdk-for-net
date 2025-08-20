@@ -864,6 +864,8 @@ namespace Azure.Storage.Files.Shares.Tests
             }
         }
 
+        // TODO figure out why we can't record this.
+        [LiveOnly]
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
         public async Task CreateFile_Data()
