@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    /// <summary> Settings for classic alerts. </summary>
-    internal partial class ClassicAlertSettings
+    /// <summary> Usage for vault. </summary>
+    internal partial class VaultUsageList
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +45,26 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ClassicAlertSettings"/>. </summary>
-        public ClassicAlertSettings()
+        /// <summary> Initializes a new instance of <see cref="VaultUsageList"/>. </summary>
+        internal VaultUsageList()
         {
+            Value = new ChangeTrackingList<VaultUsage>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClassicAlertSettings"/>. </summary>
-        /// <param name="alertsForCriticalOperations"></param>
+        /// <summary> Initializes a new instance of <see cref="VaultUsageList"/>. </summary>
+        /// <param name="value"> The list of usages for the given vault. </param>
+        /// <param name="nextLink"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClassicAlertSettings(RecoveryServicesAlertsState? alertsForCriticalOperations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VaultUsageList(IReadOnlyList<VaultUsage> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            AlertsForCriticalOperations = alertsForCriticalOperations;
+            Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the alerts for critical operations. </summary>
-        public RecoveryServicesAlertsState? AlertsForCriticalOperations { get; set; }
+        /// <summary> The list of usages for the given vault. </summary>
+        public IReadOnlyList<VaultUsage> Value { get; }
+        /// <summary> Gets the next link. </summary>
+        public string NextLink { get; }
     }
 }

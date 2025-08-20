@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    /// <summary> Replication usages for vault. </summary>
-    internal partial class ReplicationUsageListResult
+    /// <summary> Settings for Azure Monitor based alerts. </summary>
+    public partial class RecoveryServicesAzureMonitorAlertSettings
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,29 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ReplicationUsageListResult"/>. </summary>
-        internal ReplicationUsageListResult()
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesAzureMonitorAlertSettings"/>. </summary>
+        public RecoveryServicesAzureMonitorAlertSettings()
         {
-            Value = new ChangeTrackingList<ReplicationUsage>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReplicationUsageListResult"/>. </summary>
-        /// <param name="value"> The list of replication usages for the given vault. </param>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesAzureMonitorAlertSettings"/>. </summary>
+        /// <param name="alertsForAllJobFailures"></param>
+        /// <param name="alertsForAllReplicationIssues"></param>
+        /// <param name="alertsForAllFailoverIssues"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReplicationUsageListResult(IReadOnlyList<ReplicationUsage> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RecoveryServicesAzureMonitorAlertSettings(RecoveryServicesAlertsState? alertsForAllJobFailures, RecoveryServicesAlertsState? alertsForAllReplicationIssues, RecoveryServicesAlertsState? alertsForAllFailoverIssues, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
+            AlertsForAllJobFailures = alertsForAllJobFailures;
+            AlertsForAllReplicationIssues = alertsForAllReplicationIssues;
+            AlertsForAllFailoverIssues = alertsForAllFailoverIssues;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of replication usages for the given vault. </summary>
-        public IReadOnlyList<ReplicationUsage> Value { get; }
+        /// <summary> Gets or sets the alerts for all job failures. </summary>
+        public RecoveryServicesAlertsState? AlertsForAllJobFailures { get; set; }
+        /// <summary> Gets or sets the alerts for all replication issues. </summary>
+        public RecoveryServicesAlertsState? AlertsForAllReplicationIssues { get; set; }
+        /// <summary> Gets or sets the alerts for all failover issues. </summary>
+        public RecoveryServicesAlertsState? AlertsForAllFailoverIssues { get; set; }
     }
 }

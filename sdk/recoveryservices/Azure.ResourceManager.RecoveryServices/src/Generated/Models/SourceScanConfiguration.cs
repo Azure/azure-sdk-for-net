@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    /// <summary> The response model for a list of Vaults. </summary>
-    internal partial class RecoveryServicesVaultListResult
+    /// <summary> Source scan configuration of vault. </summary>
+    public partial class SourceScanConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,25 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RecoveryServicesVaultListResult"/>. </summary>
-        internal RecoveryServicesVaultListResult()
+        /// <summary> Initializes a new instance of <see cref="SourceScanConfiguration"/>. </summary>
+        public SourceScanConfiguration()
         {
-            Value = new ChangeTrackingList<RecoveryServicesVaultData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RecoveryServicesVaultListResult"/>. </summary>
-        /// <param name="value"></param>
-        /// <param name="nextLink"></param>
+        /// <summary> Initializes a new instance of <see cref="SourceScanConfiguration"/>. </summary>
+        /// <param name="state"></param>
+        /// <param name="sourceScanIdentity"> Identity details to be used for an operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryServicesVaultListResult(IReadOnlyList<RecoveryServicesVaultData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SourceScanConfiguration(RecoveryServicesSourceScanState? state, RecoveryServicesAssociatedIdentity sourceScanIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            State = state;
+            SourceScanIdentity = sourceScanIdentity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the value. </summary>
-        public IReadOnlyList<RecoveryServicesVaultData> Value { get; }
-        /// <summary> Gets the next link. </summary>
-        public string NextLink { get; }
+        /// <summary> Gets or sets the state. </summary>
+        public RecoveryServicesSourceScanState? State { get; set; }
+        /// <summary> Identity details to be used for an operation. </summary>
+        public RecoveryServicesAssociatedIdentity SourceScanIdentity { get; set; }
     }
 }
