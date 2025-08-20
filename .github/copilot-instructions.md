@@ -2,6 +2,9 @@
 
 This repo contains Azure SDKs for various Azure services and tools that generate them.
 
+## Prerequisites
+- To use MCP tool calls, user must have PowerShell installed. Provide [PowerShell installation instructions](https://learn.microsoft.com/powershell/scripting/install/installing-powershell?view=powershell-7.5) if not installed, and recommend restarting VSCode to start the MCP server.
+
 ## Folder Structure
 
 - `/eng/packages/http-client-csharp`: Contains the source code of the generator for Azure Data Plane SDKs (aka Azure Generator).
