@@ -26,6 +26,10 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Transcription metadata type
         /// </summary>
-        TranscriptionMetadata
+        TranscriptionMetadata,
+        /// <summary>
+        /// Mark audio data type
+        /// </summary>
+        Mark
     }
 }

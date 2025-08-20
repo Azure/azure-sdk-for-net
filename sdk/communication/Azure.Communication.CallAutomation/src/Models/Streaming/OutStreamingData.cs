@@ -35,6 +35,11 @@ namespace Azure.Communication.CallAutomation
         public StopAudio StopAudio { get; internal set; }
 
         /// <summary>
+        /// Out streaming Mark Audio Data
+        /// </summary>
+        public MarkAudio MarkAudio { get; internal set; }
+
+        /// <summary>
         /// Get the streaming data for outbound
         /// </summary>
         /// <param name="audioData"></param>
@@ -59,6 +64,24 @@ namespace Azure.Communication.CallAutomation
             var jsonObject = new OutStreamingData(MediaKind.StopAudio)
             {
                 StopAudio = new StopAudio()
+            };
+
+            // Serialize the JSON object to a string
+            return JsonSerializer.Serialize(jsonObject);
+        }
+
+        /// <summary>
+        /// Get the mark audio for outbound
+        /// </summary>
+        /// <returns>the string of outstreaming data with the mark audio.</returns>
+        public static string GetMarkAudioForOutbound(string sequence)
+        {
+            var jsonObject = new OutStreamingData(MediaKind.Mark)
+            {
+                MarkAudio = new MarkAudio
+                {
+                    Sequence = sequence
+                }
             };
 
             // Serialize the JSON object to a string
