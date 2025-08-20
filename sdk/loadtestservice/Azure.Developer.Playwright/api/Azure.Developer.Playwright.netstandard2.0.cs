@@ -8,16 +8,15 @@ namespace Azure.Developer.Playwright
     }
     public partial class PlaywrightServiceBrowserClient : System.IDisposable
     {
-        public PlaywrightServiceBrowserClient() { }
-        public PlaywrightServiceBrowserClient(Azure.Core.TokenCredential credential) { }
-        public PlaywrightServiceBrowserClient(Azure.Core.TokenCredential credential, Azure.Developer.Playwright.PlaywrightServiceBrowserClientOptions options) { }
-        public PlaywrightServiceBrowserClient(Azure.Developer.Playwright.PlaywrightServiceBrowserClientOptions options) { }
+        protected PlaywrightServiceBrowserClient() { }
+        public static Azure.Developer.Playwright.PlaywrightServiceBrowserClient Instance { get { throw null; } }
+        public static Azure.Developer.Playwright.PlaywrightServiceBrowserClient CreateInstance(Azure.Core.TokenCredential credential) { throw null; }
+        public static Azure.Developer.Playwright.PlaywrightServiceBrowserClient CreateInstance(Azure.Core.TokenCredential credential, Azure.Developer.Playwright.PlaywrightServiceBrowserClientOptions options) { throw null; }
+        public static Azure.Developer.Playwright.PlaywrightServiceBrowserClient CreateInstance(Azure.Developer.Playwright.PlaywrightServiceBrowserClientOptions options) { throw null; }
         public virtual void Dispose() { }
         public virtual System.Threading.Tasks.Task DisposeAsync() { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Developer.Playwright.ConnectOptions<T>> GetConnectOptionsAsync<T>(System.Runtime.InteropServices.OSPlatform? os = default(System.Runtime.InteropServices.OSPlatform?), string? runId = null, string? exposeNetwork = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, new() { throw null; }
         public virtual Azure.Developer.Playwright.ConnectOptions<T> GetConnectOptions<T>(System.Runtime.InteropServices.OSPlatform? os = default(System.Runtime.InteropServices.OSPlatform?), string? runId = null, string? exposeNetwork = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, new() { throw null; }
-        public virtual void Initialize(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
-        public virtual System.Threading.Tasks.Task InitializeAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class PlaywrightServiceBrowserClientOptions : Azure.Core.ClientOptions
     {

@@ -21,9 +21,13 @@ namespace Azure.Developer.Playwright;
 /// </summary>
 public class PlaywrightServiceBrowserClient : IDisposable
 {
-    // Static instance for Singleton pattern
-    private static PlaywrightServiceBrowserClient? _instance;
+    // Singleton instance using Lazy<T> for thread-safe lazy initialization
+    private static Lazy<PlaywrightServiceBrowserClient> _instance = new Lazy<PlaywrightServiceBrowserClient>(
+        () => new PlaywrightServiceBrowserClient(true),
+        LazyThreadSafetyMode.ExecutionAndPublication);
     private static readonly object _lock = new object();
+    private static PlaywrightServiceBrowserClient? _sharedStaticClient;
+    private static readonly object _sharedStaticClientLock = new object();
 
     internal readonly IEntraLifecycle _entraLifecycle;
     internal readonly IEnvironment _environment;
@@ -42,34 +46,7 @@ public class PlaywrightServiceBrowserClient : IDisposable
     /// <summary>
     /// Gets the singleton instance of the PlaywrightServiceBrowserClient.
     /// </summary>
-    public static PlaywrightServiceBrowserClient Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                lock (_lock)
-                {
-                    _instance ??= new PlaywrightServiceBrowserClient(new PlaywrightServiceBrowserClientOptions());
-                }
-            }
-            return _instance;
-        }
-    }
-
-    /// <summary>
-    /// Creates (if needed) or returns the singleton instance with custom options.
-    /// </summary>
-    /// <param name="options">The client options.</param>
-    /// <returns>The singleton instance.</returns>
-    public static PlaywrightServiceBrowserClient CreateInstance(PlaywrightServiceBrowserClientOptions options)
-    {
-        lock (_lock)
-        {
-            _instance ??= new PlaywrightServiceBrowserClient(options);
-            return _instance;
-        }
-    }
+    public static PlaywrightServiceBrowserClient Instance => _instance.Value;
 
     /// <summary>
     /// Creates (if needed) or returns the singleton instance with a token credential.
@@ -80,23 +57,13 @@ public class PlaywrightServiceBrowserClient : IDisposable
     {
         lock (_lock)
         {
-            _instance ??= new PlaywrightServiceBrowserClient(credential);
-            return _instance;
-        }
-    }
-
-    /// <summary>
-    /// Creates (if needed) or returns the singleton instance with options and a token credential.
-    /// </summary>
-    /// <param name="credential">The token credential.</param>
-    /// <param name="options">The client options.</param>
-    /// <returns>The singleton instance.</returns>
-    public static PlaywrightServiceBrowserClient CreateInstance(TokenCredential credential, PlaywrightServiceBrowserClientOptions options)
-    {
-        lock (_lock)
-        {
-            _instance ??= new PlaywrightServiceBrowserClient(credential, options);
-            return _instance;
+            if (_instance == null || !_instance.IsValueCreated)
+            {
+                _instance = new Lazy<PlaywrightServiceBrowserClient>(
+                    () => new PlaywrightServiceBrowserClient(credential),
+                    LazyThreadSafetyMode.ExecutionAndPublication);
+            }
+            return _instance.Value;
         }
     }
 
@@ -117,49 +84,26 @@ public class PlaywrightServiceBrowserClient : IDisposable
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="PlaywrightServiceBrowserClient"/> class.
-    /// Protected to allow framework-specific wrappers to derive and invoke.
+    /// Private constructor for singleton pattern.
+    /// Initializes safe defaults to satisfy non-nullable fields.
     /// </summary>
-    /// <param name="credential">The token credential.</param>
-    protected PlaywrightServiceBrowserClient(TokenCredential credential) : this(options: new PlaywrightServiceBrowserClientOptions(), tokenCredential: credential)
+    private PlaywrightServiceBrowserClient(bool _)
     {
-        // No-op
+        _environment = new EnvironmentHandler();
+        _playwrightVersion = new PlaywrightVersion();
+        _clientUtility = new ClientUtilities(_environment, playwrightVersion: _playwrightVersion);
+        _ciProvider = new CIProvider(_environment);
+        _options = new PlaywrightServiceBrowserClientOptions(PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview, environment: _environment, clientUtility: _clientUtility);
+        _logger = _options.Logger;
+        _jsonWebTokenHandler = new JsonWebTokenHandler();
+        _entraLifecycle = new EntraLifecycle(jsonWebTokenHandler: _jsonWebTokenHandler, logger: _logger, environment: _environment, tokenCredential: null);
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="PlaywrightServiceBrowserClient"/> class.
-    /// Protected to allow framework-specific wrappers to derive and invoke.
+    /// Private constructor for singleton pattern.
     /// </summary>
-    /// <param name="options">The client options.</param>
-    protected PlaywrightServiceBrowserClient(PlaywrightServiceBrowserClientOptions options) : this(
-        environment: null,
-        entraLifecycle: null,
-        jsonWebTokenHandler: null,
-        logger: null,
-        clientUtility: null,
-        ciProvider: null,
-        options: options
-    )
-    {
-        // No-op
-    }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="PlaywrightServiceBrowserClient"/> class.
-    /// Protected to allow framework-specific wrappers to derive and invoke.
-    /// </summary>
-    /// <param name="options">The client options.</param>
     /// <param name="credential">The token credential.</param>
-    protected PlaywrightServiceBrowserClient(TokenCredential credential, PlaywrightServiceBrowserClientOptions options) : this(
-        environment: null,
-        entraLifecycle: null,
-        jsonWebTokenHandler: null,
-        logger: null,
-        clientUtility: null,
-        ciProvider: null,
-        options: options,
-        tokenCredential: credential
-    )
+    private PlaywrightServiceBrowserClient(TokenCredential credential) : this(options: new PlaywrightServiceBrowserClientOptions(), tokenCredential: credential)
     {
         // No-op
     }
@@ -297,6 +241,38 @@ public class PlaywrightServiceBrowserClient : IDisposable
     }
 
     /// <summary>
+    /// Gets connect options using the provided client <paramref name="options"/> without needing to initialize the singleton.
+    /// </summary>
+    /// <typeparam name="T">The type of the connect options.</typeparam>
+    /// <param name="options">The client options to use for this call only.</param>
+    /// <param name="credential">Optional token credential (required for Entra Id).</param>
+    /// <param name="os">Optional OS override for this call.</param>
+    /// <param name="runId">Optional runId override for this call.</param>
+    /// <param name="exposeNetwork">Optional exposeNetwork override for this call.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <remarks>
+    /// This overload reuses a shared internal client created on first call to minimize setup and token rotation overhead across tests.
+    /// Prefer passing consistent <paramref name="options"/> values between calls in the same process.
+    /// </remarks>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+// Suppress AZC0003 as this is a static convenience method, not an instance service method.
+#pragma warning disable AZC0003 // DO make service methods virtual.
+    public static async Task<ConnectOptions<T>> GetConnectOptionsAsync<T>(
+        PlaywrightServiceBrowserClientOptions options,
+        TokenCredential? credential = null,
+        OSPlatform? os = null,
+        string? runId = null,
+        string? exposeNetwork = null,
+        CancellationToken cancellationToken = default) where T : class, new()
+#pragma warning restore AZC0015 // Unexpected client method return type.
+#pragma warning restore AZC0003 // DO make service methods virtual.
+    {
+        var client = GetOrCreateSharedStaticClient(options, credential);
+        // Let instance method handle initialization and connect option construction.
+        return await client.GetConnectOptionsAsync<T>(os, runId, exposeNetwork, cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <summary>
     /// Gets the connect options for connecting to Playwright Service's cloud hosted browsers.
     /// </summary>
     /// <typeparam name="T">The type of the connect options.</typeparam>
@@ -354,11 +330,58 @@ public class PlaywrightServiceBrowserClient : IDisposable
     }
 
     /// <summary>
+    /// Gets connect options using the provided client <paramref name="options"/> without needing to initialize the singleton (synchronous version).
+    /// </summary>
+    /// <typeparam name="T">The type of the connect options.</typeparam>
+    /// <param name="options">The client options to use for this call only.</param>
+    /// <param name="credential">Optional token credential (required for Entra Id).</param>
+    /// <param name="os">Optional OS override for this call.</param>
+    /// <param name="runId">Optional runId override for this call.</param>
+    /// <param name="exposeNetwork">Optional exposeNetwork override for this call.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+// Suppress AZC0003 as this is a static convenience method, not an instance service method.
+#pragma warning disable AZC0003 // DO make service methods virtual.
+    public static ConnectOptions<T> GetConnectOptions<T>(
+        PlaywrightServiceBrowserClientOptions options,
+        TokenCredential? credential = null,
+        OSPlatform? os = null,
+        string? runId = null,
+        string? exposeNetwork = null,
+        CancellationToken cancellationToken = default) where T : class, new()
+#pragma warning restore AZC0015 // Unexpected client method return type.
+#pragma warning restore AZC0003 // DO make service methods virtual.
+    {
+        var client = GetOrCreateSharedStaticClient(options, credential);
+        return client.GetConnectOptions<T>(os, runId, exposeNetwork, cancellationToken);
+    }
+
+    private static PlaywrightServiceBrowserClient GetOrCreateSharedStaticClient(PlaywrightServiceBrowserClientOptions options, TokenCredential? credential)
+    {
+        lock (_sharedStaticClientLock)
+        {
+            if (_sharedStaticClient is null)
+            {
+                _sharedStaticClient = new PlaywrightServiceBrowserClient(
+                    environment: null,
+                    entraLifecycle: null,
+                    jsonWebTokenHandler: null,
+                    ciProvider: null,
+                    logger: options.Logger,
+                    clientUtility: null,
+                    options: options,
+                    tokenCredential: credential,
+                    playwrightVersion: null,
+                    testRunUpdateClient: null);
+            }
+            return _sharedStaticClient;
+        }
+    }
+
+    /// <summary>
     /// Initialises the resources used to setup entra id authentication.
     /// </summary>
-#pragma warning disable AZC0015 // Unexpected client method return type.
-    public virtual async Task InitializeAsync(CancellationToken cancellationToken = default)
-#pragma warning restore AZC0015 // Unexpected client method return type.
+    internal async Task InitializeAsync(CancellationToken cancellationToken = default)
     {
         _logger?.LogInformation("Running tests using Azure Playwright service.");
         if (string.IsNullOrEmpty(_options.ServiceEndpoint))
@@ -387,15 +410,12 @@ public class PlaywrightServiceBrowserClient : IDisposable
         RotationTimer = new Timer(RotationHandlerAsync, null, TimeSpan.FromMinutes(Constants.s_entra_access_token_rotation_interval_period_in_minutes), TimeSpan.FromMinutes(Constants.s_entra_access_token_rotation_interval_period_in_minutes));
         string? entraIdToken = _entraLifecycle.GetEntraIdAccessToken();
         await CreateTestRunPatchCallAsync(entraIdToken, cancellationToken).ConfigureAwait(false);
-        _initialized = true;
     }
 
     /// <summary>
     /// Initialises the resources used to setup entra id authentication.
     /// </summary>
-#pragma warning disable AZC0015 // Unexpected client method return type.
-    public virtual void Initialize(CancellationToken cancellationToken = default)
-#pragma warning restore AZC0015 // Unexpected client method return type.
+    internal void Initialize(CancellationToken cancellationToken = default)
     {
         _logger?.LogInformation("Running tests using Azure Playwright service.");
         if (string.IsNullOrEmpty(_options.ServiceEndpoint))
@@ -431,7 +451,6 @@ public class PlaywrightServiceBrowserClient : IDisposable
         RotationTimer = new Timer(RotationHandlerAsync, null, TimeSpan.FromMinutes(Constants.s_entra_access_token_rotation_interval_period_in_minutes), TimeSpan.FromMinutes(Constants.s_entra_access_token_rotation_interval_period_in_minutes));
         string? entraIdToken = _entraLifecycle.GetEntraIdAccessToken();
         CreateTestRunPatchCall(entraIdToken);
-        _initialized = true;
     }
 
     /// <summary>
@@ -455,15 +474,26 @@ public class PlaywrightServiceBrowserClient : IDisposable
         _logger?.LogInformation("Cleaning up Playwright service resources.");
         RotationTimer?.Dispose();
 
-        // Reset the singleton instance when disposed
+        // Reset the singleton instance when disposed (allows recreation with new config)
         lock (_lock)
         {
-            if (_instance == this)
+            if (_instance.IsValueCreated && _instance.Value == this)
             {
-                _instance = null;
+                _instance = new Lazy<PlaywrightServiceBrowserClient>(
+                    () => new PlaywrightServiceBrowserClient(true),
+                    LazyThreadSafetyMode.ExecutionAndPublication);
             }
         }
         _initialized = false;
+
+        // If this instance is the shared static client, clear the shared reference.
+        lock (_sharedStaticClientLock)
+        {
+            if (ReferenceEquals(_sharedStaticClient, this))
+            {
+                _sharedStaticClient = null;
+            }
+        }
 
         GC.SuppressFinalize(this);
     }

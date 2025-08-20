@@ -10,7 +10,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Azure.Developer.Playwright\src\Azure.Developer.Playwright.csproj" />
+    <PackageReference Include="Azure.Developer.Playwright" VersionOverride="1.0.0-beta.1" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="Azure.Core" />
   </ItemGroup>

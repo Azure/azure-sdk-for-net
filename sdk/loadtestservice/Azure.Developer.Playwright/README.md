@@ -35,102 +35,54 @@ Key concepts of the Azure Playwright SDK for .NET can be found [here](https://ak
 
 ## Examples
 
-Code samples for using this SDK can be found in the following locations
+Code samples for using this SDK can be found in the following locations:
 - [.NET Azure Playwright NUnit Library Code Samples](https://aka.ms/pww/samples)
+- [SDK Samples folder](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/loadtestservice/Azure.Developer.Playwright/samples)
 
-### Use with NUnit (without the Azure.Developer.Playwright.NUnit package)
+### Simplified Usage
 
-The core package is independent of the NUnit helper package. With NUnit, add Microsoft.Playwright and Microsoft.Playwright.NUnit, then:
+You can write your Playwright test that will run on cloud-hosted browsers by extending the `PageTest` class and implementing the `ConnectOptionsAsync` method. This approach eliminates the need for separate setup files:
 
-1) Global setup/teardown with SetUpFixture — explicit initialization
-
-```csharp
-using NUnit.Framework;
-using Azure.Developer.Playwright;
-using Azure.Identity;
-
-[SetUpFixture]
-public class PlaywrightServiceSetup
-{
-    [OneTimeSetUp]
-    public async Task SetUp()
-    {
-        var options = new PlaywrightServiceBrowserClientOptions
-        {
-            UseCloudHostedBrowsers = true
-        };
-
-        PlaywrightServiceBrowserClient.CreateInstance(new DefaultAzureCredential(), options);
-        await PlaywrightServiceBrowserClient.Instance.InitializeAsync();
-    }
-
-    [OneTimeTearDown]
-    public async Task GlobalTeardown()
-    {
-        await PlaywrightServiceBrowserClient.Instance.DisposeAsync();
-    }
-}
-```
-
-2) Global setup/teardown with SetUpFixture — implicit auto-initialization
-
-```csharp
-using NUnit.Framework;
-using Azure.Developer.Playwright;
-using Azure.Identity;
-
-[SetUpFixture]
-public class PlaywrightServiceSetup
-{
-    [OneTimeSetUp]
-    public void SetUp()
-    {
-        // First GetConnectOptions call will auto-initialize the client.
-        PlaywrightServiceBrowserClient.CreateInstance(
-            new DefaultAzureCredential(),
-            new PlaywrightServiceBrowserClientOptions { UseCloudHostedBrowsers = true });
-    }
-
-    [OneTimeTearDown]
-    public async Task GlobalTeardown()
-    {
-        await PlaywrightServiceBrowserClient.Instance.DisposeAsync();
-    }
-}
-```
-
-3) Provide cloud connection options to Playwright
-
-```csharp
+```C# Snippet:ServicePageTest
 using Microsoft.Playwright;
 using Microsoft.Playwright.NUnit;
 using Azure.Developer.Playwright;
+using Azure.Identity;
+using System.Runtime.InteropServices;
 
 public class ServicePageTest : PageTest
 {
     public override async Task<(string, BrowserTypeConnectOptions?)?> ConnectOptionsAsync()
     {
-        var client = PlaywrightServiceBrowserClient.Instance; // auto-initializes if not already
-        var connect = await client.GetConnectOptionsAsync<BrowserTypeConnectOptions>();
-        return (connect.WsEndpoint, connect.Options);
+        PlaywrightServiceBrowserClient.CreateInstance(
+            credential: new DefaultAzureCredential(),
+            options: new PlaywrightServiceBrowserClientOptions
+            {
+                UseCloudHostedBrowsers = true,
+                OS = OSPlatform.Linux,
+                ExposeNetwork = "<loopback>",
+                RunName = "Playwright Service Test Run",
+                ServiceAuth = ServiceAuthType.EntraId,
+                Logger = new NUnitLogger("PlaywrightService")
+            });
+        var connectOptions = await PlaywrightServiceBrowserClient.Instance.GetConnectOptionsAsync<BrowserTypeConnectOptions>();
+        return (connectOptions.WsEndpoint, connectOptions.Options);
     }
 }
 ```
 
 Notes:
-- InitializeAsync is optional because the client auto-initialize on the first getConnectOption call.
+- The client auto-initializes on the first `GetConnectOptionsAsync` call.
 - Reference Microsoft.Playwright.NUnit 1.50.0 or newer.
-- If using Microsoft Entra ID, pass a TokenCredential to CreateInstance (e.g., DefaultAzureCredential).
+- No separate setup file is needed - everything is configured in the test class.
 
-### Enable logging (optional)
 
-You can pass an ILogger via options to surface client logs. 
 
-#### NUnit-integrated logger
+#### Enable logging using NUnit-integrated logger (optional)
 
-This logger writes to both console and NUnit's TestContext panes so all messages appear in test results:
+This logger writes NUnit's TestContext panes so all messages appear in test results. Use this implementation as shown in the main example:
 
-```csharp
+```C# Snippet:NUnitLogger
 using System;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
@@ -150,10 +102,6 @@ internal class NUnitLogger(string? category = null, LogLevel minLevel = LogLevel
         if (exception != null) msg += "\n" + exception;
 
         var prefix = _category ?? "AzurePlaywright";
-        
-        var writer = (logLevel == LogLevel.Error || logLevel == LogLevel.Critical) 
-            ? Console.Error : Console.Out;
-        writer.WriteLine($"{DateTime.Now:yyyy-MM-dd HH:mm:ss} [{logLevel}] {prefix}: {msg}");
 
         try
         {
@@ -167,7 +115,7 @@ internal class NUnitLogger(string? category = null, LogLevel minLevel = LogLevel
         }
         catch
         {
-          
+            // Ignore if TestContext is unavailable (e.g., teardown race)
         }
     }
 
@@ -177,15 +125,9 @@ internal class NUnitLogger(string? category = null, LogLevel minLevel = LogLevel
         public void Dispose() { }
     }
 }
-// Usage in SetUpFixture
-ILogger logger = new NUnitLogger("AzurePlaywright");
-var options = new PlaywrightServiceBrowserClientOptions 
-{ 
-    UseCloudHostedBrowsers = true,
-    Logger = logger
-};
-PlaywrightServiceBrowserClient.CreateInstance(new DefaultAzureCredential(), options);
 ```
+
+The logger is used by passing it in the `PlaywrightServiceBrowserClientOptions` as shown in the main example above.
 
 
 ## Troubleshooting
