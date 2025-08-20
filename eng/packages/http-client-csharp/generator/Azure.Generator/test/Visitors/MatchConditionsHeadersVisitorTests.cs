@@ -3,7 +3,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Generator.Providers;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
 using Azure.Generator.Visitors;
@@ -26,7 +25,8 @@ namespace Azure.Generator.Tests.Visitors
         public void TestUpdatesParametersInMethods_AllMatchConditionHeaderParameters()
         {
             var visitor = new TestMatchConditionsHeaderVisitor();
-            var parameters = CreateAllMatchConditionParameters();
+            var methodParameters = CreateAllMatchConditionMethodParameters();
+            var parameters = CreateAllMatchConditionHttpParameters();
             var responseModel = InputFactory.Model("foo");
             var operation = InputFactory.Operation(
                 "foo",
@@ -35,7 +35,7 @@ namespace Azure.Generator.Tests.Visitors
             var serviceMethod = InputFactory.BasicServiceMethod(
                 "foo",
                 operation,
-                parameters: parameters,
+                parameters: methodParameters,
                 response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
             var inputClient = InputFactory.Client("TestClient", methods: [serviceMethod]);
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
@@ -58,7 +58,8 @@ namespace Azure.Generator.Tests.Visitors
         public void TestValidateCreateRequestMethod_AllMatchConditionHeaderParameters()
         {
             var visitor = new TestMatchConditionsHeaderVisitor();
-            var parameters = CreateAllMatchConditionParameters();
+            var methodParameters = CreateAllMatchConditionMethodParameters();
+            var parameters = CreateAllMatchConditionHttpParameters();
             var responseModel = InputFactory.Model("foo");
             var operation = InputFactory.Operation(
                 "foo",
@@ -67,7 +68,7 @@ namespace Azure.Generator.Tests.Visitors
             var serviceMethod = InputFactory.LongRunningServiceMethod(
                 "foo",
                 operation,
-                parameters: parameters,
+                parameters: methodParameters,
                 response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
             var inputClient = InputFactory.Client("TestClient", methods: [serviceMethod]);
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
@@ -99,6 +100,10 @@ namespace Azure.Generator.Tests.Visitors
             {
                 CreateTestParameter(conditionName.ToVariableName(), conditionName, InputRequestLocation.Header)
             };
+            var methodParameters = new List<InputMethodParameter>
+            {
+                CreateTestMethodParameter(conditionName.ToVariableName(), conditionName, InputRequestLocation.Header)
+            };
             var responseModel = InputFactory.Model("foo");
             var operation = InputFactory.Operation(
                 "foo",
@@ -107,7 +112,7 @@ namespace Azure.Generator.Tests.Visitors
             var serviceMethod = InputFactory.LongRunningServiceMethod(
                 "foo",
                 operation,
-                parameters: parameters,
+                parameters: methodParameters,
                 response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
             var inputClient = InputFactory.Client("TestClient", methods: [serviceMethod]);
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
@@ -138,6 +143,10 @@ namespace Azure.Generator.Tests.Visitors
             {
                 CreateTestParameter(conditionName.ToVariableName(), conditionName, InputRequestLocation.Header)
             };
+            var methodParameters = new List<InputMethodParameter>
+            {
+                CreateTestMethodParameter(conditionName.ToVariableName(), conditionName, InputRequestLocation.Header)
+            };
             var responseModel = InputFactory.Model("foo");
             var operation = InputFactory.Operation(
                 "foo",
@@ -146,7 +155,7 @@ namespace Azure.Generator.Tests.Visitors
             var serviceMethod = InputFactory.LongRunningServiceMethod(
                 "foo",
                 operation,
-                parameters: parameters,
+                parameters: methodParameters,
                 response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
             var inputClient = InputFactory.Client("TestClient", methods: [serviceMethod]);
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
@@ -178,6 +187,13 @@ namespace Azure.Generator.Tests.Visitors
                 CreateTestParameter("contentType", "Content-Type", InputRequestLocation.Header),
                 CreateTestParameter("foo", "foo", InputRequestLocation.Body)
             };
+            var methodParameters = new List<InputMethodParameter>
+            {
+                CreateTestMethodParameter("ifNoneMatch", "If-None-Match", InputRequestLocation.Header),
+                CreateTestMethodParameter("ifModifiedSince", "If-Modified-Since", InputRequestLocation.Header),
+                CreateTestMethodParameter("contentType", "Content-Type", InputRequestLocation.Header),
+                CreateTestMethodParameter("foo", "foo", InputRequestLocation.Body)
+            };
             var responseModel = InputFactory.Model("foo");
             var operation = InputFactory.Operation(
                 "foo",
@@ -186,7 +202,7 @@ namespace Azure.Generator.Tests.Visitors
             var serviceMethod = InputFactory.LongRunningServiceMethod(
                 "foo",
                 operation,
-                parameters: parameters,
+                parameters: methodParameters,
                 response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
             var inputClient = InputFactory.Client("TestClient", methods: [serviceMethod]);
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
@@ -216,6 +232,11 @@ namespace Azure.Generator.Tests.Visitors
                 CreateTestParameter("ifNoneMatch", "If-None-Match", InputRequestLocation.Header),
                 CreateTestParameter("ifModifiedSince", "If-Modified-Since", InputRequestLocation.Header),
             };
+            var methodParameters = new List<InputMethodParameter>
+            {
+                CreateTestMethodParameter("ifNoneMatch", "If-None-Match", InputRequestLocation.Header),
+                CreateTestMethodParameter("ifModifiedSince", "If-Modified-Since", InputRequestLocation.Header),
+            };
             var responseModel = InputFactory.Model("foo");
             var operation = InputFactory.Operation(
                 "foo",
@@ -224,7 +245,7 @@ namespace Azure.Generator.Tests.Visitors
             var serviceMethod = InputFactory.LongRunningServiceMethod(
                 "foo",
                 operation,
-                parameters: parameters,
+                parameters: methodParameters,
                 response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
             var inputClient = InputFactory.Client("TestClient", methods: [serviceMethod]);
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
@@ -263,6 +284,11 @@ namespace Azure.Generator.Tests.Visitors
                 CreateTestParameter("ifNoneMatch", "If-None-Match", InputRequestLocation.Header, isRequired),
                 CreateTestParameter("foo", "foo", InputRequestLocation.Body, isRequired),
             };
+            var methodParameters = new List<InputMethodParameter>
+            {
+                CreateTestMethodParameter("ifNoneMatch", "If-None-Match", InputRequestLocation.Header, isRequired),
+                CreateTestMethodParameter("foo", "foo", InputRequestLocation.Body, isRequired)
+            };
             var responseModel = InputFactory.Model("foo");
             var operation = InputFactory.Operation(
                 "foo",
@@ -271,7 +297,7 @@ namespace Azure.Generator.Tests.Visitors
             var serviceMethod = InputFactory.LongRunningServiceMethod(
                 "foo",
                 operation,
-                parameters: parameters,
+                parameters: methodParameters,
                 response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
             var inputClient = InputFactory.Client("TestClient", methods: [serviceMethod]);
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
@@ -306,7 +332,8 @@ namespace Azure.Generator.Tests.Visitors
         public void TestDoesNotChangeNonMatchConditionParameters()
         {
             var visitor = new TestMatchConditionsHeaderVisitor();
-            var parameters = CreateMixedParameters();
+            var parameters = CreateMixedHttpParameters();
+            var methodParameters = CreateMixedMethodParameters();
             var responseModel = InputFactory.Model("foo");
             var operation = InputFactory.Operation(
                 "foo",
@@ -315,7 +342,7 @@ namespace Azure.Generator.Tests.Visitors
             var serviceMethod = InputFactory.LongRunningServiceMethod(
                 "foo",
                 operation,
-                parameters: parameters,
+                parameters: methodParameters,
                 response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
             var inputClient = InputFactory.Client("TestClient", methods: [serviceMethod]);
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
@@ -344,6 +371,11 @@ namespace Azure.Generator.Tests.Visitors
                 CreateTestParameter("authorization", "Authorization", InputRequestLocation.Header),
                 CreateTestParameter("contentType", "Content-Type", InputRequestLocation.Header)
             };
+            var methodParameters = new List<InputMethodParameter>
+            {
+                CreateTestMethodParameter("authorization", "Authorization", InputRequestLocation.Header),
+                CreateTestMethodParameter("contentType", "Content-Type", InputRequestLocation.Header)
+            };
             var responseModel = InputFactory.Model("foo");
             var operation = InputFactory.Operation(
                 "foo",
@@ -352,7 +384,7 @@ namespace Azure.Generator.Tests.Visitors
             var serviceMethod = InputFactory.LongRunningServiceMethod(
                 "foo",
                 operation,
-                parameters: parameters,
+                parameters: methodParameters,
                 response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
             var inputClient = InputFactory.Client("TestClient", methods: [serviceMethod]);
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
@@ -384,6 +416,11 @@ namespace Azure.Generator.Tests.Visitors
                 CreateTestParameter("ifMatch", "If-Match", InputRequestLocation.Header),
                 CreateTestParameter("ifNoneMatch", "If-None-Match", InputRequestLocation.Header)
             };
+            var methodParameters = new List<InputMethodParameter>
+            {
+                CreateTestMethodParameter("ifMatch", "If-Match", InputRequestLocation.Header),
+                CreateTestMethodParameter("ifNoneMatch", "If-None-Match", InputRequestLocation.Header)
+            };
             var responseModel = InputFactory.Model("foo");
             var operation = InputFactory.Operation(
                 "foo",
@@ -392,7 +429,7 @@ namespace Azure.Generator.Tests.Visitors
             var serviceMethod = InputFactory.LongRunningServiceMethod(
                 "foo",
                 operation,
-                parameters: parameters,
+                parameters: methodParameters,
                 response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
             var inputClient = InputFactory.Client("TestClient", methods: [serviceMethod]);
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
@@ -422,6 +459,11 @@ namespace Azure.Generator.Tests.Visitors
                 CreateTestParameter("ifModifiedSince", "If-Modified-Since", InputRequestLocation.Header),
                 CreateTestParameter("ifUnmodifiedSince", "If-Unmodified-Since", InputRequestLocation.Header)
             };
+            var methodParameters = new List<InputMethodParameter>
+            {
+                CreateTestMethodParameter("ifModifiedSince", "If-Modified-Since", InputRequestLocation.Header),
+                CreateTestMethodParameter("ifUnmodifiedSince", "If-Unmodified-Since", InputRequestLocation.Header)
+            };
             var responseModel = InputFactory.Model("foo");
             var operation = InputFactory.Operation(
                 "foo",
@@ -430,7 +472,7 @@ namespace Azure.Generator.Tests.Visitors
             var serviceMethod = InputFactory.LongRunningServiceMethod(
                 "foo",
                 operation,
-                parameters: parameters,
+                parameters: methodParameters,
                 response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
             var inputClient = InputFactory.Client("TestClient", methods: [serviceMethod]);
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
@@ -461,6 +503,12 @@ namespace Azure.Generator.Tests.Visitors
                 CreateTestParameter("ifModifiedSince", "If-Modified-Since", InputRequestLocation.Header),
                 CreateTestParameter("someOtherParam", "some-other-param", InputRequestLocation.Query)
             };
+            var methodParameters = new List<InputMethodParameter>
+            {
+                CreateTestMethodParameter("ifMatch", "If-Match", InputRequestLocation.Header),
+                CreateTestMethodParameter("ifModifiedSince", "If-Modified-Since", InputRequestLocation.Header),
+                CreateTestMethodParameter("someOtherParam", "some-other-param", InputRequestLocation.Query)
+            };
             var responseModel = InputFactory.Model("foo");
             var operation = InputFactory.Operation(
                 "foo",
@@ -469,7 +517,7 @@ namespace Azure.Generator.Tests.Visitors
             var serviceMethod = InputFactory.LongRunningServiceMethod(
                 "foo",
                 operation,
-                parameters: parameters,
+                parameters: methodParameters,
                 response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
             var inputClient = InputFactory.Client("TestClient", methods: [serviceMethod]);
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
@@ -509,7 +557,7 @@ namespace Azure.Generator.Tests.Visitors
                         InputFactory.Property("cats", InputFactory.Array(inputModel)),
                         InputFactory.Property("nextCat", InputPrimitiveType.Url)
                     ]));
-            var operation = InputFactory.Operation("getCats", parameters: [.. CreateAllMatchConditionParameters()], responses: [response]);
+            var operation = InputFactory.Operation("getCats", parameters: [.. CreateAllMatchConditionHttpParameters()], responses: [response]);
             var inputServiceMethod = InputFactory.PagingServiceMethod("getCats", operation, pagingMetadata: pagingMetadata);
             var client = InputFactory.Client("catClient", methods: [inputServiceMethod]);
 
@@ -541,7 +589,19 @@ namespace Azure.Generator.Tests.Visitors
             Assert.IsNull(ifMatchField, "If-Match field should not be present in the collection result definition.");
         }
 
-        private static List<InputParameter> CreateAllMatchConditionParameters()
+        private static List<InputMethodParameter> CreateAllMatchConditionMethodParameters()
+        {
+            List<InputMethodParameter> parameters =
+            [
+                CreateTestMethodParameter("ifMatch", "If-Match", InputRequestLocation.Header),
+                CreateTestMethodParameter("ifNoneMatch", "If-None-Match", InputRequestLocation.Header),
+                CreateTestMethodParameter("ifModifiedSince", "If-Modified-Since", InputRequestLocation.Header),
+                CreateTestMethodParameter("ifUnmodifiedSince", "If-Unmodified-Since", InputRequestLocation.Header)
+            ];
+            return parameters;
+        }
+
+        private static List<InputParameter> CreateAllMatchConditionHttpParameters()
         {
             List<InputParameter> parameters =
             [
@@ -553,12 +613,22 @@ namespace Azure.Generator.Tests.Visitors
             return parameters;
         }
 
-        private static List<InputParameter> CreateMixedParameters()
+        private static List<InputParameter> CreateMixedHttpParameters()
         {
             List<InputParameter> parameters =
             [
                 CreateTestParameter("ifMatch", "If-Match", InputRequestLocation.Header),
                 CreateTestParameter("some-other-parameter", "some-other-parameter", InputRequestLocation.Header)
+            ];
+            return parameters;
+        }
+
+        private static List<InputMethodParameter> CreateMixedMethodParameters()
+        {
+            List<InputMethodParameter> parameters =
+            [
+                CreateTestMethodParameter("ifMatch", "If-Match", InputRequestLocation.Header),
+                CreateTestMethodParameter("some-other-parameter", "some-other-parameter", InputRequestLocation.Header)
             ];
             return parameters;
         }
@@ -569,10 +639,40 @@ namespace Azure.Generator.Tests.Visitors
             InputRequestLocation location,
             bool isRequired = false)
         {
-            return InputFactory.Parameter(
+            if (location == InputRequestLocation.Header)
+            {
+                return InputFactory.HeaderParameter(
+                    name,
+                    type: InputPrimitiveType.String,
+                    serializedName: nameInRequest,
+                    isRequired: isRequired);
+            }
+            if (location == InputRequestLocation.Query)
+            {
+                return InputFactory.QueryParameter(
+                    name,
+                    type: InputPrimitiveType.String,
+                    serializedName: nameInRequest,
+                    isRequired: isRequired);
+            }
+
+            return InputFactory.BodyParameter(
                 name,
                 type: InputPrimitiveType.String,
-                nameInRequest: nameInRequest,
+                serializedName: nameInRequest,
+                isRequired: isRequired);
+        }
+
+        private static InputMethodParameter CreateTestMethodParameter(
+            string name,
+            string nameInRequest,
+            InputRequestLocation location,
+            bool isRequired = false)
+        {
+            return InputFactory.MethodParameter(
+                name,
+                type: InputPrimitiveType.String,
+                serializedName: nameInRequest,
                 location: location,
                 isRequired: isRequired);
         }

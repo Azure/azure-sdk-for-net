@@ -35,8 +35,9 @@ namespace BasicTypeSpec
         public override async IAsyncEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
+            PageThingModel result = (PageThingModel)response;
             List<BinaryData> items = new List<BinaryData>();
-            foreach (var item in ((PageThingModel)response).Items)
+            foreach (var item in result.Items)
             {
                 items.Add(BinaryData.FromObjectAsJson(item));
             }

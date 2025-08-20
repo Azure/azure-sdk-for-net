@@ -22,20 +22,20 @@ namespace Client.Overload
 
         public virtual HttpPipeline Pipeline => throw null;
 
-        public virtual Response Get(RequestContext context) => throw null;
+        public virtual Response GetAll(RequestContext context) => throw null;
 
-        public virtual Task<Response> GetAsync(RequestContext context) => throw null;
+        public virtual Task<Response> GetAllAsync(RequestContext context) => throw null;
 
-        public virtual Response<IReadOnlyList<Resource>> Get(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<IReadOnlyList<Resource>> GetAll(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<IReadOnlyList<Resource>>> GetAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response<IReadOnlyList<Resource>>> GetAllAsync(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Response Get(string scope, RequestContext context) => throw null;
+        public virtual Response GetAll(string scope, RequestContext context) => throw null;
 
-        public virtual Task<Response> GetAsync(string scope, RequestContext context) => throw null;
+        public virtual Task<Response> GetAllAsync(string scope, RequestContext context) => throw null;
 
-        public virtual Response<IReadOnlyList<Resource>> Get(string scope, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<IReadOnlyList<Resource>> GetAll(string scope, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<IReadOnlyList<Resource>>> GetAsync(string scope, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response<IReadOnlyList<Resource>>> GetAllAsync(string scope, CancellationToken cancellationToken = default) => throw null;
     }
 }

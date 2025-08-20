@@ -48,7 +48,8 @@ namespace MgmtTypeSpec.Mocking
 
         /// <summary> List Zoo resources by subscription ID. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<ZooResource> GetBySubscriptionAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ZooResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ZooResource> GetZoosAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -59,7 +60,8 @@ namespace MgmtTypeSpec.Mocking
 
         /// <summary> List Zoo resources by subscription ID. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<ZooResource> GetBySubscription(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ZooResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ZooResource> GetZoos(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {

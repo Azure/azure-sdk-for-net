@@ -345,7 +345,6 @@ namespace Azure.ResourceManager.Fabric
             uri.AppendPath(capacityName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -595,7 +594,6 @@ namespace Azure.ResourceManager.Fabric
             uri.AppendPath("/resume", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -681,7 +679,6 @@ namespace Azure.ResourceManager.Fabric
             uri.AppendPath("/suspend", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
