@@ -409,6 +409,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             return base.GetCustomAccountSas(permissions, services, resourceType, sharedKeyCredential);
         }
 
+        public Dictionary<string, string> BuildTags()
+            => new Dictionary<string, string>
+            {
+                { "tagKey0", "tagValue0" },
+                { "tagKey1", "tagValue1" }
+            };
+
         public DataLakeSignedIdentifier[] BuildSignedIdentifiers() =>
             new[]
             {
