@@ -26,8 +26,6 @@ namespace Azure.ResourceManager.BotService.Mocking
         private QnAMakerEndpointKeysOperationGroupRestOperations _qnAMakerEndpointKeysOperationGroupRestClient;
         private ClientDiagnostics _hostSettingsOperationGroupClientDiagnostics;
         private HostSettingsOperationGroupRestOperations _hostSettingsOperationGroupRestClient;
-        private ClientDiagnostics _operationResultsOperationGroupClientDiagnostics;
-        private OperationResultsOperationGroupRestOperations _operationResultsOperationGroupRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableBotServiceSubscriptionResource"/> class for mocking. </summary>
         protected MockableBotServiceSubscriptionResource()
@@ -49,8 +47,6 @@ namespace Azure.ResourceManager.BotService.Mocking
         private QnAMakerEndpointKeysOperationGroupRestOperations QnAMakerEndpointKeysOperationGroupRestClient => _qnAMakerEndpointKeysOperationGroupRestClient ??= new QnAMakerEndpointKeysOperationGroupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics HostSettingsOperationGroupClientDiagnostics => _hostSettingsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BotService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private HostSettingsOperationGroupRestOperations HostSettingsOperationGroupRestClient => _hostSettingsOperationGroupRestClient ??= new HostSettingsOperationGroupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics OperationResultsOperationGroupClientDiagnostics => _operationResultsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.BotService", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private OperationResultsOperationGroupRestOperations OperationResultsOperationGroupRestClient => _operationResultsOperationGroupRestClient ??= new OperationResultsOperationGroupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -304,92 +300,6 @@ namespace Azure.ResourceManager.BotService.Mocking
             {
                 var response = HostSettingsOperationGroupRestClient.GetBotServiceHostSettings(Id.SubscriptionId, cancellationToken);
                 return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the operation result for a long running operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.BotService/operationresults/{operationResultId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OperationResultsOperationGroup_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="operationResultId"> The ID of the operation result to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationResultId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationResultId"/> is null. </exception>
-        public virtual async Task<ArmOperation<OperationResultsDescription>> GetOperationResultsOperationGroupAsync(WaitUntil waitUntil, string operationResultId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationResultId, nameof(operationResultId));
-
-            using var scope = OperationResultsOperationGroupClientDiagnostics.CreateScope("MockableBotServiceSubscriptionResource.GetOperationResultsOperationGroup");
-            scope.Start();
-            try
-            {
-                var response = await OperationResultsOperationGroupRestClient.GetAsync(Id.SubscriptionId, operationResultId, cancellationToken).ConfigureAwait(false);
-                var operation = new BotServiceArmOperation<OperationResultsDescription>(new OperationResultsDescriptionOperationSource(), OperationResultsOperationGroupClientDiagnostics, Pipeline, OperationResultsOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, operationResultId).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the operation result for a long running operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.BotService/operationresults/{operationResultId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>OperationResultsOperationGroup_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="operationResultId"> The ID of the operation result to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationResultId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationResultId"/> is null. </exception>
-        public virtual ArmOperation<OperationResultsDescription> GetOperationResultsOperationGroup(WaitUntil waitUntil, string operationResultId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationResultId, nameof(operationResultId));
-
-            using var scope = OperationResultsOperationGroupClientDiagnostics.CreateScope("MockableBotServiceSubscriptionResource.GetOperationResultsOperationGroup");
-            scope.Start();
-            try
-            {
-                var response = OperationResultsOperationGroupRestClient.Get(Id.SubscriptionId, operationResultId, cancellationToken);
-                var operation = new BotServiceArmOperation<OperationResultsDescription>(new OperationResultsDescriptionOperationSource(), OperationResultsOperationGroupClientDiagnostics, Pipeline, OperationResultsOperationGroupRestClient.CreateGetRequest(Id.SubscriptionId, operationResultId).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {

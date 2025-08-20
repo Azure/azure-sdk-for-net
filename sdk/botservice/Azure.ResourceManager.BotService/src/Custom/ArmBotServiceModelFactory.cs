@@ -8,8 +8,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.BotService.Models
 {
@@ -26,11 +24,9 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.BotConnectionSettingProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BotConnectionSettingProperties BotConnectionSettingProperties(string clientId = null, string settingId = null, string clientSecret = null, string scopes = null, string serviceProviderId = null, string serviceProviderDisplayName = null, IEnumerable<BotConnectionSettingParameter> parameters = null, string provisioningState = null)
+        public static BotConnectionSettingProperties BotConnectionSettingProperties(string clientId, string settingId, string clientSecret, string scopes, string serviceProviderId, string serviceProviderDisplayName, IEnumerable<BotConnectionSettingParameter> parameters, string provisioningState)
         {
-            parameters ??= new List<BotConnectionSettingParameter>();
-
-            return new BotConnectionSettingProperties(
+            return BotConnectionSettingProperties(
                 id: null,
                 name: null,
                 clientId,
@@ -40,8 +36,7 @@ namespace Azure.ResourceManager.BotService.Models
                 serviceProviderId,
                 serviceProviderDisplayName,
                 parameters?.ToList(),
-                provisioningState,
-                serializedAdditionalRawData: null);
+                provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BotProperties"/>. </summary>
@@ -91,7 +86,7 @@ namespace Azure.ResourceManager.BotService.Models
             luisAppIds ??= new List<string>();
             privateEndpointConnections ??= new List<BotServicePrivateEndpointConnectionData>();
 
-            return new BotProperties(
+            return BotProperties(
                 displayName,
                 description,
                 iconUri,
@@ -127,8 +122,7 @@ namespace Azure.ResourceManager.BotService.Models
                 openWithHint,
                 appPasswordHint,
                 provisioningState,
-                publishingCredentials,
-                serializedAdditionalRawData: null);
+                publishingCredentials);
         }
     }
 }

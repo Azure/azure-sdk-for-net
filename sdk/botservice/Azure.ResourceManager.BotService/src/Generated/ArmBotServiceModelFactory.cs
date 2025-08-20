@@ -1140,16 +1140,5 @@ namespace Azure.ResourceManager.BotService.Models
                 botOpenIdMetadata,
                 serializedAdditionalRawData: null);
         }
-
-        /// <summary> Initializes a new instance of <see cref="Models.OperationResultsDescription"/>. </summary>
-        /// <param name="id"> The ID of the operation returned. </param>
-        /// <param name="name"> The name of the operation result. </param>
-        /// <param name="status"> The status of the operation being performed. </param>
-        /// <param name="startOn"> The time that the operation was started. </param>
-        /// <returns> A new <see cref="Models.OperationResultsDescription"/> instance for mocking. </returns>
-        public static OperationResultsDescription OperationResultsDescription(string id = null, string name = null, OperationResultStatus? status = null, DateTimeOffset? startOn = null)
-        {
-            return new OperationResultsDescription(id, name, status, startOn, serializedAdditionalRawData: null);
-        }
     }
 }
