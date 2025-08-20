@@ -85,6 +85,9 @@
 # ServiceLabel: %AAD
 # ServiceOwners:                                                   @adamedx
 
+# ServiceLabel: %TestContosoLabel
+# ServiceOwners:                                                   @shirelmr
+
 # ServiceLabel: %Advisor
 # ServiceOwners:                                                   @mojayara @Prasanna-Padmanabhan
 
