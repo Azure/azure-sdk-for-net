@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
@@ -35,7 +34,7 @@ namespace Azure.ResourceManager.BotService.Models
                 scopes,
                 serviceProviderId,
                 serviceProviderDisplayName,
-                parameters?.ToList(),
+                parameters,
                 provisioningState);
         }
 
@@ -77,15 +76,8 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="publishingCredentials"> Publishing credentials of the resource. </param>
         /// <returns> A new <see cref="Models.BotProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BotProperties BotProperties(string displayName = null, string description = null, Uri iconUri = null, Uri endpoint = null, string endpointVersion = null, IDictionary<string, string> allSettings = null, IDictionary<string, string> parameters = null, Uri manifestUri = null, BotMsaAppType? msaAppType = null, string msaAppId = null, string msaAppTenantId = null, ResourceIdentifier msaAppMSIResourceId = null, IEnumerable<string> configuredChannels = null, IEnumerable<string> enabledChannels = null, string developerAppInsightKey = null, string developerAppInsightsApiKey = null, string developerAppInsightsApplicationId = null, IEnumerable<string> luisAppIds = null, string luisKey = null, bool? isCmekEnabled = null, Uri cmekKeyVaultUri = null, string cmekEncryptionStatus = null, Guid? tenantId = null, BotServicePublicNetworkAccess? publicNetworkAccess = null, bool? isStreamingSupported = null, bool? isDeveloperAppInsightsApiKeySet = null, string migrationToken = null, bool? isLocalAuthDisabled = null, string schemaTransformationVersion = null, ResourceIdentifier storageResourceId = null, IEnumerable<BotServicePrivateEndpointConnectionData> privateEndpointConnections = null, string openWithHint = null, string appPasswordHint = null, string provisioningState = null, string publishingCredentials = null)
+        public static BotProperties BotProperties(string displayName, string description, Uri iconUri, Uri endpoint, string endpointVersion, IDictionary<string, string> allSettings, IDictionary<string, string> parameters, Uri manifestUri, BotMsaAppType? msaAppType, string msaAppId, string msaAppTenantId, ResourceIdentifier msaAppMSIResourceId, IEnumerable<string> configuredChannels, IEnumerable<string> enabledChannels, string developerAppInsightKey, string developerAppInsightsApiKey, string developerAppInsightsApplicationId, IEnumerable<string> luisAppIds, string luisKey, bool? isCmekEnabled, Uri cmekKeyVaultUri, string cmekEncryptionStatus, Guid? tenantId, BotServicePublicNetworkAccess? publicNetworkAccess, bool? isStreamingSupported, bool? isDeveloperAppInsightsApiKeySet, string migrationToken, bool? isLocalAuthDisabled, string schemaTransformationVersion, ResourceIdentifier storageResourceId, IEnumerable<BotServicePrivateEndpointConnectionData> privateEndpointConnections, string openWithHint = null, string appPasswordHint = null, string provisioningState = null, string publishingCredentials = null)
         {
-            allSettings ??= new Dictionary<string, string>();
-            parameters ??= new Dictionary<string, string>();
-            configuredChannels ??= new List<string>();
-            enabledChannels ??= new List<string>();
-            luisAppIds ??= new List<string>();
-            privateEndpointConnections ??= new List<BotServicePrivateEndpointConnectionData>();
-
             return BotProperties(
                 displayName,
                 description,
@@ -99,12 +91,12 @@ namespace Azure.ResourceManager.BotService.Models
                 msaAppId,
                 msaAppTenantId,
                 msaAppMSIResourceId,
-                configuredChannels?.ToList(),
-                enabledChannels?.ToList(),
+                configuredChannels,
+                enabledChannels,
                 developerAppInsightKey,
                 developerAppInsightsApiKey,
                 developerAppInsightsApplicationId,
-                luisAppIds?.ToList(),
+                luisAppIds,
                 luisKey,
                 isCmekEnabled,
                 cmekKeyVaultUri,
@@ -117,7 +109,7 @@ namespace Azure.ResourceManager.BotService.Models
                 isLocalAuthDisabled,
                 schemaTransformationVersion,
                 storageResourceId,
-                privateEndpointConnections?.ToList(),
+                privateEndpointConnections,
                 networkSecurityPerimeterConfigurations: null,
                 openWithHint,
                 appPasswordHint,
