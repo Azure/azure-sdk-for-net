@@ -222,6 +222,111 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        [NonParallelizable]
+        [Category("NonVirtualized")]
+        public async Task GetSetServicePropertiesAsync_EncryptionInTransit_SMB()
+        {
+            // Arrange
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
+
+            // Act
+            Response<ShareServiceProperties> propertiesResponse = await service.GetPropertiesAsync();
+            ShareServiceProperties properties = propertiesResponse.Value;
+
+            if (properties.Protocol.Smb.EncryptionInTransit?.Required == true)
+            {
+                // Act
+                properties.Protocol.Smb.Multichannel = null;
+                properties.Protocol.Smb.EncryptionInTransit.Required = false;
+                await service.SetPropertiesAsync(properties);
+                propertiesResponse = await service.GetPropertiesAsync();
+                properties = propertiesResponse.Value;
+
+                // Assert
+                Assert.IsFalse(properties.Protocol.Smb.EncryptionInTransit.Required);
+
+                // Cleanup
+                properties.Protocol.Smb.EncryptionInTransit.Required = false;
+                properties.Protocol.Smb.Multichannel = null;
+
+                await service.SetPropertiesAsync(properties);
+            }
+            else
+            {
+                // Act
+                properties.Protocol.Smb.EncryptionInTransit = new ShareSmbSettingsEncryptionInTransit
+                {
+                    Required = true
+                };
+                properties.Protocol.Smb.Multichannel = null;
+                await service.SetPropertiesAsync(properties);
+                propertiesResponse = await service.GetPropertiesAsync();
+                properties = propertiesResponse.Value;
+
+                // Assert
+                Assert.IsTrue(properties.Protocol.Smb.EncryptionInTransit.Required);
+
+                // Cleanup
+                properties.Protocol.Smb.Multichannel = null;
+                properties.Protocol.Smb.EncryptionInTransit.Required = false;
+                await service.SetPropertiesAsync(properties);
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        [NonParallelizable]
+        [Category("NonVirtualized")]
+        public async Task GetSetServicePropertiesAsync_EncryptionInTransit_NFS()
+        {
+            // Arrange
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_PremiumFile();
+
+            // Act
+            Response<ShareServiceProperties> propertiesResponse = await service.GetPropertiesAsync();
+            ShareServiceProperties properties = propertiesResponse.Value;
+
+            if (properties.Protocol.Nfs?.EncryptionInTransit?.Required == true)
+            {
+                // Act
+                properties.Protocol.Nfs.EncryptionInTransit.Required = false;
+                await service.SetPropertiesAsync(properties);
+                propertiesResponse = await service.GetPropertiesAsync();
+                properties = propertiesResponse.Value;
+
+                // Assert
+                Assert.IsFalse(properties.Protocol.Smb.EncryptionInTransit.Required);
+
+                // Cleanup
+                properties.Protocol.Smb.EncryptionInTransit.Required = true;
+                await service.SetPropertiesAsync(properties);
+            }
+            else
+            {
+                // Act
+                if (properties.Protocol.Nfs == null)
+                {
+                    properties.Protocol.Nfs = new ShareNfsSettings();
+                }
+                properties.Protocol.Nfs.EncryptionInTransit = new ShareNfsSettingsEncryptionInTransit
+                {
+                    Required = true
+                };
+                await service.SetPropertiesAsync(properties);
+                propertiesResponse = await service.GetPropertiesAsync();
+                properties = propertiesResponse.Value;
+
+                // Assert
+                Assert.IsTrue(properties.Protocol.Nfs.EncryptionInTransit.Required);
+
+                // Cleanup
+                properties.Protocol.Nfs.EncryptionInTransit.Required = false;
+                await service.SetPropertiesAsync(properties);
+            }
+        }
+
+        [RecordedTest]
         public async Task SetPropertiesAsync_Error()
         {
             // Arrange
