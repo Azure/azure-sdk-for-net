@@ -211,24 +211,26 @@ namespace MgmtTypeSpec
 
         /// <summary> List Zoo resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ZooResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ZooResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ZooData, ZooResource>(new ZoosGetAsyncCollectionResultOfT(_zoosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ZooResource(Client, data));
+            return new AsyncPageableWrapper<ZooData, ZooResource>(new ZoosGetAllAsyncCollectionResultOfT(_zoosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ZooResource(Client, data));
         }
 
         /// <summary> List Zoo resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ZooResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ZooResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ZooData, ZooResource>(new ZoosGetCollectionResultOfT(_zoosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ZooResource(Client, data));
+            return new PageableWrapper<ZooData, ZooResource>(new ZoosGetAllCollectionResultOfT(_zoosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ZooResource(Client, data));
         }
 
         /// <summary> Checks to see if the resource exists in azure. </summary>

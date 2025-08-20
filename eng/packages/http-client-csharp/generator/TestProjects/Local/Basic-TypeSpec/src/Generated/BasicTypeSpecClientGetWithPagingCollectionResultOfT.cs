@@ -34,7 +34,8 @@ namespace BasicTypeSpec
         public override IEnumerable<Page<ThingModel>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);
-            yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)((PageThingModel)response).Items, null, response);
+            PageThingModel result = (PageThingModel)response;
+            yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)result.Items, null, response);
         }
 
         /// <summary> Get next page. </summary>

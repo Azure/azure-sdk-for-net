@@ -52,7 +52,6 @@ function IsSpecDir {
 $failingSpecs = @(
     Join-Path 'http' 'streaming' 'jsonl'
     Join-Path 'http' 'payload' 'xml'
-    Join-Path 'http' 'client' 'naming' # pending until https://github.com/microsoft/typespec/issues/5653 is resolved
     Join-Path 'http' 'response' 'status-code-range' # Response namespace conflicts with Azure.Response
     # Azure scenarios not yet buildable
     Join-Path 'http' 'client' 'namespace'

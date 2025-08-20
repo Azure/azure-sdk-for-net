@@ -62,6 +62,15 @@ namespace MgmtTypeSpec.Mocking
             return new BarSettingsResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="BarQuotaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BarQuotaResource"/> object. </returns>
+        public virtual BarQuotaResource GetBarQuotaResource(ResourceIdentifier id)
+        {
+            BarQuotaResource.ValidateResourceId(id);
+            return new BarQuotaResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="ZooResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ZooResource"/> object. </returns>
