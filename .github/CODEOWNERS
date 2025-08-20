@@ -910,7 +910,7 @@
 # ServiceLabel: %WebPubSub
 # ServiceOwners:                                                   @vicancy @JialinXin
 
-# PRLabel %Contoso
+# PRLabel: %Contoso
 /sdk/contoso/                                          @danieljurek
 
 ####################
