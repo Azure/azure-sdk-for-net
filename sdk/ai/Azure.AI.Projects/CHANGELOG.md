@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.11 (Unreleased)
+## 1.0.0-beta.11 (2025-08-20)
 
 ### Features Added
 * Added a constructor for `AIProjectClient` which takes a `System.ClientModel.AuthenticationTokenProvider` object for authentication. We will be switching away from `Azure.Core.TokenCredential` with the upcoming stable release.
