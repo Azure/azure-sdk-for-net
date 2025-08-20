@@ -1144,7 +1144,7 @@ function Get-TriagesForCPEXAttestation()
   $fields += "Custom.MgmtScope"
 
   $fieldList = ($fields | ForEach-Object { "[$_]"}) -join ", "
-  $query = "SELECT ${fieldList} FROM WorkItems WHERE [System.WorkItemType] = 'Triage' AND [System.State] IN ('Completed', 'New')"
+  $query = "SELECT ${fieldList} FROM WorkItems WHERE [System.WorkItemType] = 'Triage' AND [System.State] IN ('Completed', 'New', 'Triage updated')"
   $query += " AND [Custom.DataplaneAttestationStatus] IN ('', 'Pending')"
   $query += " AND [Custom.ManagementPlaneAttestationStatus] IN ('', 'Pending')"
   $query += " AND [System.Tags] NOT CONTAINS 'Release Planner App Test'"
