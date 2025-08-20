@@ -55,6 +55,20 @@ namespace Azure.Security.KeyVault
             return firstPage.ToUri();
         }
 
+        public Uri CompleteUriWithQueryParams(Uri uri, params ValueTuple<string, string>[] queryParams)
+        {
+            var finalUri = new RequestUriBuilder();
+            finalUri.Reset(uri);
+            finalUri.AppendQuery("api-version", ApiVersion);
+
+            foreach ((string, string) tuple in queryParams)
+            {
+                finalUri.AppendQuery(tuple.Item1, tuple.Item2);
+            }
+
+            return finalUri.ToUri();
+        }
+
         public Request CreateRequest(RequestMethod method, Uri uri, bool appendApiVersion)
         {
             Request request = _pipeline.CreateRequest();

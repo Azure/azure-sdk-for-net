@@ -6,8 +6,8 @@
 
 ### Breaking Changes
 
-- Added the `outContentType` query parameter to the Get Secret operation to specify the format in which the certificate will be returned.
-- Added the `previousVersion` property to `SecretProperties`.
+- Added the `outContentType` query parameter to the `SecretClient.GetSecret` and `SecretClient.GetSecretAsync` to specify the format in which the certificate will be returned.
+- Added the `PreviousVersion` property to `SecretProperties`.
 
 ### Bugs Fixed
 
