@@ -4,11 +4,12 @@
 using System.Collections.Generic;
 using System;
 using Azure.Core;
+using System.ClientModel.Primitives;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Client options for AIProjectClient. </summary>
-    public partial class AIProjectClientOptions : ClientOptions
+    public partial class AIProjectClientOptions : ClientPipelineOptions
     {
         /// <summary> The size of the client cache. </summary>
         public int ClientCacheSize { get; set; } = 100;

@@ -4,7 +4,6 @@
         "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-text/projects/single-class-project/train/jobs/a0f21063-df96-49ea-b275-2c50b4c5fe33_638864928000000000/:cancel?api-version=2025-05-15-preview",
         "RequestMethod": "POST",
         "RequestHeaders": {
-            "Accept": "application/json",
             "Connection": "keep-alive",
             "Content-Length": "0",
             "Ocp-Apim-Subscription-Key": "Sanitized",
