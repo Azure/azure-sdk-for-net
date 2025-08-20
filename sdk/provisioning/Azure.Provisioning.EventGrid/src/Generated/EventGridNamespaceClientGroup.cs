@@ -96,7 +96,7 @@ public partial class EventGridNamespaceClientGroup : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the EventGridNamespaceClientGroup.</param>
     public EventGridNamespaceClientGroup(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.EventGrid/namespaces/clientGroups", resourceVersion)
+        : base(bicepIdentifier, "Microsoft.EventGrid/namespaces/clientGroups", resourceVersion ?? "2025-02-15")
     {
     }
 
@@ -120,7 +120,12 @@ public partial class EventGridNamespaceClientGroup : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-02-15.
+        /// </summary>
+        public static readonly string V2025_02_15 = "2025-02-15";
     }
+
     /// <summary>
     /// Creates a reference to an existing EventGridNamespaceClientGroup.
     /// </summary>

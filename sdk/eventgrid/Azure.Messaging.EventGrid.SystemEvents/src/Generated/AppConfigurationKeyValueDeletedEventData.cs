@@ -13,51 +13,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AppConfiguration.KeyValueDeleted event. </summary>
     public partial class AppConfigurationKeyValueDeletedEventData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationKeyValueDeletedEventData"/>. </summary>
         /// <param name="key"> The key used to identify the key-value that was deleted. </param>
         /// <param name="label"> The label, if any, used to identify the key-value that was deleted. </param>
         /// <param name="etag"> The etag representing the key-value that was deleted. </param>
         /// <param name="syncToken"> The sync token representing the server state after the event. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/>, <paramref name="label"/>, <paramref name="etag"/> or <paramref name="syncToken"/> is null. </exception>
         internal AppConfigurationKeyValueDeletedEventData(string key, string label, string etag, string syncToken)
         {
-            Argument.AssertNotNull(key, nameof(key));
-            Argument.AssertNotNull(label, nameof(label));
-            Argument.AssertNotNull(etag, nameof(etag));
-            Argument.AssertNotNull(syncToken, nameof(syncToken));
-
             Key = key;
             Label = label;
             Etag = etag;
@@ -69,27 +34,25 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="label"> The label, if any, used to identify the key-value that was deleted. </param>
         /// <param name="etag"> The etag representing the key-value that was deleted. </param>
         /// <param name="syncToken"> The sync token representing the server state after the event. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppConfigurationKeyValueDeletedEventData(string key, string label, string etag, string syncToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AppConfigurationKeyValueDeletedEventData(string key, string label, string etag, string syncToken, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Key = key;
             Label = label;
             Etag = etag;
             SyncToken = syncToken;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AppConfigurationKeyValueDeletedEventData"/> for deserialization. </summary>
-        internal AppConfigurationKeyValueDeletedEventData()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The key used to identify the key-value that was deleted. </summary>
         public string Key { get; }
+
         /// <summary> The label, if any, used to identify the key-value that was deleted. </summary>
         public string Label { get; }
+
         /// <summary> The etag representing the key-value that was deleted. </summary>
         public string Etag { get; }
+
         /// <summary> The sync token representing the server state after the event. </summary>
         public string SyncToken { get; }
     }

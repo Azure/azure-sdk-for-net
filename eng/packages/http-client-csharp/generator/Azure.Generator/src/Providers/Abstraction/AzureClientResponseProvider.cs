@@ -36,7 +36,7 @@ namespace Azure.Generator.Providers
             CSharpType? type,
             bool isAsync)
         {
-            return new CollectionResultDefinition(client, serviceMethod, type, isAsync);
+            return new AzureCollectionResultDefinition(client, serviceMethod, type, isAsync);
         }
 
         public override CSharpType ClientResponseExceptionType => typeof(RequestFailedException);

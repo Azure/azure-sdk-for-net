@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.NetworkAnalytics.Models;
 
 namespace Azure.ResourceManager.NetworkAnalytics
 {
@@ -13,6 +15,34 @@ namespace Azure.ResourceManager.NetworkAnalytics
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AccountSasContent))]
+    [ModelReaderWriterBuildable(typeof(AccountSasToken))]
+    [ModelReaderWriterBuildable(typeof(ConsumptionEndpointsProperties))]
+    [ModelReaderWriterBuildable(typeof(DataProductData))]
+    [ModelReaderWriterBuildable(typeof(DataProductDataType))]
+    [ModelReaderWriterBuildable(typeof(DataProductInformation))]
+    [ModelReaderWriterBuildable(typeof(DataProductListResult))]
+    [ModelReaderWriterBuildable(typeof(DataProductNetworkAcls))]
+    [ModelReaderWriterBuildable(typeof(DataProductPatch))]
+    [ModelReaderWriterBuildable(typeof(DataProductResource))]
+    [ModelReaderWriterBuildable(typeof(DataProductsCatalogData))]
+    [ModelReaderWriterBuildable(typeof(DataProductsCatalogListResult))]
+    [ModelReaderWriterBuildable(typeof(DataProductsCatalogResource))]
+    [ModelReaderWriterBuildable(typeof(DataProductVersion))]
+    [ModelReaderWriterBuildable(typeof(DataTypeListResult))]
+    [ModelReaderWriterBuildable(typeof(EncryptionKeyDetails))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(NetworkAnalyticsIPRules))]
+    [ModelReaderWriterBuildable(typeof(NetworkAnalyticsKeyVaultContent))]
+    [ModelReaderWriterBuildable(typeof(NetworkAnalyticsManagedResourceGroupConfiguration))]
+    [ModelReaderWriterBuildable(typeof(NetworkAnalyticsVirtualNetworkRule))]
+    [ModelReaderWriterBuildable(typeof(PublisherInformation))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(RoleAssignmentCommonProperties))]
+    [ModelReaderWriterBuildable(typeof(RoleAssignmentDetail))]
+    [ModelReaderWriterBuildable(typeof(RoleAssignmentListResult))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerNetworkAnalyticsContext : ModelReaderWriterContext
     {
     }

@@ -82,6 +82,26 @@ public partial class PostgreSqlMigration : ProvisionableResource
     private BicepList<string>? _dbsToTriggerCutoverOn;
 
     /// <summary>
+    /// To migrate roles and permissions we need to send this flag as True.
+    /// </summary>
+    public BicepValue<MigrateRolesEnum> MigrateRoles 
+    {
+        get { Initialize(); return _migrateRoles!; }
+        set { Initialize(); _migrateRoles!.Assign(value); }
+    }
+    private BicepValue<MigrateRolesEnum>? _migrateRoles;
+
+    /// <summary>
+    /// ResourceId of the private endpoint migration instance.
+    /// </summary>
+    public BicepValue<ResourceIdentifier> MigrationInstanceResourceId 
+    {
+        get { Initialize(); return _migrationInstanceResourceId!; }
+        set { Initialize(); _migrationInstanceResourceId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _migrationInstanceResourceId;
+
+    /// <summary>
     /// There are two types of migration modes Online and Offline.
     /// </summary>
     public BicepValue<PostgreSqlMigrationMode> MigrationMode 
@@ -90,6 +110,16 @@ public partial class PostgreSqlMigration : ProvisionableResource
         set { Initialize(); _migrationMode!.Assign(value); }
     }
     private BicepValue<PostgreSqlMigrationMode>? _migrationMode;
+
+    /// <summary>
+    /// This indicates the supported Migration option for the migration.
+    /// </summary>
+    public BicepValue<MigrationOption> MigrationOption 
+    {
+        get { Initialize(); return _migrationOption!; }
+        set { Initialize(); _migrationOption!.Assign(value); }
+    }
+    private BicepValue<MigrationOption>? _migrationOption;
 
     /// <summary>
     /// End time in UTC for migration window.
@@ -145,8 +175,9 @@ public partial class PostgreSqlMigration : ProvisionableResource
     private BicepValue<PostgreSqlMigrationLogicalReplicationOnSourceDb>? _setupLogicalReplicationOnSourceDbIfNeeded;
 
     /// <summary>
-    /// Source server fully qualified domain name or ip. It is a optional
-    /// value, if customer provide it, dms will always use it for connection.
+    /// Source server fully qualified domain name (FQDN) or IP address. It is a
+    /// optional value, if customer provide it, migration service will always
+    /// use it for connection.
     /// </summary>
     public BicepValue<string> SourceDbServerFullyQualifiedDomainName 
     {
@@ -156,7 +187,9 @@ public partial class PostgreSqlMigration : ProvisionableResource
     private BicepValue<string>? _sourceDbServerFullyQualifiedDomainName;
 
     /// <summary>
-    /// ResourceId of the source database server.
+    /// ResourceId of the source database server in case the sourceType is
+    /// PostgreSQLSingleServer. For other source types this should be
+    /// ipaddress:port@username or hostname:port@username.
     /// </summary>
     public BicepValue<ResourceIdentifier> SourceDbServerResourceId 
     {
@@ -164,6 +197,29 @@ public partial class PostgreSqlMigration : ProvisionableResource
         set { Initialize(); _sourceDbServerResourceId!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _sourceDbServerResourceId;
+
+    /// <summary>
+    /// migration source server type : OnPremises, AWS, GCP, AzureVM,
+    /// PostgreSQLSingleServer, AWS_RDS, AWS_AURORA, AWS_EC2, GCP_CloudSQL,
+    /// GCP_AlloyDB, GCP_Compute, or EDB.
+    /// </summary>
+    public BicepValue<PostgreSqlFlexibleServersSourceType> SourceType 
+    {
+        get { Initialize(); return _sourceType!; }
+        set { Initialize(); _sourceType!.Assign(value); }
+    }
+    private BicepValue<PostgreSqlFlexibleServersSourceType>? _sourceType;
+
+    /// <summary>
+    /// SSL modes for migration. Default SSL mode for PostgreSQLSingleServer is
+    /// VerifyFull and Prefer for other source types.
+    /// </summary>
+    public BicepValue<PostgreSqlFlexibleServersSslMode> SslMode 
+    {
+        get { Initialize(); return _sslMode!; }
+        set { Initialize(); _sslMode!.Assign(value); }
+    }
+    private BicepValue<PostgreSqlFlexibleServersSslMode>? _sslMode;
 
     /// <summary>
     /// Indicates whether the data migration should start right away.
@@ -186,8 +242,9 @@ public partial class PostgreSqlMigration : ProvisionableResource
     private BicepDictionary<string>? _tags;
 
     /// <summary>
-    /// Target server fully qualified domain name or ip. It is a optional
-    /// value, if customer provide it, dms will always use it for connection.
+    /// Target server fully qualified domain name (FQDN) or IP address. It is a
+    /// optional value, if customer provide it, migration service will always
+    /// use it for connection.
     /// </summary>
     public BicepValue<string> TargetDbServerFullyQualifiedDomainName 
     {
@@ -306,7 +363,10 @@ public partial class PostgreSqlMigration : ProvisionableResource
         _dbsToCancelMigrationOn = DefineListProperty<string>("DbsToCancelMigrationOn", ["properties", "dbsToCancelMigrationOn"]);
         _dbsToMigrate = DefineListProperty<string>("DbsToMigrate", ["properties", "dbsToMigrate"]);
         _dbsToTriggerCutoverOn = DefineListProperty<string>("DbsToTriggerCutoverOn", ["properties", "dbsToTriggerCutoverOn"]);
+        _migrateRoles = DefineProperty<MigrateRolesEnum>("MigrateRoles", ["properties", "migrateRoles"]);
+        _migrationInstanceResourceId = DefineProperty<ResourceIdentifier>("MigrationInstanceResourceId", ["properties", "migrationInstanceResourceId"]);
         _migrationMode = DefineProperty<PostgreSqlMigrationMode>("MigrationMode", ["properties", "migrationMode"]);
+        _migrationOption = DefineProperty<MigrationOption>("MigrationOption", ["properties", "migrationOption"]);
         _migrationWindowEndTimeInUtc = DefineProperty<DateTimeOffset>("MigrationWindowEndTimeInUtc", ["properties", "migrationWindowEndTimeInUtc"]);
         _migrationWindowStartTimeInUtc = DefineProperty<DateTimeOffset>("MigrationWindowStartTimeInUtc", ["properties", "migrationWindowStartTimeInUtc"]);
         _overwriteDbsInTarget = DefineProperty<PostgreSqlMigrationOverwriteDbsInTarget>("OverwriteDbsInTarget", ["properties", "overwriteDbsInTarget"]);
@@ -314,6 +374,8 @@ public partial class PostgreSqlMigration : ProvisionableResource
         _setupLogicalReplicationOnSourceDbIfNeeded = DefineProperty<PostgreSqlMigrationLogicalReplicationOnSourceDb>("SetupLogicalReplicationOnSourceDbIfNeeded", ["properties", "setupLogicalReplicationOnSourceDbIfNeeded"]);
         _sourceDbServerFullyQualifiedDomainName = DefineProperty<string>("SourceDbServerFullyQualifiedDomainName", ["properties", "sourceDbServerFullyQualifiedDomainName"]);
         _sourceDbServerResourceId = DefineProperty<ResourceIdentifier>("SourceDbServerResourceId", ["properties", "sourceDbServerResourceId"]);
+        _sourceType = DefineProperty<PostgreSqlFlexibleServersSourceType>("SourceType", ["properties", "sourceType"]);
+        _sslMode = DefineProperty<PostgreSqlFlexibleServersSslMode>("SslMode", ["properties", "sslMode"]);
         _startDataMigration = DefineProperty<PostgreSqlMigrationStartDataMigration>("StartDataMigration", ["properties", "startDataMigration"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _targetDbServerFullyQualifiedDomainName = DefineProperty<string>("TargetDbServerFullyQualifiedDomainName", ["properties", "targetDbServerFullyQualifiedDomainName"]);

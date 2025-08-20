@@ -72,21 +72,21 @@ namespace Azure.ResourceManager.NetworkCloud
         public override Response GetRawResponse() => _operation.RawResponse;
 
         /// <inheritdoc />
-        public override Response UpdateStatus(CancellationToken cancellationToken = default) => _operation.UpdateStatus(cancellationToken);
+        public override Response UpdateStatus(CancellationToken cancellationToken) => _operation.UpdateStatus(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
+        public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override Response WaitForCompletionResponse(CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponse(cancellationToken);
+        public override Response WaitForCompletionResponse(CancellationToken cancellationToken) => _operation.WaitForCompletionResponse(cancellationToken);
 
         /// <inheritdoc />
-        public override Response WaitForCompletionResponse(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponse(pollingInterval, cancellationToken);
+        public override Response WaitForCompletionResponse(TimeSpan pollingInterval, CancellationToken cancellationToken) => _operation.WaitForCompletionResponse(pollingInterval, cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponseAsync(cancellationToken);
+        public override ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken) => _operation.WaitForCompletionResponseAsync(cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponseAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) => _operation.WaitForCompletionResponseAsync(pollingInterval, cancellationToken);
     }
 }

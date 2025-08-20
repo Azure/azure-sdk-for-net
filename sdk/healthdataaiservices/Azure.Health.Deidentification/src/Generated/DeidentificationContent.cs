@@ -13,37 +13,8 @@ namespace Azure.Health.Deidentification
     /// <summary> Request body for de-identification operation. </summary>
     public partial class DeidentificationContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeidentificationContent"/>. </summary>
         /// <param name="inputText"> Input text to de-identify. </param>
@@ -59,24 +30,21 @@ namespace Azure.Health.Deidentification
         /// <param name="inputText"> Input text to de-identify. </param>
         /// <param name="operationType"> Operation to perform on the input documents. </param>
         /// <param name="customizations"> Customization parameters to override default service behaviors. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeidentificationContent(string inputText, DeidentificationOperationType? operationType, DeidentificationCustomizationOptions customizations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DeidentificationContent(string inputText, DeidentificationOperationType? operationType, DeidentificationCustomizationOptions customizations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InputText = inputText;
             OperationType = operationType;
             Customizations = customizations;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DeidentificationContent"/> for deserialization. </summary>
-        internal DeidentificationContent()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Input text to de-identify. </summary>
         public string InputText { get; }
+
         /// <summary> Operation to perform on the input documents. </summary>
         public DeidentificationOperationType? OperationType { get; set; }
+
         /// <summary> Customization parameters to override default service behaviors. </summary>
         public DeidentificationCustomizationOptions Customizations { get; set; }
     }

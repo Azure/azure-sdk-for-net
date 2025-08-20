@@ -16,8 +16,10 @@ namespace Azure.Core.Expressions.DataFactory
     /// <see cref="DateTimeOffset"/>, <see cref="Uri"/>, <see cref="IList{String}"/>, <see cref="IList{TElement}"/> where TElement has a <see cref="JsonConverter"/> defined,
     /// or <see cref="IDictionary{String,String}"/>.</typeparam>
 #pragma warning disable SA1649 // File name should match first type name
+#pragma warning disable SCM0005 // Type must have a parameterless constructor
     [JsonConverter(typeof(DataFactoryElementJsonConverter))]
-    public sealed class DataFactoryElement<T>
+    public sealed partial class DataFactoryElement<T>
+#pragma warning disable SCM0005 // Type must have a parameterless constructor
 #pragma warning restore SA1649 // File name should match first type name
     {
         private readonly T? _literal;

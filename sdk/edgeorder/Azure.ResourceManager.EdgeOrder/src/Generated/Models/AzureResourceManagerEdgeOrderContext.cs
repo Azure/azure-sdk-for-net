@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.EdgeOrder.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EdgeOrder
 {
@@ -13,6 +15,65 @@ namespace Azure.ResourceManager.EdgeOrder
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AddressResourceList))]
+    [ModelReaderWriterBuildable(typeof(ConfigurationFilters))]
+    [ModelReaderWriterBuildable(typeof(ConfigurationsContent))]
+    [ModelReaderWriterBuildable(typeof(CustomerSubscriptionDetails))]
+    [ModelReaderWriterBuildable(typeof(CustomerSubscriptionRegisteredFeatures))]
+    [ModelReaderWriterBuildable(typeof(EdgeOrderAddressContactDetails))]
+    [ModelReaderWriterBuildable(typeof(EdgeOrderAddressData))]
+    [ModelReaderWriterBuildable(typeof(EdgeOrderAddressPatch))]
+    [ModelReaderWriterBuildable(typeof(EdgeOrderAddressResource))]
+    [ModelReaderWriterBuildable(typeof(EdgeOrderData))]
+    [ModelReaderWriterBuildable(typeof(EdgeOrderItemAddressDetails))]
+    [ModelReaderWriterBuildable(typeof(EdgeOrderItemAddressProperties))]
+    [ModelReaderWriterBuildable(typeof(EdgeOrderItemCancellationReason))]
+    [ModelReaderWriterBuildable(typeof(EdgeOrderItemData))]
+    [ModelReaderWriterBuildable(typeof(EdgeOrderItemDetails))]
+    [ModelReaderWriterBuildable(typeof(EdgeOrderItemPatch))]
+    [ModelReaderWriterBuildable(typeof(EdgeOrderItemResource))]
+    [ModelReaderWriterBuildable(typeof(EdgeOrderItemReturnContent))]
+    [ModelReaderWriterBuildable(typeof(EdgeOrderProduct))]
+    [ModelReaderWriterBuildable(typeof(EdgeOrderProductBillingMeterDetails))]
+    [ModelReaderWriterBuildable(typeof(EdgeOrderProductCostInformation))]
+    [ModelReaderWriterBuildable(typeof(EdgeOrderProductDeviceDetails))]
+    [ModelReaderWriterBuildable(typeof(EdgeOrderProductImageInformation))]
+    [ModelReaderWriterBuildable(typeof(EdgeOrderProductMeterDetails))]
+    [ModelReaderWriterBuildable(typeof(EdgeOrderResource))]
+    [ModelReaderWriterBuildable(typeof(EdgeOrderShippingAddress))]
+    [ModelReaderWriterBuildable(typeof(EdgeOrderStageDetails))]
+    [ModelReaderWriterBuildable(typeof(EncryptionPreferences))]
+    [ModelReaderWriterBuildable(typeof(FilterableProperty))]
+    [ModelReaderWriterBuildable(typeof(ForwardShippingDetails))]
+    [ModelReaderWriterBuildable(typeof(HierarchyInformation))]
+    [ModelReaderWriterBuildable(typeof(ManagementResourcePreferences))]
+    [ModelReaderWriterBuildable(typeof(NotificationPreference))]
+    [ModelReaderWriterBuildable(typeof(OrderItemPreferences))]
+    [ModelReaderWriterBuildable(typeof(OrderItemResourceList))]
+    [ModelReaderWriterBuildable(typeof(OrderResourceList))]
+    [ModelReaderWriterBuildable(typeof(Pav2MeterDetails))]
+    [ModelReaderWriterBuildable(typeof(ProductAvailabilityInformation))]
+    [ModelReaderWriterBuildable(typeof(ProductConfiguration))]
+    [ModelReaderWriterBuildable(typeof(ProductConfigurations))]
+    [ModelReaderWriterBuildable(typeof(ProductDescription))]
+    [ModelReaderWriterBuildable(typeof(ProductDetails))]
+    [ModelReaderWriterBuildable(typeof(ProductDimensions))]
+    [ModelReaderWriterBuildable(typeof(ProductDisplayInfo))]
+    [ModelReaderWriterBuildable(typeof(ProductFamilies))]
+    [ModelReaderWriterBuildable(typeof(ProductFamiliesContent))]
+    [ModelReaderWriterBuildable(typeof(ProductFamiliesMetadata))]
+    [ModelReaderWriterBuildable(typeof(ProductFamiliesMetadataListResult))]
+    [ModelReaderWriterBuildable(typeof(ProductFamily))]
+    [ModelReaderWriterBuildable(typeof(ProductLine))]
+    [ModelReaderWriterBuildable(typeof(ProductLink))]
+    [ModelReaderWriterBuildable(typeof(ProductSpecification))]
+    [ModelReaderWriterBuildable(typeof(PurchaseMeterDetails))]
+    [ModelReaderWriterBuildable(typeof(ResourceProviderDetails))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(ReverseShippingDetails))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(TransportPreferences))]
+    [ModelReaderWriterBuildable(typeof(UnknownMeterDetails))]
     public partial class AzureResourceManagerEdgeOrderContext : ModelReaderWriterContext
     {
     }

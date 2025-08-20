@@ -91,75 +91,6 @@ namespace Azure.ResourceManager.OracleDatabase
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of CloudVmClusterDBNodeResources in the CloudVmCluster. </summary>
-        /// <returns> An object representing collection of CloudVmClusterDBNodeResources and their operations over a CloudVmClusterDBNodeResource. </returns>
-        public virtual CloudVmClusterDBNodeCollection GetCloudVmClusterDBNodes()
-        {
-            return GetCachedClient(client => new CloudVmClusterDBNodeCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a DbNode
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}/dbNodes/{dbnodeocid}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DbNodes_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudVmClusterDBNodeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="dbnodeocid"> DbNode OCID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dbnodeocid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dbnodeocid"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CloudVmClusterDBNodeResource>> GetCloudVmClusterDBNodeAsync(string dbnodeocid, CancellationToken cancellationToken = default)
-        {
-            return await GetCloudVmClusterDBNodes().GetAsync(dbnodeocid, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a DbNode
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}/dbNodes/{dbnodeocid}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DbNodes_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudVmClusterDBNodeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="dbnodeocid"> DbNode OCID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dbnodeocid"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="dbnodeocid"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<CloudVmClusterDBNodeResource> GetCloudVmClusterDBNode(string dbnodeocid, CancellationToken cancellationToken = default)
-        {
-            return GetCloudVmClusterDBNodes().Get(dbnodeocid, cancellationToken);
-        }
-
         /// <summary> Gets a collection of CloudVmClusterVirtualNetworkAddressResources in the CloudVmCluster. </summary>
         /// <returns> An object representing collection of CloudVmClusterVirtualNetworkAddressResources and their operations over a CloudVmClusterVirtualNetworkAddressResource. </returns>
         public virtual CloudVmClusterVirtualNetworkAddressCollection GetCloudVmClusterVirtualNetworkAddresses()
@@ -176,11 +107,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualNetworkAddresses_Get</description>
+        /// <description>VirtualNetworkAddress_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -207,11 +138,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualNetworkAddresses_Get</description>
+        /// <description>VirtualNetworkAddress_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -229,6 +160,75 @@ namespace Azure.ResourceManager.OracleDatabase
             return GetCloudVmClusterVirtualNetworkAddresses().Get(virtualnetworkaddressname, cancellationToken);
         }
 
+        /// <summary> Gets a collection of CloudVmClusterDBNodeResources in the CloudVmCluster. </summary>
+        /// <returns> An object representing collection of CloudVmClusterDBNodeResources and their operations over a CloudVmClusterDBNodeResource. </returns>
+        public virtual CloudVmClusterDBNodeCollection GetCloudVmClusterDBNodes()
+        {
+            return GetCachedClient(client => new CloudVmClusterDBNodeCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a DbNode
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}/dbNodes/{dbnodeocid}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DbNode_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudVmClusterDBNodeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dbnodeocid"> DbNode OCID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dbnodeocid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dbnodeocid"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CloudVmClusterDBNodeResource>> GetCloudVmClusterDBNodeAsync(string dbnodeocid, CancellationToken cancellationToken = default)
+        {
+            return await GetCloudVmClusterDBNodes().GetAsync(dbnodeocid, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a DbNode
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}/dbNodes/{dbnodeocid}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DbNode_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudVmClusterDBNodeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dbnodeocid"> DbNode OCID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dbnodeocid"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dbnodeocid"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CloudVmClusterDBNodeResource> GetCloudVmClusterDBNode(string dbnodeocid, CancellationToken cancellationToken = default)
+        {
+            return GetCloudVmClusterDBNodes().Get(dbnodeocid, cancellationToken);
+        }
+
         /// <summary>
         /// Get a CloudVmCluster
         /// <list type="bullet">
@@ -238,11 +238,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudVmClusters_Get</description>
+        /// <description>CloudVmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -278,11 +278,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudVmClusters_Get</description>
+        /// <description>CloudVmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -318,11 +318,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudVmClusters_Delete</description>
+        /// <description>CloudVmCluster_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -360,11 +360,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudVmClusters_Delete</description>
+        /// <description>CloudVmCluster_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -402,11 +402,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudVmClusters_Update</description>
+        /// <description>CloudVmCluster_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -448,11 +448,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudVmClusters_Update</description>
+        /// <description>CloudVmCluster_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -578,72 +578,6 @@ namespace Azure.ResourceManager.OracleDatabase
         }
 
         /// <summary>
-        /// List Private IP Addresses by the provided filter
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}/listPrivateIpAddresses</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CloudVmClusters_ListPrivateIPAddresses</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudVmClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PrivateIPAddressResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PrivateIPAddressResult> GetPrivateIPAddressesAsync(PrivateIPAddressesContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudVmClusterRestClient.CreateListPrivateIPAddressesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PrivateIPAddressResult.DeserializePrivateIPAddressResult(e), _cloudVmClusterClientDiagnostics, Pipeline, "CloudVmClusterResource.GetPrivateIPAddresses", "", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// List Private IP Addresses by the provided filter
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}/listPrivateIpAddresses</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CloudVmClusters_ListPrivateIPAddresses</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CloudVmClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content of the action request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="PrivateIPAddressResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PrivateIPAddressResult> GetPrivateIPAddresses(PrivateIPAddressesContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudVmClusterRestClient.CreateListPrivateIPAddressesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PrivateIPAddressResult.DeserializePrivateIPAddressResult(e), _cloudVmClusterClientDiagnostics, Pipeline, "CloudVmClusterResource.GetPrivateIPAddresses", "", null, cancellationToken);
-        }
-
-        /// <summary>
         /// Remove VMs from the VM Cluster
         /// <list type="bullet">
         /// <item>
@@ -656,7 +590,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -702,7 +636,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -736,6 +670,72 @@ namespace Azure.ResourceManager.OracleDatabase
         }
 
         /// <summary>
+        /// List Private IP Addresses by the provided filter
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}/listPrivateIpAddresses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CloudVmClusters_ListPrivateIPAddresses</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudVmClusterResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> An async collection of <see cref="PrivateIPAddressResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PrivateIPAddressResult> GetPrivateIPAddressesAsync(PrivateIPAddressesContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudVmClusterRestClient.CreateListPrivateIPAddressesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PrivateIPAddressResult.DeserializePrivateIPAddressResult(e), _cloudVmClusterClientDiagnostics, Pipeline, "CloudVmClusterResource.GetPrivateIPAddresses", "", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// List Private IP Addresses by the provided filter
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Oracle.Database/cloudVmClusters/{cloudvmclustername}/listPrivateIpAddresses</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CloudVmClusters_ListPrivateIPAddresses</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudVmClusterResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="PrivateIPAddressResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PrivateIPAddressResult> GetPrivateIPAddresses(PrivateIPAddressesContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudVmClusterRestClient.CreateListPrivateIPAddressesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PrivateIPAddressResult.DeserializePrivateIPAddressResult(e), _cloudVmClusterClientDiagnostics, Pipeline, "CloudVmClusterResource.GetPrivateIPAddresses", "", null, cancellationToken);
+        }
+
+        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>
@@ -744,11 +744,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudVmClusters_Get</description>
+        /// <description>CloudVmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -806,11 +806,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudVmClusters_Get</description>
+        /// <description>CloudVmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -868,11 +868,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudVmClusters_Get</description>
+        /// <description>CloudVmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -925,11 +925,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudVmClusters_Get</description>
+        /// <description>CloudVmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -982,11 +982,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudVmClusters_Get</description>
+        /// <description>CloudVmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1042,11 +1042,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CloudVmClusters_Get</description>
+        /// <description>CloudVmCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

@@ -59,4 +59,16 @@ public enum CorsRuleAllowedMethod
     /// </summary>
     [DataMember(Name = "PATCH")]
     Patch,
+
+    /// <summary>
+    /// CONNECT.
+    /// </summary>
+    [DataMember(Name = "CONNECT")]
+    Connect,
+
+    /// <summary>
+    /// TRACE.
+    /// </summary>
+    [DataMember(Name = "TRACE")]
+    Trace,
 }

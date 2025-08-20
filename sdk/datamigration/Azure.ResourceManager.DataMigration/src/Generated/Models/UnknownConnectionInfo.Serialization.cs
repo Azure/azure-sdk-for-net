@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    internal partial class UnknownConnectionInfo : IUtf8JsonSerializable, IJsonModel<ConnectionInfo>
+    internal partial class UnknownConnectionInfo : IUtf8JsonSerializable, IJsonModel<ServerConnectionInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerConnectionInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ConnectionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ServerConnectionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,25 +28,25 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServerConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionInfo)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerConnectionInfo)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
         }
 
-        ConnectionInfo IJsonModel<ConnectionInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ServerConnectionInfo IJsonModel<ServerConnectionInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServerConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionInfo)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerConnectionInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConnectionInfo(document.RootElement, options);
+            return DeserializeServerConnectionInfo(document.RootElement, options);
         }
 
         internal static UnknownConnectionInfo DeserializeUnknownConnectionInfo(JsonElement element, ModelReaderWriterOptions options = null)
@@ -88,35 +88,35 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new UnknownConnectionInfo(type, userName, password, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ConnectionInfo>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ServerConnectionInfo>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServerConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionInfo)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerConnectionInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ConnectionInfo IPersistableModel<ConnectionInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ServerConnectionInfo IPersistableModel<ServerConnectionInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServerConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeConnectionInfo(document.RootElement, options);
+                        return DeserializeServerConnectionInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerConnectionInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ConnectionInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ServerConnectionInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

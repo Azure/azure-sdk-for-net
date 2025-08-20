@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources
 
         TenantData IJsonModel<TenantData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TenantData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<TenantData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TenantData>(Data, options, AzureResourceManagerContext.Default);
+        BinaryData IPersistableModel<TenantData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options, AzureResourceManagerContext.Default);
 
         TenantData IPersistableModel<TenantData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TenantData>(data, options, AzureResourceManagerContext.Default);
 

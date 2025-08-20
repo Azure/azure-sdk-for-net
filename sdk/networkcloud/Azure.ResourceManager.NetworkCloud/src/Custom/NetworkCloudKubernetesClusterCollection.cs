@@ -35,10 +35,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <description>KubernetesClusters_CreateOrUpdate</description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
-        /// </item>
-        /// <item>
         /// <term>Resource</term>
         /// <description><see cref="NetworkCloudKubernetesClusterResource"/></description>
         /// </item>
@@ -51,9 +47,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="kubernetesClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesClusterName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkCloudKubernetesClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string kubernetesClusterName, NetworkCloudKubernetesClusterData data, CancellationToken cancellationToken)
-        {
-            return await CreateOrUpdateAsync(waitUntil, kubernetesClusterName, data, null, null, cancellationToken).ConfigureAwait(false);
-        }
+            => await CreateOrUpdateAsync(waitUntil, kubernetesClusterName, data, null, null, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Create a new Kubernetes cluster or update the properties of the existing one.
@@ -65,10 +59,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KubernetesClusters_CreateOrUpdate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,8 +73,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentException"> <paramref name="kubernetesClusterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesClusterName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkCloudKubernetesClusterResource> CreateOrUpdate(WaitUntil waitUntil, string kubernetesClusterName, NetworkCloudKubernetesClusterData data, CancellationToken cancellationToken)
-        {
-            return CreateOrUpdate(waitUntil, kubernetesClusterName, data, null, null, cancellationToken);
-        }
+            => CreateOrUpdate(waitUntil, kubernetesClusterName, data, null, null, cancellationToken);
     }
 }

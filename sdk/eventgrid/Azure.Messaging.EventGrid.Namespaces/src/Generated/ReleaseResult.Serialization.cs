@@ -10,11 +10,10 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary></summary>
+    /// <summary> The result of the Release operation. </summary>
     public partial class ReleaseResult : IJsonModel<ReleaseResult>
     {
         /// <param name="writer"> The JSON writer. </param>
@@ -181,18 +180,6 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ReleaseResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="releaseResult"> The <see cref="ReleaseResult"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(ReleaseResult releaseResult)
-        {
-            if (releaseResult == null)
-            {
-                return null;
-            }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(releaseResult, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
 
         /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ReleaseResult"/> from. </param>
         public static explicit operator ReleaseResult(Response result)

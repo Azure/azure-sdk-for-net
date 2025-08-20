@@ -75,6 +75,16 @@ public partial class ContainerAppConfiguration : ProvisionableConstruct
     private ContainerAppDaprConfiguration? _dapr;
 
     /// <summary>
+    /// Enable jmx core metrics for the java app.
+    /// </summary>
+    public BicepValue<bool> EnableMetrics 
+    {
+        get { Initialize(); return _enableMetrics!; }
+        set { Initialize(); _enableMetrics!.Assign(value); }
+    }
+    private BicepValue<bool>? _enableMetrics;
+
+    /// <summary>
     /// Optional. Max inactive revisions a Container App can have.
     /// </summary>
     public BicepValue<int> MaxInactiveRevisions 
@@ -95,6 +105,18 @@ public partial class ContainerAppConfiguration : ProvisionableConstruct
     private BicepValue<string>? _serviceType;
 
     /// <summary>
+    /// Optional settings for Managed Identities that are assigned to the
+    /// Container App. If a Managed Identity is not specified here, default
+    /// settings will be used.
+    /// </summary>
+    public BicepList<ContainerAppIdentitySettings> IdentitySettings 
+    {
+        get { Initialize(); return _identitySettings!; }
+        set { Initialize(); _identitySettings!.Assign(value); }
+    }
+    private BicepList<ContainerAppIdentitySettings>? _identitySettings;
+
+    /// <summary>
     /// Creates a new ContainerAppConfiguration.
     /// </summary>
     public ContainerAppConfiguration()
@@ -112,7 +134,9 @@ public partial class ContainerAppConfiguration : ProvisionableConstruct
         _ingress = DefineModelProperty<ContainerAppIngressConfiguration>("Ingress", ["ingress"]);
         _registries = DefineListProperty<ContainerAppRegistryCredentials>("Registries", ["registries"]);
         _dapr = DefineModelProperty<ContainerAppDaprConfiguration>("Dapr", ["dapr"]);
+        _enableMetrics = DefineProperty<bool>("EnableMetrics", ["runtime", "java", "enableMetrics"]);
         _maxInactiveRevisions = DefineProperty<int>("MaxInactiveRevisions", ["maxInactiveRevisions"]);
         _serviceType = DefineProperty<string>("ServiceType", ["service", "type"]);
+        _identitySettings = DefineListProperty<ContainerAppIdentitySettings>("IdentitySettings", ["identitySettings"]);
     }
 }

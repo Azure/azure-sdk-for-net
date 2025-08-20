@@ -76,6 +76,16 @@ public partial class ManagedInstance : ProvisionableResource
     private ManagedInstanceExternalAdministrator? _administrators;
 
     /// <summary>
+    /// The managed instance&apos;s authentication metadata lookup mode.
+    /// </summary>
+    public BicepValue<AuthMetadataLookupMode> AuthenticationMetadata 
+    {
+        get { Initialize(); return _authenticationMetadata!; }
+        set { Initialize(); _authenticationMetadata!.Assign(value); }
+    }
+    private BicepValue<AuthMetadataLookupMode>? _authenticationMetadata;
+
+    /// <summary>
     /// Collation of the managed instance.
     /// </summary>
     public BicepValue<string> Collation 
@@ -84,6 +94,29 @@ public partial class ManagedInstance : ProvisionableResource
         set { Initialize(); _collation!.Assign(value); }
     }
     private BicepValue<string>? _collation;
+
+    /// <summary>
+    /// Specifies the internal format of instance databases specific to the SQL
+    /// engine version.
+    /// </summary>
+    public BicepValue<ManagedInstanceDatabaseFormat> DatabaseFormat 
+    {
+        get { Initialize(); return _databaseFormat!; }
+        set { Initialize(); _databaseFormat!.Assign(value); }
+    }
+    private BicepValue<ManagedInstanceDatabaseFormat>? _databaseFormat;
+
+    /// <summary>
+    /// Hybrid secondary usage. Possible values are &apos;Active&apos; (default
+    /// value) and &apos;Passive&apos; (customer uses the secondary as Passive
+    /// DR).
+    /// </summary>
+    public BicepValue<HybridSecondaryUsage> HybridSecondaryUsage 
+    {
+        get { Initialize(); return _hybridSecondaryUsage!; }
+        set { Initialize(); _hybridSecondaryUsage!.Assign(value); }
+    }
+    private BicepValue<HybridSecondaryUsage>? _hybridSecondaryUsage;
 
     /// <summary>
     /// The Azure Active Directory identity of the managed instance.
@@ -104,6 +137,16 @@ public partial class ManagedInstance : ProvisionableResource
         set { Initialize(); _instancePoolId!.Assign(value); }
     }
     private BicepValue<ResourceIdentifier>? _instancePoolId;
+
+    /// <summary>
+    /// Whether or not this is a GPv2 variant of General Purpose edition.
+    /// </summary>
+    public BicepValue<bool> IsGeneralPurposeV2 
+    {
+        get { Initialize(); return _isGeneralPurposeV2!; }
+        set { Initialize(); _isGeneralPurposeV2!.Assign(value); }
+    }
+    private BicepValue<bool>? _isGeneralPurposeV2;
 
     /// <summary>
     /// Whether or not the public data endpoint is enabled.
@@ -196,6 +239,16 @@ public partial class ManagedInstance : ProvisionableResource
     private BicepValue<string>? _minimalTlsVersion;
 
     /// <summary>
+    /// Pricing model of Managed Instance.
+    /// </summary>
+    public BicepValue<SqlManagedInstancePricingModel> PricingModel 
+    {
+        get { Initialize(); return _pricingModel!; }
+        set { Initialize(); _pricingModel!.Assign(value); }
+    }
+    private BicepValue<SqlManagedInstancePricingModel>? _pricingModel;
+
+    /// <summary>
     /// The resource id of a user assigned identity to be used by default.
     /// </summary>
     public BicepValue<ResourceIdentifier> PrimaryUserAssignedIdentityId 
@@ -272,6 +325,18 @@ public partial class ManagedInstance : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _sourceManagedInstanceId;
 
     /// <summary>
+    /// Storage IOps. Minimum value: 300. Maximum value: 80000. Increments of 1
+    /// IOps allowed only. Maximum value depends on the selected hardware
+    /// family and number of vCores.
+    /// </summary>
+    public BicepValue<int> StorageIOps 
+    {
+        get { Initialize(); return _storageIOps!; }
+        set { Initialize(); _storageIOps!.Assign(value); }
+    }
+    private BicepValue<int>? _storageIOps;
+
+    /// <summary>
     /// Storage size in GB. Minimum value: 32. Maximum value: 16384. Increments
     /// of 32 GB allowed only. Maximum value depends on the selected hardware
     /// family and number of vCores.
@@ -282,6 +347,17 @@ public partial class ManagedInstance : ProvisionableResource
         set { Initialize(); _storageSizeInGB!.Assign(value); }
     }
     private BicepValue<int>? _storageSizeInGB;
+
+    /// <summary>
+    /// Storage throughput MBps parameter is not supported in the instance
+    /// create/update operation.
+    /// </summary>
+    public BicepValue<int> StorageThroughputMBps 
+    {
+        get { Initialize(); return _storageThroughputMBps!; }
+        set { Initialize(); _storageThroughputMBps!.Assign(value); }
+    }
+    private BicepValue<int>? _storageThroughputMBps;
 
     /// <summary>
     /// Subnet resource ID for the managed instance.
@@ -333,6 +409,16 @@ public partial class ManagedInstance : ProvisionableResource
     private BicepValue<int>? _vCores;
 
     /// <summary>
+    /// Specifies the point in time (ISO8601 format) of the Managed Instance
+    /// creation.
+    /// </summary>
+    public BicepValue<DateTimeOffset> CreateOn 
+    {
+        get { Initialize(); return _createOn!; }
+    }
+    private BicepValue<DateTimeOffset>? _createOn;
+
+    /// <summary>
     /// The storage account type used to store backups for this instance. The
     /// options are Local (LocallyRedundantStorage), Zone
     /// (ZoneRedundantStorage), Geo (GeoRedundantStorage) and
@@ -354,6 +440,15 @@ public partial class ManagedInstance : ProvisionableResource
     private BicepValue<string>? _dnsZone;
 
     /// <summary>
+    /// Status of external governance.
+    /// </summary>
+    public BicepValue<ExternalGovernanceStatus> ExternalGovernanceStatus 
+    {
+        get { Initialize(); return _externalGovernanceStatus!; }
+    }
+    private BicepValue<ExternalGovernanceStatus>? _externalGovernanceStatus;
+
+    /// <summary>
     /// The fully qualified domain name of the managed instance.
     /// </summary>
     public BicepValue<string> FullyQualifiedDomainName 
@@ -361,6 +456,18 @@ public partial class ManagedInstance : ProvisionableResource
         get { Initialize(); return _fullyQualifiedDomainName!; }
     }
     private BicepValue<string>? _fullyQualifiedDomainName;
+
+    /// <summary>
+    /// Hybrid secondary usage detected. Possible values are &apos;Active&apos;
+    /// (customer does not meet the requirements to use the secondary as
+    /// Passive DR) and &apos;Passive&apos; (customer meets the requirements
+    /// to use the secondary as Passive DR).
+    /// </summary>
+    public BicepValue<HybridSecondaryUsageDetected> HybridSecondaryUsageDetected 
+    {
+        get { Initialize(); return _hybridSecondaryUsageDetected!; }
+    }
+    private BicepValue<HybridSecondaryUsageDetected>? _hybridSecondaryUsageDetected;
 
     /// <summary>
     /// Gets the Id.
@@ -381,7 +488,7 @@ public partial class ManagedInstance : ProvisionableResource
     private BicepList<ManagedInstancePecProperty>? _privateEndpointConnections;
 
     /// <summary>
-    /// Gets the provisioning state.
+    /// Provisioning state of managed instance.
     /// </summary>
     public BicepValue<ManagedInstancePropertiesProvisioningState> ProvisioningState 
     {
@@ -408,6 +515,15 @@ public partial class ManagedInstance : ProvisionableResource
     private SystemData? _systemData;
 
     /// <summary>
+    /// Virtual cluster resource id for the Managed Instance.
+    /// </summary>
+    public BicepValue<ResourceIdentifier> VirtualClusterId 
+    {
+        get { Initialize(); return _virtualClusterId!; }
+    }
+    private BicepValue<ResourceIdentifier>? _virtualClusterId;
+
+    /// <summary>
     /// Creates a new ManagedInstance.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -418,7 +534,7 @@ public partial class ManagedInstance : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedInstance.</param>
     public ManagedInstance(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Sql/managedInstances", resourceVersion ?? "2021-11-01")
+        : base(bicepIdentifier, "Microsoft.Sql/managedInstances", resourceVersion ?? "2023-08-01")
     {
     }
 
@@ -432,9 +548,13 @@ public partial class ManagedInstance : ProvisionableResource
         _administratorLogin = DefineProperty<string>("AdministratorLogin", ["properties", "administratorLogin"]);
         _administratorLoginPassword = DefineProperty<string>("AdministratorLoginPassword", ["properties", "administratorLoginPassword"]);
         _administrators = DefineModelProperty<ManagedInstanceExternalAdministrator>("Administrators", ["properties", "administrators"]);
+        _authenticationMetadata = DefineProperty<AuthMetadataLookupMode>("AuthenticationMetadata", ["properties", "authenticationMetadata"]);
         _collation = DefineProperty<string>("Collation", ["properties", "collation"]);
+        _databaseFormat = DefineProperty<ManagedInstanceDatabaseFormat>("DatabaseFormat", ["properties", "databaseFormat"]);
+        _hybridSecondaryUsage = DefineProperty<HybridSecondaryUsage>("HybridSecondaryUsage", ["properties", "hybridSecondaryUsage"]);
         _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
         _instancePoolId = DefineProperty<ResourceIdentifier>("InstancePoolId", ["properties", "instancePoolId"]);
+        _isGeneralPurposeV2 = DefineProperty<bool>("IsGeneralPurposeV2", ["properties", "isGeneralPurposeV2"]);
         _isPublicDataEndpointEnabled = DefineProperty<bool>("IsPublicDataEndpointEnabled", ["properties", "publicDataEndpointEnabled"]);
         _isZoneRedundant = DefineProperty<bool>("IsZoneRedundant", ["properties", "zoneRedundant"]);
         _keyId = DefineProperty<Uri>("KeyId", ["properties", "keyId"]);
@@ -443,6 +563,7 @@ public partial class ManagedInstance : ProvisionableResource
         _managedDnsZonePartner = DefineProperty<ResourceIdentifier>("ManagedDnsZonePartner", ["properties", "dnsZonePartner"]);
         _managedInstanceCreateMode = DefineProperty<ManagedServerCreateMode>("ManagedInstanceCreateMode", ["properties", "managedInstanceCreateMode"]);
         _minimalTlsVersion = DefineProperty<string>("MinimalTlsVersion", ["properties", "minimalTlsVersion"]);
+        _pricingModel = DefineProperty<SqlManagedInstancePricingModel>("PricingModel", ["properties", "pricingModel"]);
         _primaryUserAssignedIdentityId = DefineProperty<ResourceIdentifier>("PrimaryUserAssignedIdentityId", ["properties", "primaryUserAssignedIdentityId"]);
         _proxyOverride = DefineProperty<ManagedInstanceProxyOverride>("ProxyOverride", ["properties", "proxyOverride"]);
         _requestedBackupStorageRedundancy = DefineProperty<SqlBackupStorageRedundancy>("RequestedBackupStorageRedundancy", ["properties", "requestedBackupStorageRedundancy"]);
@@ -450,19 +571,25 @@ public partial class ManagedInstance : ProvisionableResource
         _servicePrincipal = DefineModelProperty<SqlServicePrincipal>("ServicePrincipal", ["properties", "servicePrincipal"]);
         _sku = DefineModelProperty<SqlSku>("Sku", ["sku"]);
         _sourceManagedInstanceId = DefineProperty<ResourceIdentifier>("SourceManagedInstanceId", ["properties", "sourceManagedInstanceId"]);
+        _storageIOps = DefineProperty<int>("StorageIOps", ["properties", "storageIOps"]);
         _storageSizeInGB = DefineProperty<int>("StorageSizeInGB", ["properties", "storageSizeInGB"]);
+        _storageThroughputMBps = DefineProperty<int>("StorageThroughputMBps", ["properties", "storageThroughputMBps"]);
         _subnetId = DefineProperty<ResourceIdentifier>("SubnetId", ["properties", "subnetId"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _timezoneId = DefineProperty<string>("TimezoneId", ["properties", "timezoneId"]);
         _vCores = DefineProperty<int>("VCores", ["properties", "vCores"]);
+        _createOn = DefineProperty<DateTimeOffset>("CreateOn", ["properties", "createTime"], isOutput: true);
         _currentBackupStorageRedundancy = DefineProperty<SqlBackupStorageRedundancy>("CurrentBackupStorageRedundancy", ["properties", "currentBackupStorageRedundancy"], isOutput: true);
         _dnsZone = DefineProperty<string>("DnsZone", ["properties", "dnsZone"], isOutput: true);
+        _externalGovernanceStatus = DefineProperty<ExternalGovernanceStatus>("ExternalGovernanceStatus", ["properties", "externalGovernanceStatus"], isOutput: true);
         _fullyQualifiedDomainName = DefineProperty<string>("FullyQualifiedDomainName", ["properties", "fullyQualifiedDomainName"], isOutput: true);
+        _hybridSecondaryUsageDetected = DefineProperty<HybridSecondaryUsageDetected>("HybridSecondaryUsageDetected", ["properties", "hybridSecondaryUsageDetected"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _privateEndpointConnections = DefineListProperty<ManagedInstancePecProperty>("PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
         _provisioningState = DefineProperty<ManagedInstancePropertiesProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _state = DefineProperty<string>("State", ["properties", "state"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
+        _virtualClusterId = DefineProperty<ResourceIdentifier>("VirtualClusterId", ["properties", "virtualClusterId"], isOutput: true);
     }
 
     /// <summary>
@@ -470,6 +597,11 @@ public partial class ManagedInstance : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2023-08-01.
+        /// </summary>
+        public static readonly string V2023_08_01 = "2023-08-01";
+
         /// <summary>
         /// 2021-11-01.
         /// </summary>

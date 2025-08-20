@@ -106,7 +106,7 @@ public partial class RedisCacheAccessPolicyAssignment : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the RedisCacheAccessPolicyAssignment.</param>
     public RedisCacheAccessPolicyAssignment(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Cache/redis/accessPolicyAssignments", resourceVersion ?? "2024-03-01")
+        : base(bicepIdentifier, "Microsoft.Cache/redis/accessPolicyAssignments", resourceVersion ?? "2024-11-01")
     {
     }
 
@@ -131,6 +131,11 @@ public partial class RedisCacheAccessPolicyAssignment : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2024-11-01.
+        /// </summary>
+        public static readonly string V2024_11_01 = "2024-11-01";
+
         /// <summary>
         /// 2024-03-01.
         /// </summary>

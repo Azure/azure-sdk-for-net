@@ -52,11 +52,6 @@ namespace Azure.ResourceManager.OracleDatabase
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="OracleSystemVersionData"/>. </summary>
-        public OracleSystemVersionData()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OracleSystemVersionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -70,12 +65,6 @@ namespace Azure.ResourceManager.OracleDatabase
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        internal OracleSystemVersionProperties Properties { get; set; }
-        /// <summary> A valid Oracle System Version. </summary>
-        public string OracleSystemVersion
-        {
-            get => Properties is null ? default : Properties.SystemVersion;
-            set => Properties = new OracleSystemVersionProperties(value);
-        }
+        internal OracleSystemVersionProperties Properties { get; }
     }
 }

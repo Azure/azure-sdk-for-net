@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace SpecialWords._ModelProperties
@@ -37,7 +36,5 @@ namespace SpecialWords._ModelProperties
 
         /// <param name="sameAsModel"> The <see cref="SameAsModel"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(SameAsModel sameAsModel) => throw null;
-
-        public static explicit operator SameAsModel(Response result) => throw null;
     }
 }

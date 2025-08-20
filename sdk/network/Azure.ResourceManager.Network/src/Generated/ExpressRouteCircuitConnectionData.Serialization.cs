@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -47,12 +48,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ExpressRouteCircuitPeering))
             {
                 writer.WritePropertyName("expressRouteCircuitPeering"u8);
-                JsonSerializer.Serialize(writer, ExpressRouteCircuitPeering);
+                ((IJsonModel<WritableSubResource>)ExpressRouteCircuitPeering).Write(writer, options);
             }
             if (Optional.IsDefined(PeerExpressRouteCircuitPeering))
             {
                 writer.WritePropertyName("peerExpressRouteCircuitPeering"u8);
-                JsonSerializer.Serialize(writer, PeerExpressRouteCircuitPeering);
+                ((IJsonModel<WritableSubResource>)PeerExpressRouteCircuitPeering).Write(writer, options);
             }
             if (Optional.IsDefined(AddressPrefix))
             {
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            expressRouteCircuitPeering = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            expressRouteCircuitPeering = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("peerExpressRouteCircuitPeering"u8))
@@ -173,7 +174,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            peerExpressRouteCircuitPeering = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            peerExpressRouteCircuitPeering = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("addressPrefix"u8))

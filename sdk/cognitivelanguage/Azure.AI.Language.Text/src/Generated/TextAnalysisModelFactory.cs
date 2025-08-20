@@ -34,6 +34,15 @@ namespace Azure.AI.Language.Text
             return new LanguageInput(id, text, countryHint, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Text.EntitySynonym"/>. </summary>
+        /// <param name="synonym"> The synonym to be used for context. </param>
+        /// <param name="language"> The 2 letter ISO 639-1 language the synonym. </param>
+        /// <returns> A new <see cref="Text.EntitySynonym"/> instance for mocking. </returns>
+        public static EntitySynonym EntitySynonym(string synonym = null, string language = null)
+        {
+            return new EntitySynonym(synonym, language, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Text.AnalyzeTextEntityLinkingResult"/>. </summary>
         /// <param name="results"> Entity linking result. </param>
         /// <returns> A new <see cref="Text.AnalyzeTextEntityLinkingResult"/> instance for mocking. </returns>

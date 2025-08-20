@@ -96,11 +96,11 @@ public partial class KubernetesObjectStatus : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
-        _namespace = DefineProperty<string>("Namespace", ["namespace"], isOutput: true);
-        _kind = DefineProperty<string>("Kind", ["kind"], isOutput: true);
-        _complianceState = DefineProperty<KubernetesFluxComplianceState>("ComplianceState", ["complianceState"], isOutput: true);
-        _appliedBy = DefineModelProperty<KubernetesObjectReference>("AppliedBy", ["appliedBy"], isOutput: true);
-        _statusConditions = DefineListProperty<KubernetesObjectStatusCondition>("StatusConditions", ["statusConditions"], isOutput: true);
-        _helmReleaseProperties = DefineModelProperty<HelmReleaseProperties>("HelmReleaseProperties", ["helmReleaseProperties"], isOutput: true);
+        _namespace = DefineProperty<string>("Namespace", ["Namespace"], isOutput: true);
+        _kind = DefineProperty<string>("Kind", ["Kind"], isOutput: true);
+        _complianceState = DefineProperty<KubernetesFluxComplianceState>("ComplianceState", ["ComplianceState"], isOutput: true);
+        _appliedBy = DefineModelProperty<KubernetesObjectReference>("AppliedBy", ["AppliedBy"], isOutput: true);
+        _statusConditions = DefineListProperty<KubernetesObjectStatusCondition>("StatusConditions", ["StatusConditions"], isOutput: true);
+        _helmReleaseProperties = DefineModelProperty<HelmReleaseProperties>("HelmReleaseProperties", ["HelmReleaseProperties"], isOutput: true);
     }
 }

@@ -47,35 +47,35 @@ namespace Azure.Compute.Batch
 
         /// <summary> Initializes a new instance of <see cref="AzureFileShareConfiguration"/>. </summary>
         /// <param name="accountName"> The Azure Storage account name. </param>
-        /// <param name="azureFileUrl"> The Azure Files URL. This is of the form 'https://{account}.file.core.windows.net/'. </param>
         /// <param name="accountKey"> The Azure Storage account key. </param>
+        /// <param name="azureFileUri"> The Azure Files URL. This is of the form 'https://{account}.file.core.windows.net/'. </param>
         /// <param name="relativeMountPath"> The relative path on the compute node where the file system will be mounted. All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="azureFileUrl"/>, <paramref name="accountKey"/> or <paramref name="relativeMountPath"/> is null. </exception>
-        public AzureFileShareConfiguration(string accountName, string azureFileUrl, string accountKey, string relativeMountPath)
+        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="accountKey"/>, <paramref name="azureFileUri"/> or <paramref name="relativeMountPath"/> is null. </exception>
+        public AzureFileShareConfiguration(string accountName, string accountKey, Uri azureFileUri, string relativeMountPath)
         {
             Argument.AssertNotNull(accountName, nameof(accountName));
-            Argument.AssertNotNull(azureFileUrl, nameof(azureFileUrl));
             Argument.AssertNotNull(accountKey, nameof(accountKey));
+            Argument.AssertNotNull(azureFileUri, nameof(azureFileUri));
             Argument.AssertNotNull(relativeMountPath, nameof(relativeMountPath));
 
             AccountName = accountName;
-            AzureFileUrl = azureFileUrl;
             AccountKey = accountKey;
+            AzureFileUri = azureFileUri;
             RelativeMountPath = relativeMountPath;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureFileShareConfiguration"/>. </summary>
         /// <param name="accountName"> The Azure Storage account name. </param>
-        /// <param name="azureFileUrl"> The Azure Files URL. This is of the form 'https://{account}.file.core.windows.net/'. </param>
         /// <param name="accountKey"> The Azure Storage account key. </param>
+        /// <param name="azureFileUri"> The Azure Files URL. This is of the form 'https://{account}.file.core.windows.net/'. </param>
         /// <param name="relativeMountPath"> The relative path on the compute node where the file system will be mounted. All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable. </param>
         /// <param name="mountOptions"> Additional command line options to pass to the mount command. These are 'net use' options in Windows and 'mount' options in Linux. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureFileShareConfiguration(string accountName, string azureFileUrl, string accountKey, string relativeMountPath, string mountOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AzureFileShareConfiguration(string accountName, string accountKey, Uri azureFileUri, string relativeMountPath, string mountOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AccountName = accountName;
-            AzureFileUrl = azureFileUrl;
             AccountKey = accountKey;
+            AzureFileUri = azureFileUri;
             RelativeMountPath = relativeMountPath;
             MountOptions = mountOptions;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -88,10 +88,10 @@ namespace Azure.Compute.Batch
 
         /// <summary> The Azure Storage account name. </summary>
         public string AccountName { get; set; }
-        /// <summary> The Azure Files URL. This is of the form 'https://{account}.file.core.windows.net/'. </summary>
-        public string AzureFileUrl { get; set; }
         /// <summary> The Azure Storage account key. </summary>
         public string AccountKey { get; set; }
+        /// <summary> The Azure Files URL. This is of the form 'https://{account}.file.core.windows.net/'. </summary>
+        public Uri AzureFileUri { get; set; }
         /// <summary> The relative path on the compute node where the file system will be mounted. All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable. </summary>
         public string RelativeMountPath { get; set; }
         /// <summary> Additional command line options to pass to the mount command. These are 'net use' options in Windows and 'mount' options in Linux. </summary>

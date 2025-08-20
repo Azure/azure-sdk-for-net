@@ -21,7 +21,7 @@ public class ServiceBusNamespaceFeature : AzureProjectFeature
 
     protected internal override void EmitConstructs(ProjectInfrastructure infrastructure)
     {
-        var sb = new ServiceBusNamespace("cm_servicebus")
+        var sb = new ServiceBusNamespace("cm_servicebus", ServiceBusNamespace.ResourceVersions.V2024_01_01)
         {
             Sku = new ServiceBusSku
             {
@@ -33,7 +33,7 @@ public class ServiceBusNamespaceFeature : AzureProjectFeature
         infrastructure.AddConstruct(Id, sb);
 
         infrastructure.AddConstruct(Id + "_rule",
-            new ServiceBusNamespaceAuthorizationRule("cm_servicebus_auth_rule", "2021-11-01")
+            new ServiceBusNamespaceAuthorizationRule("cm_servicebus_auth_rule", ServiceBusNamespaceAuthorizationRule.ResourceVersions.V2021_11_01)
             {
                 Parent = sb,
                 Rights = [ServiceBusAccessRight.Listen, ServiceBusAccessRight.Send, ServiceBusAccessRight.Manage]

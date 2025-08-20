@@ -137,7 +137,7 @@ namespace Azure.Communication.CallAutomation
                 correlationId,
                 operationContext,
                 resultInformation,
-                participant: CommunicationIdentifierSerializer.Serialize(participant)
+                participant: CommunicationIdentifierSerializer_2025_06_30.Serialize(participant)
                 );
 
             return new AddParticipantFailed(internalObject);
@@ -154,7 +154,7 @@ namespace Azure.Communication.CallAutomation
                 correlationId,
                 operationContext,
                 resultInformation,
-                participant: CommunicationIdentifierSerializer.Serialize(participant)
+                participant: CommunicationIdentifierSerializer_2025_06_30.Serialize(participant)
                 );
 
             return new AddParticipantSucceeded(internalObject);
@@ -172,7 +172,7 @@ namespace Azure.Communication.CallAutomation
                 sequenceNumber: sequenceNumber,
                 participants: participants == null
                     ? new List<CallParticipantInternal>()
-                    : participants.Select(p => new CallParticipantInternal(CommunicationIdentifierSerializer.Serialize(p.Identifier), p.IsMuted, p.IsOnHold)).ToList(),
+                    : participants.Select(p => new CallParticipantInternal(CommunicationIdentifierSerializer_2025_06_30.Serialize(p.Identifier), p.IsMuted, p.IsOnHold)).ToList(),
                 resultInformation: resultInformation
                 );
 
@@ -190,7 +190,7 @@ namespace Azure.Communication.CallAutomation
                 correlationId,
                 operationContext,
                 resultInformation,
-                participant: CommunicationIdentifierSerializer.Serialize(participant)
+                participant: CommunicationIdentifierSerializer_2025_06_30.Serialize(participant)
                 );
 
             return new RemoveParticipantFailed(internalObject);
@@ -207,7 +207,7 @@ namespace Azure.Communication.CallAutomation
                 correlationId,
                 operationContext,
                 resultInformation,
-                participant: CommunicationIdentifierSerializer.Serialize(participant)
+                participant: CommunicationIdentifierSerializer_2025_06_30.Serialize(participant)
                 );
 
             return new RemoveParticipantSucceeded(internalObject);
@@ -247,8 +247,8 @@ namespace Azure.Communication.CallAutomation
                 correlationId,
                 operationContext,
                 resultInformation,
-                transferTarget: transferTarget == null ? null : CommunicationIdentifierSerializer.Serialize(transferTarget),
-                transferee: transferee == null ? null : CommunicationIdentifierSerializer.Serialize(transferee)
+                transferTarget: transferTarget == null ? null : CommunicationIdentifierSerializer_2025_06_30.Serialize(transferTarget),
+                transferee: transferee == null ? null : CommunicationIdentifierSerializer_2025_06_30.Serialize(transferee)
                 );
             return new CallTransferAccepted(internalEvent);
         }
@@ -330,17 +330,17 @@ namespace Azure.Communication.CallAutomation
             return new CallConnected(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
 
-        ///// <summary> Initializes a new instance of CallConnected. </summary>
-        ///// <param name="callConnectionId"> Call connection ID. </param>
-        ///// <param name="serverCallId"> Server call ID. </param>
-        ///// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        ///// <param name="operationContext"> Used by customers to set the context for creating a new call. This property will be null for answering a call. </param>
-        ///// /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
-        ///// <returns> A new <see cref="CallAutomation.ConnectFailed"/> instance for mocking. </returns>
-        //public static ConnectFailed ConnectFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
-        //{
-        //    return new ConnectFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
-        //}
+        /// <summary> Initializes a new instance of CallConnected. </summary>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="operationContext"> Used by customers to set the context for creating a new call. This property will be null for answering a call. </param>
+        /// /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <returns> A new <see cref="CallAutomation.ConnectFailed"/> instance for mocking. </returns>
+        public static ConnectFailed ConnectFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
+        {
+            return new ConnectFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+        }
 
         /// <summary> Initializes a new instance of CallDisconnected. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
@@ -445,30 +445,6 @@ namespace Azure.Communication.CallAutomation
             return new PlayStarted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
 
-        /// <summary> Initializes a new instance of PlayPaused. </summary>
-        /// <param name="resultInformation"> Result information defines the code, subcode and message. </param>
-        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="callConnectionId"> Call connection ID. </param>
-        /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        /// <returns> A new <see cref="CallAutomation.PlayPaused"/> instance for mocking. </returns>
-        public static PlayPaused PlayPaused(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
-        {
-            return new PlayPaused(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
-        }
-
-        /// <summary> Initializes a new instance of PlayResumed. </summary>
-        /// <param name="resultInformation"> Result information defines the code, subcode and message. </param>
-        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="callConnectionId"> Call connection ID. </param>
-        /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        /// <returns> A new <see cref="CallAutomation.PlayResumed"/> instance for mocking. </returns>
-        public static PlayResumed PlayResumed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
-        {
-            return new PlayResumed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
-        }
-
         /// <summary> Initializes a new instance of PlayCanceled. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
@@ -561,54 +537,6 @@ namespace Azure.Communication.CallAutomation
             return new SendDtmfTonesFailed(internalObject);
         }
 
-        /// <summary> Initializes a new instance of HoldAudioStarted. </summary>
-        /// <param name="resultInformation"> Result information defines the code, subcode and message. </param>
-        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="callConnectionId"> Call connection ID. </param>
-        /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        /// <returns> A new <see cref="CallAutomation.HoldAudioStarted"/> instance for mocking. </returns>
-        public static HoldAudioStarted HoldAudioStarted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
-        {
-            return new HoldAudioStarted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
-        }
-
-        /// <summary> Initializes a new instance of HoldAudioPaused. </summary>
-        /// <param name="resultInformation"> Result information defines the code, subcode and message. </param>
-        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="callConnectionId"> Call connection ID. </param>
-        /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        /// <returns> A new <see cref="CallAutomation.HoldAudioPaused"/> instance for mocking. </returns>
-        public static HoldAudioPaused HoldAudioPaused(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
-        {
-            return new HoldAudioPaused(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
-        }
-
-        /// <summary> Initializes a new instance of HoldAudioResumed. </summary>
-        /// <param name="resultInformation"> Result information defines the code, subcode and message. </param>
-        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="callConnectionId"> Call connection ID. </param>
-        /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        /// <returns> A new <see cref="CallAutomation.HoldAudioResumed"/> instance for mocking. </returns>
-        public static HoldAudioResumed HoldAudioResumed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
-        {
-            return new HoldAudioResumed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
-        }
-
-        /// <summary> Initializes a new instance of HoldAudioCompleted. </summary>
-        /// <param name="resultInformation"> Result information defines the code, subcode and message. </param>
-        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="callConnectionId"> Call connection ID. </param>
-        /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        /// <returns> A new <see cref="CallAutomation.HoldAudioCompleted"/> instance for mocking. </returns>
-        public static HoldAudioCompleted HoldAudioCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
-        {
-            return new HoldAudioCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
-        }
-
         /// <summary> Initializes a new instance of HoldFailed. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
@@ -635,36 +563,6 @@ namespace Azure.Communication.CallAutomation
         {
             var createdCallFailedInternal = new CreateCallFailedInternal(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
             return new CreateCallFailed(createdCallFailedInternal);
-        }
-
-        /// <summary> Initializes a new instance of IncomingCall. </summary>
-        /// <param name="to"> The recipient of the call. </param>
-        /// <param name="from"> The caller initiating the call.</param>
-        /// <param name="callerDisplayName"> The display name of the caller. </param>
-        /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="customContext"> Custom Sip and Voip Headers of call.</param>
-        /// <param name="incomingCallContext"> The context of the incoming call. </param>
-        /// <param name="onBehalfOfCallee"> The identifier of the user on whose behalf the call is received.</param>
-        /// <param name="correlationId"> The correlation ID for tracking the event. </param>
-        /// <returns>A new <see cref="CallAutomation.IncomingCall"/> instance for mocking. </returns>
-        public static IncomingCall IncomingCall(CommunicationIdentifier to = null, CommunicationIdentifier @from = null, string callerDisplayName = null, string serverCallId = null,
-            CustomCallingContext customContext = null, string incomingCallContext = null, CommunicationIdentifier onBehalfOfCallee = null, string correlationId = null)
-        {
-            var internalObject = new IncomingCallInternal(
-                to == null ? null : CommunicationIdentifierSerializer.Serialize(to),
-                @from == null ? null : CommunicationIdentifierSerializer.Serialize(@from),
-                callerDisplayName,
-                serverCallId,
-                customContext == null ? null : new CustomCallingContextInternal(
-                    customContext.VoipHeaders,
-                    customContext.SipHeaders,
-                    CustomCallContextHelpers.CreateTeamsPhoneCallDetailsInternal(customContext.TeamsPhoneCallDetails)),
-                incomingCallContext,
-                onBehalfOfCallee == null ? null : CommunicationIdentifierSerializer.Serialize(onBehalfOfCallee),
-                correlationId
-                );
-
-            return new IncomingCall(internalObject);
         }
     }
 }

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.15.0-beta.1 (Unreleased)
+## 1.16.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -8,7 +8,61 @@
 
 ### Bugs Fixed
 
+- Fixed `AzureDeveloperCliCredential` hanging when the `AZD_DEBUG` environment variable is set by adding the `--no-prompt` flag to prevent interactive prompts ([#52005](https://github.com/Azure/azure-sdk-for-net/issues/52005)).
+
 ### Other Changes
+
+## 1.15.0 (2025-08-11)
+
+### Breaking Changes
+
+#### Behavioral Breaking Changes
+
+- Deprecated `SharedTokenCacheCredential`. The supporting credential (`SharedTokenCacheCredential`) was a legacy mechanism for authenticating clients using credentials provided to Visual Studio. For brokered authentication, consider using `InteractiveBrowserCredential` instead. The following changes have been made:
+  - `SharedTokenCacheCredential` class is marked as `[Obsolete]` and `[EditorBrowsable(EditorBrowsableState.Never)]`
+  - `SharedTokenCacheCredentialOptions` class is marked as `[Obsolete]` and `[EditorBrowsable(EditorBrowsableState.Never)]`
+  - `DefaultAzureCredentialOptions.ExcludeSharedTokenCacheCredential` property is marked as `[Obsolete]` and `[EditorBrowsable(EditorBrowsableState.Never)]`
+  - `SharedTokenCacheUsername` property is marked as `[Obsolete]` and `[EditorBrowsable(EditorBrowsableState.Never)]`
+  - `SharedTokenCacheCredential` is no longer included in the `DefaultAzureCredential` authentication flow
+
+### Bugs Fixed
+
+- Tenant ID comparisons in credential options are now case-insensitive. This affects `AdditionallyAllowedTenants` values which will now be matched against tenant IDs without case sensitivity, making the authentication more resilient to case differences in tenant IDs returned from WWW-Authenticate challenges ([#51693](https://github.com/Azure/azure-sdk-for-net/issues/51693)).
+
+### Other Changes
+- `BrokerAuthenticationCredential` has been renamed as `BrokerCredential`.
+
+- Added the `EditorBrowsable(Never)` attribute to property `VisualStudioCodeTenantId` as `TenantId` is preferred. The `VisualStudioCodeTenantId` property exists only to provide backwards compatibility.
+
+## 1.15.0-beta.1 (2025-07-17)
+
+### Features Added
+
+- Expanded the set of acceptable values for environment variable `AZURE_TOKEN_CREDENTIALS` to allow for selection of a specific credential in the `DefaultAzureCredential` chain. The valid values now include any of the credential names available in the default chain (`VisualStudioCredential`, `VisualStudioCodeCredential`, `AzureCliCredential`, `AzurePowerShellCredential`, `AzureDeveloperCliCredential`, `EnvironmentCredential`, `WorkloadIdentityCredential`, `ManagedIdentityCredential`, `InteractiveBrowserCredential`, or `BrokerAuthenticationCredential`.) **Note:** `BrokerAuthenticationCredential` requires that the project include a reference to package Azure.Identity.Broker.
+
+- Re-introduced `VisualStudioCodeCredential` and included it in the `DefaultAzureCredential` authentication flow. This credential now supports Single Sign-On (SSO) through the authentication broker on Windows, macOS, and Linux using the Azure.Identity.Broker package.
+
+### Bugs Fixed
+
+- `ManagedIdentityCredential` now retries 410 status responses for at least 70 seconds total duration as required by [Azure IMDS documentation](https://learn.microsoft.com/azure/virtual-machines/instance-metadata-service?tabs=windows#errors-and-debugging). Previously, 410 responses were retried with the same short exponential backoff as other status codes, resulting in insufficient retry duration ([#50724](https://github.com/Azure/azure-sdk-for-net/issues/50724)).
+- `ManagedIdentityCredential` throws `CredentialUnavailableException` when the IMDS endpoint is unavailable. This addresses a regression in how it behaves in the `ChainedTokenCredential` ([47057](https://github.com/Azure/azure-sdk-for-net/issues/47057)).
+
+### Other Changes
+
+- `VisualStudioCredential` throws `CredentialUnavailableException` for all failures except for OperationCancelledException due to cancellation being requested for a `CancellationToken`. This ensures that it falls through for most failures when part of a chained credential.
+- Removed `AzureApplicationCredential`. For context, see issue [49781](https://github.com/Azure/azure-sdk-for-net/issues/49781).
+
+## 1.14.2 (2025-07-10)
+
+### Other changes
+
+- Updated `Microsoft.Identity.Client` dependency to version 4.73.1 to take a security fix.
+
+## 1.14.1 (2025-06-24)
+
+### Bugs Fixed
+
+- Added support in `AzurePowerShellCredential` for the `Az.Accounts` 5.0.0+ (Az 14.0.0+) breaking change where `Get-AzAccessToken` returns `PSSecureAccessToken` with a `SecureString` Token property instead of plaintext.
 
 ## 1.14.0 (2025-05-13)
 

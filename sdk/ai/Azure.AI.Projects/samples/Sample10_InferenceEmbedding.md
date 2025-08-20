@@ -12,10 +12,17 @@ This sample demonstrates how to use the synchronous and asynchronous `GetEmbeddi
 ## Synchronous Sample
 
 ```C# Snippet:AI_Projects_EmbeddingSync
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AIProjectClient client = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-EmbeddingsClient embeddingsClient = client.GetEmbeddingsClient();
+var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
+
+AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
+
+var credential = new DefaultAzureCredential();
+BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, new string[] { "https://ai.azure.com/.default" });
+clientOptions.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
+
+EmbeddingsClient embeddingsClient = new EmbeddingsClient(new Uri(inferenceEndpoint), credential, clientOptions);
 
 var input = new List<string> { "first phrase", "second phrase", "third phrase" };
 var requestOptions = new EmbeddingsOptions(input)
@@ -33,10 +40,17 @@ foreach (EmbeddingItem item in response.Value.Data)
 ## Asynchronous Sample
 
 ```C# Snippet:AI_Projects_EmbeddingAsync
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AIProjectClient client = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-EmbeddingsClient embeddingsClient = client.GetEmbeddingsClient();
+var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
+
+AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
+
+var credential = new DefaultAzureCredential();
+BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, new string[] { "https://ai.azure.com/.default" });
+clientOptions.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
+
+EmbeddingsClient embeddingsClient = new EmbeddingsClient(new Uri(inferenceEndpoint), credential, clientOptions);
 
 var input = new List<string> { "first phrase", "second phrase", "third phrase" };
 var requestOptions = new EmbeddingsOptions(input)

@@ -60,4 +60,22 @@ public enum OperationalInsightsWorkspaceCapacityReservationLevel
     /// </summary>
     [DataMember(Name = "5000")]
     FiveThousand,
+
+    /// <summary>
+    /// 10000.
+    /// </summary>
+    [DataMember(Name = "10000")]
+    TenThousand,
+
+    /// <summary>
+    /// 25000.
+    /// </summary>
+    [DataMember(Name = "25000")]
+    TwentyFiveThousand,
+
+    /// <summary>
+    /// 50000.
+    /// </summary>
+    [DataMember(Name = "50000")]
+    FiftyThousand,
 }

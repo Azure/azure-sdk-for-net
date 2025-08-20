@@ -47,13 +47,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Initializes a new instance of <see cref="AutonomousDBVersionProperties"/>. </summary>
         /// <param name="version"> Supported Autonomous Db versions. </param>
-        public AutonomousDBVersionProperties(string version)
-        {
-            Version = version;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AutonomousDBVersionProperties"/>. </summary>
-        /// <param name="version"> Supported Autonomous Db versions. </param>
         /// <param name="dbWorkload"> The Autonomous Database workload type. </param>
         /// <param name="isDefaultForFree"> True if this version of the Oracle Database software's default is free. </param>
         /// <param name="isDefaultForPaid"> True if this version of the Oracle Database software's default is paid. </param>

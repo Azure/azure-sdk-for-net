@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.Avs
         /// <summary> Initializes a new instance of VirtualMachinesRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Service host. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public VirtualMachinesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-09-01";
+            _apiVersion = apiVersion ?? "2024-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -289,7 +289,6 @@ namespace Azure.ResourceManager.Avs
             uri.AppendPath("/restrictMovement", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(restrictMovement, ModelSerializationExtensions.WireOptions);
@@ -304,7 +303,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="clusterName"> Name of the cluster. </param>
         /// <param name="virtualMachineId"> ID of the virtual machine. </param>
-        /// <param name="restrictMovement"> The body type of the operation request. </param>
+        /// <param name="restrictMovement"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, <paramref name="virtualMachineId"/> or <paramref name="restrictMovement"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/> or <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -334,7 +333,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="privateCloudName"> Name of the private cloud. </param>
         /// <param name="clusterName"> Name of the cluster. </param>
         /// <param name="virtualMachineId"> ID of the virtual machine. </param>
-        /// <param name="restrictMovement"> The body type of the operation request. </param>
+        /// <param name="restrictMovement"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/>, <paramref name="virtualMachineId"/> or <paramref name="restrictMovement"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateCloudName"/>, <paramref name="clusterName"/> or <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>

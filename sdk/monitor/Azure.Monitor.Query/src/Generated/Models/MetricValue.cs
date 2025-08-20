@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> Represents a metric value. </summary>
     public partial class MetricValue
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MetricValue"/>. </summary>
         /// <param name="timeStamp"> The timestamp for the metric value in ISO 8601 format. </param>
         internal MetricValue(DateTimeOffset timeStamp)
@@ -26,7 +59,8 @@ namespace Azure.Monitor.Query.Models
         /// <param name="maximum"> The greatest value in the time range. </param>
         /// <param name="total"> The sum of all of the values in the time range. </param>
         /// <param name="count"> The number of samples in the time range. Can be used to determine the number of values that contributed to the average value. </param>
-        internal MetricValue(DateTimeOffset timeStamp, double? average, double? minimum, double? maximum, double? total, double? count)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricValue(DateTimeOffset timeStamp, double? average, double? minimum, double? maximum, double? total, double? count, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TimeStamp = timeStamp;
             Average = average;
@@ -34,6 +68,12 @@ namespace Azure.Monitor.Query.Models
             Maximum = maximum;
             Total = total;
             Count = count;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricValue"/> for deserialization. </summary>
+        internal MetricValue()
+        {
         }
 
         /// <summary> The timestamp for the metric value in ISO 8601 format. </summary>

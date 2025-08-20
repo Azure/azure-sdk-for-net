@@ -69,7 +69,7 @@ public partial class DataMaskingPolicy : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
-    /// The kind of data masking policy. Metadata, used for Azure portal.
+    /// The kind of Data Masking Policy. Metadata, used for Azure portal.
     /// </summary>
     public BicepValue<string> Kind 
     {
@@ -125,7 +125,7 @@ public partial class DataMaskingPolicy : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the DataMaskingPolicy.</param>
     public DataMaskingPolicy(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Sql/servers/databases/dataMaskingPolicies", resourceVersion ?? "2021-11-01")
+        : base(bicepIdentifier, "Microsoft.Sql/servers/databases/dataMaskingPolicies", resourceVersion ?? "2023-08-01")
     {
     }
 
@@ -151,6 +151,11 @@ public partial class DataMaskingPolicy : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2023-08-01.
+        /// </summary>
+        public static readonly string V2023_08_01 = "2023-08-01";
+
         /// <summary>
         /// 2021-11-01.
         /// </summary>
