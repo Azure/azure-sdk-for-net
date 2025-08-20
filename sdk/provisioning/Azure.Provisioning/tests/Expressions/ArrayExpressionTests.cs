@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Text.RegularExpressions;
 using Azure.Provisioning.Expressions;
 using NUnit.Framework;
 
@@ -47,8 +46,8 @@ namespace Azure.Provisioning.Tests.Expressions
 
             static void AssertExpression(string expected, ArrayExpression expression)
                 => Assert.AreEqual(
-                    Regex.Replace(expected, @"\r\n?", "\n"),
-                    Regex.Replace(expression.ToString(), @"\r\n?", "\n")
+                   expected.NormalizeLineEndings(),
+                   expression.ToString().NormalizeLineEndings()
                 );
         }
     }
