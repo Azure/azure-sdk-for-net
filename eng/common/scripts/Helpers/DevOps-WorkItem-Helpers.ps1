@@ -1052,7 +1052,8 @@ function Get-ReleasePlanForPackage($packageName)
     $query = "SELECT ${fieldList} FROM WorkItems WHERE [Work Item Type] = 'Release Plan' AND [${packageNameFieldName}] = '${packageName}'"
     $query += " AND [${prStatusFieldName}] = 'merged'"
     $query += " AND [System.State] IN ('In Progress')"
-    $query += " AND [System.Tags] NOT CONTAINS 'Release Planner App Test' ORDER BY [System.CreatedDate]"
+    $query += " AND [System.Tags] NOT CONTAINS 'Release Planner App Test'"
+    $query += " ORDER BY [System.CreatedDate]"
     $workItems = Invoke-Query $fields $query
     return $workItems
 }
