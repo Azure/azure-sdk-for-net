@@ -76,6 +76,11 @@ namespace Azure.Data.AppConfiguration
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
             if (Optional.IsDefined(IsReadOnly))
             {
                 writer.WritePropertyName("locked"u8);
@@ -131,6 +136,7 @@ namespace Azure.Data.AppConfiguration
             string value = default;
             DateTimeOffset? lastModified = default;
             IDictionary<string, string> tags = default;
+            string description = default;
             bool? isReadOnly = default;
             ETag eTag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -186,6 +192,11 @@ namespace Azure.Data.AppConfiguration
                     tags = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("description"u8))
+                {
+                    description = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("locked"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -212,6 +223,7 @@ namespace Azure.Data.AppConfiguration
                 value,
                 lastModified,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
+                description,
                 isReadOnly,
                 eTag,
                 additionalBinaryDataProperties);

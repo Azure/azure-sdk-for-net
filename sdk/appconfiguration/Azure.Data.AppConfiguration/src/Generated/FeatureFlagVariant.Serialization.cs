@@ -12,12 +12,17 @@ using System.Text.Json;
 
 namespace Azure.Data.AppConfiguration
 {
-    /// <summary> Labels are used to group key values or feature flags. </summary>
-    public partial class SettingLabel : IJsonModel<SettingLabel>
+    /// <summary> Feature Flag Variants object. </summary>
+    public partial class FeatureFlagVariant : IJsonModel<FeatureFlagVariant>
     {
+        /// <summary> Initializes a new instance of <see cref="FeatureFlagVariant"/> for deserialization. </summary>
+        internal FeatureFlagVariant()
+        {
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SettingLabel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FeatureFlagVariant>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,15 +33,22 @@ namespace Azure.Data.AppConfiguration
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SettingLabel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FeatureFlagVariant>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SettingLabel)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FeatureFlagVariant)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Name))
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
+            if (Optional.IsDefined(ConfigurationValue))
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
+                writer.WritePropertyName("configuration_value"u8);
+                writer.WriteStringValue(ConfigurationValue);
+            }
+            if (Optional.IsDefined(StatusOverride))
+            {
+                writer.WritePropertyName("status_override"u8);
+                writer.WriteStringValue(StatusOverride.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -57,30 +69,32 @@ namespace Azure.Data.AppConfiguration
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SettingLabel IJsonModel<SettingLabel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        FeatureFlagVariant IJsonModel<FeatureFlagVariant>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SettingLabel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual FeatureFlagVariant JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SettingLabel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FeatureFlagVariant>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SettingLabel)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FeatureFlagVariant)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSettingLabel(document.RootElement, options);
+            return DeserializeFeatureFlagVariant(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SettingLabel DeserializeSettingLabel(JsonElement element, ModelReaderWriterOptions options)
+        internal static FeatureFlagVariant DeserializeFeatureFlagVariant(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
+            string configurationValue = default;
+            StatusOverride? statusOverride = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -89,52 +103,66 @@ namespace Azure.Data.AppConfiguration
                     name = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("configuration_value"u8))
+                {
+                    configurationValue = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("status_override"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    statusOverride = new StatusOverride(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SettingLabel(name, additionalBinaryDataProperties);
+            return new FeatureFlagVariant(name, configurationValue, statusOverride, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SettingLabel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<FeatureFlagVariant>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SettingLabel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FeatureFlagVariant>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureDataAppConfigurationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SettingLabel)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FeatureFlagVariant)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SettingLabel IPersistableModel<SettingLabel>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        FeatureFlagVariant IPersistableModel<FeatureFlagVariant>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SettingLabel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual FeatureFlagVariant PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SettingLabel>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FeatureFlagVariant>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeSettingLabel(document.RootElement, options);
+                        return DeserializeFeatureFlagVariant(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SettingLabel)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FeatureFlagVariant)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SettingLabel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FeatureFlagVariant>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

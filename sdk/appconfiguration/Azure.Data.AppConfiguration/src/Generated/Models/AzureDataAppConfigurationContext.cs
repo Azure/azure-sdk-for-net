@@ -20,6 +20,16 @@ namespace Azure.Data.AppConfiguration
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SnapshotUpdateParameters))]
     [ModelReaderWriterBuildable(typeof(SettingLabel))]
+    [ModelReaderWriterBuildable(typeof(FeatureFlagListResult))]
+    [ModelReaderWriterBuildable(typeof(FeatureFlag))]
+    [ModelReaderWriterBuildable(typeof(FeatureFlagConditions))]
+    [ModelReaderWriterBuildable(typeof(FeatureFlagFilter))]
+    [ModelReaderWriterBuildable(typeof(FeatureFlagVariant))]
+    [ModelReaderWriterBuildable(typeof(FeatureFlagAllocation))]
+    [ModelReaderWriterBuildable(typeof(PercentileAllocation))]
+    [ModelReaderWriterBuildable(typeof(UserAllocation))]
+    [ModelReaderWriterBuildable(typeof(GroupAllocation))]
+    [ModelReaderWriterBuildable(typeof(FeatureFlagTelemetry))]
     public partial class AzureDataAppConfigurationContext : ModelReaderWriterContext
     {
     }
