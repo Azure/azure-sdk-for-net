@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnApplication()
         {
-            // Generated from example definition: 2025-03-01-preview/ApplicationGetOperation_example.json
+            // Generated from example definition: 2025-06-01-preview/ApplicationGetOperation_example.json
             // this example is just showing the usage of "ApplicationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAnApplication()
         {
-            // Generated from example definition: 2025-03-01-preview/ApplicationDeleteOperation_example.json
+            // Generated from example definition: 2025-06-01-preview/ApplicationDeleteOperation_example.json
             // this example is just showing the usage of "ApplicationResource_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchAnApplication()
         {
-            // Generated from example definition: 2025-03-01-preview/ApplicationPatchOperation_example.json
+            // Generated from example definition: 2025-06-01-preview/ApplicationPatchOperation_example.json
             // this example is just showing the usage of "ApplicationResource_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ReadUpgrade_GetAnApplicationUpgrade()
         {
-            // Generated from example definition: 2025-03-01-preview/ApplicationActionGetUpgrade_example.json
+            // Generated from example definition: 2025-06-01-preview/ApplicationActionGetUpgrade_example.json
             // this example is just showing the usage of "Applications_ReadUpgrade" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ResumeUpgrade_ResumeUpgrade()
         {
-            // Generated from example definition: 2025-03-01-preview/ApplicationActionResumeUpgrade_example.json
+            // Generated from example definition: 2025-06-01-preview/ApplicationActionResumeUpgrade_example.json
             // this example is just showing the usage of "Applications_ResumeUpgrade" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task StartRollback_StartAnApplicationUpgradeRollback()
         {
-            // Generated from example definition: 2025-03-01-preview/ApplicationActionStartRollback_example.json
+            // Generated from example definition: 2025-06-01-preview/ApplicationActionStartRollback_example.json
             // this example is just showing the usage of "Applications_StartRollback" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

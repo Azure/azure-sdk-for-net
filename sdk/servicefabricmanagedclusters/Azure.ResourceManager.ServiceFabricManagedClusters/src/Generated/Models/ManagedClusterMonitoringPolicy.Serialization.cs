@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WritePropertyName("healthCheckStableDuration"u8);
             writer.WriteStringValue(HealthCheckStableDuration, "c");
             writer.WritePropertyName("healthCheckRetryTimeout"u8);
-            writer.WriteStringValue(HealthCheckRetryTimeout);
+            writer.WriteStringValue(HealthCheckRetryTimeout, "c");
             writer.WritePropertyName("upgradeTimeout"u8);
-            writer.WriteStringValue(UpgradeTimeout);
+            writer.WriteStringValue(UpgradeTimeout, "c");
             writer.WritePropertyName("upgradeDomainTimeout"u8);
-            writer.WriteStringValue(UpgradeDomainTimeout);
+            writer.WriteStringValue(UpgradeDomainTimeout, "c");
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,9 +83,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
             TimeSpan healthCheckWaitDuration = default;
             TimeSpan healthCheckStableDuration = default;
-            string healthCheckRetryTimeout = default;
-            string upgradeTimeout = default;
-            string upgradeDomainTimeout = default;
+            TimeSpan healthCheckRetryTimeout = default;
+            TimeSpan upgradeTimeout = default;
+            TimeSpan upgradeDomainTimeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,17 +102,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 if (property.NameEquals("healthCheckRetryTimeout"u8))
                 {
-                    healthCheckRetryTimeout = property.Value.GetString();
+                    healthCheckRetryTimeout = property.Value.GetTimeSpan("c");
                     continue;
                 }
                 if (property.NameEquals("upgradeTimeout"u8))
                 {
-                    upgradeTimeout = property.Value.GetString();
+                    upgradeTimeout = property.Value.GetTimeSpan("c");
                     continue;
                 }
                 if (property.NameEquals("upgradeDomainTimeout"u8))
                 {
-                    upgradeDomainTimeout = property.Value.GetString();
+                    upgradeDomainTimeout = property.Value.GetTimeSpan("c");
                     continue;
                 }
                 if (options.Format != "W")
