@@ -13,49 +13,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.MachineLearningServices.ModelDeployed event. </summary>
     public partial class MachineLearningServicesModelDeployedEventData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningServicesModelDeployedEventData"/>. </summary>
         /// <param name="serviceName"> The name of the deployed service. </param>
         /// <param name="serviceComputeType"> The compute type (e.g. ACI, AKS) of the deployed service. </param>
         /// <param name="modelIds"> A common separated list of model IDs. The IDs of the models deployed in the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/>, <paramref name="serviceComputeType"/> or <paramref name="modelIds"/> is null. </exception>
         internal MachineLearningServicesModelDeployedEventData(string serviceName, string serviceComputeType, string modelIds)
         {
-            Argument.AssertNotNull(serviceName, nameof(serviceName));
-            Argument.AssertNotNull(serviceComputeType, nameof(serviceComputeType));
-            Argument.AssertNotNull(modelIds, nameof(modelIds));
-
             ServiceName = serviceName;
             ServiceComputeType = serviceComputeType;
             ModelIds = modelIds;
@@ -67,26 +33,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="modelIds"> A common separated list of model IDs. The IDs of the models deployed in the service. </param>
         /// <param name="serviceTags"> The tags of the deployed service. </param>
         /// <param name="serviceProperties"> The properties of the deployed service. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningServicesModelDeployedEventData(string serviceName, string serviceComputeType, string modelIds, object serviceTags, object serviceProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningServicesModelDeployedEventData(string serviceName, string serviceComputeType, string modelIds, object serviceTags, object serviceProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceName = serviceName;
             ServiceComputeType = serviceComputeType;
             ModelIds = modelIds;
             ServiceTags = serviceTags;
             ServiceProperties = serviceProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningServicesModelDeployedEventData"/> for deserialization. </summary>
-        internal MachineLearningServicesModelDeployedEventData()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the deployed service. </summary>
         public string ServiceName { get; }
+
         /// <summary> The compute type (e.g. ACI, AKS) of the deployed service. </summary>
         public string ServiceComputeType { get; }
+
         /// <summary> A common separated list of model IDs. The IDs of the models deployed in the service. </summary>
         public string ModelIds { get; }
     }

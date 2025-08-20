@@ -49,18 +49,24 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         internal ContainerServiceFleetUpdateGroupStatus()
         {
             Members = new ChangeTrackingList<MemberUpdateStatus>();
+            BeforeGates = new ChangeTrackingList<UpdateRunGateStatus>();
+            AfterGates = new ChangeTrackingList<UpdateRunGateStatus>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateGroupStatus"/>. </summary>
         /// <param name="status"> The status of the UpdateGroup. </param>
         /// <param name="name"> The name of the UpdateGroup. </param>
         /// <param name="members"> The list of member this UpdateGroup updates. </param>
+        /// <param name="beforeGates"> The list of Gates that will run before this UpdateGroup. </param>
+        /// <param name="afterGates"> The list of Gates that will run after this UpdateGroup. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetUpdateGroupStatus(ContainerServiceFleetUpdateStatus status, string name, IReadOnlyList<MemberUpdateStatus> members, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerServiceFleetUpdateGroupStatus(ContainerServiceFleetUpdateStatus status, string name, IReadOnlyList<MemberUpdateStatus> members, IReadOnlyList<UpdateRunGateStatus> beforeGates, IReadOnlyList<UpdateRunGateStatus> afterGates, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Name = name;
             Members = members;
+            BeforeGates = beforeGates;
+            AfterGates = afterGates;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -70,5 +76,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public string Name { get; }
         /// <summary> The list of member this UpdateGroup updates. </summary>
         public IReadOnlyList<MemberUpdateStatus> Members { get; }
+        /// <summary> The list of Gates that will run before this UpdateGroup. </summary>
+        public IReadOnlyList<UpdateRunGateStatus> BeforeGates { get; }
+        /// <summary> The list of Gates that will run after this UpdateGroup. </summary>
+        public IReadOnlyList<UpdateRunGateStatus> AfterGates { get; }
     }
 }

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="sourceServerBrandVersion"> Source server brand version. </param>
         /// <param name="targetServerVersion"> Target server version. </param>
         /// <param name="targetServerBrandVersion"> Target server brand version. </param>
-        internal MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, MigrationState? state, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string sourceServerVersion, string sourceServerBrandVersion, string targetServerVersion, string targetServerBrandVersion) : base(id, resultType, serializedAdditionalRawData)
+        internal MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, DataMigrationState? state, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string sourceServerVersion, string sourceServerBrandVersion, string targetServerVersion, string targetServerBrandVersion) : base(id, resultType, serializedAdditionalRawData)
         {
             State = state;
             StartedOn = startedOn;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Overall state of the schema migration. </summary>
-        public MigrationState? State { get; }
+        public DataMigrationState? State { get; }
         /// <summary> Migration start time. </summary>
         public DateTimeOffset? StartedOn { get; }
         /// <summary> Migration end time. </summary>

@@ -22,6 +22,7 @@ public class BasicContainerServiceTests(bool async)
         await test.Define(
             ctx =>
             {
+                #region Snippet:ContainerServiceBasic
                 Infrastructure infra = new();
 
                 ProvisioningParameter dnsPrefix = new(nameof(dnsPrefix), typeof(string));
@@ -61,6 +62,7 @@ public class BasicContainerServiceTests(bool async)
                         }
                     };
                 infra.Add(aks);
+                #endregion
 
                 return infra;
             })

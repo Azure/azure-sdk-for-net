@@ -65,12 +65,13 @@ namespace Azure.ResourceManager.Sql
         /// <param name="location"> Resource location. </param>
         /// <param name="subregion"> Subregion of the server key. </param>
         /// <param name="serverKeyType"> The server key type like 'ServiceManaged', 'AzureKeyVault'. </param>
-        /// <param name="uri"> The URI of the server key. If the ServerKeyType is AzureKeyVault, then the URI is required. The AKV URI is required to be in this format: 'https://YourVaultName.vault.azure.net/keys/YourKeyName/YourKeyVersion'. </param>
+        /// <param name="uri"> The URI of the server key. If the ServerKeyType is AzureKeyVault, then the URI is required. The AKV URI is required to be in this format: 'https://YourVaultName.vault.azure.net/keys/YourKeyName/YourKeyVersion' or can be 'https://YourVaultName.vault.azure.net/keys/YourKeyName'. </param>
         /// <param name="thumbprint"> Thumbprint of the server key. </param>
         /// <param name="createdOn"> The server key creation date. </param>
         /// <param name="isAutoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
+        /// <param name="keyVersion"> The version of the server key. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, string subregion, SqlServerKeyType? serverKeyType, Uri uri, string thumbprint, DateTimeOffset? createdOn, bool? isAutoRotationEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SqlServerKeyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, string subregion, SqlServerKeyType? serverKeyType, Uri uri, string thumbprint, DateTimeOffset? createdOn, bool? isAutoRotationEnabled, string keyVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Location = location;
@@ -80,6 +81,7 @@ namespace Azure.ResourceManager.Sql
             Thumbprint = thumbprint;
             CreatedOn = createdOn;
             IsAutoRotationEnabled = isAutoRotationEnabled;
+            KeyVersion = keyVersion;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -95,7 +97,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The server key type like 'ServiceManaged', 'AzureKeyVault'. </summary>
         [WirePath("properties.serverKeyType")]
         public SqlServerKeyType? ServerKeyType { get; set; }
-        /// <summary> The URI of the server key. If the ServerKeyType is AzureKeyVault, then the URI is required. The AKV URI is required to be in this format: 'https://YourVaultName.vault.azure.net/keys/YourKeyName/YourKeyVersion'. </summary>
+        /// <summary> The URI of the server key. If the ServerKeyType is AzureKeyVault, then the URI is required. The AKV URI is required to be in this format: 'https://YourVaultName.vault.azure.net/keys/YourKeyName/YourKeyVersion' or can be 'https://YourVaultName.vault.azure.net/keys/YourKeyName'. </summary>
         [WirePath("properties.uri")]
         public Uri Uri { get; set; }
         /// <summary> Thumbprint of the server key. </summary>
@@ -107,5 +109,8 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Key auto rotation opt-in flag. Either true or false. </summary>
         [WirePath("properties.autoRotationEnabled")]
         public bool? IsAutoRotationEnabled { get; }
+        /// <summary> The version of the server key. </summary>
+        [WirePath("properties.keyVersion")]
+        public string KeyVersion { get; }
     }
 }

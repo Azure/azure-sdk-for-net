@@ -31,6 +31,7 @@ namespace Azure.Generator.Providers
             _publicClients = publicClients;
             _resourceProviderName = TypeNameUtilities.GetResourceProviderName();
             AzureClientGenerator.Instance.AddTypeToKeep(this);
+            AzureClientGenerator.Instance.AddNonRootType(this);
         }
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");

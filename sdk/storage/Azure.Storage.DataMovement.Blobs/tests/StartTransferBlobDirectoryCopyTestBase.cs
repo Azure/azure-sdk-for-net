@@ -285,9 +285,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // List all files in source blob folder path
             List<string> sourceFileNames = new List<string>();
-
-            // Get source directory client and list the paths
-            await foreach (Page<BlobItem> page in sourceContainer.GetBlobsAsync(prefix: sourcePrefix, cancellationToken: cancellationToken).AsPages())
+            await foreach (Page<BlobItem> page in sourceContainer.GetBlobsAsync(
+                prefix: !string.IsNullOrEmpty(sourcePrefix) ? sourcePrefix + '/' : sourcePrefix,
+                cancellationToken: cancellationToken).AsPages())
             {
                 sourceFileNames.AddRange(page.Values.Select(
                     (BlobItem item) => !string.IsNullOrEmpty(sourcePrefix) ? item.Name.Substring(sourcePrefix.Length + 1) : item.Name));
@@ -295,7 +295,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // List all files in the destination blob folder path
             List<string> destinationFileNames = new List<string>();
-            await foreach (Page<BlobItem> page in destinationContainer.GetBlobsAsync(prefix: destinationPrefix, cancellationToken: cancellationToken).AsPages())
+            await foreach (Page<BlobItem> page in destinationContainer.GetBlobsAsync(
+                prefix: !string.IsNullOrEmpty(destinationPrefix) ? destinationPrefix + '/' : destinationPrefix,
+                cancellationToken: cancellationToken).AsPages())
             {
                 destinationFileNames.AddRange(page.Values.Select(
                     (BlobItem item) => !string.IsNullOrEmpty(destinationPrefix) ? item.Name.Substring(destinationPrefix.Length + 1) : item.Name));

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -25,11 +26,17 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="AzureOpenAIVectorizer"/>. </summary>
         /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
         /// <param name="kind"> The name of the kind of vectorization method being configured for use with vector search. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> Contains the parameters specific to Azure OpenAI embedding vectorization. </param>
-        internal AzureOpenAIVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, AzureOpenAIVectorizerParameters parameters) : base(vectorizerName, kind)
+        internal AzureOpenAIVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureOpenAIVectorizerParameters parameters) : base(vectorizerName, kind, serializedAdditionalRawData)
         {
             Parameters = parameters;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureOpenAIVectorizer"/> for deserialization. </summary>
+        internal AzureOpenAIVectorizer()
+        {
         }
 
         /// <summary> Contains the parameters specific to Azure OpenAI embedding vectorization. </summary>

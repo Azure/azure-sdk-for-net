@@ -129,22 +129,22 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceProjectTaskResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceProjectTaskResource.CreateResourceIdentifier" /> to create a <see cref="ServiceProjectTaskResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataMigrationServiceTaskResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataMigrationServiceTaskResource.CreateResourceIdentifier" /> to create a <see cref="DataMigrationServiceTaskResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDataMigrationArmClient.GetServiceProjectTaskResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationArmClient.GetDataMigrationServiceTaskResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ServiceProjectTaskResource"/> object. </returns>
-        public static ServiceProjectTaskResource GetServiceProjectTaskResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataMigrationServiceTaskResource"/> object. </returns>
+        public static DataMigrationServiceTaskResource GetDataMigrationServiceTaskResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDataMigrationArmClient(client).GetServiceProjectTaskResource(id);
+            return GetMockableDataMigrationArmClient(client).GetDataMigrationServiceTaskResource(id);
         }
 
         /// <summary>
@@ -167,41 +167,41 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProjectResource.CreateResourceIdentifier" /> to create a <see cref="ProjectResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataMigrationProjectResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataMigrationProjectResource.CreateResourceIdentifier" /> to create a <see cref="DataMigrationProjectResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDataMigrationArmClient.GetProjectResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationArmClient.GetDataMigrationProjectResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ProjectResource"/> object. </returns>
-        public static ProjectResource GetProjectResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataMigrationProjectResource"/> object. </returns>
+        public static DataMigrationProjectResource GetDataMigrationProjectResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDataMigrationArmClient(client).GetProjectResource(id);
+            return GetMockableDataMigrationArmClient(client).GetDataMigrationProjectResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProjectFileResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProjectFileResource.CreateResourceIdentifier" /> to create a <see cref="ProjectFileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataMigrationProjectFileResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataMigrationProjectFileResource.CreateResourceIdentifier" /> to create a <see cref="DataMigrationProjectFileResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDataMigrationArmClient.GetProjectFileResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationArmClient.GetDataMigrationProjectFileResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ProjectFileResource"/> object. </returns>
-        public static ProjectFileResource GetProjectFileResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataMigrationProjectFileResource"/> object. </returns>
+        public static DataMigrationProjectFileResource GetDataMigrationProjectFileResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDataMigrationArmClient(client).GetProjectFileResource(id);
+            return GetMockableDataMigrationArmClient(client).GetDataMigrationProjectFileResource(id);
         }
 
         /// <summary>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The services resource is the top-level resource that represents the Database Migration Service. The GET method retrieves information about a service instance.
+        /// The services resource is the top-level resource that represents the Azure Database Migration Service (classic). The GET method retrieves information about a service instance.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The services resource is the top-level resource that represents the Database Migration Service. The GET method retrieves information about a service instance.
+        /// The services resource is the top-level resource that represents the Azure Database Migration Service (classic). The GET method retrieves information about a service instance.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -662,7 +662,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -760,7 +760,7 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The skus action returns the list of SKUs that DMS supports.
+        /// The skus action returns the list of SKUs that DMS (classic) supports.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -772,7 +772,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -783,8 +783,8 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ResourceSku"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ResourceSku> GetSkusResourceSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DataMigrationSku"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DataMigrationSku> GetSkusResourceSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -792,7 +792,7 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The skus action returns the list of SKUs that DMS supports.
+        /// The skus action returns the list of SKUs that DMS (classic) supports.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -804,7 +804,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -815,8 +815,8 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ResourceSku"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ResourceSku> GetSkusResourceSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataMigrationSku"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DataMigrationSku> GetSkusResourceSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -824,7 +824,7 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The services resource is the top-level resource that represents the Database Migration Service. This method returns a list of service resources in a subscription.
+        /// The services resource is the top-level resource that represents the Azure Database Migration Service (classic). This method returns a list of service resources in a subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -836,7 +836,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -860,7 +860,7 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The services resource is the top-level resource that represents the Database Migration Service. This method returns a list of service resources in a subscription.
+        /// The services resource is the top-level resource that represents the Azure Database Migration Service (classic). This method returns a list of service resources in a subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -872,7 +872,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -908,7 +908,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -917,19 +917,19 @@ namespace Azure.ResourceManager.DataMigration
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDataMigrationSubscriptionResource.CheckNameAvailabilityService(AzureLocation,NameAvailabilityRequest,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationSubscriptionResource.CheckDataMigrationNameAvailability(AzureLocation,DataMigrationServiceNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The Azure region of the operation. </param>
-        /// <param name="nameAvailabilityRequest"> Requested name to validate. </param>
+        /// <param name="content"> Requested name to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="nameAvailabilityRequest"/> is null. </exception>
-        public static async Task<Response<NameAvailabilityResponse>> CheckNameAvailabilityServiceAsync(this SubscriptionResource subscriptionResource, AzureLocation location, NameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<Response<DataMigrationServiceNameAvailabilityResult>> CheckDataMigrationNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DataMigrationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableDataMigrationSubscriptionResource(subscriptionResource).CheckNameAvailabilityServiceAsync(location, nameAvailabilityRequest, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDataMigrationSubscriptionResource(subscriptionResource).CheckDataMigrationNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -945,7 +945,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -954,23 +954,23 @@ namespace Azure.ResourceManager.DataMigration
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDataMigrationSubscriptionResource.CheckNameAvailabilityService(AzureLocation,NameAvailabilityRequest,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationSubscriptionResource.CheckDataMigrationNameAvailability(AzureLocation,DataMigrationServiceNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The Azure region of the operation. </param>
-        /// <param name="nameAvailabilityRequest"> Requested name to validate. </param>
+        /// <param name="content"> Requested name to validate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="nameAvailabilityRequest"/> is null. </exception>
-        public static Response<NameAvailabilityResponse> CheckNameAvailabilityService(this SubscriptionResource subscriptionResource, AzureLocation location, NameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        public static Response<DataMigrationServiceNameAvailabilityResult> CheckDataMigrationNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, DataMigrationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDataMigrationSubscriptionResource(subscriptionResource).CheckNameAvailabilityService(location, nameAvailabilityRequest, cancellationToken);
+            return GetMockableDataMigrationSubscriptionResource(subscriptionResource).CheckDataMigrationNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
-        /// This method returns region-specific quotas and resource usage information for the Database Migration Service.
+        /// This method returns region-specific quotas and resource usage information for the Azure Database Migration Service (classic).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -982,7 +982,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -994,8 +994,8 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="location"> The Azure region of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="Quota"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Quota> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DataMigrationQuota"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<DataMigrationQuota> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -1003,7 +1003,7 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// This method returns region-specific quotas and resource usage information for the Database Migration Service.
+        /// This method returns region-specific quotas and resource usage information for the Azure Database Migration Service (classic).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1015,7 +1015,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-03-30-preview</description>
+        /// <description>2025-03-15-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1027,8 +1027,8 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="location"> The Azure region of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Quota"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Quota> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataMigrationQuota"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<DataMigrationQuota> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
