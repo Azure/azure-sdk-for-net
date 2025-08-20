@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary> Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary. </summary>
-        /// <param name="content"> Request body for discovering solutions using NLP. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<DiscoveryNlpResult>> DiscoverSolutionsNlpAsync(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
         {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary> Search for relevant Azure Diagnostics, Solutions and Troubleshooters using a natural language issue summary. </summary>
-        /// <param name="content"> Request body for discovering solutions using NLP. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<DiscoveryNlpResult> DiscoverSolutionsNlp(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
         {

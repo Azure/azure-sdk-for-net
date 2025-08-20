@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Request body for discovering solutions using NLP. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SolutionNlpMetadata> DiscoverSolutionsNlpAsync(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Request body for discovering solutions using NLP. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SolutionNlpMetadata> DiscoverSolutionsNlp(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)

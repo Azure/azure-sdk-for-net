@@ -245,7 +245,6 @@ namespace Azure.ResourceManager.SelfHelp
             uri.AppendPath("/continue", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             if (content != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
@@ -330,7 +329,6 @@ namespace Azure.ResourceManager.SelfHelp
             uri.AppendPath("/end", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
