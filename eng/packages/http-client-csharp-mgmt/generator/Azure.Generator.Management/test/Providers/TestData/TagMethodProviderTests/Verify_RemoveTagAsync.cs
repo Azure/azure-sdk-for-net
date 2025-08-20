@@ -12,8 +12,7 @@ try
         global::Azure.RequestContext context = new global::Azure.RequestContext
         {
             CancellationToken = cancellationToken
-        }
-        ;
+        };
         global::Azure.Core.HttpMessage message = _testClientRestClient.CreateGetRequest(this.Id.Name, global::System.Guid.Parse(this.Id.SubscriptionId), context);
         global::Azure.Response result = await this.Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
         global::Azure.Response<global::Samples.Models.ResponseTypeData> response = global::Azure.Response.FromValue(global::Samples.Models.ResponseTypeData.FromResponse(result), result);
@@ -22,8 +21,13 @@ try
     else
     {
         global::Samples.Models.ResponseTypeData current = (await this.GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
-        current.Tags.Remove(key);
-        global::Azure.ResourceManager.ArmOperation<global::Samples.ResponseTypeResource> result = await this.UpdateAsync(global::Azure.WaitUntil.Completed, current, cancellationToken).ConfigureAwait(false);
+        global::Samples.Models.ResponseTypeData patch = new global::Samples.Models.ResponseTypeData();
+        foreach (global::System.Collections.Generic.KeyValuePair<string, string> tag in current.Tags)
+        {
+            patch.Tags.Add(tag);
+        }
+        patch.Tags.Remove(key);
+        global::Azure.Response<global::Samples.ResponseTypeResource> result = await this.UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
         return global::Azure.Response.FromValue(result.Value, result.GetRawResponse());
     }
 }

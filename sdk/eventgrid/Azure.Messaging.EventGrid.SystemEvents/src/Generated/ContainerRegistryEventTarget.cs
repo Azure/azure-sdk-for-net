@@ -13,47 +13,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> The target of the event. </summary>
     public partial class ContainerRegistryEventTarget
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryEventTarget"/>. </summary>
         /// <param name="mediaType"> The MIME type of the referenced object. </param>
         /// <param name="repository"> The repository name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="mediaType"/> or <paramref name="repository"/> is null. </exception>
         internal ContainerRegistryEventTarget(string mediaType, string repository)
         {
-            Argument.AssertNotNull(mediaType, nameof(mediaType));
-            Argument.AssertNotNull(repository, nameof(repository));
-
             MediaType = mediaType;
             Repository = repository;
         }
@@ -66,8 +33,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="repository"> The repository name. </param>
         /// <param name="url"> The direct URL to the content. </param>
         /// <param name="tag"> The tag name. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryEventTarget(string mediaType, long? size, string digest, long? length, string repository, string url, string tag, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryEventTarget(string mediaType, long? size, string digest, long? length, string repository, string url, string tag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MediaType = mediaType;
             Size = size;
@@ -76,26 +43,27 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Repository = repository;
             Url = url;
             Tag = tag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistryEventTarget"/> for deserialization. </summary>
-        internal ContainerRegistryEventTarget()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The MIME type of the referenced object. </summary>
         public string MediaType { get; }
+
         /// <summary> The number of bytes of the content. Same as Length field. </summary>
         public long? Size { get; }
+
         /// <summary> The digest of the content, as defined by the Registry V2 HTTP API Specification. </summary>
         public string Digest { get; }
+
         /// <summary> The number of bytes of the content. Same as Size field. </summary>
         public long? Length { get; }
+
         /// <summary> The repository name. </summary>
         public string Repository { get; }
+
         /// <summary> The direct URL to the content. </summary>
         public string Url { get; }
+
         /// <summary> The tag name. </summary>
         public string Tag { get; }
     }

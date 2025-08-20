@@ -13,49 +13,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Describes the schema of the common properties across all ARN system topic events. </summary>
     public partial class ResourceNotificationsResourceUpdatedEventData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceUpdatedEventData"/>. </summary>
         /// <param name="resourceDetails"> resourceInfo details for update event. </param>
         /// <param name="operationalDetails"> details about operational info. </param>
         /// <param name="apiVersion"> api version of the resource properties bag. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceDetails"/>, <paramref name="operationalDetails"/> or <paramref name="apiVersion"/> is null. </exception>
         internal ResourceNotificationsResourceUpdatedEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails, ResourceNotificationsOperationalDetails operationalDetails, string apiVersion)
         {
-            Argument.AssertNotNull(resourceDetails, nameof(resourceDetails));
-            Argument.AssertNotNull(operationalDetails, nameof(operationalDetails));
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
             ResourceDetails = resourceDetails;
             OperationalDetails = operationalDetails;
             ApiVersion = apiVersion;
@@ -65,24 +31,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="resourceDetails"> resourceInfo details for update event. </param>
         /// <param name="operationalDetails"> details about operational info. </param>
         /// <param name="apiVersion"> api version of the resource properties bag. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceNotificationsResourceUpdatedEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails, ResourceNotificationsOperationalDetails operationalDetails, string apiVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceNotificationsResourceUpdatedEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails, ResourceNotificationsOperationalDetails operationalDetails, string apiVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceDetails = resourceDetails;
             OperationalDetails = operationalDetails;
             ApiVersion = apiVersion;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceUpdatedEventData"/> for deserialization. </summary>
-        internal ResourceNotificationsResourceUpdatedEventData()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> resourceInfo details for update event. </summary>
         public ResourceNotificationsResourceUpdatedDetails ResourceDetails { get; }
+
         /// <summary> details about operational info. </summary>
         public ResourceNotificationsOperationalDetails OperationalDetails { get; }
+
         /// <summary> api version of the resource properties bag. </summary>
         public string ApiVersion { get; }
     }

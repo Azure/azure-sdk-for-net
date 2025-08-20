@@ -13,47 +13,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Properties JSON element. </summary>
     public partial class DeviceTwinInfoProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeviceTwinInfoProperties"/>. </summary>
         /// <param name="desired"> A portion of the properties that can be written only by the application back-end, and read by the device. </param>
         /// <param name="reported"> A portion of the properties that can be written only by the device, and read by the application back-end. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="desired"/> or <paramref name="reported"/> is null. </exception>
         internal DeviceTwinInfoProperties(DeviceTwinProperties desired, DeviceTwinProperties reported)
         {
-            Argument.AssertNotNull(desired, nameof(desired));
-            Argument.AssertNotNull(reported, nameof(reported));
-
             Desired = desired;
             Reported = reported;
         }
@@ -61,21 +28,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of <see cref="DeviceTwinInfoProperties"/>. </summary>
         /// <param name="desired"> A portion of the properties that can be written only by the application back-end, and read by the device. </param>
         /// <param name="reported"> A portion of the properties that can be written only by the device, and read by the application back-end. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceTwinInfoProperties(DeviceTwinProperties desired, DeviceTwinProperties reported, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceTwinInfoProperties(DeviceTwinProperties desired, DeviceTwinProperties reported, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Desired = desired;
             Reported = reported;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DeviceTwinInfoProperties"/> for deserialization. </summary>
-        internal DeviceTwinInfoProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A portion of the properties that can be written only by the application back-end, and read by the device. </summary>
         public DeviceTwinProperties Desired { get; }
+
         /// <summary> A portion of the properties that can be written only by the device, and read by the application back-end. </summary>
         public DeviceTwinProperties Reported { get; }
     }

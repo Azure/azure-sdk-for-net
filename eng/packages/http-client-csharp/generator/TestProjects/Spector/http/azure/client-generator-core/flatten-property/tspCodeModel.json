@@ -101,7 +101,8 @@
             "json": {
               "name": "name"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "12",
@@ -140,7 +141,8 @@
                   "json": {
                     "name": "description"
                   }
-                }
+                },
+                "isHttpMetadata": false
               },
               {
                 "$id": "16",
@@ -164,7 +166,8 @@
                   "json": {
                     "name": "age"
                   }
-                }
+                },
+                "isHttpMetadata": false
               }
             ]
           },
@@ -178,7 +181,8 @@
             "json": {
               "name": "properties"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -217,7 +221,8 @@
             "json": {
               "name": "name"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "21",
@@ -256,7 +261,8 @@
                   "json": {
                     "name": "summary"
                   }
-                }
+                },
+                "isHttpMetadata": false
               },
               {
                 "$id": "25",
@@ -276,7 +282,8 @@
                   "json": {
                     "name": "properties"
                   }
-                }
+                },
+                "isHttpMetadata": false
               }
             ]
           },
@@ -290,7 +297,8 @@
             "json": {
               "name": "properties"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -320,55 +328,55 @@
             "parameters": [
               {
                 "$id": "29",
+                "kind": "header",
                 "name": "contentType",
-                "nameInRequest": "Content-Type",
+                "serializedName": "Content-Type",
                 "doc": "Body parameter's content type. Known values are application/json",
                 "type": {
                   "$ref": "1"
                 },
-                "location": "Header",
                 "isApiVersion": false,
+                "optional": false,
                 "isContentType": true,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Constant",
+                "scope": "Constant",
+                "readOnly": false,
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.putFlattenModel.contentType"
               },
               {
                 "$id": "30",
+                "kind": "header",
                 "name": "accept",
-                "nameInRequest": "Accept",
+                "serializedName": "Accept",
                 "type": {
                   "$ref": "3"
                 },
-                "location": "Header",
                 "isApiVersion": false,
+                "optional": false,
                 "isContentType": false,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Constant",
+                "scope": "Constant",
+                "readOnly": false,
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.putFlattenModel.accept"
               },
               {
                 "$id": "31",
+                "kind": "body",
                 "name": "input",
-                "nameInRequest": "input",
+                "serializedName": "input",
                 "type": {
                   "$ref": "9"
                 },
-                "location": "Body",
                 "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Method",
+                "contentTypes": [
+                  "application/json"
+                ],
+                "defaultContentType": "application/json",
+                "optional": false,
+                "scope": "Method",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "readOnly": false,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.putFlattenModel.input"
               }
             ],
             "responses": [
@@ -401,55 +409,55 @@
           "parameters": [
             {
               "$id": "32",
+              "kind": "method",
               "name": "input",
-              "nameInRequest": "input",
+              "serializedName": "input",
               "type": {
                 "$ref": "9"
               },
               "location": "Body",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.putFlattenModel.input",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
               "$id": "33",
+              "kind": "method",
               "name": "contentType",
-              "nameInRequest": "contentType",
+              "serializedName": "Content-Type",
               "doc": "Body parameter's content type. Known values are application/json",
               "type": {
                 "$ref": "1"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Constant",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.putFlattenModel.contentType",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
               "$id": "34",
+              "kind": "method",
               "name": "accept",
-              "nameInRequest": "accept",
+              "serializedName": "Accept",
               "type": {
                 "$ref": "3"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Constant",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.putFlattenModel.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             }
           ],
           "response": {
@@ -476,55 +484,55 @@
             "parameters": [
               {
                 "$id": "37",
+                "kind": "header",
                 "name": "contentType",
-                "nameInRequest": "Content-Type",
+                "serializedName": "Content-Type",
                 "doc": "Body parameter's content type. Known values are application/json",
                 "type": {
                   "$ref": "5"
                 },
-                "location": "Header",
                 "isApiVersion": false,
+                "optional": false,
                 "isContentType": true,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Constant",
+                "scope": "Constant",
+                "readOnly": false,
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.putNestedFlattenModel.contentType"
               },
               {
                 "$id": "38",
+                "kind": "header",
                 "name": "accept",
-                "nameInRequest": "Accept",
+                "serializedName": "Accept",
                 "type": {
                   "$ref": "7"
                 },
-                "location": "Header",
                 "isApiVersion": false,
+                "optional": false,
                 "isContentType": false,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Constant",
+                "scope": "Constant",
+                "readOnly": false,
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.putNestedFlattenModel.accept"
               },
               {
                 "$id": "39",
+                "kind": "body",
                 "name": "input",
-                "nameInRequest": "input",
+                "serializedName": "input",
                 "type": {
                   "$ref": "18"
                 },
-                "location": "Body",
                 "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Method",
+                "contentTypes": [
+                  "application/json"
+                ],
+                "defaultContentType": "application/json",
+                "optional": false,
+                "scope": "Method",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "readOnly": false,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.putNestedFlattenModel.input"
               }
             ],
             "responses": [
@@ -557,55 +565,55 @@
           "parameters": [
             {
               "$id": "40",
+              "kind": "method",
               "name": "input",
-              "nameInRequest": "input",
+              "serializedName": "input",
               "type": {
                 "$ref": "18"
               },
               "location": "Body",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.putNestedFlattenModel.input",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
               "$id": "41",
+              "kind": "method",
               "name": "contentType",
-              "nameInRequest": "contentType",
+              "serializedName": "Content-Type",
               "doc": "Body parameter's content type. Known values are application/json",
               "type": {
                 "$ref": "5"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Constant",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.putNestedFlattenModel.contentType",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
               "$id": "42",
+              "kind": "method",
               "name": "accept",
-              "nameInRequest": "accept",
+              "serializedName": "Accept",
               "type": {
                 "$ref": "7"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Constant",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.putNestedFlattenModel.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             }
           ],
           "response": {
@@ -622,8 +630,9 @@
       "parameters": [
         {
           "$id": "43",
+          "kind": "endpoint",
           "name": "endpoint",
-          "nameInRequest": "endpoint",
+          "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
             "$id": "44",
@@ -631,14 +640,10 @@
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
           },
-          "location": "Uri",
           "isApiVersion": false,
-          "isContentType": false,
-          "isRequired": true,
+          "optional": false,
+          "scope": "Client",
           "isEndpoint": true,
-          "skipUrlEncoding": false,
-          "explode": false,
-          "kind": "Client",
           "defaultValue": {
             "type": {
               "$id": "45",
@@ -648,7 +653,10 @@
             },
             "value": "http://localhost:3000"
           },
-          "serverUrlTemplate": "{endpoint}"
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.FlattenProperty.endpoint"
         }
       ],
       "decorators": [],

@@ -37,7 +37,6 @@ public class PlaywrightServiceBrowserClientTests
         Assert.Multiple(() =>
         {
             Assert.That(client._options.ServiceAuth, Is.EqualTo(ServiceAuthType.EntraId));
-            Assert.That(client._options.UseCloudHostedBrowsers, Is.True);
             Assert.AreEqual(client._options.OS, OSPlatform.Linux);
             Assert.AreEqual(client._options.ExposeNetwork, Constants.s_default_expose_network);
             Assert.That(Guid.TryParse(client._options.RunId, out _), Is.True);
@@ -117,17 +116,21 @@ public class PlaywrightServiceBrowserClientTests
     public void InitializeAsync_WhenDefaultAuthIsEntraIdAccessTokenAndAccessTokenEnvironmentVariableIsSet_FetchesEntraIdAccessToken()
     {
         var environment = new TestEnvironment();
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
+        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://eastus.api.playwright.microsoft.com/playwrightworkspaces/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers");
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
         var playwrightVersion = new PlaywrightVersion();
+        var testRunUpdateClientMock = new Mock<TestRunUpdateClient>();
         var token = "valid_token";
         defaultAzureCredentialMock
             .Setup(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new AccessToken(token, DateTimeOffset.UtcNow.AddMinutes(10)));
+        testRunUpdateClientMock
+            .Setup(x => x.TestRunsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<RequestContent>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<RequestContext>()))
+            .ReturnsAsync(Mock.Of<Response>());
         var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null, environment);
         environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), "access_token");
-        PlaywrightServiceBrowserClient client = new(environment, entraLifecycle: entraLifecycleMock.Object, playwrightVersion: playwrightVersion);
+        PlaywrightServiceBrowserClient client = new(environment, entraLifecycle: entraLifecycleMock.Object, playwrightVersion: playwrightVersion, testRunUpdateClient: testRunUpdateClientMock.Object);
         client.InitializeAsync().Wait();
         defaultAzureCredentialMock.Verify(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Once);
 
@@ -140,17 +143,21 @@ public class PlaywrightServiceBrowserClientTests
     public void InitializeAsync_WhenDefaultAuthIsEntraIdAccessTokenAndAccessTokenEnvironmentVariableIsSetAndCredentialsArePassed_FetchesEntraIdAccessTokenUsedPassedCredentials()
     {
         var environment = new TestEnvironment();
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
+        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://eastus.api.playwright.microsoft.com/playwrightworkspaces/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers");
         var tokenCredential = new Mock<TokenCredential>();
         var playwrightVersion = new PlaywrightVersion();
         var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
+        var testRunUpdateClientMock = new Mock<TestRunUpdateClient>();
         var token = "valid_token";
         tokenCredential
             .Setup(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new AccessToken(token, DateTimeOffset.UtcNow.AddMinutes(10)));
+        testRunUpdateClientMock
+            .Setup(x => x.TestRunsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<RequestContent>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<RequestContext>()))
+            .ReturnsAsync(Mock.Of<Response>());
         environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), "access_token");
         var entraLifecycleMock = new Mock<EntraLifecycle>(tokenCredential.Object, jsonWebTokenHandlerMock.Object, null, environment);
-        PlaywrightServiceBrowserClient client = new(environment, entraLifecycle: entraLifecycleMock.Object, playwrightVersion: playwrightVersion);
+        PlaywrightServiceBrowserClient client = new(environment, entraLifecycle: entraLifecycleMock.Object, playwrightVersion: playwrightVersion, testRunUpdateClient: testRunUpdateClientMock.Object);
         client.InitializeAsync().Wait();
         tokenCredential.Verify(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Once);
 
@@ -160,48 +167,23 @@ public class PlaywrightServiceBrowserClientTests
     }
 
     [Test]
-    public void InitializeAsync_WhenDefaultAuthIsEntraIdAccessTokenAndAccessTokenEnvironmentVariableIsSetButScalableExecutionIsDisabled_DeletesServiceUrlEnvVariable()
-    {
-        var environment = new TestEnvironment();
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
-        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
-        var playwrightVersion = new PlaywrightVersion();
-        var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
-        var token = "valid_token";
-        defaultAzureCredentialMock
-            .Setup(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new AccessToken(token, DateTimeOffset.UtcNow.AddMinutes(10)));
-        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null, environment);
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), "access_token");
-        var clientOptions = new PlaywrightServiceBrowserClientOptions(environment: environment, serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview)
-        {
-            UseCloudHostedBrowsers = false
-        };
-        PlaywrightServiceBrowserClient client = new(environment, entraLifecycle: entraLifecycleMock.Object, options: clientOptions, playwrightVersion: playwrightVersion);
-
-        Assert.That(environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString()), Is.Not.Null);
-
-        client.InitializeAsync().Wait();
-        defaultAzureCredentialMock.Verify(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Never);
-
-        Assert.That(client.RotationTimer, Is.Null);
-        Assert.That(environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString()), Is.Null);
-    }
-
-    [Test]
     public void InitializeAsync_WhenDefaultAuthIsEntraIdAccessTokenAndAccessTokenEnvironmentVariableIsNotSet_FetchesEntraIdAccessToken()
     {
         var environment = new TestEnvironment();
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
+        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://eastus.api.playwright.microsoft.com/playwrightworkspaces/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers");
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
         var playwrightVersion = new PlaywrightVersion();
+        var testRunUpdateClientMock = new Mock<TestRunUpdateClient>();
         var token = "valid_token";
         defaultAzureCredentialMock
             .Setup(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new AccessToken(token, DateTimeOffset.UtcNow.AddMinutes(10)));
+        testRunUpdateClientMock
+            .Setup(x => x.TestRunsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<RequestContent>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<RequestContext>()))
+            .ReturnsAsync(Mock.Of<Response>());
         var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null, environment);
-        PlaywrightServiceBrowserClient client = new(environment, entraLifecycle: entraLifecycleMock.Object, playwrightVersion: playwrightVersion);
+        PlaywrightServiceBrowserClient client = new(environment, entraLifecycle: entraLifecycleMock.Object, playwrightVersion: playwrightVersion, testRunUpdateClient: testRunUpdateClientMock.Object);
         client.InitializeAsync().Wait();
         defaultAzureCredentialMock.Verify(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Once);
 
@@ -212,16 +194,20 @@ public class PlaywrightServiceBrowserClientTests
     public void InitializeAsync_WhenFetchesEntraIdAccessToken_SetsUpRotationHandler()
     {
         var environment = new TestEnvironment();
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
+        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://eastus.api.playwright.microsoft.com/playwrightworkspaces/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers");
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         var playwrightVersion = new PlaywrightVersion();
         var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
+        var testRunUpdateClientMock = new Mock<TestRunUpdateClient>();
         var token = "valid_token";
         defaultAzureCredentialMock
             .Setup(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new AccessToken(token, DateTimeOffset.UtcNow.AddMinutes(10)));
+        testRunUpdateClientMock
+            .Setup(x => x.TestRunsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<RequestContent>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<RequestContext>()))
+            .ReturnsAsync(Mock.Of<Response>());
         var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null, environment);
-        PlaywrightServiceBrowserClient client = new(environment, entraLifecycle: entraLifecycleMock.Object, playwrightVersion: playwrightVersion);
+        PlaywrightServiceBrowserClient client = new(environment, entraLifecycle: entraLifecycleMock.Object, playwrightVersion: playwrightVersion, testRunUpdateClient: testRunUpdateClientMock.Object);
         client.InitializeAsync().Wait();
         defaultAzureCredentialMock.Verify(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Once);
         Assert.That(client.RotationTimer, Is.Not.Null);
@@ -233,7 +219,7 @@ public class PlaywrightServiceBrowserClientTests
     public void InitializeAsync_WhenFailsToFetchEntraIdAccessToken_ThrowsException()
     {
         var environment = new TestEnvironment();
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
+        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://eastus.api.playwright.microsoft.com/playwrightworkspaces/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers");
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         var playwrightVersion = new PlaywrightVersion();
         var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
@@ -250,7 +236,7 @@ public class PlaywrightServiceBrowserClientTests
     public void InitializeAsync_WhenEntraIdAccessTokenFailsAndMptPatIsSet_ThrowsException()
     {
         var environment = new TestEnvironment();
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
+        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://eastus.api.playwright.microsoft.com/playwrightworkspaces/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers");
         var token = TestUtilities.GetToken(new Dictionary<string, object>
         {
             {"pwid", "account-id-guid"},
@@ -271,7 +257,7 @@ public class PlaywrightServiceBrowserClientTests
     public void InitializeAsync_WhenEntraIdAccessTokenFailsAndMptPatIsNotSet_ThrowsException()
     {
         var environment = new TestEnvironment();
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
+        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://eastus.api.playwright.microsoft.com/playwrightworkspaces/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers");
         var token = TestUtilities.GetToken(new Dictionary<string, object>
         {
             {"pwid", "account-id-guid"},
@@ -291,7 +277,7 @@ public class PlaywrightServiceBrowserClientTests
     public void InitializeAsync_WhenEntraIdAccessTokenFailsAndMptPatIsNotValid_ThrowsError()
     {
         var environment = new TestEnvironment();
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
+        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://eastus.api.playwright.microsoft.com/playwrightworkspaces/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers");
         var token = "sample token";
         Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), token);
         var playwrightVersion = new PlaywrightVersion();
@@ -308,7 +294,7 @@ public class PlaywrightServiceBrowserClientTests
     public void InitializeAsync_WhenEntraIdAccessTokenFailsAndMptPatTokenParsingReturnsNull_ThrowsError()
     {
         var environment = new TestEnvironment();
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
+        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://eastus.api.playwright.microsoft.com/playwrightworkspaces/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers");
         var token = "sample token";
         environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), token);
         var playwrightVersion = new PlaywrightVersion();
@@ -331,7 +317,7 @@ public class PlaywrightServiceBrowserClientTests
     public void InitializeAsync_WhenEntraIdAccessTokenFailsAndMptPatIsExpired_ThrowsError()
     {
         var environment = new TestEnvironment();
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
+        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://eastus.api.playwright.microsoft.com/playwrightworkspaces/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers");
         var token = TestUtilities.GetToken(new Dictionary<string, object>
         {
             {"pwid", "account-id-guid"},
@@ -367,12 +353,16 @@ public class PlaywrightServiceBrowserClientTests
         };
         environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), $"{testRubric["url"]}");
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
+        var testRunUpdateClientMock = new Mock<TestRunUpdateClient>();
+        testRunUpdateClientMock
+            .Setup(x => x.TestRunsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<RequestContent>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<RequestContext>()))
+            .ReturnsAsync(Mock.Of<Response>());
         var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, new JsonWebTokenHandler(), null, environment);
         var clientOptions = new PlaywrightServiceBrowserClientOptions(environment: environment, serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview)
         {
             ServiceAuth = ServiceAuthType.AccessToken
         };
-        PlaywrightServiceBrowserClient client = new(environment, entraLifecycle: entraLifecycleMock.Object, options: clientOptions, playwrightVersion: playwrightVersion);
+        PlaywrightServiceBrowserClient client = new(environment, entraLifecycle: entraLifecycleMock.Object, options: clientOptions, playwrightVersion: playwrightVersion, testRunUpdateClient: testRunUpdateClientMock.Object);
         client.InitializeAsync().Wait();
         Assert.That(client.RotationTimer, Is.Null);
     }
@@ -394,17 +384,21 @@ public class PlaywrightServiceBrowserClientTests
     public void Initialize_WhenDefaultAuthIsEntraIdAccessTokenAndAccessTokenEnvironmentVariableIsSet_FetchesEntraIdAccessToken()
     {
         var environment = new TestEnvironment();
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
+        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://eastus.api.playwright.microsoft.com/playwrightworkspaces/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers");
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         var playwrightVersion = new PlaywrightVersion();
         var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
+        var testRunUpdateClientMock = new Mock<TestRunUpdateClient>();
         var token = "valid_token";
         defaultAzureCredentialMock
             .Setup(x => x.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
             .Returns(new AccessToken(token, DateTimeOffset.UtcNow.AddMinutes(10)));
+        testRunUpdateClientMock
+            .Setup(x => x.TestRuns(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<RequestContent>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<RequestContext>()))
+            .Returns(Mock.Of<Response>());
         var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null, environment);
         environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), "access_token");
-        PlaywrightServiceBrowserClient client = new(environment, entraLifecycle: entraLifecycleMock.Object, playwrightVersion: playwrightVersion);
+        PlaywrightServiceBrowserClient client = new(environment, entraLifecycle: entraLifecycleMock.Object, playwrightVersion: playwrightVersion, testRunUpdateClient: testRunUpdateClientMock.Object);
         client.Initialize();
         defaultAzureCredentialMock.Verify(x => x.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Once);
 
@@ -418,16 +412,20 @@ public class PlaywrightServiceBrowserClientTests
     {
         var environment = new TestEnvironment();
         var playwrightVersion = new PlaywrightVersion();
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
+        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://eastus.api.playwright.microsoft.com/playwrightworkspaces/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers");
         var tokenCredential = new Mock<TokenCredential>();
         var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
+        var testRunUpdateClientMock = new Mock<TestRunUpdateClient>();
         var token = "valid_token";
         tokenCredential
             .Setup(x => x.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
             .Returns(new AccessToken(token, DateTimeOffset.UtcNow.AddMinutes(10)));
+        testRunUpdateClientMock
+            .Setup(x => x.TestRuns(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<RequestContent>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<RequestContext>()))
+            .Returns(Mock.Of<Response>());
         environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), "access_token");
         var entraLifecycleMock = new Mock<EntraLifecycle>(tokenCredential.Object, jsonWebTokenHandlerMock.Object, null, environment);
-        PlaywrightServiceBrowserClient client = new(environment, entraLifecycle: entraLifecycleMock.Object, playwrightVersion: playwrightVersion);
+        PlaywrightServiceBrowserClient client = new(environment, entraLifecycle: entraLifecycleMock.Object, playwrightVersion: playwrightVersion, testRunUpdateClient: testRunUpdateClientMock.Object);
         client.Initialize();
         tokenCredential.Verify(x => x.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Once);
 
@@ -437,48 +435,23 @@ public class PlaywrightServiceBrowserClientTests
     }
 
     [Test]
-    public void Initialize_WhenDefaultAuthIsEntraIdAccessTokenAndAccessTokenEnvironmentVariableIsSetButScalableExecutionIsDisabled_DeletesServiceUrlEnvVariable()
-    {
-        var environment = new TestEnvironment();
-        var playwrightVersion = new PlaywrightVersion();
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
-        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
-        var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
-        var token = "valid_token";
-        defaultAzureCredentialMock
-            .Setup(x => x.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
-            .Returns(new AccessToken(token, DateTimeOffset.UtcNow.AddMinutes(10)));
-        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null, environment);
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), "access_token");
-        var clientOptions = new PlaywrightServiceBrowserClientOptions(environment: environment, serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview)
-        {
-            UseCloudHostedBrowsers = false
-        };
-        PlaywrightServiceBrowserClient client = new(environment, entraLifecycle: entraLifecycleMock.Object, options: clientOptions, playwrightVersion: playwrightVersion);
-
-        Assert.That(environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString()), Is.Not.Null);
-
-        client.Initialize();
-        defaultAzureCredentialMock.Verify(x => x.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Never);
-
-        Assert.That(client.RotationTimer, Is.Null);
-        Assert.That(environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString()), Is.Null);
-    }
-
-    [Test]
     public void Initialize_WhenDefaultAuthIsEntraIdAccessTokenAndAccessTokenEnvironmentVariableIsNotSet_FetchesEntraIdAccessToken()
     {
         var environment = new TestEnvironment();
         var playwrightVersion = new PlaywrightVersion();
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
+        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://eastus.api.playwright.microsoft.com/playwrightworkspaces/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers");
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
+        var testRunUpdateClientMock = new Mock<TestRunUpdateClient>();
         var token = "valid_token";
         defaultAzureCredentialMock
             .Setup(x => x.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
             .Returns(new AccessToken(token, DateTimeOffset.UtcNow.AddMinutes(10)));
+        testRunUpdateClientMock
+            .Setup(x => x.TestRuns(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<RequestContent>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<RequestContext>()))
+            .Returns(Mock.Of<Response>());
         var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null, environment);
-        PlaywrightServiceBrowserClient client = new(environment, entraLifecycle: entraLifecycleMock.Object, playwrightVersion: playwrightVersion);
+        PlaywrightServiceBrowserClient client = new(environment, entraLifecycle: entraLifecycleMock.Object, playwrightVersion: playwrightVersion, testRunUpdateClient: testRunUpdateClientMock.Object);
         client.Initialize();
         defaultAzureCredentialMock.Verify(x => x.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Once);
 
@@ -490,15 +463,19 @@ public class PlaywrightServiceBrowserClientTests
     {
         var environment = new TestEnvironment();
         var playwrightVersion = new PlaywrightVersion();
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
+        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://eastus.api.playwright.microsoft.com/playwrightworkspaces/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers");
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
+        var testRunUpdateClientMock = new Mock<TestRunUpdateClient>();
         var token = "valid_token";
         defaultAzureCredentialMock
             .Setup(x => x.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
             .Returns(new AccessToken(token, DateTimeOffset.UtcNow.AddMinutes(10)));
+        testRunUpdateClientMock
+            .Setup(x => x.TestRuns(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<RequestContent>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<RequestContext>()))
+            .Returns(Mock.Of<Response>());
         var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null, environment);
-        PlaywrightServiceBrowserClient client = new(environment, entraLifecycle: entraLifecycleMock.Object, playwrightVersion: playwrightVersion);
+        PlaywrightServiceBrowserClient client = new(environment, entraLifecycle: entraLifecycleMock.Object, playwrightVersion: playwrightVersion, testRunUpdateClient: testRunUpdateClientMock.Object);
         client.Initialize();
         defaultAzureCredentialMock.Verify(x => x.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Once);
         Assert.That(client.RotationTimer, Is.Not.Null);
@@ -511,7 +488,7 @@ public class PlaywrightServiceBrowserClientTests
     {
         var environment = new TestEnvironment();
         var playwrightVersion = new PlaywrightVersion();
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
+        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://eastus.api.playwright.microsoft.com/playwrightworkspaces/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers");
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
         defaultAzureCredentialMock
@@ -528,7 +505,7 @@ public class PlaywrightServiceBrowserClientTests
     {
         var environment = new TestEnvironment();
         var playwrightVersion = new PlaywrightVersion();
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
+        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://eastus.api.playwright.microsoft.com/playwrightworkspaces/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers");
         var token = TestUtilities.GetToken(new Dictionary<string, object>
         {
             {"pwid", "account-id-guid"},
@@ -549,7 +526,7 @@ public class PlaywrightServiceBrowserClientTests
     {
         var environment = new TestEnvironment();
         var playwrightVersion = new PlaywrightVersion();
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
+        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://eastus.api.playwright.microsoft.com/playwrightworkspaces/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers");
         var token = TestUtilities.GetToken(new Dictionary<string, object>
         {
             {"pwid", "account-id-guid"},
@@ -569,7 +546,7 @@ public class PlaywrightServiceBrowserClientTests
     {
         var environment = new TestEnvironment();
         var playwrightVersion = new PlaywrightVersion();
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
+        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://eastus.api.playwright.microsoft.com/playwrightworkspaces/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers");
         var token = "sample token";
         Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), token);
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
@@ -586,7 +563,7 @@ public class PlaywrightServiceBrowserClientTests
     {
         var environment = new TestEnvironment();
         var playwrightVersion = new PlaywrightVersion();
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
+        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://eastus.api.playwright.microsoft.com/playwrightworkspaces/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers");
         var token = "sample token";
         environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), token);
         var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
@@ -609,7 +586,7 @@ public class PlaywrightServiceBrowserClientTests
     {
         var environment = new TestEnvironment();
         var playwrightVersion = new PlaywrightVersion();
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
+        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://eastus.api.playwright.microsoft.com/playwrightworkspaces/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers");
         var token = TestUtilities.GetToken(new Dictionary<string, object>
         {
             {"pwid", "account-id-guid"},
@@ -644,12 +621,16 @@ public class PlaywrightServiceBrowserClientTests
         };
         environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), $"{testRubric["url"]}");
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
+        var testRunUpdateClientMock = new Mock<TestRunUpdateClient>();
+        testRunUpdateClientMock
+            .Setup(x => x.TestRuns(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<RequestContent>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<RequestContext>()))
+            .Returns(Mock.Of<Response>());
         var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, new JsonWebTokenHandler(), null, environment);
         var clientOptions = new PlaywrightServiceBrowserClientOptions(environment: environment, serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview)
         {
             ServiceAuth = ServiceAuthType.AccessToken
         };
-        PlaywrightServiceBrowserClient client = new(environment, entraLifecycle: entraLifecycleMock.Object, options: clientOptions, playwrightVersion: playwrightVersion);
+        PlaywrightServiceBrowserClient client = new(environment, entraLifecycle: entraLifecycleMock.Object, options: clientOptions, playwrightVersion: playwrightVersion, testRunUpdateClient: testRunUpdateClientMock.Object);
         client.Initialize();
         Assert.That(client.RotationTimer, Is.Null);
     }
@@ -711,25 +692,6 @@ public class PlaywrightServiceBrowserClientTests
     }
 
     [Test]
-    public void GetConnectOptionsAsync_WhenUseCloudHostedBrowsersEnvironmentIsFalse_ThrowsException()
-    {
-        var environment = new TestEnvironment();
-        var playwrightVersion = new PlaywrightVersion();
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
-        var clientOptions = new PlaywrightServiceBrowserClientOptions(environment: environment, serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview)
-        {
-            UseCloudHostedBrowsers = false
-        };
-        PlaywrightServiceBrowserClient client = new(environment, options: clientOptions, playwrightVersion: playwrightVersion);
-        Exception? ex = Assert.ThrowsAsync<Exception>(() => client.GetConnectOptionsAsync<BrowserConnectOptions>());
-        Assert.Multiple(() =>
-        {
-            Assert.That(client._options.UseCloudHostedBrowsers, Is.False);
-            Assert.That(ex!.Message, Is.EqualTo(Constants.s_service_endpoint_removed_since_scalable_execution_disabled_error_message));
-        });
-    }
-
-    [Test]
     public async Task GetConnectOptionsAsync_WhenServiceEndpointIsSet_ReturnsConnectOptions()
     {
         var runId = "run-id";
@@ -761,7 +723,7 @@ public class PlaywrightServiceBrowserClientTests
     {
         var environment = new TestEnvironment();
         var playwrightVersion = new PlaywrightVersion();
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
+        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://eastus.api.playwright.microsoft.com/playwrightworkspaces/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers");
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         defaultAzureCredentialMock
             .Setup(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
@@ -781,7 +743,7 @@ public class PlaywrightServiceBrowserClientTests
     {
         var environment = new TestEnvironment();
         var playwrightVersion = new PlaywrightVersion();
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
+        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://eastus.api.playwright.microsoft.com/playwrightworkspaces/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers");
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), "valid_token");
         defaultAzureCredentialMock
@@ -957,25 +919,6 @@ public class PlaywrightServiceBrowserClientTests
     }
 
     [Test]
-    public void GetConnectOptions_WhenUseCloudHostedBrowsersEnvironmentIsFalse_ThrowsException()
-    {
-        var environment = new TestEnvironment();
-        var playwrightVersion = new PlaywrightVersion();
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
-        var clientOptions = new PlaywrightServiceBrowserClientOptions(environment: environment, serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview)
-        {
-            UseCloudHostedBrowsers = false
-        };
-        PlaywrightServiceBrowserClient client = new(environment, options: clientOptions, playwrightVersion: playwrightVersion);
-        Exception? ex = Assert.Throws<Exception>(() => client.GetConnectOptions<BrowserConnectOptions>());
-        Assert.Multiple(() =>
-        {
-            Assert.That(client._options.UseCloudHostedBrowsers, Is.False);
-            Assert.That(ex!.Message, Is.EqualTo(Constants.s_service_endpoint_removed_since_scalable_execution_disabled_error_message));
-        });
-    }
-
-    [Test]
     public void GetConnectOptions_WhenServiceEndpointIsSet_ReturnsConnectOptions()
     {
         var runId = "run-id";
@@ -1007,7 +950,7 @@ public class PlaywrightServiceBrowserClientTests
     {
         var environment = new TestEnvironment();
         var playwrightVersion = new PlaywrightVersion();
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
+        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://eastus.api.playwright.microsoft.com/playwrightworkspaces/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers");
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         defaultAzureCredentialMock
             .Setup(x => x.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
@@ -1027,7 +970,7 @@ public class PlaywrightServiceBrowserClientTests
     {
         var environment = new TestEnvironment();
         var playwrightVersion = new PlaywrightVersion();
-        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://region.api.playwright.microsoft.com/");
+        environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://eastus.api.playwright.microsoft.com/playwrightworkspaces/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers");
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), "valid_token");
         defaultAzureCredentialMock

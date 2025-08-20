@@ -1,10 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>A library for querying Azure Monitor's Logs and Metrics data sources.</Description>
     <AssemblyTitle>Azure Monitor Query client library</AssemblyTitle>
     <Version>1.8.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.7.0</ApiCompatVersion>
+    <ApiCompatVersion>1.7.1</ApiCompatVersion>
     <PackageTags>Azure Monitor Query</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -13,9 +13,16 @@
     <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <NoWarn>
+      $(NoWarn);
+      AZC0035; <!-- Missing model factory methods.  #51228-->
+    </NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.Memory.Data" /> <!-- TODO remove after Azure.Core release with updated version -->
+    <PackageReference Include="System.ClientModel" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->
