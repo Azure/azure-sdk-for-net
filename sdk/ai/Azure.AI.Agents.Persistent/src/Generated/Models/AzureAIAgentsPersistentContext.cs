@@ -79,6 +79,7 @@ namespace Azure.AI.Agents.Persistent
     [ModelReaderWriterBuildable(typeof(MCPToolResource))]
     [ModelReaderWriterBuildable(typeof(MessageAttachment))]
     [ModelReaderWriterBuildable(typeof(MessageContent))]
+    [ModelReaderWriterBuildable(typeof(MessageDeletionStatus))]
     [ModelReaderWriterBuildable(typeof(MessageDelta))]
     [ModelReaderWriterBuildable(typeof(MessageDeltaChunk))]
     [ModelReaderWriterBuildable(typeof(MessageDeltaContent))]
