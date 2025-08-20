@@ -46,8 +46,10 @@ namespace Azure.Generator.Management
         internal IReadOnlyList<MockableResourceProvider> MockableResourceProviders => GetValue(ref _mockableResourceProviders);
         internal ExtensionProvider ExtensionProvider => GetValue(ref _extensionProvider);
 
+        // our initialization process should guarantee that here we never get a KeyNotFoundException
         internal ResourceClientProvider GetResourceById(string id) => GetValue(ref _resourceClientsDict)[id];
 
+        // our initialization process should guarantee that here we never get a KeyNotFoundException
         internal MockableResourceProvider GetMockableResourceByScope(ResourceScope scope) => GetValue(ref _mockableResourceProvidersDict)[scope];
 
         private T GetValue<T>(ref T? field) where T : class
