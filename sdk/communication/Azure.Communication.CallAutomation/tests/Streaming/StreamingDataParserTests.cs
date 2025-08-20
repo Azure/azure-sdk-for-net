@@ -47,6 +47,20 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             ValidateAudioData(streamingAudio);
         }
 
+        [Test]
+        public void ParseMarkAudio_Test()
+        {
+            string markJson = "{"
+                + "\"kind\": \"Mark\","
+                + "\"markAudio\": {"
+                + "\"sequence\": \"test\""
+                + "}"
+                + "}";
+
+            MarkAudio streamingAudio = (MarkAudio)StreamingData.Parse(markJson);
+            ValidateMarkAudio(streamingAudio);
+        }
+
         private static void ValidateAudioMetadata(AudioMetadata streamingAudioMetadata)
         {
             Assert.IsNotNull(streamingAudioMetadata);
@@ -73,6 +87,12 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             Assert.AreEqual(2022, streamingAudio.Timestamp.Year);
             Assert.IsNull(streamingAudio.Participant);
             Assert.IsFalse(streamingAudio.IsSilent);
+        }
+
+        private static void ValidateMarkAudio(MarkAudio streamingAudio)
+        {
+            Assert.IsNotNull(streamingAudio);
+            Assert.AreEqual("test", streamingAudio.Sequence);
         }
         #endregion
 
