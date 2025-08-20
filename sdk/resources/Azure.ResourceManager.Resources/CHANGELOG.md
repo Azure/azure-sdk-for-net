@@ -1,14 +1,10 @@
 # Release History
 
-## 1.12.0-beta.1 (Unreleased)
+## 1.11.1 (2025-08-20)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Make `Azure.ResourceManager.Resources` AOT-compatible
 
 ## 1.11.0 (2025-06-23)
 
