@@ -49,7 +49,7 @@ internal sealed partial class ModelReaderWriterContextGenerator : IIncrementalGe
             TypeSymbolKindCache SymbolToKindCache,
             TypeSymbolTypeRefCache SymbolToTypeRefCache) data)
     {
-        if (data.TypesWithAttribute.Length == 0 || data.TypesWithAttribute[0].Context is null)
+        if (data.TypesWithAttribute.Length == 0 || data.TypesWithAttribute[0].Context is null || data.TypesWithAttribute[0].Context!.ContainingType is not null)
         {
             return;
         }
