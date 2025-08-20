@@ -44,7 +44,7 @@ namespace Azure.AI.Projects
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <returns>A <see cref="ConnectionProperties"/> object.</returns>
         /// <exception cref="RequestFailedException">Thrown when the request fails.</exception>
-        public async Task<ClientResult<ConnectionProperties>> GetConnectionAsync(string connectionName, bool includeCredentials = false, string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<ConnectionProperties>> GetConnectionAsync(string connectionName, bool includeCredentials = false, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(connectionName))
             {
@@ -86,7 +86,7 @@ namespace Azure.AI.Projects
         /// <param name="includeCredentials">Whether to include credentials in the response. Default is false.</param>
         /// <returns>A <see cref="ConnectionProperties"/> object.</returns>
         /// <exception cref="RequestFailedException">Thrown when the request fails.</exception>
-        public async Task<ConnectionProperties> GetDefaultConnectionAsync(ConnectionType? connectionType = null, bool includeCredentials = false)
+        public virtual async Task<ConnectionProperties> GetDefaultConnectionAsync(ConnectionType? connectionType = null, bool includeCredentials = false)
         {
             await foreach (var connection in GetConnectionsAsync(connectionType).ConfigureAwait(false))
             {

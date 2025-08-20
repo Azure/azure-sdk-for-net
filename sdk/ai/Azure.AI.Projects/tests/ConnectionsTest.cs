@@ -58,11 +58,11 @@ namespace Azure.AI.Projects.Tests
             TestBase.ValidateConnection(specificConnectionCredentials, true, expectedConnectionName: connectionName);
 
             Console.WriteLine($"Get the properties of the default connection:");
-            ConnectionProperties defaultConnection = await projectClient.Connections.GetDefaultAsync(connectionType: connectionType, includeCredentials: false);
+            ConnectionProperties defaultConnection = await projectClient.Connections.GetDefaultConnectionAsync(connectionType: connectionType, includeCredentials: false);
             TestBase.ValidateConnection(defaultConnection, false);
 
             Console.WriteLine($"Get the properties of the default connection with credentials:");
-            ConnectionProperties defaultConnectionCredentials = await projectClient.Connections.GetDefaultAsync(connectionType: connectionType, includeCredentials: true);
+            ConnectionProperties defaultConnectionCredentials = await projectClient.Connections.GetDefaultConnectionAsync(connectionType: connectionType, includeCredentials: true);
             TestBase.ValidateConnection(defaultConnectionCredentials, true);
         }
     }

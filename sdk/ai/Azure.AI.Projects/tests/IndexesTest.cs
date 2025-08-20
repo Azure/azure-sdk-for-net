@@ -43,7 +43,7 @@ namespace Azure.AI.Projects.Tests
             }));
 
             Console.WriteLine($"Create an Index named `{indexName}` referencing an existing AI Search resource:");
-            SearchIndex index = await projectClient.Indexes.CreateOrUpdateAsync(
+            SearchIndex index = (SearchIndex) await projectClient.Indexes.CreateOrUpdateAsync(
                 name: indexName,
                 version: indexVersion,
                 content: content
@@ -58,7 +58,7 @@ namespace Azure.AI.Projects.Tests
             );
 
             Console.WriteLine($"Get an existing Index named `{indexName}`, version `{indexVersion}`:");
-            SearchIndex retrievedIndex = await projectClient.Indexes.GetAsync(name: indexName, version: indexVersion);
+            SearchIndex retrievedIndex = await projectClient.Indexes.GetIndexAsync(name: indexName, version: indexVersion);
             TestBase.ValidateIndex(
                 retrievedIndex,
                 expectedIndexType: "AzureSearch",
@@ -70,7 +70,7 @@ namespace Azure.AI.Projects.Tests
 
             Console.WriteLine($"Listing all versions of the Index named `{indexName}`:");
             bool isEmpty = true;
-            await foreach (SearchIndex version in projectClient.Indexes.GetVersionsAsync(name: indexName))
+            await foreach (SearchIndex version in projectClient.Indexes.GetIndexVersionsAsync(name: indexName))
             {
                 isEmpty = false;
                 TestBase.ValidateIndex(version);
@@ -79,7 +79,7 @@ namespace Azure.AI.Projects.Tests
 
             Console.WriteLine($"Listing all Indices:");
             isEmpty = true;
-            await foreach (SearchIndex version in projectClient.Indexes.GetAsync())
+            await foreach (SearchIndex version in projectClient.Indexes.GetIndexesAsync())
             {
                 isEmpty = false;
                 TestBase.ValidateIndex(version);

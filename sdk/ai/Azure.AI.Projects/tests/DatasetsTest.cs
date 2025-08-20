@@ -56,7 +56,7 @@ namespace Azure.AI.Projects.Tests
             );
 
             Console.WriteLine($"Retrieving Dataset version {datasetVersion}:");
-            DatasetVersion dataset = projectClient.Datasets.Get(datasetName, datasetVersion);
+            DatasetVersion dataset = projectClient.Datasets.GetDataset(datasetName, datasetVersion);
             TestBase.ValidateDataset(
                 dataset,
                 expectedDatasetType: "FileDatasetVersion",
@@ -107,7 +107,7 @@ namespace Azure.AI.Projects.Tests
             bool exceptionThrown = false;
             try
             {
-                projectClient.Datasets.Get(datasetName, datasetVersion);
+                projectClient.Datasets.GetDataset(datasetName, datasetVersion);
             }
             catch (RequestFailedException ex) when (ex.Status == 204)
             {
