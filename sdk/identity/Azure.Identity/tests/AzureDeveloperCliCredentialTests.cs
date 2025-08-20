@@ -72,6 +72,22 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public async Task AuthenticateWithDeveloperCliCredential_IncludesNoPromptFlag()
+        {
+            var context = new TokenRequestContext(new[] { Scope });
+            var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureDeveloperCli();
+
+            var testProcess = new TestProcess { Output = processOutput };
+            AzureDeveloperCliCredential credential =
+                InstrumentClient(new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
+            AccessToken actualToken = await credential.GetTokenAsync(context);
+
+            Assert.AreEqual(expectedToken, actualToken.Token);
+            Assert.AreEqual(expectedExpiresOn, actualToken.ExpiresOn);
+            Assert.That(testProcess.StartInfo.Arguments, Does.Contain("--no-prompt"));
+        }
+
+        [Test]
         public void AuthenticateWithCliCredential_InvalidJsonOutput(
             [Values("", "{}", "{\"Some\": false}", "{\"token\": \"token\"}", "{\"expiresOn\" : \"1900-01-01T00:00:00Z\"}")]
             string jsonContent)
