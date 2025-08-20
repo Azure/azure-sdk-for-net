@@ -2,19 +2,21 @@
 
 ## Summary
 
-- Total libraries: 407
-- Management Plane (Swagger): 170
+- Total libraries: 408
+- Management Plane (Swagger): 171
 - Management Plane (TSP-Old): 48
 - Management Plane (TypeSpec - @azure-typespec/http-client-csharp): 0
+- Management Plane (TypeSpec - @typespec/http-client-csharp): 0
 - Data Plane (Swagger): 115
-- Data Plane (TSP-Old): 28
-- Data Plane (TypeSpec - @azure-typespec/http-client-csharp): 7
+- Data Plane (TSP-Old): 27
+- Data Plane (TypeSpec - @azure-typespec/http-client-csharp): 6
+- Data Plane (TypeSpec - @typespec/http-client-csharp): 2
 - No generator: 39
 
 
 ## Data Plane Libraries using TypeSpec (@azure-typespec/http-client-csharp)
 
-TypeSpec with @azure-typespec/http-client-csharp generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp, or through special handling for specific libraries. Total: 7
+TypeSpec with @azure-typespec/http-client-csharp generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp, or through special handling for specific libraries. Total: 6
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -23,19 +25,27 @@ TypeSpec with @azure-typespec/http-client-csharp generator is detected by the pr
 | eventgrid | Azure.Messaging.EventGrid.SystemEvents | sdk/eventgrid/Azure.Messaging.EventGrid.SystemEvents |
 | healthdataaiservices | Azure.Health.Deidentification | sdk/healthdataaiservices/Azure.Health.Deidentification |
 | keyvault | Azure.Security.KeyVault.Administration | sdk/keyvault/Azure.Security.KeyVault.Administration |
-| openai | Azure.AI.OpenAI | sdk/openai/Azure.AI.OpenAI |
 | schemaregistry | Azure.Data.SchemaRegistry | sdk/schemaregistry/Azure.Data.SchemaRegistry |
+
+
+## Data Plane Libraries using TypeSpec (@typespec/http-client-csharp)
+
+TypeSpec with @typespec/http-client-csharp generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @typespec/http-client-csharp, or through special handling for specific libraries. Total: 2
+
+| Service | Library | Path |
+| ------- | ------- | ---- |
+| ai | Azure.AI.Projects | sdk/ai/Azure.AI.Projects |
+| openai | Azure.AI.OpenAI | sdk/openai/Azure.AI.OpenAI |
 
 
 ## Data Plane Libraries using TypeSpec (Old Generator)
 
-TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: 28
+TypeSpec with old generator is detected by the presence of a tsp-location.yaml file without an emitterPackageJsonPath value, tspconfig.yaml file, tsp directory, or *.tsp files. Total: 27
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
 | ai | Azure.AI.Agents.Persistent | sdk/ai/Azure.AI.Agents.Persistent |
 | ai | Azure.AI.Inference | sdk/ai/Azure.AI.Inference |
-| ai | Azure.AI.Projects | sdk/ai/Azure.AI.Projects |
 | anomalydetector | Azure.AI.AnomalyDetector | sdk/anomalydetector/Azure.AI.AnomalyDetector |
 | batch | Azure.Compute.Batch | sdk/batch/Azure.Compute.Batch |
 | cognitivelanguage | Azure.AI.Language.Conversations | sdk/cognitivelanguage/Azure.AI.Language.Conversations |
@@ -244,7 +254,7 @@ TypeSpec with old generator is detected by the presence of a tsp-location.yaml f
 
 ## Management Plane Libraries using Swagger
 
-Total: 170
+Total: 171
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -388,6 +398,7 @@ Total: 170
 | resourcemanager | Azure.ResourceManager | sdk/resourcemanager/Azure.ResourceManager |
 | resourcemover | Azure.ResourceManager.ResourceMover | sdk/resourcemover/Azure.ResourceManager.ResourceMover |
 | resources | Azure.ResourceManager.Resources | sdk/resources/Azure.ResourceManager.Resources |
+| resources | Azure.ResourceManager.Resources.Deployments | sdk/resources/Azure.ResourceManager.Resources.Deployments |
 | resources | Azure.ResourceManager.Resources.DeploymentStacks | sdk/resources/Azure.ResourceManager.Resources.DeploymentStacks |
 | search | Azure.ResourceManager.Search | sdk/search/Azure.ResourceManager.Search |
 | securitycenter | Azure.ResourceManager.SecurityCenter | sdk/securitycenter/Azure.ResourceManager.SecurityCenter |

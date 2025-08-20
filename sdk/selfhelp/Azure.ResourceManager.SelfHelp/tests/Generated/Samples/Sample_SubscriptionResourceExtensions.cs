@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.SelfHelp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task DiscoverSolutionsNlp_DiscoverySolutionsUsingIssueSummaryAndServiceId()
         {
-            // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2024-03-01-preview/examples/DiscoverSolutionsAtSubscriptionScope.json
-            // this example is just showing the usage of "DiscoverySolutionNLP_DiscoverSolutionsBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-03-01-preview/DiscoverSolutionsAtSubscriptionScope.json
+            // this example is just showing the usage of "DiscoverySolutionNLPOperationGroup_DiscoverSolutionsNlp" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
