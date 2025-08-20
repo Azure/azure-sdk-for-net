@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    [PersistableModelProxy(typeof(UnknownDataCenterAddressResponse))]
+    [PersistableModelProxy(typeof(UnknownDataCenterAddressResult))]
     public partial class DataCenterAddressResult : IUtf8JsonSerializable, IJsonModel<DataCenterAddressResult>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCenterAddressResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             writer.WritePropertyName("datacenterAddressType"u8);
-            writer.WriteStringValue(DataCenterAddressType.ToSerialString());
+            writer.WriteStringValue(DatacenterAddressType.ToSerialString());
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedCarriersForReturnShipment))
             {
                 writer.WritePropertyName("supportedCarriersForReturnShipment"u8);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     case "DatacenterAddressLocation": return DataCenterAddressLocationResult.DeserializeDataCenterAddressLocationResult(element, options);
                 }
             }
-            return UnknownDataCenterAddressResponse.DeserializeUnknownDataCenterAddressResponse(element, options);
+            return UnknownDataCenterAddressResult.DeserializeUnknownDataCenterAddressResult(element, options);
         }
 
         BinaryData IPersistableModel<DataCenterAddressResult>.Write(ModelReaderWriterOptions options)

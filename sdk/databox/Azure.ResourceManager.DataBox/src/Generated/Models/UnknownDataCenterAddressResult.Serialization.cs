@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    internal partial class UnknownDataCenterAddressResponse : IUtf8JsonSerializable, IJsonModel<DataCenterAddressResult>
+    internal partial class UnknownDataCenterAddressResult : IUtf8JsonSerializable, IJsonModel<DataCenterAddressResult>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCenterAddressResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return DeserializeDataCenterAddressResult(document.RootElement, options);
         }
 
-        internal static UnknownDataCenterAddressResponse DeserializeUnknownDataCenterAddressResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownDataCenterAddressResult DeserializeUnknownDataCenterAddressResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            DataCenterAddressType dataCenterAddressType = default;
+            DatacenterAddressType datacenterAddressType = default;
             IReadOnlyList<string> supportedCarriersForReturnShipment = default;
             AzureLocation? dataCenterAzureLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 if (property.NameEquals("datacenterAddressType"u8))
                 {
-                    dataCenterAddressType = property.Value.GetString().ToDataCenterAddressType();
+                    datacenterAddressType = property.Value.GetString().ToDatacenterAddressType();
                     continue;
                 }
                 if (property.NameEquals("supportedCarriersForReturnShipment"u8))
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownDataCenterAddressResponse(dataCenterAddressType, supportedCarriersForReturnShipment ?? new ChangeTrackingList<string>(), dataCenterAzureLocation, serializedAdditionalRawData);
+            return new UnknownDataCenterAddressResult(datacenterAddressType, supportedCarriersForReturnShipment ?? new ChangeTrackingList<string>(), dataCenterAzureLocation, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataCenterAddressResult>.Write(ModelReaderWriterOptions options)

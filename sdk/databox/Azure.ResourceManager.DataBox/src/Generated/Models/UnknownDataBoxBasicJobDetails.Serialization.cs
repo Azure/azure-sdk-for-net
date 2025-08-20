@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    internal partial class UnknownJobDetails : IUtf8JsonSerializable, IJsonModel<DataBoxBasicJobDetails>
+    internal partial class UnknownDataBoxBasicJobDetails : IUtf8JsonSerializable, IJsonModel<DataBoxBasicJobDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxBasicJobDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return DeserializeDataBoxBasicJobDetails(document.RootElement, options);
         }
 
-        internal static UnknownJobDetails DeserializeUnknownJobDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownDataBoxBasicJobDetails DeserializeUnknownDataBoxBasicJobDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.DataBox.Models
             string chainOfCustodySasKey = default;
             DeviceErasureDetails deviceErasureDetails = default;
             DataBoxKeyEncryptionKey keyEncryptionKey = default;
-            int? expectedDataSizeInTerabytes = default;
+            int? expectedDataSizeInTeraBytes = default;
             IReadOnlyList<CustomerResolutionCode> actions = default;
             LastMitigationActionOnJob lastMitigationActionOnJob = default;
-            DataCenterAddressResult dataCenterAddress = default;
+            DataCenterAddressResult datacenterAddress = default;
             DataCenterCode? dataCenterCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    expectedDataSizeInTerabytes = property.Value.GetInt32();
+                    expectedDataSizeInTeraBytes = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("actions"u8))
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    dataCenterAddress = DataCenterAddressResult.DeserializeDataCenterAddressResult(property.Value, options);
+                    datacenterAddress = DataCenterAddressResult.DeserializeDataCenterAddressResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataCenterCode"u8))
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownJobDetails(
+            return new UnknownDataBoxBasicJobDetails(
                 jobStages ?? new ChangeTrackingList<DataBoxJobStage>(),
                 contactDetails,
                 shippingAddress,
@@ -292,10 +292,10 @@ namespace Azure.ResourceManager.DataBox.Models
                 chainOfCustodySasKey,
                 deviceErasureDetails,
                 keyEncryptionKey,
-                expectedDataSizeInTerabytes,
+                expectedDataSizeInTeraBytes,
                 actions ?? new ChangeTrackingList<CustomerResolutionCode>(),
                 lastMitigationActionOnJob,
-                dataCenterAddress,
+                datacenterAddress,
                 dataCenterCode,
                 serializedAdditionalRawData);
         }

@@ -8,11 +8,11 @@
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Data center address type. </summary>
-    internal enum DataCenterAddressType
+    internal enum DatacenterAddressType
     {
         /// <summary> Data center address location. </summary>
-        DataCenterAddressLocation,
+        DatacenterAddressLocation,
         /// <summary> Data center address instruction. </summary>
-        DataCenterAddressInstruction
+        DatacenterAddressInstruction
     }
 }

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            int expectedDataSizeInTerabytes = default;
+            int expectedDataSizeInTeraBytes = default;
             AzureLocation storageLocation = default;
             DataBoxSkuName skuName = default;
             string country = default;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 if (property.NameEquals("expectedDataSizeInTeraBytes"u8))
                 {
-                    expectedDataSizeInTerabytes = property.Value.GetInt32();
+                    expectedDataSizeInTeraBytes = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("storageLocation"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 country,
                 model,
                 serializedAdditionalRawData,
-                expectedDataSizeInTerabytes);
+                expectedDataSizeInTeraBytes);
         }
 
         BinaryData IPersistableModel<DiskScheduleAvailabilityContent>.Write(ModelReaderWriterOptions options)

@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    [PersistableModelProxy(typeof(UnknownValidationInputResponse))]
+    [PersistableModelProxy(typeof(UnknownDataBoxValidationInputResult))]
     public partial class DataBoxValidationInputResult : IUtf8JsonSerializable, IJsonModel<DataBoxValidationInputResult>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxValidationInputResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     case "ValidateSubscriptionIsAllowedToCreateJob": return SubscriptionIsAllowedToCreateJobValidationResult.DeserializeSubscriptionIsAllowedToCreateJobValidationResult(element, options);
                 }
             }
-            return UnknownValidationInputResponse.DeserializeUnknownValidationInputResponse(element, options);
+            return UnknownDataBoxValidationInputResult.DeserializeUnknownDataBoxValidationInputResult(element, options);
         }
 
         BinaryData IPersistableModel<DataBoxValidationInputResult>.Write(ModelReaderWriterOptions options)

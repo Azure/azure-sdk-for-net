@@ -92,6 +92,10 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 if (property.NameEquals("customerResolutionCode"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     customerResolutionCode = property.Value.GetString().ToCustomerResolutionCode();
                     continue;
                 }
