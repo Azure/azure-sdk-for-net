@@ -46,10 +46,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 AsyncPageable<BlobHierarchyItem> asyncPageable = PageResponseEnumerator.CreateAsyncEnumerable(GetChunkPagesFuncAsync);
 
                 containerClient.Setup(r => r.GetBlobsByHierarchyAsync(
-                    default,
-                    default,
-                    default,
-                    It.IsAny<string>(),
+                    It.IsAny<GetBlobsByHierarchyOptions>(),
                     default)).Returns(asyncPageable);
             }
             else
@@ -57,10 +54,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 Pageable<BlobHierarchyItem> pageable = PageResponseEnumerator.CreateEnumerable(GetChunkPagesFunc);
 
                 containerClient.Setup(r => r.GetBlobsByHierarchy(
-                    default,
-                    default,
-                    default,
-                    It.IsAny<string>(),
+                    It.IsAny<GetBlobsByHierarchyOptions>(),
                     default)).Returns(pageable);
             }
 
@@ -93,19 +87,13 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             if (IsAsync)
             {
                 containerClient.Verify(r => r.GetBlobsByHierarchyAsync(
-                    default,
-                    default,
-                    default,
-                    shardPath,
+                    It.Is<GetBlobsByHierarchyOptions>(r => r.Prefix == shardPath),
                     default));
             }
             else
             {
                 containerClient.Verify(r => r.GetBlobsByHierarchy(
-                    default,
-                    default,
-                    default,
-                    shardPath,
+                    It.Is<GetBlobsByHierarchyOptions>(r => r.Prefix == shardPath),
                     default));
             }
 
@@ -147,10 +135,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 AsyncPageable<BlobHierarchyItem> asyncPageable = PageResponseEnumerator.CreateAsyncEnumerable(GetChunkPagesFuncAsync);
 
                 containerClient.Setup(r => r.GetBlobsByHierarchyAsync(
-                    default,
-                    default,
-                    default,
-                    It.IsAny<string>(),
+                    It.IsAny<GetBlobsByHierarchyOptions>(),
                     default)).Returns(asyncPageable);
             }
             else
@@ -158,10 +143,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 Pageable<BlobHierarchyItem> pageable = PageResponseEnumerator.CreateEnumerable(GetChunkPagesFunc);
 
                 containerClient.Setup(r => r.GetBlobsByHierarchy(
-                    default,
-                    default,
-                    default,
-                    It.IsAny<string>(),
+                    It.IsAny<GetBlobsByHierarchyOptions>(),
                     default)).Returns(pageable);
             }
 
@@ -194,19 +176,13 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             if (IsAsync)
             {
                 containerClient.Verify(r => r.GetBlobsByHierarchyAsync(
-                    default,
-                    default,
-                    default,
-                    shardPath,
+                    It.Is<GetBlobsByHierarchyOptions>(r => r.Prefix == shardPath),
                     default));
             }
             else
             {
                 containerClient.Verify(r => r.GetBlobsByHierarchy(
-                    default,
-                    default,
-                    default,
-                    shardPath,
+                    It.Is<GetBlobsByHierarchyOptions>(r => r.Prefix == shardPath),
                     default));
             }
 
@@ -246,10 +222,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 AsyncPageable<BlobHierarchyItem> asyncPageable = PageResponseEnumerator.CreateAsyncEnumerable(GetChunkPagesFuncAsync);
 
                 containerClient.Setup(r => r.GetBlobsByHierarchyAsync(
-                    default,
-                    default,
-                    default,
-                    It.IsAny<string>(),
+                    It.IsAny<GetBlobsByHierarchyOptions>(),
                     default)).Returns(asyncPageable);
             }
             else
@@ -257,10 +230,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 Pageable<BlobHierarchyItem> pageable = PageResponseEnumerator.CreateEnumerable(GetChunkPagesFunc);
 
                 containerClient.Setup(r => r.GetBlobsByHierarchy(
-                    default,
-                    default,
-                    default,
-                    It.IsAny<string>(),
+                    It.IsAny<GetBlobsByHierarchyOptions>(),
                     default)).Returns(pageable);
             }
 
@@ -291,19 +261,13 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             if (IsAsync)
             {
                 containerClient.Verify(r => r.GetBlobsByHierarchyAsync(
-                    default,
-                    default,
-                    default,
-                    shardPath,
+                    It.Is<GetBlobsByHierarchyOptions>(r => r.Prefix == shardPath),
                     default));
             }
             else
             {
                 containerClient.Verify(r => r.GetBlobsByHierarchy(
-                    default,
-                    default,
-                    default,
-                    shardPath,
+                    It.Is<GetBlobsByHierarchyOptions>(r => r.Prefix == shardPath),
                     default));
             }
 
@@ -341,10 +305,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 AsyncPageable<BlobHierarchyItem> asyncPageable = PageResponseEnumerator.CreateAsyncEnumerable(GetChunkPagesFuncAsync);
 
                 containerClient.Setup(r => r.GetBlobsByHierarchyAsync(
-                    default,
-                    default,
-                    default,
-                    It.IsAny<string>(),
+                    It.IsAny<GetBlobsByHierarchyOptions>(),
                     default)).Returns(asyncPageable);
             }
             else
@@ -352,10 +313,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 Pageable<BlobHierarchyItem> pageable = PageResponseEnumerator.CreateEnumerable(GetChunkPagesFunc);
 
                 containerClient.Setup(r => r.GetBlobsByHierarchy(
-                    default,
-                    default,
-                    default,
-                    It.IsAny<string>(),
+                    It.IsAny<GetBlobsByHierarchyOptions>(),
                     default)).Returns(pageable);
             }
 
@@ -388,19 +346,13 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             if (IsAsync)
             {
                 containerClient.Verify(r => r.GetBlobsByHierarchyAsync(
-                    default,
-                    default,
-                    default,
-                    shardPath,
+                    It.Is<GetBlobsByHierarchyOptions>(r => r.Prefix == shardPath),
                     default));
             }
             else
             {
                 containerClient.Verify(r => r.GetBlobsByHierarchy(
-                    default,
-                    default,
-                    default,
-                    shardPath,
+                    It.Is<GetBlobsByHierarchyOptions>(r => r.Prefix == shardPath),
                     default));
             }
 
@@ -457,10 +409,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 AsyncPageable<BlobHierarchyItem> asyncPageable = PageResponseEnumerator.CreateAsyncEnumerable(GetChunkPagesFuncAsync);
 
                 containerClient.Setup(r => r.GetBlobsByHierarchyAsync(
-                    default,
-                    default,
-                    default,
-                    It.IsAny<string>(),
+                    It.IsAny<GetBlobsByHierarchyOptions>(),
                     default)).Returns(asyncPageable);
             }
             else
@@ -468,10 +417,7 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 Pageable<BlobHierarchyItem> pageable = PageResponseEnumerator.CreateEnumerable(GetChunkPagesFunc);
 
                 containerClient.Setup(r => r.GetBlobsByHierarchy(
-                    default,
-                    default,
-                    default,
-                    It.IsAny<string>(),
+                    It.IsAny<GetBlobsByHierarchyOptions>(),
                     default)).Returns(pageable);
             }
 
@@ -547,19 +493,13 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             if (IsAsync)
             {
                 containerClient.Verify(r => r.GetBlobsByHierarchyAsync(
-                    default,
-                    default,
-                    default,
-                    shardPath,
+                    It.Is<GetBlobsByHierarchyOptions>(r => r.Prefix == shardPath),
                     default));
             }
             else
             {
                 containerClient.Verify(r => r.GetBlobsByHierarchy(
-                    default,
-                    default,
-                    default,
-                    shardPath,
+                    It.Is<GetBlobsByHierarchyOptions>(r => r.Prefix == shardPath),
                     default));
             }
 

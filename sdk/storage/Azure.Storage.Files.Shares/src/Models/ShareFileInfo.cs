@@ -109,20 +109,20 @@ namespace Azure.Storage.Files.Shares.Models
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ShareFileInfo StorageFileInfo(
-            ETag eTag = default,
-            DateTimeOffset lastModified = default,
-            bool isServerEncrypted = default,
-            string filePermissionKey = default,
-            string fileAttributes = default,
-            DateTimeOffset fileCreationTime = default,
-            DateTimeOffset fileLastWriteTime = default,
-            DateTimeOffset fileChangeTime = default,
-            string fileId = default,
-            string fileParentId = default,
-            NfsFileMode nfsFileMode = default,
-            string owner = default,
-            string group = default,
-            NfsFileType nfsFileType = default)
+            ETag eTag,
+            DateTimeOffset lastModified,
+            bool isServerEncrypted,
+            string filePermissionKey,
+            string fileAttributes,
+            DateTimeOffset fileCreationTime,
+            DateTimeOffset fileLastWriteTime,
+            DateTimeOffset fileChangeTime,
+            string fileId,
+            string fileParentId,
+            NfsFileMode nfsFileMode,
+            string owner,
+            string group,
+            NfsFileType nfsFileType)
             => new ShareFileInfo
             {
                 ETag = eTag,

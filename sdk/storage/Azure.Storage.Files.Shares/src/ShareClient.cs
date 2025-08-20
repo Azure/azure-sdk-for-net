@@ -498,6 +498,7 @@ namespace Azure.Storage.Files.Shares
                 options?.PaidBurstingMaxBandwidthMibps,
                 options?.ProvisionedMaxIops,
                 options?.ProvisionedMaxBandwidthMibps,
+                options?.EnableDirectoryLease,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -543,6 +544,7 @@ namespace Azure.Storage.Files.Shares
                 options?.PaidBurstingMaxBandwidthMibps,
                 options?.ProvisionedMaxIops,
                 options?.ProvisionedMaxBandwidthMibps,
+                options?.EnableDirectoryLease,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -593,6 +595,7 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: default,
                 provisionedMaxIops: default,
                 provisionedMaxBandwidthMibps: default,
+                enableDirectoryLease: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -643,6 +646,7 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: default,
                 provisionedMaxIops: default,
                 provisionedMaxBandwidthMibps: default,
+                enableDirectoryLease: default,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -694,6 +698,11 @@ namespace Azure.Storage.Files.Shares
         /// <param name="provisionedMaxBandwidthMibps">
         /// Provisioned max bandwidth MiBps.
         /// </param>
+        /// <param name="enableDirectoryLease">
+        /// Specifies whether granting of new directory leases for directories present in a share are to be enabled or disabled.
+        /// An input of true specifies that granting of new directory leases is to be allowed.
+        /// An input of false specifies that granting of new directory leases is to be blocked.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -726,6 +735,7 @@ namespace Azure.Storage.Files.Shares
             long? paidBurstingMaxBandwidthMibps,
             long? provisionedMaxIops,
             long? provisionedMaxBandwidthMibps,
+            bool? enableDirectoryLease,
             bool async,
             CancellationToken cancellationToken,
             string operationName = default)
@@ -760,6 +770,7 @@ namespace Azure.Storage.Files.Shares
                             paidBurstingMaxBandwidthMibps: paidBurstingMaxBandwidthMibps,
                             shareProvisionedIops: provisionedMaxIops,
                             shareProvisionedBandwidthMibps: provisionedMaxBandwidthMibps,
+                            enableSmbDirectoryLease: enableDirectoryLease,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -777,6 +788,7 @@ namespace Azure.Storage.Files.Shares
                             paidBurstingMaxBandwidthMibps: paidBurstingMaxBandwidthMibps,
                             shareProvisionedIops: provisionedMaxIops,
                             shareProvisionedBandwidthMibps: provisionedMaxBandwidthMibps,
+                            enableSmbDirectoryLease: enableDirectoryLease,
                             cancellationToken: cancellationToken);
                     }
 
@@ -841,6 +853,7 @@ namespace Azure.Storage.Files.Shares
                 options?.PaidBurstingMaxBandwidthMibps,
                 options?.ProvisionedMaxIops,
                 options?.ProvisionedMaxBandwidthMibps,
+                options?.EnableDirectoryLease,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -885,6 +898,7 @@ namespace Azure.Storage.Files.Shares
                 options?.PaidBurstingMaxBandwidthMibps,
                 options?.ProvisionedMaxIops,
                 options?.ProvisionedMaxBandwidthMibps,
+                options?.EnableDirectoryLease,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -936,6 +950,7 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: default,
                 provisionedMaxIops: default,
                 provisionedMaxBandwidthMibps: default,
+                enableDirectoryLease: default,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -988,6 +1003,7 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: default,
                 provisionedMaxIops: default,
                 provisionedMaxBandwidthMibps: default,
+                enableDirectoryLease: default,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -1038,6 +1054,11 @@ namespace Azure.Storage.Files.Shares
         /// <param name="provisionedMaxBandwidthMibps">
         /// Provisioned max bandwidth MiBps.
         /// </param>
+        /// <param name="enableDirectoryLease">
+        /// Specifies whether granting of new directory leases for directories present in a share are to be enabled or disabled.
+        /// An input of true specifies that granting of new directory leases is to be allowed.
+        /// An input of false specifies that granting of new directory leases is to be blocked.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1067,6 +1088,7 @@ namespace Azure.Storage.Files.Shares
             long? paidBurstingMaxBandwidthMibps,
             long? provisionedMaxIops,
             long? provisionedMaxBandwidthMibps,
+            bool? enableDirectoryLease,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1092,6 +1114,7 @@ namespace Azure.Storage.Files.Shares
                         paidBurstingMaxBandwidthMibps,
                         provisionedMaxIops,
                         provisionedMaxBandwidthMibps,
+                        enableDirectoryLease,
                         async,
                         cancellationToken,
                         operationName: $"{nameof(ShareClient)}.{nameof(CreateIfNotExists)}")
@@ -2098,6 +2121,7 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: options?.PaidBurstingMaxBandwidthMibps,
                 provisionedMaxIops: options?.ProvisionedMaxIops,
                 provisionedMaxBandwidthBandwidthMibps: options?.ProvisionedMaxBandwidthMibps,
+                enableDirectoryLease: options?.EnableDirectoryLease,
                 conditions: options?.Conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetProperties)}",
                 async: false,
@@ -2141,6 +2165,7 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: options?.PaidBurstingMaxBandwidthMibps,
                 provisionedMaxIops: options?.ProvisionedMaxIops,
                 provisionedMaxBandwidthBandwidthMibps: options?.ProvisionedMaxBandwidthMibps,
+                enableDirectoryLease: options?.EnableDirectoryLease,
                 conditions: options?.Conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetProperties)}",
                 async: true,
@@ -2191,6 +2216,11 @@ namespace Azure.Storage.Files.Shares
         /// Sets the max provisioned brandwith for a share.  For SSD, min bandwidth is 125 MiB/sec and max is 10,340 MiB/sec.
         /// For HDD, min bandwidth is 60 MiB/sec and max is 5,120 MiB/sec.
         /// </param>
+        /// <param name="enableDirectoryLease">
+        /// Specifies whether granting of new directory leases for directories present in a share are to be enabled or disabled.
+        /// An input of true specifies that granting of new directory leases is to be allowed.
+        /// An input of false specifies that granting of new directory leases is to be blocked.
+        /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on setting the quota.
@@ -2225,6 +2255,7 @@ namespace Azure.Storage.Files.Shares
             long? paidBurstingMaxBandwidthMibps,
             long? provisionedMaxIops,
             long? provisionedMaxBandwidthBandwidthMibps,
+            bool? enableDirectoryLease,
             ShareFileRequestConditions conditions,
             string operationName,
             bool async,
@@ -2259,6 +2290,7 @@ namespace Azure.Storage.Files.Shares
                             paidBurstingMaxBandwidthMibps: paidBurstingMaxBandwidthMibps,
                             shareProvisionedIops: provisionedMaxIops,
                             shareProvisionedBandwidthMibps: provisionedMaxBandwidthBandwidthMibps,
+                            enableSmbDirectoryLease: enableDirectoryLease,
                             shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -2275,6 +2307,7 @@ namespace Azure.Storage.Files.Shares
                             paidBurstingMaxBandwidthMibps: paidBurstingMaxBandwidthMibps,
                             shareProvisionedIops: provisionedMaxIops,
                             shareProvisionedBandwidthMibps: provisionedMaxBandwidthBandwidthMibps,
+                            enableSmbDirectoryLease: enableDirectoryLease,
                             shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }
@@ -2343,6 +2376,7 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: default,
                 provisionedMaxIops: default,
                 provisionedMaxBandwidthBandwidthMibps: default,
+                enableDirectoryLease: default,
                 conditions: conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: false,
@@ -2393,6 +2427,7 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: default,
                 provisionedMaxIops: default,
                 provisionedMaxBandwidthBandwidthMibps: default,
+                enableDirectoryLease: default,
                 conditions: conditions,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: true,
@@ -2441,6 +2476,7 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: default,
                 provisionedMaxIops: default,
                 provisionedMaxBandwidthBandwidthMibps: default,
+                enableDirectoryLease: default,
                 conditions: default,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: false,
@@ -2488,6 +2524,7 @@ namespace Azure.Storage.Files.Shares
                 paidBurstingMaxBandwidthMibps: default,
                 provisionedMaxIops: default,
                 provisionedMaxBandwidthBandwidthMibps: default,
+                enableDirectoryLease: default,
                 conditions: default,
                 operationName: $"{nameof(ShareClient)}.{nameof(SetQuota)}",
                 async: true,
