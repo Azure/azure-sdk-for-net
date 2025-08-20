@@ -16,10 +16,20 @@ namespace Azure.ResourceManager.MongoCluster
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AuthConfigProperties))]
     [ModelReaderWriterBuildable(typeof(BackupProperties))]
     [ModelReaderWriterBuildable(typeof(ComputeProperties))]
+    [ModelReaderWriterBuildable(typeof(CustomerManagedKeyEncryptionProperties))]
+    [ModelReaderWriterBuildable(typeof(DataApiProperties))]
+    [ModelReaderWriterBuildable(typeof(DatabaseRole))]
+    [ModelReaderWriterBuildable(typeof(Models.EncryptionProperties))]
+    [ModelReaderWriterBuildable(typeof(EntraIdentityProvider))]
+    [ModelReaderWriterBuildable(typeof(EntraIdentityProviderProperties))]
     [ModelReaderWriterBuildable(typeof(FirewallRuleListResult))]
     [ModelReaderWriterBuildable(typeof(HighAvailabilityProperties))]
+    [ModelReaderWriterBuildable(typeof(IdentityProvider))]
+    [ModelReaderWriterBuildable(typeof(KeyEncryptionKeyIdentity))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MongoClusterAdministratorProperties))]
     [ModelReaderWriterBuildable(typeof(MongoClusterConnectionString))]
     [ModelReaderWriterBuildable(typeof(MongoClusterConnectionStringsResult))]
@@ -54,6 +64,12 @@ namespace Azure.ResourceManager.MongoCluster
     [ModelReaderWriterBuildable(typeof(StorageProperties))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(UnknownIdentityProvider))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(UserData))]
+    [ModelReaderWriterBuildable(typeof(UserListResult))]
+    [ModelReaderWriterBuildable(typeof(UserProperties))]
+    [ModelReaderWriterBuildable(typeof(UserResource))]
     public partial class AzureResourceManagerMongoClusterContext : ModelReaderWriterContext
     {
     }
