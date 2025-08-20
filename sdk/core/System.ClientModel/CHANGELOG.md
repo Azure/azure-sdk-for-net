@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Fix the behavior roslyn not properly handling partial classes with attributes in different files
+- Fix the behavior of Roslyn not properly handling partial classes with attributes in different files
 
 ## 1.6.0 (2025-08-11)
 
