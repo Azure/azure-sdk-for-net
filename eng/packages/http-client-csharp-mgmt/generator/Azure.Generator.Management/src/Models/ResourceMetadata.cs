@@ -19,6 +19,7 @@ namespace Azure.Generator.Management.Models
         string? ParentResourceId,
         IReadOnlyList<string> ChildResourceIds)
     {
+        // the childResourceIds parameter will be populated by the caller of this method later
         internal static ResourceMetadata DeserializeResourceMetadata(IReadOnlyDictionary<string, BinaryData> args, InputModelType inputModel, IReadOnlyList<string> childResourceIds)
         {
             string? resourceIdPattern = null;
