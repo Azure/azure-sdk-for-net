@@ -1,0 +1,79 @@
+name: Auto-close TypeSpec Version Bump PRs
+
+on:
+  schedule:
+    # Run daily at 10:00 AM UTC
+    - cron: '0 10 * * *'
+  # Allow manual trigger for testing
+  workflow_dispatch:
+
+permissions:
+  pull-requests: write
+  issues: write
+
+jobs:
+  auto-close-old-typespec-prs:
+    name: Auto-close old TypeSpec version bump PRs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Auto-close TypeSpec version bump PRs older than 2 days
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            
+            // Calculate the date 2 days ago
+            const twoDaysAgo = new Date();
+            twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
+            
+            console.log(`Looking for PRs older than: ${twoDaysAgo.toISOString()}`);
+            
+            // Search for open PRs with "Update TypeSpec emitter version" in the title
+            const searchQuery = `repo:${owner}/${repo} is:pr is:open "Update TypeSpec emitter version" in:title`;
+            
+            const searchResults = await github.rest.search.issuesAndPullRequests({
+              q: searchQuery,
+              sort: 'created',
+              order: 'asc',
+              per_page: 100
+            });
+            
+            console.log(`Found ${searchResults.data.total_count} open TypeSpec version bump PRs`);
+            
+            let closedCount = 0;
+            
+            for (const pr of searchResults.data.items) {
+              const createdAt = new Date(pr.created_at);
+              
+              console.log(`Checking PR #${pr.number}: "${pr.title}"`);
+              console.log(`  Created at: ${createdAt.toISOString()}`);
+              console.log(`  Age in days: ${(Date.now() - createdAt.getTime()) / (1000 * 60 * 60 * 24)}`);
+              
+              // Check if PR is older than 2 days
+              if (createdAt < twoDaysAgo) {
+                console.log(`  PR #${pr.number} is older than 2 days, closing...`);
+                
+                // Add a comment explaining why the PR is being closed
+                await github.rest.issues.createComment({
+                  owner,
+                  repo,
+                  issue_number: pr.number,
+                  body: `This TypeSpec emitter version bump PR has been automatically closed as it was not merged within 2 days of creation. This helps keep the repository clean by removing stale version bump PRs.\n\nIf this PR needs to be reopened, please do so manually and ensure it can be merged promptly.`
+                });
+                
+                // Close the PR
+                await github.rest.pulls.update({
+                  owner,
+                  repo,
+                  pull_number: pr.number,
+                  state: 'closed'
+                });
+                
+                closedCount++;
+                console.log(`  ✅ Closed PR #${pr.number}`);
+              } else {
+                console.log(`  PR #${pr.number} is not old enough yet, skipping`);
+              }
+            }
+            
+            console.log(`\nSummary: Closed ${closedCount} TypeSpec version bump PRs`);
