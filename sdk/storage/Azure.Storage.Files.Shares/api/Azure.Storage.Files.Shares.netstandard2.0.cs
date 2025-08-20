@@ -536,6 +536,24 @@ namespace Azure.Storage.Files.Shares.Models
         public long? LinkCount { get { throw null; } }
         public string Owner { get { throw null; } set { } }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FilePropertySemantics : System.IEquatable<Azure.Storage.Files.Shares.Models.FilePropertySemantics>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FilePropertySemantics(string value) { throw null; }
+        public static Azure.Storage.Files.Shares.Models.FilePropertySemantics New { get { throw null; } }
+        public static Azure.Storage.Files.Shares.Models.FilePropertySemantics Restore { get { throw null; } }
+        public bool Equals(Azure.Storage.Files.Shares.Models.FilePropertySemantics other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Storage.Files.Shares.Models.FilePropertySemantics left, Azure.Storage.Files.Shares.Models.FilePropertySemantics right) { throw null; }
+        public static implicit operator Azure.Storage.Files.Shares.Models.FilePropertySemantics (string value) { throw null; }
+        public static bool operator !=(Azure.Storage.Files.Shares.Models.FilePropertySemantics left, Azure.Storage.Files.Shares.Models.FilePropertySemantics right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class FileSmbProperties
     {
         public FileSmbProperties() { }
