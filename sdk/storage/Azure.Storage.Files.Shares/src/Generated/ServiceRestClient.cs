@@ -314,7 +314,7 @@ namespace Azure.Storage.Files.Shares
             return message;
         }
 
-        /// <summary> Retrieves a user delegation key for the Queue service. This is only a valid operation when using bearer token authentication. </summary>
+        /// <summary> Retrieves a user delegation key for the File service. This is only a valid operation when using bearer token authentication. </summary>
         /// <param name="keyInfo"> Key information. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -346,7 +346,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        /// <summary> Retrieves a user delegation key for the Queue service. This is only a valid operation when using bearer token authentication. </summary>
+        /// <summary> Retrieves a user delegation key for the File service. This is only a valid operation when using bearer token authentication. </summary>
         /// <param name="keyInfo"> Key information. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

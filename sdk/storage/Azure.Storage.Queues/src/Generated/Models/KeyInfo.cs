@@ -26,19 +26,15 @@ namespace Azure.Storage.Queues.Models
         /// <summary> Initializes a new instance of <see cref="KeyInfo"/>. </summary>
         /// <param name="start"> The date-time the key is active in ISO 8601 UTC time. </param>
         /// <param name="expiry"> The date-time the key expires in ISO 8601 UTC time. </param>
-        /// <param name="delegatedUserTid"> Optional. String, The delegated user tenant ID in Entra ID. </param>
-        internal KeyInfo(string start, string expiry, string delegatedUserTid)
+        internal KeyInfo(string start, string expiry)
         {
             Start = start;
             Expiry = expiry;
-            DelegatedUserTid = delegatedUserTid;
         }
 
         /// <summary> The date-time the key is active in ISO 8601 UTC time. </summary>
         public string Start { get; set; }
         /// <summary> The date-time the key expires in ISO 8601 UTC time. </summary>
         public string Expiry { get; }
-        /// <summary> Optional. String, The delegated user tenant ID in Entra ID. </summary>
-        public string DelegatedUserTid { get; set; }
     }
 }
