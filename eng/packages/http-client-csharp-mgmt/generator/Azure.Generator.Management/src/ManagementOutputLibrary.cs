@@ -37,6 +37,7 @@ namespace Azure.Generator.Management
         private IReadOnlyDictionary<string, ResourceClientProvider>? _resourceClientsDict;
         private IReadOnlyList<ResourceClientProvider>? _resourceClients;
         private IReadOnlyList<ResourceCollectionClientProvider>? _resourceCollections;
+        private IReadOnlyDictionary<ResourceScope, MockableResourceProvider>? _mockableResourceProvidersDict;
         private IReadOnlyList<MockableResourceProvider>? _mockableResourceProviders;
         private ExtensionProvider? _extensionProvider;
 
@@ -45,11 +46,9 @@ namespace Azure.Generator.Management
         internal IReadOnlyList<MockableResourceProvider> MockableResourceProviders => GetValue(ref _mockableResourceProviders);
         internal ExtensionProvider ExtensionProvider => GetValue(ref _extensionProvider);
 
-        internal ResourceClientProvider? GetResourceById(string id)
-        {
-            var dict = GetValue(ref _resourceClientsDict);
-            return dict.TryGetValue(id, out var resource) ? resource : null;
-        }
+        internal ResourceClientProvider GetResourceById(string id) => GetValue(ref _resourceClientsDict)[id];
+
+        internal MockableResourceProvider GetMockableResourceByScope(ResourceScope scope) => GetValue(ref _mockableResourceProvidersDict)[scope];
 
         private T GetValue<T>(ref T? field) where T : class
         {
@@ -57,6 +56,7 @@ namespace Azure.Generator.Management
                 ref _resourceClientsDict,
                 ref _resourceClients,
                 ref _resourceCollections,
+                ref _mockableResourceProvidersDict,
                 ref _mockableResourceProviders,
                 ref _extensionProvider);
 
@@ -70,17 +70,21 @@ namespace Azure.Generator.Management
         /// <param name="_resourceClientsDict">Represent a map from resource id pattern to the <see cref="ResourceClientProvider"/>. </param>
         /// <param name="_resourceClients">The full list of <see cref="ResourceClientProvider"/>. </param>
         /// <param name="_collectionClients">The full list of <see cref="ResourceCollectionClientProvider"/>. </param>
+        /// <param name="_mockableClientsDict">Represent a dictionary from scope to the corresponding <see cref="MockableResourceProvider"/>. </param>
         /// <param name="_mockableClients">The full list of <see cref="MockableResourceProvider"/>. </param>
-        /// <param name="_extensionProvider">The <see cref="T:ExtensionProvider"/>.</param>
+        /// <param name="_extensionProvider">The <see cref="T:ExtensionProvider"/>. </param>
         private static void InitializeResourceClients(
             ref IReadOnlyDictionary<string, ResourceClientProvider>? _resourceClientsDict,
             ref IReadOnlyList<ResourceClientProvider>? _resourceClients,
             ref IReadOnlyList<ResourceCollectionClientProvider>? _collectionClients,
+            ref IReadOnlyDictionary<ResourceScope, MockableResourceProvider>? _mockableClientsDict,
             ref IReadOnlyList<MockableResourceProvider>? _mockableClients,
             ref ExtensionProvider? _extensionProvider)
         {
-            if (_resourceClients is not null ||
+            if (_resourceClientsDict is not null ||
+                _resourceClients is not null ||
                 _collectionClients is not null ||
+                _mockableClientsDict is not null ||
                 _mockableClients is not null ||
                 _extensionProvider is not null)
             {
@@ -118,22 +122,19 @@ namespace Azure.Generator.Management
                 resourceMethodCategories,
                 ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods);
             var mockableArmClientResource = new MockableArmClientProvider(_resourceClients);
-            var mockableResources = new List<MockableResourceProvider>(resourcesAndMethodsPerScope.Count)
-            {
-                // add the arm client mockable resource
-                mockableArmClientResource
-            };
+            var mockableResources = new Dictionary<ResourceScope, MockableResourceProvider>(resourcesAndMethodsPerScope.Count);
             foreach (var (scope, (resourcesInScope, resourceMethods, nonResourceMethods)) in resourcesAndMethodsPerScope)
             {
                 if (resourcesInScope.Count > 0 || nonResourceMethods.Count > 0)
                 {
                     var mockableExtension = new MockableResourceProvider(scope, resourcesInScope, resourceMethods, nonResourceMethods);
-                    mockableResources.Add(mockableExtension);
+                    mockableResources.Add(scope, mockableExtension);
                 }
             }
 
-            _mockableClients = mockableResources;
-            _extensionProvider = new ExtensionProvider(mockableResources);
+            _mockableClientsDict = mockableResources;
+            _mockableClients = [mockableArmClientResource, ..mockableResources.Values];
+            _extensionProvider = new ExtensionProvider(_mockableClients);
 
             static Dictionary<ResourceScope, ResourcesAndNonResourceMethodsInScope> BuildResourcesAndNonResourceMethods(
                 IReadOnlyDictionary<ResourceMetadata, ResourceClientProvider> resourceDict,
