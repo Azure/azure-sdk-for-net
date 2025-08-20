@@ -378,7 +378,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [TestCase("$.bar['f.oo']", "$.bar")]
         public void GetParent(string jsonPath, string expected)
         {
-            var result = Encoding.UTF8.GetBytes(jsonPath).AsSpan().GetParent();
+            var result = Encoding.UTF8.GetBytes(jsonPath).GetParent();
             Assert.AreEqual(expected, Encoding.UTF8.GetString(result.ToArray()));
         }
     }
