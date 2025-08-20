@@ -45,7 +45,10 @@ namespace Azure.Provisioning.Tests.Expressions
                 );
 
             static void AssertExpression(string expected, ArrayExpression expression)
-                => Assert.AreEqual(expected.Replace("\r\n", "\n").Replace("\r", "\n"), expression.ToString().Replace("\r\n", "\n").Replace("\r", "\n"));
+                => Assert.AreEqual(
+                    Regex.Replace(expected, @"\r\n?", "\n"),
+                    Regex.Replace(expression.ToString(), @"\r\n?", "\n")
+                );
         }
     }
 }
