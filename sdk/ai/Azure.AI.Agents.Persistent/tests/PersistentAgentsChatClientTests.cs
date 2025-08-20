@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -18,11 +19,14 @@ namespace Azure.AI.Agents.Persistent.Tests
     {
         private const string AGENT_NAME = "cs_e2e_tests_chat_client";
         private const string STREAMING_CONSTRAINT = "The test framework does not support iteration of stream in Sync mode.";
+        private const string FILE_UPLOAD_CONSTRAINT = "The file is being uploaded as a multipart multipart/form-data, which cannot be recorded.";
+        private const string FILE_NAME = "stock-prices.txt";
+        private const string VCT_STORE_NAME = "cs_e2e_tests_chat_client_vct_store";
 
         private string _agentId;
         private string _threadId;
 
-        public PersistentAgentsChatClientTests(bool isAsync) : base(isAsync)
+        public PersistentAgentsChatClientTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
             TestDiagnostics = false;
         }
@@ -82,7 +86,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         public async Task TestGetStreamingResponseAsync(ChatOptionsTestType optionsType)
         {
             // This test will not record the sync version, however, CI/CD will still check
-            // the presense of this file. Just copy assets for
+            // the existence of this file. Just copy assets for
             // TestGetStreamingResponseAsync(***)Async to TestGetStreamingResponseAsync(***)
             // in net\sdk\ai\Azure.AI.Agents.Persistent\tests\SessionRecords\PersistentAgentsChatClientTests
             // assets folder to make CI/CD pass.
@@ -158,6 +162,64 @@ namespace Azure.AI.Agents.Persistent.Tests
         }
 
         [RecordedTest]
+        public async Task TestFileSearchToolOutputs()
+        {
+            // This test will not record the sync version, however, CI/CD will still check
+            // the existence of this file. Just copy assets for
+            // TestGetStreamingResponseAsync(***)Async to TestGetStreamingResponseAsync(***)
+            // in net\sdk\ai\Azure.AI.Agents.Persistent\tests\SessionRecords\PersistentAgentsChatClientTests
+            // assets folder to make CI/CD pass.
+            if (!IsAsync)
+            {
+                Assert.Inconclusive(STREAMING_CONSTRAINT);
+            }
+
+            if (Mode != RecordedTestMode.Live)
+            {
+                Assert.Inconclusive(FILE_UPLOAD_CONSTRAINT);
+            }
+
+            using IDisposable _ = SetTestSwitch();
+
+            PersistentAgentsClient client = GetClient();
+
+            var fileDataSource = await client.Files.UploadFileAsync(GetFile(), PersistentAgentFilePurpose.Agents);
+            var vectorStoreSource = await client.VectorStores.CreateVectorStoreAsync(
+                name: VCT_STORE_NAME,
+                fileIds: [fileDataSource.Value.Id]
+            );
+
+            // Create the file search tool with the vector store.
+            HostedFileSearchTool fileSearchTool = new() { Inputs = [new HostedVectorStoreContent(vectorStoreSource.Value.Id)] };
+            ChatOptions chatOptions = new() { Tools = [fileSearchTool] };
+
+            PersistentAgentsChatClient chatClient = new(client, _agentId, _threadId);
+
+            List<ChatMessage> messages = [];
+            messages.Add(new ChatMessage(ChatRole.User, [new TextContent("I provided to you a file with the stock prices for Microsoft, can you please see what were the value for Microsoft for it?")]));
+
+            ChatResponse response = await chatClient.GetResponseAsync(messages, chatOptions);
+
+            List<AIAnnotation> annotations = [];
+            foreach (ChatMessage message in response.Messages)
+            {
+                foreach (AIContent content in message.Contents)
+                {
+                    if (content.Annotations is not null)
+                    {
+                        annotations.AddRange(content.Annotations);
+                    }
+                }
+            }
+
+            Assert.NotZero(annotations.Count);
+            Assert.IsNotNull(response);
+            Assert.IsNotNull(response.Messages);
+            Assert.GreaterOrEqual(response.Messages.Count, 1);
+            Assert.AreEqual(ChatRole.Assistant, response.Messages[0].Role);
+        }
+
+        [RecordedTest]
         public async Task TestSubmitToolOutputs()
         {
             using IDisposable _ = SetTestSwitch();
@@ -174,7 +236,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             );
 
             PersistentAgent agent = await client.Administration.CreateAgentAsync(
-                model: "gpt-4o",
+                model: "gpt-4.1",
                 name: AGENT_NAME,
                 instructions: "Use the provided function to answer questions.",
                 tools: [tool]
@@ -235,7 +297,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // First tool is registered on agent level.
             PersistentAgent agent = await client.Administration.CreateAgentAsync(
-                model: "gpt-4o",
+                model: "gpt-4.1",
                 name: AGENT_NAME,
                 instructions: "Use the provided function to answer questions.",
                 tools: [wordTool]
@@ -244,8 +306,9 @@ namespace Azure.AI.Agents.Persistent.Tests
             // Second tool is registered per request.
             ChatOptions chatOptions = new()
             {
-                Tools = [AIFunctionFactory.Create(() => "It's 80 degrees and sunny.", "GetWeather")],
-                ToolMode = ChatToolMode.Auto
+                Tools = [AIFunctionFactory.Create((string city) => "It's 80 degrees and sunny.", "GetWeather", "Get the current weather for a specific city")],
+                ToolMode = ChatToolMode.Auto,
+                AllowMultipleToolCalls = true
             };
 
             PersistentAgentThread thread = await client.Threads.CreateThreadAsync();
@@ -253,7 +316,11 @@ namespace Azure.AI.Agents.Persistent.Tests
             PersistentAgentsChatClient chatClient = new(client, agent.Id, thread.Id);
 
             List<ChatMessage> messages = [];
-            messages.Add(new ChatMessage(ChatRole.User, [new TextContent("What's Mike's favourite word and current weather in Seattle?")]));
+            messages.Add(new ChatMessage(ChatRole.User, [new TextContent("""
+                Please two functions to:
+                1. Get current weather in Seattle
+                2. Get Mike's favourite word
+                """)]));
 
             ChatResponse response = await chatClient.GetResponseAsync(messages, chatOptions);
 
@@ -381,7 +448,29 @@ namespace Azure.AI.Agents.Persistent.Tests
                 if (thread.Id == _threadId)
                     client.Threads.DeleteThread(thread.Id);
             }
+
+            // Remove all files
+            IReadOnlyList<PersistentAgentFileInfo> files = client.Files.GetFiles().Value;
+            foreach (PersistentAgentFileInfo af in files)
+            {
+                if (af.Filename.Equals(FILE_NAME) || af.Filename.Equals(FILE_NAME))
+                    client.Files.DeleteFile(af.Id);
+            }
+
+            // Remove all vector stores
+            List<PersistentAgentsVectorStore> stores = [.. client.VectorStores.GetVectorStores()];
+            foreach (PersistentAgentsVectorStore store in stores)
+            {
+                if (store.Name == null || store.Name.Equals(VCT_STORE_NAME))
+                    client.VectorStores.DeleteVectorStore(store.Id);
+            }
         }
         #endregion
+
+        private static string GetFile([CallerFilePath] string pth = "", string fileName = FILE_NAME)
+        {
+            var dirName = Path.GetDirectoryName(pth) ?? "";
+            return Path.Combine(new string[] { dirName, "TestData", fileName });
+        }
     }
 }
