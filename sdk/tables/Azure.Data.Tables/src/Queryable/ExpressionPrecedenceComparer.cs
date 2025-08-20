@@ -10,7 +10,7 @@ namespace Azure.Data.Tables.Queryable
     {
         //From (2.2.3.6.1.1.2 Operator Precedence) https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-odata/f3380585-3f87-41d9-a2dc-ff46cc38e7a6
 
-        private const byte UnknownPrecedencyCategory = byte.MaxValue;
+        private const byte UnknownPrecedenceCategory = byte.MaxValue;
         private const byte PrimaryPrecedenceCategory = 8;
         private const byte UnaryPrecedenceCategory = 7;
         private const byte MultiplicativePrecedenceCategory = 6;
@@ -70,7 +70,7 @@ namespace Azure.Data.Tables.Queryable
                 case ExpressionType.OrElse:
                     return ConditionalOrPrecedenceCategory;
                 default:
-                    return UnknownPrecedencyCategory;
+                    return UnknownPrecedenceCategory;
             };
         }
     }
