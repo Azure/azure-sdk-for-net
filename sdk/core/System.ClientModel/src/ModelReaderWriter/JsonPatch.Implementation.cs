@@ -377,12 +377,13 @@ public partial struct JsonPatch
         Span<byte> childPath = stackalloc byte[jsonPath.Length];
         var currentPath = jsonPath;
         var lastPath = jsonPath;
+        EncodedValue currentValue;
         do
         {
-            if (_properties.TryGetValue(currentPath, out var currentValue))
+            if (_properties.TryGetValue(currentPath, out currentValue))
             {
                 GetSubPath(currentPath, jsonPath, ref childPath);
-                _properties.Set(currentPath, new(ValueKind.Json, GetNewJson(currentValue, childPath, encodedValue)));
+                _properties.Set(currentPath, new(ValueKind.Json, ModifyJson(currentValue, childPath, encodedValue)));
                 return true;
             }
 
@@ -395,10 +396,12 @@ public partial struct JsonPatch
         {
             lastPath = currentPath;
             kind |= ValueKind.ArrayItemAppend;
+            _properties.TryGetValue(lastPath, out currentValue);
         }
 
         GetSubPath(lastPath, jsonPath, ref childPath);
-        _properties.Set(lastPath, new(kind, GetNewJson(EncodedValue.Empty, childPath, encodedValue)));
+        var newValue = currentValue.Value.IsEmpty ? GetNewJson(childPath, encodedValue) : ModifyJson(currentValue, childPath, encodedValue);
+        _properties.Set(lastPath, new(kind, newValue));
 
         return false;
     }
@@ -418,21 +421,23 @@ public partial struct JsonPatch
         subPath = subPath.Slice(0, childSlice.Length + 1);
     }
 
-    private ReadOnlyMemory<byte> GetNewJson(EncodedValue currentValue, ReadOnlySpan<byte> jsonPath, EncodedValue encodedValue)
+    private ReadOnlyMemory<byte> ModifyJson(EncodedValue currentValue, ReadOnlySpan<byte> jsonPath, EncodedValue encodedValue)
     {
-        JsonPathReader pathReader = new(jsonPath);
-        if (!currentValue.Value.IsEmpty)
+        ReadOnlyMemory<byte> json = currentValue.Value;
+        if (encodedValue.Kind == ValueKind.Removed)
         {
-            if (encodedValue.Kind == ValueKind.Removed)
-            {
-                return currentValue.Value.Remove(jsonPath);
-            }
-            else
-            {
-                return currentValue.Value.Set(jsonPath, encodedValue.Value);
-            }
+            return json.Remove(jsonPath);
         }
-        else
+
+        JsonPathReader pathReader = new(jsonPath);
+        Utf8JsonReader jsonReader = new(json.Span);
+
+        bool jsonFound = jsonReader.Advance(ref pathReader);
+
+        ReadOnlyMemory<byte> data = encodedValue.Value;
+        ReadOnlySpan<byte> propertyName = pathReader.Current.ValueSpan;
+
+        if (pathReader.Current.TokenType != JsonPathTokenType.End)
         {
             using var buffer = new UnsafeBufferSequence();
             using var writer = new Utf8JsonWriter(buffer);
@@ -441,8 +446,39 @@ public partial struct JsonPatch
 
             writer.Flush();
             using var bufferReader = buffer.ExtractReader();
-            return bufferReader.ToBinaryData().ToMemory();
+            data = bufferReader.ToBinaryData().ToMemory();
         }
+
+        if (jsonFound)
+        {
+            long endLeft = jsonReader.TokenStartIndex;
+            jsonReader.Skip();
+            jsonReader.Read();
+            long startRight = jsonReader.TokenStartIndex;
+
+            return new ReadOnlyMemory<byte>([.. json.Slice(0, (int)endLeft).Span, .. data.Span, .. json.Slice((int)startRight).Span]);
+        }
+        else
+        {
+            return jsonReader.Insert(json, propertyName, data);
+        }
+    }
+
+    private ReadOnlyMemory<byte> GetNewJson(ReadOnlySpan<byte> jsonPath, EncodedValue encodedValue)
+    {
+        if (jsonPath.IsRoot())
+            return encodedValue.Value;
+
+        JsonPathReader pathReader = new(jsonPath);
+
+        using var buffer = new UnsafeBufferSequence();
+        using var writer = new Utf8JsonWriter(buffer);
+
+        ProjectJson(writer, ref pathReader, encodedValue, false);
+
+        writer.Flush();
+        using var bufferReader = buffer.ExtractReader();
+        return bufferReader.ToBinaryData().ToMemory();
     }
 
     private void ProjectJson(Utf8JsonWriter writer, ref JsonPathReader pathReader, EncodedValue encodedValue, bool inArray)
@@ -456,7 +492,7 @@ public partial struct JsonPatch
                 case JsonPathTokenType.ArrayIndex:
                     writer.WriteStartArray();
                     Utf8Parser.TryParse(pathReader.Current.ValueSpan, out int index, out _);
-                    for (int i = 0; i < index - 1; i++)
+                    for (int i = 0; i < index; i++)
                     {
                         writer.WriteNullValue(); // Placeholder for array items
                     }
@@ -500,6 +536,10 @@ public partial struct JsonPatch
                     writer.WriteEndObject();
                     break;
                 case JsonPathTokenType.End:
+                    if (writer.BytesPending == 0 && writer.BytesCommitted == 0)
+                    {
+                        writer.WriteRawValue(encodedValue.Value.Span);
+                    }
                     break;
                 default:
                     throw new Exception($"Unexpected token type: {pathReader.Current.TokenType}");

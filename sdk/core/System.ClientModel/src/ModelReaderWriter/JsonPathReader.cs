@@ -144,10 +144,7 @@ internal ref struct JsonPathReader
         if (!Read())
             return ReadOnlySpan<byte>.Empty;
 
-        if (Current.TokenType != JsonPathTokenType.PropertySeparator)
-            return ReadOnlySpan<byte>.Empty;
-
-        if (!Read())
+        if (Current.TokenType == JsonPathTokenType.PropertySeparator && !Read())
             return ReadOnlySpan<byte>.Empty;
 
         switch (Current.TokenType)
@@ -155,8 +152,9 @@ internal ref struct JsonPathReader
             case JsonPathTokenType.Property:
                 return _jsonPath.Slice(0, _consumed);
 
-            //should get first property return $[0] if its an array rooted jsonpath?
-            //case JsonPathTokenType.ArrayIndex:
+            case JsonPathTokenType.ArrayIndex:
+                return _jsonPath.Slice(0, _consumed);
+
             default:
                 return ReadOnlySpan<byte>.Empty;
         }

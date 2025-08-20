@@ -21,10 +21,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             model.Patch.Set("$.newDictionary['key1']"u8, "{\"x\":\"value1\"}"u8);
             model.Patch.Set("$.newDictionary.key2"u8, "{\"x\":\"value2\"}"u8);
 
-            Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model.Patch.GetJson("$.newDictionary['key1']"u8).ToArray());
-            Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model.Patch.GetJson("$.newDictionary.key1"u8).ToArray());
-            Assert.AreEqual("{\"x\":\"value2\"}"u8.ToArray(), model.Patch.GetJson("$.newDictionary['key2']"u8).ToArray());
-            Assert.AreEqual("{\"x\":\"value2\"}"u8.ToArray(), model.Patch.GetJson("$.newDictionary.key2"u8).ToArray());
+            Assert.AreEqual("{\"x\":\"value1\"}", model.Patch.GetJson("$.newDictionary['key1']"u8).ToString());
+            Assert.AreEqual("{\"x\":\"value1\"}", model.Patch.GetJson("$.newDictionary.key1"u8).ToString());
+            Assert.AreEqual("{\"x\":\"value2\"}", model.Patch.GetJson("$.newDictionary['key2']"u8).ToString());
+            Assert.AreEqual("{\"x\":\"value2\"}", model.Patch.GetJson("$.newDictionary.key2"u8).ToString());
 
             var data = ModelReaderWriter.Write(model);
             Assert.AreEqual(
@@ -32,10 +32,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 data.ToString());
 
             var model2 = GetRoundTripModel(data);
-            Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model2.Patch.GetJson("$.newDictionary['key1']"u8).ToArray());
-            Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model2.Patch.GetJson("$.newDictionary.key1"u8).ToArray());
-            Assert.AreEqual("{\"x\":\"value2\"}"u8.ToArray(), model2.Patch.GetJson("$.newDictionary['key2']"u8).ToArray());
-            Assert.AreEqual("{\"x\":\"value2\"}"u8.ToArray(), model2.Patch.GetJson("$.newDictionary.key2"u8).ToArray());
+            Assert.AreEqual("{\"x\":\"value1\"}", model2.Patch.GetJson("$.newDictionary['key1']"u8).ToString());
+            Assert.AreEqual("{\"x\":\"value1\"}", model2.Patch.GetJson("$.newDictionary.key1"u8).ToString());
+            Assert.AreEqual("{\"x\":\"value2\"}", model2.Patch.GetJson("$.newDictionary['key2']"u8).ToString());
+            Assert.AreEqual("{\"x\":\"value2\"}", model2.Patch.GetJson("$.newDictionary.key2"u8).ToString());
 
             AssertCommon(model, model2);
         }

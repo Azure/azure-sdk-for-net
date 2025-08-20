@@ -224,17 +224,22 @@ internal static class JsonPathReaderExtensions
 
     public static byte[] Set(this ReadOnlyMemory<byte> json, ReadOnlySpan<byte> jsonPath, ReadOnlyMemory<byte> jsonReplacement)
     {
-        long endLeft;
-
         if (TryFind(json.Span, jsonPath, out Utf8JsonReader jsonReader))
         {
-            endLeft = jsonReader.TokenStartIndex;
+            long endLeft = jsonReader.TokenStartIndex;
             jsonReader.Skip();
             jsonReader.Read();
             long startRight = jsonReader.TokenStartIndex;
 
             return [.. json.Slice(0, (int)endLeft).Span, .. jsonReplacement.Span, .. json.Slice((int)startRight).Span];
         }
+
+        return jsonReader.Insert(json, jsonPath.GetPropertyName(), jsonReplacement);
+    }
+
+    internal static byte[] Insert(ref this Utf8JsonReader jsonReader, ReadOnlyMemory<byte> json, ReadOnlySpan<byte> propertyName, ReadOnlyMemory<byte> jsonReplacement)
+    {
+        long endLeft;
 
         if (jsonReader.TokenType == JsonTokenType.StartArray)
         {
@@ -246,7 +251,7 @@ internal static class JsonPathReaderExtensions
 
             endLeft = jsonReader.TokenStartIndex;
             return
-                [
+            [
                 .. json.Slice(0, (int)endLeft).Span,
                 (byte)',',
                 .. jsonReplacement.Span,
@@ -256,11 +261,11 @@ internal static class JsonPathReaderExtensions
 
         endLeft = jsonReader.TokenStartIndex;
         return
-                [
+        [
             .. json.Slice(0, (int)endLeft).Span,
             (byte)',',
             (byte)'"',
-            ..jsonPath.GetPropertyName(),
+            .. propertyName,
             (byte)'"',
             (byte)':',
             .. jsonReplacement.Span,

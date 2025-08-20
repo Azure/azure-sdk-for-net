@@ -21,8 +21,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             model.Patch.Append("$.properties.virtualMachines"u8, "{\"id\":\"myNewVmId\"}"u8);
 
-            Assert.AreEqual("[{\"id\":\"myNewVmId\"}]"u8.ToArray(), model.Patch.GetJson("$.properties.virtualMachines"u8).ToArray());
-            Assert.AreEqual("{\"id\":\"myNewVmId\"}"u8.ToArray(), model.Patch.GetJson("$.properties.virtualMachines[0]"u8).ToArray());
+            Assert.AreEqual("[{\"id\":\"myNewVmId\"}]", model.Patch.GetJson("$.properties.virtualMachines"u8).ToString());
+            Assert.AreEqual("{\"id\":\"myNewVmId\"}", model.Patch.GetJson("$.properties.virtualMachines[0]"u8).ToString());
 
             var data = ModelReaderWriter.Write(model);
             Assert.AreEqual(
@@ -43,8 +43,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             model.Patch.Append("$.newArray"u8, "{\"x\":\"value1\"}"u8);
 
-            Assert.AreEqual("[{\"x\":\"value1\"}]"u8.ToArray(), model.Patch.GetJson("$.newArray"u8).ToArray());
-            Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model.Patch.GetJson("$.newArray[0]"u8).ToArray());
+            Assert.AreEqual("[{\"x\":\"value1\"}]", model.Patch.GetJson("$.newArray"u8).ToString());
+            Assert.AreEqual("{\"x\":\"value1\"}", model.Patch.GetJson("$.newArray[0]"u8).ToString());
 
             var data = ModelReaderWriter.Write(model);
             Assert.AreEqual(
@@ -52,8 +52,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 data.ToString());
 
             var model2 = GetRoundTripModel(data);
-            Assert.AreEqual("[{\"x\":\"value1\"}]"u8.ToArray(), model2.Patch.GetJson("$.newArray"u8).ToArray());
-            Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model2.Patch.GetJson("$.newArray[0]"u8).ToArray());
+            Assert.AreEqual("[{\"x\":\"value1\"}]", model2.Patch.GetJson("$.newArray"u8).ToString());
+            Assert.AreEqual("{\"x\":\"value1\"}", model2.Patch.GetJson("$.newArray[0]"u8).ToString());
 
             AssertCommon(model, model2);
         }
@@ -66,9 +66,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             model.Patch.Append("$.newArray"u8, "5"u8);
             model.Patch.Append("$.newArray"u8, "10"u8);
 
-            Assert.AreEqual("[5,10]"u8.ToArray(), model.Patch.GetJson("$.newArray"u8).ToArray());
-            Assert.AreEqual("5"u8.ToArray(), model.Patch.GetJson("$.newArray[0]"u8).ToArray());
-            Assert.AreEqual("10"u8.ToArray(), model.Patch.GetJson("$.newArray[1]"u8).ToArray());
+            Assert.AreEqual("[5,10]", model.Patch.GetJson("$.newArray"u8).ToString());
+            Assert.AreEqual("5", model.Patch.GetJson("$.newArray[0]"u8).ToString());
+            Assert.AreEqual("10", model.Patch.GetJson("$.newArray[1]"u8).ToString());
 
             var data = ModelReaderWriter.Write(model);
             Assert.AreEqual(
@@ -76,9 +76,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 data.ToString());
 
             var model2 = GetRoundTripModel(data);
-            Assert.AreEqual("[5,10]"u8.ToArray(), model2.Patch.GetJson("$.newArray"u8).ToArray());
-            Assert.AreEqual("5"u8.ToArray(), model2.Patch.GetJson("$.newArray[0]"u8).ToArray());
-            Assert.AreEqual("10"u8.ToArray(), model2.Patch.GetJson("$.newArray[1]"u8).ToArray());
+            Assert.AreEqual("[5,10]", model2.Patch.GetJson("$.newArray"u8).ToString());
+            Assert.AreEqual("5", model2.Patch.GetJson("$.newArray[0]"u8).ToString());
+            Assert.AreEqual("10", model2.Patch.GetJson("$.newArray[1]"u8).ToString());
 
             AssertCommon(model, model2);
         }
@@ -91,9 +91,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             model.Patch.Append("$.newArray"u8, "5"u8);
             model.Patch.Append("$.newArray"u8, "10"u8);
 
-            Assert.AreEqual("[5,10]"u8.ToArray(), model.Patch.GetJson("$.newArray"u8).ToArray());
-            Assert.AreEqual("5"u8.ToArray(), model.Patch.GetJson("$.newArray[0]"u8).ToArray());
-            Assert.AreEqual("10"u8.ToArray(), model.Patch.GetJson("$.newArray[1]"u8).ToArray());
+            Assert.AreEqual("[5,10]", model.Patch.GetJson("$.newArray"u8).ToString());
+            Assert.AreEqual("5", model.Patch.GetJson("$.newArray[0]"u8).ToString());
+            Assert.AreEqual("10", model.Patch.GetJson("$.newArray[1]"u8).ToString());
 
             var data = ModelReaderWriter.Write(model);
             Assert.AreEqual(
@@ -101,15 +101,15 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 data.ToString());
 
             var model2 = GetRoundTripModel(data);
-            Assert.AreEqual("[5,10]"u8.ToArray(), model2.Patch.GetJson("$.newArray"u8).ToArray());
-            Assert.AreEqual("5"u8.ToArray(), model2.Patch.GetJson("$.newArray[0]"u8).ToArray());
-            Assert.AreEqual("10"u8.ToArray(), model2.Patch.GetJson("$.newArray[1]"u8).ToArray());
+            Assert.AreEqual("[5,10]", model2.Patch.GetJson("$.newArray"u8).ToString());
+            Assert.AreEqual("5", model2.Patch.GetJson("$.newArray[0]"u8).ToString());
+            Assert.AreEqual("10", model2.Patch.GetJson("$.newArray[1]"u8).ToString());
 
             AssertCommon(model, model2);
 
             model2.Patch.Set("$.newArray"u8, "[1,2,3]"u8);
 
-            Assert.AreEqual("[1,2,3]"u8.ToArray(), model2.Patch.GetJson("$.newArray"u8).ToArray());
+            Assert.AreEqual("[1,2,3]", model2.Patch.GetJson("$.newArray"u8).ToString());
             Assert.AreEqual(1, model2.Patch.GetInt32("$.newArray[0]"u8));
             Assert.AreEqual(2, model2.Patch.GetInt32("$.newArray[1]"u8));
             Assert.AreEqual(3, model2.Patch.GetInt32("$.newArray[2]"u8));
@@ -121,7 +121,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             var model3 = GetRoundTripModel(data2);
 
-            Assert.AreEqual("[1,2,3]"u8.ToArray(), model3.Patch.GetJson("$.newArray"u8).ToArray());
+            Assert.AreEqual("[1,2,3]", model3.Patch.GetJson("$.newArray"u8).ToString());
             Assert.AreEqual(1, model3.Patch.GetInt32("$.newArray[0]"u8));
             Assert.AreEqual(2, model3.Patch.GetInt32("$.newArray[1]"u8));
             Assert.AreEqual(3, model3.Patch.GetInt32("$.newArray[2]"u8));
@@ -136,8 +136,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             model.Patch.Append("$.properties.virtualMachines"u8, new { id = "myNewVmId" });
 
-            Assert.AreEqual("[{\"id\":\"myNewVmId\"}]"u8.ToArray(), model.Patch.GetJson("$.properties.virtualMachines"u8).ToArray());
-            Assert.AreEqual("{\"id\":\"myNewVmId\"}"u8.ToArray(), model.Patch.GetJson("$.properties.virtualMachines[0]"u8).ToArray());
+            Assert.AreEqual("[{\"id\":\"myNewVmId\"}]", model.Patch.GetJson("$.properties.virtualMachines"u8).ToString());
+            Assert.AreEqual("{\"id\":\"myNewVmId\"}", model.Patch.GetJson("$.properties.virtualMachines[0]"u8).ToString());
             Assert.AreEqual("myNewVmId", model.Patch.GetString("$.properties.virtualMachines[0].id"u8));
 
             var data = ModelReaderWriter.Write(model);
@@ -150,9 +150,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.AreEqual("myExistingVmId", model2.VirtualMachines[0].Id);
             Assert.AreEqual("myNewVmId", model2.VirtualMachines[1].Id);
 
-            Assert.AreEqual("[{\"id\":\"myExistingVmId\"},{\"id\":\"myNewVmId\"}]"u8.ToArray(), model2.Patch.GetJson("$.properties.virtualMachines"u8).ToArray());
-            Assert.AreEqual("{\"id\":\"myExistingVmId\"}"u8.ToArray(), model2.Patch.GetJson("$.properties.virtualMachines[0]"u8).ToArray());
-            Assert.AreEqual("{\"id\":\"myNewVmId\"}"u8.ToArray(), model2.Patch.GetJson("$.properties.virtualMachines[1]"u8).ToArray());
+            Assert.AreEqual("[{\"id\":\"myExistingVmId\"},{\"id\":\"myNewVmId\"}]", model2.Patch.GetJson("$.properties.virtualMachines"u8).ToString());
+            Assert.AreEqual("{\"id\":\"myExistingVmId\"}", model2.Patch.GetJson("$.properties.virtualMachines[0]"u8).ToString());
+            Assert.AreEqual("{\"id\":\"myNewVmId\"}", model2.Patch.GetJson("$.properties.virtualMachines[1]"u8).ToString());
             Assert.AreEqual("myExistingVmId", model2.Patch.GetString("$.properties.virtualMachines[0].id"u8));
             Assert.AreEqual("myNewVmId", model2.Patch.GetString("$.properties.virtualMachines[1].id"u8));
 
@@ -169,11 +169,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             model.Patch.Append("$.properties.virtualMachines"u8, new { id = "myNewVmId3" });
             model.Patch.Append("$.properties.virtualMachines"u8, new { Id = "myNewVmId4" });
 
-            Assert.AreEqual("[{\"id\":\"myNewVmId1\"},{\"id\":\"myNewVmId2\"},{\"id\":\"myNewVmId3\"},{\"id\":\"myNewVmId4\"}]"u8.ToArray(), model.Patch.GetJson("$.properties.virtualMachines"u8).ToArray());
-            Assert.AreEqual("{\"id\":\"myNewVmId1\"}"u8.ToArray(), model.Patch.GetJson("$.properties.virtualMachines[0]"u8).ToArray());
-            Assert.AreEqual("{\"id\":\"myNewVmId2\"}"u8.ToArray(), model.Patch.GetJson("$.properties.virtualMachines[1]"u8).ToArray());
-            Assert.AreEqual("{\"id\":\"myNewVmId3\"}"u8.ToArray(), model.Patch.GetJson("$.properties.virtualMachines[2]"u8).ToArray());
-            Assert.AreEqual("{\"id\":\"myNewVmId4\"}"u8.ToArray(), model.Patch.GetJson("$.properties.virtualMachines[3]"u8).ToArray());
+            Assert.AreEqual("[{\"id\":\"myNewVmId1\"},{\"id\":\"myNewVmId2\"},{\"id\":\"myNewVmId3\"},{\"id\":\"myNewVmId4\"}]", model.Patch.GetJson("$.properties.virtualMachines"u8).ToString());
+            Assert.AreEqual("{\"id\":\"myNewVmId1\"}", model.Patch.GetJson("$.properties.virtualMachines[0]"u8).ToString());
+            Assert.AreEqual("{\"id\":\"myNewVmId2\"}", model.Patch.GetJson("$.properties.virtualMachines[1]"u8).ToString());
+            Assert.AreEqual("{\"id\":\"myNewVmId3\"}", model.Patch.GetJson("$.properties.virtualMachines[2]"u8).ToString());
+            Assert.AreEqual("{\"id\":\"myNewVmId4\"}", model.Patch.GetJson("$.properties.virtualMachines[3]"u8).ToString());
 
             var data = ModelReaderWriter.Write(model);
             Assert.AreEqual(
@@ -197,8 +197,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             model.Patch.Append("$.newArray"u8, "{\"x\":\"value1\"}"u8);
 
-            Assert.AreEqual("[{\"x\":\"value1\"}]"u8.ToArray(), model.Patch.GetJson("$.newArray"u8).ToArray());
-            Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model.Patch.GetJson("$.newArray[0]"u8).ToArray());
+            Assert.AreEqual("[{\"x\":\"value1\"}]", model.Patch.GetJson("$.newArray"u8).ToString());
+            Assert.AreEqual("{\"x\":\"value1\"}", model.Patch.GetJson("$.newArray[0]"u8).ToString());
 
             var data = ModelReaderWriter.Write(model);
             Assert.AreEqual(
@@ -206,13 +206,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 data.ToString());
 
             var model2 = GetRoundTripModel(data);
-            Assert.AreEqual("[{\"x\":\"value1\"}]"u8.ToArray(), model2.Patch.GetJson("$.newArray"u8).ToArray());
-            Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model2.Patch.GetJson("$.newArray[0]"u8).ToArray());
+            Assert.AreEqual("[{\"x\":\"value1\"}]", model2.Patch.GetJson("$.newArray"u8).ToString());
+            Assert.AreEqual("{\"x\":\"value1\"}", model2.Patch.GetJson("$.newArray[0]"u8).ToString());
 
             model2.Patch.Set("$.newArray[0]"u8, "{\"x\":\"value2\"}"u8);
 
-            Assert.AreEqual("[{\"x\":\"value2\"}]"u8.ToArray(), model2.Patch.GetJson("$.newArray"u8).ToArray());
-            Assert.AreEqual("{\"x\":\"value2\"}"u8.ToArray(), model2.Patch.GetJson("$.newArray[0]"u8).ToArray());
+            Assert.AreEqual("[{\"x\":\"value2\"}]", model2.Patch.GetJson("$.newArray"u8).ToString());
+            Assert.AreEqual("{\"x\":\"value2\"}", model2.Patch.GetJson("$.newArray[0]"u8).ToString());
 
             var data2 = ModelReaderWriter.Write(model2);
             Assert.AreEqual(
@@ -220,8 +220,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 data2.ToString());
 
             var model3 = GetRoundTripModel(data2);
-            Assert.AreEqual("[{\"x\":\"value2\"}]"u8.ToArray(), model3.Patch.GetJson("$.newArray"u8).ToArray());
-            Assert.AreEqual("{\"x\":\"value2\"}"u8.ToArray(), model3.Patch.GetJson("$.newArray[0]"u8).ToArray());
+            Assert.AreEqual("[{\"x\":\"value2\"}]", model3.Patch.GetJson("$.newArray"u8).ToString());
+            Assert.AreEqual("{\"x\":\"value2\"}", model3.Patch.GetJson("$.newArray[0]"u8).ToString());
 
             AssertCommon(model, model2);
         }
@@ -243,10 +243,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.AreEqual("myExistingVmId2", model2.VirtualMachines[1].Id);
             Assert.AreEqual("myExistingVmId3", model2.VirtualMachines[2].Id);
 
-            Assert.AreEqual("[{\"id\":\"myExistingVmId1\"},{\"id\":\"myExistingVmId2\"},{\"id\":\"myExistingVmId3\"}]"u8.ToArray(), model2.Patch.GetJson("$.properties.virtualMachines"u8).ToArray());
-            Assert.AreEqual("{\"id\":\"myExistingVmId1\"}"u8.ToArray(), model2.Patch.GetJson("$.properties.virtualMachines[0]"u8).ToArray());
-            Assert.AreEqual("{\"id\":\"myExistingVmId2\"}"u8.ToArray(), model2.Patch.GetJson("$.properties.virtualMachines[1]"u8).ToArray());
-            Assert.AreEqual("{\"id\":\"myExistingVmId3\"}"u8.ToArray(), model2.Patch.GetJson("$.properties.virtualMachines[2]"u8).ToArray());
+            Assert.AreEqual("[{\"id\":\"myExistingVmId1\"},{\"id\":\"myExistingVmId2\"},{\"id\":\"myExistingVmId3\"}]", model2.Patch.GetJson("$.properties.virtualMachines"u8).ToString());
+            Assert.AreEqual("{\"id\":\"myExistingVmId1\"}", model2.Patch.GetJson("$.properties.virtualMachines[0]"u8).ToString());
+            Assert.AreEqual("{\"id\":\"myExistingVmId2\"}", model2.Patch.GetJson("$.properties.virtualMachines[1]"u8).ToString());
+            Assert.AreEqual("{\"id\":\"myExistingVmId3\"}", model2.Patch.GetJson("$.properties.virtualMachines[2]"u8).ToString());
             Assert.AreEqual("myExistingVmId1", model2.Patch.GetString("$.properties.virtualMachines[0].id"u8));
             Assert.AreEqual("myExistingVmId2", model2.Patch.GetString("$.properties.virtualMachines[1].id"u8));
             Assert.AreEqual("myExistingVmId3", model2.Patch.GetString("$.properties.virtualMachines[2].id"u8));
@@ -264,10 +264,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.AreEqual("myNewVmId", model3.VirtualMachines[1].Id);
             Assert.AreEqual("myExistingVmId3", model3.VirtualMachines[2].Id);
 
-            Assert.AreEqual("[{\"id\":\"myExistingVmId1\"},{\"id\":\"myNewVmId\"},{\"id\":\"myExistingVmId3\"}]"u8.ToArray(), model3.Patch.GetJson("$.properties.virtualMachines"u8).ToArray());
-            Assert.AreEqual("{\"id\":\"myExistingVmId1\"}"u8.ToArray(), model3.Patch.GetJson("$.properties.virtualMachines[0]"u8).ToArray());
-            Assert.AreEqual("{\"id\":\"myNewVmId\"}"u8.ToArray(), model3.Patch.GetJson("$.properties.virtualMachines[1]"u8).ToArray());
-            Assert.AreEqual("{\"id\":\"myExistingVmId3\"}"u8.ToArray(), model3.Patch.GetJson("$.properties.virtualMachines[2]"u8).ToArray());
+            Assert.AreEqual("[{\"id\":\"myExistingVmId1\"},{\"id\":\"myNewVmId\"},{\"id\":\"myExistingVmId3\"}]", model3.Patch.GetJson("$.properties.virtualMachines"u8).ToString());
+            Assert.AreEqual("{\"id\":\"myExistingVmId1\"}", model3.Patch.GetJson("$.properties.virtualMachines[0]"u8).ToString());
+            Assert.AreEqual("{\"id\":\"myNewVmId\"}", model3.Patch.GetJson("$.properties.virtualMachines[1]"u8).ToString());
+            Assert.AreEqual("{\"id\":\"myExistingVmId3\"}", model3.Patch.GetJson("$.properties.virtualMachines[2]"u8).ToString());
 
             Assert.AreEqual("myExistingVmId1", model3.Patch.GetString("$.properties.virtualMachines[0].id"u8));
             Assert.AreEqual("myNewVmId", model3.Patch.GetString("$.properties.virtualMachines[1].id"u8));
@@ -293,8 +293,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.AreEqual(1, model2.VirtualMachines.Count);
             Assert.AreEqual("myExistingVmId2", model2.VirtualMachines[0].Id);
 
-            Assert.AreEqual("[{\"id\":\"myExistingVmId2\"}]"u8.ToArray(), model2.Patch.GetJson("$.properties.virtualMachines"u8).ToArray());
-            Assert.AreEqual("{\"id\":\"myExistingVmId2\"}"u8.ToArray(), model2.Patch.GetJson("$.properties.virtualMachines[0]"u8).ToArray());
+            Assert.AreEqual("[{\"id\":\"myExistingVmId2\"}]", model2.Patch.GetJson("$.properties.virtualMachines"u8).ToString());
+            Assert.AreEqual("{\"id\":\"myExistingVmId2\"}", model2.Patch.GetJson("$.properties.virtualMachines[0]"u8).ToString());
 
             AssertCommon(model, model2);
         }
@@ -319,9 +319,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.AreEqual("myExistingVmId1", model2.VirtualMachines[0].Id);
             Assert.AreEqual("myExistingVmId2", model2.VirtualMachines[1].Id);
 
-            Assert.AreEqual("[{\"id\":\"myExistingVmId1\"},{\"id\":\"myExistingVmId2\"}]"u8.ToArray(), model2.Patch.GetJson("$.properties.virtualMachines"u8).ToArray());
-            Assert.AreEqual("{\"id\":\"myExistingVmId1\"}"u8.ToArray(), model2.Patch.GetJson("$.properties.virtualMachines[0]"u8).ToArray());
-            Assert.AreEqual("{\"id\":\"myExistingVmId2\"}"u8.ToArray(), model2.Patch.GetJson("$.properties.virtualMachines[1]"u8).ToArray());
+            Assert.AreEqual("[{\"id\":\"myExistingVmId1\"},{\"id\":\"myExistingVmId2\"}]", model2.Patch.GetJson("$.properties.virtualMachines"u8).ToString());
+            Assert.AreEqual("{\"id\":\"myExistingVmId1\"}", model2.Patch.GetJson("$.properties.virtualMachines[0]"u8).ToString());
+            Assert.AreEqual("{\"id\":\"myExistingVmId2\"}", model2.Patch.GetJson("$.properties.virtualMachines[1]"u8).ToString());
 
             AssertCommon(model, model2);
         }
@@ -333,8 +333,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             model.Patch.Append("$.newArray"u8, "{\"x\":\"value1\"}"u8);
 
-            Assert.AreEqual("[{\"x\":\"value1\"}]"u8.ToArray(), model.Patch.GetJson("$.newArray"u8).ToArray());
-            Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model.Patch.GetJson("$.newArray[0]"u8).ToArray());
+            Assert.AreEqual("[{\"x\":\"value1\"}]", model.Patch.GetJson("$.newArray"u8).ToString());
+            Assert.AreEqual("{\"x\":\"value1\"}", model.Patch.GetJson("$.newArray[0]"u8).ToString());
 
             var data = ModelReaderWriter.Write(model);
             Assert.AreEqual(
@@ -342,8 +342,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 data.ToString());
 
             var model2 = GetRoundTripModel(data);
-            Assert.AreEqual("[{\"x\":\"value1\"}]"u8.ToArray(), model2.Patch.GetJson("$.newArray"u8).ToArray());
-            Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model2.Patch.GetJson("$.newArray[0]"u8).ToArray());
+            Assert.AreEqual("[{\"x\":\"value1\"}]", model2.Patch.GetJson("$.newArray"u8).ToString());
+            Assert.AreEqual("{\"x\":\"value1\"}", model2.Patch.GetJson("$.newArray[0]"u8).ToString());
 
             model2.Patch.Remove("$.newArray[0]"u8);
 
@@ -353,7 +353,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 data2.ToString());
 
             var model3 = GetRoundTripModel(data2);
-            Assert.AreEqual("[]"u8.ToArray(), model3.Patch.GetJson("$.newArray"u8).ToArray());
+            Assert.AreEqual("[]", model3.Patch.GetJson("$.newArray"u8).ToString());
 
             AssertCommon(model2, model3);
         }
@@ -367,7 +367,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             model.Patch.Append("$.newArray"u8, false);
             model.Patch.Append("$.newArray"u8, true);
 
-            Assert.AreEqual("[true,false,true]"u8.ToArray(), model.Patch.GetJson("$.newArray"u8).ToArray());
+            Assert.AreEqual("[true,false,true]", model.Patch.GetJson("$.newArray"u8).ToString());
             Assert.AreEqual(true, model.Patch.GetBoolean("$.newArray[0]"u8));
             Assert.AreEqual(false, model.Patch.GetBoolean("$.newArray[1]"u8));
             Assert.AreEqual(true, model.Patch.GetBoolean("$.newArray[2]"u8));
@@ -378,7 +378,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 data.ToString());
 
             var model2 = GetRoundTripModel(data);
-            Assert.AreEqual("[true,false,true]"u8.ToArray(), model2.Patch.GetJson("$.newArray"u8).ToArray());
+            Assert.AreEqual("[true,false,true]", model2.Patch.GetJson("$.newArray"u8).ToString());
             Assert.AreEqual(true, model2.Patch.GetBoolean("$.newArray[0]"u8));
             Assert.AreEqual(false, model2.Patch.GetBoolean("$.newArray[1]"u8));
             Assert.AreEqual(true, model2.Patch.GetBoolean("$.newArray[2]"u8));
@@ -391,7 +391,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 data2.ToString());
 
             var model3 = GetRoundTripModel(data2);
-            Assert.AreEqual("[true,true]"u8.ToArray(), model3.Patch.GetJson("$.newArray"u8).ToArray());
+            Assert.AreEqual("[true,true]", model3.Patch.GetJson("$.newArray"u8).ToString());
             Assert.AreEqual(true, model3.Patch.GetBoolean("$.newArray[0]"u8));
             Assert.AreEqual(true, model3.Patch.GetBoolean("$.newArray[1]"u8));
 
@@ -406,9 +406,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             model.Patch.Append("$.newArray"u8, "{\"x\":\"value1\"}"u8);
             model.Patch.Append("$.newArray"u8, "{\"x\":\"value2\"}"u8);
 
-            Assert.AreEqual("[{\"x\":\"value1\"},{\"x\":\"value2\"}]"u8.ToArray(), model.Patch.GetJson("$.newArray"u8).ToArray());
-            Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model.Patch.GetJson("$.newArray[0]"u8).ToArray());
-            Assert.AreEqual("{\"x\":\"value2\"}"u8.ToArray(), model.Patch.GetJson("$.newArray[1]"u8).ToArray());
+            Assert.AreEqual("[{\"x\":\"value1\"},{\"x\":\"value2\"}]", model.Patch.GetJson("$.newArray"u8).ToString());
+            Assert.AreEqual("{\"x\":\"value1\"}", model.Patch.GetJson("$.newArray[0]"u8).ToString());
+            Assert.AreEqual("{\"x\":\"value2\"}", model.Patch.GetJson("$.newArray[1]"u8).ToString());
 
             var data = ModelReaderWriter.Write(model);
             Assert.AreEqual(
@@ -416,9 +416,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 data.ToString());
 
             var model2 = GetRoundTripModel(data);
-            Assert.AreEqual("[{\"x\":\"value1\"},{\"x\":\"value2\"}]"u8.ToArray(), model2.Patch.GetJson("$.newArray"u8).ToArray());
-            Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model2.Patch.GetJson("$.newArray[0]"u8).ToArray());
-            Assert.AreEqual("{\"x\":\"value2\"}"u8.ToArray(), model2.Patch.GetJson("$.newArray[1]"u8).ToArray());
+            Assert.AreEqual("[{\"x\":\"value1\"},{\"x\":\"value2\"}]", model2.Patch.GetJson("$.newArray"u8).ToString());
+            Assert.AreEqual("{\"x\":\"value1\"}", model2.Patch.GetJson("$.newArray[0]"u8).ToString());
+            Assert.AreEqual("{\"x\":\"value2\"}", model2.Patch.GetJson("$.newArray[1]"u8).ToString());
 
             model2.Patch.Remove("$.newArray[0]"u8);
 
@@ -428,8 +428,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 data2.ToString());
 
             var model3 = GetRoundTripModel(data2);
-            Assert.AreEqual("[{\"x\":\"value2\"}]"u8.ToArray(), model3.Patch.GetJson("$.newArray"u8).ToArray());
-            Assert.AreEqual("{\"x\":\"value2\"}"u8.ToArray(), model3.Patch.GetJson("$.newArray[0]"u8).ToArray());
+            Assert.AreEqual("[{\"x\":\"value2\"}]", model3.Patch.GetJson("$.newArray"u8).ToString());
+            Assert.AreEqual("{\"x\":\"value2\"}", model3.Patch.GetJson("$.newArray[0]"u8).ToString());
 
             AssertCommon(model2, model3);
         }
@@ -443,10 +443,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             model.Patch.Append("$.newArray"u8, "{\"x\":\"value2\"}"u8);
             model.Patch.Append("$.newArray"u8, "{\"x\":\"value3\"}"u8);
 
-            Assert.AreEqual("[{\"x\":\"value1\"},{\"x\":\"value2\"},{\"x\":\"value3\"}]"u8.ToArray(), model.Patch.GetJson("$.newArray"u8).ToArray());
-            Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model.Patch.GetJson("$.newArray[0]"u8).ToArray());
-            Assert.AreEqual("{\"x\":\"value2\"}"u8.ToArray(), model.Patch.GetJson("$.newArray[1]"u8).ToArray());
-            Assert.AreEqual("{\"x\":\"value3\"}"u8.ToArray(), model.Patch.GetJson("$.newArray[2]"u8).ToArray());
+            Assert.AreEqual("[{\"x\":\"value1\"},{\"x\":\"value2\"},{\"x\":\"value3\"}]", model.Patch.GetJson("$.newArray"u8).ToString());
+            Assert.AreEqual("{\"x\":\"value1\"}", model.Patch.GetJson("$.newArray[0]"u8).ToString());
+            Assert.AreEqual("{\"x\":\"value2\"}", model.Patch.GetJson("$.newArray[1]"u8).ToString());
+            Assert.AreEqual("{\"x\":\"value3\"}", model.Patch.GetJson("$.newArray[2]"u8).ToString());
 
             var data = ModelReaderWriter.Write(model);
             Assert.AreEqual(
@@ -454,10 +454,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 data.ToString());
 
             var model2 = GetRoundTripModel(data);
-            Assert.AreEqual("[{\"x\":\"value1\"},{\"x\":\"value2\"},{\"x\":\"value3\"}]"u8.ToArray(), model2.Patch.GetJson("$.newArray"u8).ToArray());
-            Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model2.Patch.GetJson("$.newArray[0]"u8).ToArray());
-            Assert.AreEqual("{\"x\":\"value2\"}"u8.ToArray(), model2.Patch.GetJson("$.newArray[1]"u8).ToArray());
-            Assert.AreEqual("{\"x\":\"value3\"}"u8.ToArray(), model2.Patch.GetJson("$.newArray[2]"u8).ToArray());
+            Assert.AreEqual("[{\"x\":\"value1\"},{\"x\":\"value2\"},{\"x\":\"value3\"}]", model2.Patch.GetJson("$.newArray"u8).ToString());
+            Assert.AreEqual("{\"x\":\"value1\"}", model2.Patch.GetJson("$.newArray[0]"u8).ToString());
+            Assert.AreEqual("{\"x\":\"value2\"}", model2.Patch.GetJson("$.newArray[1]"u8).ToString());
+            Assert.AreEqual("{\"x\":\"value3\"}", model2.Patch.GetJson("$.newArray[2]"u8).ToString());
 
             model2.Patch.Remove("$.newArray[1]"u8);
 
@@ -467,9 +467,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 data2.ToString());
 
             var model3 = GetRoundTripModel(data2);
-            Assert.AreEqual("[{\"x\":\"value1\"},{\"x\":\"value3\"}]"u8.ToArray(), model3.Patch.GetJson("$.newArray"u8).ToArray());
-            Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model3.Patch.GetJson("$.newArray[0]"u8).ToArray());
-            Assert.AreEqual("{\"x\":\"value3\"}"u8.ToArray(), model3.Patch.GetJson("$.newArray[1]"u8).ToArray());
+            Assert.AreEqual("[{\"x\":\"value1\"},{\"x\":\"value3\"}]", model3.Patch.GetJson("$.newArray"u8).ToString());
+            Assert.AreEqual("{\"x\":\"value1\"}", model3.Patch.GetJson("$.newArray[0]"u8).ToString());
+            Assert.AreEqual("{\"x\":\"value3\"}", model3.Patch.GetJson("$.newArray[1]"u8).ToString());
 
             AssertCommon(model2, model3);
         }
@@ -543,9 +543,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.AreEqual(null, model2.VirtualMachines[0].Id);
             Assert.AreEqual("myExistingVmId2", model2.VirtualMachines[1].Id);
 
-            Assert.AreEqual("[{},{\"id\":\"myExistingVmId2\"}]"u8.ToArray(), model2.Patch.GetJson("$.properties.virtualMachines"u8).ToArray());
-            Assert.AreEqual("{}"u8.ToArray(), model2.Patch.GetJson("$.properties.virtualMachines[0]"u8).ToArray());
-            Assert.AreEqual("{\"id\":\"myExistingVmId2\"}"u8.ToArray(), model2.Patch.GetJson("$.properties.virtualMachines[1]"u8).ToArray());
+            Assert.AreEqual("[{},{\"id\":\"myExistingVmId2\"}]", model2.Patch.GetJson("$.properties.virtualMachines"u8).ToString());
+            Assert.AreEqual("{}", model2.Patch.GetJson("$.properties.virtualMachines[0]"u8).ToString());
+            Assert.AreEqual("{\"id\":\"myExistingVmId2\"}", model2.Patch.GetJson("$.properties.virtualMachines[1]"u8).ToString());
 
             AssertCommon(model, model2);
         }
@@ -557,15 +557,15 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             model.Patch.Append("$.newArray"u8, "{\"x\":\"value1\"}"u8);
             model.Patch.Append("$.newArray"u8, "{\"x\":\"value2\"}"u8);
 
-            Assert.AreEqual("[{\"x\":\"value1\"},{\"x\":\"value2\"}]"u8.ToArray(), model.Patch.GetJson("$.newArray"u8).ToArray());
-            Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model.Patch.GetJson("$.newArray[0]"u8).ToArray());
-            Assert.AreEqual("{\"x\":\"value2\"}"u8.ToArray(), model.Patch.GetJson("$.newArray[1]"u8).ToArray());
+            Assert.AreEqual("[{\"x\":\"value1\"},{\"x\":\"value2\"}]", model.Patch.GetJson("$.newArray"u8).ToString());
+            Assert.AreEqual("{\"x\":\"value1\"}", model.Patch.GetJson("$.newArray[0]"u8).ToString());
+            Assert.AreEqual("{\"x\":\"value2\"}", model.Patch.GetJson("$.newArray[1]"u8).ToString());
 
             model.Patch.Remove("$.newArray[1].x"u8);
 
-            Assert.AreEqual("[{\"x\":\"value1\"},{}]"u8.ToArray(), model.Patch.GetJson("$.newArray"u8).ToArray());
-            Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model.Patch.GetJson("$.newArray[0]"u8).ToArray());
-            Assert.AreEqual("{}"u8.ToArray(), model.Patch.GetJson("$.newArray[1]"u8).ToArray());
+            Assert.AreEqual("[{\"x\":\"value1\"},{}]", model.Patch.GetJson("$.newArray"u8).ToString());
+            Assert.AreEqual("{\"x\":\"value1\"}", model.Patch.GetJson("$.newArray[0]"u8).ToString());
+            Assert.AreEqual("{}", model.Patch.GetJson("$.newArray[1]"u8).ToString());
 
             var data = ModelReaderWriter.Write(model);
             Assert.AreEqual(
@@ -573,9 +573,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 data.ToString());
 
             var model2 = GetRoundTripModel(data);
-            Assert.AreEqual("[{\"x\":\"value1\"},{}]"u8.ToArray(), model2.Patch.GetJson("$.newArray"u8).ToArray());
-            Assert.AreEqual("{\"x\":\"value1\"}"u8.ToArray(), model2.Patch.GetJson("$.newArray[0]"u8).ToArray());
-            Assert.AreEqual("{}"u8.ToArray(), model2.Patch.GetJson("$.newArray[1]"u8).ToArray());
+            Assert.AreEqual("[{\"x\":\"value1\"},{}]", model2.Patch.GetJson("$.newArray"u8).ToString());
+            Assert.AreEqual("{\"x\":\"value1\"}", model2.Patch.GetJson("$.newArray[0]"u8).ToString());
+            Assert.AreEqual("{}", model2.Patch.GetJson("$.newArray[1]"u8).ToString());
 
             AssertCommon(model, model2);
         }

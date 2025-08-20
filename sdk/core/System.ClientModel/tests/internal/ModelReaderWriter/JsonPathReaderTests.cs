@@ -308,7 +308,9 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             Assert.IsFalse(reader.Read(), "Should not be able to read past End token");
         }
 
-        [TestCase("$[0]", "")]
+        [TestCase("$[0]", "$[0]")]
+        [TestCase("$.x[0]", "$.x")]
+        [TestCase("$[0].x", "$[0]")]
         [TestCase("$['complex path']", "$['complex path']")]
         [TestCase("$.x['complex path']", "$.x")]
         [TestCase("$.complex.path.here", "$.complex")]

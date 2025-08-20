@@ -68,8 +68,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             JsonPatch jp = new();
             jp.Set("$[0].property"u8, "value");
 
-            Assert.AreEqual("[{\"property\":\"value\"}]"u8.ToArray(), jp.GetJson("$"u8).ToArray());
-            Assert.AreEqual("{\"property\":\"value\"}"u8.ToArray(), jp.GetJson("$[0]"u8).ToArray());
+            Assert.AreEqual("[{\"property\":\"value\"}]", jp.GetJson("$"u8).ToString());
+            Assert.AreEqual("{\"property\":\"value\"}", jp.GetJson("$[0]"u8).ToString());
             Assert.AreEqual("value", jp.GetString("$[0].property"u8));
 
             using var stream = new MemoryStream();
@@ -81,15 +81,102 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        [Ignore("Not implemented")]
         public void TryGetJson_RemovedProperty_EntryExists()
         {
+            JsonPatch jp = new();
+            jp.Set("$[0].property1"u8, "value1");
+            jp.Set("$[0].property2"u8, "value2");
+
+            Assert.AreEqual("[{\"property1\":\"value1\",\"property2\":\"value2\"}]", jp.GetJson("$"u8).ToString());
+            Assert.AreEqual("{\"property1\":\"value1\",\"property2\":\"value2\"}", jp.GetJson("$[0]"u8).ToString());
+            Assert.AreEqual("value1", jp.GetString("$[0].property1"u8));
+            Assert.AreEqual("value2", jp.GetString("$[0].property2"u8));
+
+            using var stream = new MemoryStream();
+            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+            jp.Write(writer);
+            writer.Flush();
+
+            Assert.AreEqual("[{\"property1\":\"value1\",\"property2\":\"value2\"}]", GetJsonString(stream));
+
+            jp.Remove("$[0].property1"u8);
+
+            Assert.AreEqual("[{\"property2\":\"value2\"}]", jp.GetJson("$"u8).ToString());
+            Assert.AreEqual("{\"property2\":\"value2\"}", jp.GetJson("$[0]"u8).ToString());
+            var ex = Assert.Throws<Exception>(() => jp.GetString("$[0].property1"u8));
+            Assert.AreEqual("$[0].property1 was not found in the JSON structure.", ex!.Message);
+            Assert.AreEqual("value2", jp.GetString("$[0].property2"u8));
+
+            stream.Position = 0;
+            writer = new Utf8JsonWriter(stream);
+            jp.Write(writer);
+            writer.Flush();
+
+            Assert.AreEqual("[{\"property2\":\"value2\"}]", GetJsonString(stream));
         }
 
         [Test]
-        [Ignore("Not implemented")]
         public void TryGetJson_RemovedProperty_EntryDoesNotExist()
         {
+            JsonPatch jp = new();
+            jp.Set("$[0].property1"u8, "value1");
+            jp.Set("$[0].property2"u8, "value2");
+
+            Assert.AreEqual("[{\"property1\":\"value1\",\"property2\":\"value2\"}]", jp.GetJson("$"u8).ToString());
+            Assert.AreEqual("{\"property1\":\"value1\",\"property2\":\"value2\"}", jp.GetJson("$[0]"u8).ToString());
+            Assert.AreEqual("value1", jp.GetString("$[0].property1"u8));
+            Assert.AreEqual("value2", jp.GetString("$[0].property2"u8));
+
+            using var stream = new MemoryStream();
+            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+            jp.Write(writer);
+            writer.Flush();
+
+            Assert.AreEqual("[{\"property1\":\"value1\",\"property2\":\"value2\"}]", GetJsonString(stream));
+
+            var ex = Assert.Throws<Exception>(() => jp.Remove("$[0].property3"u8));
+            Assert.AreEqual("$[0].property3 was not found in the JSON structure.", ex!.Message);
+        }
+
+        [Test]
+        public void ProjectMultipleJsons()
+        {
+            JsonPatch jp = new();
+            jp.Set("$.x.y[2]['z']"u8, 5);
+
+            Assert.AreEqual("{\"y\":[null,null,{\"z\":5}]}", jp.GetJson("$.x"u8).ToString());
+            Assert.AreEqual("[null,null,{\"z\":5}]", jp.GetJson("$.x.y"u8).ToString());
+            Assert.AreEqual("null", jp.GetJson("$.x.y[0]"u8).ToString());
+            Assert.AreEqual("null", jp.GetJson("$.x.y[1]"u8).ToString());
+            Assert.AreEqual("{\"z\":5}", jp.GetJson("$.x.y[2]"u8).ToString());
+            Assert.AreEqual(5, jp.GetInt32("$.x.y[2]['z']"u8));
+
+            using var stream = new MemoryStream();
+            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+            jp.Write(writer);
+            writer.Flush();
+
+            Assert.AreEqual("{\"x\":{\"y\":[null,null,{\"z\":5}]}}", GetJsonString(stream));
+
+            jp.Set("$.x.z.a[0].b"u8, 10);
+
+            Assert.AreEqual("{\"y\":[null,null,{\"z\":5}],\"z\":{\"a\":[{\"b\":10}]}}", jp.GetJson("$.x"u8).ToString());
+            Assert.AreEqual("[null,null,{\"z\":5}]", jp.GetJson("$.x.y"u8).ToString());
+            Assert.AreEqual("null", jp.GetJson("$.x.y[0]"u8).ToString());
+            Assert.AreEqual("null", jp.GetJson("$.x.y[1]"u8).ToString());
+            Assert.AreEqual("{\"z\":5}", jp.GetJson("$.x.y[2]"u8).ToString());
+            Assert.AreEqual(5, jp.GetInt32("$.x.y[2]['z']"u8));
+            Assert.AreEqual("{\"a\":[{\"b\":10}]}", jp.GetJson("$.x.z"u8).ToString());
+            Assert.AreEqual("[{\"b\":10}]", jp.GetJson("$.x.z.a"u8).ToString());
+            Assert.AreEqual("{\"b\":10}", jp.GetJson("$.x.z.a[0]"u8).ToString());
+            Assert.AreEqual(10, jp.GetInt32("$.x.z.a[0].b"u8));
+
+            stream.Position = 0;
+            writer = new Utf8JsonWriter(stream);
+            jp.Write(writer);
+            writer.Flush();
+
+            Assert.AreEqual("{\"x\":{\"y\":[null,null,{\"z\":5}],\"z\":{\"a\":[{\"b\":10}]}}}", GetJsonString(stream));
         }
 
         [Test]
