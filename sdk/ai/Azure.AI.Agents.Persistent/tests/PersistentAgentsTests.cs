@@ -108,7 +108,8 @@ namespace Azure.AI.Agents.Persistent.Tests
             ConnectedAgent,
             FileSearch,
             AzureFunction,
-            BrowserAutomation
+            BrowserAutomation,
+            MicrosoftFabric
         }
 
         public Dictionary<ToolTypes, Type> ExpectedDeltas = new()
@@ -120,7 +121,8 @@ namespace Azure.AI.Agents.Persistent.Tests
             {ToolTypes.AzureAISearch, typeof(RunStepDeltaAzureAISearchToolCall)},
             {ToolTypes.ConnectedAgent, typeof(RunStepDeltaConnectedAgentToolCall)},
             {ToolTypes.FileSearch, typeof(RunStepDeltaFileSearchToolCall)},
-            {ToolTypes.AzureFunction, typeof(RunStepDeltaAzureFunctionToolCall)}
+            {ToolTypes.AzureFunction, typeof(RunStepDeltaAzureFunctionToolCall)},
+            {ToolTypes.MicrosoftFabric, typeof(RunStepDeltaMicrosoftFabricToolCall)},
         };
 
         public Dictionary<ToolTypes, Type> ExpectedToolCalls = new()
@@ -133,7 +135,8 @@ namespace Azure.AI.Agents.Persistent.Tests
             {ToolTypes.ConnectedAgent, typeof(RunStepConnectedAgentToolCall)},
             {ToolTypes.FileSearch, typeof(RunStepFileSearchToolCall)},
             {ToolTypes.BrowserAutomation, typeof(RunStepBrowserAutomationToolCall)},
-            {ToolTypes.AzureFunction, typeof(RunStepAzureFunctionToolCall)}
+            {ToolTypes.AzureFunction, typeof(RunStepAzureFunctionToolCall)},
+            {ToolTypes.MicrosoftFabric, typeof(RunStepMicrosoftFabricToolCall)},
         };
 
         public Dictionary<ToolTypes, string> ToolPrompts = new()
@@ -155,6 +158,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                      "Enter the value 'MSFT', to get information about the Microsoft stock price." +
                      "At the top of the resulting page you will see a default chart of Microsoft stock price." +
                      "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it."},
+            {ToolTypes.MicrosoftFabric, "What are top 3 weather events with largest revenue loss?"},
         };
 
         public Dictionary<ToolTypes, string> ToolInstructions = new()
@@ -169,6 +173,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             {ToolTypes.BrowserAutomation, "You are an Agent helping with browser automation tasks. " +
                               "You can answer questions, provide information, and assist with various tasks " +
                               "related to web browsing using the Browser Automation tool available to you." },
+            {ToolTypes.MicrosoftFabric, "You are helpful agent."},
         };
 
         public Dictionary<ToolTypes, string> RequiredTextInResponse = new()
@@ -1906,6 +1911,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [TestCase(ToolTypes.AzureFunction)]
         [TestCase(ToolTypes.BingCustomGrounding)]
         [TestCase(ToolTypes.BrowserAutomation)]
+        [TestCase(ToolTypes.MicrosoftFabric)]
         public async Task TestToolCall(ToolTypes toolToTest)
         {
             PersistentAgentsClient client = GetClient();
@@ -2180,6 +2186,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [TestCase(ToolTypes.ConnectedAgent)]
         [TestCase(ToolTypes.FileSearch)]
         [TestCase(ToolTypes.BingCustomGrounding)]
+        [TestCase(ToolTypes.MicrosoftFabric)]
         // AzureAISearch is tested separately in TestAzureAiSearchStreaming.
         public async Task TestStreamDelta(ToolTypes toolToTest)
         {
@@ -2560,6 +2567,11 @@ namespace Azure.AI.Agents.Persistent.Tests
                        new BrowserAutomationToolParameters(
                            new BrowserAutomationToolConnectionParameters(id: TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
                        )
+                    ),
+                    ToolTypes.MicrosoftFabric => new MicrosoftFabricToolDefinition (
+                        new FabricDataAgentToolParameters(
+                            TestEnvironment.FABRIC_CONNECTION_ID
+                        )
                     ),
                     _ => null
                 };
