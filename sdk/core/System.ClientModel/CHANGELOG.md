@@ -1,14 +1,10 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
+## 1.6.1 (2025-08-20)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Fix the behavior roslyn not properly handling partial classes with attributes in different files
 
 ## 1.6.0 (2025-08-11)
 
