@@ -1685,17 +1685,6 @@ namespace Azure.Storage.Files.DataLake.Tests
             AssertSasUserDelegationKey(identitySasFile.Uri, userDelegationKey);
         }
 
-        private void AssertSasUserDelegationKey(Uri uri, UserDelegationKey key)
-        {
-            DataLakeSasQueryParameters sas = new DataLakeUriBuilder(uri).Sas;
-            Assert.AreEqual(key.SignedObjectId, sas.KeyObjectId);
-            Assert.AreEqual(key.SignedExpiresOn, sas.KeyExpiresOn);
-            Assert.AreEqual(key.SignedService, sas.KeyService);
-            Assert.AreEqual(key.SignedStartsOn, sas.KeyStartsOn);
-            Assert.AreEqual(key.SignedTenantId, sas.KeyTenantId);
-            //Assert.AreEqual(key.SignedVersion, sas.Version);
-        }
-
         [RecordedTest]
         public async Task GetAccessControlAsync_PathSAS()
         {
