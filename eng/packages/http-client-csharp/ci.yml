@@ -80,3 +80,35 @@ extends:
       All:
         TestArguments: -UnitTests -GenerationChecks -Filter .NET
         SpectorName: "http-client-csharp"
+
+# Additional stage to update http-client-csharp-mgmt package when http-client-csharp is published on main
+stages:
+- ${{ if and(eq(variables['System.TeamProject'], 'internal'), eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}:
+  - stage: UpdateMgmtPackage
+    displayName: 'Update http-client-csharp-mgmt package'
+    dependsOn: Publish
+    pool:
+      name: $(LINUXPOOL)
+      image: $(LINUXVMIMAGE)
+      os: linux
+    variables:
+      emitterVersion: $[stageDependencies.Build.Build.outputs['initialize.emitterVersion']]
+    jobs:
+    - job: UpdateMgmtPackage
+      displayName: 'Update http-client-csharp-mgmt package'
+      steps:
+      - checkout: self
+        persistCredentials: true
+      
+      - template: /eng/pipelines/templates/steps/install-dotnet.yml
+      
+      - task: PowerShell@2
+        displayName: 'Create PR to update http-client-csharp-mgmt'
+        inputs:
+          pwsh: true
+          filePath: $(Build.SourcesDirectory)/eng/scripts/Create-MgmtUpdatePR.ps1
+          arguments: >
+            -NewVersion '$(emitterVersion)'
+            -BuildNumber '$(Build.BuildNumber)'
+            -AuthToken '$(azuresdk-github-pat)'
+            -RepoRoot '$(Build.SourcesDirectory)'
