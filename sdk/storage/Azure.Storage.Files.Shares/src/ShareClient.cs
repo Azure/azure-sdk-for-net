@@ -4264,7 +4264,7 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
-        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public virtual Uri GenerateUserDelegationSasUri(ShareSasPermissions permissions, DateTimeOffset expiresOn, UserDelegationKey userDelegationKey) =>
             GenerateUserDelegationSasUri(permissions, expiresOn, userDelegationKey, out _);
 
@@ -4301,7 +4301,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public virtual Uri GenerateUserDelegationSasUri(ShareSasPermissions permissions, DateTimeOffset expiresOn, UserDelegationKey userDelegationKey, out string stringToSign) =>
             GenerateUserDelegationSasUri(new ShareSasBuilder(permissions, expiresOn) { ShareName = Name }, userDelegationKey, out stringToSign);
 
@@ -4329,7 +4329,7 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
-        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public virtual Uri GenerateUserDelegationSasUri(ShareSasBuilder builder, UserDelegationKey userDelegationKey) =>
             GenerateUserDelegationSasUri(builder, userDelegationKey, out _);
 
@@ -4361,7 +4361,7 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public virtual Uri GenerateUserDelegationSasUri(ShareSasBuilder builder, UserDelegationKey userDelegationKey, out string stringToSign)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));

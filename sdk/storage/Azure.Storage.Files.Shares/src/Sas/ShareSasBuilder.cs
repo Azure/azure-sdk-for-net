@@ -373,7 +373,7 @@ namespace Azure.Storage.Sas
         /// <returns>
         /// The <see cref="ShareSasQueryParameters"/> used for authenticating requests.
         /// </returns>
-        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public ShareSasQueryParameters ToSasQueryParameters(UserDelegationKey userDelegationKey, string accountName)
             => ToSasQueryParameters(userDelegationKey, accountName, out _);
 
@@ -393,7 +393,7 @@ namespace Azure.Storage.Sas
         /// </param>
         /// The <see cref="SasQueryParameters"/> used for authenticating requests.
         /// </returns>
-        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public ShareSasQueryParameters ToSasQueryParameters(UserDelegationKey userDelegationKey, string accountName, out string stringToSign)
         {
             userDelegationKey = userDelegationKey ?? throw Errors.ArgumentNull(nameof(userDelegationKey));
