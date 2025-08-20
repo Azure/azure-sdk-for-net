@@ -104,7 +104,6 @@ public class PlaywrightServiceBrowserClient : IDisposable
         _ = _options.RunName;
         _ = _options.ExposeNetwork;
         _ = _options.ServiceAuth;
-        _ = _options.UseCloudHostedBrowsers;
     }
 
     /// <summary>
@@ -120,14 +119,6 @@ public class PlaywrightServiceBrowserClient : IDisposable
     public virtual async Task<ConnectOptions<T>> GetConnectOptionsAsync<T>(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, CancellationToken cancellationToken = default) where T : class, new()
 #pragma warning restore AZC0015 // Unexpected client method return type.
     {
-        var environmentValueForUseCloudHostedBrowsers = _environment.GetEnvironmentVariable(Constants.s_playwright_service_use_cloud_hosted_browsers_environment_variable);
-        if (bool.TryParse(environmentValueForUseCloudHostedBrowsers, out var useCloudHostedBrowsers) && !useCloudHostedBrowsers)
-        {
-            if (!useCloudHostedBrowsers)
-            {
-                throw new Exception(Constants.s_service_endpoint_removed_since_scalable_execution_disabled_error_message);
-            }
-        }
         if (string.IsNullOrEmpty(_options.ServiceEndpoint))
             throw new Exception(Constants.s_no_service_endpoint_error_message);
         string _serviceOs = Uri.EscapeDataString(ClientUtilities.GetServiceCompatibleOs(os) ?? ClientUtilities.GetServiceCompatibleOs(_options.OS)!);
@@ -174,14 +165,6 @@ public class PlaywrightServiceBrowserClient : IDisposable
     public virtual ConnectOptions<T> GetConnectOptions<T>(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, CancellationToken cancellationToken = default) where T : class, new()
 #pragma warning restore AZC0015 // Unexpected client method return type.
     {
-        var environmentValueForUseCloudHostedBrowsers = _environment.GetEnvironmentVariable(Constants.s_playwright_service_use_cloud_hosted_browsers_environment_variable);
-        if (bool.TryParse(environmentValueForUseCloudHostedBrowsers, out var useCloudHostedBrowsers) && !useCloudHostedBrowsers)
-        {
-            if (!useCloudHostedBrowsers)
-            {
-                throw new Exception(Constants.s_service_endpoint_removed_since_scalable_execution_disabled_error_message);
-            }
-        }
         if (string.IsNullOrEmpty(_options.ServiceEndpoint))
             throw new Exception(Constants.s_no_service_endpoint_error_message);
         string _serviceOs = Uri.EscapeDataString(ClientUtilities.GetServiceCompatibleOs(os) ?? ClientUtilities.GetServiceCompatibleOs(_options.OS)!);
@@ -227,14 +210,6 @@ public class PlaywrightServiceBrowserClient : IDisposable
             _logger?.LogInformation("Exiting initialization as service endpoint is not set.");
             return;
         }
-        if (!_options.UseCloudHostedBrowsers)
-        {
-            // Since playwright-dotnet checks PLAYWRIGHT_SERVICE_ACCESS_TOKEN and PLAYWRIGHT_SERVICE_URL to be set, remove PLAYWRIGHT_SERVICE_URL so that tests are run locally.
-            // If customers use GetConnectOptionsAsync, after setting disableScalableExecution, an error will be thrown.
-            _logger?.LogInformation("Disabling scalable execution since UseCloudHostedBrowsers is set to false.");
-            _environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), null);
-            return;
-        }
         // If default auth mechanism is Access token and token is available in the environment variable, no need to setup rotation handler
         if (_options.ServiceAuth == ServiceAuthType.AccessToken)
         {
@@ -260,14 +235,6 @@ public class PlaywrightServiceBrowserClient : IDisposable
         if (string.IsNullOrEmpty(_options.ServiceEndpoint))
         {
             _logger?.LogInformation("Exiting initialization as service endpoint is not set.");
-            return;
-        }
-        if (!_options.UseCloudHostedBrowsers)
-        {
-            // Since playwright-dotnet checks PLAYWRIGHT_SERVICE_ACCESS_TOKEN and PLAYWRIGHT_SERVICE_URL to be set, remove PLAYWRIGHT_SERVICE_URL so that tests are run locally.
-            // If customers use GetConnectOptionsAsync, after setting disableScalableExecution, an error will be thrown.
-            _logger?.LogInformation("Disabling scalable execution since UseCloudHostedBrowsers is set to false.");
-            _environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), null);
             return;
         }
         // If default auth mechanism is Access token and token is available in the environment variable, no need to setup rotation handler

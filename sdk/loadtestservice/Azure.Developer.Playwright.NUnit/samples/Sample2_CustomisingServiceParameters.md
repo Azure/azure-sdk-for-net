@@ -23,7 +23,6 @@ public class PlaywrightServiceNUnitSetup : PlaywrightServiceBrowserNUnit
         credential: new ManagedIdentityCredential(),
         options: new PlaywrightServiceBrowserClientOptions()
         {
-            UseCloudHostedBrowsers = true,
             OS = OSPlatform.Linux,
             ExposeNetwork = "<loopback>",
             RunId = Guid.NewGuid().ToString(),

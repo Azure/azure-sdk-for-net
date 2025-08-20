@@ -45,18 +45,22 @@ namespace Azure.Security.KeyVault.Administration
         public override IEnumerable<Page<KeyVaultRoleDefinition>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
-            do
+            while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
                 }
-                RoleDefinitionListResult responseWithType = (RoleDefinitionListResult)response;
-                nextPage = responseWithType.NextLink != null ? new Uri(responseWithType.NextLink) : null;
-                yield return Page<KeyVaultRoleDefinition>.FromValues((IReadOnlyList<KeyVaultRoleDefinition>)responseWithType.Value, nextPage?.AbsoluteUri, response);
+                RoleDefinitionListResult result = (RoleDefinitionListResult)response;
+                yield return Page<KeyVaultRoleDefinition>.FromValues((IReadOnlyList<KeyVaultRoleDefinition>)result.Value, nextPage?.AbsoluteUri, response);
+                string nextPageString = result.NextLink;
+                if (nextPageString == null)
+                {
+                    yield break;
+                }
+                nextPage = new Uri(nextPageString);
             }
-            while (nextPage != null);
         }
 
         /// <summary> Get next page. </summary>
