@@ -13,7 +13,6 @@ using Azure.Core;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The ForceModelsRequest. </summary>
     internal partial class ForceModelsRequest : IJsonModel<ForceModelsRequest>
     {
         /// <summary> Initializes a new instance of <see cref="ForceModelsRequest"/> for deserialization. </summary>
@@ -48,21 +47,6 @@ namespace Azure.AI.VoiceLive
                 JsonSerializer.Serialize(writer, document.RootElement);
             }
 #endif
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -98,10 +82,6 @@ namespace Azure.AI.VoiceLive
                 {
                     @event = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new ForceModelsRequest(@event, additionalBinaryDataProperties);
