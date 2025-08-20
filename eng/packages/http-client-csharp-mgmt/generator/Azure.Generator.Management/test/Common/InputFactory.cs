@@ -7,7 +7,7 @@ using Microsoft.TypeSpec.Generator.Input.Extensions;
 namespace Azure.Generator.Management.Tests.Common
 {
     /// <summary>
-    /// Provider methods to construct intput test data
+    /// Provider methods to construct input test data
     /// </summary>
     public static class InputFactory
     {
