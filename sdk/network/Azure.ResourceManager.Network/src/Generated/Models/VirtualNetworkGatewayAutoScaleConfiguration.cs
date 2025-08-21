@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The bounds of the autoscale configuration. </summary>
+        [WirePath("bounds")]
         public VirtualNetworkGatewayAutoScaleBounds Bounds { get; set; }
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -189,6 +190,124 @@ namespace Azure.ResourceManager.Network.Models
             return new EffectiveNetworkSecurityGroup(networkSecurityGroup, association, effectiveSecurityRules ?? new ChangeTrackingList<EffectiveNetworkSecurityRule>(), tagMap ?? new ChangeTrackingDictionary<string, IList<string>>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("NetworkSecurityGroupId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  networkSecurityGroup: ");
+                builder.AppendLine("{");
+                builder.Append("    id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(NetworkSecurityGroup))
+                {
+                    builder.Append("  networkSecurityGroup: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, NetworkSecurityGroup, options, 2, false, "  networkSecurityGroup: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Association), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  association: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Association))
+                {
+                    builder.Append("  association: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Association, options, 2, false, "  association: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EffectiveSecurityRules), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  effectiveSecurityRules: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(EffectiveSecurityRules))
+                {
+                    if (EffectiveSecurityRules.Any())
+                    {
+                        builder.Append("  effectiveSecurityRules: ");
+                        builder.AppendLine("[");
+                        foreach (var item in EffectiveSecurityRules)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  effectiveSecurityRules: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TagToIPAddresses), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  tagMap: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(TagToIPAddresses))
+                {
+                    if (TagToIPAddresses.Any())
+                    {
+                        builder.Append("  tagMap: ");
+                        builder.AppendLine("{");
+                        foreach (var item in TagToIPAddresses)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine("[");
+                            foreach (var item0 in item.Value)
+                            {
+                                if (item0 == null)
+                                {
+                                    builder.Append("null");
+                                    continue;
+                                }
+                                if (item0.Contains(Environment.NewLine))
+                                {
+                                    builder.AppendLine("      '''");
+                                    builder.AppendLine($"{item0}'''");
+                                }
+                                else
+                                {
+                                    builder.AppendLine($"      '{item0}'");
+                                }
+                            }
+                            builder.AppendLine("    ]");
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<EffectiveNetworkSecurityGroup>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EffectiveNetworkSecurityGroup>)this).GetFormatFromOptions(options) : options.Format;
@@ -197,6 +316,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EffectiveNetworkSecurityGroup)} does not support writing '{options.Format}' format.");
             }

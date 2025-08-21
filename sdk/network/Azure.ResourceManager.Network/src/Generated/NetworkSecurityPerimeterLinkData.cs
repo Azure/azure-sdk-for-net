@@ -92,24 +92,34 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The provisioning state of the NSP Link resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkSecurityPerimeterLinkProvisioningState? ProvisioningState { get; }
         /// <summary> Perimeter ARM Id for the remote NSP with which the link gets created in Auto-approval mode. It should be used when the NSP admin have Microsoft.Network/networkSecurityPerimeters/linkPerimeter/action permission on the remote NSP resource. </summary>
+        [WirePath("properties.autoApprovedRemotePerimeterResourceId")]
         public ResourceIdentifier AutoApprovedRemotePerimeterResourceId { get; set; }
         /// <summary> Remote NSP Guid with which the link gets created. </summary>
+        [WirePath("properties.remotePerimeterGuid")]
         public Guid? RemotePerimeterGuid { get; }
         /// <summary> Remote NSP location with which the link gets created. </summary>
+        [WirePath("properties.remotePerimeterLocation")]
         public string RemotePerimeterLocation { get; }
         /// <summary> Local Inbound profile names to which Inbound is allowed. Use ['*'] to allow inbound to all profiles. </summary>
+        [WirePath("properties.localInboundProfiles")]
         public IList<string> LocalInboundProfiles { get; }
         /// <summary> Local Outbound profile names from which Outbound is allowed. In current version, it is readonly property and it's value is set to ['*'] to allow outbound from all profiles. In later version, user will be able to modify it. </summary>
+        [WirePath("properties.localOutboundProfiles")]
         public IReadOnlyList<string> LocalOutboundProfiles { get; }
         /// <summary> Remote Inbound profile names to which Inbound is allowed. Use ['*'] to allow inbound to all profiles. This property can only be updated in auto-approval mode. </summary>
+        [WirePath("properties.remoteInboundProfiles")]
         public IList<string> RemoteInboundProfiles { get; }
         /// <summary> Remote Outbound profile names from which Outbound is allowed. In current version, it is readonly property and it's value is set to ['*'] to allow outbound from all profiles. In later version, user will be able to modify it. </summary>
+        [WirePath("properties.remoteOutboundProfiles")]
         public IReadOnlyList<string> RemoteOutboundProfiles { get; }
         /// <summary> A message passed to the owner of the remote NSP link resource with this connection request. In case of Auto-approved flow, it is default to 'Auto Approved'. Restricted to 140 chars. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> The NSP link state. </summary>
+        [WirePath("properties.status")]
         public NetworkSecurityPerimeterLinkStatus? Status { get; }
     }
 }
