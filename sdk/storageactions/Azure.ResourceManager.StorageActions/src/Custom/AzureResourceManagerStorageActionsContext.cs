@@ -16,15 +16,6 @@ namespace Azure.ResourceManager.StorageActions
         partial void AddAdditionalFactories(Dictionary<Type, Func<ModelReaderWriterTypeBuilder>> factories)
         {
             factories.Add(typeof(SystemData), () => s_referenceContexts[typeof(AzureResourceManagerContext)].GetTypeBuilder(typeof(SystemData)));
-            factories.Add(typeof(UserAssignedIdentity), () => s_referenceContexts[typeof(AzureResourceManagerContext)].GetTypeBuilder(typeof(UserAssignedIdentity)));
-            factories.Add(typeof(StorageTaskData), () => new StorageTaskData_Builder());
-        }
-
-        internal class StorageTaskData_Builder : ModelReaderWriterTypeBuilder
-        {
-            protected override Type BuilderType => typeof(StorageTaskData);
-
-            protected override object CreateInstance() => new StorageTaskData();
         }
     }
 }
