@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.StorageActions
         StorageTaskResource IOperationSource<StorageTaskResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            StorageTaskData data = StorageTaskData.DeserializeStorageTaskData(document.RootElement, new ModelReaderWriterOptions("W"));
+            StorageTaskData data = StorageTaskData.DeserializeStorageTaskData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new StorageTaskResource(_client, data);
         }
 

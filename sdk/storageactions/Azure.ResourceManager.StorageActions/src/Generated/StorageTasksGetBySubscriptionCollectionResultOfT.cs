@@ -45,8 +45,9 @@ namespace Azure.ResourceManager.StorageActions
                 {
                     yield break;
                 }
-                yield return Page<StorageTaskData>.FromValues(StorageTasksListResult.FromResponse(response).Value, nextPage?.AbsoluteUri, response);
-                nextPage = StorageTasksListResult.FromResponse(response).NextLink;
+                StorageTasksListResult result = StorageTasksListResult.FromResponse(response);
+                yield return Page<StorageTaskData>.FromValues(result.Value, nextPage?.AbsoluteUri, response);
+                nextPage = result.NextLink;
                 if (nextPage == null)
                 {
                     yield break;

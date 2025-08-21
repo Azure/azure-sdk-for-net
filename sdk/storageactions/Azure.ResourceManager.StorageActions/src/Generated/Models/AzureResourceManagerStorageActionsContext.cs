@@ -16,7 +16,9 @@ namespace Azure.ResourceManager.StorageActions
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(StorageTaskData))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(StorageTaskProperties))]
     [ModelReaderWriterBuildable(typeof(StorageTaskAction))]
     [ModelReaderWriterBuildable(typeof(StorageTaskIfCondition))]
@@ -37,6 +39,7 @@ namespace Azure.ResourceManager.StorageActions
     [ModelReaderWriterBuildable(typeof(StorageTaskReportProperties))]
     [ModelReaderWriterBuildable(typeof(StorageTaskAssignmentsListResult))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
+    [ModelReaderWriterBuildable(typeof(StorageTaskResource))]
     public partial class AzureResourceManagerStorageActionsContext : ModelReaderWriterContext
     {
     }
