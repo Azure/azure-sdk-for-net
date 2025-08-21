@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        internal RequestUriBuilder CreateListUsagesRequestUri(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location)
+        internal RequestUriBuilder CreateListRequestUri(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.Quota
             return uri;
         }
 
-        internal HttpMessage CreateListUsagesRequest(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location)
+        internal HttpMessage CreateListRequest(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -598,13 +598,13 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceUsageList>> ListUsagesAsync(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceUsageList>> ListAsync(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using var message = CreateListUsagesRequest(managementGroupId, groupQuotaName, resourceProviderName, location);
+            using var message = CreateListRequest(managementGroupId, groupQuotaName, resourceProviderName, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -628,13 +628,13 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceUsageList> ListUsages(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        public Response<ResourceUsageList> List(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using var message = CreateListUsagesRequest(managementGroupId, groupQuotaName, resourceProviderName, location);
+            using var message = CreateListRequest(managementGroupId, groupQuotaName, resourceProviderName, location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -814,7 +814,7 @@ namespace Azure.ResourceManager.Quota
             }
         }
 
-        internal RequestUriBuilder CreateListUsagesNextPageRequestUri(string nextLink, string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location)
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.Quota
             return uri;
         }
 
-        internal HttpMessage CreateListUsagesNextPageRequest(string nextLink, string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -845,14 +845,14 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResourceUsageList>> ListUsagesNextPageAsync(string nextLink, string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        public async Task<Response<ResourceUsageList>> ListNextPageAsync(string nextLink, string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using var message = CreateListUsagesNextPageRequest(nextLink, managementGroupId, groupQuotaName, resourceProviderName, location);
+            using var message = CreateListNextPageRequest(nextLink, managementGroupId, groupQuotaName, resourceProviderName, location);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -877,14 +877,14 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupId"/>, <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResourceUsageList> ListUsagesNextPage(string nextLink, string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        public Response<ResourceUsageList> ListNextPage(string nextLink, string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(managementGroupId, nameof(managementGroupId));
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using var message = CreateListUsagesNextPageRequest(nextLink, managementGroupId, groupQuotaName, resourceProviderName, location);
+            using var message = CreateListNextPageRequest(nextLink, managementGroupId, groupQuotaName, resourceProviderName, location);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

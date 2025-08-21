@@ -782,7 +782,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotasEntity_ListUsages</description>
+        /// <description>GroupQuotasEntity_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -800,13 +800,13 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
         /// <returns> An async collection of <see cref="GroupQuotaResourceUsages"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GroupQuotaResourceUsages> ListUsagesAsync(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GroupQuotaResourceUsages> ListAsync(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _groupQuotaEntityGroupQuotasEntitiesRestClient.CreateListUsagesRequest(Id.Parent.Name, Id.Name, resourceProviderName, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _groupQuotaEntityGroupQuotasEntitiesRestClient.CreateListUsagesNextPageRequest(nextLink, Id.Parent.Name, Id.Name, resourceProviderName, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => GroupQuotaResourceUsages.DeserializeGroupQuotaResourceUsages(e), _groupQuotaEntityGroupQuotasEntitiesClientDiagnostics, Pipeline, "GroupQuotaEntityResource.ListUsages", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _groupQuotaEntityGroupQuotasEntitiesRestClient.CreateListRequest(Id.Parent.Name, Id.Name, resourceProviderName, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _groupQuotaEntityGroupQuotasEntitiesRestClient.CreateListNextPageRequest(nextLink, Id.Parent.Name, Id.Name, resourceProviderName, location);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => GroupQuotaResourceUsages.DeserializeGroupQuotaResourceUsages(e), _groupQuotaEntityGroupQuotasEntitiesClientDiagnostics, Pipeline, "GroupQuotaEntityResource.List", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -818,7 +818,7 @@ namespace Azure.ResourceManager.Quota
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GroupQuotasEntity_ListUsages</description>
+        /// <description>GroupQuotasEntity_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -836,13 +836,13 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
         /// <returns> A collection of <see cref="GroupQuotaResourceUsages"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GroupQuotaResourceUsages> ListUsages(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual Pageable<GroupQuotaResourceUsages> List(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _groupQuotaEntityGroupQuotasEntitiesRestClient.CreateListUsagesRequest(Id.Parent.Name, Id.Name, resourceProviderName, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _groupQuotaEntityGroupQuotasEntitiesRestClient.CreateListUsagesNextPageRequest(nextLink, Id.Parent.Name, Id.Name, resourceProviderName, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => GroupQuotaResourceUsages.DeserializeGroupQuotaResourceUsages(e), _groupQuotaEntityGroupQuotasEntitiesClientDiagnostics, Pipeline, "GroupQuotaEntityResource.ListUsages", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _groupQuotaEntityGroupQuotasEntitiesRestClient.CreateListRequest(Id.Parent.Name, Id.Name, resourceProviderName, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _groupQuotaEntityGroupQuotasEntitiesRestClient.CreateListNextPageRequest(nextLink, Id.Parent.Name, Id.Name, resourceProviderName, location);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => GroupQuotaResourceUsages.DeserializeGroupQuotaResourceUsages(e), _groupQuotaEntityGroupQuotasEntitiesClientDiagnostics, Pipeline, "GroupQuotaEntityResource.List", "value", "nextLink", cancellationToken);
         }
     }
 }
