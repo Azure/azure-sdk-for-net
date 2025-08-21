@@ -955,7 +955,8 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <summary>
         /// Creates a new GetPathTagResult for mocking.
         /// </summary>
-        public static GetPathTagResult GetPathTagResult(
+        // https://github.com/Azure/azure-sdk-for-net/issues/52168
+        internal static GetPathTagResult GetPathTagResult(
             Tags tags)
             => new GetPathTagResult()
             {
