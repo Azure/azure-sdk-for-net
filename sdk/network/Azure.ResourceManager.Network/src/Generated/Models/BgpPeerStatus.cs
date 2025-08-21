@@ -74,20 +74,28 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The virtual network gateway's local address. </summary>
+        [WirePath("localAddress")]
         public string LocalAddress { get; }
         /// <summary> The remote BGP peer. </summary>
+        [WirePath("neighbor")]
         public string Neighbor { get; }
         /// <summary> The autonomous system number of the remote BGP peer. </summary>
+        [WirePath("asn")]
         public long? Asn { get; }
         /// <summary> The BGP peer state. </summary>
+        [WirePath("state")]
         public BgpPeerState? State { get; }
         /// <summary> For how long the peering has been up. </summary>
+        [WirePath("connectedDuration")]
         public TimeSpan? ConnectedDuration { get; }
         /// <summary> The number of routes learned from this peer. </summary>
+        [WirePath("routesReceived")]
         public long? RoutesReceived { get; }
         /// <summary> The number of BGP messages sent. </summary>
+        [WirePath("messagesSent")]
         public long? MessagesSent { get; }
         /// <summary> The number of BGP messages received. </summary>
+        [WirePath("messagesReceived")]
         public long? MessagesReceived { get; }
     }
 }

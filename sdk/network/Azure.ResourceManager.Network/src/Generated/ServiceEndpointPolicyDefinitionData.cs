@@ -44,14 +44,19 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> A description for this rule. Restricted to 140 chars. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Service endpoint name. </summary>
+        [WirePath("properties.service")]
         public string Service { get; set; }
         /// <summary> A list of service resources. </summary>
+        [WirePath("properties.serviceResources")]
         public IList<ResourceIdentifier> ServiceResources { get; }
         /// <summary> The provisioning state of the service endpoint policy definition resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

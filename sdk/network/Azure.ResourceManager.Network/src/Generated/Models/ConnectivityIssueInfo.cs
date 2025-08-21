@@ -67,12 +67,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The origin of the issue. </summary>
+        [WirePath("origin")]
         public IssueOrigin? Origin { get; }
         /// <summary> The severity of the issue. </summary>
+        [WirePath("severity")]
         public IssueSeverity? Severity { get; }
         /// <summary> The type of issue. </summary>
+        [WirePath("type")]
         public ConnectivityIssueType? ConnectivityIssueType { get; }
         /// <summary> Provides additional context on the issue. </summary>
+        [WirePath("context")]
         public IReadOnlyList<IDictionary<string, string>> Contexts { get; }
     }
 }

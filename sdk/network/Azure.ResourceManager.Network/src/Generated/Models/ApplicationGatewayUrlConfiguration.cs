@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Url path which user has provided for url rewrite. Null means no path will be updated. Default value is null. </summary>
+        [WirePath("modifiedPath")]
         public string ModifiedPath { get; set; }
         /// <summary> Query string which user has provided for url rewrite. Null means no query string will be updated. Default value is null. </summary>
+        [WirePath("modifiedQueryString")]
         public string ModifiedQueryString { get; set; }
         /// <summary> If set as true, it will re-evaluate the url path map provided in path based request routing rules using modified path. Default value is false. </summary>
+        [WirePath("reroute")]
         public bool? Reroute { get; set; }
     }
 }

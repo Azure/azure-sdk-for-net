@@ -39,6 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The virtual network connection shared key value. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }
