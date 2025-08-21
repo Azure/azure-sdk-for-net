@@ -19,19 +19,6 @@ $failingSpecs = @(
     Join-Path 'http' 'azure' 'resource-manager' 'large-header'
 )
 
-function IsGenerated {
-    param (
-        [string]$dir
-    )
-
-    if (-not ($dir.EndsWith("Generated"))) {
-        return $false
-    }
-
-    $csFiles = Get-ChildItem -Path $dir -Filter *.cs -File
-    return $csFiles.Count -gt 0
-}
-
 function Capitalize-FirstLetter {
     param (
         [string]$inputString
@@ -64,16 +51,11 @@ function IsValidSpecDir {
     param (
         [string]$fullPath
     )
-    $subdirs = Get-ChildItem -Path $fullPath -Directory
-    if (($subdirs) -or -not(Test-Path "$fullPath/main.tsp")){
+    if (-not(Test-Path "$fullPath/main.tsp")){
         return $false;
     }
 
-    $fromAzure = $fullPath.Contains("azure-http-specs")
     $subPath = Get-SubPath $fullPath
-    if ($fromAzure) {
-        return $azureAllowSpecs.Contains($subPath)
-    }
 
     if ($failingSpecs.Contains($subPath)) {
         Write-Host "Skipping $subPath" -ForegroundColor Yellow
@@ -111,13 +93,19 @@ function Get-Sorted-Specs {
             $specFile = Join-Path $_.FullName "main.tsp"
         }
 
-        # Produce an object with both specFile and a sort key
+        # Extract the relative path after "specs/" and normalize slashes
+        $relativePath = ($specFile -replace '[\\\/]', '/').Substring($_.FullName.IndexOf($pattern) + $pattern.Length)
+
+        # Remove the filename to get just the directory path
+        $dirPath = $relativePath -replace '/[^/]+\.tsp$', ''
+
+        # Produce an object with the path for sorting
         [PSCustomObject]@{
             SpecFile = $specFile
-            SortKey  = ($specFile -replace '[\\\/]', '/').Substring($_.FullName.IndexOf($pattern) + $pattern.Length) }
-    } | Sort-Object SortKey | ForEach-Object { $_.SpecFile }
+            DirPath = $dirPath
+        }
+    } | Sort-Object -Property @{Expression = { $_.DirPath -replace '/', '!' }; Ascending = $true} | ForEach-Object { $_.SpecFile }
 }
-
 
 function Get-SubPath {
     param (
@@ -141,7 +129,6 @@ function Get-SubPath {
     return $subPath
 }
 
-Export-ModuleMember -Function "IsGenerated"
 Export-ModuleMember -Function "Get-Namespace"
 Export-ModuleMember -Function "Get-Sorted-Specs"
 Export-ModuleMember -Function "Get-SubPath"

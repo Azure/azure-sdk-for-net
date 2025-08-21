@@ -37,8 +37,6 @@ foreach ($specFile in $specFiles) {
         continue
     }
 
-    $outputDir = Join-Path $spectorRoot $subPath
-
     $command = Get-TspCommand $specFile $outputDir
     Invoke $command
 
