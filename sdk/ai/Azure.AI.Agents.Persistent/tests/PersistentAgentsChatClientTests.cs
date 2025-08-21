@@ -26,7 +26,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         private string _agentId;
         private string _threadId;
 
-        public PersistentAgentsChatClientTests(bool isAsync) : base(isAsync, mode: RecordedTestMode.Record)
+        public PersistentAgentsChatClientTests(bool isAsync) : base(isAsync)
         {
             TestDiagnostics = false;
         }
