@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.1 (unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Other Changes
 
