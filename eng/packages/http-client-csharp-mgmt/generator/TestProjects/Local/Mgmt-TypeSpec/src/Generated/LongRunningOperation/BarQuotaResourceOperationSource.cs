@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,7 +32,7 @@ namespace MgmtTypeSpec
         BarQuotaResource IOperationSource<BarQuotaResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            BarQuotaResourceData data = BarQuotaResourceData.DeserializeBarQuotaResourceData(document.RootElement, new ModelReaderWriterOptions("W"));
+            BarQuotaResourceData data = BarQuotaResourceData.DeserializeBarQuotaResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new BarQuotaResource(_client, data);
         }
 
