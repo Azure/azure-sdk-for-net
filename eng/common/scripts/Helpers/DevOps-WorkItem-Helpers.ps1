@@ -1087,8 +1087,6 @@ function Get-ReleasePlansForCPEXAttestation()
   $query += " AND [Custom.AttestationStatus] IN ('', 'Pending')"
   $query += " AND [System.Tags] NOT CONTAINS 'Release Planner App Test'"
   $query += " AND [System.Tags] NOT CONTAINS 'Release Planner Test App'"
-  $query += " AND [System.ChangedDate] >= @StartOfDay('-1')" # Filter for items changed yesterday only
-  $query += " AND [System.ChangedDate] < @StartOfDay('0')"
 
   $workItems = Invoke-Query $fields $query
   return $workItems
@@ -1108,8 +1106,6 @@ function Get-TriagesForCPEXAttestation()
   $query += " AND [Custom.ManagementPlaneAttestationStatus] IN ('', 'Pending')"
   $query += " AND [System.Tags] NOT CONTAINS 'Release Planner App Test'"
   $query += " AND [System.Tags] NOT CONTAINS 'Release Planner Test App'"
-  $query += " AND [System.ChangedDate] >= @StartOfDay('-1')" # Filter for items changed yesterday only
-  $query += " AND [System.ChangedDate] < @StartOfDay('0')"
 
   $workItems = Invoke-Query $fields $query
   return $workItems  
