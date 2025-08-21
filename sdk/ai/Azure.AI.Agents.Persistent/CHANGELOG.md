@@ -4,6 +4,9 @@
 
 ### Features Added
 - Added delete operation for `ThreadMessages`.
+- Add `RunStepDeltaCustomBingGroundingToolCall`, describing `BingCustomSearchTool` updates in streaming scenario.
+- Add `RunStepDeltaMicrosoftFabricToolCall`, describing `FabricTool` updates in streaming scenario.
+- Add `RunStepDeltaSharepointToolCall`, describing `SharepointTool` updates in streaming scenario.
 
 ### Breaking Changes
 

@@ -109,7 +109,8 @@ namespace Azure.AI.Agents.Persistent.Tests
             FileSearch,
             AzureFunction,
             BrowserAutomation,
-            MicrosoftFabric
+            MicrosoftFabric,
+            Sharepoint,
         }
 
         public Dictionary<ToolTypes, Type> ExpectedDeltas = new()
@@ -123,6 +124,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             {ToolTypes.FileSearch, typeof(RunStepDeltaFileSearchToolCall)},
             {ToolTypes.AzureFunction, typeof(RunStepDeltaAzureFunctionToolCall)},
             {ToolTypes.MicrosoftFabric, typeof(RunStepDeltaMicrosoftFabricToolCall)},
+            {ToolTypes.Sharepoint, typeof(RunStepDeltaSharepointToolCall)},
         };
 
         public Dictionary<ToolTypes, Type> ExpectedToolCalls = new()
@@ -137,6 +139,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             {ToolTypes.BrowserAutomation, typeof(RunStepBrowserAutomationToolCall)},
             {ToolTypes.AzureFunction, typeof(RunStepAzureFunctionToolCall)},
             {ToolTypes.MicrosoftFabric, typeof(RunStepMicrosoftFabricToolCall)},
+            {ToolTypes.Sharepoint, typeof(RunStepSharepointToolCall)},
         };
 
         public Dictionary<ToolTypes, string> ToolPrompts = new()
@@ -159,6 +162,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                      "At the top of the resulting page you will see a default chart of Microsoft stock price." +
                      "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it."},
             {ToolTypes.MicrosoftFabric, "What are top 3 weather events with largest revenue loss?"},
+            {ToolTypes.Sharepoint, "Hello, summarize the key points of the first document in the list."},
         };
 
         public Dictionary<ToolTypes, string> ToolInstructions = new()
@@ -174,6 +178,7 @@ namespace Azure.AI.Agents.Persistent.Tests
                               "You can answer questions, provide information, and assist with various tasks " +
                               "related to web browsing using the Browser Automation tool available to you." },
             {ToolTypes.MicrosoftFabric, "You are helpful agent."},
+            {ToolTypes.Sharepoint, "You are helpful agent."},
         };
 
         public Dictionary<ToolTypes, string> RequiredTextInResponse = new()
@@ -1934,6 +1939,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [TestCase(ToolTypes.BingCustomGrounding)]
         [TestCase(ToolTypes.BrowserAutomation)]
         [TestCase(ToolTypes.MicrosoftFabric)]
+        [TestCase(ToolTypes.Sharepoint)]
         public async Task TestToolCall(ToolTypes toolToTest)
         {
             PersistentAgentsClient client = GetClient();
@@ -2209,6 +2215,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         [TestCase(ToolTypes.FileSearch)]
         [TestCase(ToolTypes.BingCustomGrounding)]
         [TestCase(ToolTypes.MicrosoftFabric)]
+        [TestCase(ToolTypes.Sharepoint)]
         // AzureAISearch is tested separately in TestAzureAiSearchStreaming.
         public async Task TestStreamDelta(ToolTypes toolToTest)
         {
@@ -2593,6 +2600,11 @@ namespace Azure.AI.Agents.Persistent.Tests
                     ToolTypes.MicrosoftFabric => new MicrosoftFabricToolDefinition (
                         new FabricDataAgentToolParameters(
                             TestEnvironment.FABRIC_CONNECTION_ID
+                        )
+                    ),
+                    ToolTypes.Sharepoint => new SharepointToolDefinition(
+                        new SharepointGroundingToolParameters(
+                            TestEnvironment.SHAREPOINT_CONNECTION_ID
                         )
                     ),
                     _ => null
