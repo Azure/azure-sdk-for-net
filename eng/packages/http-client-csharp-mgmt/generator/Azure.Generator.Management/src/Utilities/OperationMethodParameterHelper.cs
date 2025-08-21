@@ -15,20 +15,21 @@ namespace Azure.Generator.Management.Utilities
         // TODO -- we should be able to just use the parameters from convenience method. But currently the xml doc provider has some bug that we build the parameters prematurely.
         public static IReadOnlyList<ParameterProvider> GetOperationMethodParameters(
             InputServiceMethod serviceMethod,
-            RequestPathPattern contextualPath)
+            RequestPathPattern contextualPath,
+            bool forceLro = false)
         {
             var requiredParameters = new List<ParameterProvider>();
             var optionalParameters = new List<ParameterProvider>();
 
             // Add WaitUntil parameter for long-running operations
-            if (serviceMethod.IsLongRunningOperation() || serviceMethod.IsFakeLongRunningOperation())
+            if (forceLro || serviceMethod.IsLongRunningOperation())
             {
                 requiredParameters.Add(KnownAzureParameters.WaitUntil);
             }
 
             foreach (var parameter in serviceMethod.Operation.Parameters)
             {
-                if (parameter.Kind != InputParameterKind.Method)
+                if (parameter.Scope != InputParameterScope.Method)
                 {
                     continue;
                 }

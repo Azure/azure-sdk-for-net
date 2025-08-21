@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.11.0</Version>
+    <Version>1.12.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.10.0</ApiCompatVersion>
+    <ApiCompatVersion>1.11.0</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.Compute</PackageId>
     <Description>Microsoft Azure management client SDK for Azure resource provider Microsoft.Compute.</Description>
     <PackageTags>azure;management;compute</PackageTags>

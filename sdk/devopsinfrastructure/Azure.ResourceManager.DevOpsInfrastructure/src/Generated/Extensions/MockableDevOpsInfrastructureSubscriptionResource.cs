@@ -194,8 +194,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         public virtual AsyncPageable<DevOpsResourceQuota> GetUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SubscriptionUsagesRestClient.CreateGetUsagesRequest(Id.SubscriptionId, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SubscriptionUsagesRestClient.CreateGetUsagesNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DevOpsResourceQuota.DeserializeDevOpsResourceQuota(e), SubscriptionUsagesClientDiagnostics, Pipeline, "MockableDevOpsInfrastructureSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => DevOpsResourceQuota.DeserializeDevOpsResourceQuota(e), SubscriptionUsagesClientDiagnostics, Pipeline, "MockableDevOpsInfrastructureSubscriptionResource.GetUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -221,8 +220,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         public virtual Pageable<DevOpsResourceQuota> GetUsages(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SubscriptionUsagesRestClient.CreateGetUsagesRequest(Id.SubscriptionId, location);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SubscriptionUsagesRestClient.CreateGetUsagesNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DevOpsResourceQuota.DeserializeDevOpsResourceQuota(e), SubscriptionUsagesClientDiagnostics, Pipeline, "MockableDevOpsInfrastructureSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => DevOpsResourceQuota.DeserializeDevOpsResourceQuota(e), SubscriptionUsagesClientDiagnostics, Pipeline, "MockableDevOpsInfrastructureSubscriptionResource.GetUsages", "value", null, cancellationToken);
         }
     }
 }

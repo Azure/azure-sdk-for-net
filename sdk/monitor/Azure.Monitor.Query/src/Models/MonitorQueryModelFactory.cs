@@ -32,7 +32,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="metrics"> The value of the collection. </param>
         public static MetricsQueryResult MetricsQueryResult(int? cost, string timespan, TimeSpan? granularity, string @namespace, string resourceRegion, IReadOnlyList<MetricResult> metrics)
         {
-            return new MetricsQueryResult(cost, timespan, granularity, @namespace, resourceRegion, metrics.ToArray());
+            return new MetricsQueryResult(cost, timespan, granularity, @namespace, resourceRegion, metrics.ToArray(), serializedAdditionalRawData: null);
         }
 
         /// <summary>
@@ -58,10 +58,10 @@ namespace Azure.Monitor.Query.Models
             var metadataValueList = new List<MetadataValue>();
             foreach (var value in metadataValues)
             {
-                var metadataValue = new MetadataValue(new LocalizableString(value.Key), value.Value);
+                var metadataValue = new MetadataValue(new LocalizableString(value.Key), value.Value, serializedAdditionalRawData: null);
                 metadataValueList.Add(metadataValue);
             }
-            return new MetricTimeSeriesElement(metadataValueList, values.ToList());
+            return new MetricTimeSeriesElement(metadataValueList, values.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Azure.Monitor.Query.Models
         /// <param name="count"> The number of samples in the time range. Can be used to determine the number of values that contributed to the average value. </param>
         public static MetricValue MetricValue(DateTimeOffset timeStamp = default, double? average = null, double? minimum = null, double? maximum = null, double? total = null, double? count = null)
         {
-            return new MetricValue(timeStamp, average, minimum, maximum, total, count);
+            return new MetricValue(timeStamp, average, minimum, maximum, total, count, serializedAdditionalRawData: null);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Azure.Monitor.Query.Models
             JsonElement statisticsJson = statistics.ToObjectFromJson<JsonElement>();
             JsonElement visualizationJson = visualization.ToObjectFromJson<JsonElement>();
             JsonElement errorJson = error.ToObjectFromJson<JsonElement>();
-            return new LogsQueryResult(allTables.ToArray(), statisticsJson, visualizationJson, errorJson);
+            return new LogsQueryResult(allTables.ToArray(), statisticsJson, visualizationJson, errorJson, serializedAdditionalRawData: null);
         }
 
         /// <summary>

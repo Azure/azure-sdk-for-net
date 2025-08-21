@@ -13,49 +13,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of common properties of all calling events. </summary>
     public partial class AcsCallingEventProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AcsCallingEventProperties"/>. </summary>
         /// <param name="startedBy"> The call participant who initiated the call. </param>
         /// <param name="serverCallId"> The call id of the server. </param>
         /// <param name="correlationId"> The correlationId of calling event. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="startedBy"/>, <paramref name="serverCallId"/> or <paramref name="correlationId"/> is null. </exception>
         internal AcsCallingEventProperties(AcsCallParticipantProperties startedBy, string serverCallId, string correlationId)
         {
-            Argument.AssertNotNull(startedBy, nameof(startedBy));
-            Argument.AssertNotNull(serverCallId, nameof(serverCallId));
-            Argument.AssertNotNull(correlationId, nameof(correlationId));
-
             StartedBy = startedBy;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
@@ -69,36 +35,37 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="isTwoParty"> Is two-party in calling event. </param>
         /// <param name="correlationId"> The correlationId of calling event. </param>
         /// <param name="isRoomsCall"> Is the calling event a room call. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AcsCallingEventProperties(AcsCallParticipantProperties startedBy, string serverCallId, AcsCallGroupProperties group, AcsCallRoomProperties room, bool? isTwoParty, string correlationId, bool? isRoomsCall, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AcsCallingEventProperties(AcsCallParticipantProperties startedBy, string serverCallId, AcsCallGroupProperties @group, AcsCallRoomProperties room, bool? isTwoParty, string correlationId, bool? isRoomsCall, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartedBy = startedBy;
             ServerCallId = serverCallId;
-            Group = group;
+            Group = @group;
             Room = room;
             IsTwoParty = isTwoParty;
             CorrelationId = correlationId;
             IsRoomsCall = isRoomsCall;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AcsCallingEventProperties"/> for deserialization. </summary>
-        internal AcsCallingEventProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The call participant who initiated the call. </summary>
         public AcsCallParticipantProperties StartedBy { get; }
+
         /// <summary> The call id of the server. </summary>
         public string ServerCallId { get; }
+
         /// <summary> The group metadata. </summary>
         public AcsCallGroupProperties Group { get; }
+
         /// <summary> The room metadata. </summary>
         public AcsCallRoomProperties Room { get; }
+
         /// <summary> Is two-party in calling event. </summary>
         public bool? IsTwoParty { get; }
+
         /// <summary> The correlationId of calling event. </summary>
         public string CorrelationId { get; }
+
         /// <summary> Is the calling event a room call. </summary>
         public bool? IsRoomsCall { get; }
     }

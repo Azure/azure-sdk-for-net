@@ -19,7 +19,8 @@ namespace Azure.Generator.Tests.Visitors
         public void RemovesTheRequestClientIdHeaderParameterFromServiceMethods()
         {
             var visitor = new TestRequestClientIdHeaderVisitor();
-            var parameters = CreateParameters();
+            var parameters = CreateHttpParameters();
+            var methodParameters = CreateMethodParameters();
             var responseModel = InputFactory.Model("foo");
             var operation = InputFactory.Operation(
                 "foo",
@@ -28,7 +29,7 @@ namespace Azure.Generator.Tests.Visitors
             var serviceMethod = InputFactory.LongRunningServiceMethod(
                 "foo",
                 operation,
-                parameters: parameters,
+                parameters: methodParameters,
                 response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
             var inputClient = InputFactory.Client("TestClient", methods: [serviceMethod]);
             MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
@@ -57,8 +58,8 @@ namespace Azure.Generator.Tests.Visitors
         public void DoesNotChangeExistingParameters()
         {
             var visitor = new TestRequestClientIdHeaderVisitor();
-            var operationParameters = CreateParameters();
-            var serviceMethodParameters = CreateParameters();
+            var operationParameters = CreateHttpParameters();
+            var serviceMethodParameters = CreateMethodParameters();
             var responseModel = InputFactory.Model("foo");
             var operation = InputFactory.Operation(
                 "foo",
@@ -90,20 +91,36 @@ namespace Azure.Generator.Tests.Visitors
             Assert.AreNotSame(serviceMethodParameters[0], serviceMethod.Parameters[0]);
         }
 
-        private static List<InputParameter> CreateParameters()
+        private static List<InputMethodParameter> CreateMethodParameters()
+        {
+            List<InputMethodParameter> parameters =
+            [
+                InputFactory.MethodParameter(
+                    "client-request-id",
+                    type: InputPrimitiveType.String,
+                    serializedName: "client-request-id",
+                    location: InputRequestLocation.Header),
+                InputFactory.MethodParameter(
+                    "some-other-parameter",
+                    type: InputPrimitiveType.String,
+                    serializedName: "some-other-parameter",
+                    location: InputRequestLocation.Header)
+            ];
+            return parameters;
+        }
+
+        private static List<InputParameter> CreateHttpParameters()
         {
             List<InputParameter> parameters =
             [
-                InputFactory.Parameter(
+                InputFactory.HeaderParameter(
                     "client-request-id",
                     type: InputPrimitiveType.String,
-                    nameInRequest: "client-request-id",
-                    location: InputRequestLocation.Header),
-                InputFactory.Parameter(
+                    serializedName: "client-request-id"),
+                InputFactory.HeaderParameter(
                     "some-other-parameter",
                     type: InputPrimitiveType.String,
-                    nameInRequest: "some-other-parameter",
-                    location: InputRequestLocation.Header)
+                    serializedName: "some-other-parameter")
             ];
             return parameters;
         }
