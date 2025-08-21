@@ -8,9 +8,9 @@
 - Management Plane (TypeSpec - @azure-typespec/http-client-csharp): 0
 - Management Plane (TypeSpec - @azure-typespec/http-client-csharp-mgmt): 1
 - Management Plane (TypeSpec - @typespec/http-client-csharp): 0
-- Data Plane (Swagger): 115
+- Data Plane (Swagger): 114
 - Data Plane (TSP-Old): 27
-- Data Plane (TypeSpec - @azure-typespec/http-client-csharp): 6
+- Data Plane (TypeSpec - @azure-typespec/http-client-csharp): 7
 - Data Plane (TypeSpec - @azure-typespec/http-client-csharp-mgmt): 0
 - Data Plane (TypeSpec - @typespec/http-client-csharp): 2
 - No generator: 39
@@ -18,7 +18,7 @@
 
 ## Data Plane Libraries using TypeSpec (@azure-typespec/http-client-csharp)
 
-TypeSpec with @azure-typespec/http-client-csharp generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp, or through special handling for specific libraries. Total: 6
+TypeSpec with @azure-typespec/http-client-csharp generator is detected by the presence of a tsp-location.yaml file with an emitterPackageJsonPath value referencing @azure-typespec/http-client-csharp, or through special handling for specific libraries. Total: 7
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -27,6 +27,7 @@ TypeSpec with @azure-typespec/http-client-csharp generator is detected by the pr
 | eventgrid | Azure.Messaging.EventGrid.SystemEvents | sdk/eventgrid/Azure.Messaging.EventGrid.SystemEvents |
 | healthdataaiservices | Azure.Health.Deidentification | sdk/healthdataaiservices/Azure.Health.Deidentification |
 | keyvault | Azure.Security.KeyVault.Administration | sdk/keyvault/Azure.Security.KeyVault.Administration |
+| monitor | Azure.Monitor.Ingestion | sdk/monitor/Azure.Monitor.Ingestion |
 | schemaregistry | Azure.Data.SchemaRegistry | sdk/schemaregistry/Azure.Data.SchemaRegistry |
 
 
@@ -77,7 +78,7 @@ TypeSpec with old generator is detected by the presence of a tsp-location.yaml f
 
 ## Data Plane Libraries using Swagger
 
-Total: 115
+Total: 114
 
 | Service | Library | Path |
 | ------- | ------- | ---- |
@@ -136,7 +137,6 @@ Total: 115
 | maps | Azure.Maps.Weather | sdk/maps/Azure.Maps.Weather |
 | metricsadvisor | Azure.AI.MetricsAdvisor | sdk/metricsadvisor/Azure.AI.MetricsAdvisor |
 | mixedreality | Azure.MixedReality.Authentication | sdk/mixedreality/Azure.MixedReality.Authentication |
-| monitor | Azure.Monitor.Ingestion | sdk/monitor/Azure.Monitor.Ingestion |
 | monitor | Azure.Monitor.OpenTelemetry.Exporter | sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter |
 | monitor | Azure.Monitor.OpenTelemetry.LiveMetrics | sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics |
 | monitor | Azure.Monitor.Query | sdk/monitor/Azure.Monitor.Query |
