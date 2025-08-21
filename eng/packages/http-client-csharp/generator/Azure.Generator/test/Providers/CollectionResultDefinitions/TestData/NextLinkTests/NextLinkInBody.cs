@@ -17,17 +17,14 @@ namespace Samples
     internal partial class CatClientGetCatsCollectionResult : global::Azure.Pageable<global::System.BinaryData>
     {
         private readonly global::Samples.CatClient _client;
-        private readonly global::System.Uri _nextPage;
         private readonly global::Azure.RequestContext _context;
 
         /// <summary> Initializes a new instance of CatClientGetCatsCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The CatClient client used to send requests. </param>
-        /// <param name="nextPage"> The url of the next page of responses. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public CatClientGetCatsCollectionResult(global::Samples.CatClient client, global::System.Uri nextPage, global::Azure.RequestContext context) : base((context?.CancellationToken ?? default))
+        public CatClientGetCatsCollectionResult(global::Samples.CatClient client, global::Azure.RequestContext context) : base((context?.CancellationToken ?? default))
         {
             _client = client;
-            _nextPage = nextPage;
             _context = context;
         }
 
@@ -37,24 +34,27 @@ namespace Samples
         /// <returns> The pages of CatClientGetCatsCollectionResult as an enumerable collection. </returns>
         public override global::System.Collections.Generic.IEnumerable<global::Azure.Page<global::System.BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : _nextPage;
-            do
+            global::System.Uri nextPage = (continuationToken != null) ? new global::System.Uri(continuationToken) : null;
+            while (true)
             {
                 global::Azure.Response response = this.GetNextResponse(pageSizeHint, nextPage);
                 if ((response is null))
                 {
                     yield break;
                 }
-                global::Samples.Models.Page responseWithType = ((global::Samples.Models.Page)response);
+                global::Samples.Models.Page result = ((global::Samples.Models.Page)response);
                 global::System.Collections.Generic.List<global::System.BinaryData> items = new global::System.Collections.Generic.List<global::System.BinaryData>();
-                foreach (var item in responseWithType.Cats)
+                foreach (var item in result.Cats)
                 {
                     items.Add(global::System.BinaryData.FromObjectAsJson(item));
                 }
-                nextPage = responseWithType.NextCat;
                 yield return global::Azure.Page<global::System.BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
+                nextPage = result.NextCat;
+                if ((nextPage == null))
+                {
+                    yield break;
+                }
             }
-            while ((nextPage != null));
         }
 
         /// <summary> Get next page. </summary>
@@ -62,17 +62,12 @@ namespace Samples
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private global::Azure.Response GetNextResponse(int? pageSizeHint, global::System.Uri nextLink)
         {
-            global::Azure.Core.HttpMessage message = _client.CreateGetCatsRequest(nextLink, _context);
+            global::Azure.Core.HttpMessage message = (nextLink != null) ? _client.CreateNextGetCatsRequest(nextLink, _context) : _client.CreateGetCatsRequest(_context);
             using global::Azure.Core.Pipeline.DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("CatClient.GetCats");
             scope.Start();
             try
             {
-                _client.Pipeline.Send(message, this.CancellationToken);
-                if ((message.Response.IsError && (_context.ErrorOptions != global::Azure.ErrorOptions.NoThrow)))
-                {
-                    throw new global::Azure.RequestFailedException(message.Response);
-                }
-                return message.Response;
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (global::System.Exception e)
             {

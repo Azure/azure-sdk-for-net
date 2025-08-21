@@ -4,6 +4,7 @@
 using Azure.Provisioning.Generator.Model;
 using Azure.ResourceManager.PostgreSql;
 using Azure.ResourceManager.PostgreSql.FlexibleServers;
+using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 using Azure.ResourceManager.PostgreSql.Models;
 
 namespace Azure.Provisioning.Generator.Specifications;
@@ -15,10 +16,12 @@ public class PostgreSqlSpecification() :
     {
         // Remove misfires
         RemoveProperty<PostgreSqlServerSecurityAlertPolicyResource>("SecurityAlertPolicyName");
+        RemoveProperty<PostgreSqlFlexibleServerResource>("StorageSizeInGB");
 
         // Patch properties
         CustomizeProperty<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>("Name", p => { p.IsReadOnly = false; p.IsRequired = true; });
         CustomizeProperty<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>("ObjectId", p => { p.IsReadOnly = true; p.IsRequired = false; });
+        CustomizeProperty<PostgreSqlServerMetadata>("Sku", p => p.Name = "ServerSku");
         CustomizeSimpleModel<PostgreSqlServerPropertiesForDefaultCreate>(m => { m.DiscriminatorName = "createMode"; m.DiscriminatorValue = "Default"; });
         CustomizeSimpleModel<PostgreSqlServerPropertiesForGeoRestore>(m => { m.DiscriminatorName = "createMode"; m.DiscriminatorValue = "GeoRestore"; });
         CustomizeSimpleModel<PostgreSqlServerPropertiesForReplica>(m => { m.DiscriminatorName = "createMode"; m.DiscriminatorValue = "Replica"; });

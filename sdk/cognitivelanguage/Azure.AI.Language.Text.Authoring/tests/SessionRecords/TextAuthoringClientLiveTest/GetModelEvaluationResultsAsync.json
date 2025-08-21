@@ -1,0 +1,417 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-text/projects/single-class-project/models/model1/evaluation/result?stringIndexType=Utf16CodeUnit&api-version=2025-05-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Text.Authoring/1.0.0-alpha.20250628.1 (.NET 9.0.6; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "f7890a97-de51-4150-b79f-1b5623130cf6",
+        "Content-Length": "8479",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Sun, 29 Jun 2025 00:37:43 GMT",
+        "request-id": "f7890a97-de51-4150-b79f-1b5623130cf6",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "110",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "location": "202.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Biochemistry",
+              "predictedClass": "Biochemistry"
+            }
+          },
+          {
+            "location": "198.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Biochemistry",
+              "predictedClass": "Biochemistry"
+            }
+          },
+          {
+            "location": "185.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Biochemistry",
+              "predictedClass": "Biochemistry"
+            }
+          },
+          {
+            "location": "199.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Biochemistry",
+              "predictedClass": "Biochemistry"
+            }
+          },
+          {
+            "location": "192.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Biochemistry",
+              "predictedClass": "Biochemistry"
+            }
+          },
+          {
+            "location": "182.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Biochemistry",
+              "predictedClass": "Biochemistry"
+            }
+          },
+          {
+            "location": "153.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Medical",
+              "predictedClass": "Medical"
+            }
+          },
+          {
+            "location": "155.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Medical",
+              "predictedClass": "Medical"
+            }
+          },
+          {
+            "location": "158.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Medical",
+              "predictedClass": "Medical"
+            }
+          },
+          {
+            "location": "180.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Medical",
+              "predictedClass": "Medical"
+            }
+          },
+          {
+            "location": "161.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Medical",
+              "predictedClass": "Medical"
+            }
+          },
+          {
+            "location": "163.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Medical",
+              "predictedClass": "Medical"
+            }
+          },
+          {
+            "location": "143.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Civil_engineering",
+              "predictedClass": "Civil_engineering"
+            }
+          },
+          {
+            "location": "150.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Civil_engineering",
+              "predictedClass": "Civil_engineering"
+            }
+          },
+          {
+            "location": "138.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Civil_engineering",
+              "predictedClass": "Civil_engineering"
+            }
+          },
+          {
+            "location": "126.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Civil_engineering",
+              "predictedClass": "Civil_engineering"
+            }
+          },
+          {
+            "location": "133.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Civil_engineering",
+              "predictedClass": "Civil_engineering"
+            }
+          },
+          {
+            "location": "121.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Civil_engineering",
+              "predictedClass": "Civil_engineering"
+            }
+          },
+          {
+            "location": "100.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Mechanical_engineering",
+              "predictedClass": "Mechanical_engineering"
+            }
+          },
+          {
+            "location": "113.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Mechanical_engineering",
+              "predictedClass": "Mechanical_engineering"
+            }
+          },
+          {
+            "location": "097.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Mechanical_engineering",
+              "predictedClass": "Mechanical_engineering"
+            }
+          },
+          {
+            "location": "095.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Mechanical_engineering",
+              "predictedClass": "Mechanical_engineering"
+            }
+          },
+          {
+            "location": "104.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Mechanical_engineering",
+              "predictedClass": "Civil_engineering"
+            }
+          },
+          {
+            "location": "105.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Mechanical_engineering",
+              "predictedClass": "Electrical_engineering"
+            }
+          },
+          {
+            "location": "066.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Psychology",
+              "predictedClass": "Psychology"
+            }
+          },
+          {
+            "location": "083.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Psychology",
+              "predictedClass": "Medical"
+            }
+          },
+          {
+            "location": "074.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Psychology",
+              "predictedClass": "Psychology"
+            }
+          },
+          {
+            "location": "086.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Psychology",
+              "predictedClass": "Biochemistry"
+            }
+          },
+          {
+            "location": "075.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Psychology",
+              "predictedClass": "Psychology"
+            }
+          },
+          {
+            "location": "087.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Psychology",
+              "predictedClass": "Biochemistry"
+            }
+          },
+          {
+            "location": "051.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Electrical_engineering",
+              "predictedClass": "Mechanical_engineering"
+            }
+          },
+          {
+            "location": "056.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Electrical_engineering",
+              "predictedClass": "Mechanical_engineering"
+            }
+          },
+          {
+            "location": "043.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Electrical_engineering",
+              "predictedClass": "Electrical_engineering"
+            }
+          },
+          {
+            "location": "034.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Electrical_engineering",
+              "predictedClass": "Electrical_engineering"
+            }
+          },
+          {
+            "location": "050.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Electrical_engineering",
+              "predictedClass": "Civil_engineering"
+            }
+          },
+          {
+            "location": "053.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Electrical_engineering",
+              "predictedClass": "Electrical_engineering"
+            }
+          },
+          {
+            "location": "025.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Computer_science",
+              "predictedClass": "Computer_science"
+            }
+          },
+          {
+            "location": "015.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Computer_science",
+              "predictedClass": "Computer_science"
+            }
+          },
+          {
+            "location": "012.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Computer_science",
+              "predictedClass": "Mechanical_engineering"
+            }
+          },
+          {
+            "location": "002.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Computer_science",
+              "predictedClass": "Computer_science"
+            }
+          },
+          {
+            "location": "029.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Computer_science",
+              "predictedClass": "Computer_science"
+            }
+          },
+          {
+            "location": "019.txt",
+            "language": "en-us",
+            "projectKind": "CustomSingleLabelClassification",
+            "customSingleLabelClassificationResult": {
+              "expectedClass": "Computer_science",
+              "predictedClass": "Civil_engineering"
+            }
+          }
+        ],
+        "nextLink": null
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_TEXT_AUTHORING_ENDPOINT": "https://sdk-test-01.cognitiveservices.azure.com/",
+    "AZURE_TEXT_AUTHORING_KEY": "Sanitized",
+    "RandomSeed": "1561670891"
+  }
+}

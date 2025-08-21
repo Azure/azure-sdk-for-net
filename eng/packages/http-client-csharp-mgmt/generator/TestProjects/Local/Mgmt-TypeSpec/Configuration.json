@@ -1,5 +1,6 @@
 {
   "package-name": "MgmtTypeSpec",
+  "namespace": "MgmtTypeSpec",
   "model-namespace": true,
   "license": {
     "name": "MIT License",

@@ -6,12 +6,16 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Security.KeyVault.Administration;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    /// <summary> The authentication method and location for the restore operation. </summary>
     internal partial class RestoreOperationParameters
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="RestoreOperationParameters"/>. </summary>
         /// <param name="sasTokenParameters"> A user-provided SAS token to an Azure blob storage container. </param>
         /// <param name="folderToRestore"> The Folder name of the blob where the previous successful full backup was stored. </param>
@@ -25,8 +29,20 @@ namespace Azure.Security.KeyVault.Administration.Models
             FolderToRestore = folderToRestore;
         }
 
+        /// <summary> Initializes a new instance of <see cref="RestoreOperationParameters"/>. </summary>
+        /// <param name="sasTokenParameters"> A user-provided SAS token to an Azure blob storage container. </param>
+        /// <param name="folderToRestore"> The Folder name of the blob where the previous successful full backup was stored. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RestoreOperationParameters(SASTokenParameter sasTokenParameters, string folderToRestore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            SasTokenParameters = sasTokenParameters;
+            FolderToRestore = folderToRestore;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
         /// <summary> A user-provided SAS token to an Azure blob storage container. </summary>
         public SASTokenParameter SasTokenParameters { get; }
+
         /// <summary> The Folder name of the blob where the previous successful full backup was stored. </summary>
         public string FolderToRestore { get; }
     }

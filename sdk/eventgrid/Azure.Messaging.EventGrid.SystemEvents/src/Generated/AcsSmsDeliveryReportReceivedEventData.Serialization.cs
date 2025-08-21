@@ -10,15 +10,20 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.SMSDeliveryReportReceived event. </summary>
     [JsonConverter(typeof(AcsSmsDeliveryReportReceivedEventDataConverter))]
-    public partial class AcsSmsDeliveryReportReceivedEventData : IUtf8JsonSerializable, IJsonModel<AcsSmsDeliveryReportReceivedEventData>
+    public partial class AcsSmsDeliveryReportReceivedEventData : IJsonModel<AcsSmsDeliveryReportReceivedEventData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsSmsDeliveryReportReceivedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="AcsSmsDeliveryReportReceivedEventData"/> for deserialization. </summary>
+        internal AcsSmsDeliveryReportReceivedEventData()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AcsSmsDeliveryReportReceivedEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +35,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsSmsDeliveryReportReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AcsSmsDeliveryReportReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AcsSmsDeliveryReportReceivedEventData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("deliveryStatus"u8);
             writer.WriteStringValue(DeliveryStatus);
@@ -45,7 +49,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 writer.WritePropertyName("deliveryAttempts"u8);
                 writer.WriteStartArray();
-                foreach (var item in DeliveryAttempts)
+                foreach (AcsSmsDeliveryAttemptProperties item in DeliveryAttempts)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -63,98 +67,101 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        AcsSmsDeliveryReportReceivedEventData IJsonModel<AcsSmsDeliveryReportReceivedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AcsSmsDeliveryReportReceivedEventData IJsonModel<AcsSmsDeliveryReportReceivedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AcsSmsDeliveryReportReceivedEventData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AcsSmsEventBaseProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsSmsDeliveryReportReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AcsSmsDeliveryReportReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AcsSmsDeliveryReportReceivedEventData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAcsSmsDeliveryReportReceivedEventData(document.RootElement, options);
         }
 
-        internal static AcsSmsDeliveryReportReceivedEventData DeserializeAcsSmsDeliveryReportReceivedEventData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AcsSmsDeliveryReportReceivedEventData DeserializeAcsSmsDeliveryReportReceivedEventData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string messageId = default;
+            string @from = default;
+            string to = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string deliveryStatus = default;
             string deliveryStatusDetails = default;
             IReadOnlyList<AcsSmsDeliveryAttemptProperties> deliveryAttempts = default;
             DateTimeOffset? receivedTimestamp = default;
             string tag = default;
-            string messageId = default;
-            string @from = default;
-            string to = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("deliveryStatus"u8))
+                if (prop.NameEquals("messageId"u8))
                 {
-                    deliveryStatus = property.Value.GetString();
+                    messageId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deliveryStatusDetails"u8))
+                if (prop.NameEquals("from"u8))
                 {
-                    deliveryStatusDetails = property.Value.GetString();
+                    @from = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deliveryAttempts"u8))
+                if (prop.NameEquals("to"u8))
+                {
+                    to = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("deliveryStatus"u8))
+                {
+                    deliveryStatus = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("deliveryStatusDetails"u8))
+                {
+                    deliveryStatusDetails = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("deliveryAttempts"u8))
                 {
                     List<AcsSmsDeliveryAttemptProperties> array = new List<AcsSmsDeliveryAttemptProperties>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(AcsSmsDeliveryAttemptProperties.DeserializeAcsSmsDeliveryAttemptProperties(item, options));
                     }
                     deliveryAttempts = array;
                     continue;
                 }
-                if (property.NameEquals("receivedTimestamp"u8))
+                if (prop.NameEquals("receivedTimestamp"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    receivedTimestamp = property.Value.GetDateTimeOffset("O");
+                    receivedTimestamp = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("tag"u8))
+                if (prop.NameEquals("tag"u8))
                 {
-                    tag = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("messageId"u8))
-                {
-                    messageId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("from"u8))
-                {
-                    @from = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("to"u8))
-                {
-                    to = property.Value.GetString();
+                    tag = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AcsSmsDeliveryReportReceivedEventData(
                 messageId,
                 @from,
                 to,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 deliveryStatus,
                 deliveryStatusDetails,
                 deliveryAttempts,
@@ -162,10 +169,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 tag);
         }
 
-        BinaryData IPersistableModel<AcsSmsDeliveryReportReceivedEventData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsSmsDeliveryReportReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AcsSmsDeliveryReportReceivedEventData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AcsSmsDeliveryReportReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -175,15 +185,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        AcsSmsDeliveryReportReceivedEventData IPersistableModel<AcsSmsDeliveryReportReceivedEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsSmsDeliveryReportReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AcsSmsDeliveryReportReceivedEventData IPersistableModel<AcsSmsDeliveryReportReceivedEventData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AcsSmsDeliveryReportReceivedEventData)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override AcsSmsEventBaseProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AcsSmsDeliveryReportReceivedEventData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAcsSmsDeliveryReportReceivedEventData(document.RootElement, options);
                     }
                 default:
@@ -191,35 +206,28 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AcsSmsDeliveryReportReceivedEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new AcsSmsDeliveryReportReceivedEventData FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAcsSmsDeliveryReportReceivedEventData(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
 
         internal partial class AcsSmsDeliveryReportReceivedEventDataConverter : JsonConverter<AcsSmsDeliveryReportReceivedEventData>
         {
+            /// <summary> Writes the JSON representation of the model. </summary>
+            /// <param name="writer"> The writer. </param>
+            /// <param name="model"> The model to write. </param>
+            /// <param name="options"> The serialization options. </param>
             public override void Write(Utf8JsonWriter writer, AcsSmsDeliveryReportReceivedEventData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+                writer.WriteObjectValue<IJsonModel<AcsSmsDeliveryReportReceivedEventData>>(model, ModelSerializationExtensions.WireOptions);
             }
 
+            /// <summary> Reads the JSON representation and converts into the model. </summary>
+            /// <param name="reader"> The reader. </param>
+            /// <param name="typeToConvert"> The type to convert. </param>
+            /// <param name="options"> The serialization options. </param>
             public override AcsSmsDeliveryReportReceivedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAcsSmsDeliveryReportReceivedEventData(document.RootElement);
+                using JsonDocument document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsSmsDeliveryReportReceivedEventData(document.RootElement, ModelSerializationExtensions.WireOptions);
             }
         }
     }

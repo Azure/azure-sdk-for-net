@@ -70,7 +70,7 @@ public partial class AppCertificate : ProvisionableResource
     private BicepList<string>? _hostNames;
 
     /// <summary>
-    /// Key Vault Csm resource Id.
+    /// Azure Key Vault Csm resource Id.
     /// </summary>
     public BicepValue<ResourceIdentifier> KeyVaultId 
     {
@@ -80,7 +80,7 @@ public partial class AppCertificate : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _keyVaultId;
 
     /// <summary>
-    /// Key Vault secret name.
+    /// Azure Key Vault secret name.
     /// </summary>
     public BicepValue<string> KeyVaultSecretName 
     {
@@ -90,7 +90,9 @@ public partial class AppCertificate : ProvisionableResource
     private BicepValue<string>? _keyVaultSecretName;
 
     /// <summary>
-    /// Kind of resource.
+    /// Kind of resource. If the resource is an app, you can refer to
+    /// https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference
+    /// for details supported values for kind.
     /// </summary>
     public BicepValue<string> Kind 
     {
@@ -120,8 +122,7 @@ public partial class AppCertificate : ProvisionableResource
     private BicepValue<BinaryData>? _pfxBlob;
 
     /// <summary>
-    /// Resource ID of the associated App Service plan, formatted as:
-    /// &quot;/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}&quot;.
+    /// Resource ID of the associated App Service plan.
     /// </summary>
     public BicepValue<ResourceIdentifier> ServerFarmId 
     {
@@ -287,7 +288,7 @@ public partial class AppCertificate : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the AppCertificate.</param>
     public AppCertificate(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Web/certificates", resourceVersion ?? "2024-04-01")
+        : base(bicepIdentifier, "Microsoft.Web/certificates", resourceVersion ?? "2024-11-01")
     {
     }
 
@@ -330,6 +331,11 @@ public partial class AppCertificate : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2024-11-01.
+        /// </summary>
+        public static readonly string V2024_11_01 = "2024-11-01";
+
         /// <summary>
         /// 2024-04-01.
         /// </summary>

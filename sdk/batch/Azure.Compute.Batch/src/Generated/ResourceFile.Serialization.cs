@@ -39,15 +39,15 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("autoStorageContainerName"u8);
                 writer.WriteStringValue(AutoStorageContainerName);
             }
-            if (Optional.IsDefined(StorageContainerUrl))
+            if (Optional.IsDefined(StorageContainerUri))
             {
                 writer.WritePropertyName("storageContainerUrl"u8);
-                writer.WriteStringValue(StorageContainerUrl);
+                writer.WriteStringValue(StorageContainerUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(HttpUrl))
+            if (Optional.IsDefined(HttpUri))
             {
                 writer.WritePropertyName("httpUrl"u8);
-                writer.WriteStringValue(HttpUrl);
+                writer.WriteStringValue(HttpUri.AbsoluteUri);
             }
             if (Optional.IsDefined(BlobPrefix))
             {
@@ -107,8 +107,8 @@ namespace Azure.Compute.Batch
                 return null;
             }
             string autoStorageContainerName = default;
-            string storageContainerUrl = default;
-            string httpUrl = default;
+            Uri storageContainerUrl = default;
+            Uri httpUrl = default;
             string blobPrefix = default;
             string filePath = default;
             string fileMode = default;
@@ -124,12 +124,20 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("storageContainerUrl"u8))
                 {
-                    storageContainerUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageContainerUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("httpUrl"u8))
                 {
-                    httpUrl = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    httpUrl = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("blobPrefix"u8))

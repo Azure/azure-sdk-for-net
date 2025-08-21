@@ -19,20 +19,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// for authentication. This case-sensitive string can be up to 128 characters
         /// long, and supports UTF-8 characters.
         /// </param>
-        /// <param name="clientName"> Name of the client resource in the Event Grid namespace. </param>
         /// <param name="namespaceName"> Name of the Event Grid namespace where the MQTT client was created or updated. </param>
         /// <param name="clientSessionName">
         /// Unique identifier for the MQTT client's session. This case-sensitive string can
         /// be up to 128 characters long, and supports UTF-8 characters.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientAuthenticationName"/>, <paramref name="clientName"/>, <paramref name="namespaceName"/> or <paramref name="clientSessionName"/> is null. </exception>
-        internal EventGridMqttClientSessionConnectedEventData(string clientAuthenticationName, string clientName, string namespaceName, string clientSessionName) : base(clientAuthenticationName, clientName, namespaceName)
+        internal EventGridMqttClientSessionConnectedEventData(string clientAuthenticationName, string namespaceName, string clientSessionName) : base(clientAuthenticationName, namespaceName)
         {
-            Argument.AssertNotNull(clientAuthenticationName, nameof(clientAuthenticationName));
-            Argument.AssertNotNull(clientName, nameof(clientName));
-            Argument.AssertNotNull(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNull(clientSessionName, nameof(clientSessionName));
-
             ClientSessionName = clientSessionName;
         }
 
@@ -44,7 +37,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// </param>
         /// <param name="clientName"> Name of the client resource in the Event Grid namespace. </param>
         /// <param name="namespaceName"> Name of the Event Grid namespace where the MQTT client was created or updated. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="clientSessionName">
         /// Unique identifier for the MQTT client's session. This case-sensitive string can
         /// be up to 128 characters long, and supports UTF-8 characters.
@@ -54,15 +47,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// disconnected events. Latest event will have a sequence number that is higher
         /// than the previous event.
         /// </param>
-        internal EventGridMqttClientSessionConnectedEventData(string clientAuthenticationName, string clientName, string namespaceName, IDictionary<string, BinaryData> serializedAdditionalRawData, string clientSessionName, long? sequenceNumber) : base(clientAuthenticationName, clientName, namespaceName, serializedAdditionalRawData)
+        internal EventGridMqttClientSessionConnectedEventData(string clientAuthenticationName, string clientName, string namespaceName, IDictionary<string, BinaryData> additionalBinaryDataProperties, string clientSessionName, long? sequenceNumber) : base(clientAuthenticationName, clientName, namespaceName, additionalBinaryDataProperties)
         {
             ClientSessionName = clientSessionName;
             SequenceNumber = sequenceNumber;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="EventGridMqttClientSessionConnectedEventData"/> for deserialization. </summary>
-        internal EventGridMqttClientSessionConnectedEventData()
-        {
         }
 
         /// <summary>
@@ -70,6 +58,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// be up to 128 characters long, and supports UTF-8 characters.
         /// </summary>
         public string ClientSessionName { get; }
+
         /// <summary>
         /// A number that helps indicate order of MQTT client session connected or
         /// disconnected events. Latest event will have a sequence number that is higher

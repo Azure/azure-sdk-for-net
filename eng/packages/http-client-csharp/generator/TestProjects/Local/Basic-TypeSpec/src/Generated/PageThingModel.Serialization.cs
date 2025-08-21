@@ -10,11 +10,10 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace BasicTypeSpec
 {
-    /// <summary></summary>
+    /// <summary> The PageThingModel. </summary>
     internal partial class PageThingModel : IJsonModel<PageThingModel>
     {
         /// <summary> Initializes a new instance of <see cref="PageThingModel"/> for deserialization. </summary>
@@ -150,18 +149,6 @@ namespace BasicTypeSpec
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PageThingModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="pageThingModel"> The <see cref="PageThingModel"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(PageThingModel pageThingModel)
-        {
-            if (pageThingModel == null)
-            {
-                return null;
-            }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(pageThingModel, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
 
         /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="PageThingModel"/> from. </param>
         public static explicit operator PageThingModel(Response result)

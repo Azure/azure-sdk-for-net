@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using Azure.Core;
 
@@ -14,6 +15,7 @@ namespace Azure.Messaging.EventHubs.Processor
     ///
     /// <seealso href="https://www.nuget.org/packages/Azure.Messaging.EventHubs.Processor">Azure.Messaging.EventHubs.Processor (NuGet)</seealso>
     ///
+    [SuppressMessage("Usage", "AZC0034:Type name 'ProcessErrorEventArgs' conflicts with 'Azure.Messaging.ServiceBus.ProcessErrorEventArgs (from Azure.Messaging.ServiceBus)'. Consider renaming to 'ProcessorProcessErrorEventArgsClient' or 'ProcessorProcessErrorEventArgsService' to avoid confusion.", Justification = "Existing name with a stable release.")]
     public struct ProcessErrorEventArgs
     {
         /// <summary>

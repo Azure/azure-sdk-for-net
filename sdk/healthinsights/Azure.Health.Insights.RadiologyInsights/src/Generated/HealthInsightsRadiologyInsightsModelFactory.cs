@@ -54,7 +54,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="inferences">
         /// The model's inferences for the given patient.
         /// Please note <see cref="RadiologyInsights.RadiologyInsightsInference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RadiologyInsights.AgeMismatchInference"/>, <see cref="RadiologyInsights.CompleteOrderDiscrepancyInference"/>, <see cref="RadiologyInsights.CriticalResultInference"/>, <see cref="RadiologyInsights.FindingInference"/>, <see cref="RadiologyInsights.FollowupCommunicationInference"/>, <see cref="RadiologyInsights.FollowupRecommendationInference"/>, <see cref="RadiologyInsights.LateralityDiscrepancyInference"/>, <see cref="RadiologyInsights.LimitedOrderDiscrepancyInference"/>, <see cref="RadiologyInsights.RadiologyProcedureInference"/> and <see cref="RadiologyInsights.SexMismatchInference"/>.
+        /// The available derived classes include <see cref="RadiologyInsights.AgeMismatchInference"/>, <see cref="RadiologyInsights.CompleteOrderDiscrepancyInference"/>, <see cref="RadiologyInsights.CriticalResultInference"/>, <see cref="RadiologyInsights.FindingInference"/>, <see cref="RadiologyInsights.FollowupCommunicationInference"/>, <see cref="RadiologyInsights.FollowupRecommendationInference"/>, <see cref="RadiologyInsights.GuidanceInference"/>, <see cref="RadiologyInsights.LateralityDiscrepancyInference"/>, <see cref="RadiologyInsights.LimitedOrderDiscrepancyInference"/>, <see cref="RadiologyInsights.QualityMeasureInference"/>, <see cref="RadiologyInsights.RadiologyProcedureInference"/>, <see cref="RadiologyInsights.ScoringAndAssessmentInference"/> and <see cref="RadiologyInsights.SexMismatchInference"/>.
         /// </param>
         /// <returns> A new <see cref="RadiologyInsights.RadiologyInsightsPatientResult"/> instance for mocking. </returns>
         public static RadiologyInsightsPatientResult RadiologyInsightsPatientResult(string patientId = null, IEnumerable<RadiologyInsightsInference> inferences = null)
@@ -797,6 +797,106 @@ namespace Azure.Health.Insights.RadiologyInsights
                 communicatedAt?.ToList(),
                 recipient?.ToList(),
                 wasAcknowledged);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.ScoringAndAssessmentInference"/>. </summary>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <param name="category"> Category, e.g. BIRADS. </param>
+        /// <param name="categoryDescription"> The expansion of the category (which is an abbreviation.). </param>
+        /// <param name="singleValue"> The value. If the value is a range, use field rangeValue. </param>
+        /// <param name="rangeValue"> The range. </param>
+        /// <returns> A new <see cref="RadiologyInsights.ScoringAndAssessmentInference"/> instance for mocking. </returns>
+        public static ScoringAndAssessmentInference ScoringAndAssessmentInference(IEnumerable<FhirR4Extension> extension = null, ScoringAndAssessmentCategoryType category = default, string categoryDescription = null, string singleValue = null, AssessmentValueRange rangeValue = null)
+        {
+            extension ??= new List<FhirR4Extension>();
+
+            return new ScoringAndAssessmentInference(
+                RadiologyInsightsInferenceType.ScoringAndAssessment,
+                extension?.ToList(),
+                serializedAdditionalRawData: null,
+                category,
+                categoryDescription,
+                singleValue,
+                rangeValue);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.AssessmentValueRange"/>. </summary>
+        /// <param name="minimum"> The minimum value. </param>
+        /// <param name="maximum"> The maximum value. </param>
+        /// <returns> A new <see cref="RadiologyInsights.AssessmentValueRange"/> instance for mocking. </returns>
+        public static AssessmentValueRange AssessmentValueRange(string minimum = null, string maximum = null)
+        {
+            return new AssessmentValueRange(minimum, maximum, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.GuidanceInference"/>. </summary>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <param name="finding"> The finding associated with the guidance. </param>
+        /// <param name="identifier"> The guidance identifier, as a concept. </param>
+        /// <param name="presentGuidanceInformation"> presentGuidanceInformation lists each item of the structured information (e.g. laterality) and corresponding details (left, right, bilateral) that is present in the document. </param>
+        /// <param name="ranking"> See doc of GuidanceRankingType. </param>
+        /// <param name="recommendationProposals"> The proposed follow-up recommendations, if any. If this is filled, missingGuidanceInformation cannot be filled (and vice versa). </param>
+        /// <param name="missingGuidanceInformation"> Contains all missing items that are needed to determine follow-up. </param>
+        /// <returns> A new <see cref="RadiologyInsights.GuidanceInference"/> instance for mocking. </returns>
+        public static GuidanceInference GuidanceInference(IEnumerable<FhirR4Extension> extension = null, FindingInference finding = null, FhirR4CodeableConcept identifier = null, IEnumerable<PresentGuidanceInformation> presentGuidanceInformation = null, GuidanceRankingType ranking = default, IEnumerable<FollowupRecommendationInference> recommendationProposals = null, IEnumerable<string> missingGuidanceInformation = null)
+        {
+            extension ??= new List<FhirR4Extension>();
+            presentGuidanceInformation ??= new List<PresentGuidanceInformation>();
+            recommendationProposals ??= new List<FollowupRecommendationInference>();
+            missingGuidanceInformation ??= new List<string>();
+
+            return new GuidanceInference(
+                RadiologyInsightsInferenceType.Guidance,
+                extension?.ToList(),
+                serializedAdditionalRawData: null,
+                finding,
+                identifier,
+                presentGuidanceInformation?.ToList(),
+                ranking,
+                recommendationProposals?.ToList(),
+                missingGuidanceInformation?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.PresentGuidanceInformation"/>. </summary>
+        /// <param name="presentGuidanceItem"> The item of the structured information. </param>
+        /// <param name="sizes"> A list of size values, if the item is about size. </param>
+        /// <param name="maximumDiameterAsInText"> The maximum diameter value, if the item is about the maximum diameter. </param>
+        /// <param name="presentGuidanceValues"> The list of item values that are mentioned in the report. </param>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <returns> A new <see cref="RadiologyInsights.PresentGuidanceInformation"/> instance for mocking. </returns>
+        public static PresentGuidanceInformation PresentGuidanceInformation(string presentGuidanceItem = null, IEnumerable<FhirR4Observation> sizes = null, FhirR4Quantity maximumDiameterAsInText = null, IEnumerable<string> presentGuidanceValues = null, IEnumerable<FhirR4Extension> extension = null)
+        {
+            sizes ??= new List<FhirR4Observation>();
+            presentGuidanceValues ??= new List<string>();
+            extension ??= new List<FhirR4Extension>();
+
+            return new PresentGuidanceInformation(
+                presentGuidanceItem,
+                sizes?.ToList(),
+                maximumDiameterAsInText,
+                presentGuidanceValues?.ToList(),
+                extension?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RadiologyInsights.QualityMeasureInference"/>. </summary>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <param name="qualityMeasureDenominator"> The denominator, which identifies the QualityMeasure kind. </param>
+        /// <param name="complianceType"> The ComplianceType indicates whether the document is compliant for the specified QualityMeasure or not, or if exceptions apply. </param>
+        /// <param name="qualityCriteria"> List of quality criteria identified in the document, if any. </param>
+        /// <returns> A new <see cref="RadiologyInsights.QualityMeasureInference"/> instance for mocking. </returns>
+        public static QualityMeasureInference QualityMeasureInference(IEnumerable<FhirR4Extension> extension = null, string qualityMeasureDenominator = null, QualityMeasureComplianceType complianceType = default, IEnumerable<string> qualityCriteria = null)
+        {
+            extension ??= new List<FhirR4Extension>();
+            qualityCriteria ??= new List<string>();
+
+            return new QualityMeasureInference(
+                RadiologyInsightsInferenceType.QualityMeasure,
+                extension?.ToList(),
+                serializedAdditionalRawData: null,
+                qualityMeasureDenominator,
+                complianceType,
+                qualityCriteria?.ToList());
         }
     }
 }

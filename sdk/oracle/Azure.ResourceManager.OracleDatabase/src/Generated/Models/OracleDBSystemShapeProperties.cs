@@ -46,14 +46,20 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="OracleDBSystemShapeProperties"/>. </summary>
+        /// <param name="shapeName"> The shape used for the DB system. </param>
         /// <param name="availableCoreCount"> The maximum number of CPU cores that can be enabled on the DB system for this shape. </param>
-        public OracleDBSystemShapeProperties(int availableCoreCount)
+        /// <exception cref="ArgumentNullException"> <paramref name="shapeName"/> is null. </exception>
+        internal OracleDBSystemShapeProperties(string shapeName, int availableCoreCount)
         {
+            Argument.AssertNotNull(shapeName, nameof(shapeName));
+
+            ShapeName = shapeName;
             AvailableCoreCount = availableCoreCount;
         }
 
         /// <summary> Initializes a new instance of <see cref="OracleDBSystemShapeProperties"/>. </summary>
         /// <param name="shapeFamily"> The family of the shape used for the DB system. </param>
+        /// <param name="shapeName"> The shape used for the DB system. </param>
         /// <param name="availableCoreCount"> The maximum number of CPU cores that can be enabled on the DB system for this shape. </param>
         /// <param name="minimumCoreCount"> The minimum number of CPU cores that can be enabled on the DB system for this shape. </param>
         /// <param name="runtimeMinimumCoreCount"> The runtime minimum number of CPU cores that can be enabled on the DB system for this shape. </param>
@@ -73,10 +79,14 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="minimumNodeCount"> The minimum number of database nodes available for this shape. </param>
         /// <param name="maximumNodeCount"> The maximum number of database nodes available for this shape. </param>
         /// <param name="availableCoreCountPerNode"> The maximum number of CPU cores per database node that can be enabled for this shape. Only applicable to the flex Exadata shape and ExaCC Elastic shapes. </param>
+        /// <param name="computeModel"> The compute model of the Exadata Infrastructure. </param>
+        /// <param name="areServerTypesSupported"> Indicates if the shape supports database and storage server types. </param>
+        /// <param name="displayName"> The display name of the shape used for the DB system. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OracleDBSystemShapeProperties(string shapeFamily, int availableCoreCount, int? minimumCoreCount, int? runtimeMinimumCoreCount, int? coreCountIncrement, int? minStorageCount, int? maxStorageCount, double? availableDataStoragePerServerInTbs, int? availableMemoryPerNodeInGbs, int? availableDBNodePerNodeInGbs, int? minCoreCountPerNode, int? availableMemoryInGbs, int? minMemoryPerNodeInGbs, int? availableDBNodeStorageInGbs, int? minDBNodeStoragePerNodeInGbs, int? availableDataStorageInTbs, int? minDataStorageInTbs, int? minimumNodeCount, int? maximumNodeCount, int? availableCoreCountPerNode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OracleDBSystemShapeProperties(string shapeFamily, string shapeName, int availableCoreCount, int? minimumCoreCount, int? runtimeMinimumCoreCount, int? coreCountIncrement, int? minStorageCount, int? maxStorageCount, double? availableDataStoragePerServerInTbs, int? availableMemoryPerNodeInGbs, int? availableDBNodePerNodeInGbs, int? minCoreCountPerNode, int? availableMemoryInGbs, int? minMemoryPerNodeInGbs, int? availableDBNodeStorageInGbs, int? minDBNodeStoragePerNodeInGbs, int? availableDataStorageInTbs, int? minDataStorageInTbs, int? minimumNodeCount, int? maximumNodeCount, int? availableCoreCountPerNode, OracleDatabaseComputeModel? computeModel, bool? areServerTypesSupported, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ShapeFamily = shapeFamily;
+            ShapeName = shapeName;
             AvailableCoreCount = availableCoreCount;
             MinimumCoreCount = minimumCoreCount;
             RuntimeMinimumCoreCount = runtimeMinimumCoreCount;
@@ -96,6 +106,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             MinimumNodeCount = minimumNodeCount;
             MaximumNodeCount = maximumNodeCount;
             AvailableCoreCountPerNode = availableCoreCountPerNode;
+            ComputeModel = computeModel;
+            AreServerTypesSupported = areServerTypesSupported;
+            DisplayName = displayName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -106,6 +119,8 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> The family of the shape used for the DB system. </summary>
         public string ShapeFamily { get; }
+        /// <summary> The shape used for the DB system. </summary>
+        public string ShapeName { get; }
         /// <summary> The maximum number of CPU cores that can be enabled on the DB system for this shape. </summary>
         public int AvailableCoreCount { get; }
         /// <summary> The minimum number of CPU cores that can be enabled on the DB system for this shape. </summary>
@@ -144,5 +159,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public int? MaximumNodeCount { get; }
         /// <summary> The maximum number of CPU cores per database node that can be enabled for this shape. Only applicable to the flex Exadata shape and ExaCC Elastic shapes. </summary>
         public int? AvailableCoreCountPerNode { get; }
+        /// <summary> The compute model of the Exadata Infrastructure. </summary>
+        public OracleDatabaseComputeModel? ComputeModel { get; }
+        /// <summary> Indicates if the shape supports database and storage server types. </summary>
+        public bool? AreServerTypesSupported { get; }
+        /// <summary> The display name of the shape used for the DB system. </summary>
+        public string DisplayName { get; }
     }
 }

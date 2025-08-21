@@ -29,7 +29,6 @@ namespace Azure.Communication.Chat
         /// <param name="editedOn"> The timestamp when the chat message was edited. </param>
         /// <param name="metadata"> Property bag of message metadata key - value pairs. </param>
         /// <returns>A new <see cref="Chat.ChatMessage"/> instance for mocking.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ChatMessage ChatMessage(string id, ChatMessageType type, string sequenceId, string version, ChatMessageContent content, string senderDisplayName, DateTimeOffset createdOn, string senderId, DateTimeOffset? deletedOn, DateTimeOffset? editedOn, IReadOnlyDictionary<string, string> metadata)
             => new ChatMessage(id, type, sequenceId, version, content, senderDisplayName, createdOn, senderId, deletedOn, editedOn, metadata);
 
@@ -47,7 +46,6 @@ namespace Azure.Communication.Chat
         /// <param name="deletedOn"> The timestamp when the chat message was deleted. </param>
         /// <param name="editedOn"> The timestamp when the chat message was edited. </param>
         /// <returns>A new <see cref="Chat.ChatMessage"/> instance for mocking.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ChatMessage ChatMessage(string id, ChatMessageType type, string sequenceId, string version, ChatMessageContent content, string senderDisplayName, DateTimeOffset createdOn, string senderId, DateTimeOffset? deletedOn, DateTimeOffset? editedOn)
             => ChatMessage(id, type, sequenceId, version, content, senderDisplayName, createdOn, senderId, deletedOn, editedOn, null);
 
@@ -59,7 +57,6 @@ namespace Azure.Communication.Chat
         /// <param name="deletedOn"> The timestamp when the chat thread was deleted. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="lastMessageReceivedOn"> The timestamp when the last message arrived at the server. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <returns>A new <see cref="ChatThreadItem"/> instance for mocking.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ChatThreadItem ChatThreadItem(string id, string topic, DateTimeOffset? deletedOn, DateTimeOffset? lastMessageReceivedOn)
             => new ChatThreadItem(id, topic, deletedOn, lastMessageReceivedOn);
 
@@ -70,7 +67,6 @@ namespace Azure.Communication.Chat
         /// <param name="chatMessageId"> Id for the chat message that has been read. </param>
         /// <param name="readOn"> Read receipt timestamp. </param>
         /// <returns>A new <see cref="ChatMessageReadReceipt"/> instance for mocking.</returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ChatMessageReadReceipt ChatMessageReadReceipt(CommunicationIdentifier sender, string chatMessageId, DateTimeOffset readOn)
             => new ChatMessageReadReceipt(sender, chatMessageId, readOn);
 
@@ -96,14 +92,14 @@ namespace Azure.Communication.Chat
         public static ChatMessageContent ChatMessageContent(string message, string topic, CommunicationUserIdentifier communicationUserIdentifier, IEnumerable<ChatParticipant> participants, IEnumerable<ChatAttachment> attachments = null) => new ChatMessageContent(message, topic, communicationUserIdentifier, participants, attachments);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ChatThreadProperties"/> class.
+        /// Initializes a new instance of the <see cref="Chat.ChatThreadProperties"/> class.
         /// </summary>
-        /// <param name="id"> Chat message. </param>
+        /// <param name="id"> Chat message ID. </param>
         /// <param name="topic"> Topic of the message content. </param>
         /// <param name="createdOn"> Created on date time </param>
         /// <param name="createdBy"> Created by </param>
         /// <param name="deletedOn"> Deleted on date time </param>
-        /// <returns>A new <see cref="ChatThreadProperties"/> instance for mocking.</returns>
+        /// <returns>A new <see cref="Chat.ChatThreadProperties"/> instance for mocking.</returns>
         public static ChatThreadProperties ChatThreadProperties(string id, string topic, DateTimeOffset createdOn, CommunicationIdentifier createdBy, DateTimeOffset deletedOn) => new ChatThreadProperties(id, topic, createdOn, createdBy, deletedOn);
 
         /// <summary>
@@ -126,13 +122,23 @@ namespace Azure.Communication.Chat
         public static ChatAttachment ChatAttachment(string id, ChatAttachmentType attachmentType, string name, Uri uri, Uri previewUri) => new ChatAttachment(id, attachmentType, name, uri, previewUri);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ChatParticipant"/> class.
+        /// Initializes a new instance of the <see cref="Chat.ChatParticipant"/> class.
         /// </summary>
         /// <param name="user"> User </param>
         /// <param name="displayName">Display name for the chat thread member.</param>
         /// <param name="shareHistoryTime"> Time from which the chat history is shared with the member. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`.</param>
-        /// <returns>A new <see cref="ChatParticipant"/> instance for mocking.</returns>
+        /// <returns>A new <see cref="Chat.ChatParticipant"/> instance for mocking.</returns>
         public static ChatParticipant ChatParticipant(CommunicationIdentifier user, string displayName, DateTimeOffset? shareHistoryTime) => new ChatParticipant(user, displayName, shareHistoryTime);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Chat.ChatParticipant"/> class.
+        /// </summary>
+        /// <param name="user"> User </param>
+        /// <param name="displayName">Display name for the chat thread member.</param>
+        /// <param name="shareHistoryTime"> Time from which the chat history is shared with the member. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`.</param>
+        /// <param name="metadata"> Property bag of participant metadata key - value pairs. </param>
+        /// <returns>A new <see cref="Chat.ChatParticipant"/> instance for mocking.</returns>
+        public static ChatParticipant ChatParticipant(CommunicationIdentifier user, string displayName, DateTimeOffset? shareHistoryTime, IDictionary<string, string> metadata) => new ChatParticipant(user, displayName, shareHistoryTime, metadata);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SendChatMessageResult"/> class.

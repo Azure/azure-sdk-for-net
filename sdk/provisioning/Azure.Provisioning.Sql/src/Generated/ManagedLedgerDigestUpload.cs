@@ -85,7 +85,7 @@ public partial class ManagedLedgerDigestUpload : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedLedgerDigestUpload.</param>
     public ManagedLedgerDigestUpload(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/databases/ledgerDigestUploads", resourceVersion ?? "2021-11-01")
+        : base(bicepIdentifier, "Microsoft.Sql/managedInstances/databases/ledgerDigestUploads", resourceVersion ?? "2023-08-01")
     {
     }
 
@@ -111,6 +111,11 @@ public partial class ManagedLedgerDigestUpload : ProvisionableResource
         /// 2021-11-01.
         /// </summary>
         public static readonly string V2021_11_01 = "2021-11-01";
+
+        /// <summary>
+        /// 2023-08-01.
+        /// </summary>
+        public static readonly string V2023_08_01 = "2023-08-01";
     }
 
     /// <summary>

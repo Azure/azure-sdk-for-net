@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Terraform.Models;
 
 namespace Azure.ResourceManager.Terraform
 {
@@ -13,6 +14,14 @@ namespace Azure.ResourceManager.Terraform
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(CommonExportProperties))]
+    [ModelReaderWriterBuildable(typeof(ExportQueryTerraform))]
+    [ModelReaderWriterBuildable(typeof(ExportResourceGroupTerraform))]
+    [ModelReaderWriterBuildable(typeof(ExportResourceTerraform))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(TerraformExportResult))]
+    [ModelReaderWriterBuildable(typeof(TerraformOperationStatus))]
+    [ModelReaderWriterBuildable(typeof(UnknownCommonExportProperties))]
     public partial class AzureResourceManagerTerraformContext : ModelReaderWriterContext
     {
     }

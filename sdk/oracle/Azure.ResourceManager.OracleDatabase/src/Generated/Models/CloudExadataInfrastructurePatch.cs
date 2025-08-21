@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> Initializes a new instance of <see cref="CloudExadataInfrastructurePatch"/>. </summary>
         /// <param name="zones"> CloudExadataInfrastructure zones. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="properties"> The updatable properties of the CloudExadataInfrastructure. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CloudExadataInfrastructurePatch(IList<string> zones, IDictionary<string, string> tags, CloudExadataInfrastructureUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public IList<string> Zones { get; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The updatable properties of the CloudExadataInfrastructure. </summary>
+        /// <summary> The resource-specific properties for this resource. </summary>
         public CloudExadataInfrastructureUpdateProperties Properties { get; set; }
     }
 }

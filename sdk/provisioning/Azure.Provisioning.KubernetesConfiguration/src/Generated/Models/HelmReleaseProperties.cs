@@ -74,10 +74,10 @@ public partial class HelmReleaseProperties : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _lastRevisionApplied = DefineProperty<long>("LastRevisionApplied", ["lastRevisionApplied"], isOutput: true);
-        _helmChartRef = DefineModelProperty<KubernetesObjectReference>("HelmChartRef", ["helmChartRef"], isOutput: true);
-        _failureCount = DefineProperty<long>("FailureCount", ["failureCount"], isOutput: true);
-        _installFailureCount = DefineProperty<long>("InstallFailureCount", ["installFailureCount"], isOutput: true);
-        _upgradeFailureCount = DefineProperty<long>("UpgradeFailureCount", ["upgradeFailureCount"], isOutput: true);
+        _lastRevisionApplied = DefineProperty<long>("LastRevisionApplied", ["LastRevisionApplied"], isOutput: true);
+        _helmChartRef = DefineModelProperty<KubernetesObjectReference>("HelmChartRef", ["HelmChartRef"], isOutput: true);
+        _failureCount = DefineProperty<long>("FailureCount", ["FailureCount"], isOutput: true);
+        _installFailureCount = DefineProperty<long>("InstallFailureCount", ["InstallFailureCount"], isOutput: true);
+        _upgradeFailureCount = DefineProperty<long>("UpgradeFailureCount", ["UpgradeFailureCount"], isOutput: true);
     }
 }

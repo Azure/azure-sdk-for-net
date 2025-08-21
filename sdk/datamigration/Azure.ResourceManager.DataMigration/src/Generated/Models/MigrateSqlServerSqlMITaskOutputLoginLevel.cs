@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMITaskOutputLoginLevel"/>. </summary>
         internal MigrateSqlServerSqlMITaskOutputLoginLevel()
         {
-            ExceptionsAndWarnings = new ChangeTrackingList<ReportableException>();
+            ExceptionsAndWarnings = new ChangeTrackingList<DataMigrationReportableException>();
             ResultType = "LoginLevelOutput";
         }
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="endedOn"> Login migration end time. </param>
         /// <param name="message"> Login migration progress message. </param>
         /// <param name="exceptionsAndWarnings"> Login migration errors and warnings per login. </param>
-        internal MigrateSqlServerSqlMITaskOutputLoginLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string loginName, MigrationState? state, LoginMigrationStage? stage, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string message, IReadOnlyList<ReportableException> exceptionsAndWarnings) : base(id, resultType, serializedAdditionalRawData)
+        internal MigrateSqlServerSqlMITaskOutputLoginLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string loginName, DataMigrationState? state, LoginMigrationStage? stage, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string message, IReadOnlyList<DataMigrationReportableException> exceptionsAndWarnings) : base(id, resultType, serializedAdditionalRawData)
         {
             LoginName = loginName;
             State = state;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Login name. </summary>
         public string LoginName { get; }
         /// <summary> Current state of login. </summary>
-        public MigrationState? State { get; }
+        public DataMigrationState? State { get; }
         /// <summary> Current stage of login. </summary>
         public LoginMigrationStage? Stage { get; }
         /// <summary> Login migration start time. </summary>
@@ -56,6 +56,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Login migration progress message. </summary>
         public string Message { get; }
         /// <summary> Login migration errors and warnings per login. </summary>
-        public IReadOnlyList<ReportableException> ExceptionsAndWarnings { get; }
+        public IReadOnlyList<DataMigrationReportableException> ExceptionsAndWarnings { get; }
     }
 }

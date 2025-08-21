@@ -19,7 +19,6 @@ namespace Azure.Developer.Playwright.Tests
             Assert.Multiple(() =>
             {
                 Assert.That(options.OS, Is.EqualTo(OSPlatform.Linux));
-                Assert.That(options.UseCloudHostedBrowsers, Is.True);
                 Assert.That(options.ServiceAuth, Is.EqualTo(ServiceAuthType.EntraId));
                 Assert.That(options.VersionString, Is.EqualTo("2025-07-01-preview"));
             });
@@ -68,7 +67,7 @@ namespace Azure.Developer.Playwright.Tests
                 environment: environment,
                 serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview);
 
-            var expectedRunId = "new-run-id";
+            var expectedRunId = "f3a0f9c8-1b4b-4f44-9a77-062d8d4188e4";
             options.RunId = expectedRunId;
 
             Assert.That(environment.GetEnvironmentVariable(Constants.s_playwright_service_run_id_environment_variable),
@@ -83,25 +82,6 @@ namespace Azure.Developer.Playwright.Tests
             var ex = Assert.Throws<ArgumentException>(() =>
                 options.ServiceAuth = new ServiceAuthType("InvalidAuth"));
             Assert.That(ex!.Message, Does.Contain("Invalid value for ServiceAuth"));
-        }
-
-        [Test]
-        public void UseCloudHostedBrowsers_WhenEnvironmentVariableIsInvalid_ThrowsArgumentException()
-        {
-            var environment = new TestEnvironment();
-            environment.SetEnvironmentVariable(
-                Constants.s_playwright_service_use_cloud_hosted_browsers_environment_variable,
-                "not-a-boolean");
-
-            var options = new PlaywrightServiceBrowserClientOptions(
-                environment: environment,
-                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview);
-
-            var ex = Assert.Throws<ArgumentException>(() =>
-            {
-                var _ = options.UseCloudHostedBrowsers;
-            });
-            Assert.That(ex!.Message, Does.Contain("Invalid value for UseCloudHostedBrowsers"));
         }
 
         [Test]
@@ -218,36 +198,6 @@ namespace Azure.Developer.Playwright.Tests
         }
 
         [Test]
-        public void UseCloudHostedBrowsers_WhenSetAndEnvironmentIsSet_DoesNotUpdateEnvironmentVariable()
-        {
-            var environment = new TestEnvironment();
-            environment.SetEnvironmentVariable(Constants.s_playwright_service_use_cloud_hosted_browsers_environment_variable, "true");
-
-            _ = new PlaywrightServiceBrowserClientOptions(
-                environment: environment,
-                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview)
-            {
-                UseCloudHostedBrowsers = false
-            };
-
-            Assert.That(environment.GetEnvironmentVariable(Constants.s_playwright_service_use_cloud_hosted_browsers_environment_variable),
-                Is.EqualTo("true"));
-        }
-
-        [Test]
-        public void UseCloudHostedBrowsers_WhenEnvironmentVariableIsSet_ReturnsEnvironmentValue()
-        {
-            var environment = new TestEnvironment();
-            environment.SetEnvironmentVariable(Constants.s_playwright_service_use_cloud_hosted_browsers_environment_variable, "false");
-
-            var options = new PlaywrightServiceBrowserClientOptions(
-                environment: environment,
-                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview);
-
-            Assert.That(options.UseCloudHostedBrowsers, Is.False);
-        }
-
-        [Test]
         public void RunId_WhenNoValueSet_ReturnsDefaultRunId()
         {
             var environment = new TestEnvironment();
@@ -276,14 +226,14 @@ namespace Azure.Developer.Playwright.Tests
         public void RunId_WhenSetAndEnvironmentAlreadySet_DoesNotUpdateEnvironment()
         {
             var environment = new TestEnvironment();
-            var existingRunId = "existing-run-id";
+            var existingRunId = "f3a0f9c8-1b4b-4f44-9a77-062d8d4188e4";
             environment.SetEnvironmentVariable(Constants.s_playwright_service_run_id_environment_variable, existingRunId);
 
             _ = new PlaywrightServiceBrowserClientOptions(
                 environment: environment,
                 serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview)
             {
-                RunId = "new-run-id"
+                RunId = "f3a0f9c8-1b4b-4f44-9a77-062d8d418878"
             };
 
             Assert.That(environment.GetEnvironmentVariable(Constants.s_playwright_service_run_id_environment_variable),
@@ -320,22 +270,6 @@ namespace Azure.Developer.Playwright.Tests
 
             Assert.That(environment.GetEnvironmentVariable(Constants.s_playwright_service_auth_type_environment_variable),
                 Is.EqualTo(ServiceAuthType.AccessToken.ToString()));
-        }
-
-        [Test]
-        public void UseCloudHostedBrowsers_WhenSetAndEnvironmentNotSet_UpdatesEnvironment()
-        {
-            var environment = new TestEnvironment();
-
-            _ = new PlaywrightServiceBrowserClientOptions(
-                environment: environment,
-                serviceVersion: PlaywrightServiceBrowserClientOptions.ServiceVersion.V2025_07_01_Preview)
-            {
-                UseCloudHostedBrowsers = false
-            };
-
-            Assert.That(environment.GetEnvironmentVariable(Constants.s_playwright_service_use_cloud_hosted_browsers_environment_variable),
-                Is.EqualTo(false.ToString()));
         }
     }
 }

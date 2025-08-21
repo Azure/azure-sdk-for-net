@@ -20,7 +20,7 @@ namespace Azure.Generator.Tests
         [SetUp]
         public void SetUp()
         {
-            MockHelpers.LoadMockPlugin();
+            MockHelpers.LoadMockGenerator();
         }
 
         [TestCase(typeof(Guid), ExpectedResult = "writer.WriteStringValue(value);\n")]
@@ -139,6 +139,19 @@ namespace Azure.Generator.Tests
             Assert.IsNotNull(actual);
             Assert.IsTrue(actual?.IsFrameworkType);
             Assert.AreEqual(typeof(ResponseError), actual?.FrameworkType);
+        }
+
+        [TestCase(typeof(Guid))]
+        [TestCase(typeof(ETag))]
+        [TestCase(typeof(ResourceIdentifier))]
+        [TestCase(typeof(AzureLocation))]
+        [TestCase(typeof(ResponseError))]
+        public void CreatesFrameworkType(Type expectedType)
+        {
+            var factory = new TestTypeFactory();
+
+            var actual = factory.InvokeCreateFrameworkType(expectedType.FullName!);
+            Assert.AreEqual(expectedType, actual);
         }
     }
 }

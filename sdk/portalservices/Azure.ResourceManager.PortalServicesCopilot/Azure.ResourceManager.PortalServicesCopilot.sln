@@ -7,8 +7,6 @@ Project("{443E3AD3-1ED9-44A4-8C6E-901365FF1966}") = "Azure.ResourceManager.Porta
 EndProject
 Project("{443E3AD3-1ED9-44A4-8C6E-901365FF1966}") = "Azure.ResourceManager.PortalServicesCopilot.Tests", "tests\Azure.ResourceManager.PortalServicesCopilot.Tests.csproj", "{381B174E-8E5B-4887-B8C1-BF4DEBEAC3A6}"
 EndProject
-Project("{443E3AD3-1ED9-44A4-8C6E-901365FF1966}") = "Azure.ResourceManager.PortalServicesCopilot.Samples", "samples\Azure.ResourceManager.PortalServicesCopilot.Samples.csproj", "{2D08F5E7-7672-4E0E-A2EF-8376B9A7ED7B}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

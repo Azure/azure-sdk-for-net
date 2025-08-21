@@ -83,6 +83,16 @@ public partial class ContainerRegistryService : ProvisionableResource
     private BicepValue<bool>? _isAdminUserEnabled;
 
     /// <summary>
+    /// Enables registry-wide pull from unauthenticated clients.
+    /// </summary>
+    public BicepValue<bool> IsAnonymousPullEnabled 
+    {
+        get { Initialize(); return _isAnonymousPullEnabled!; }
+        set { Initialize(); _isAnonymousPullEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isAnonymousPullEnabled;
+
+    /// <summary>
     /// Enable a single data endpoint per region for serving data.
     /// </summary>
     public BicepValue<bool> IsDataEndpointEnabled 
@@ -240,7 +250,7 @@ public partial class ContainerRegistryService : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerRegistryService.</param>
     public ContainerRegistryService(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.ContainerRegistry/registries", resourceVersion ?? "2023-07-01")
+        : base(bicepIdentifier, "Microsoft.ContainerRegistry/registries", resourceVersion ?? "2025-04-01")
     {
     }
 
@@ -255,6 +265,7 @@ public partial class ContainerRegistryService : ProvisionableResource
         _encryption = DefineModelProperty<ContainerRegistryEncryption>("Encryption", ["properties", "encryption"]);
         _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
         _isAdminUserEnabled = DefineProperty<bool>("IsAdminUserEnabled", ["properties", "adminUserEnabled"]);
+        _isAnonymousPullEnabled = DefineProperty<bool>("IsAnonymousPullEnabled", ["properties", "anonymousPullEnabled"]);
         _isDataEndpointEnabled = DefineProperty<bool>("IsDataEndpointEnabled", ["properties", "dataEndpointEnabled"]);
         _networkRuleBypassOptions = DefineProperty<ContainerRegistryNetworkRuleBypassOption>("NetworkRuleBypassOptions", ["properties", "networkRuleBypassOptions"]);
         _networkRuleSet = DefineModelProperty<ContainerRegistryNetworkRuleSet>("NetworkRuleSet", ["properties", "networkRuleSet"]);
@@ -277,6 +288,11 @@ public partial class ContainerRegistryService : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-04-01.
+        /// </summary>
+        public static readonly string V2025_04_01 = "2025-04-01";
+
         /// <summary>
         /// 2023-07-01.
         /// </summary>
