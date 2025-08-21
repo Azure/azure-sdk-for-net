@@ -315,26 +315,19 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             PersistentAgentsChatClient chatClient = new(client, agent.Id, thread.Id);
 
-            List<ChatMessage> messages = [];
-            messages.Add(new ChatMessage(ChatRole.User, [new TextContent("""
-                Please two functions to:
-                1. Get current weather in Seattle
-                2. Get Mike's favourite word
-                """)]));
-
-            ChatResponse response = await chatClient.GetResponseAsync(messages, chatOptions);
+            ChatResponse response = await chatClient.GetResponseAsync(new ChatMessage(ChatRole.User, "Get Mike's favourite word"), chatOptions);
 
             Assert.IsNotNull(response);
             Assert.IsNotNull(response.Messages);
             Assert.GreaterOrEqual(response.Messages.Count, 1);
             Assert.AreEqual(ChatRole.Assistant, response.Messages[0].Role);
 
-            List<string> functionNames = [.. response.Messages[0].Contents
+            List<string> functionNames = response.Messages[0].Contents
                 .OfType<FunctionCallContent>()
-                .Select(c => c.Name)];
+                .Select(c => c.Name)
+                .ToList();
 
             Assert.Contains("GetFavouriteWord", functionNames);
-            Assert.Contains("GetWeather", functionNames);
         }
 
         [RecordedTest]

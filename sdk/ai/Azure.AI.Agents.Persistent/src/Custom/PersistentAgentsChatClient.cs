@@ -100,7 +100,8 @@ namespace Azure.AI.Agents.Persistent
 
             // Submit the request.
             IAsyncEnumerable<StreamingUpdate> updates;
-            if (threadRun is not null &&
+            if (toolResults is not null &&
+                threadRun is not null &&
                 ConvertFunctionResultsToToolOutput(toolResults, out List<ToolOutput>? toolOutputs) is { } toolRunId &&
                 toolRunId == threadRun.Id)
             {
@@ -124,32 +125,34 @@ namespace Azure.AI.Agents.Persistent
                     await _client!.Runs.CancelRunAsync(threadId, threadRun.Id, cancellationToken).ConfigureAwait(false);
                     threadRun = null;
                 }
-                else if (runOptions.ToolResources is not null)
-                {
-                    // For an existing thread, when the options require a changes in the resources, since there's no way to override resources per-request basis,
-                    // the new resources are updated for the thread before a new run call.
-                    // await _client!.Threads.UpdateThreadAsync(threadId, toolResources: runOptions.ToolResources, cancellationToken: cancellationToken).ConfigureAwait(false);
-                }
 
                 // Now create a new run and stream the results.
+                CreateRunStreamingOptions opts = new()
+                {
+                    OverrideModelName = runOptions.OverrideModelName,
+                    OverrideInstructions = runOptions.OverrideInstructions,
+                    AdditionalInstructions = null,
+                    AdditionalMessages = runOptions.ThreadOptions.Messages,
+                    OverrideTools = runOptions.OverrideTools,
+                    ToolResources = runOptions.ToolResources,
+                    Temperature = runOptions.Temperature,
+                    TopP = runOptions.TopP,
+                    MaxPromptTokens = runOptions.MaxPromptTokens,
+                    MaxCompletionTokens = runOptions.MaxCompletionTokens,
+                    TruncationStrategy = runOptions.TruncationStrategy,
+                    ToolChoice = runOptions.ToolChoice,
+                    ResponseFormat = runOptions.ResponseFormat,
+                    ParallelToolCalls = runOptions.ParallelToolCalls,
+                    Metadata = runOptions.Metadata
+                };
+
+                // This method added for compatibility, before the include parameter support was enabled.
                 updates = _client!.Runs.CreateRunStreamingAsync(
-                        threadId: threadId,
-                        agentId: _agentId,
-                        overrideModelName: runOptions.OverrideModelName,
-                        overrideInstructions: runOptions.OverrideInstructions,
-                        additionalInstructions: null,
-                        additionalMessages: runOptions.ThreadOptions.Messages,
-                        overrideTools: runOptions.OverrideTools,
-                        temperature: runOptions.Temperature,
-                        topP: runOptions.TopP,
-                        maxPromptTokens: runOptions.MaxPromptTokens,
-                        maxCompletionTokens: runOptions.MaxCompletionTokens,
-                        truncationStrategy: runOptions.TruncationStrategy,
-                        toolChoice: runOptions.ToolChoice,
-                        responseFormat: runOptions.ResponseFormat,
-                        parallelToolCalls: runOptions.ParallelToolCalls,
-                        metadata: runOptions.Metadata,
-                        cancellationToken);
+                    threadId: threadId,
+                    agentId: _agentId,
+                    options: opts,
+                    cancellationToken: cancellationToken
+                );
             }
 
             // Process each update.
