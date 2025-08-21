@@ -26,14 +26,14 @@ namespace Azure.Generator.Visitors
             ScmMethodProviderCollection? methods)
         {
             var returnClientRequestIdParameter =
-                serviceMethod.Parameters.FirstOrDefault(p => p.NameInRequest == ReturnClientRequestIdParameterName);
+                serviceMethod.Parameters.FirstOrDefault(p => p.SerializedName == ReturnClientRequestIdParameterName);
             var xMsClientRequestIdParameter =
-                serviceMethod.Parameters.FirstOrDefault(p => p.NameInRequest == XMsClientRequestIdParameterName);
+                serviceMethod.Parameters.FirstOrDefault(p => p.SerializedName == XMsClientRequestIdParameterName);
 
             if (returnClientRequestIdParameter != null || xMsClientRequestIdParameter != null)
             {
-                serviceMethod.Update(parameters: [.. serviceMethod.Parameters.Where(p => p.NameInRequest != ReturnClientRequestIdParameterName && p.NameInRequest != XMsClientRequestIdParameterName)]);
-                serviceMethod.Operation.Update(parameters: [.. serviceMethod.Operation.Parameters.Where(p => p.NameInRequest != ReturnClientRequestIdParameterName && p.NameInRequest != XMsClientRequestIdParameterName)]);
+                serviceMethod.Update(parameters: [.. serviceMethod.Parameters.Where(p => p.SerializedName != ReturnClientRequestIdParameterName && p.SerializedName != XMsClientRequestIdParameterName)]);
+                serviceMethod.Operation.Update(parameters: [.. serviceMethod.Operation.Parameters.Where(p => p.SerializedName != ReturnClientRequestIdParameterName && p.SerializedName != XMsClientRequestIdParameterName)]);
 
                 // Create a new method collection with the updated service method
                 methods = new ScmMethodProviderCollection(serviceMethod, client);
@@ -71,7 +71,7 @@ namespace Azure.Generator.Visitors
                         // Set the return-client-request-id header
                         newStatements.Add(requestVariable!.ToApi<HttpRequestApi>().SetHeaders(
                         [
-                            Literal(returnClientRequestIdParameter.NameInRequest),
+                            Literal(returnClientRequestIdParameter.SerializedName),
                             Literal(value.ToString().ToLowerInvariant())
                         ]));
                     }

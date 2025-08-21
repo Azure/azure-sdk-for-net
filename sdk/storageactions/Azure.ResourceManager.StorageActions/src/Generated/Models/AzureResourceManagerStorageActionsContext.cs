@@ -6,13 +6,40 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.StorageActions.Models;
 
 namespace Azure.ResourceManager.StorageActions
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(StorageTaskData))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(StorageTaskProperties))]
+    [ModelReaderWriterBuildable(typeof(StorageTaskAction))]
+    [ModelReaderWriterBuildable(typeof(StorageTaskIfCondition))]
+    [ModelReaderWriterBuildable(typeof(StorageTaskOperationInfo))]
+    [ModelReaderWriterBuildable(typeof(StorageTaskElseCondition))]
+    [ModelReaderWriterBuildable(typeof(StorageTaskPatch))]
+    [ModelReaderWriterBuildable(typeof(StorageTaskUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(StorageTasksListResult))]
+    [ModelReaderWriterBuildable(typeof(StorageTaskPreviewAction))]
+    [ModelReaderWriterBuildable(typeof(StorageTaskPreviewActionProperties))]
+    [ModelReaderWriterBuildable(typeof(StorageTaskPreviewContainerProperties))]
+    [ModelReaderWriterBuildable(typeof(StorageTaskPreviewKeyValueProperties))]
+    [ModelReaderWriterBuildable(typeof(StorageTaskPreviewBlobProperties))]
+    [ModelReaderWriterBuildable(typeof(StorageTaskPreviewActionCondition))]
+    [ModelReaderWriterBuildable(typeof(StorageTaskPreviewActionIfCondition))]
+    [ModelReaderWriterBuildable(typeof(StorageTaskReportSummary))]
+    [ModelReaderWriterBuildable(typeof(StorageTaskReportInstance))]
+    [ModelReaderWriterBuildable(typeof(StorageTaskReportProperties))]
+    [ModelReaderWriterBuildable(typeof(StorageTaskAssignmentsListResult))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
+    [ModelReaderWriterBuildable(typeof(StorageTaskResource))]
     public partial class AzureResourceManagerStorageActionsContext : ModelReaderWriterContext
     {
     }

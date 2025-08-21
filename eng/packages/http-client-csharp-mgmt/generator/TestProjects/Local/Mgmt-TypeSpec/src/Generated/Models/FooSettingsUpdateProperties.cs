@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace MgmtTypeSpec.Models
 {
     /// <summary> The updatable properties of the FooSettings. </summary>
-    public partial class FooSettingsUpdateProperties
+    internal partial class FooSettingsUpdateProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

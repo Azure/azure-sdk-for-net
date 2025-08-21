@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.ResourceManager.InformaticaDataManagement.Models;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.InformaticaDataManagement
 {
@@ -13,6 +15,52 @@ namespace Azure.ResourceManager.InformaticaDataManagement
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AdvancedCustomProperties))]
+    [ModelReaderWriterBuildable(typeof(CdiConfigProperties))]
+    [ModelReaderWriterBuildable(typeof(CheckDependenciesResult))]
+    [ModelReaderWriterBuildable(typeof(ComputeUnitsMetadata))]
+    [ModelReaderWriterBuildable(typeof(InformaticaApplicationConfigs))]
+    [ModelReaderWriterBuildable(typeof(InformaticaApplicationTypeMetadata))]
+    [ModelReaderWriterBuildable(typeof(InformaticaCompanyDetails))]
+    [ModelReaderWriterBuildable(typeof(InformaticaCompanyDetailsUpdate))]
+    [ModelReaderWriterBuildable(typeof(InformaticaMarketplaceDetails))]
+    [ModelReaderWriterBuildable(typeof(InformaticaMarketplaceDetailsUpdate))]
+    [ModelReaderWriterBuildable(typeof(InformaticaNetworkInterfaceConfiguration))]
+    [ModelReaderWriterBuildable(typeof(InformaticaNetworkInterfaceConfigurationUpdate))]
+    [ModelReaderWriterBuildable(typeof(InformaticaOfferDetails))]
+    [ModelReaderWriterBuildable(typeof(InformaticaOfferDetailsUpdate))]
+    [ModelReaderWriterBuildable(typeof(InformaticaOrganizationData))]
+    [ModelReaderWriterBuildable(typeof(InformaticaOrganizationPatch))]
+    [ModelReaderWriterBuildable(typeof(InformaticaOrganizationProperties))]
+    [ModelReaderWriterBuildable(typeof(InformaticaOrganizationPropertiesUpdate))]
+    [ModelReaderWriterBuildable(typeof(InformaticaOrganizationResource))]
+    [ModelReaderWriterBuildable(typeof(InformaticaOrganizationResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(InformaticaProperties))]
+    [ModelReaderWriterBuildable(typeof(InformaticaRegionsMetadata))]
+    [ModelReaderWriterBuildable(typeof(InformaticaRuntimeResourceFetchMetadata))]
+    [ModelReaderWriterBuildable(typeof(InformaticaServerlessFetchConfigProperties))]
+    [ModelReaderWriterBuildable(typeof(InformaticaServerlessRuntimeData))]
+    [ModelReaderWriterBuildable(typeof(InformaticaServerlessRuntimePatch))]
+    [ModelReaderWriterBuildable(typeof(InformaticaServerlessRuntimeProperties))]
+    [ModelReaderWriterBuildable(typeof(InformaticaServerlessRuntimeResource))]
+    [ModelReaderWriterBuildable(typeof(InformaticaServerlessRuntimeResourceList))]
+    [ModelReaderWriterBuildable(typeof(InformaticaServerlessRuntimeResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(InformaticaUserDetails))]
+    [ModelReaderWriterBuildable(typeof(InformaticaUserDetailsUpdate))]
+    [ModelReaderWriterBuildable(typeof(LinkOrganization))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(ServerlessConfigProperties))]
+    [ModelReaderWriterBuildable(typeof(ServerlessMetadataResponse))]
+    [ModelReaderWriterBuildable(typeof(ServerlessRuntimeConfigProperties))]
+    [ModelReaderWriterBuildable(typeof(ServerlessRuntimeConfigPropertiesUpdate))]
+    [ModelReaderWriterBuildable(typeof(ServerlessRuntimeDependency))]
+    [ModelReaderWriterBuildable(typeof(ServerlessRuntimeNetworkProfile))]
+    [ModelReaderWriterBuildable(typeof(ServerlessRuntimeNetworkProfileUpdate))]
+    [ModelReaderWriterBuildable(typeof(ServerlessRuntimePropertiesUpdate))]
+    [ModelReaderWriterBuildable(typeof(ServerlessRuntimeTag))]
+    [ModelReaderWriterBuildable(typeof(ServerlessRuntimeUserContextProperties))]
+    [ModelReaderWriterBuildable(typeof(ServerlessRuntimeUserContextPropertiesUpdate))]
+    [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerInformaticaDataManagementContext : ModelReaderWriterContext
     {
     }

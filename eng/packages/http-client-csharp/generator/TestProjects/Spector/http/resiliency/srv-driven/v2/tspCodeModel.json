@@ -1,0 +1,541 @@
+{
+  "name": "Resiliency.SrvDriven.V2",
+  "apiVersions": [
+    "v1",
+    "v2"
+  ],
+  "enums": [
+    {
+      "$id": "1",
+      "kind": "enum",
+      "name": "Versions",
+      "crossLanguageDefinitionId": "Resiliency.ServiceDriven.Versions",
+      "valueType": {
+        "$id": "2",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "3",
+          "kind": "enumvalue",
+          "name": "v1",
+          "value": "v1",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "doc": "Version 1",
+          "decorators": []
+        },
+        {
+          "$id": "4",
+          "kind": "enumvalue",
+          "name": "v2",
+          "value": "v2",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "doc": "Version 2",
+          "decorators": []
+        }
+      ],
+      "namespace": "Resiliency.ServiceDriven",
+      "doc": "Service versions",
+      "isFixed": true,
+      "isFlags": false,
+      "usage": "ApiVersionEnum",
+      "decorators": []
+    }
+  ],
+  "constants": [],
+  "models": [],
+  "clients": [
+    {
+      "$id": "5",
+      "kind": "client",
+      "name": "ResiliencyServiceDrivenClient",
+      "namespace": "Resiliency.ServiceDriven",
+      "doc": "Test that we can grow up a service spec and service deployment into a multi-versioned service with full client support.\n\nThere are three concepts that should be clarified:\n1. Client spec version: refers to the spec that the client is generated from. 'v1' is a client generated from old.tsp and 'v2' is a client generated from main.tsp.\n2. Service deployment version: refers to a deployment version of the service. 'v1' represents the initial deployment of the service with a single api version. 'v2' represents the new deployment of a service with multiple api versions\n3. Api version: The initial deployment of the service only supports api version 'v1'. The new deployment of the service supports api versions 'v1' and 'v2'.\n\nWe test the following configurations from this service spec:\n- A client generated from the second service spec can call the second deployment of a service with api version v1\n- A client generated from the second service spec can call the second deployment of a service with api version v2",
+      "methods": [
+        {
+          "$id": "6",
+          "kind": "basic",
+          "name": "addOperation",
+          "accessibility": "public",
+          "apiVersions": [
+            "v2"
+          ],
+          "doc": "Added operation",
+          "operation": {
+            "$id": "7",
+            "name": "addOperation",
+            "resourceName": "ServiceDriven",
+            "doc": "Added operation",
+            "accessibility": "public",
+            "parameters": [],
+            "responses": [
+              {
+                "statusCodes": [
+                  204
+                ],
+                "headers": [],
+                "isErrorResponse": false
+              }
+            ],
+            "httpMethod": "DELETE",
+            "uri": "{endpoint}/resiliency/service-driven/client:v2/service:{serviceDeploymentVersion}/api-version:{apiVersion}",
+            "path": "/add-operation",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Resiliency.ServiceDriven.addOperation",
+            "decorators": []
+          },
+          "parameters": [],
+          "response": {},
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Resiliency.ServiceDriven.addOperation"
+        },
+        {
+          "$id": "8",
+          "kind": "basic",
+          "name": "fromNone",
+          "accessibility": "public",
+          "apiVersions": [
+            "v1",
+            "v2"
+          ],
+          "doc": "Test that grew up from accepting no parameters to an optional input parameter",
+          "operation": {
+            "$id": "9",
+            "name": "fromNone",
+            "resourceName": "AddOptionalParam",
+            "doc": "Test that grew up from accepting no parameters to an optional input parameter",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "10",
+                "kind": "query",
+                "name": "new-parameter",
+                "serializedName": "new-parameter",
+                "doc": "I'm a new input optional parameter",
+                "type": {
+                  "$id": "11",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "isApiVersion": false,
+                "explode": false,
+                "optional": true,
+                "scope": "Method",
+                "decorators": [],
+                "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromNone.new-parameter",
+                "readOnly": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  204
+                ],
+                "headers": [],
+                "isErrorResponse": false
+              }
+            ],
+            "httpMethod": "HEAD",
+            "uri": "{endpoint}/resiliency/service-driven/client:v2/service:{serviceDeploymentVersion}/api-version:{apiVersion}",
+            "path": "/add-optional-param/from-none",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromNone",
+            "decorators": []
+          },
+          "parameters": [
+            {
+              "$id": "12",
+              "kind": "method",
+              "name": "new-parameter",
+              "serializedName": "new-parameter",
+              "doc": "I'm a new input optional parameter",
+              "type": {
+                "$id": "13",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Query",
+              "isApiVersion": false,
+              "optional": true,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromNone.new-parameter",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            }
+          ],
+          "response": {},
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromNone"
+        },
+        {
+          "$id": "14",
+          "kind": "basic",
+          "name": "fromOneRequired",
+          "accessibility": "public",
+          "apiVersions": [
+            "v1",
+            "v2"
+          ],
+          "doc": "Operation that grew up from accepting one required parameter to accepting a required parameter and an optional parameter.",
+          "operation": {
+            "$id": "15",
+            "name": "fromOneRequired",
+            "resourceName": "AddOptionalParam",
+            "doc": "Operation that grew up from accepting one required parameter to accepting a required parameter and an optional parameter.",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "16",
+                "kind": "query",
+                "name": "parameter",
+                "serializedName": "parameter",
+                "doc": "I am a required parameter",
+                "type": {
+                  "$id": "17",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "isApiVersion": false,
+                "explode": false,
+                "optional": false,
+                "scope": "Method",
+                "decorators": [],
+                "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromOneRequired.parameter",
+                "readOnly": false
+              },
+              {
+                "$id": "18",
+                "kind": "query",
+                "name": "new-parameter",
+                "serializedName": "new-parameter",
+                "doc": "I'm a new input optional parameter",
+                "type": {
+                  "$id": "19",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "isApiVersion": false,
+                "explode": false,
+                "optional": true,
+                "scope": "Method",
+                "decorators": [],
+                "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromOneRequired.new-parameter",
+                "readOnly": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  204
+                ],
+                "headers": [],
+                "isErrorResponse": false
+              }
+            ],
+            "httpMethod": "GET",
+            "uri": "{endpoint}/resiliency/service-driven/client:v2/service:{serviceDeploymentVersion}/api-version:{apiVersion}",
+            "path": "/add-optional-param/from-one-required",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromOneRequired",
+            "decorators": []
+          },
+          "parameters": [
+            {
+              "$id": "20",
+              "kind": "method",
+              "name": "parameter",
+              "serializedName": "parameter",
+              "doc": "I am a required parameter",
+              "type": {
+                "$id": "21",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Query",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromOneRequired.parameter",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            },
+            {
+              "$id": "22",
+              "kind": "method",
+              "name": "new-parameter",
+              "serializedName": "new-parameter",
+              "doc": "I'm a new input optional parameter",
+              "type": {
+                "$id": "23",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Query",
+              "isApiVersion": false,
+              "optional": true,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromOneRequired.new-parameter",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            }
+          ],
+          "response": {},
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromOneRequired"
+        },
+        {
+          "$id": "24",
+          "kind": "basic",
+          "name": "fromOneOptional",
+          "accessibility": "public",
+          "apiVersions": [
+            "v1",
+            "v2"
+          ],
+          "doc": "Tests that we can grow up an operation from accepting one optional parameter to accepting two optional parameters.",
+          "operation": {
+            "$id": "25",
+            "name": "fromOneOptional",
+            "resourceName": "AddOptionalParam",
+            "doc": "Tests that we can grow up an operation from accepting one optional parameter to accepting two optional parameters.",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "26",
+                "kind": "query",
+                "name": "parameter",
+                "serializedName": "parameter",
+                "doc": "I am an optional parameter",
+                "type": {
+                  "$id": "27",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "isApiVersion": false,
+                "explode": false,
+                "optional": true,
+                "scope": "Method",
+                "decorators": [],
+                "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromOneOptional.parameter",
+                "readOnly": false
+              },
+              {
+                "$id": "28",
+                "kind": "query",
+                "name": "new-parameter",
+                "serializedName": "new-parameter",
+                "doc": "I'm a new input optional parameter",
+                "type": {
+                  "$id": "29",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "isApiVersion": false,
+                "explode": false,
+                "optional": true,
+                "scope": "Method",
+                "decorators": [],
+                "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromOneOptional.new-parameter",
+                "readOnly": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  204
+                ],
+                "headers": [],
+                "isErrorResponse": false
+              }
+            ],
+            "httpMethod": "GET",
+            "uri": "{endpoint}/resiliency/service-driven/client:v2/service:{serviceDeploymentVersion}/api-version:{apiVersion}",
+            "path": "/add-optional-param/from-one-optional",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromOneOptional",
+            "decorators": []
+          },
+          "parameters": [
+            {
+              "$id": "30",
+              "kind": "method",
+              "name": "parameter",
+              "serializedName": "parameter",
+              "doc": "I am an optional parameter",
+              "type": {
+                "$id": "31",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Query",
+              "isApiVersion": false,
+              "optional": true,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromOneOptional.parameter",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            },
+            {
+              "$id": "32",
+              "kind": "method",
+              "name": "new-parameter",
+              "serializedName": "new-parameter",
+              "doc": "I'm a new input optional parameter",
+              "type": {
+                "$id": "33",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "location": "Query",
+              "isApiVersion": false,
+              "optional": true,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromOneOptional.new-parameter",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            }
+          ],
+          "response": {},
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Resiliency.ServiceDriven.AddOptionalParam.fromOneOptional"
+        }
+      ],
+      "parameters": [
+        {
+          "$id": "34",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "Need to be set as 'http://localhost:3000' in client.",
+          "type": {
+            "$id": "35",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "serverUrlTemplate": "{endpoint}/resiliency/service-driven/client:v2/service:{serviceDeploymentVersion}/api-version:{apiVersion}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Resiliency.ServiceDriven.endpoint"
+        },
+        {
+          "$id": "36",
+          "kind": "endpoint",
+          "name": "serviceDeploymentVersion",
+          "serializedName": "serviceDeploymentVersion",
+          "doc": "Pass in either 'v1' or 'v2'. This represents a version of the service deployment in history. 'v1' is for the deployment when the service had only one api version. 'v2' is for the deployment when the service had api-versions 'v1' and 'v2'.",
+          "type": {
+            "$id": "37",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": false,
+          "serverUrlTemplate": "{endpoint}/resiliency/service-driven/client:v2/service:{serviceDeploymentVersion}/api-version:{apiVersion}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Resiliency.ServiceDriven.serviceDeploymentVersion"
+        },
+        {
+          "$id": "38",
+          "kind": "endpoint",
+          "name": "apiVersion",
+          "serializedName": "apiVersion",
+          "doc": "Pass in either 'v1' or 'v2'. This represents the API version of a service.",
+          "type": {
+            "$id": "39",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "isApiVersion": true,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": false,
+          "defaultValue": {
+            "type": {
+              "$id": "40",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "v2"
+          },
+          "serverUrlTemplate": "{endpoint}/resiliency/service-driven/client:v2/service:{serviceDeploymentVersion}/api-version:{apiVersion}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Resiliency.ServiceDriven.apiVersion"
+        }
+      ],
+      "decorators": [],
+      "crossLanguageDefinitionId": "Resiliency.ServiceDriven",
+      "apiVersions": [
+        "v1",
+        "v2"
+      ]
+    }
+  ]
+}

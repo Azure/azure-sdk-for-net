@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: Search
 namespace: Azure.ResourceManager.Search
-require: https://github.com/Azure/azure-rest-api-specs/blob/5c73e496040fa9fec8725b7e26f8e45864211e62/specification/search/resource-manager/readme.md
-#tag: package-preview-2025-02-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/2e0a040b078aaf7f67cc8bafc18214d355715ca4/specification/search/resource-manager/readme.md
+#tag: package-2025-05-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -26,6 +26,9 @@ enable-bicep-serialization: true
 
 rename-mapping:
   AadAuthFailureMode: SearchAadAuthFailureMode
+  AccessRule: SearchServiceNetworkSecurityPerimeterAccessRule
+  AccessRuleDirection: SearchServiceNetworkSecurityPerimeterAccessRuleDirection
+  AccessRuleProperties: SearchServiceNetworkSecurityPerimeterAccessRuleProperties
   AdminKeyKind: SearchServiceAdminKeyKind
   AdminKeyResult: SearchServiceAdminKeyResult
   CheckNameAvailabilityInput: SearchServiceNameAvailabilityContent
@@ -33,19 +36,26 @@ rename-mapping:
   ComputeType: SearchServiceComputeType
   DataPlaneAuthOptions: SearchAadAuthDataPlaneAuthOptions
   EncryptionWithCmk: SearchEncryptionWithCmk
-  FeatureName: SearchServiceFeatureName
-  FeatureOffering: SearchServiceFeatureOffering
   HostingMode: SearchServiceHostingMode
   IpRule: SearchServiceIPRule
+  IssueType: SearchServiceNetworkSecurityPerimeterProvisioningIssueType
   NetworkRuleSet: SearchServiceNetworkRuleSet
+  NetworkSecurityPerimeter: SearchServiceNetworkSecurityPerimeter
+  NetworkSecurityPerimeterConfiguration: SearchServiceNetworkSecurityPerimeterConfiguration
+  NetworkSecurityPerimeterConfigurationProperties: SearchServiceNetworkSecurityPerimeterConfigurationProperties
+  NetworkSecurityPerimeterConfigurationProvisioningState: SearchServiceNetworkSecurityPerimeterConfigurationProvisioningState
+  NetworkSecurityProfile: SearchNetworkSecurityProfile
   PrivateEndpointConnectionProperties: SearchServicePrivateEndpointConnectionProperties
   PrivateEndpointConnectionPropertiesPrivateLinkServiceConnectionState: SearchServicePrivateLinkServiceConnectionState
   PrivateLinkServiceConnectionStatus: SearchServicePrivateLinkServiceConnectionStatus
   PrivateLinkServiceConnectionProvisioningState: SearchPrivateLinkServiceConnectionProvisioningState
+  ProvisioningIssue: SearchServiceNetworkSecurityPerimeterProvisioningIssue
+  ProvisioningIssueProperties: SearchServiceNetworkSecurityPerimeterProvisioningIssueProperties
   ProvisioningState: SearchServiceProvisioningState
   PublicNetworkAccess: SearchServicePublicInternetAccess
-  OfferingsByRegion: SearchServiceOfferingsByRegion
   QueryKey: SearchServiceQueryKey
+  ResourceAssociation: SearchServiceNetworkSecurityPerimeterResourceAssociation
+  ResourceAssociationAccessMode: SearchServiceNetworkSecurityPerimeterResourceAssociationAccessMode
   ResourceType: SearchServiceResourceType
   SearchEncryptionWithCmk: SearchEncryptionWithCmkEnforcement
   SearchService.properties.disableLocalAuth: isLocalAuthDisabled
@@ -56,6 +66,7 @@ rename-mapping:
   SearchServiceUpdate.properties.publicNetworkAccess: PublicInternetAccess
   SearchServiceUpdate.properties.upgradeAvailable: IsUpgradeAvailable
   SearchServiceUpdate.sku: SearchSku
+  Severity: SearchServiceNetworkSecurityPerimeterProvisioningIssueSeverity
   ShareablePrivateLinkResourceProperties: ShareableSearchServicePrivateLinkResourceProperties
   ShareablePrivateLinkResourceType: ShareableSearchServicePrivateLinkResourceType
   SharedPrivateLinkResource: SharedSearchServicePrivateLinkResource
@@ -67,9 +78,8 @@ rename-mapping:
   SharedPrivateLinkResourceProvisioningState: SearchServiceSharedPrivateLinkResourceProvisioningState
   SharedPrivateLinkResourceStatus: SearchServiceSharedPrivateLinkResourceStatus
   SkuName: SearchServiceSkuName
-  SkuOffering: SearchServiceSkuOffering
-  SkuOfferingLimits: SearchServiceSkuOfferingLimits
   UnavailableNameReason: SearchServiceNameUnavailableReason
+  UpgradeAvailable: SearchServiceUpgradeAvailable
 
 format-by-name-rules:
   'tenantId': 'uuid'

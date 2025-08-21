@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,19 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0 (2025-08-01)
+
+### Features Added
+
+- Supported `FormattableString` in `BicepFunction.Interpolate` method. ([#47360](https://github.com/Azure/azure-sdk-for-net/issues/47360))
+
+## 1.2.1 (2025-07-09)
+
+### Bugs Fixed
+
+- Fixed the incorrect property name for discriminators in `AzureCliScript` and `AzurePowerShellScript` ([#51135](https://github.com/Azure/azure-sdk-for-net/issues/51135))
+- Fixed the incorrect format for `TimeSpan` properties in `AzureCliScript` and `AzurePowerShellScript` ([#51135](https://github.com/Azure/azure-sdk-for-net/issues/51135))
 
 ## 1.2.0 (2025-07-02)
 

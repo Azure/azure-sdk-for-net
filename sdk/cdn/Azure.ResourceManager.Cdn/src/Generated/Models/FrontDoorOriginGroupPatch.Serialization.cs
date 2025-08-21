@@ -68,6 +68,11 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("sessionAffinityState"u8);
                 writer.WriteStringValue(SessionAffinityState.Value.ToString());
             }
+            if (Optional.IsDefined(Authentication))
+            {
+                writer.WritePropertyName("authentication"u8);
+                writer.WriteObjectValue(Authentication, options);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -111,6 +116,7 @@ namespace Azure.ResourceManager.Cdn.Models
             HealthProbeSettings healthProbeSettings = default;
             int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes = default;
             EnabledState? sessionAffinityState = default;
+            OriginAuthenticationProperties authentication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,6 +172,15 @@ namespace Azure.ResourceManager.Cdn.Models
                             sessionAffinityState = new EnabledState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("authentication"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            authentication = OriginAuthenticationProperties.DeserializeOriginAuthenticationProperties(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -181,6 +196,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 healthProbeSettings,
                 trafficRestorationTimeToHealedOrNewEndpointsInMinutes,
                 sessionAffinityState,
+                authentication,
                 serializedAdditionalRawData);
         }
 

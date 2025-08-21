@@ -49,6 +49,10 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="value"> The value. </param>
         public static implicit operator KeyVaultRoleType(string value) => new KeyVaultRoleType(value);
 
+        /// <summary> Converts a string to a <see cref="KeyVaultRoleType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KeyVaultRoleType?(string value) => value == null ? null : new KeyVaultRoleType(value);
+
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KeyVaultRoleType other && Equals(other);

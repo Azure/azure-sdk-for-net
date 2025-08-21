@@ -50,13 +50,16 @@ namespace Azure.Generator.Management
             base.Configure();
             // Include Azure.ResourceManager
             AddMetadataReference(MetadataReference.CreateFromFile(typeof(ArmClient).Assembly.Location));
+            // renaming should come first
+            AddVisitor(new NameVisitor());
+            AddVisitor(new SerializationVisitor());
+            AddVisitor(new SafeFlattenVisitor());
             AddVisitor(new RestClientVisitor());
             AddVisitor(new ResourceVisitor());
-            AddVisitor(new InheritableSystemObjectModelVisitor());
-            AddVisitor(new NameVisitor());
+            AddVisitor(new SystemObjectModelVisitor());
             AddVisitor(new TypeFilterVisitor());
-            AddVisitor(new SerializationVisitor());
             AddVisitor(new PaginationVisitor());
+            AddVisitor(new ModelFactoryVisitor());
         }
     }
 }

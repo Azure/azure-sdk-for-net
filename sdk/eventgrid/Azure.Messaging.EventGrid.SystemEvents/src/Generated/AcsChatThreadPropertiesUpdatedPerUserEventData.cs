@@ -17,15 +17,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="threadId"> The chat thread id. </param>
         /// <param name="editedByCommunicationIdentifier"> The communication identifier of the user who updated the thread properties. </param>
-        /// <param name="properties"> The updated thread properties. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recipientCommunicationIdentifier"/>, <paramref name="threadId"/>, <paramref name="editedByCommunicationIdentifier"/> or <paramref name="properties"/> is null. </exception>
+        /// <param name="properties"> The properties of the chat thread that were updated for the user. </param>
         internal AcsChatThreadPropertiesUpdatedPerUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string threadId, CommunicationIdentifierModel editedByCommunicationIdentifier, IReadOnlyDictionary<string, object> properties) : base(recipientCommunicationIdentifier, threadId)
         {
-            Argument.AssertNotNull(recipientCommunicationIdentifier, nameof(recipientCommunicationIdentifier));
-            Argument.AssertNotNull(threadId, nameof(threadId));
-            Argument.AssertNotNull(editedByCommunicationIdentifier, nameof(editedByCommunicationIdentifier));
-            Argument.AssertNotNull(properties, nameof(properties));
-
             EditedByCommunicationIdentifier = editedByCommunicationIdentifier;
             Metadata = new ChangeTrackingDictionary<string, string>();
             Properties = properties;
@@ -35,14 +29,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="createTime"> The original creation time of the thread. </param>
         /// <param name="version"> The version of the thread. </param>
         /// <param name="editedByCommunicationIdentifier"> The communication identifier of the user who updated the thread properties. </param>
         /// <param name="editTime"> The time at which the properties of the thread were updated. </param>
         /// <param name="metadata"> The thread metadata. </param>
-        /// <param name="properties"> The updated thread properties. </param>
-        internal AcsChatThreadPropertiesUpdatedPerUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel editedByCommunicationIdentifier, DateTimeOffset? editTime, IReadOnlyDictionary<string, string> metadata, IReadOnlyDictionary<string, object> properties) : base(recipientCommunicationIdentifier, transactionId, threadId, serializedAdditionalRawData, createTime, version)
+        /// <param name="properties"> The properties of the chat thread that were updated for the user. </param>
+        internal AcsChatThreadPropertiesUpdatedPerUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel editedByCommunicationIdentifier, DateTimeOffset? editTime, IReadOnlyDictionary<string, string> metadata, IReadOnlyDictionary<string, object> properties) : base(recipientCommunicationIdentifier, transactionId, threadId, additionalBinaryDataProperties, createTime, version)
         {
             EditedByCommunicationIdentifier = editedByCommunicationIdentifier;
             EditTime = editTime;
@@ -50,15 +44,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsChatThreadPropertiesUpdatedPerUserEventData"/> for deserialization. </summary>
-        internal AcsChatThreadPropertiesUpdatedPerUserEventData()
-        {
-        }
-
         /// <summary> The communication identifier of the user who updated the thread properties. </summary>
         public CommunicationIdentifierModel EditedByCommunicationIdentifier { get; }
+
         /// <summary> The time at which the properties of the thread were updated. </summary>
         public DateTimeOffset? EditTime { get; }
+
         /// <summary> The thread metadata. </summary>
         public IReadOnlyDictionary<string, string> Metadata { get; }
     }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.Models
@@ -14,9 +16,15 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownKnowledgeAgentModel"/>. </summary>
         /// <param name="kind"> The type of AI model. </param>
-        internal UnknownKnowledgeAgentModel(KnowledgeAgentModelKind kind) : base(kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownKnowledgeAgentModel(KnowledgeAgentModelKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
         {
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownKnowledgeAgentModel"/> for deserialization. </summary>
+        internal UnknownKnowledgeAgentModel()
+        {
         }
     }
 }
