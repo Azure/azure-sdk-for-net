@@ -30,7 +30,7 @@ namespace Azure.Storage.Blobs.Perf.Scenarios
             using (Stream data = RandomStream.Create(Options.Size))
             using (FileStream fileStream = File.Create(_tempFile))
             {
-                data.CopyTo(fileStream);
+                await data.CopyToAsync(fileStream);
             }
         }
 
@@ -38,7 +38,6 @@ namespace Azure.Storage.Blobs.Perf.Scenarios
         {
             if (_tempFile != null && File.Exists(_tempFile))
             {
-                Console.WriteLine($"Deleting {_tempFile}");
                 File.Delete(_tempFile);
             }
             await base.CleanupAsync();
