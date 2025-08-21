@@ -94,22 +94,31 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The provisioning state of the scope assignment resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkSecurityPerimeterProvisioningState? ProvisioningState { get; }
         /// <summary> Direction that specifies whether the access rules is inbound/outbound. </summary>
+        [WirePath("properties.direction")]
         public NetworkSecurityPerimeterAccessRuleDirection? Direction { get; set; }
         /// <summary> Inbound address prefixes (IPv4/IPv6). </summary>
+        [WirePath("properties.addressPrefixes")]
         public IList<string> AddressPrefixes { get; }
         /// <summary> Outbound rules in fully qualified domain name format. </summary>
+        [WirePath("properties.fullyQualifiedDomainNames")]
         public IList<string> FullyQualifiedDomainNames { get; }
         /// <summary> List of subscription ids. </summary>
+        [WirePath("properties.subscriptions")]
         public IList<WritableSubResource> Subscriptions { get; }
         /// <summary> Rule specified by the perimeter id. </summary>
+        [WirePath("properties.networkSecurityPerimeters")]
         public IReadOnlyList<NetworkSecurityPerimeterBasedAccessRule> NetworkSecurityPerimeters { get; }
         /// <summary> Outbound rules in email address format. This access rule type is currently unavailable for use. </summary>
+        [WirePath("properties.emailAddresses")]
         public IList<string> EmailAddresses { get; }
         /// <summary> Outbound rules in phone number format. This access rule type is currently unavailable for use. </summary>
+        [WirePath("properties.phoneNumbers")]
         public IList<string> PhoneNumbers { get; }
         /// <summary> Inbound rules of type service tag. This access rule type is currently unavailable for use. </summary>
+        [WirePath("properties.serviceTags")]
         public IList<string> ServiceTags { get; }
     }
 }

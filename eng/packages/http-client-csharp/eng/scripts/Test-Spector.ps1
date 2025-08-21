@@ -9,11 +9,7 @@ $packageRoot = Resolve-Path (Join-Path $PSScriptRoot '..' '..')
 
 Refresh-Build
 
-$specsDirectory = Join-Path $packageRoot 'node_modules' '@typespec' 'http-specs' 'specs'
-$azureSpecsDirectory = Join-Path $packageRoot 'node_modules' '@azure-tools' 'azure-http-specs' 'specs'
-$spectorRoot = Join-Path $packageRoot 'generator' 'TestProjects' 'Spector' 
-$spectorRootHttp = Join-Path $spectorRoot 'http'
-$directories = Get-ChildItem -Path "$spectorRootHttp" -Directory -Recurse
+$spectorRoot = Join-Path $packageRoot 'generator' 'TestProjects' 'Spector'
 $spectorCsproj = Join-Path $packageRoot 'generator' 'TestProjects' 'Spector.Tests' 'TestProjects.Spector.Tests.csproj'
 
 $coverageDir = Join-Path $packageRoot 'generator' 'artifacts' 'coverage'
@@ -22,14 +18,11 @@ if (-not (Test-Path $coverageDir)) {
     New-Item -ItemType Directory -Path $coverageDir | Out-Null
 }
 
-foreach ($directory in $directories) {
-    if (-not (IsGenerated $directory.FullName)) {
-        continue
-    }
+foreach ($specFile in Get-Sorted-Specs) {
+    $subPath = Get-SubPath $specFile
 
-    $outputDir = $directory.FullName.Substring(0, $directory.FullName.IndexOf("src") - 1)
-    $subPath = $outputDir.Substring($spectorRootHttp.Length + 1)
-    $folders = $subPath.Split([System.IO.Path]::DirectorySeparatorChar)
+    # skip the HTTP root folder when computing the namespace filter
+    $folders = $subPath.Split([System.IO.Path]::DirectorySeparatorChar) | Select-Object -Skip 1
 
     if (-not (Compare-Paths $subPath $filter)) {
         continue
@@ -39,7 +32,7 @@ foreach ($directory in $directories) {
     $testFilter = "TestProjects.Spector.Tests.Http"
     foreach ($folder in $folders) {
         $segment = "$(Get-Namespace $folder)"
-        
+
         # the test directory names match the test namespace names, but the source directory names will not have the leading underscore
         # so check to see if the filter should contain a leading underscore by comparing with the test directory
         if (-not (Test-Path (Join-Path $testPath $segment))) {
@@ -54,27 +47,14 @@ foreach ($directory in $directories) {
 
     Write-Host "Regenerating $subPath" -ForegroundColor Cyan
 
-    $specFile = Join-Path $specsDirectory $subPath "client.tsp"
-    if (-not (Test-Path $specFile)) {
-        $specFile = Join-Path $specsDirectory $subPath "main.tsp"
-    }
-    if (-not (Test-Path $specFile)) {
-        $specFile = Join-Path $azureSpecsDirectory $subPath "client.tsp"
-    }
-    if (-not (Test-Path $specFile)) {
-        $specFile = Join-Path $azureSpecsDirectory $subPath "main.tsp"
-    }
-    
+    $outputDir = Join-Path $spectorRoot $subPath
+
     if ($subPath.Contains("versioning")) {
-        if ($subPath.Contains("v1")) {
-            # this will generate v1 and v2 so we only need to call it once for one of the versions
-            Generate-Versioning ($(Join-Path $specsDirectory $subPath) | Split-Path) $($outputDir | Split-Path) -createOutputDirIfNotExist $false
-        }
+        # this will generate v1 and v2 so we only need to call it once for one of the versions
+        Generate-Versioning (Split-Path $specFile) $outputDir -createOutputDirIfNotExist $false
     }
     elseif ($subPath.Contains("srv-driven")) {
-        if ($subPath.Contains("v1")) {
-            Generate-Srv-Driven ($(Join-Path $azureSpecsDirectory $subPath) | Split-Path) $($outputDir | Split-Path) -createOutputDirIfNotExist $false
-        }
+        Generate-Srv-Driven (Split-Path $specFile) $outputDir -createOutputDirIfNotExist $false
     }
     else {
         $command = Get-TspCommand $specFile $outputDir
@@ -95,6 +75,7 @@ foreach ($directory in $directories) {
     }
 
     Write-Host "Restoring $subPath" -ForegroundColor Cyan
+
     $command = "git clean -xfd $outputDir"
     Invoke $command
     # exit if the restore failed

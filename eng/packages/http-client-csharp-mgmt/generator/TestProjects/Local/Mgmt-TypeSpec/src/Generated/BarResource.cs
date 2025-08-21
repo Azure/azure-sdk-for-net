@@ -21,7 +21,7 @@ namespace MgmtTypeSpec
     /// <summary>
     /// A class representing a Bar along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BarResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource (TODO: add parent resource information).
+    /// Otherwise you can get one from its parent resource <see cref="FooResource"/> using the GetBars method.
     /// </summary>
     public partial class BarResource : ArmResource
     {
@@ -523,15 +523,15 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Gets an object representing a BarSettingsResource along with the instance operations that can be performed on it in the Bar. </summary>
+        /// <summary> Gets an object representing a <see cref="BarSettingsResource"/> along with the instance operations that can be performed on it in the <see cref="BarResource"/>. </summary>
         /// <returns> Returns a <see cref="BarSettingsResource"/> object. </returns>
         public virtual BarSettingsResource GetBarSettingsResource()
         {
             return new BarSettingsResource(Client, Id.AppendChildResource("settings", "current"));
         }
 
-        /// <summary> Gets a collection of BarQuotaResources in the Bar. </summary>
-        /// <returns> An object representing collection of BarQuotaResources and their operations over a Bar. </returns>
+        /// <summary> Gets a collection of BarQuotaResources in the <see cref="BarResource"/>. </summary>
+        /// <returns> An object representing collection of BarQuotaResources and their operations over a BarQuotaResource. </returns>
         public virtual BarQuotaResourceCollection GetBarQuotaResources()
         {
             return GetCachedClient(client => new BarQuotaResourceCollection(client, Id));

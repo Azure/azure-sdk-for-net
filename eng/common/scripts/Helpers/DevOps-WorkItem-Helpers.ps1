@@ -1051,7 +1051,8 @@ function Get-ReleasePlanForPackage($packageName)
     $fieldList = ($fields | ForEach-Object { "[$_]"}) -join ", "
     $query = "SELECT ${fieldList} FROM WorkItems WHERE [Work Item Type] = 'Release Plan' AND [${packageNameFieldName}] = '${packageName}'"
     $query += " AND [${prStatusFieldName}] = 'merged'"
-    $query += " AND [System.State] IN ('In Progress') ORDER BY [System.CreatedDate]"
+    $query += " AND [System.State] IN ('In Progress')"
+    $query += " AND [System.Tags] NOT CONTAINS 'Release Planner App Test'"
     $workItems = Invoke-Query $fields $query
     return $workItems
 }
