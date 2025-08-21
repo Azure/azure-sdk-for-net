@@ -27,11 +27,9 @@ namespace Azure.AI.Projects
         };
         private readonly string _apiVersion;
         private ConnectionsOperations _cachedConnectionsOperations;
-        private Evaluations _cachedEvaluations;
         private DatasetsOperations _cachedDatasetsOperations;
         private IndexesOperations _cachedIndexesOperations;
         private DeploymentsOperations _cachedDeploymentsOperations;
-        private RedTeams _cachedRedTeams;
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
@@ -40,12 +38,6 @@ namespace Azure.AI.Projects
         public virtual ConnectionsOperations GetConnectionsOperationsClient()
         {
             return Volatile.Read(ref _cachedConnectionsOperations) ?? Interlocked.CompareExchange(ref _cachedConnectionsOperations, new ConnectionsOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedConnectionsOperations;
-        }
-
-        /// <summary> Initializes a new instance of Evaluations. </summary>
-        public virtual Evaluations GetEvaluationsClient()
-        {
-            return Volatile.Read(ref _cachedEvaluations) ?? Interlocked.CompareExchange(ref _cachedEvaluations, new Evaluations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedEvaluations;
         }
 
         /// <summary> Initializes a new instance of IndexesOperations. </summary>
@@ -58,12 +50,6 @@ namespace Azure.AI.Projects
         public virtual DeploymentsOperations GetDeploymentsOperationsClient()
         {
             return Volatile.Read(ref _cachedDeploymentsOperations) ?? Interlocked.CompareExchange(ref _cachedDeploymentsOperations, new DeploymentsOperations(Pipeline, _endpoint, _apiVersion), null) ?? _cachedDeploymentsOperations;
-        }
-
-        /// <summary> Initializes a new instance of RedTeams. </summary>
-        public virtual RedTeams GetRedTeamsClient()
-        {
-            return Volatile.Read(ref _cachedRedTeams) ?? Interlocked.CompareExchange(ref _cachedRedTeams, new RedTeams(Pipeline, _endpoint, _apiVersion), null) ?? _cachedRedTeams;
         }
     }
 }
