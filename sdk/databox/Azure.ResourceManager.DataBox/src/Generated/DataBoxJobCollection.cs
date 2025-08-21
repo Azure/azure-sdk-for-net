@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation> CreateOrUpdateAsync(WaitUntil waitUntil, string jobName, DataBoxJobData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataBoxJobResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string jobName, DataBoxJobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
             Argument.AssertNotNull(data, nameof(data));
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.DataBox
             try
             {
                 var response = await _dataBoxJobJobResourcesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, jobName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataBoxArmOperation(_dataBoxJobJobResourcesClientDiagnostics, Pipeline, _dataBoxJobJobResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataBoxArmOperation<DataBoxJobResource>(new DataBoxJobOperationSource(Client), _dataBoxJobJobResourcesClientDiagnostics, Pipeline, _dataBoxJobJobResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataBox
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation CreateOrUpdate(WaitUntil waitUntil, string jobName, DataBoxJobData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataBoxJobResource> CreateOrUpdate(WaitUntil waitUntil, string jobName, DataBoxJobData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
             Argument.AssertNotNull(data, nameof(data));
@@ -138,9 +138,9 @@ namespace Azure.ResourceManager.DataBox
             try
             {
                 var response = _dataBoxJobJobResourcesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, jobName, data, cancellationToken);
-                var operation = new DataBoxArmOperation(_dataBoxJobJobResourcesClientDiagnostics, Pipeline, _dataBoxJobJobResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new DataBoxArmOperation<DataBoxJobResource>(new DataBoxJobOperationSource(Client), _dataBoxJobJobResourcesClientDiagnostics, Pipeline, _dataBoxJobJobResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, jobName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 return operation;
             }
             catch (Exception e)
