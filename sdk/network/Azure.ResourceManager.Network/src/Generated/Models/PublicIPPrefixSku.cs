@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Name of a public IP prefix SKU. </summary>
+        [WirePath("name")]
         public PublicIPPrefixSkuName? Name { get; set; }
         /// <summary> Tier of a public IP prefix SKU. </summary>
+        [WirePath("tier")]
         public PublicIPPrefixSkuTier? Tier { get; set; }
     }
 }

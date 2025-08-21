@@ -101,20 +101,28 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The ID of the target resource to perform next-hop on. </summary>
+        [WirePath("targetResourceId")]
         public ResourceIdentifier TargetResourceId { get; }
         /// <summary> The direction of the packet represented as a 5-tuple. </summary>
+        [WirePath("direction")]
         public NetworkTrafficDirection Direction { get; }
         /// <summary> Protocol to be verified on. </summary>
+        [WirePath("protocol")]
         public IPFlowProtocol Protocol { get; }
         /// <summary> The local port. Acceptable values are a single integer in the range (0-65535). Support for * for the source port, which depends on the direction. </summary>
+        [WirePath("localPort")]
         public string LocalPort { get; }
         /// <summary> The remote port. Acceptable values are a single integer in the range (0-65535). Support for * for the source port, which depends on the direction. </summary>
+        [WirePath("remotePort")]
         public string RemotePort { get; }
         /// <summary> The local IP address. Acceptable values are valid IPv4 addresses. </summary>
+        [WirePath("localIPAddress")]
         public string LocalIPAddress { get; }
         /// <summary> The remote IP address. Acceptable values are valid IPv4 addresses. </summary>
+        [WirePath("remoteIPAddress")]
         public string RemoteIPAddress { get; }
         /// <summary> The NIC ID. (If VM has multiple NICs and IP forwarding is enabled on any of them, then this parameter must be specified. Otherwise optional). </summary>
+        [WirePath("targetNicResourceId")]
         public ResourceIdentifier TargetNicResourceId { get; set; }
     }
 }

@@ -71,16 +71,22 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The region which the service support. e.g. For O365, region is Global. </summary>
+        [WirePath("serviceSupportedRegion")]
         public string ServiceSupportedRegion { get; set; }
         /// <summary> The name of the bgp community. e.g. Skype. </summary>
+        [WirePath("communityName")]
         public string CommunityName { get; set; }
         /// <summary> The value of the bgp community. For more information: https://docs.microsoft.com/en-us/azure/expressroute/expressroute-routing. </summary>
+        [WirePath("communityValue")]
         public string CommunityValue { get; set; }
         /// <summary> The prefixes that the bgp community contains. </summary>
+        [WirePath("communityPrefixes")]
         public IList<string> CommunityPrefixes { get; }
         /// <summary> Customer is authorized to use bgp community or not. </summary>
+        [WirePath("isAuthorizedToUse")]
         public bool? IsAuthorizedToUse { get; set; }
         /// <summary> The service group of the bgp community contains. </summary>
+        [WirePath("serviceGroup")]
         public string ServiceGroup { get; set; }
     }
 }

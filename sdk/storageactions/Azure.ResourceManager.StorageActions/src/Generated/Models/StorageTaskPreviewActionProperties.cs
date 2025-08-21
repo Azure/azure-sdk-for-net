@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.StorageActions;
 
 namespace Azure.ResourceManager.StorageActions.Models
 {
     /// <summary> Storage task preview action properties. </summary>
     public partial class StorageTaskPreviewActionProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskPreviewActionProperties"/>. </summary>
         /// <param name="container"> Properties of a sample container to test for a match with the preview action. </param>
@@ -66,24 +38,21 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <param name="container"> Properties of a sample container to test for a match with the preview action. </param>
         /// <param name="blobs"> Properties of some sample blobs in the container to test for matches with the preview action. </param>
         /// <param name="action"> Preview action to test. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTaskPreviewActionProperties(StorageTaskPreviewContainerProperties container, IList<StorageTaskPreviewBlobProperties> blobs, StorageTaskPreviewActionCondition action, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StorageTaskPreviewActionProperties(StorageTaskPreviewContainerProperties container, IList<StorageTaskPreviewBlobProperties> blobs, StorageTaskPreviewActionCondition action, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Container = container;
             Blobs = blobs;
             Action = action;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="StorageTaskPreviewActionProperties"/> for deserialization. </summary>
-        internal StorageTaskPreviewActionProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of a sample container to test for a match with the preview action. </summary>
         public StorageTaskPreviewContainerProperties Container { get; set; }
+
         /// <summary> Properties of some sample blobs in the container to test for matches with the preview action. </summary>
         public IList<StorageTaskPreviewBlobProperties> Blobs { get; }
+
         /// <summary> Preview action to test. </summary>
         public StorageTaskPreviewActionCondition Action { get; set; }
     }

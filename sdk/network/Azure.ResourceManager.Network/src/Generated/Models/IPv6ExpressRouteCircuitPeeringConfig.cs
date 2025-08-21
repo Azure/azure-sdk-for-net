@@ -70,14 +70,18 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The primary address prefix. </summary>
+        [WirePath("primaryPeerAddressPrefix")]
         public string PrimaryPeerAddressPrefix { get; set; }
         /// <summary> The secondary address prefix. </summary>
+        [WirePath("secondaryPeerAddressPrefix")]
         public string SecondaryPeerAddressPrefix { get; set; }
         /// <summary> The Microsoft peering configuration. </summary>
+        [WirePath("microsoftPeeringConfig")]
         public ExpressRouteCircuitPeeringConfig MicrosoftPeeringConfig { get; set; }
         /// <summary> The reference to the RouteFilter resource. </summary>
         internal WritableSubResource RouteFilter { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("routeFilter.id")]
         public ResourceIdentifier RouteFilterId
         {
             get => RouteFilter is null ? default : RouteFilter.Id;
@@ -90,6 +94,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The state of peering. </summary>
+        [WirePath("state")]
         public ExpressRouteCircuitPeeringState? State { get; set; }
     }
 }

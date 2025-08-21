@@ -88,14 +88,19 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The name of the connection monitor test group. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Value indicating whether test group is disabled. </summary>
+        [WirePath("disable")]
         public bool? Disable { get; set; }
         /// <summary> List of test configuration names. </summary>
+        [WirePath("testConfigurations")]
         public IList<string> TestConfigurations { get; }
         /// <summary> List of source endpoint names. </summary>
+        [WirePath("sources")]
         public IList<string> Sources { get; }
         /// <summary> List of destination endpoint names. </summary>
+        [WirePath("destinations")]
         public IList<string> Destinations { get; }
     }
 }

@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Address prefix. </summary>
+        [WirePath("addressPrefix")]
         public string AddressPrefix { get; set; }
         /// <summary> Address prefix type. </summary>
+        [WirePath("addressPrefixType")]
         public AddressPrefixType? AddressPrefixType { get; set; }
     }
 }

@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Specifies the IP or IP range in CIDR format. Only IPV4 address is allowed. </summary>
+        [WirePath("addressPrefix")]
         public string AddressPrefix { get; set; }
     }
 }
