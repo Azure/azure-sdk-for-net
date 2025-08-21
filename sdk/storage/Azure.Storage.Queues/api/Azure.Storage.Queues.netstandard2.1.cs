@@ -405,6 +405,7 @@ namespace Azure.Storage.Queues.Models
         public static Azure.Storage.Queues.Models.QueueServiceStatistics QueueServiceStatistics(Azure.Storage.Queues.Models.QueueGeoReplication geoReplication = null) { throw null; }
         public static Azure.Storage.Queues.Models.SendReceipt SendReceipt(string messageId, System.DateTimeOffset insertionTime, System.DateTimeOffset expirationTime, string popReceipt, System.DateTimeOffset timeNextVisible) { throw null; }
         public static Azure.Storage.Queues.Models.UpdateReceipt UpdateReceipt(string popReceipt, System.DateTimeOffset nextVisibleOn) { throw null; }
+        public static Azure.Storage.Queues.Models.UserDelegationKey UserDelegationKey(string signedObjectId = null, string signedTenantId = null, System.DateTimeOffset signedStartsOn = default(System.DateTimeOffset), System.DateTimeOffset signedExpiresOn = default(System.DateTimeOffset), string signedService = null, string signedVersion = null, string value = null) { throw null; }
     }
     [System.FlagsAttribute]
     public enum QueueTraits
