@@ -1157,6 +1157,12 @@
 # ServiceLabel: %SiteManager %Mgmt
 # ServiceOwners:                                                   @bsomeshekar
 
+# PRLabel: %TESTLABEL
+/sdk/purestorage/                                                  @deepakmauryams @ReilleyMilne
+
+# ServiceLabel: %TESTLABEL %Mgmt
+# ServiceOwners:                                                   @deepakmauryams @ReilleyMilne
+
 # PRLabel: %Weights & Biases
 /sdk/weightsandbiases/Azure.ResourceManager.*/                     @aggarwalsw
 
