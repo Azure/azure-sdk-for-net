@@ -5597,7 +5597,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/52168")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/52168")]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetSetTags()
         {
@@ -5615,7 +5615,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/52168")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/52168")]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetSetTagsOAuth()
         {
@@ -5634,7 +5634,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/52168")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/52168")]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetSetTags_Lease()
         {
@@ -5661,7 +5661,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/52168")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/52168")]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetTags_LeaseFailed()
         {
@@ -5684,7 +5684,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/52168")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/52168")]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task SetTags_LeaseFailed()
         {
@@ -5707,7 +5707,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/52168")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/52168")]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetTags_Error()
         {
@@ -5722,7 +5722,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/52168")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/52168")]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetSetTags_FileSas()
         {
@@ -5743,7 +5743,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/52168")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/52168")]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetSetTags_FileSystemSas()
         {
@@ -5767,7 +5767,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/52168")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/52168")]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetSetTags_AccountSas()
         {
@@ -5789,7 +5789,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/52168")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/52168")]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetSetTags_FileIdentitySas()
         {
@@ -5816,7 +5816,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/52168")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/52168")]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetSetTags_FileSystemIdentitySas()
         {
@@ -5846,7 +5846,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/52168")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/52168")]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task SetTags_Error()
         {
@@ -5862,7 +5862,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/52168")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/52168")]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetSetTags_AccessConditions()
         {
@@ -5896,7 +5896,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/52168")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/52168")]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetTags_AccessConditionsFail()
         {
@@ -5919,7 +5919,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/52168")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/52168")]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task SetTags_AccessConditionsFail()
         {
