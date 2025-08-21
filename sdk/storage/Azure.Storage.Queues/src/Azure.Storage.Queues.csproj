@@ -18,7 +18,7 @@
       REST API Reference for Queue Service - https://docs.microsoft.com/en-us/rest/api/storageservices/queue-service-rest-api
     </Description>
     <!-- https://github.com/Azure/azure-sdk-for-net/issues/19222 -->
-    <NoWarn>$(NoWarn);IDT002;IDT003</NoWarn>
+    <NoWarn>$(NoWarn);IDT002;IDT003;AZC0034</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
