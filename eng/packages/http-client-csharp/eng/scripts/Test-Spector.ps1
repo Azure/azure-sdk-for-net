@@ -18,7 +18,7 @@ if (-not (Test-Path $coverageDir)) {
     New-Item -ItemType Directory -Path $coverageDir | Out-Null
 }
 
-foreach ($directory in Get-Sorted-Specs) {
+foreach ($specFile in Get-Sorted-Specs) {
     $subPath = Get-SubPath $specFile
 
     # skip the HTTP root folder when computing the namespace filter
