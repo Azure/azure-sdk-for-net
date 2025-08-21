@@ -1,6 +1,7 @@
 parameters:
   ConfigFileDir: ''
   PackageArtifactName: ''
+  SourceRootPath: $(Build.SourcesDirectory)
 
 steps:
   - task: AzureCLI@2
@@ -8,7 +9,7 @@ steps:
       azureSubscription: opensource-api-connection
       scriptType: pscore
       scriptLocation: scriptPath
-      scriptPath: $(Build.SourcesDirectory)/eng/common/scripts/Mark-ReleasePlanCompletion.ps1
+      scriptPath: ${{ parameters.SourceRootPath }}/eng/common/scripts/Mark-ReleasePlanCompletion.ps1
       arguments: -PackageInfoFilePath '${{ parameters.ConfigFileDir }}/${{ parameters.PackageArtifactName }}.json'
       workingDirectory: $(Pipeline.Workspace)
     displayName: Mark package as released
