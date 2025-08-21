@@ -83,26 +83,37 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Connectivity configuration ID. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> Effective configuration groups. </summary>
+        [WirePath("configurationGroups")]
         public IReadOnlyList<NetworkConfigurationGroup> ConfigurationGroups { get; }
         /// <summary> A description of the connectivity configuration. </summary>
+        [WirePath("properties.description")]
         public string Description { get; }
         /// <summary> Connectivity topology type. </summary>
+        [WirePath("properties.connectivityTopology")]
         public ConnectivityTopology? ConnectivityTopology { get; }
         /// <summary> List of hubItems. </summary>
+        [WirePath("properties.hubs")]
         public IReadOnlyList<ConnectivityHub> Hubs { get; }
         /// <summary> Flag if global mesh is supported. </summary>
+        [WirePath("properties.isGlobal")]
         public GlobalMeshSupportFlag? IsGlobal { get; }
         /// <summary> Collection of additional settings to enhance specific topology behaviors of the connectivity configuration resource. </summary>
+        [WirePath("properties.connectivityCapabilities")]
         public ConnectivityConfigurationPropertiesConnectivityCapabilities ConnectivityCapabilities { get; }
         /// <summary> Groups for configuration. </summary>
+        [WirePath("properties.appliesToGroups")]
         public IReadOnlyList<ConnectivityGroupItem> AppliesToGroups { get; }
         /// <summary> The provisioning state of the connectivity configuration resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Flag if need to remove current existing peerings. </summary>
+        [WirePath("properties.deleteExistingPeering")]
         public DeleteExistingPeering? DeleteExistingPeering { get; }
         /// <summary> Unique identifier for this resource. </summary>
+        [WirePath("properties.resourceGuid")]
         public Guid? ResourceGuid { get; }
     }
 }

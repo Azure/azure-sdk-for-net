@@ -64,10 +64,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The DDoS protection mode of the public IP. </summary>
+        [WirePath("protectionMode")]
         public DdosSettingsProtectionMode? ProtectionMode { get; set; }
         /// <summary> The DDoS protection plan associated with the public IP. Can only be set if ProtectionMode is Enabled. </summary>
         internal WritableSubResource DdosProtectionPlan { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("ddosProtectionPlan.id")]
         public ResourceIdentifier DdosProtectionPlanId
         {
             get => DdosProtectionPlan is null ? default : DdosProtectionPlan.Id;

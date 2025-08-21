@@ -43,12 +43,16 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> List of all routes. </summary>
+        [WirePath("properties.routes")]
         public IList<VirtualHubRouteV2> Routes { get; }
         /// <summary> List of all connections attached to this route table v2. </summary>
+        [WirePath("properties.attachedConnections")]
         public IList<string> AttachedConnections { get; }
         /// <summary> The provisioning state of the virtual hub route table v2 resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

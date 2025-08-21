@@ -70,8 +70,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The type of the rule collection. </summary>
         internal FirewallPolicyRuleCollectionType RuleCollectionType { get; set; }
         /// <summary> The name of the rule collection. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Priority of the Firewall Policy Rule Collection resource. </summary>
+        [WirePath("priority")]
         public int? Priority { get; set; }
     }
 }

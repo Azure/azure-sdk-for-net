@@ -75,10 +75,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Option indicating the scale of private endpoints allowed in the connected group of the connectivity configuration. </summary>
+        [WirePath("connectedGroupPrivateEndpointsScale")]
         public ConnectedGroupPrivateEndpointsScale ConnectedGroupPrivateEndpointsScale { get; set; }
         /// <summary> Behavior to handle overlapped IP address space among members of the connected group of the connectivity configuration. </summary>
+        [WirePath("connectedGroupAddressOverlap")]
         public ConnectedGroupAddressOverlap ConnectedGroupAddressOverlap { get; set; }
         /// <summary> Option indicating enforcement of peerings created by the connectivity configuration. </summary>
+        [WirePath("peeringEnforcement")]
         public PeeringEnforcement PeeringEnforcement { get; set; }
     }
 }

@@ -49,16 +49,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> List of all routes. </summary>
+        [WirePath("properties.routes")]
         public IList<HubRoute> Routes { get; }
         /// <summary> List of labels associated with this route table. </summary>
+        [WirePath("properties.labels")]
         public IList<string> Labels { get; }
         /// <summary> List of all connections associated with this route table. </summary>
+        [WirePath("properties.associatedConnections")]
         public IReadOnlyList<string> AssociatedConnections { get; }
         /// <summary> List of all connections that advertise to this route table. </summary>
+        [WirePath("properties.propagatingConnections")]
         public IReadOnlyList<string> PropagatingConnections { get; }
         /// <summary> The provisioning state of the RouteTable resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

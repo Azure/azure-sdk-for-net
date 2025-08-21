@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> State of the log scrubbing config. Default value is Enabled. </summary>
+        [WirePath("state")]
         public WebApplicationFirewallScrubbingState? State { get; set; }
         /// <summary> The rules that are applied to the logs for scrubbing. </summary>
+        [WirePath("scrubbingRules")]
         public IList<WebApplicationFirewallScrubbingRules> ScrubbingRules { get; }
     }
 }

@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The list of Effective RouteMap Routes configured on the connection resource. </summary>
+        [WirePath("value")]
         public IReadOnlyList<EffectiveRouteMapRoute> Value { get; }
     }
 }
