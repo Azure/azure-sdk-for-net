@@ -166,7 +166,7 @@ namespace Azure.Storage.Files.Shares
                 {
                     request.Headers.Add("Content-Length", contentLength.Value);
                 }
-                request.Headers.Add("Content-Type", "application/xml");
+                request.Headers.Add("Content-Type", "application/octet-stream");
                 request.Content = RequestContent.Create(optionalbody);
             }
             return message;
