@@ -214,7 +214,7 @@ namespace MgmtTypeSpec
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BarData, BarResource>(new BarsGetAsyncCollectionResultOfT(_barsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new BarResource(Client, data));
+            return new AsyncPageableWrapper<BarData, BarResource>(new BarsGetAllAsyncCollectionResultOfT(_barsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new BarResource(Client, data));
         }
 
         /// <summary> List Bar resources by Foo. </summary>
@@ -226,7 +226,7 @@ namespace MgmtTypeSpec
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BarData, BarResource>(new BarsGetCollectionResultOfT(_barsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new BarResource(Client, data));
+            return new PageableWrapper<BarData, BarResource>(new BarsGetAllCollectionResultOfT(_barsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new BarResource(Client, data));
         }
 
         /// <summary> Checks to see if the resource exists in azure. </summary>

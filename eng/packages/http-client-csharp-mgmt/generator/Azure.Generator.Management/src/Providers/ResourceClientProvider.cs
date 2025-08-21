@@ -309,7 +309,7 @@ namespace Azure.Generator.Management.Providers
                 // iterate through all parameters in this method to find a matching parameter
                 foreach (var parameter in resourceMethod.InputMethod.Operation.Parameters)
                 {
-                    if (parameter.Location != InputRequestLocation.Path)
+                    if (parameter is not InputPathParameter)
                     {
                         continue; // Skip parameters that are not in the path
                     }

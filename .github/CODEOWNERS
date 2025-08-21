@@ -981,10 +981,10 @@
 /sdk/communication/Azure.ResourceManager.Communication/            @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Compute - Fleet
-/sdk/computefleet/Azure.ResourceManager.*/                         @sahilarora92 @rahuls-microsoft
+/sdk/computefleet/Azure.ResourceManager.*/                         @sahilarora92
 
 # ServiceLabel: %Compute - Fleet %Mgmt
-# ServiceOwners:                                                   @sahilarora92 @rahuls-microsoft
+# ServiceOwners:                                                   @sahilarora92
 
 # PRLabel: %Container Orchestrator Runtime
 /sdk/containerorchestratorruntime/Azure.ResourceManager.*/         @ArthurMa1978
