@@ -1,14 +1,10 @@
 # Release History
 
-## 1.1.0-beta.5 (Unreleased)
+## 1.1.0-beta.5 (2025-08-21)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Make `Azure.ResourceManager.ResourceHealth` AOT-compatible
 
 ## 1.1.0-beta.4 (2025-03-11)
 
