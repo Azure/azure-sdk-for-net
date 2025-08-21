@@ -193,6 +193,8 @@ public partial class AzureOpenAISamples
         Console.WriteLine("\nVerifying file processing status...");
         foreach (var file in uploadedFiles)
         {
+            // Note: GetFile may fail immediately after upload. In production code,
+            // consider adding retries with small delays (e.g., 1-2 seconds) if needed.
             OpenAIFile currentFile = fileClient.GetFile(file.Id);
             Console.WriteLine($"  {currentFile.Filename}: File uploaded successfully");
         }

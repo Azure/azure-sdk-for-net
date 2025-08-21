@@ -183,14 +183,14 @@ public partial class AzureOpenAISamples
                                "nature photography, high resolution, crisp details";
 
         // 2. Use appropriate quality settings for your use case
-        ImageGenerationOptions highQualityOptions = new()
+        ImageGenerationOptions qualityOptions = new()
         {
             Quality = GeneratedImageQuality.Standard, // Use Standard for most applications
             Size = GeneratedImageSize.W1024xH1024, // Standard size for most applications
             Style = GeneratedImageStyle.Natural, // Natural for realistic images
         };
 
-        GeneratedImage professionalImage = imageClient.GenerateImage(detailedPrompt, highQualityOptions);
+        GeneratedImage professionalImage = imageClient.GenerateImage(detailedPrompt, qualityOptions);
         
         // 3. For social media or web use, standard quality may suffice
         string socialPrompt = "A cheerful illustration of people enjoying coffee together, cartoon style";
