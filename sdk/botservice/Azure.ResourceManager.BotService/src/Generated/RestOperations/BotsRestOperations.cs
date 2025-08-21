@@ -365,7 +365,6 @@ namespace Azure.ResourceManager.BotService
             uri.AppendPath(resourceName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
