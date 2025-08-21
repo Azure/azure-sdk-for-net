@@ -3,7 +3,6 @@
 
 using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Keys.Cryptography;
-using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
 using Org.BouncyCastle.Asn1;
 using Org.BouncyCastle.Asn1.Pkcs;
@@ -882,7 +881,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.AreNotEqual(version, certificate.Properties.Version);
 
             // Now download the certificate and test decryption.
-            using X509Certificate2 x509certificate = await Client.DownloadCertificateAsync(name, version);
+            using X509Certificate2 x509certificate = await Client.DownloadCertificateAsync(name, version, null);
             Assert.IsTrue(x509certificate.HasPrivateKey);
 
             using RSA rsa = (RSA)x509certificate.GetRSAPrivateKey();
@@ -971,7 +970,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             X509Certificate2 certificate = null;
             try
             {
-                certificate = await Client.DownloadCertificateAsync(name, operation.Value.Properties.Version);
+                certificate = await Client.DownloadCertificateAsync(name, operation.Value.Properties.Version, null);
                 using ECDsa publicKey = certificate.GetECDsaPublicKey();
 
                 Assert.IsTrue(publicKey.VerifyData(plaintext, result.Signature, keyCurveName.GetHashAlgorithmName()));
@@ -1032,7 +1031,7 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             X509Certificate2 certificate = null;
             try
             {
-                certificate = await Client.DownloadCertificateAsync(name, operation.Value.Properties.Version);
+                certificate = await Client.DownloadCertificateAsync(name, operation.Value.Properties.Version, null);
                 using ECDsa privateKey = certificate.GetECDsaPrivateKey();
 
                 byte[] signature = privateKey.SignData(plaintext, keyCurveName.GetHashAlgorithmName());

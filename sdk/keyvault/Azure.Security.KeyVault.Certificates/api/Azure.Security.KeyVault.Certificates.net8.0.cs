@@ -349,6 +349,7 @@ namespace Azure.Security.KeyVault.Certificates
         public string CertificateName { get { throw null; } }
         public System.Security.Cryptography.X509Certificates.X509KeyStorageFlags KeyStorageFlags { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
+        public Azure.Security.KeyVault.Certificates.CertificateContentType? OutContentType { get { throw null; } set { } }
     }
     public partial class ImportCertificateOptions
     {
