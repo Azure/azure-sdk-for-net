@@ -33,6 +33,13 @@
 ##################
 # Catch all for loose files in the root, which are mostly global configuration and
 # should not be changed without team discussion.
+
+# PRLabel: %Contoso WidgetManager
+/sdk/contosowidgetmanager/                                         @shirelmr @michiisai
+
+# ServiceLabel: %Contoso WidgetManager
+# ServiceOwners:                                                   @shirelmr @michiisai
+
 /*                                                                 @jsquire @Azure/azure-sdk-write-net-core
 
 ################
