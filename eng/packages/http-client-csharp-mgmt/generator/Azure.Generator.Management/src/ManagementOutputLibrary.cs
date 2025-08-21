@@ -34,32 +34,32 @@ namespace Azure.Generator.Management
         // but currently this is the best we could do right now.
         internal Dictionary<TypeProvider, string> PageableMethodScopes { get; } = new();
 
-        private IReadOnlyDictionary<string, ResourceClientProvider>? _resourceClientsDict;
-        private IReadOnlyList<ResourceClientProvider>? _resourceClients;
+        private IReadOnlyDictionary<string, ResourceClientProvider>? _resourcesByIdDict;
+        private IReadOnlyList<ResourceClientProvider>? _resources;
         private IReadOnlyList<ResourceCollectionClientProvider>? _resourceCollections;
-        private IReadOnlyDictionary<ResourceScope, MockableResourceProvider>? _mockableResourceProvidersDict;
-        private IReadOnlyList<MockableResourceProvider>? _mockableResourceProviders;
+        private IReadOnlyDictionary<ResourceScope, MockableResourceProvider>? _mockableResourcesByScopeDict;
+        private IReadOnlyList<MockableResourceProvider>? _mockableResources;
         private ExtensionProvider? _extensionProvider;
 
-        internal IReadOnlyList<ResourceClientProvider> ResourceProviders => GetValue(ref _resourceClients);
+        internal IReadOnlyList<ResourceClientProvider> ResourceProviders => GetValue(ref _resources);
         internal IReadOnlyList<ResourceCollectionClientProvider> ResourceCollectionProviders => GetValue(ref _resourceCollections);
-        internal IReadOnlyList<MockableResourceProvider> MockableResourceProviders => GetValue(ref _mockableResourceProviders);
+        internal IReadOnlyList<MockableResourceProvider> MockableResourceProviders => GetValue(ref _mockableResources);
         internal ExtensionProvider ExtensionProvider => GetValue(ref _extensionProvider);
 
         // our initialization process should guarantee that here we never get a KeyNotFoundException
-        internal ResourceClientProvider GetResourceById(string id) => GetValue(ref _resourceClientsDict)[id];
+        internal ResourceClientProvider GetResourceById(string id) => GetValue(ref _resourcesByIdDict)[id];
 
         // our initialization process should guarantee that here we never get a KeyNotFoundException
-        internal MockableResourceProvider GetMockableResourceByScope(ResourceScope scope) => GetValue(ref _mockableResourceProvidersDict)[scope];
+        internal MockableResourceProvider GetMockableResourceByScope(ResourceScope scope) => GetValue(ref _mockableResourcesByScopeDict)[scope];
 
         private T GetValue<T>(ref T? field) where T : class
         {
             InitializeResourceClients(
-                ref _resourceClientsDict,
-                ref _resourceClients,
+                ref _resourcesByIdDict,
+                ref _resources,
                 ref _resourceCollections,
-                ref _mockableResourceProvidersDict,
-                ref _mockableResourceProviders,
+                ref _mockableResourcesByScopeDict,
+                ref _mockableResources,
                 ref _extensionProvider);
 
             return field!;
@@ -69,25 +69,25 @@ namespace Azure.Generator.Management
         /// This method initializes the resource clients, collections, and mockable clients.
         /// We do all of these in the same method to ensure they are initialized together
         /// </summary>
-        /// <param name="_resourceClientsDict">Represent a map from resource id pattern to the <see cref="ResourceClientProvider"/>. </param>
-        /// <param name="_resourceClients">The full list of <see cref="ResourceClientProvider"/>. </param>
-        /// <param name="_collectionClients">The full list of <see cref="ResourceCollectionClientProvider"/>. </param>
-        /// <param name="_mockableClientsDict">Represent a dictionary from scope to the corresponding <see cref="MockableResourceProvider"/>. </param>
-        /// <param name="_mockableClients">The full list of <see cref="MockableResourceProvider"/>. </param>
+        /// <param name="_resourcesByIdDict">Represent a map from resource id pattern to the <see cref="ResourceClientProvider"/>. </param>
+        /// <param name="_resources">The full list of <see cref="ResourceClientProvider"/>. </param>
+        /// <param name="_resourceCollections">The full list of <see cref="ResourceCollectionClientProvider"/>. </param>
+        /// <param name="_mockableResourcesByScopeDict">Represent a dictionary from scope to the corresponding <see cref="MockableResourceProvider"/>. </param>
+        /// <param name="_mockableResources">The full list of <see cref="MockableResourceProvider"/>. </param>
         /// <param name="_extensionProvider">The <see cref="T:ExtensionProvider"/>. </param>
         private static void InitializeResourceClients(
-            ref IReadOnlyDictionary<string, ResourceClientProvider>? _resourceClientsDict,
-            ref IReadOnlyList<ResourceClientProvider>? _resourceClients,
-            ref IReadOnlyList<ResourceCollectionClientProvider>? _collectionClients,
-            ref IReadOnlyDictionary<ResourceScope, MockableResourceProvider>? _mockableClientsDict,
-            ref IReadOnlyList<MockableResourceProvider>? _mockableClients,
+            ref IReadOnlyDictionary<string, ResourceClientProvider>? _resourcesByIdDict,
+            ref IReadOnlyList<ResourceClientProvider>? _resources,
+            ref IReadOnlyList<ResourceCollectionClientProvider>? _resourceCollections,
+            ref IReadOnlyDictionary<ResourceScope, MockableResourceProvider>? _mockableResourcesByScopeDict,
+            ref IReadOnlyList<MockableResourceProvider>? _mockableResources,
             ref ExtensionProvider? _extensionProvider)
         {
-            if (_resourceClientsDict is not null ||
-                _resourceClients is not null ||
-                _collectionClients is not null ||
-                _mockableClientsDict is not null ||
-                _mockableClients is not null ||
+            if (_resourcesByIdDict is not null ||
+                _resources is not null ||
+                _resourceCollections is not null ||
+                _mockableResourcesByScopeDict is not null ||
+                _mockableResources is not null ||
                 _extensionProvider is not null)
             {
                 return; // already initialized
@@ -114,16 +114,16 @@ namespace Azure.Generator.Management
             }
 
             // resources and collections are now initialized
-            _resourceClientsDict = resourceDict.ToDictionary(kv => kv.Key.ResourceIdPattern, kv => kv.Value);
-            _resourceClients = [.. resourceDict.Values];
-            _collectionClients = collections;
+            _resourcesByIdDict = resourceDict.ToDictionary(kv => kv.Key.ResourceIdPattern, kv => kv.Value);
+            _resources = [.. resourceDict.Values];
+            _resourceCollections = collections;
 
             // build mockable resources
             var resourcesAndMethodsPerScope = BuildResourcesAndNonResourceMethods(
                 resourceDict,
                 resourceMethodCategories,
                 ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods);
-            var mockableArmClientResource = new MockableArmClientProvider(_resourceClients);
+            var mockableArmClientResource = new MockableArmClientProvider(_resources);
             var mockableResources = new Dictionary<ResourceScope, MockableResourceProvider>(resourcesAndMethodsPerScope.Count);
             foreach (var (scope, (resourcesInScope, resourceMethods, nonResourceMethods)) in resourcesAndMethodsPerScope)
             {
@@ -134,9 +134,9 @@ namespace Azure.Generator.Management
                 }
             }
 
-            _mockableClientsDict = mockableResources;
-            _mockableClients = [mockableArmClientResource, ..mockableResources.Values];
-            _extensionProvider = new ExtensionProvider(_mockableClients);
+            _mockableResourcesByScopeDict = mockableResources;
+            _mockableResources = [mockableArmClientResource, ..mockableResources.Values];
+            _extensionProvider = new ExtensionProvider(_mockableResources);
 
             static Dictionary<ResourceScope, ResourcesAndNonResourceMethodsInScope> BuildResourcesAndNonResourceMethods(
                 IReadOnlyDictionary<ResourceMetadata, ResourceClientProvider> resourceDict,
