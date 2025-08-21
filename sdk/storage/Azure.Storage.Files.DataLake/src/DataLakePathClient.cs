@@ -3901,7 +3901,8 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
-        public virtual Response<GetPathTagResult> GetTags(
+        // https://github.com/Azure/azure-sdk-for-net/issues/52168
+        internal virtual Response<GetPathTagResult> GetTags(
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
@@ -3952,7 +3953,8 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
-        public virtual async Task<Response<GetPathTagResult>> GetTagsAsync(
+        // https://github.com/Azure/azure-sdk-for-net/issues/52168
+        internal virtual async Task<Response<GetPathTagResult>> GetTagsAsync(
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
         {
@@ -4012,7 +4014,8 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
-        public virtual Response SetTags(
+        // https://github.com/Azure/azure-sdk-for-net/issues/52168
+        internal virtual Response SetTags(
             Tags tags,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
@@ -4069,7 +4072,8 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
-        public virtual async Task<Response> SetTagsAsync(
+        // https://github.com/Azure/azure-sdk-for-net/issues/52168
+        internal virtual async Task<Response> SetTagsAsync(
             Tags tags,
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
