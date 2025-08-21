@@ -81,7 +81,8 @@
               "json": {
                 "name": "extension"
               }
-            }
+            },
+            "isHttpMetadata": false
           }
         ]
       },
@@ -108,7 +109,8 @@
             "json": {
               "name": "level"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -138,38 +140,39 @@
             "parameters": [
               {
                 "$id": "14",
+                "kind": "header",
                 "name": "contentType",
-                "nameInRequest": "Content-Type",
+                "serializedName": "Content-Type",
                 "doc": "Body parameter's content type. Known values are application/json",
                 "type": {
                   "$ref": "1"
                 },
-                "location": "Header",
                 "isApiVersion": false,
+                "optional": false,
                 "isContentType": true,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Constant",
+                "scope": "Constant",
+                "readOnly": false,
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.put.contentType"
               },
               {
                 "$id": "15",
+                "kind": "body",
                 "name": "input",
-                "nameInRequest": "input",
+                "serializedName": "input",
                 "type": {
                   "$ref": "5"
                 },
-                "location": "Body",
                 "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Method",
+                "contentTypes": [
+                  "application/json"
+                ],
+                "defaultContentType": "application/json",
+                "optional": false,
+                "scope": "Method",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "readOnly": false,
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.put.input"
               }
             ],
             "responses": [
@@ -196,38 +199,38 @@
           "parameters": [
             {
               "$id": "16",
+              "kind": "method",
               "name": "input",
-              "nameInRequest": "input",
+              "serializedName": "input",
               "type": {
                 "$ref": "5"
               },
               "location": "Body",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.put.input",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
               "$id": "17",
+              "kind": "method",
               "name": "contentType",
-              "nameInRequest": "contentType",
+              "serializedName": "Content-Type",
               "doc": "Body parameter's content type. Known values are application/json",
               "type": {
                 "$ref": "1"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Constant",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.put.contentType",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             }
           ],
           "response": {},
@@ -250,20 +253,19 @@
             "parameters": [
               {
                 "$id": "20",
+                "kind": "header",
                 "name": "accept",
-                "nameInRequest": "Accept",
+                "serializedName": "Accept",
                 "type": {
                   "$ref": "3"
                 },
-                "location": "Header",
                 "isApiVersion": false,
+                "optional": false,
                 "isContentType": false,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Constant",
+                "scope": "Constant",
+                "readOnly": false,
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.get.accept"
               }
             ],
             "responses": [
@@ -293,20 +295,20 @@
           "parameters": [
             {
               "$id": "21",
+              "kind": "method",
               "name": "accept",
-              "nameInRequest": "accept",
+              "serializedName": "Accept",
               "type": {
                 "$ref": "3"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Constant",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.get.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             }
           ],
           "response": {
@@ -323,8 +325,9 @@
       "parameters": [
         {
           "$id": "22",
+          "kind": "endpoint",
           "name": "endpoint",
-          "nameInRequest": "endpoint",
+          "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
             "$id": "23",
@@ -332,14 +335,10 @@
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
           },
-          "location": "Uri",
           "isApiVersion": false,
-          "isContentType": false,
-          "isRequired": true,
+          "optional": false,
+          "scope": "Client",
           "isEndpoint": true,
-          "skipUrlEncoding": false,
-          "explode": false,
-          "kind": "Client",
           "defaultValue": {
             "type": {
               "$id": "24",
@@ -349,7 +348,10 @@
             },
             "value": "http://localhost:3000"
           },
-          "serverUrlTemplate": "{endpoint}"
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.endpoint"
         }
       ],
       "decorators": [],

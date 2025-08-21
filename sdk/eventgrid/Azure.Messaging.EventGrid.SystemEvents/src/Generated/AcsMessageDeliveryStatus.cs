@@ -14,50 +14,77 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public readonly partial struct AcsMessageDeliveryStatus : IEquatable<AcsMessageDeliveryStatus>
     {
         private readonly string _value;
+        /// <summary> Read. </summary>
+        private const string ReadValue = "read";
+        /// <summary> Delivered. </summary>
+        private const string DeliveredValue = "delivered";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "failed";
+        /// <summary> Sent. </summary>
+        private const string SentValue = "sent";
+        /// <summary> Warning. </summary>
+        private const string WarningValue = "warning";
+        /// <summary> Unknown. </summary>
+        private const string UnknownValue = "unknown";
 
         /// <summary> Initializes a new instance of <see cref="AcsMessageDeliveryStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AcsMessageDeliveryStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ReadValue = "read";
-        private const string DeliveredValue = "delivered";
-        private const string FailedValue = "failed";
-        private const string SentValue = "sent";
-        private const string WarningValue = "warning";
-        private const string UnknownValue = "unknown";
+            _value = value;
+        }
 
         /// <summary> Read. </summary>
         public static AcsMessageDeliveryStatus Read { get; } = new AcsMessageDeliveryStatus(ReadValue);
+
         /// <summary> Delivered. </summary>
         public static AcsMessageDeliveryStatus Delivered { get; } = new AcsMessageDeliveryStatus(DeliveredValue);
+
         /// <summary> Failed. </summary>
         public static AcsMessageDeliveryStatus Failed { get; } = new AcsMessageDeliveryStatus(FailedValue);
+
         /// <summary> Sent. </summary>
         public static AcsMessageDeliveryStatus Sent { get; } = new AcsMessageDeliveryStatus(SentValue);
+
         /// <summary> Warning. </summary>
         public static AcsMessageDeliveryStatus Warning { get; } = new AcsMessageDeliveryStatus(WarningValue);
+
         /// <summary> Unknown. </summary>
         public static AcsMessageDeliveryStatus Unknown { get; } = new AcsMessageDeliveryStatus(UnknownValue);
+
         /// <summary> Determines if two <see cref="AcsMessageDeliveryStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AcsMessageDeliveryStatus left, AcsMessageDeliveryStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AcsMessageDeliveryStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AcsMessageDeliveryStatus left, AcsMessageDeliveryStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AcsMessageDeliveryStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AcsMessageDeliveryStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AcsMessageDeliveryStatus(string value) => new AcsMessageDeliveryStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AcsMessageDeliveryStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AcsMessageDeliveryStatus?(string value) => value == null ? null : new AcsMessageDeliveryStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AcsMessageDeliveryStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AcsMessageDeliveryStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

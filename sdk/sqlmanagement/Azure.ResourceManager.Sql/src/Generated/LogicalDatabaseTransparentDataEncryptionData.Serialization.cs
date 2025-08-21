@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
+            if (Optional.IsDefined(ScanState))
+            {
+                writer.WritePropertyName("scanState"u8);
+                writer.WriteStringValue(ScanState.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -73,6 +78,7 @@ namespace Azure.ResourceManager.Sql
             ResourceType type = default;
             SystemData systemData = default;
             TransparentDataEncryptionState? state = default;
+            TransparentDataEncryptionScanState? scanState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +104,7 @@ namespace Azure.ResourceManager.Sql
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSqlContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -119,6 +125,15 @@ namespace Azure.ResourceManager.Sql
                             state = property0.Value.GetString().ToTransparentDataEncryptionState();
                             continue;
                         }
+                        if (property0.NameEquals("scanState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            scanState = new TransparentDataEncryptionScanState(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -134,6 +149,7 @@ namespace Azure.ResourceManager.Sql
                 type,
                 systemData,
                 state,
+                scanState,
                 serializedAdditionalRawData);
         }
 
@@ -215,6 +231,21 @@ namespace Azure.ResourceManager.Sql
                 {
                     builder.Append("    state: ");
                     builder.AppendLine($"'{State.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScanState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    scanState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScanState))
+                {
+                    builder.Append("    scanState: ");
+                    builder.AppendLine($"'{ScanState.Value.ToString()}'");
                 }
             }
 

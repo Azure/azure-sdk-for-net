@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            SsisStoreType? ssisStoreType = default;
+            DataMigrationSsisStoreType? ssisStoreType = default;
             SsisMigrationOverwriteOption? projectOverwriteOption = default;
             SsisMigrationOverwriteOption? environmentOverwriteOption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    ssisStoreType = new SsisStoreType(property.Value.GetString());
+                    ssisStoreType = new DataMigrationSsisStoreType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("projectOverwriteOption"u8))

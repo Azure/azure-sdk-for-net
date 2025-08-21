@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="sourceConnectionInfo"> Connection information for source SQL Server. </param>
         /// <param name="targetConnectionInfo"> Connection information for target SQL DB. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/> or <paramref name="targetConnectionInfo"/> is null. </exception>
-        public ConnectToTargetSqlDBSyncTaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo)
+        public ConnectToTargetSqlDBSyncTaskInput(DataMigrationSqlConnectionInfo sourceConnectionInfo, DataMigrationSqlConnectionInfo targetConnectionInfo)
         {
             Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
             Argument.AssertNotNull(targetConnectionInfo, nameof(targetConnectionInfo));
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="sourceConnectionInfo"> Connection information for source SQL Server. </param>
         /// <param name="targetConnectionInfo"> Connection information for target SQL DB. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectToTargetSqlDBSyncTaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectToTargetSqlDBSyncTaskInput(DataMigrationSqlConnectionInfo sourceConnectionInfo, DataMigrationSqlConnectionInfo targetConnectionInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceConnectionInfo = sourceConnectionInfo;
             TargetConnectionInfo = targetConnectionInfo;
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Connection information for source SQL Server. </summary>
-        public SqlConnectionInfo SourceConnectionInfo { get; set; }
+        public DataMigrationSqlConnectionInfo SourceConnectionInfo { get; set; }
         /// <summary> Connection information for target SQL DB. </summary>
-        public SqlConnectionInfo TargetConnectionInfo { get; set; }
+        public DataMigrationSqlConnectionInfo TargetConnectionInfo { get; set; }
     }
 }

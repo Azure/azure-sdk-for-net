@@ -263,11 +263,7 @@ namespace Azure.ResourceManager.Models
                     Dictionary<ResourceIdentifier, UserAssignedIdentity> dictionary = new Dictionary<ResourceIdentifier, UserAssignedIdentity>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-#if NET9_0_OR_GREATER
-                        var data = new BinaryData(JsonMarshal.GetRawUtf8Value(property0.Value).ToArray());
-#else
                         var data = new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText()));
-#endif
                         dictionary.Add(new ResourceIdentifier(property0.Name), ModelReaderWriter.Read<UserAssignedIdentity>(data, options, AzureResourceManagerContext.Default));
                     }
                     userAssignedIdentities = dictionary;

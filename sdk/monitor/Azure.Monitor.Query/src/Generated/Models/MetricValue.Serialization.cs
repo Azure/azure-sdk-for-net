@@ -6,14 +6,94 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    public partial class MetricValue
+    public partial class MetricValue : IUtf8JsonSerializable, IJsonModel<MetricValue>
     {
-        internal static MetricValue DeserializeMetricValue(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricValue>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<MetricValue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MetricValue>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MetricValue)} does not support writing '{format}' format.");
+            }
+
+            writer.WritePropertyName("timeStamp"u8);
+            writer.WriteStringValue(TimeStamp, "O");
+            if (Optional.IsDefined(Average))
+            {
+                writer.WritePropertyName("average"u8);
+                writer.WriteNumberValue(Average.Value);
+            }
+            if (Optional.IsDefined(Minimum))
+            {
+                writer.WritePropertyName("minimum"u8);
+                writer.WriteNumberValue(Minimum.Value);
+            }
+            if (Optional.IsDefined(Maximum))
+            {
+                writer.WritePropertyName("maximum"u8);
+                writer.WriteNumberValue(Maximum.Value);
+            }
+            if (Optional.IsDefined(Total))
+            {
+                writer.WritePropertyName("total"u8);
+                writer.WriteNumberValue(Total.Value);
+            }
+            if (Optional.IsDefined(Count))
+            {
+                writer.WritePropertyName("count"u8);
+                writer.WriteNumberValue(Count.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        MetricValue IJsonModel<MetricValue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MetricValue>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MetricValue)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMetricValue(document.RootElement, options);
+        }
+
+        internal static MetricValue DeserializeMetricValue(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +104,8 @@ namespace Azure.Monitor.Query.Models
             double? maximum = default;
             double? total = default;
             double? count = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeStamp"u8))
@@ -76,15 +158,52 @@ namespace Azure.Monitor.Query.Models
                     count = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
+            serializedAdditionalRawData = rawDataDictionary;
             return new MetricValue(
                 timeStamp,
                 average,
                 minimum,
                 maximum,
                 total,
-                count);
+                count,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MetricValue>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MetricValue>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureMonitorQueryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MetricValue)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MetricValue IPersistableModel<MetricValue>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MetricValue>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeMetricValue(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MetricValue)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MetricValue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -92,6 +211,14 @@ namespace Azure.Monitor.Query.Models
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeMetricValue(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }
