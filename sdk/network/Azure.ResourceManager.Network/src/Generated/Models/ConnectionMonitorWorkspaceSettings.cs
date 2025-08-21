@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Log analytics workspace resource ID. </summary>
+        [WirePath("workspaceResourceId")]
         public ResourceIdentifier WorkspaceResourceId { get; set; }
     }
 }

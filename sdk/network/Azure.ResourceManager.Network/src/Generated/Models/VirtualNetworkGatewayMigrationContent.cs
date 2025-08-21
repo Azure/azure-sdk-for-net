@@ -69,8 +69,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> MigrationType for the virtual network gateway. </summary>
+        [WirePath("migrationType")]
         public VirtualNetworkGatewayMigrationType MigrationType { get; }
         /// <summary> Resource url that needs to be passed in to migration. </summary>
+        [WirePath("resourceUrl")]
         public Uri ResourceUri { get; set; }
     }
 }

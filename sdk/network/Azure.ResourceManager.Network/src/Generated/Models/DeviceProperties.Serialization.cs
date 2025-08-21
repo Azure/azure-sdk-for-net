@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -121,6 +122,82 @@ namespace Azure.ResourceManager.Network.Models
             return new DeviceProperties(deviceVendor, deviceModel, linkSpeedInMbps, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeviceVendor), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  deviceVendor: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeviceVendor))
+                {
+                    builder.Append("  deviceVendor: ");
+                    if (DeviceVendor.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DeviceVendor}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DeviceVendor}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeviceModel), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  deviceModel: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeviceModel))
+                {
+                    builder.Append("  deviceModel: ");
+                    if (DeviceModel.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DeviceModel}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DeviceModel}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkSpeedInMbps), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  linkSpeedInMbps: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LinkSpeedInMbps))
+                {
+                    builder.Append("  linkSpeedInMbps: ");
+                    builder.AppendLine($"{LinkSpeedInMbps.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<DeviceProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DeviceProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -129,6 +206,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DeviceProperties)} does not support writing '{options.Format}' format.");
             }

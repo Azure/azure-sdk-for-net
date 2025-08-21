@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -129,6 +130,66 @@ namespace Azure.ResourceManager.Network.Models
             return new PacketCaptureSettings(fileCount, fileSizeInBytes, sessionTimeLimitInSeconds, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FileCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  fileCount: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FileCount))
+                {
+                    builder.Append("  fileCount: ");
+                    builder.AppendLine($"{FileCount.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FileSizeInBytes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  fileSizeInBytes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FileSizeInBytes))
+                {
+                    builder.Append("  fileSizeInBytes: ");
+                    builder.AppendLine($"'{FileSizeInBytes.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SessionTimeLimitInSeconds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sessionTimeLimitInSeconds: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SessionTimeLimitInSeconds))
+                {
+                    builder.Append("  sessionTimeLimitInSeconds: ");
+                    builder.AppendLine($"{SessionTimeLimitInSeconds.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<PacketCaptureSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PacketCaptureSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -137,6 +198,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PacketCaptureSettings)} does not support writing '{options.Format}' format.");
             }
