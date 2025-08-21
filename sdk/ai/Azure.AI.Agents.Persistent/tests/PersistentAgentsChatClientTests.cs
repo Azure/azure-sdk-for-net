@@ -26,7 +26,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         private string _agentId;
         private string _threadId;
 
-        public PersistentAgentsChatClientTests(bool isAsync) : base(isAsync)
+        public PersistentAgentsChatClientTests(bool isAsync) : base(isAsync, mode: RecordedTestMode.Record)
         {
             TestDiagnostics = false;
         }
@@ -47,7 +47,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             using IDisposable _ = SetTestSwitch();
             PersistentAgentsClient client = GetClient();
             PersistentAgent agent = await client.Administration.CreateAgentAsync(
-                model: "gpt-4.1",
+                model: "gpt-4o",
                 name: AGENT_NAME,
                 instructions: "You are a helpful chat agent."
             );
@@ -236,7 +236,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             );
 
             PersistentAgent agent = await client.Administration.CreateAgentAsync(
-                model: "gpt-4.1",
+                model: "gpt-4o",
                 name: AGENT_NAME,
                 instructions: "Use the provided function to answer questions.",
                 tools: [tool]
@@ -297,7 +297,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
             // First tool is registered on agent level.
             PersistentAgent agent = await client.Administration.CreateAgentAsync(
-                model: "gpt-4.1",
+                model: "gpt-4o",
                 name: AGENT_NAME,
                 instructions: "Use the provided function to answer questions.",
                 tools: [wordTool]
