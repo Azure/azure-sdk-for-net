@@ -7,7 +7,7 @@ $packageRoot = Resolve-Path (Join-Path $PSScriptRoot '..' '..')
 
 Refresh-Build
 
-$spectorRoot = Join-Path $packageRoot 'generator' 'TestProjects' 'Spector' 'http'
+$spectorRoot = Join-Path $packageRoot 'generator' 'TestProjects' 'Spector'
 $spectorCsproj = Join-Path $packageRoot 'generator' 'TestProjects' 'Spector.Tests' 'TestProjects.Spector.Tests.csproj'
 
 $coverageDir = Join-Path $packageRoot 'generator' 'artifacts' 'coverage'
@@ -16,10 +16,10 @@ if (-not (Test-Path $coverageDir)) {
     New-Item -ItemType Directory -Path $coverageDir | Out-Null
 }
 
-$specFiles = Get-Sorted-Specs
+$specs = Get-Sorted-Specs
 
 # generate all
-foreach ($specFile in $specFiles) {
+foreach ($specFile in $specs) {
     $subPath = Get-SubPath $specFile
 
     Write-Host "Regenerating $subPath" -ForegroundColor Cyan
@@ -56,7 +56,7 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 # restore all
-foreach ($specFile in $specFiles) {
+foreach ($specFile in $specs) {
     $subPath = Get-SubPath $specFile
 
     Write-Host "Restoring $subPath" -ForegroundColor Cyan
