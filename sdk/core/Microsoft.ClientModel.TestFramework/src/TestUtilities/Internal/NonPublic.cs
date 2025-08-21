@@ -7,7 +7,7 @@ using System.Reflection;
 namespace Microsoft.ClientModel.TestFramework;
 
 /// <summary>
-/// Helpers to make accessing the many internal or private members of the Azure test framework more streamlined.
+/// Helpers to make accessing the many internal or private members of the test framework more streamlined.
 /// </summary>
 internal static class NonPublic
 {

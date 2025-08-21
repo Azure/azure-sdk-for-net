@@ -138,11 +138,6 @@ public abstract class RecordedTestBase : ClientTestBase
             UriRegexSanitizer.CreateWithQueryParameter("sktid", EmptyGuid),
         };
 
-    ///// <summary>
-    ///// The list of <see cref="HeaderTransform"/> to apply in Playback mode to the response headers.
-    ///// </summary>
-    //public List<HeaderTransform> HeaderTransforms = new();
-
     /// <summary>
     /// The list of <see cref="HeaderRegexSanitizer"/> to apply to the request and response headers. This allows you to specify
     /// a regex for matching on the header values. For simple use cases where you need to sanitize based solely on header key, use

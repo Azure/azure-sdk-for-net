@@ -461,10 +461,6 @@ public class TestRecording : IAsyncDisposable
                 };
                 await _proxy.AdminClient.SetMatcherAsync(MatcherType.CustomDefaultMatcher, defaultMatcher).ConfigureAwait(false);
 
-                //foreach (HeaderTransform transform in _recordedTestBase.HeaderTransforms)
-                //{
-                //    await _proxy.ProxyClient.AddHeaderTransformAsync("HeaderTransform", transform).ConfigureAwait(false);
-                //}
                 break;
         }
     }
