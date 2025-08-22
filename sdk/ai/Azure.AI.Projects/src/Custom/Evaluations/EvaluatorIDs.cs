@@ -3,16 +3,14 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.AI.Projects
 {
     /// <summary>
     /// Evaluator IDs for built-in evaluators.
     /// </summary>
-    public static class EvaluatorIDs
+    internal static class EvaluatorIDs
     {
+        // TODO: Update to public again once we add back eval support
         public const string Relevance = "azureai://built-in/evaluators/relevance";
         public const string HateUnfairness = "azureai://built-in/evaluators/hate_unfairness";
         public const string Violence = "azureai://built-in/evaluators/violence";
