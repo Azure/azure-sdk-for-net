@@ -14,6 +14,7 @@ namespace Azure.Identity
         private static readonly TokenCredential[] s_defaultCredentialChain = new DefaultAzureCredentialFactory(new DefaultAzureCredentialOptions()).CreateCredentialChain();
         private bool _useDefaultCredentialChain;
         private readonly string _customEnvironmentVariableName;
+        private static string _troubleshootingMessage = $" See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/defaultazurecredential/troubleshoot";
 
         public DefaultAzureCredentialFactory(DefaultAzureCredentialOptions options)
             : this(options, CredentialPipeline.GetInstance(options))
@@ -159,14 +160,14 @@ namespace Azure.Identity
                 char c = environmentVariableName[i];
                 if (!char.IsLetterOrDigit(c) && c != '_')
                 {
-                    throw new ArgumentException($"Invalid environment variable name: '{environmentVariableName}'. Only letters, digits, and underscores are allowed.", nameof(environmentVariableName));
+                    throw new ArgumentException($"Invalid environment variable name: '{environmentVariableName}'. Only letters, digits, and underscores are allowed.{_troubleshootingMessage}", nameof(environmentVariableName));
                 }
             }
 
             string credentialSelection = Environment.GetEnvironmentVariable(environmentVariableName);
             if (string.IsNullOrEmpty(credentialSelection))
             {
-                throw new InvalidOperationException($"Environment variable '{environmentVariableName}' is not set or is empty.");
+                throw new InvalidOperationException($"Environment variable '{environmentVariableName}' is not set or is empty.{_troubleshootingMessage}");
             }
             return credentialSelection.Trim().ToLower();
         }
@@ -251,7 +252,7 @@ namespace Azure.Identity
                     TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions brokerOptions)
                         ? [CreateBrokerCredential(brokerOptions)]
                         : throw new CredentialUnavailableException("BrokerCredential is not available without a reference to Azure.Identity.Broker."),
-                _ => throw new InvalidOperationException($"Invalid value for environment variable {environmentVariableName}: {credentialSelection}. Valid values are {validCredentials}. See https://aka.ms/azsdk/net/identity/defaultazurecredential/troubleshoot for more information.")
+                _ => throw new InvalidOperationException($"Invalid value for environment variable {environmentVariableName}: {credentialSelection}. Valid values are {validCredentials}.{_troubleshootingMessage}")
             };
         }
 
