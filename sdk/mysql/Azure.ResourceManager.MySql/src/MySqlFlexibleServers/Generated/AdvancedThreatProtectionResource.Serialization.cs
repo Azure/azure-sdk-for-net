@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 
         AdvancedThreatProtectionData IJsonModel<AdvancedThreatProtectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AdvancedThreatProtectionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AdvancedThreatProtectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AdvancedThreatProtectionData>(Data, options, AzureResourceManagerMySqlContext.Default);
+        BinaryData IPersistableModel<AdvancedThreatProtectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AdvancedThreatProtectionData>(Data, options, MySql.AzureResourceManagerMySqlContext.Default);
 
-        AdvancedThreatProtectionData IPersistableModel<AdvancedThreatProtectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AdvancedThreatProtectionData>(data, options, AzureResourceManagerMySqlContext.Default);
+        AdvancedThreatProtectionData IPersistableModel<AdvancedThreatProtectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AdvancedThreatProtectionData>(data, options, MySql.AzureResourceManagerMySqlContext.Default);
 
         string IPersistableModel<AdvancedThreatProtectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AdvancedThreatProtectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }

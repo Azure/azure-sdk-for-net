@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerPostgreSqlContext.Default);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, PostgreSql.AzureResourceManagerPostgreSqlContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPostgreSqlContext.Default);
+                    return ModelReaderWriter.Write(this, options, PostgreSql.AzureResourceManagerPostgreSqlContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

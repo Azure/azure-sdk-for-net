@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         PostgreSqlFlexibleServerFirewallRuleData IJsonModel<PostgreSqlFlexibleServerFirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlFlexibleServerFirewallRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PostgreSqlFlexibleServerFirewallRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PostgreSqlFlexibleServerFirewallRuleData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
+        BinaryData IPersistableModel<PostgreSqlFlexibleServerFirewallRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PostgreSqlFlexibleServerFirewallRuleData>(Data, options, PostgreSql.AzureResourceManagerPostgreSqlContext.Default);
 
-        PostgreSqlFlexibleServerFirewallRuleData IPersistableModel<PostgreSqlFlexibleServerFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlFlexibleServerFirewallRuleData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
+        PostgreSqlFlexibleServerFirewallRuleData IPersistableModel<PostgreSqlFlexibleServerFirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlFlexibleServerFirewallRuleData>(data, options, PostgreSql.AzureResourceManagerPostgreSqlContext.Default);
 
         string IPersistableModel<PostgreSqlFlexibleServerFirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlFlexibleServerFirewallRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }

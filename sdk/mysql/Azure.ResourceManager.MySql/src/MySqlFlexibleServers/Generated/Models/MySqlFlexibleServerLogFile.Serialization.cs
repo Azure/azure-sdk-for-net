@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMySqlContext.Default);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, MySql.AzureResourceManagerMySqlContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMySqlContext.Default);
+                    return ModelReaderWriter.Write(this, options, MySql.AzureResourceManagerMySqlContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MySqlFlexibleServerLogFile)} does not support writing '{options.Format}' format.");
             }

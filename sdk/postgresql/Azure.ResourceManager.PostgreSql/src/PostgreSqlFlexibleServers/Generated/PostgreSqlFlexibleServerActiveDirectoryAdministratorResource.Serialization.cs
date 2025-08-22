@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         PostgreSqlFlexibleServerActiveDirectoryAdministratorData IJsonModel<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
+        BinaryData IPersistableModel<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>(Data, options, PostgreSql.AzureResourceManagerPostgreSqlContext.Default);
 
-        PostgreSqlFlexibleServerActiveDirectoryAdministratorData IPersistableModel<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
+        PostgreSqlFlexibleServerActiveDirectoryAdministratorData IPersistableModel<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>(data, options, PostgreSql.AzureResourceManagerPostgreSqlContext.Default);
 
         string IPersistableModel<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
