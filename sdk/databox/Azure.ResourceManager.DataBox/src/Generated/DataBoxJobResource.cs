@@ -625,7 +625,8 @@ namespace Azure.ResourceManager.DataBox
         public virtual AsyncPageable<UnencryptedCredentials> GetCredentialsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxJobJobResourcesRestClient.CreateListCredentialsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => UnencryptedCredentials.DeserializeUnencryptedCredentials(e), _dataBoxJobJobResourcesClientDiagnostics, Pipeline, "DataBoxJobResource.GetCredentials", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxJobJobResourcesRestClient.CreateListCredentialsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => UnencryptedCredentials.DeserializeUnencryptedCredentials(e), _dataBoxJobJobResourcesClientDiagnostics, Pipeline, "DataBoxJobResource.GetCredentials", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -654,7 +655,8 @@ namespace Azure.ResourceManager.DataBox
         public virtual Pageable<UnencryptedCredentials> GetCredentials(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxJobJobResourcesRestClient.CreateListCredentialsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => UnencryptedCredentials.DeserializeUnencryptedCredentials(e), _dataBoxJobJobResourcesClientDiagnostics, Pipeline, "DataBoxJobResource.GetCredentials", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataBoxJobJobResourcesRestClient.CreateListCredentialsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => UnencryptedCredentials.DeserializeUnencryptedCredentials(e), _dataBoxJobJobResourcesClientDiagnostics, Pipeline, "DataBoxJobResource.GetCredentials", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
