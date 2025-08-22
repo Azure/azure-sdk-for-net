@@ -107,6 +107,7 @@ namespace Azure.Generator.Management.Visitors
                                         Default,
                                         New.Instance(
                                             variable.Type,
+                                            // Use the flattened property as the parameter, if it is an overridden value type, we need to use the Value property.
                                             [isOverriddenValueType ? flattenedProperty.AsParameter.Property("Value") : flattenedProperty.AsParameter, New.Instance(new CSharpType(typeof(Dictionary<,>), typeof(string), typeof(BinaryData)))]))); // TODO: handle additional parameters properly or should it be nullable?
                                 }
                                 else
@@ -151,6 +152,7 @@ namespace Azure.Generator.Management.Visitors
                         isFlattenedPropertyReadOnly ? null : BuildSetter(includeSetterNullCheck, modelProvider, property, innerProperty)
                     );
 
+                    // If the inner property is a value type, we need to ensure that we handle the nullability correctly.
                     var isOverriddenValueType = innerProperty.Type.IsValueType && !innerProperty.Type.IsNullable;
                     var flattenedProperty = new PropertyProvider(innerProperty.Description, innerProperty.Modifiers, isOverriddenValueType ? innerProperty.Type.WithNullable(true) : innerProperty.Type, flattenPropertyName, flattenPropertyBody, model, innerProperty.ExplicitInterface, innerProperty.WireInfo, innerProperty.Attributes);
 
