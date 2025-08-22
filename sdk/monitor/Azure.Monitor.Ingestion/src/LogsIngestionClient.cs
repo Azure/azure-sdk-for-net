@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -15,7 +14,6 @@ using Azure.Core.Pipeline;
 namespace Azure.Monitor.Ingestion
 {
     /// <summary> The IngestionUsingDataCollectionRules service client. </summary>
-    [CodeGenClient("IngestionUsingDataCollectionRulesClient")]
     [CodeGenSuppress("LogsIngestionClient", typeof(Uri), typeof(TokenCredential), typeof(LogsIngestionClientOptions))]
     public partial class LogsIngestionClient
     {
@@ -42,7 +40,7 @@ namespace Azure.Monitor.Ingestion
             _tokenCredential = credential;
             var authorizationScope = $"{(string.IsNullOrEmpty(options.Audience?.ToString()) ? LogsIngestionAudience.AzurePublicCloud : options.Audience)}";
             var scopes = new List<string> { authorizationScope };
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, scopes) }, new ResponseClassifier());
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, scopes) }, new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
@@ -70,7 +68,7 @@ namespace Azure.Monitor.Ingestion
 
         internal HttpMessage CreateUploadRequest(string ruleId, string streamName, RequestContent content, string contentEncoding, RequestContext context = null)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -591,11 +589,11 @@ namespace Azure.Monitor.Ingestion
 
             if (async)
             {
-                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             }
             else
             {
-                _pipeline.Send(message, cancellationToken);
+                Pipeline.Send(message, cancellationToken);
             }
 
             return message.Response;

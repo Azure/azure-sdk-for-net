@@ -64,10 +64,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Region to configure the Workspace. </summary>
+        [WirePath("region")]
         public string Region { get; set; }
         /// <summary> The workspace Id for Firewall Policy Insights. </summary>
         internal WritableSubResource WorkspaceId { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("workspaceId.id")]
         public ResourceIdentifier WorkspaceIdId
         {
             get => WorkspaceId is null ? default : WorkspaceId.Id;

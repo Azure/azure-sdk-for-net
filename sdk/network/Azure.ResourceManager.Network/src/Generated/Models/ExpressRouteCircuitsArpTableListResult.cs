@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A list of the ARP tables. </summary>
+        [WirePath("value")]
         public IReadOnlyList<ExpressRouteCircuitArpTable> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

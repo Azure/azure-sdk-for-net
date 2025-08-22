@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The resource navigation links in a subnet. </summary>
+        [WirePath("value")]
         public IReadOnlyList<ResourceNavigationLink> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

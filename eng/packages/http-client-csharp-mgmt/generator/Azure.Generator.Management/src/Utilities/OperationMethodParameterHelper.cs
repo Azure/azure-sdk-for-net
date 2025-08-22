@@ -29,7 +29,7 @@ namespace Azure.Generator.Management.Utilities
 
             foreach (var parameter in serviceMethod.Operation.Parameters)
             {
-                if (parameter.Kind != InputParameterKind.Method)
+                if (parameter.Scope != InputParameterScope.Method)
                 {
                     continue;
                 }

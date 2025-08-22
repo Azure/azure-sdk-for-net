@@ -60,10 +60,12 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> A reference to frontend IP addresses. </summary>
         internal WritableSubResource FrontendIPConfiguration { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.frontendIPConfiguration.id")]
         public ResourceIdentifier FrontendIPConfigurationId
         {
             get => FrontendIPConfiguration is null ? default : FrontendIPConfiguration.Id;
@@ -76,26 +78,36 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A reference to a private IP address defined on a network interface of a VM. Traffic sent to the frontend port of each of the frontend IP configurations is forwarded to the backend IP. </summary>
+        [WirePath("properties.backendIPConfiguration")]
         public NetworkInterfaceIPConfigurationData BackendIPConfiguration { get; }
         /// <summary> The reference to the transport protocol used by the load balancing rule. </summary>
+        [WirePath("properties.protocol")]
         public LoadBalancingTransportProtocol? Protocol { get; set; }
         /// <summary> The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values range from 1 to 65534. </summary>
+        [WirePath("properties.frontendPort")]
         public int? FrontendPort { get; set; }
         /// <summary> The port used for the internal endpoint. Acceptable values range from 1 to 65535. </summary>
+        [WirePath("properties.backendPort")]
         public int? BackendPort { get; set; }
         /// <summary> The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when the protocol is set to TCP. </summary>
+        [WirePath("properties.idleTimeoutInMinutes")]
         public int? IdleTimeoutInMinutes { get; set; }
         /// <summary> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </summary>
+        [WirePath("properties.enableFloatingIP")]
         public bool? EnableFloatingIP { get; set; }
         /// <summary> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </summary>
+        [WirePath("properties.enableTcpReset")]
         public bool? EnableTcpReset { get; set; }
         /// <summary> The port range start for the external endpoint. This property is used together with BackendAddressPool and FrontendPortRangeEnd. Individual inbound NAT rule port mappings will be created for each backend address from BackendAddressPool. Acceptable values range from 1 to 65534. </summary>
+        [WirePath("properties.frontendPortRangeStart")]
         public int? FrontendPortRangeStart { get; set; }
         /// <summary> The port range end for the external endpoint. This property is used together with BackendAddressPool and FrontendPortRangeStart. Individual inbound NAT rule port mappings will be created for each backend address from BackendAddressPool. Acceptable values range from 1 to 65534. </summary>
+        [WirePath("properties.frontendPortRangeEnd")]
         public int? FrontendPortRangeEnd { get; set; }
         /// <summary> A reference to backendAddressPool resource. </summary>
         internal WritableSubResource BackendAddressPool { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.backendAddressPool.id")]
         public ResourceIdentifier BackendAddressPoolId
         {
             get => BackendAddressPool is null ? default : BackendAddressPool.Id;
@@ -108,6 +120,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The provisioning state of the inbound NAT rule resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

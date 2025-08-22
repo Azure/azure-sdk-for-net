@@ -8,7 +8,6 @@ using Azure.Generator.Management.Providers.OperationMethodProviders;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
-using Humanizer;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -205,14 +204,7 @@ namespace Azure.Generator.Management.Providers
         {
             if (resource.IsSingleton)
             {
-                var resourceMethodSignature = new MethodSignature(
-                    $"Get{resource.ResourceName}",
-                    $"Gets an object representing a {resource.Type:C} along with the instance operations that can be performed on it in the {ArmCoreType:C}.",
-                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
-                    resource.Type,
-                    $"Returns a {resource.Type:C} object.",
-                    []
-                    );
+                var resourceMethodSignature = resource.FactoryMethodSignature;
                 var bodyStatement = Return(
                     New.Instance(
                         resource.Type,
@@ -225,17 +217,9 @@ namespace Azure.Generator.Management.Providers
             }
             else
             {
-                var collection = resource.ResourceCollection!;
                 // the first method is returning the collection
-                var pluralOfResourceName = resource.ResourceName.Pluralize();
-                var collectionMethodSignature = new MethodSignature(
-                    $"Get{pluralOfResourceName}",
-                    $"Gets a collection of {pluralOfResourceName} in the {ArmCoreType:C}",
-                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
-                    collection.Type,
-                    $"An object representing collection of {pluralOfResourceName} and their operations over a {resource.Name}.",
-                    []
-                    );
+                var collection = resource.ResourceCollection!;
+                var collectionMethodSignature = resource.FactoryMethodSignature;
 
                 var bodyStatement = Return(This.As<ArmResource>().GetCachedClient(new CodeWriterDeclaration("client"), client => New.Instance(collection.Type, client, This.As<ArmResource>().Id())));
                 yield return new MethodProvider(

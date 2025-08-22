@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Start IP Address. </summary>
+        [WirePath("startIP")]
         public string StartIP { get; set; }
         /// <summary> End IP Address. </summary>
+        [WirePath("endIP")]
         public string EndIP { get; set; }
     }
 }
