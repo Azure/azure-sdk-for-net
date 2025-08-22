@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -196,14 +196,21 @@ namespace Azure.Identity
         /// <returns>Array of development TokenCredential instances.</returns>
         private TokenCredential[] CreateDevelopmentCredentialChain()
         {
-            return
+            List<TokenCredential> chain =
             [
                 CreateVisualStudioCredential(),
                 CreateVisualStudioCodeCredential(),
                 CreateAzureCliCredential(),
                 CreateAzurePowerShellCredential(),
-                CreateAzureDeveloperCliCredential()
+                CreateAzureDeveloperCliCredential(),
+                CreateInteractiveBrowserCredential()
             ];
+
+            if (TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions brokerOptions))
+            {
+                chain.Add(CreateBrokerCredential(brokerOptions));
+            }
+            return chain.ToArray();
         }
 
         /// <summary>
