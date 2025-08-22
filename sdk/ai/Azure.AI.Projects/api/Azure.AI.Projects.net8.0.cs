@@ -12,7 +12,7 @@ namespace Azure.AI.Projects
         public virtual Azure.AI.Projects.DeploymentsOperations Deployments { get { throw null; } }
         public virtual Azure.AI.Projects.IndexesOperations Indexes { get { throw null; } }
         public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
-        public virtual Azure.AI.Projects.Telemetry Telemetry { get { throw null; } }
+        public virtual Azure.AI.Projects.AIProjectTelemetry Telemetry { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override System.Collections.Generic.IEnumerable<System.ClientModel.Primitives.ClientConnection> GetAllConnections() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -32,6 +32,12 @@ namespace Azure.AI.Projects
             V2025_05_01 = 1,
             V1 = 2,
         }
+    }
+    public partial class AIProjectTelemetry
+    {
+        public AIProjectTelemetry(Azure.AI.Projects.AIProjectClient outerInstance) { }
+        public string GetApplicationInsightsConnectionString() { throw null; }
+        public System.Threading.Tasks.Task<string> GetApplicationInsightsConnectionStringAsync() { throw null; }
     }
     public partial class ApiKeyCredentials : Azure.AI.Projects.BaseCredentials, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ApiKeyCredentials>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ApiKeyCredentials>
     {
@@ -100,7 +106,7 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.NoAuthenticationCredentials NoAuthenticationCredentials() { throw null; }
         public static Azure.AI.Projects.PendingUploadConfiguration PendingUploadConfiguration(string pendingUploadId = null, string connectionName = null, Azure.AI.Projects.PendingUploadType pendingUploadType = default(Azure.AI.Projects.PendingUploadType)) { throw null; }
         public static Azure.AI.Projects.PendingUploadResult PendingUploadResult(Azure.AI.Projects.BlobReference blobReference = null, string pendingUploadId = null, string version = null, Azure.AI.Projects.PendingUploadType pendingUploadType = default(Azure.AI.Projects.PendingUploadType)) { throw null; }
-        public static Azure.AI.Projects.SASCredentials SASCredentials(string sasToken = null) { throw null; }
+        public static Azure.AI.Projects.SasCredential SasCredential(string sasToken = null) { throw null; }
         public static Azure.AI.Projects.SearchIndex SearchIndex(string type = null, string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
     }
     public partial class AzureAISearchIndex : Azure.AI.Projects.SearchIndex, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AzureAISearchIndex>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureAISearchIndex>
@@ -386,39 +392,6 @@ namespace Azure.AI.Projects
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.EntraIDCredentials>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.EntraIDCredentials>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public static partial class EvaluatorIDs
-    {
-        public const string BleuScore = "azureai://built-in/evaluators/bleu_score";
-        public const string CodeVulnerability = "azureai://built-in/evaluators/code_vulnerability";
-        public const string Coherence = "azureai://built-in/evaluators/coherence";
-        public const string ContentSafety = "azureai://built-in/evaluators/content_safety";
-        public const string DocumentRetrieval = "azureai://built-in/evaluators/document_retrieval";
-        public const string F1Score = "azureai://built-in/evaluators/f1_score";
-        public const string Fluency = "azureai://built-in/evaluators/fluency";
-        public const string GleuScore = "azureai://built-in/evaluators/gleu_score";
-        public const string Groundedness = "azureai://built-in/evaluators/groundedness";
-        public const string GroundednessPro = "azureai://built-in/evaluators/groundedness_pro";
-        public const string HateUnfairness = "azureai://built-in/evaluators/hate_unfairness";
-        public const string IndirectAttack = "azureai://built-in/evaluators/indirect_attack";
-        public const string IntentResolution = "azureai://built-in/evaluators/intent_resolution";
-        public const string LabelGrader = "azureai://built-in/evaluators/label_grader";
-        public const string MeteorScore = "azureai://built-in/evaluators/meteor_score";
-        public const string ProtectedMaterial = "azureai://built-in/evaluators/protected_material";
-        public const string QA = "azureai://built-in/evaluators/qa";
-        public const string Relevance = "azureai://built-in/evaluators/relevance";
-        public const string ResponseCompleteness = "azureai://built-in/evaluators/response_completeness";
-        public const string Retrieval = "azureai://built-in/evaluators/retrieval";
-        public const string RougeScore = "azureai://built-in/evaluators/rouge_score";
-        public const string SelfHarm = "azureai://built-in/evaluators/self_harm";
-        public const string Sexual = "azureai://built-in/evaluators/sexual";
-        public const string SimilarityScore = "azureai://built-in/evaluators/similarity_score";
-        public const string StringCheckGrader = "azureai://built-in/evaluators/string_check_grader";
-        public const string TaskAdherence = "azureai://built-in/evaluators/task_adherence";
-        public const string TextSimilarityGrader = "azureai://built-in/evaluators/text_similarity_grader";
-        public const string ToolCallAccuracy = "azureai://built-in/evaluators/tool_call_accuracy";
-        public const string UngroundedAttributes = "azureai://built-in/evaluators/ungrounded_attributes";
-        public const string Violence = "azureai://built-in/evaluators/violence";
-    }
     public partial class FieldMapping : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.FieldMapping>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.FieldMapping>
     {
         public FieldMapping(System.Collections.Generic.IEnumerable<string> contentFields) { }
@@ -468,7 +441,9 @@ namespace Azure.AI.Projects
     {
         protected IndexesOperations() { }
         public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
+        public virtual System.ClientModel.ClientResult<Azure.AI.Projects.SearchIndex> CreateOrUpdate(string name, string version, Azure.AI.Projects.SearchIndex index, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult CreateOrUpdate(string name, string version, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.SearchIndex>> CreateOrUpdateAsync(string name, string version, Azure.AI.Projects.SearchIndex index, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> CreateOrUpdateAsync(string name, string version, System.ClientModel.BinaryContent content, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.ClientModel.ClientResult Delete(string name, string version, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.ClientModel.ClientResult Delete(string name, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -605,19 +580,19 @@ namespace Azure.AI.Projects
         public static bool operator !=(Azure.AI.Projects.PendingUploadType left, Azure.AI.Projects.PendingUploadType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SASCredentials : Azure.AI.Projects.BaseCredentials, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.SASCredentials>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.SASCredentials>
+    public partial class SasCredential : Azure.AI.Projects.BaseCredentials, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.SasCredential>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.SasCredential>
     {
-        internal SASCredentials() { }
+        internal SasCredential() { }
         public string SasToken { get { throw null; } }
         protected override Azure.AI.Projects.BaseCredentials JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.AI.Projects.BaseCredentials PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.SASCredentials System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.SASCredentials>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.SASCredentials>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.SASCredentials System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.SASCredentials>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.SASCredentials>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.SASCredentials>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.SasCredential System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.SasCredential>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.SasCredential>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.SasCredential System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.SasCredential>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.SasCredential>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.SasCredential>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public abstract partial class SearchIndex : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.SearchIndex>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.SearchIndex>
     {
@@ -637,11 +612,5 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.SearchIndex System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.SearchIndex>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.SearchIndex>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.SearchIndex>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class Telemetry
-    {
-        public Telemetry(Azure.AI.Projects.AIProjectClient outerInstance) { }
-        public string GetApplicationInsightsConnectionString() { throw null; }
-        public System.Threading.Tasks.Task<string> GetApplicationInsightsConnectionStringAsync() { throw null; }
     }
 }
