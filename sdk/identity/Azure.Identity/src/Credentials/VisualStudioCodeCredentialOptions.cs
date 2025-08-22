@@ -4,13 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Azure.Identity.Credentials;
 
 namespace Azure.Identity
 {
     /// <summary>
     /// Options for configuring the <see cref="VisualStudioCodeCredential"/>.
     /// </summary>
-    public class VisualStudioCodeCredentialOptions : TokenCredentialOptions, ISupportsAdditionallyAllowedTenants
+    public class VisualStudioCodeCredentialOptions : TokenCredentialOptions, ISupportsAdditionallyAllowedTenants, ISupportsTenantId
     {
         private string _tenantId;
 

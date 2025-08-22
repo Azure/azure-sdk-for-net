@@ -4,13 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Azure.Identity.Credentials;
 
 namespace Azure.Identity
 {
     /// <summary>
     /// Options used to configure the <see cref="WorkloadIdentityCredential"/>.
     /// </summary>
-    public class WorkloadIdentityCredentialOptions : TokenCredentialOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants
+    public class WorkloadIdentityCredentialOptions : TokenCredentialOptions, ISupportsDisableInstanceDiscovery, ISupportsAdditionallyAllowedTenants, ISupportsTenantId
     {
         /// <summary>
         /// The tenant ID of the service principal.

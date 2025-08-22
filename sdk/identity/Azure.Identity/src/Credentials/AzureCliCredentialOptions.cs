@@ -3,13 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Identity.Credentials;
 
 namespace Azure.Identity
 {
     /// <summary>
     /// Options for configuring the <see cref="AzureCliCredential"/>.
     /// </summary>
-    public class AzureCliCredentialOptions : TokenCredentialOptions, ISupportsAdditionallyAllowedTenants
+    public class AzureCliCredentialOptions : TokenCredentialOptions, ISupportsAdditionallyAllowedTenants, ISupportsTenantId
     {
         private string _subscription;
 
