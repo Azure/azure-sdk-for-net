@@ -7,10 +7,9 @@
 
 using Azure.Core.Pipeline;
 
-namespace Azure.ResourceManager.MySql.FlexibleServers
+namespace Azure.ResourceManager.MySql
 {
     internal static class ProviderConstants
     {
-        public static string DefaultProviderNamespace { get; } = ClientDiagnostics.GetResourceProviderNamespace(typeof(ProviderConstants).Assembly);
     }
 }

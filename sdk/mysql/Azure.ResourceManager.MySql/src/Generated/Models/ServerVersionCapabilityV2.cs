@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.MySql.FlexibleServers.Models
+namespace Azure.ResourceManager.MySql.Models
 {
     /// <summary> Server version capabilities. </summary>
     public partial class ServerVersionCapabilityV2

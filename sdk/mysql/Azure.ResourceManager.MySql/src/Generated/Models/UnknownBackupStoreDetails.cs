@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.MySql.FlexibleServers.Models
+namespace Azure.ResourceManager.MySql.Models
 {
     /// <summary> Unknown version of BackupStoreDetails. </summary>
-    internal partial class UnknownBackupStoreDetails : MySqlFlexibleServerBackupStoreDetails
+    internal partial class UnknownBackupStoreDetails : BackupStoreDetails
     {
         /// <summary> Initializes a new instance of <see cref="UnknownBackupStoreDetails"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>

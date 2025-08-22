@@ -14,14 +14,14 @@ using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.MySql.FlexibleServers.Models;
+using Azure.ResourceManager.MySql.Models;
 
-namespace Azure.ResourceManager.MySql.FlexibleServers
+namespace Azure.ResourceManager.MySql
 {
     /// <summary>
     /// A class representing a collection of <see cref="AdvancedThreatProtectionResource"/> and their operations.
-    /// Each <see cref="AdvancedThreatProtectionResource"/> in the collection will belong to the same instance of <see cref="MySqlFlexibleServerResource"/>.
-    /// To get an <see cref="AdvancedThreatProtectionCollection"/> instance call the GetAdvancedThreatProtections method from an instance of <see cref="MySqlFlexibleServerResource"/>.
+    /// Each <see cref="AdvancedThreatProtectionResource"/> in the collection will belong to the same instance of <see cref="ServerResource"/>.
+    /// To get an <see cref="AdvancedThreatProtectionCollection"/> instance call the GetAdvancedThreatProtections method from an instance of <see cref="ServerResource"/>.
     /// </summary>
     public partial class AdvancedThreatProtectionCollection : ArmCollection, IEnumerable<AdvancedThreatProtectionResource>, IAsyncEnumerable<AdvancedThreatProtectionResource>
     {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal AdvancedThreatProtectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _advancedThreatProtectionAdvancedThreatProtectionSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", AdvancedThreatProtectionResource.ResourceType.Namespace, Diagnostics);
+            _advancedThreatProtectionAdvancedThreatProtectionSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql", AdvancedThreatProtectionResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(AdvancedThreatProtectionResource.ResourceType, out string advancedThreatProtectionAdvancedThreatProtectionSettingsApiVersion);
             _advancedThreatProtectionAdvancedThreatProtectionSettingsRestClient = new AdvancedThreatProtectionSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, advancedThreatProtectionAdvancedThreatProtectionSettingsApiVersion);
 #if DEBUG
@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != MySqlFlexibleServerResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, MySqlFlexibleServerResource.ResourceType), nameof(id));
+            if (id.ResourceType != ServerResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ServerResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_UpdatePut</description>
+        /// <description>AdvancedThreatProtection_UpdatePut</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             try
             {
                 var response = await _advancedThreatProtectionAdvancedThreatProtectionSettingsRestClient.UpdatePutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advancedThreatProtectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation<AdvancedThreatProtectionResource>(new AdvancedThreatProtectionOperationSource(Client), _advancedThreatProtectionAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, _advancedThreatProtectionAdvancedThreatProtectionSettingsRestClient.CreateUpdatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advancedThreatProtectionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation<AdvancedThreatProtectionResource>(new AdvancedThreatProtectionOperationSource(Client), _advancedThreatProtectionAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, _advancedThreatProtectionAdvancedThreatProtectionSettingsRestClient.CreateUpdatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advancedThreatProtectionName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_UpdatePut</description>
+        /// <description>AdvancedThreatProtection_UpdatePut</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             try
             {
                 var response = _advancedThreatProtectionAdvancedThreatProtectionSettingsRestClient.UpdatePut(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advancedThreatProtectionName, data, cancellationToken);
-                var operation = new FlexibleServersArmOperation<AdvancedThreatProtectionResource>(new AdvancedThreatProtectionOperationSource(Client), _advancedThreatProtectionAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, _advancedThreatProtectionAdvancedThreatProtectionSettingsRestClient.CreateUpdatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advancedThreatProtectionName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation<AdvancedThreatProtectionResource>(new AdvancedThreatProtectionOperationSource(Client), _advancedThreatProtectionAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, _advancedThreatProtectionAdvancedThreatProtectionSettingsRestClient.CreateUpdatePutRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advancedThreatProtectionName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_Get</description>
+        /// <description>AdvancedThreatProtection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_Get</description>
+        /// <description>AdvancedThreatProtection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_List</description>
+        /// <description>AdvancedThreatProtection_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_List</description>
+        /// <description>AdvancedThreatProtection_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_Get</description>
+        /// <description>AdvancedThreatProtection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_Get</description>
+        /// <description>AdvancedThreatProtection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_Get</description>
+        /// <description>AdvancedThreatProtection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_Get</description>
+        /// <description>AdvancedThreatProtection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

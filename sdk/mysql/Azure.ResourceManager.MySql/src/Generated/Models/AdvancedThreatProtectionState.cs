@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MySql.FlexibleServers.Models
+namespace Azure.ResourceManager.MySql.Models
 {
     /// <summary> Specifies the state of the Advanced Threat Protection, whether it is enabled or disabled on the server. </summary>
     public readonly partial struct AdvancedThreatProtectionState : IEquatable<AdvancedThreatProtectionState>

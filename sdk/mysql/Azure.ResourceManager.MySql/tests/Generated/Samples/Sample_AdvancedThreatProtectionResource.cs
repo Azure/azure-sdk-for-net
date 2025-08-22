@@ -9,10 +9,10 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.MySql.FlexibleServers.Models;
+using Azure.ResourceManager.MySql.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
+namespace Azure.ResourceManager.MySql.Samples
 {
     public partial class Sample_AdvancedThreatProtectionResource
     {
@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAServerSAdvancedThreatProtectionSettings()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/AdvancedThreatProtectionSettingsGet.json
-            // this example is just showing the usage of "AdvancedThreatProtectionSettings_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-01-preview/AdvancedThreatProtectionSettingsGet.json
+            // this example is just showing the usage of "AdvancedThreatProtection_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_DisableAServerSAdvancedThreatProtectionSettingsWithAllParameters()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/AdvancedThreatProtectionSettingsPatchDisabled.json
-            // this example is just showing the usage of "AdvancedThreatProtectionSettings_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-01-preview/AdvancedThreatProtectionSettingsPatchDisabled.json
+            // this example is just showing the usage of "AdvancedThreatProtection_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -69,10 +69,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             AdvancedThreatProtectionResource advancedThreatProtection = client.GetAdvancedThreatProtectionResource(advancedThreatProtectionResourceId);
 
             // invoke the operation
-            AdvancedThreatProtectionPatch patch = new AdvancedThreatProtectionPatch
-            {
-                State = AdvancedThreatProtectionState.Disabled,
-            };
+            AdvancedThreatProtectionPatch patch = new AdvancedThreatProtectionPatch();
             ArmOperation<AdvancedThreatProtectionResource> lro = await advancedThreatProtection.UpdateAsync(WaitUntil.Completed, patch);
             AdvancedThreatProtectionResource result = lro.Value;
 
@@ -87,8 +84,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_EnableAServerSAdvancedThreatProtectionSettings()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/AdvancedThreatProtectionSettingsPatchEnabled.json
-            // this example is just showing the usage of "AdvancedThreatProtectionSettings_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-01-preview/AdvancedThreatProtectionSettingsPatchEnabled.json
+            // this example is just showing the usage of "AdvancedThreatProtection_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -105,10 +102,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             AdvancedThreatProtectionResource advancedThreatProtection = client.GetAdvancedThreatProtectionResource(advancedThreatProtectionResourceId);
 
             // invoke the operation
-            AdvancedThreatProtectionPatch patch = new AdvancedThreatProtectionPatch
-            {
-                State = AdvancedThreatProtectionState.Enabled,
-            };
+            AdvancedThreatProtectionPatch patch = new AdvancedThreatProtectionPatch();
             ArmOperation<AdvancedThreatProtectionResource> lro = await advancedThreatProtection.UpdateAsync(WaitUntil.Completed, patch);
             AdvancedThreatProtectionResource result = lro.Value;
 

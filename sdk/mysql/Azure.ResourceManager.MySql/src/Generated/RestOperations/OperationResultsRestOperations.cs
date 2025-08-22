@@ -11,9 +11,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.MySql.FlexibleServers.Models;
+using Azure.ResourceManager.MySql.Models;
 
-namespace Azure.ResourceManager.MySql.FlexibleServers
+namespace Azure.ResourceManager.MySql
 {
     internal partial class OperationResultsRestOperations
     {
@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <summary> Initializes a new instance of OperationResultsRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Service host. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public OperationResultsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, AzureLocation locationName, string operationId)
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string locationName, string operationId)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             return uri;
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation locationName, string operationId)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string locationName, string operationId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -75,11 +75,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OperationStatusExtendedResult>> GetAsync(string subscriptionId, AzureLocation locationName, string operationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationName"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="locationName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<OperationStatusExtendedResult>> GetAsync(string subscriptionId, string locationName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             using var message = CreateGetRequest(subscriptionId, locationName, operationId);
@@ -103,11 +104,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OperationStatusExtendedResult> Get(string subscriptionId, AzureLocation locationName, string operationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationName"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="locationName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<OperationStatusExtendedResult> Get(string subscriptionId, string locationName, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             using var message = CreateGetRequest(subscriptionId, locationName, operationId);

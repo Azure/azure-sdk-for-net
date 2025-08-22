@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.MySql.FlexibleServers
+namespace Azure.ResourceManager.MySql
 {
     public partial class AdvancedThreatProtectionResource : IJsonModel<AdvancedThreatProtectionData>
     {

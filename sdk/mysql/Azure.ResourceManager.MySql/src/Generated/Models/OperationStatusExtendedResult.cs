@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MySql.FlexibleServers.Models
+namespace Azure.ResourceManager.MySql.Models
 {
     /// <summary> Represents Operation Results API Response. </summary>
     public partial class OperationStatusExtendedResult : OperationStatusResult
@@ -20,13 +20,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         internal OperationStatusExtendedResult(string status) : base(status)
         {
             Argument.AssertNotNull(status, nameof(status));
-
-            Properties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationStatusExtendedResult"/>. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
-        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="percentComplete"> Percent of the operation that is complete. </param>
@@ -34,9 +31,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="endOn"> The end time of the operation. </param>
         /// <param name="operations"> The operations list. </param>
         /// <param name="error"> If present, details of the operation error. </param>
+        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The extended properties of Operation Results. </param>
-        internal OperationStatusExtendedResult(ResourceIdentifier id, ResourceIdentifier resourceId, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<OperationStatusResult> operations, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> properties) : base(id, resourceId, name, status, percentComplete, startOn, endOn, operations, error, serializedAdditionalRawData)
+        internal OperationStatusExtendedResult(ResourceIdentifier id, string name, string status, double? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<OperationStatusResult> operations, ResponseError error, ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData, ExtendedData properties) : base(id, name, status, percentComplete, startOn, endOn, operations, error, resourceId, serializedAdditionalRawData)
         {
             Properties = properties;
         }
@@ -46,36 +44,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         {
         }
 
-        /// <summary>
-        /// The extended properties of Operation Results
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IReadOnlyDictionary<string, BinaryData> Properties { get; }
+        /// <summary> The extended properties of Operation Results. </summary>
+        public ExtendedData Properties { get; }
     }
 }

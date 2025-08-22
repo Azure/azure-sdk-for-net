@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.MySql.FlexibleServers.Models
+namespace Azure.ResourceManager.MySql.Models
 {
     /// <summary> Import source related properties. </summary>
     public partial class ImportSourceProperties
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="sasToken"> Sas token for accessing source storage. Read and list permissions are required for sas token. </param>
         /// <param name="dataDirPath"> Relative path of data directory in storage. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImportSourceProperties(ImportSourceStorageType? storageType, Uri storageUri, string sasToken, string dataDirPath, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ImportSourceProperties(ImportSourceStorageType? storageType, string storageUri, string sasToken, string dataDirPath, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageType = storageType;
             StorageUri = storageUri;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <summary> Storage type of import source. </summary>
         public ImportSourceStorageType? StorageType { get; set; }
         /// <summary> Uri of the import source storage. </summary>
-        public Uri StorageUri { get; set; }
+        public string StorageUri { get; set; }
         /// <summary> Sas token for accessing source storage. Read and list permissions are required for sas token. </summary>
         public string SasToken { get; set; }
         /// <summary> Relative path of data directory in storage. </summary>

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MySql.FlexibleServers.Models
+namespace Azure.ResourceManager.MySql.Models
 {
     /// <summary> Storage type of import source. </summary>
     public readonly partial struct ImportSourceStorageType : IEquatable<ImportSourceStorageType>

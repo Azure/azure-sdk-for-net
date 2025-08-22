@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MySql.FlexibleServers.Models
+namespace Azure.ResourceManager.MySql.Models
 {
     public partial class HighAvailabilityValidationEstimation : IUtf8JsonSerializable, IJsonModel<HighAvailabilityValidationEstimation>
     {

@@ -12,7 +12,7 @@ using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MySql.FlexibleServers.Models
+namespace Azure.ResourceManager.MySql.Models
 {
     public partial class OperationStatusExtendedResult : IUtf8JsonSerializable, IJsonModel<OperationStatusExtendedResult>
     {
@@ -36,28 +36,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsCollectionDefined(Properties))
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteStartObject();
-                foreach (var item in Properties)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndObject();
+                writer.WriteObjectValue<ExtendedData>(Properties, options);
             }
         }
 
@@ -81,16 +63,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            IReadOnlyDictionary<string, BinaryData> properties = default;
+            ExtendedData properties = default;
             ResourceIdentifier id = default;
-            ResourceIdentifier resourceId = default;
             string name = default;
             string status = default;
-            float? percentComplete = default;
+            double? percentComplete = default;
             DateTimeOffset? startTime = default;
             DateTimeOffset? endTime = default;
             IReadOnlyList<OperationStatusResult> operations = default;
             ResponseError error = default;
+            ResourceIdentifier resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,19 +83,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
-                        }
-                    }
-                    properties = dictionary;
+                    properties = ExtendedData.DeserializeExtendedData(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -123,15 +93,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("resourceId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -150,7 +111,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    percentComplete = property.Value.GetSingle();
+                    percentComplete = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("startTime"u8))
@@ -194,6 +155,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerMySqlContext.Default);
                     continue;
                 }
+                if (property.NameEquals("resourceId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -202,7 +172,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new OperationStatusExtendedResult(
                 id,
-                resourceId,
                 name,
                 status,
                 percentComplete,
@@ -210,8 +179,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 endTime,
                 operations ?? new ChangeTrackingList<OperationStatusResult>(),
                 error,
+                resourceId,
                 serializedAdditionalRawData,
-                properties ?? new ChangeTrackingDictionary<string, BinaryData>());
+                properties);
         }
 
         BinaryData IPersistableModel<OperationStatusExtendedResult>.Write(ModelReaderWriterOptions options)

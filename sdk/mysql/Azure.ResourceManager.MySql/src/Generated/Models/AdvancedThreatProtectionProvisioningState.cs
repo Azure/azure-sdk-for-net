@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.MySql.FlexibleServers.Models
+namespace Azure.ResourceManager.MySql.Models
 {
     /// <summary> The current provisioning state. </summary>
     public readonly partial struct AdvancedThreatProtectionProvisioningState : IEquatable<AdvancedThreatProtectionProvisioningState>
