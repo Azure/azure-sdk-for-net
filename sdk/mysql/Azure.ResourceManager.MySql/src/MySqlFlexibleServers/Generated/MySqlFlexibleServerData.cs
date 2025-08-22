@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="location"> The location. </param>
         public MySqlFlexibleServerData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new ChangeTrackingList<MySqlFlexibleServersPrivateEndpointConnection>();
+            ServerPrivateEndpointConnections = new ChangeTrackingList<MySqlFlexibleServersPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerData"/>. </summary>
@@ -69,7 +69,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="sku"> The SKU (pricing tier) of the server. </param>
         /// <param name="administratorLogin"> The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation). </param>
         /// <param name="administratorLoginPassword"> The password of the administrator login (required for server creation). </param>
-        /// <param name="version"> Server version. </param>
+        /// <param name="version"> Major version of MySQL. 8.0.21 stands for MySQL 8.0, 5.7.44 stands for MySQL 5.7. </param>
+        /// <param name="fullVersion"> Major version and actual engine version. </param>
         /// <param name="availabilityZone"> availability Zone information of the server. </param>
         /// <param name="createMode"> The mode to create a new MySQL server. </param>
         /// <param name="sourceServerResourceId"> The source MySQL server id. </param>
@@ -79,21 +80,24 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="dataEncryption"> The Data Encryption for CMK. </param>
         /// <param name="state"> The state of a server. </param>
         /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of a server. </param>
+        /// <param name="databasePort"> The server database port. Can only be specified when the server is being created. </param>
         /// <param name="storage"> Storage related properties of a server. </param>
         /// <param name="backup"> Backup related properties of a server. </param>
         /// <param name="highAvailability"> High availability related properties of a server. </param>
         /// <param name="network"> Network related properties of a server. </param>
-        /// <param name="privateEndpointConnections"> PrivateEndpointConnections related properties of a server. </param>
-        /// <param name="maintenanceWindow"> Maintenance window of a server. </param>
+        /// <param name="serverPrivateEndpointConnections"> PrivateEndpointConnections related properties of a server. </param>
+        /// <param name="maintenancePolicy"> Maintenance policy of a server. </param>
+        /// <param name="maintenanceWindow"> Maintenance window of a server. Known issue: cannot be set during server creation or updated with other properties during server update; must be updated separately. </param>
         /// <param name="importSourceProperties"> Source properties for import from storage. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MySqlFlexibleServerSku sku, string administratorLogin, string administratorLoginPassword, MySqlFlexibleServerVersion? version, string availabilityZone, MySqlFlexibleServerCreateMode? createMode, ResourceIdentifier sourceServerResourceId, DateTimeOffset? restorePointInTime, MySqlFlexibleServerReplicationRole? replicationRole, int? replicaCapacity, MySqlFlexibleServerDataEncryption dataEncryption, MySqlFlexibleServerState? state, string fullyQualifiedDomainName, MySqlFlexibleServerStorage storage, MySqlFlexibleServerBackupProperties backup, MySqlFlexibleServerHighAvailability highAvailability, MySqlFlexibleServerNetwork network, IReadOnlyList<MySqlFlexibleServersPrivateEndpointConnection> privateEndpointConnections, MySqlFlexibleServerMaintenanceWindow maintenanceWindow, ImportSourceProperties importSourceProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal MySqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MySqlFlexibleServerSku sku, string administratorLogin, string administratorLoginPassword, MySqlFlexibleServerVersion? version, string fullVersion, string availabilityZone, MySqlFlexibleServerCreateMode? createMode, ResourceIdentifier sourceServerResourceId, DateTimeOffset? restorePointInTime, MySqlFlexibleServerReplicationRole? replicationRole, int? replicaCapacity, MySqlFlexibleServerDataEncryption dataEncryption, MySqlFlexibleServerState? state, string fullyQualifiedDomainName, int? databasePort, MySqlFlexibleServerStorage storage, MySqlFlexibleServerBackupProperties backup, MySqlFlexibleServerHighAvailability highAvailability, MySqlFlexibleServerNetwork network, IReadOnlyList<MySqlFlexibleServersPrivateEndpointConnectionData> serverPrivateEndpointConnections, MaintenancePolicy maintenancePolicy, MySqlFlexibleServerMaintenanceWindow maintenanceWindow, ImportSourceProperties importSourceProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
             Version = version;
+            FullVersion = fullVersion;
             AvailabilityZone = availabilityZone;
             CreateMode = createMode;
             SourceServerResourceId = sourceServerResourceId;
@@ -103,11 +107,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             DataEncryption = dataEncryption;
             State = state;
             FullyQualifiedDomainName = fullyQualifiedDomainName;
+            DatabasePort = databasePort;
             Storage = storage;
             Backup = backup;
             HighAvailability = highAvailability;
             Network = network;
-            PrivateEndpointConnections = privateEndpointConnections;
+            ServerPrivateEndpointConnections = serverPrivateEndpointConnections;
+            MaintenancePolicy = maintenancePolicy;
             MaintenanceWindow = maintenanceWindow;
             ImportSourceProperties = importSourceProperties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -126,8 +132,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         public string AdministratorLogin { get; set; }
         /// <summary> The password of the administrator login (required for server creation). </summary>
         public string AdministratorLoginPassword { get; set; }
-        /// <summary> Server version. </summary>
+        /// <summary> Major version of MySQL. 8.0.21 stands for MySQL 8.0, 5.7.44 stands for MySQL 5.7. </summary>
         public MySqlFlexibleServerVersion? Version { get; set; }
+        /// <summary> Major version and actual engine version. </summary>
+        public string FullVersion { get; set; }
         /// <summary> availability Zone information of the server. </summary>
         public string AvailabilityZone { get; set; }
         /// <summary> The mode to create a new MySQL server. </summary>
@@ -146,6 +154,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         public MySqlFlexibleServerState? State { get; }
         /// <summary> The fully qualified domain name of a server. </summary>
         public string FullyQualifiedDomainName { get; }
+        /// <summary> The server database port. Can only be specified when the server is being created. </summary>
+        public int? DatabasePort { get; set; }
         /// <summary> Storage related properties of a server. </summary>
         public MySqlFlexibleServerStorage Storage { get; set; }
         /// <summary> Backup related properties of a server. </summary>
@@ -155,8 +165,22 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <summary> Network related properties of a server. </summary>
         public MySqlFlexibleServerNetwork Network { get; set; }
         /// <summary> PrivateEndpointConnections related properties of a server. </summary>
-        public IReadOnlyList<MySqlFlexibleServersPrivateEndpointConnection> PrivateEndpointConnections { get; }
-        /// <summary> Maintenance window of a server. </summary>
+        public IReadOnlyList<MySqlFlexibleServersPrivateEndpointConnectionData> ServerPrivateEndpointConnections { get; }
+        /// <summary> Maintenance policy of a server. </summary>
+        internal MaintenancePolicy MaintenancePolicy { get; set; }
+        /// <summary> The patch strategy of this server. </summary>
+        public PatchStrategy? MaintenancePatchStrategy
+        {
+            get => MaintenancePolicy is null ? default : MaintenancePolicy.PatchStrategy;
+            set
+            {
+                if (MaintenancePolicy is null)
+                    MaintenancePolicy = new MaintenancePolicy();
+                MaintenancePolicy.PatchStrategy = value;
+            }
+        }
+
+        /// <summary> Maintenance window of a server. Known issue: cannot be set during server creation or updated with other properties during server update; must be updated separately. </summary>
         public MySqlFlexibleServerMaintenanceWindow MaintenanceWindow { get; set; }
         /// <summary> Source properties for import from storage. </summary>
         public ImportSourceProperties ImportSourceProperties { get; set; }

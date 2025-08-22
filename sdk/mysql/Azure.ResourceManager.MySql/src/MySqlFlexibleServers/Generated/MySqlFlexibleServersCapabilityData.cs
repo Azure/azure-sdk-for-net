@@ -57,6 +57,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             SupportedGeoBackupRegions = new ChangeTrackingList<string>();
             SupportedFlexibleServerEditions = new ChangeTrackingList<ServerEditionCapabilityV2>();
             SupportedServerVersions = new ChangeTrackingList<ServerVersionCapabilityV2>();
+            SupportedFeatures = new ChangeTrackingList<FeatureProperty>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServersCapabilityData"/>. </summary>
@@ -67,12 +68,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="supportedGeoBackupRegions"> supported geo backup regions. </param>
         /// <param name="supportedFlexibleServerEditions"> A list of supported flexible server editions. </param>
         /// <param name="supportedServerVersions"> A list of supported server versions. </param>
+        /// <param name="supportedFeatures"> A list of supported features. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServersCapabilityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> supportedGeoBackupRegions, IReadOnlyList<ServerEditionCapabilityV2> supportedFlexibleServerEditions, IReadOnlyList<ServerVersionCapabilityV2> supportedServerVersions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal MySqlFlexibleServersCapabilityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> supportedGeoBackupRegions, IReadOnlyList<ServerEditionCapabilityV2> supportedFlexibleServerEditions, IReadOnlyList<ServerVersionCapabilityV2> supportedServerVersions, IReadOnlyList<FeatureProperty> supportedFeatures, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SupportedGeoBackupRegions = supportedGeoBackupRegions;
             SupportedFlexibleServerEditions = supportedFlexibleServerEditions;
             SupportedServerVersions = supportedServerVersions;
+            SupportedFeatures = supportedFeatures;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -82,5 +85,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         public IReadOnlyList<ServerEditionCapabilityV2> SupportedFlexibleServerEditions { get; }
         /// <summary> A list of supported server versions. </summary>
         public IReadOnlyList<ServerVersionCapabilityV2> SupportedServerVersions { get; }
+        /// <summary> A list of supported features. </summary>
+        public IReadOnlyList<FeatureProperty> SupportedFeatures { get; }
     }
 }

@@ -61,12 +61,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="storage"> Storage related properties of a server. </param>
         /// <param name="backup"> Backup related properties of a server. </param>
         /// <param name="highAvailability"> High availability related properties of a server. </param>
+        /// <param name="maintenancePolicy"> Maintenance policy of a server. </param>
         /// <param name="maintenanceWindow"> Maintenance window of a server. </param>
         /// <param name="replicationRole"> The replication role of the server. </param>
         /// <param name="dataEncryption"> The Data Encryption for CMK. </param>
         /// <param name="network"> Network related properties of a server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServerPatch(ManagedServiceIdentity identity, MySqlFlexibleServerSku sku, IDictionary<string, string> tags, string administratorLoginPassword, MySqlFlexibleServerVersion? version, MySqlFlexibleServerStorage storage, MySqlFlexibleServerBackupProperties backup, MySqlFlexibleServerHighAvailability highAvailability, MySqlFlexibleServerMaintenanceWindow maintenanceWindow, MySqlFlexibleServerReplicationRole? replicationRole, MySqlFlexibleServerDataEncryption dataEncryption, MySqlFlexibleServerNetwork network, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MySqlFlexibleServerPatch(ManagedServiceIdentity identity, MySqlFlexibleServerSku sku, IDictionary<string, string> tags, string administratorLoginPassword, MySqlFlexibleServerVersion? version, MySqlFlexibleServerStorage storage, MySqlFlexibleServerBackupProperties backup, MySqlFlexibleServerHighAvailability highAvailability, MaintenancePolicy maintenancePolicy, MySqlFlexibleServerMaintenanceWindow maintenanceWindow, MySqlFlexibleServerReplicationRole? replicationRole, MySqlFlexibleServerDataEncryption dataEncryption, MySqlFlexibleServerNetwork network, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Identity = identity;
             Sku = sku;
@@ -76,6 +77,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             Storage = storage;
             Backup = backup;
             HighAvailability = highAvailability;
+            MaintenancePolicy = maintenancePolicy;
             MaintenanceWindow = maintenanceWindow;
             ReplicationRole = replicationRole;
             DataEncryption = dataEncryption;
@@ -99,6 +101,20 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public MySqlFlexibleServerBackupProperties Backup { get; set; }
         /// <summary> High availability related properties of a server. </summary>
         public MySqlFlexibleServerHighAvailability HighAvailability { get; set; }
+        /// <summary> Maintenance policy of a server. </summary>
+        internal MaintenancePolicy MaintenancePolicy { get; set; }
+        /// <summary> The patch strategy of this server. </summary>
+        public PatchStrategy? MaintenancePatchStrategy
+        {
+            get => MaintenancePolicy is null ? default : MaintenancePolicy.PatchStrategy;
+            set
+            {
+                if (MaintenancePolicy is null)
+                    MaintenancePolicy = new MaintenancePolicy();
+                MaintenancePolicy.PatchStrategy = value;
+            }
+        }
+
         /// <summary> Maintenance window of a server. </summary>
         public MySqlFlexibleServerMaintenanceWindow MaintenanceWindow { get; set; }
         /// <summary> The replication role of the server. </summary>

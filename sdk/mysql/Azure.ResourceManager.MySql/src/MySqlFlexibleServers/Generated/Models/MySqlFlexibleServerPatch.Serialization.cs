@@ -84,6 +84,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WritePropertyName("highAvailability"u8);
                 writer.WriteObjectValue(HighAvailability, options);
             }
+            if (Optional.IsDefined(MaintenancePolicy))
+            {
+                writer.WritePropertyName("maintenancePolicy"u8);
+                writer.WriteObjectValue(MaintenancePolicy, options);
+            }
             if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
@@ -150,6 +155,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             MySqlFlexibleServerStorage storage = default;
             MySqlFlexibleServerBackupProperties backup = default;
             MySqlFlexibleServerHighAvailability highAvailability = default;
+            MaintenancePolicy maintenancePolicy = default;
             MySqlFlexibleServerMaintenanceWindow maintenanceWindow = default;
             MySqlFlexibleServerReplicationRole? replicationRole = default;
             MySqlFlexibleServerDataEncryption dataEncryption = default;
@@ -240,6 +246,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                             highAvailability = MySqlFlexibleServerHighAvailability.DeserializeMySqlFlexibleServerHighAvailability(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("maintenancePolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            maintenancePolicy = MaintenancePolicy.DeserializeMaintenancePolicy(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("maintenanceWindow"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -294,6 +309,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 storage,
                 backup,
                 highAvailability,
+                maintenancePolicy,
                 maintenanceWindow,
                 replicationRole,
                 dataEncryption,

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    /// <summary> Server Gtid set parameters. </summary>
+    /// <summary> Server Gtid set parameters: Replication with Global Transaction Identifiers. </summary>
     public partial class MySqlFlexibleServerGtidSetContent
     {
         /// <summary>

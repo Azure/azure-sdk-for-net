@@ -153,5 +153,29 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
             MySqlFlexibleServerMaintenanceResource.ValidateResourceId(id);
             return new MySqlFlexibleServerMaintenanceResource(Client, id);
         }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="MySqlFlexibleServersPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MySqlFlexibleServersPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MySqlFlexibleServersPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MySqlFlexibleServersPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual MySqlFlexibleServersPrivateEndpointConnectionResource GetMySqlFlexibleServersPrivateEndpointConnectionResource(ResourceIdentifier id)
+        {
+            MySqlFlexibleServersPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new MySqlFlexibleServersPrivateEndpointConnectionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="MySqlFlexibleServersPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MySqlFlexibleServersPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="MySqlFlexibleServersPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MySqlFlexibleServersPrivateLinkResource"/> object. </returns>
+        public virtual MySqlFlexibleServersPrivateLinkResource GetMySqlFlexibleServersPrivateLinkResource(ResourceIdentifier id)
+        {
+            MySqlFlexibleServersPrivateLinkResource.ValidateResourceId(id);
+            return new MySqlFlexibleServersPrivateLinkResource(Client, id);
+        }
     }
 }

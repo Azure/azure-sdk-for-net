@@ -64,6 +64,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WritePropertyName("autoIoScaling"u8);
                 writer.WriteStringValue(AutoIoScaling.Value.ToString());
             }
+            if (Optional.IsDefined(StorageRedundancy))
+            {
+                writer.WritePropertyName("storageRedundancy"u8);
+                writer.WriteStringValue(StorageRedundancy.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -107,6 +112,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             MySqlFlexibleServerEnableStatusEnum? logOnDisk = default;
             string storageSku = default;
             MySqlFlexibleServerEnableStatusEnum? autoIoScaling = default;
+            StorageRedundancyEnum? storageRedundancy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,6 +167,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     autoIoScaling = new MySqlFlexibleServerEnableStatusEnum(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("storageRedundancy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageRedundancy = new StorageRedundancyEnum(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -174,6 +189,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 logOnDisk,
                 storageSku,
                 autoIoScaling,
+                storageRedundancy,
                 serializedAdditionalRawData);
         }
 

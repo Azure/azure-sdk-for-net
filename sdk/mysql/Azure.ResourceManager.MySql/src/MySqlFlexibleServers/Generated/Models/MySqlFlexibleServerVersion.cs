@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    /// <summary> The version of a server. </summary>
+    /// <summary> The major version of a server. 8.0.21 stands for MySQL 8.0, 5.7.44 stands for MySQL 5.7. </summary>
     public readonly partial struct MySqlFlexibleServerVersion : IEquatable<MySqlFlexibleServerVersion>
     {
         private readonly string _value;

@@ -55,13 +55,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="startHour"> start hour for maintenance window. </param>
         /// <param name="startMinute"> start minute for maintenance window. </param>
         /// <param name="dayOfWeek"> day of week for maintenance window. </param>
+        /// <param name="batchOfMaintenance"> The batch of maintenance when enabled the custom managed maintenance window of a server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServerMaintenanceWindow(string customWindow, int? startHour, int? startMinute, int? dayOfWeek, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MySqlFlexibleServerMaintenanceWindow(string customWindow, int? startHour, int? startMinute, int? dayOfWeek, BatchOfMaintenance? batchOfMaintenance, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CustomWindow = customWindow;
             StartHour = startHour;
             StartMinute = startMinute;
             DayOfWeek = dayOfWeek;
+            BatchOfMaintenance = batchOfMaintenance;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -73,5 +75,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public int? StartMinute { get; set; }
         /// <summary> day of week for maintenance window. </summary>
         public int? DayOfWeek { get; set; }
+        /// <summary> The batch of maintenance when enabled the custom managed maintenance window of a server. </summary>
+        public BatchOfMaintenance? BatchOfMaintenance { get; set; }
     }
 }

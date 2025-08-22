@@ -70,6 +70,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedFeatures))
+            {
+                writer.WritePropertyName("supportedFeatures"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedFeatures)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
@@ -100,6 +110,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             IReadOnlyList<string> supportedGeoBackupRegions = default;
             IReadOnlyList<ServerEditionCapabilityV2> supportedFlexibleServerEditions = default;
             IReadOnlyList<ServerVersionCapabilityV2> supportedServerVersions = default;
+            IReadOnlyList<FeatureProperty> supportedFeatures = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,6 +190,20 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                             supportedServerVersions = array;
                             continue;
                         }
+                        if (property0.NameEquals("supportedFeatures"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<FeatureProperty> array = new List<FeatureProperty>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(FeatureProperty.DeserializeFeatureProperty(item, options));
+                            }
+                            supportedFeatures = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -196,6 +221,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 supportedGeoBackupRegions ?? new ChangeTrackingList<string>(),
                 supportedFlexibleServerEditions ?? new ChangeTrackingList<ServerEditionCapabilityV2>(),
                 supportedServerVersions ?? new ChangeTrackingList<ServerVersionCapabilityV2>(),
+                supportedFeatures ?? new ChangeTrackingList<FeatureProperty>(),
                 serializedAdditionalRawData);
         }
 

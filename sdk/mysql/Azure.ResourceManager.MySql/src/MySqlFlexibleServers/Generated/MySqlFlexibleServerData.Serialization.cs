@@ -65,6 +65,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version.Value.ToString());
             }
+            if (Optional.IsDefined(FullVersion))
+            {
+                writer.WritePropertyName("fullVersion"u8);
+                writer.WriteStringValue(FullVersion);
+            }
             if (Optional.IsDefined(AvailabilityZone))
             {
                 writer.WritePropertyName("availabilityZone"u8);
@@ -110,6 +115,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 writer.WritePropertyName("fullyQualifiedDomainName"u8);
                 writer.WriteStringValue(FullyQualifiedDomainName);
             }
+            if (Optional.IsDefined(DatabasePort))
+            {
+                writer.WritePropertyName("databasePort"u8);
+                writer.WriteNumberValue(DatabasePort.Value);
+            }
             if (Optional.IsDefined(Storage))
             {
                 writer.WritePropertyName("storage"u8);
@@ -130,15 +140,20 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 writer.WritePropertyName("network"u8);
                 writer.WriteObjectValue(Network, options);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ServerPrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
-                foreach (var item in PrivateEndpointConnections)
+                foreach (var item in ServerPrivateEndpointConnections)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(MaintenancePolicy))
+            {
+                writer.WritePropertyName("maintenancePolicy"u8);
+                writer.WriteObjectValue(MaintenancePolicy, options);
             }
             if (Optional.IsDefined(MaintenanceWindow))
             {
@@ -184,6 +199,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             string administratorLogin = default;
             string administratorLoginPassword = default;
             MySqlFlexibleServerVersion? version = default;
+            string fullVersion = default;
             string availabilityZone = default;
             MySqlFlexibleServerCreateMode? createMode = default;
             ResourceIdentifier sourceServerResourceId = default;
@@ -193,11 +209,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             MySqlFlexibleServerDataEncryption dataEncryption = default;
             MySqlFlexibleServerState? state = default;
             string fullyQualifiedDomainName = default;
+            int? databasePort = default;
             MySqlFlexibleServerStorage storage = default;
             MySqlFlexibleServerBackupProperties backup = default;
             MySqlFlexibleServerHighAvailability highAvailability = default;
             MySqlFlexibleServerNetwork network = default;
-            IReadOnlyList<MySqlFlexibleServersPrivateEndpointConnection> privateEndpointConnections = default;
+            IReadOnlyList<MySqlFlexibleServersPrivateEndpointConnectionData> privateEndpointConnections = default;
+            MaintenancePolicy maintenancePolicy = default;
             MySqlFlexibleServerMaintenanceWindow maintenanceWindow = default;
             ImportSourceProperties importSourceProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -293,6 +311,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                             version = new MySqlFlexibleServerVersion(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("fullVersion"u8))
+                        {
+                            fullVersion = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("availabilityZone"u8))
                         {
                             availabilityZone = property0.Value.GetString();
@@ -366,6 +389,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                             fullyQualifiedDomainName = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("databasePort"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            databasePort = property0.Value.GetInt32();
+                            continue;
+                        }
                         if (property0.NameEquals("storage"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -408,12 +440,21 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                             {
                                 continue;
                             }
-                            List<MySqlFlexibleServersPrivateEndpointConnection> array = new List<MySqlFlexibleServersPrivateEndpointConnection>();
+                            List<MySqlFlexibleServersPrivateEndpointConnectionData> array = new List<MySqlFlexibleServersPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MySqlFlexibleServersPrivateEndpointConnection.DeserializeMySqlFlexibleServersPrivateEndpointConnection(item, options));
+                                array.Add(MySqlFlexibleServersPrivateEndpointConnectionData.DeserializeMySqlFlexibleServersPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("maintenancePolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            maintenancePolicy = MaintenancePolicy.DeserializeMaintenancePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("maintenanceWindow"u8))
@@ -455,6 +496,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 administratorLogin,
                 administratorLoginPassword,
                 version,
+                fullVersion,
                 availabilityZone,
                 createMode,
                 sourceServerResourceId,
@@ -464,11 +506,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 dataEncryption,
                 state,
                 fullyQualifiedDomainName,
+                databasePort,
                 storage,
                 backup,
                 highAvailability,
                 network,
-                privateEndpointConnections ?? new ChangeTrackingList<MySqlFlexibleServersPrivateEndpointConnection>(),
+                privateEndpointConnections ?? new ChangeTrackingList<MySqlFlexibleServersPrivateEndpointConnectionData>(),
+                maintenancePolicy,
                 maintenanceWindow,
                 importSourceProperties,
                 serializedAdditionalRawData);

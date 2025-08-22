@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-30</description>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-30</description>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-30</description>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-30</description>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-30</description>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-30</description>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-30</description>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-30</description>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-30</description>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-30</description>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-30</description>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-30</description>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -493,12 +493,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-30</description>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
-        /// <param name="operationId"> The operation Id. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
@@ -533,12 +533,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-30</description>
+        /// <description>2024-12-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
-        /// <param name="operationId"> The operation Id. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
