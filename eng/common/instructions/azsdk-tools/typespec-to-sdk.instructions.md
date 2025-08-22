@@ -92,7 +92,7 @@ Your goal is to guide user through the process of generating SDKs from TypeSpec 
 **Goal**: Validate the label and all codeowners for a service. Create new label and codeowner entry if none exist.
 **Actions**:
 1. To validate a service label refer to #file:./validate-service-label.prompt.md
-2. After service label is validated or created refer to #file:./validate-codeowners.prompt.md
+2. After service label is validated or created refer to #file:./validate-codeowners.instructions.md
 3. Handle post-validation actions based on results:
    - **If both label and codeowners were already valid**: Prompt user "Your service label and codeowners are already properly configured. Would you like to modify the existing codeowners entry for your service?"
    - **If new label or codeowner entries were created**: Display details of all created PRs, then prompt user "The following PRs have been created for your service configuration: [list PRs]. Would you like to make any additional modifications to these entries?"
