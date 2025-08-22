@@ -19,7 +19,7 @@ batch:
 ``` yaml $(tag) == 'package-flexibleserver-2024-12-01-preview'
 namespace: Azure.ResourceManager.MySql.FlexibleServers
 require: https://github.com/Azure/azure-rest-api-specs/blob/3a54096db1d5a4a3f5f5c2e9e17098e892773ad5/specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/readme.md
-output-folder: $(this-folder)/MySqlFlexibleServers/Generated
+output-folder: $(this-folder)/Generated
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: false
@@ -89,14 +89,11 @@ rename-mapping:
   HighAvailability: MySqlFlexibleServerHighAvailability
   HighAvailabilityMode: MySqlFlexibleServerHighAvailabilityMode
   HighAvailabilityState: MySqlFlexibleServerHighAvailabilityState
-  ServerProperties: MySqlFlexibleServerProperties
-  ServerPropertiesForUpdate: MySqlFlexibleServerPropertiesForUpdate
   ServerForUpdate: MySqlFlexibleServerForUpdate
   ServerListResult: MySqlFlexibleServerListResult
   ServerRestartParameter: MySqlFlexibleServerRestartParameter
   ServerState: MySqlFlexibleServerState
   ServerBackupListResult: MySqlFlexibleServerBackupListResult
-  FirewallRuleProperties: MySqlFlexibleServerFirewallRuleProperties
   FirewallRuleListResult: MySqlFlexibleServerFirewallRuleListResult
   DatabaseListResult: MySqlFlexibleServerDatabaseListResult
   ConfigurationSource: MySqlFlexibleServerConfigurationSource
