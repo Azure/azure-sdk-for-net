@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             IReadOnlyList<string> supportedGeoBackupRegions = default;
             IReadOnlyList<ServerEditionCapabilityV2> supportedFlexibleServerEditions = default;
             IReadOnlyList<ServerVersionCapabilityV2> supportedServerVersions = default;
-            IReadOnlyList<FeatureProperty> supportedFeatures = default;
+            IReadOnlyList<MySqlFlexibleServerFeatureProperty> supportedFeatures = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,10 +196,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                             {
                                 continue;
                             }
-                            List<FeatureProperty> array = new List<FeatureProperty>();
+                            List<MySqlFlexibleServerFeatureProperty> array = new List<MySqlFlexibleServerFeatureProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FeatureProperty.DeserializeFeatureProperty(item, options));
+                                array.Add(MySqlFlexibleServerFeatureProperty.DeserializeMySqlFlexibleServerFeatureProperty(item, options));
                             }
                             supportedFeatures = array;
                             continue;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 supportedGeoBackupRegions ?? new ChangeTrackingList<string>(),
                 supportedFlexibleServerEditions ?? new ChangeTrackingList<ServerEditionCapabilityV2>(),
                 supportedServerVersions ?? new ChangeTrackingList<ServerVersionCapabilityV2>(),
-                supportedFeatures ?? new ChangeTrackingList<FeatureProperty>(),
+                supportedFeatures ?? new ChangeTrackingList<MySqlFlexibleServerFeatureProperty>(),
                 serializedAdditionalRawData);
         }
 

@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             MySqlFlexibleServerEnableStatusEnum? logOnDisk = default;
             string storageSku = default;
             MySqlFlexibleServerEnableStatusEnum? autoIoScaling = default;
-            StorageRedundancyEnum? storageRedundancy = default;
+            MySqlFlexibleServerStorageRedundancyType? storageRedundancy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    storageRedundancy = new StorageRedundancyEnum(property.Value.GetString());
+                    storageRedundancy = new MySqlFlexibleServerStorageRedundancyType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

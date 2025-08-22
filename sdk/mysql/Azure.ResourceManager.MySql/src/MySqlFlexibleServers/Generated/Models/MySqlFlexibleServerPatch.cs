@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <summary> Maintenance policy of a server. </summary>
         internal MaintenancePolicy MaintenancePolicy { get; set; }
         /// <summary> The patch strategy of this server. </summary>
-        public PatchStrategy? MaintenancePatchStrategy
+        public MySqlFlexibleServerPatchStrategy? MaintenancePatchStrategy
         {
             get => MaintenancePolicy is null ? default : MaintenancePolicy.PatchStrategy;
             set

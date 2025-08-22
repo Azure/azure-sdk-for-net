@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="maintenanceWindow"> Maintenance window of a server. Known issue: cannot be set during server creation or updated with other properties during server update; must be updated separately. </param>
         /// <param name="importSourceProperties"> Source properties for import from storage. </param>
         /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServerData"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerData MySqlFlexibleServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, MySqlFlexibleServerSku sku = null, string administratorLogin = null, string administratorLoginPassword = null, MySqlFlexibleServerVersion? version = null, string fullVersion = null, string availabilityZone = null, MySqlFlexibleServerCreateMode? createMode = null, ResourceIdentifier sourceServerResourceId = null, DateTimeOffset? restorePointInTime = null, MySqlFlexibleServerReplicationRole? replicationRole = null, int? replicaCapacity = null, MySqlFlexibleServerDataEncryption dataEncryption = null, MySqlFlexibleServerState? state = null, string fullyQualifiedDomainName = null, int? databasePort = null, MySqlFlexibleServerStorage storage = null, MySqlFlexibleServerBackupProperties backup = null, MySqlFlexibleServerHighAvailability highAvailability = null, MySqlFlexibleServerNetwork network = null, IEnumerable<MySqlFlexibleServersPrivateEndpointConnectionData> serverPrivateEndpointConnections = null, PatchStrategy? maintenancePatchStrategy = null, MySqlFlexibleServerMaintenanceWindow maintenanceWindow = null, ImportSourceProperties importSourceProperties = null)
+        public static MySqlFlexibleServerData MySqlFlexibleServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, MySqlFlexibleServerSku sku = null, string administratorLogin = null, string administratorLoginPassword = null, MySqlFlexibleServerVersion? version = null, string fullVersion = null, string availabilityZone = null, MySqlFlexibleServerCreateMode? createMode = null, ResourceIdentifier sourceServerResourceId = null, DateTimeOffset? restorePointInTime = null, MySqlFlexibleServerReplicationRole? replicationRole = null, int? replicaCapacity = null, MySqlFlexibleServerDataEncryption dataEncryption = null, MySqlFlexibleServerState? state = null, string fullyQualifiedDomainName = null, int? databasePort = null, MySqlFlexibleServerStorage storage = null, MySqlFlexibleServerBackupProperties backup = null, MySqlFlexibleServerHighAvailability highAvailability = null, MySqlFlexibleServerNetwork network = null, IEnumerable<MySqlFlexibleServersPrivateEndpointConnectionData> serverPrivateEndpointConnections = null, MySqlFlexibleServerPatchStrategy? maintenancePatchStrategy = null, MySqlFlexibleServerMaintenanceWindow maintenanceWindow = null, ImportSourceProperties importSourceProperties = null)
         {
             tags ??= new Dictionary<string, string>();
             serverPrivateEndpointConnections ??= new List<MySqlFlexibleServersPrivateEndpointConnectionData>();
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="autoIoScaling"> Enable IO Auto Scaling or not. </param>
         /// <param name="storageRedundancy"> The redundant type of the server storage. The parameter is used for server creation. </param>
         /// <returns> A new <see cref="Models.MySqlFlexibleServerStorage"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerStorage MySqlFlexibleServerStorage(int? storageSizeInGB = null, int? iops = null, MySqlFlexibleServerEnableStatusEnum? autoGrow = null, MySqlFlexibleServerEnableStatusEnum? logOnDisk = null, string storageSku = null, MySqlFlexibleServerEnableStatusEnum? autoIoScaling = null, StorageRedundancyEnum? storageRedundancy = null)
+        public static MySqlFlexibleServerStorage MySqlFlexibleServerStorage(int? storageSizeInGB = null, int? iops = null, MySqlFlexibleServerEnableStatusEnum? autoGrow = null, MySqlFlexibleServerEnableStatusEnum? logOnDisk = null, string storageSku = null, MySqlFlexibleServerEnableStatusEnum? autoIoScaling = null, MySqlFlexibleServerStorageRedundancyType? storageRedundancy = null)
         {
             return new MySqlFlexibleServerStorage(
                 storageSizeInGB,
@@ -508,12 +508,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="supportedServerVersions"> A list of supported server versions. </param>
         /// <param name="supportedFeatures"> A list of supported features. </param>
         /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServersCapabilityData"/> instance for mocking. </returns>
-        public static MySqlFlexibleServersCapabilityData MySqlFlexibleServersCapabilityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> supportedGeoBackupRegions = null, IEnumerable<ServerEditionCapabilityV2> supportedFlexibleServerEditions = null, IEnumerable<ServerVersionCapabilityV2> supportedServerVersions = null, IEnumerable<FeatureProperty> supportedFeatures = null)
+        public static MySqlFlexibleServersCapabilityData MySqlFlexibleServersCapabilityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> supportedGeoBackupRegions = null, IEnumerable<ServerEditionCapabilityV2> supportedFlexibleServerEditions = null, IEnumerable<ServerVersionCapabilityV2> supportedServerVersions = null, IEnumerable<MySqlFlexibleServerFeatureProperty> supportedFeatures = null)
         {
             supportedGeoBackupRegions ??= new List<string>();
             supportedFlexibleServerEditions ??= new List<ServerEditionCapabilityV2>();
             supportedServerVersions ??= new List<ServerVersionCapabilityV2>();
-            supportedFeatures ??= new List<FeatureProperty>();
+            supportedFeatures ??= new List<MySqlFlexibleServerFeatureProperty>();
 
             return new MySqlFlexibleServersCapabilityData(
                 id,
@@ -579,13 +579,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new ServerVersionCapabilityV2(name, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.FeatureProperty"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MySqlFlexibleServerFeatureProperty"/>. </summary>
         /// <param name="featureName"> feature name. </param>
         /// <param name="featureValue"> feature value. </param>
-        /// <returns> A new <see cref="Models.FeatureProperty"/> instance for mocking. </returns>
-        public static FeatureProperty FeatureProperty(string featureName = null, string featureValue = null)
+        /// <returns> A new <see cref="Models.MySqlFlexibleServerFeatureProperty"/> instance for mocking. </returns>
+        public static MySqlFlexibleServerFeatureProperty MySqlFlexibleServerFeatureProperty(string featureName = null, string featureValue = null)
         {
-            return new FeatureProperty(featureName, featureValue, serializedAdditionalRawData: null);
+            return new MySqlFlexibleServerFeatureProperty(featureName, featureValue, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MySqlFlexibleServerVirtualNetworkSubnetUsageResult"/>. </summary>

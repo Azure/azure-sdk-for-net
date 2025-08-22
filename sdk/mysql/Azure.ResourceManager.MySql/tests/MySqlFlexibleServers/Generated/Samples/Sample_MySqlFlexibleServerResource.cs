@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
                     Iops = 200,
                     AutoGrow = MySqlFlexibleServerEnableStatusEnum.Disabled,
                     AutoIoScaling = MySqlFlexibleServerEnableStatusEnum.Disabled,
-                    StorageRedundancy = StorageRedundancyEnum.LocalRedundancy,
+                    StorageRedundancy = MySqlFlexibleServerStorageRedundancyType.LocalRedundancy,
                 },
                 Network = new MySqlFlexibleServerNetwork
                 {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
                     StartHour = 8,
                     StartMinute = 0,
                     DayOfWeek = 1,
-                    BatchOfMaintenance = BatchOfMaintenance.Batch1,
+                    BatchOfMaintenance = MySqlFlexibleServerBatchOfMaintenance.Batch1,
                 },
             };
             ArmOperation<MySqlFlexibleServerResource> lro = await mySqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             // invoke the operation
             MySqlFlexibleServerPatch patch = new MySqlFlexibleServerPatch
             {
-                MaintenancePatchStrategy = PatchStrategy.VirtualCanary,
+                MaintenancePatchStrategy = MySqlFlexibleServerPatchStrategy.VirtualCanary,
             };
             ArmOperation<MySqlFlexibleServerResource> lro = await mySqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
             MySqlFlexibleServerResource result = lro.Value;
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             // invoke the operation
             MySqlFlexibleServerPatch patch = new MySqlFlexibleServerPatch
             {
-                MaintenancePatchStrategy = new PatchStrategy("Default"),
+                MaintenancePatchStrategy = new MySqlFlexibleServerPatchStrategy("Default"),
             };
             ArmOperation<MySqlFlexibleServerResource> lro = await mySqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
             MySqlFlexibleServerResource result = lro.Value;
@@ -575,7 +575,7 @@ Value = "8",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task DetachVNet_DetachVNetOnAServer()
+        public async Task DetachVnet_DetachVNetOnAServer()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/preview/2024-12-01-preview/examples/ServerDetachVNet.json
             // this example is just showing the usage of "Servers_DetachVNet" operation, for the dependent resources, they will have to be created separately.
@@ -594,11 +594,11 @@ Value = "8",
             MySqlFlexibleServerResource mySqlFlexibleServer = client.GetMySqlFlexibleServerResource(mySqlFlexibleServerResourceId);
 
             // invoke the operation
-            ServerDetachVNetParameter serverDetachVNetParameter = new ServerDetachVNetParameter
+            MySqlFlexibleServerDetachVnetContent content = new MySqlFlexibleServerDetachVnetContent
             {
                 PublicNetworkAccess = MySqlFlexibleServerEnableStatusEnum.Enabled,
             };
-            ArmOperation<MySqlFlexibleServerResource> lro = await mySqlFlexibleServer.DetachVNetAsync(WaitUntil.Completed, serverDetachVNetParameter);
+            ArmOperation<MySqlFlexibleServerResource> lro = await mySqlFlexibleServer.DetachVnetAsync(WaitUntil.Completed, content);
             MySqlFlexibleServerResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

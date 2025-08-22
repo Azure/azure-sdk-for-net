@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
                     StorageSizeInGB = 100,
                     Iops = 600,
                     AutoGrow = MySqlFlexibleServerEnableStatusEnum.Disabled,
-                    StorageRedundancy = StorageRedundancyEnum.ZoneRedundancy,
+                    StorageRedundancy = MySqlFlexibleServerStorageRedundancyType.ZoneRedundancy,
                 },
                 Backup = new MySqlFlexibleServerBackupProperties
                 {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
                     StorageSizeInGB = 100,
                     Iops = 600,
                     AutoGrow = MySqlFlexibleServerEnableStatusEnum.Disabled,
-                    StorageRedundancy = StorageRedundancyEnum.LocalRedundancy,
+                    StorageRedundancy = MySqlFlexibleServerStorageRedundancyType.LocalRedundancy,
                 },
                 Backup = new MySqlFlexibleServerBackupProperties
                 {
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
                     StorageSizeInGB = 100,
                     Iops = 600,
                     AutoGrow = MySqlFlexibleServerEnableStatusEnum.Disabled,
-                    StorageRedundancy = StorageRedundancyEnum.LocalRedundancy,
+                    StorageRedundancy = MySqlFlexibleServerStorageRedundancyType.LocalRedundancy,
                 },
                 Backup = new MySqlFlexibleServerBackupProperties
                 {

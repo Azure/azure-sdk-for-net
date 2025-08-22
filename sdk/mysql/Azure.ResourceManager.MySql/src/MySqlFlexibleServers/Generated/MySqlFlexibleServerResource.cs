@@ -1832,19 +1832,19 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="serverDetachVNetParameter"> The required parameters for detach vnet on a server. </param>
+        /// <param name="content"> The required parameters for detach vnet on a server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serverDetachVNetParameter"/> is null. </exception>
-        public virtual async Task<ArmOperation<MySqlFlexibleServerResource>> DetachVNetAsync(WaitUntil waitUntil, ServerDetachVNetParameter serverDetachVNetParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<MySqlFlexibleServerResource>> DetachVnetAsync(WaitUntil waitUntil, MySqlFlexibleServerDetachVnetContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(serverDetachVNetParameter, nameof(serverDetachVNetParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _mySqlFlexibleServerServersClientDiagnostics.CreateScope("MySqlFlexibleServerResource.DetachVNet");
+            using var scope = _mySqlFlexibleServerServersClientDiagnostics.CreateScope("MySqlFlexibleServerResource.DetachVnet");
             scope.Start();
             try
             {
-                var response = await _mySqlFlexibleServerServersRestClient.DetachVNetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverDetachVNetParameter, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerResource>(new MySqlFlexibleServerOperationSource(Client), _mySqlFlexibleServerServersClientDiagnostics, Pipeline, _mySqlFlexibleServerServersRestClient.CreateDetachVNetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverDetachVNetParameter).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _mySqlFlexibleServerServersRestClient.DetachVNetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerResource>(new MySqlFlexibleServerOperationSource(Client), _mySqlFlexibleServerServersClientDiagnostics, Pipeline, _mySqlFlexibleServerServersRestClient.CreateDetachVNetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1878,19 +1878,19 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="serverDetachVNetParameter"> The required parameters for detach vnet on a server. </param>
+        /// <param name="content"> The required parameters for detach vnet on a server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serverDetachVNetParameter"/> is null. </exception>
-        public virtual ArmOperation<MySqlFlexibleServerResource> DetachVNet(WaitUntil waitUntil, ServerDetachVNetParameter serverDetachVNetParameter, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<MySqlFlexibleServerResource> DetachVnet(WaitUntil waitUntil, MySqlFlexibleServerDetachVnetContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(serverDetachVNetParameter, nameof(serverDetachVNetParameter));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _mySqlFlexibleServerServersClientDiagnostics.CreateScope("MySqlFlexibleServerResource.DetachVNet");
+            using var scope = _mySqlFlexibleServerServersClientDiagnostics.CreateScope("MySqlFlexibleServerResource.DetachVnet");
             scope.Start();
             try
             {
-                var response = _mySqlFlexibleServerServersRestClient.DetachVNet(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverDetachVNetParameter, cancellationToken);
-                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerResource>(new MySqlFlexibleServerOperationSource(Client), _mySqlFlexibleServerServersClientDiagnostics, Pipeline, _mySqlFlexibleServerServersRestClient.CreateDetachVNetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverDetachVNetParameter).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _mySqlFlexibleServerServersRestClient.DetachVNet(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerResource>(new MySqlFlexibleServerOperationSource(Client), _mySqlFlexibleServerServersClientDiagnostics, Pipeline, _mySqlFlexibleServerServersRestClient.CreateDetachVNetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

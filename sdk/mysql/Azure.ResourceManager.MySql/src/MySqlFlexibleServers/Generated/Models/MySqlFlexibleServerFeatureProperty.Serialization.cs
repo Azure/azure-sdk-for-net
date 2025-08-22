@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class FeatureProperty : IUtf8JsonSerializable, IJsonModel<FeatureProperty>
+    public partial class MySqlFlexibleServerFeatureProperty : IUtf8JsonSerializable, IJsonModel<MySqlFlexibleServerFeatureProperty>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FeatureProperty>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlFlexibleServerFeatureProperty>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<FeatureProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MySqlFlexibleServerFeatureProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FeatureProperty>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerFeatureProperty>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FeatureProperty)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerFeatureProperty)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(FeatureName))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
         }
 
-        FeatureProperty IJsonModel<FeatureProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        MySqlFlexibleServerFeatureProperty IJsonModel<MySqlFlexibleServerFeatureProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FeatureProperty>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerFeatureProperty>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FeatureProperty)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerFeatureProperty)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFeatureProperty(document.RootElement, options);
+            return DeserializeMySqlFlexibleServerFeatureProperty(document.RootElement, options);
         }
 
-        internal static FeatureProperty DeserializeFeatureProperty(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static MySqlFlexibleServerFeatureProperty DeserializeMySqlFlexibleServerFeatureProperty(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -103,38 +103,38 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FeatureProperty(featureName, featureValue, serializedAdditionalRawData);
+            return new MySqlFlexibleServerFeatureProperty(featureName, featureValue, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<FeatureProperty>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<MySqlFlexibleServerFeatureProperty>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FeatureProperty>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerFeatureProperty>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMySqlContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FeatureProperty)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerFeatureProperty)} does not support writing '{options.Format}' format.");
             }
         }
 
-        FeatureProperty IPersistableModel<FeatureProperty>.Create(BinaryData data, ModelReaderWriterOptions options)
+        MySqlFlexibleServerFeatureProperty IPersistableModel<MySqlFlexibleServerFeatureProperty>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FeatureProperty>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerFeatureProperty>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeFeatureProperty(document.RootElement, options);
+                        return DeserializeMySqlFlexibleServerFeatureProperty(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FeatureProperty)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerFeatureProperty)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<FeatureProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MySqlFlexibleServerFeatureProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

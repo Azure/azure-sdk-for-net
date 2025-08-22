@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    /// <summary> Parameters to detach Vnet. </summary>
-    public partial class ServerDetachVNetParameter
+    /// <summary> Server version capabilities. </summary>
+    public partial class MySqlFlexibleServerFeatureProperty
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +45,25 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ServerDetachVNetParameter"/>. </summary>
-        public ServerDetachVNetParameter()
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerFeatureProperty"/>. </summary>
+        internal MySqlFlexibleServerFeatureProperty()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServerDetachVNetParameter"/>. </summary>
-        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is 'Disabled' when server has VNet integration. </param>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerFeatureProperty"/>. </summary>
+        /// <param name="featureName"> feature name. </param>
+        /// <param name="featureValue"> feature value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServerDetachVNetParameter(MySqlFlexibleServerEnableStatusEnum? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MySqlFlexibleServerFeatureProperty(string featureName, string featureValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            PublicNetworkAccess = publicNetworkAccess;
+            FeatureName = featureName;
+            FeatureValue = featureValue;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Whether or not public network access is allowed for this server. Value is 'Disabled' when server has VNet integration. </summary>
-        public MySqlFlexibleServerEnableStatusEnum? PublicNetworkAccess { get; set; }
+        /// <summary> feature name. </summary>
+        public string FeatureName { get; }
+        /// <summary> feature value. </summary>
+        public string FeatureValue { get; }
     }
 }

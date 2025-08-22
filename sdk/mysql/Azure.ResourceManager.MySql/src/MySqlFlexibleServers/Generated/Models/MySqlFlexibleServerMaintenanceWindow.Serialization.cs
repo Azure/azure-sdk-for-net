@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             int? startHour = default;
             int? startMinute = default;
             int? dayOfWeek = default;
-            BatchOfMaintenance? batchOfMaintenance = default;
+            MySqlFlexibleServerBatchOfMaintenance? batchOfMaintenance = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    batchOfMaintenance = new BatchOfMaintenance(property.Value.GetString());
+                    batchOfMaintenance = new MySqlFlexibleServerBatchOfMaintenance(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="autoIoScaling"> Enable IO Auto Scaling or not. </param>
         /// <param name="storageRedundancy"> The redundant type of the server storage. The parameter is used for server creation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServerStorage(int? storageSizeInGB, int? iops, MySqlFlexibleServerEnableStatusEnum? autoGrow, MySqlFlexibleServerEnableStatusEnum? logOnDisk, string storageSku, MySqlFlexibleServerEnableStatusEnum? autoIoScaling, StorageRedundancyEnum? storageRedundancy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MySqlFlexibleServerStorage(int? storageSizeInGB, int? iops, MySqlFlexibleServerEnableStatusEnum? autoGrow, MySqlFlexibleServerEnableStatusEnum? logOnDisk, string storageSku, MySqlFlexibleServerEnableStatusEnum? autoIoScaling, MySqlFlexibleServerStorageRedundancyType? storageRedundancy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageSizeInGB = storageSizeInGB;
             Iops = iops;
@@ -84,6 +84,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <summary> Enable IO Auto Scaling or not. </summary>
         public MySqlFlexibleServerEnableStatusEnum? AutoIoScaling { get; set; }
         /// <summary> The redundant type of the server storage. The parameter is used for server creation. </summary>
-        public StorageRedundancyEnum? StorageRedundancy { get; set; }
+        public MySqlFlexibleServerStorageRedundancyType? StorageRedundancy { get; set; }
     }
 }
