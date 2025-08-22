@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Address Prefix. </summary>
+        [WirePath("properties.addressPrefix")]
         public string AddressPrefix { get; set; }
         /// <summary> Office 365 Policy. </summary>
         internal Office365PolicyProperties O365Policy { get; set; }
         /// <summary> Office 365 breakout categories. </summary>
+        [WirePath("properties.o365Policy.breakOutCategories")]
         public BreakOutCategoryPolicies O365BreakOutCategories
         {
             get => O365Policy is null ? default : O365Policy.BreakOutCategories;
@@ -59,6 +62,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The provisioning state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

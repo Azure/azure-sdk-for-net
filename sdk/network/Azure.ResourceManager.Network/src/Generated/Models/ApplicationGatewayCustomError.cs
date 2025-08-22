@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Status code of the application gateway custom error. </summary>
+        [WirePath("statusCode")]
         public ApplicationGatewayCustomErrorStatusCode? StatusCode { get; set; }
         /// <summary> Error page URL of the application gateway custom error. </summary>
+        [WirePath("customErrorPageUrl")]
         public Uri CustomErrorPageUri { get; set; }
     }
 }

@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The list of effective routes configured on the virtual hub or the specified resource. </summary>
+        [WirePath("value")]
         public IReadOnlyList<VirtualHubEffectiveRoute> Value { get; }
     }
 }

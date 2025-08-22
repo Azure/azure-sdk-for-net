@@ -69,14 +69,19 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The iteration number of service tag. </summary>
+        [WirePath("changeNumber")]
         public string ChangeNumber { get; }
         /// <summary> The region of service tag. </summary>
+        [WirePath("region")]
         public string Region { get; }
         /// <summary> The name of system service. </summary>
+        [WirePath("systemService")]
         public string SystemService { get; }
         /// <summary> The list of IP address prefixes. </summary>
+        [WirePath("addressPrefixes")]
         public IReadOnlyList<string> AddressPrefixes { get; }
         /// <summary> The state of the service tag. </summary>
+        [WirePath("state")]
         public string State { get; }
     }
 }

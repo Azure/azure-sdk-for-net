@@ -91,14 +91,19 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of source IP addresses of the traffic.. </summary>
+        [WirePath("sourceIps")]
         public IList<string> SourceIPs { get; }
         /// <summary> List of destination IP addresses of the traffic.. </summary>
+        [WirePath("destinationIps")]
         public IList<string> DestinationIPs { get; }
         /// <summary> The source ports of the traffic. </summary>
+        [WirePath("sourcePorts")]
         public IList<string> SourcePorts { get; }
         /// <summary> The destination ports of the traffic. </summary>
+        [WirePath("destinationPorts")]
         public IList<string> DestinationPorts { get; }
         /// <summary> Gets the protocols. </summary>
+        [WirePath("protocols")]
         public IList<NetworkProtocol> Protocols { get; }
     }
 }
