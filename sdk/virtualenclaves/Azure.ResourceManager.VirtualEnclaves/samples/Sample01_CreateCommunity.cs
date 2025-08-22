@@ -14,7 +14,7 @@ using Azure.ResourceManager.VirtualEnclaves.Models;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Samples
 {
-    public class Program
+    public class Sample01_CreateCommunity
     {
         public static async Task Main(string[] args)
         {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.VirtualEnclaves.Samples
                 };
 
                 // Create the community
-                string communityName = "jorgechav-community";
+                string communityName = "jorgechav-community2";
                 Console.WriteLine($"Creating community {communityName}...");
 
                 var communities = resourceGroup.Value.GetCommunityResources();

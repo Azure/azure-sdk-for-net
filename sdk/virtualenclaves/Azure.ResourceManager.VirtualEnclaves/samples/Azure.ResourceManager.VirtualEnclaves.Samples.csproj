@@ -1,18 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\..\Directory.Build.props" />
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>disable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <StartupObject>Azure.ResourceManager.VirtualEnclaves.Samples.Sample01_CreateCommunity</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.VirtualEnclaves.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Azure.Identity" />
   </ItemGroup>
 </Project>
