@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="tenantId"> Tenant ID of the administrator. </param>
         /// <param name="identityResourceId"> The resource id of the identity used for AAD Authentication. </param>
         /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServerAadAdministratorData"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerAadAdministratorData MySqlFlexibleServerAadAdministratorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, MySqlFlexibleServerAdministratorType? administratorType = null, string login = null, string sid = null, Guid? tenantId = null, ResourceIdentifier identityResourceId = null)
+        public static MySqlFlexibleServerAadAdministratorData MySqlFlexibleServerAadAdministratorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MySqlFlexibleServerAdministratorType? administratorType = null, string login = null, string sid = null, Guid? tenantId = null, ResourceIdentifier identityResourceId = null)
         {
             return new MySqlFlexibleServerAadAdministratorData(
                 id,
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="completedOn"> Backup completed time (ISO8601 format). </param>
         /// <param name="source"> Backup source. </param>
         /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServerBackupData"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerBackupData MySqlFlexibleServerBackupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string backupType = null, DateTimeOffset? completedOn = null, string source = null)
+        public static MySqlFlexibleServerBackupData MySqlFlexibleServerBackupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string backupType = null, DateTimeOffset? completedOn = null, string source = null)
         {
             return new MySqlFlexibleServerBackupData(
                 id,
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="backupMetadata"> Metadata related to backup to be stored for restoring resource in key-value pairs. </param>
         /// <param name="error"> The error object. </param>
         /// <returns> A new <see cref="Models.MySqlFlexibleServerBackupAndExportResult"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerBackupAndExportResult MySqlFlexibleServerBackupAndExportResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, MySqlFlexibleServerBackupAndExportOperationStatus? status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, double? percentComplete = null, long? datasourceSizeInBytes = null, long? dataTransferredInBytes = null, string backupMetadata = null, ResponseError error = null)
+        public static MySqlFlexibleServerBackupAndExportResult MySqlFlexibleServerBackupAndExportResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MySqlFlexibleServerBackupAndExportOperationStatus? status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, double? percentComplete = null, long? datasourceSizeInBytes = null, long? dataTransferredInBytes = null, string backupMetadata = null, ResponseError error = null)
         {
             return new MySqlFlexibleServerBackupAndExportResult(
                 id,
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="source"> Backup source. </param>
         /// <param name="provisioningState"> The provisioning state of backup resource. </param>
         /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServerBackupV2Data"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerBackupV2Data MySqlFlexibleServerBackupV2Data(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string backupNameV2 = null, MySqlFlexibleServerBackupType? backupType = null, DateTimeOffset? completedOn = null, string source = null, MySqlFlexibleServerBackupProvisioningState? provisioningState = null)
+        public static MySqlFlexibleServerBackupV2Data MySqlFlexibleServerBackupV2Data(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string backupNameV2 = null, MySqlFlexibleServerBackupType? backupType = null, DateTimeOffset? completedOn = null, string source = null, MySqlFlexibleServerBackupProvisioningState? provisioningState = null)
         {
             return new MySqlFlexibleServerBackupV2Data(
                 id,
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="isConfigPendingRestart"> If is the configuration pending restart or not. </param>
         /// <param name="isDynamicConfig"> If is the configuration dynamic. </param>
         /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServerConfigurationData"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerConfigurationData MySqlFlexibleServerConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string value = null, string currentValue = null, string description = null, string documentationLink = null, string defaultValue = null, string dataType = null, string allowedValues = null, MySqlFlexibleServerConfigurationSource? source = null, MySqlFlexibleServerConfigReadOnlyState? isReadOnly = null, MySqlFlexibleServerConfigPendingRestartState? isConfigPendingRestart = null, MySqlFlexibleServerConfigDynamicState? isDynamicConfig = null)
+        public static MySqlFlexibleServerConfigurationData MySqlFlexibleServerConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string value = null, string currentValue = null, string description = null, string documentationLink = null, string defaultValue = null, string dataType = null, string allowedValues = null, MySqlFlexibleServerConfigurationSource? source = null, MySqlFlexibleServerConfigReadOnlyState? isReadOnly = null, MySqlFlexibleServerConfigPendingRestartState? isConfigPendingRestart = null, MySqlFlexibleServerConfigDynamicState? isDynamicConfig = null)
         {
             return new MySqlFlexibleServerConfigurationData(
                 id,
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="charset"> The charset of the database. </param>
         /// <param name="collation"> The collation of the database. </param>
         /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServerDatabaseData"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerDatabaseData MySqlFlexibleServerDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string charset = null, string collation = null)
+        public static MySqlFlexibleServerDatabaseData MySqlFlexibleServerDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string charset = null, string collation = null)
         {
             return new MySqlFlexibleServerDatabaseData(
                 id,
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="startIPAddress"> The start IP address of the server firewall rule. Must be IPv4 format. </param>
         /// <param name="endIPAddress"> The end IP address of the server firewall rule. Must be IPv4 format. </param>
         /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServerFirewallRuleData"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerFirewallRuleData MySqlFlexibleServerFirewallRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IPAddress startIPAddress = null, IPAddress endIPAddress = null)
+        public static MySqlFlexibleServerFirewallRuleData MySqlFlexibleServerFirewallRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IPAddress startIPAddress = null, IPAddress endIPAddress = null)
         {
             return new MySqlFlexibleServerFirewallRuleData(
                 id,
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="maintenanceWindow"> Maintenance window of a server. </param>
         /// <param name="importSourceProperties"> Source properties for import from storage. </param>
         /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServerData"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerData MySqlFlexibleServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, MySqlFlexibleServerSku sku = null, string administratorLogin = null, string administratorLoginPassword = null, MySqlFlexibleServerVersion? version = null, string availabilityZone = null, MySqlFlexibleServerCreateMode? createMode = null, ResourceIdentifier sourceServerResourceId = null, DateTimeOffset? restorePointInTime = null, MySqlFlexibleServerReplicationRole? replicationRole = null, int? replicaCapacity = null, MySqlFlexibleServerDataEncryption dataEncryption = null, MySqlFlexibleServerState? state = null, string fullyQualifiedDomainName = null, MySqlFlexibleServerStorage storage = null, MySqlFlexibleServerBackupProperties backup = null, MySqlFlexibleServerHighAvailability highAvailability = null, MySqlFlexibleServerNetwork network = null, IEnumerable<MySqlFlexibleServersPrivateEndpointConnection> privateEndpointConnections = null, MySqlFlexibleServerMaintenanceWindow maintenanceWindow = null, ImportSourceProperties importSourceProperties = null)
+        public static MySqlFlexibleServerData MySqlFlexibleServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, MySqlFlexibleServerSku sku = null, string administratorLogin = null, string administratorLoginPassword = null, MySqlFlexibleServerVersion? version = null, string availabilityZone = null, MySqlFlexibleServerCreateMode? createMode = null, ResourceIdentifier sourceServerResourceId = null, DateTimeOffset? restorePointInTime = null, MySqlFlexibleServerReplicationRole? replicationRole = null, int? replicaCapacity = null, MySqlFlexibleServerDataEncryption dataEncryption = null, MySqlFlexibleServerState? state = null, string fullyQualifiedDomainName = null, MySqlFlexibleServerStorage storage = null, MySqlFlexibleServerBackupProperties backup = null, MySqlFlexibleServerHighAvailability highAvailability = null, MySqlFlexibleServerNetwork network = null, IEnumerable<MySqlFlexibleServersPrivateEndpointConnection> privateEndpointConnections = null, MySqlFlexibleServerMaintenanceWindow maintenanceWindow = null, ImportSourceProperties importSourceProperties = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<MySqlFlexibleServersPrivateEndpointConnection>();
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <returns> A new <see cref="Models.MySqlFlexibleServersPrivateEndpointConnection"/> instance for mocking. </returns>
-        public static MySqlFlexibleServersPrivateEndpointConnection MySqlFlexibleServersPrivateEndpointConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IEnumerable<string> groupIds = null, ResourceIdentifier privateEndpointId = null, MySqlFlexibleServersPrivateLinkServiceConnectionState connectionState = null, MySqlFlexibleServersPrivateEndpointConnectionProvisioningState? provisioningState = null)
+        public static MySqlFlexibleServersPrivateEndpointConnection MySqlFlexibleServersPrivateEndpointConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> groupIds = null, ResourceIdentifier privateEndpointId = null, MySqlFlexibleServersPrivateLinkServiceConnectionState connectionState = null, MySqlFlexibleServersPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
             groupIds ??= new List<string>();
 
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="state"> Specifies the state of the Advanced Threat Protection, whether it is enabled or disabled or a state has not been applied yet on the specific database or server. </param>
         /// <param name="provisioningState"> Provisioning state of the Threat Protection. </param>
         /// <returns> A new <see cref="FlexibleServers.AdvancedThreatProtectionData"/> instance for mocking. </returns>
-        public static AdvancedThreatProtectionData AdvancedThreatProtectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, DateTimeOffset? createdOn = null, AdvancedThreatProtectionState? state = null, AdvancedThreatProtectionProvisioningState? provisioningState = null)
+        public static AdvancedThreatProtectionData AdvancedThreatProtectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, AdvancedThreatProtectionState? state = null, AdvancedThreatProtectionProvisioningState? provisioningState = null)
         {
             return new AdvancedThreatProtectionData(
                 id,
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="lastModifiedOn"> Last modified timestamp of the log file. </param>
         /// <param name="uri"> The url to download the log file from. </param>
         /// <returns> A new <see cref="Models.MySqlFlexibleServerLogFile"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerLogFile MySqlFlexibleServerLogFile(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, long? sizeInKB = null, DateTimeOffset? createdOn = null, string typePropertiesType = null, DateTimeOffset? lastModifiedOn = null, Uri uri = null)
+        public static MySqlFlexibleServerLogFile MySqlFlexibleServerLogFile(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, long? sizeInKB = null, DateTimeOffset? createdOn = null, string typePropertiesType = null, DateTimeOffset? lastModifiedOn = null, Uri uri = null)
         {
             return new MySqlFlexibleServerLogFile(
                 id,
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="supportedFlexibleServerEditions"> A list of supported flexible server editions. </param>
         /// <param name="supportedServerVersions"> A list of supported server versions. </param>
         /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServersCapabilityData"/> instance for mocking. </returns>
-        public static MySqlFlexibleServersCapabilityData MySqlFlexibleServersCapabilityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IEnumerable<string> supportedGeoBackupRegions = null, IEnumerable<ServerEditionCapabilityV2> supportedFlexibleServerEditions = null, IEnumerable<ServerVersionCapabilityV2> supportedServerVersions = null)
+        public static MySqlFlexibleServersCapabilityData MySqlFlexibleServersCapabilityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<string> supportedGeoBackupRegions = null, IEnumerable<ServerEditionCapabilityV2> supportedFlexibleServerEditions = null, IEnumerable<ServerVersionCapabilityV2> supportedServerVersions = null)
         {
             supportedGeoBackupRegions ??= new List<string>();
             supportedFlexibleServerEditions ??= new List<ServerEditionCapabilityV2>();
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="maintenanceDescription"> The maintenance description. </param>
         /// <param name="provisioningState"> Provisioning state of the Maintenance. </param>
         /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServerMaintenanceData"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerMaintenanceData MySqlFlexibleServerMaintenanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, MySqlFlexibleServerMaintenanceType? maintenanceType = null, MySqlFlexibleServerMaintenanceState? maintenanceState = null, DateTimeOffset? maintenanceStartOn = null, DateTimeOffset? maintenanceEndOn = null, DateTimeOffset? maintenanceExecutionStartOn = null, DateTimeOffset? maintenanceExecutionEndOn = null, DateTimeOffset? maintenanceAvailableScheduleMinOn = null, DateTimeOffset? maintenanceAvailableScheduleMaxOn = null, string maintenanceTitle = null, string maintenanceDescription = null, MySqlFlexibleServerMaintenanceProvisioningState? provisioningState = null)
+        public static MySqlFlexibleServerMaintenanceData MySqlFlexibleServerMaintenanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MySqlFlexibleServerMaintenanceType? maintenanceType = null, MySqlFlexibleServerMaintenanceState? maintenanceState = null, DateTimeOffset? maintenanceStartOn = null, DateTimeOffset? maintenanceEndOn = null, DateTimeOffset? maintenanceExecutionStartOn = null, DateTimeOffset? maintenanceExecutionEndOn = null, DateTimeOffset? maintenanceAvailableScheduleMinOn = null, DateTimeOffset? maintenanceAvailableScheduleMaxOn = null, string maintenanceTitle = null, string maintenanceDescription = null, MySqlFlexibleServerMaintenanceProvisioningState? provisioningState = null)
         {
             return new MySqlFlexibleServerMaintenanceData(
                 id,

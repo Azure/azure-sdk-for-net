@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            ResourceManager.Models.SystemData systemData = default;
+            SystemData systemData = default;
             IReadOnlyList<string> groupIds = default;
             SubResource privateEndpoint = default;
             MySqlFlexibleServersPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<ResourceManager.Models.SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMySqlFlexibleServersContext.Default);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMySqlContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            privateEndpoint = ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerMySqlFlexibleServersContext.Default);
+                            privateEndpoint = ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerMySqlContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMySqlFlexibleServersContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMySqlContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MySqlFlexibleServersPrivateEndpointConnection)} does not support writing '{options.Format}' format.");
             }

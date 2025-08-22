@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            ResourceManager.Models.SystemData systemData = default;
+            SystemData systemData = default;
             long? datasourceSizeInBytes = default;
             long? dataTransferredInBytes = default;
             string backupMetadata = default;
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerMySqlFlexibleServersContext.Default);
+                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerMySqlContext.Default);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<ResourceManager.Models.SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMySqlFlexibleServersContext.Default);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMySqlContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMySqlFlexibleServersContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMySqlContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupAndExportResult)} does not support writing '{options.Format}' format.");
             }

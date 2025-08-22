@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="supportedFlexibleServerEditions"> A list of supported flexible server editions. </param>
         /// <param name="supportedServerVersions"> A list of supported server versions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MySqlFlexibleServersCapabilityData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IReadOnlyList<string> supportedGeoBackupRegions, IReadOnlyList<ServerEditionCapabilityV2> supportedFlexibleServerEditions, IReadOnlyList<ServerVersionCapabilityV2> supportedServerVersions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal MySqlFlexibleServersCapabilityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> supportedGeoBackupRegions, IReadOnlyList<ServerEditionCapabilityV2> supportedFlexibleServerEditions, IReadOnlyList<ServerVersionCapabilityV2> supportedServerVersions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SupportedGeoBackupRegions = supportedGeoBackupRegions;
             SupportedFlexibleServerEditions = supportedFlexibleServerEditions;

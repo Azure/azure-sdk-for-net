@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
                 Sku = new MySqlFlexibleServerSku("Standard_D2ds_v4", MySqlFlexibleServerSkuTier.GeneralPurpose),
                 AdministratorLogin = "cloudsa",
                 AdministratorLoginPassword = "your_password",
-                Version = MySqlFlexibleServerVersion.Five7,
+                Version = MySqlFlexibleServerVersion.Ver5_7,
                 AvailabilityZone = "1",
                 CreateMode = MySqlFlexibleServerCreateMode.Default,
                 Storage = new MySqlFlexibleServerStorage
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
                 Sku = new MySqlFlexibleServerSku("Standard_D2ds_v4", MySqlFlexibleServerSkuTier.GeneralPurpose),
                 AdministratorLogin = "cloudsa",
                 AdministratorLoginPassword = "your_password",
-                Version = MySqlFlexibleServerVersion.Five7,
+                Version = MySqlFlexibleServerVersion.Ver5_7,
                 AvailabilityZone = "1",
                 CreateMode = MySqlFlexibleServerCreateMode.Default,
                 DataEncryption = new MySqlFlexibleServerDataEncryption
