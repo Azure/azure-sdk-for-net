@@ -12,7 +12,7 @@ using Azure.ResourceManager.IotFirmwareDefense.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Tests
 {
-    public class CommonVulnerabilitiesAndExposuresTest : IotFirmwareDefenseManagementTestBase
+    public class CveTest : IotFirmwareDefenseManagementTestBase
     {
         private static readonly string subscriptionId = "07aed47b-60ad-4d6e-a07a-89b602418441";
         private static readonly string rgName = "sdk-tests-rg";
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
         private static readonly string firmwareId = "cf833be1-3e8e-a00a-a037-ad27a0fc0497";
         private static SubscriptionResource testSubscription;
 
-        public CommonVulnerabilitiesAndExposuresTest(bool isAsync)
+        public CveTest(bool isAsync)
             : base(isAsync)
         {
         }
@@ -34,13 +34,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task TestGetCommonVulnerabilitiesAndExposures()
+        public async Task TestGetCves()
         {
             ResourceGroupResource testRg = await testSubscription.GetResourceGroupAsync(rgName);
             FirmwareAnalysisWorkspaceResource testWorkspace = await testRg.GetFirmwareAnalysisWorkspaceAsync(workspaceName);
             IotFirmwareResource testFirmware = await testWorkspace.GetIotFirmwareAsync(firmwareId);
 
-            var results = testFirmware.GetCommonVulnerabilitiesAndExposuresAsync();
+            var results = testFirmware.GetCvesAsync();
             await foreach ( CveResult result in results ) {
                 Console.WriteLine($"Fetched: {result}");
             }
