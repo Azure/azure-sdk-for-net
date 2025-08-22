@@ -314,7 +314,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [TestCase("$['complex path']", "$['complex path']")]
         [TestCase("$.x['complex path']", "$.x")]
         [TestCase("$.complex.path.here", "$.complex")]
-        [TestCase("$", "")]
+        [TestCase("$", "$")]
         [TestCase("$.property", "$.property")]
         [TestCase("$['property.with.dot'].x", "$['property.with.dot']")]
         public void GetFirstProperty(string jsonPath, string expected)

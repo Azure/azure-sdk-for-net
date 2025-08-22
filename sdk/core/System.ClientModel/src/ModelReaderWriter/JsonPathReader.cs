@@ -31,6 +31,13 @@ internal readonly ref struct JsonPathToken
 
 internal ref struct JsonPathReader
 {
+    private ref struct PeekedJsonPathToken
+    {
+        public JsonPathToken Token;
+        public bool HasValue;
+        public int Consumed;
+    }
+
     private const byte DollarSign = 36;   // '$'
     private const byte Dot = 46;          // '.'
     private const byte OpenBracket = 91;  // '['
@@ -44,6 +51,7 @@ internal ref struct JsonPathReader
     private readonly ReadOnlySpan<byte> _jsonPath;
     private int _consumed;
     private int _length;
+    private PeekedJsonPathToken _peeked;
 
     public JsonPathToken Current { get; private set; }
 
@@ -59,6 +67,14 @@ internal ref struct JsonPathReader
 
     public bool Read()
     {
+        if (_peeked.HasValue)
+        {
+            Current = _peeked.Token;
+            _consumed = _peeked.Consumed;
+            _peeked.HasValue = false;
+            return true;
+        }
+
         if (Current.TokenType == JsonPathTokenType.End)
             return false;
 
@@ -133,8 +149,28 @@ internal ref struct JsonPathReader
         }
     }
 
+    public JsonPathToken Peek()
+    {
+        if (Current.TokenType == JsonPathTokenType.End)
+            return Current;
+
+        if (_peeked.HasValue)
+            return _peeked.Token;
+
+        JsonPathReader local = this;
+        local.Read();
+        _peeked.HasValue = true;
+        _peeked.Consumed = local._consumed;
+        _peeked.Token = local.Current;
+
+        return _peeked.Token;
+    }
+
     public ReadOnlySpan<byte> GetFirstProperty()
     {
+        if (_jsonPath.IsRoot())
+            return _jsonPath;
+
         if (!Read())
             return ReadOnlySpan<byte>.Empty;
 
@@ -158,6 +194,17 @@ internal ref struct JsonPathReader
             default:
                 return ReadOnlySpan<byte>.Empty;
         }
+    }
+
+    public ReadOnlySpan<byte> GetNextArray()
+    {
+        while (Read())
+        {
+            if (Current.TokenType == JsonPathTokenType.ArrayIndex)
+                return _jsonPath.Slice(0, _consumed);
+        }
+
+        return ReadOnlySpan<byte>.Empty;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -216,6 +263,12 @@ internal ref struct JsonPathReader
         if (prefix.Length >= _length)
             return false;
 
+        if (_jsonPath.StartsWith(prefix))
+        {
+            _consumed = prefix.Length;
+            return true;
+        }
+
         if (prefix[0] != DollarSign || _jsonPath[0] != DollarSign)
             return false;
 
@@ -230,6 +283,14 @@ internal ref struct JsonPathReader
         }
 
         return prefixReader.Current.TokenType == JsonPathTokenType.End && Current.TokenType != JsonPathTokenType.End;
+    }
+
+    internal ReadOnlySpan<byte> GetParsedPath()
+    {
+        if (_consumed == 0)
+            return ReadOnlySpan<byte>.Empty;
+
+        return _jsonPath.Slice(0, _consumed);
     }
 
     private void Reset()

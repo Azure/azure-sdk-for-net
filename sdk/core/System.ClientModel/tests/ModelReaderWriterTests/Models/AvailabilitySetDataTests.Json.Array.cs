@@ -63,12 +63,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         {
             var model = GetInitialModel();
 
-            model.Patch.Append("$.newArray"u8, "5"u8);
-            model.Patch.Append("$.newArray"u8, "10"u8);
+            model.Patch.Append("$.newArray"u8, 5);
+            model.Patch.Append("$.newArray"u8, 10);
 
             Assert.AreEqual("[5,10]", model.Patch.GetJson("$.newArray"u8).ToString());
             Assert.AreEqual("5", model.Patch.GetJson("$.newArray[0]"u8).ToString());
             Assert.AreEqual("10", model.Patch.GetJson("$.newArray[1]"u8).ToString());
+            Assert.AreEqual(5, model.Patch.GetInt32("$.newArray[0]"u8));
+            Assert.AreEqual(10, model.Patch.GetInt32("$.newArray[1]"u8));
 
             var data = ModelReaderWriter.Write(model);
             Assert.AreEqual(
@@ -79,6 +81,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.AreEqual("[5,10]", model2.Patch.GetJson("$.newArray"u8).ToString());
             Assert.AreEqual("5", model2.Patch.GetJson("$.newArray[0]"u8).ToString());
             Assert.AreEqual("10", model2.Patch.GetJson("$.newArray[1]"u8).ToString());
+            Assert.AreEqual(5, model2.Patch.GetInt32("$.newArray[0]"u8));
+            Assert.AreEqual(10, model2.Patch.GetInt32("$.newArray[1]"u8));
 
             AssertCommon(model, model2);
         }
@@ -187,6 +191,16 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.AreEqual("myNewVmId3", model2.VirtualMachines[2].Id);
             Assert.AreEqual("myNewVmId4", model2.VirtualMachines[3].Id);
 
+            Assert.AreEqual("[{\"id\":\"myNewVmId1\"},{\"id\":\"myNewVmId2\"},{\"id\":\"myNewVmId3\"},{\"id\":\"myNewVmId4\"}]", model2.Patch.GetJson("$.properties.virtualMachines"u8).ToString());
+            Assert.AreEqual("{\"id\":\"myNewVmId1\"}", model2.Patch.GetJson("$.properties.virtualMachines[0]"u8).ToString());
+            Assert.AreEqual("{\"id\":\"myNewVmId2\"}", model2.Patch.GetJson("$.properties.virtualMachines[1]"u8).ToString());
+            Assert.AreEqual("{\"id\":\"myNewVmId3\"}", model2.Patch.GetJson("$.properties.virtualMachines[2]"u8).ToString());
+            Assert.AreEqual("{\"id\":\"myNewVmId4\"}", model2.Patch.GetJson("$.properties.virtualMachines[3]"u8).ToString());
+            Assert.AreEqual("myNewVmId1", model2.Patch.GetString("$.properties.virtualMachines[0].id"u8));
+            Assert.AreEqual("myNewVmId2", model2.Patch.GetString("$.properties.virtualMachines[1].id"u8));
+            Assert.AreEqual("myNewVmId3", model2.Patch.GetString("$.properties.virtualMachines[2].id"u8));
+            Assert.AreEqual("myNewVmId4", model2.Patch.GetString("$.properties.virtualMachines[3].id"u8));
+
             AssertCommon(model, model2);
         }
 
@@ -275,6 +289,49 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         }
 
         [Test]
+        public void ValidateArrayIndexes()
+        {
+            var model = GetInitialModel();
+
+            model.VirtualMachines.Add(new WritableSubResource() { Id = "myExistingVmId1" });
+
+            var data = ModelReaderWriter.Write(model);
+
+            var model2 = GetRoundTripModel(data);
+            Assert.AreEqual(1, model2.VirtualMachines.Count);
+            Assert.AreEqual("myExistingVmId1", model2.VirtualMachines[0].Id);
+
+            Assert.AreEqual("[{\"id\":\"myExistingVmId1\"}]", model2.Patch.GetJson("$.properties.virtualMachines"u8).ToString());
+            Assert.AreEqual("{\"id\":\"myExistingVmId1\"}", model2.Patch.GetJson("$.properties.virtualMachines[0]"u8).ToString());
+            Assert.AreEqual("myExistingVmId1", model2.Patch.GetString("$.properties.virtualMachines[0].id"u8));
+
+            model2.Patch.Append("$.properties.virtualMachines"u8, new WritableSubResource() { Id = "myNewVmId1" });
+
+            Assert.AreEqual("[{\"id\":\"myExistingVmId1\"},{\"id\":\"myNewVmId1\"}]", model2.Patch.GetJson("$.properties.virtualMachines"u8).ToString());
+            Assert.AreEqual("{\"id\":\"myExistingVmId1\"}", model2.Patch.GetJson("$.properties.virtualMachines[0]"u8).ToString());
+            Assert.AreEqual("myExistingVmId1", model2.Patch.GetString("$.properties.virtualMachines[0].id"u8));
+            Assert.AreEqual("{\"id\":\"myNewVmId1\"}", model2.Patch.GetJson("$.properties.virtualMachines[1]"u8).ToString());
+            Assert.AreEqual("myNewVmId1", model2.Patch.GetString("$.properties.virtualMachines[1].id"u8));
+
+            var data2 = ModelReaderWriter.Write(model2);
+            Assert.AreEqual(
+                "{\"name\":\"testAS-3375\",\"id\":\"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3375\",\"type\":\"Microsoft.Compute/availabilitySets\",\"sku\":{\"name\":\"Classic\"},\"tags\":{\"key\":\"value\"},\"location\":\"eastus\",\"properties\":{\"platformUpdateDomainCount\":5,\"platformFaultDomainCount\":3,\"virtualMachines\":[{\"id\":\"myExistingVmId1\"},{\"id\":\"myNewVmId1\"}]},\"extraSku\":\"extraSku\",\"extraRoot\":\"extraRoot\"}",
+                data2.ToString());
+
+            var model3 = GetRoundTripModel(data2);
+            Assert.AreEqual(2, model3.VirtualMachines.Count);
+            Assert.AreEqual("myExistingVmId1", model3.VirtualMachines[0].Id);
+            Assert.AreEqual("myNewVmId1", model3.VirtualMachines[1].Id);
+
+            Assert.AreEqual("[{\"id\":\"myExistingVmId1\"},{\"id\":\"myNewVmId1\"}]", model3.Patch.GetJson("$.properties.virtualMachines"u8).ToString());
+            Assert.AreEqual("{\"id\":\"myExistingVmId1\"}", model3.Patch.GetJson("$.properties.virtualMachines[0]"u8).ToString());
+            Assert.AreEqual("{\"id\":\"myNewVmId1\"}", model3.Patch.GetJson("$.properties.virtualMachines[1]"u8).ToString());
+
+            Assert.AreEqual("myExistingVmId1", model3.Patch.GetString("$.properties.virtualMachines[0].id"u8));
+            Assert.AreEqual("myNewVmId1", model3.Patch.GetString("$.properties.virtualMachines[1].id"u8));
+        }
+
+        [Test]
         public void RemoveItemFromArrayClr()
         {
             var model = GetInitialModel();
@@ -307,7 +364,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             model.VirtualMachines.Add(new WritableSubResource() { Id = "myExistingVmId1" });
             model.VirtualMachines.Add(new WritableSubResource() { Id = "myExistingVmId2" });
 
-            model.Patch.Remove("$.properties.virtualMachines[4]"u8);
+            var ex = Assert.Throws<ArgumentException>(() => model.Patch.Remove("$.properties.virtualMachines[4]"u8));
+            Assert.AreEqual("The input does not contain any JSON tokens. Expected the input to start with a valid JSON token, when isFinalBlock is true.", ex!.Message);
 
             var data = ModelReaderWriter.Write(model);
             Assert.AreEqual(
