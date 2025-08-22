@@ -61,7 +61,7 @@ function Process-Package([string]$packageInfoPath)
     Write-Host "Successfully marked release completion for package, name: $PackageName version: $PackageVersion."
 }
 
-Write-Host "Finding all package info files in directory: $PackageInfoFilePath"
+Write-Host "Finding all package info files in the path: $PackageInfoFilePath"
 # Get all package info file under the directory given in input param and process
 Get-ChildItem -Path $PackageInfoFilePath -Filter "*.json" | ForEach-Object {
     Write-Host "Processing package info file: $_"
