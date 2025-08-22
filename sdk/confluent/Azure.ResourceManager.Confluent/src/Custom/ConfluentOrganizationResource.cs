@@ -93,5 +93,93 @@ namespace Azure.ResourceManager.Confluent
                 null);
             return Response.FromValue(record, response.GetRawResponse());
         }
+
+        /// <summary>
+        /// Get cluster by Id
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}/environments/{environmentId}/clusters/{clusterId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Organization_GetClusterById</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="environmentId"> Confluent environment id. </param>
+        /// <param name="clusterId"> Confluent kafka or schema registry cluster id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="environmentId"/> or <paramref name="clusterId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/> or <paramref name="clusterId"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Response<SCClusterRecord> GetCluster(string environmentId, string clusterId, CancellationToken cancellationToken = default)
+        {
+            var resource = GetSCEnvironmentRecord(environmentId, cancellationToken).Value;
+            var response = resource.GetSCClusterRecord(clusterId, cancellationToken);
+            var data = response.Value.Data;
+            var record = new SCClusterRecord(
+                data.Kind,
+                data.Id,
+                data.Name,
+                data.Metadata,
+                data.Spec,
+                data.Status,
+                null);
+            return Response.FromValue(record, response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Get cluster by Id
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}/environments/{environmentId}/clusters/{clusterId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Organization_GetClusterById</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="environmentId"> Confluent environment id. </param>
+        /// <param name="clusterId"> Confluent kafka or schema registry cluster id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="environmentId"/> or <paramref name="clusterId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/> or <paramref name="clusterId"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SCClusterRecord>> GetClusterAsync(string environmentId, string clusterId, CancellationToken cancellationToken = default)
+        {
+            var resource = (await GetSCEnvironmentRecordAsync(environmentId, cancellationToken).ConfigureAwait(false)).Value;
+            var response = await resource.GetSCClusterRecordAsync(clusterId, cancellationToken).ConfigureAwait(false);
+            var data = response.Value.Data;
+            var record = new SCClusterRecord(
+                data.Kind,
+                data.Id,
+                data.Name,
+                data.Metadata,
+                data.Spec,
+                data.Status,
+                null);
+            return Response.FromValue(record, response.GetRawResponse());
+        }
     }
 }
