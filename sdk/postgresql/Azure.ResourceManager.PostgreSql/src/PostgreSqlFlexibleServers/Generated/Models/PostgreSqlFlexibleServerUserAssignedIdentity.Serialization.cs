@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     Dictionary<string, UserAssignedIdentity> dictionary = new Dictionary<string, UserAssignedIdentity>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ModelReaderWriter.Read<UserAssignedIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, PostgreSql.AzureResourceManagerPostgreSqlContext.Default));
+                        dictionary.Add(property0.Name, ModelReaderWriter.Read<UserAssignedIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerPostgreSqlContext.Default));
                     }
                     userAssignedIdentities = dictionary;
                     continue;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, PostgreSql.AzureResourceManagerPostgreSqlContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPostgreSqlContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

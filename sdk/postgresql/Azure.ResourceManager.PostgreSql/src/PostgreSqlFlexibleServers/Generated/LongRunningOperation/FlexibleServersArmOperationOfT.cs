@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 return null;
             }
-            var data = ModelReaderWriter.Write(rehydrationToken, ModelReaderWriterOptions.Json, PostgreSql.AzureResourceManagerPostgreSqlContext.Default);
+            var data = ModelReaderWriter.Write(rehydrationToken, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
             using var document = JsonDocument.Parse(data);
             var lroDetails = document.RootElement;
             return lroDetails.GetProperty("id").GetString();

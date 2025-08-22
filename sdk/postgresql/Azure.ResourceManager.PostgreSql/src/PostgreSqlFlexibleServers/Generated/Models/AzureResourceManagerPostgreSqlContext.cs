@@ -7,10 +7,11 @@
 
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.PostgreSql.FlexibleServers
+namespace Azure.ResourceManager.PostgreSql
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     [ModelReaderWriterBuildable(typeof(VirtualEndpointResourceData))]
     [ModelReaderWriterBuildable(typeof(VirtualEndpointResourcePatch))]
     [ModelReaderWriterBuildable(typeof(VirtualEndpointsListResult))]
-    public partial class AzureResourceManagerPostgreSqlFlexibleServersContext : ModelReaderWriterContext
+    public partial class AzureResourceManagerPostgreSqlContext : ModelReaderWriterContext
     {
     }
 }

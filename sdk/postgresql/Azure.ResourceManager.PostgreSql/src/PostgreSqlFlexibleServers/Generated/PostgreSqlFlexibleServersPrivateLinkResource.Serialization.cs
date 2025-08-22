@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         PostgreSqlFlexibleServersPrivateLinkResourceData IJsonModel<PostgreSqlFlexibleServersPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlFlexibleServersPrivateLinkResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PostgreSqlFlexibleServersPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PostgreSqlFlexibleServersPrivateLinkResourceData>(Data, options, PostgreSql.AzureResourceManagerPostgreSqlContext.Default);
+        BinaryData IPersistableModel<PostgreSqlFlexibleServersPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PostgreSqlFlexibleServersPrivateLinkResourceData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
 
-        PostgreSqlFlexibleServersPrivateLinkResourceData IPersistableModel<PostgreSqlFlexibleServersPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlFlexibleServersPrivateLinkResourceData>(data, options, PostgreSql.AzureResourceManagerPostgreSqlContext.Default);
+        PostgreSqlFlexibleServersPrivateLinkResourceData IPersistableModel<PostgreSqlFlexibleServersPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlFlexibleServersPrivateLinkResourceData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
 
         string IPersistableModel<PostgreSqlFlexibleServersPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlFlexibleServersPrivateLinkResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }

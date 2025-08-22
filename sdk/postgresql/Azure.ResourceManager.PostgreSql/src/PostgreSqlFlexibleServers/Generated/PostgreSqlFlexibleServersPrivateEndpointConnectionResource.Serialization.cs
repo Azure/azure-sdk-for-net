@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         PostgreSqlFlexibleServersPrivateEndpointConnectionData IJsonModel<PostgreSqlFlexibleServersPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlFlexibleServersPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PostgreSqlFlexibleServersPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PostgreSqlFlexibleServersPrivateEndpointConnectionData>(Data, options, PostgreSql.AzureResourceManagerPostgreSqlContext.Default);
+        BinaryData IPersistableModel<PostgreSqlFlexibleServersPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PostgreSqlFlexibleServersPrivateEndpointConnectionData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
 
-        PostgreSqlFlexibleServersPrivateEndpointConnectionData IPersistableModel<PostgreSqlFlexibleServersPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlFlexibleServersPrivateEndpointConnectionData>(data, options, PostgreSql.AzureResourceManagerPostgreSqlContext.Default);
+        PostgreSqlFlexibleServersPrivateEndpointConnectionData IPersistableModel<PostgreSqlFlexibleServersPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlFlexibleServersPrivateEndpointConnectionData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
 
         string IPersistableModel<PostgreSqlFlexibleServersPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlFlexibleServersPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
