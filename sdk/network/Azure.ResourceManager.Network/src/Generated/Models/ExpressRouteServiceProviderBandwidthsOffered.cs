@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The OfferName. </summary>
+        [WirePath("offerName")]
         public string OfferName { get; set; }
         /// <summary> The ValueInMbps. </summary>
+        [WirePath("valueInMbps")]
         public int? ValueInMbps { get; set; }
     }
 }

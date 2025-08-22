@@ -49,7 +49,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="id"> Unique ID of the parameter. </param>
         /// <param name="parameterType">
         /// A string of one of the basic JSON types (number, integer, array, object,
-        /// boolean, string)
+        /// boolean, string).
         /// </param>
         /// <param name="required"> Whether or not this parameter is required. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
@@ -70,7 +70,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="defaultValue"> Default value of the parameter. </param>
         /// <param name="parameterType">
         /// A string of one of the basic JSON types (number, integer, array, object,
-        /// boolean, string)
+        /// boolean, string).
         /// </param>
         /// <param name="readOnly">
         /// Whether or not this parameter is read-only.  If true, default should have a
@@ -107,7 +107,7 @@ namespace Azure.Developer.DevCenter.Models
         public string DefaultValue { get; }
         /// <summary>
         /// A string of one of the basic JSON types (number, integer, array, object,
-        /// boolean, string)
+        /// boolean, string).
         /// </summary>
         public EnvironmentDefinitionParameterType ParameterType { get; }
         /// <summary>

@@ -1623,7 +1623,6 @@ namespace Azure.AI.Vision.Face
             uri.AppendPath("/largepersongroups/", false);
             uri.AppendPath(_largePersonGroupId, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -1641,7 +1640,6 @@ namespace Azure.AI.Vision.Face
             uri.AppendPath("/largepersongroups/", false);
             uri.AppendPath(_largePersonGroupId, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1677,7 +1675,6 @@ namespace Azure.AI.Vision.Face
             uri.AppendPath("/largepersongroups/", false);
             uri.AppendPath(_largePersonGroupId, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -1740,7 +1737,6 @@ namespace Azure.AI.Vision.Face
             uri.AppendPath(_largePersonGroupId, true);
             uri.AppendPath("/train", false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1777,7 +1773,6 @@ namespace Azure.AI.Vision.Face
             uri.AppendPath("/persons/", false);
             uri.AppendPath(personId, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1813,7 +1808,6 @@ namespace Azure.AI.Vision.Face
             uri.AppendPath("/persons/", false);
             uri.AppendPath(personId, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -1926,7 +1920,6 @@ namespace Azure.AI.Vision.Face
             uri.AppendPath("/persistedfaces/", false);
             uri.AppendPath(persistedFaceId, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -1966,7 +1959,6 @@ namespace Azure.AI.Vision.Face
             uri.AppendPath("/persistedfaces/", false);
             uri.AppendPath(persistedFaceId, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,7 +32,7 @@ namespace MgmtTypeSpec
         BarResource IOperationSource<BarResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            BarData data = BarData.DeserializeBarData(document.RootElement, new ModelReaderWriterOptions("W"));
+            BarData data = BarData.DeserializeBarData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new BarResource(_client, data);
         }
 

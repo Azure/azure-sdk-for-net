@@ -44,12 +44,16 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Address of peering location. </summary>
+        [WirePath("properties.address")]
         public string Address { get; }
         /// <summary> Contact details of peering locations. </summary>
+        [WirePath("properties.contact")]
         public string Contact { get; }
         /// <summary> The inventory of available ExpressRoutePort bandwidths. </summary>
+        [WirePath("properties.availableBandwidths")]
         public IList<ExpressRoutePortsLocationBandwidths> AvailableBandwidths { get; }
         /// <summary> The provisioning state of the express route port location resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

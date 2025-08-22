@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Peering location of the test. </summary>
+        [WirePath("peeringLocation")]
         public string PeeringLocation { get; set; }
         /// <summary> Whether the failover simulation was successful or not. </summary>
+        [WirePath("wasSimulationSuccessful")]
         public bool? WasSimulationSuccessful { get; set; }
         /// <summary> List of all the failover connections for this peering location. </summary>
+        [WirePath("details")]
         public IList<FailoverConnectionDetails> Details { get; }
     }
 }
