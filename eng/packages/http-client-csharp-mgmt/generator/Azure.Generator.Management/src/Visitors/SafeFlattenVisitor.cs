@@ -79,7 +79,7 @@ namespace Azure.Generator.Management.Visitors
             }
             if (updated)
             {
-                method.Signature.Update(parameters: updatedParameters.ToList());
+                method.Signature.Update(parameters: updatedParameters);
 
                 // The model factory method return a new instance of the model type, update the constructor arguments with the flattened properties of internalized properties.
                 if (method.BodyStatements is not null)
