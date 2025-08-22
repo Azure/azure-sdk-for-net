@@ -76,6 +76,26 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
         }
         #endregion
 
+        #region DTMF
+        [Test]
+        public void ParseDtmfData_Test()
+        {
+            string dtmfJson = "{"
+                + "\"kind\": \"DtmfData\","
+                + "\"dtmfData\": {"
+                + "\"data\": \"5\""
+                + "}"
+                + "}";
+
+            DtmfData streamingDtmf = (DtmfData)StreamingData.Parse(dtmfJson);
+            ValidateDtmfData(streamingDtmf);
+        }
+        private static void ValidateDtmfData(DtmfData streamingDtmf)
+        {
+            Assert.IsNotNull(streamingDtmf);
+            Assert.AreEqual("5", streamingDtmf.Data);
+        }
+        #endregion
         #region Transcription
 
         [Test]
