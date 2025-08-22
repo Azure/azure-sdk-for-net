@@ -48,6 +48,8 @@ model BarSettingsResource is ProxyResource<BarSettingsProperties> {
   ...ResourceNameParameter<BarSettingsResource, SegmentName = "settings">;
 
   stringArray?: string[];
+  property: BarQuotaProperties;
+  anotherProperty: BarQuotaProperties;
 }
 
 @parentResource(Bar)

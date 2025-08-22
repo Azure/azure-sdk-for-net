@@ -12,7 +12,7 @@ using MgmtTypeSpec;
 namespace MgmtTypeSpec.Models
 {
     /// <summary> The BarQuotaProperties. </summary>
-    internal partial class BarQuotaProperties
+    public partial class BarQuotaProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
