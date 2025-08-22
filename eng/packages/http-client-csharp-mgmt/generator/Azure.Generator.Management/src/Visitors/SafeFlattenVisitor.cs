@@ -50,15 +50,16 @@ namespace Azure.Generator.Management.Visitors
             }
         }
 
-        private void UpdateModelFactoryMethod(MethodProvider method, CSharpType returnType, Dictionary<string, PropertyProvider> propertyMap)
+        private void UpdateModelFactoryMethod(MethodProvider method, CSharpType returnType, Dictionary<string, (bool IsOverriddenValueType, PropertyProvider FlattenedProperty)> propertyMap)
         {
             var updatedParameters = new List<ParameterProvider>(method.Signature.Parameters.Count);
             var updated = false;
             var parameterShouldBeNullable = false; // if the previous method parameter is nullable, we need to ensure that the current parameter is also set with default value
             foreach (var parameter in method.Signature.Parameters)
             {
-                if (propertyMap.TryGetValue(parameter.Name, out var flattenedProperty))
+                if (propertyMap.TryGetValue(parameter.Name, out var value))
                 {
+                    var (_, flattenedProperty) = value;
                     updated = true;
                     var updatedParameter = flattenedProperty.AsParameter;
                     if (parameterShouldBeNullable || flattenedProperty.Type.IsNullable)
@@ -94,18 +95,19 @@ namespace Azure.Generator.Management.Visitors
                             var updatedInstanceParameters = new List<ValueExpression>(newInstanceExpression.Parameters.Count);
                             foreach (var parameter in newInstanceExpression.Parameters)
                             {
-                                if (parameter is VariableExpression variable && propertyMap.TryGetValue(variable.Declaration.RequestedName, out var flattenedProperty))
+                                if (parameter is VariableExpression variable && propertyMap.TryGetValue(variable.Declaration.RequestedName, out var value))
                                 {
                                     // Flatten the property to the new instance parameters
                                     // If the property is null, we need to ensure that we create a new instance of the model type.
                                     // If the property is not null, we can use the existing value.
+                                    var (isOverriddenValueType, flattenedProperty) = value;
                                     updatedInstanceParameters.Add(
                                     new TernaryConditionalExpression(
                                         flattenedProperty.AsParameter.Is(Null),
                                         Default,
                                         New.Instance(
                                             variable.Type,
-                                            [flattenedProperty.AsParameter, New.Instance(new CSharpType(typeof(Dictionary<,>), typeof(string), typeof(BinaryData)))]))); // TODO: handle additional parameters properly or should it be nullable?
+                                            [isOverriddenValueType ? flattenedProperty.AsParameter.Property("Value") : flattenedProperty.AsParameter, New.Instance(new CSharpType(typeof(Dictionary<,>), typeof(string), typeof(BinaryData)))]))); // TODO: handle additional parameters properly or should it be nullable?
                                 }
                                 else
                                 {
@@ -126,11 +128,11 @@ namespace Azure.Generator.Management.Visitors
 
         // This dictionary holds the flattened model types, where the key is the CSharpType of the model and the value is a dictionary of property names to flattened PropertyProvider.
         // So that, we can use this to update the model factory methods later.
-        private readonly Dictionary<CSharpType, Dictionary<string, PropertyProvider>> _flattenedModelTypes = new();
+        private readonly Dictionary<CSharpType, Dictionary<string, (bool IsOverriddenValueType, PropertyProvider FlattenedProperty)>> _flattenedModelTypes = new();
         private void FlattenModel(ModelProvider model)
         {
             var isFlattened = false;
-            var map = new Dictionary<string, PropertyProvider>();
+            var map = new Dictionary<string, (bool IsOverriddenValueType, PropertyProvider FlattenedProperty)>();
             var flattenedProperties = new List<PropertyProvider>();
             foreach (var property in model.Properties)
             {
@@ -148,12 +150,14 @@ namespace Azure.Generator.Management.Visitors
                         BuildGetter(includeGetterNullCheck, property, modelProvider, innerProperty),
                         isFlattenedPropertyReadOnly ? null : BuildSetter(includeSetterNullCheck, modelProvider, property, innerProperty)
                     );
-                    var flattenedProperty = new PropertyProvider(innerProperty.Description, innerProperty.Modifiers, innerProperty.Type, flattenPropertyName, flattenPropertyBody, model, innerProperty.ExplicitInterface, innerProperty.WireInfo, innerProperty.Attributes);
+
+                    var isOverriddenValueType = innerProperty.Type.IsValueType && !innerProperty.Type.IsNullable;
+                    var flattenedProperty = new PropertyProvider(innerProperty.Description, innerProperty.Modifiers, isOverriddenValueType ? innerProperty.Type.WithNullable(true) : innerProperty.Type, flattenPropertyName, flattenPropertyBody, model, innerProperty.ExplicitInterface, innerProperty.WireInfo, innerProperty.Attributes);
 
                     // make the internalized properties internal
                     property.Update(modifiers: property.Modifiers & ~MethodSignatureModifiers.Public | MethodSignatureModifiers.Internal);
                     flattenedProperties.Add(flattenedProperty);
-                    map.Add(property.Name.ToVariableName(), flattenedProperty);
+                    map.Add(property.Name.ToVariableName(), (isOverriddenValueType, flattenedProperty));
                 }
             }
             model.Update(properties: [.. model.Properties, .. flattenedProperties]);
@@ -233,9 +237,9 @@ namespace Azure.Generator.Management.Visitors
             }
         }
 
-        private MethodBodyStatement BuildSetter(bool includeSetterCheck, ModelProvider innerModel, PropertyProvider internalProperty, PropertyProvider singleProperty)
+        private MethodBodyStatement BuildSetter(bool includeSetterCheck, ModelProvider innerModel, PropertyProvider internalProperty, PropertyProvider innerProperty)
         {
-            var isOverriddenValueType = innerModel.Type.IsValueType && !innerModel.Type.IsNullable;
+            var isOverriddenValueType = PropertyHelpers.IsOverriddenValueType(innerProperty);
             var setter = new List<MethodBodyStatement>();
             var internalPropertyExpression = This.Property(internalProperty.Name);
             if (includeSetterCheck)
@@ -247,7 +251,7 @@ namespace Azure.Generator.Management.Visitors
                         new IfStatement(internalPropertyExpression.Is(Null))
                         {
                             internalPropertyExpression.Assign(New.Instance(innerModel.Type!)).Terminate(),
-                            internalPropertyExpression.Property(singleProperty.Name).Assign(Value.Property(nameof(Nullable<int>.Value))).Terminate()
+                            internalPropertyExpression.Property(innerProperty.Name).Assign(Value.Property(nameof(Nullable<int>.Value))).Terminate()
                         }
                     };
                     setter.Add(new IfElseStatement(ifStatement, internalProperty.AsVariableExpression.Assign(Null).Terminate()));
@@ -258,14 +262,14 @@ namespace Azure.Generator.Management.Visitors
                     {
                         internalPropertyExpression.Assign(New.Instance(innerModel.Type!)).Terminate()
                     });
-                    setter.Add(internalPropertyExpression.Property(singleProperty.Name).Assign(Value).Terminate());
+                    setter.Add(internalPropertyExpression.Property(innerProperty.Name).Assign(Value).Terminate());
                 }
             }
             else
             {
                 if (isOverriddenValueType)
                 {
-                    setter.Add(internalPropertyExpression.Assign(new TernaryConditionalExpression(Value.Property(nameof(Nullable<int>.HasValue)), new MemberExpression(internalProperty, singleProperty.Name), Default)).Terminate());
+                    setter.Add(internalPropertyExpression.Assign(new TernaryConditionalExpression(Value.Property(nameof(Nullable<int>.HasValue)), New.Instance(innerModel.Type!, Value.Property(nameof(Nullable<int>.Value))), Default)).Terminate());
                 }
                 else
                 {

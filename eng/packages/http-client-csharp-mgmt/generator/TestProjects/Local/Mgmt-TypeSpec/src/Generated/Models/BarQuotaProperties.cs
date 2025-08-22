@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using MgmtTypeSpec;
 
 namespace MgmtTypeSpec.Models
 {
@@ -19,24 +18,21 @@ namespace MgmtTypeSpec.Models
 
         /// <summary> Initializes a new instance of <see cref="BarQuotaProperties"/>. </summary>
         /// <param name="left"> enabled. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="left"/> is null. </exception>
-        public BarQuotaProperties(object left)
+        public BarQuotaProperties(int left)
         {
-            Argument.AssertNotNull(left, nameof(left));
-
             Left = left;
         }
 
         /// <summary> Initializes a new instance of <see cref="BarQuotaProperties"/>. </summary>
         /// <param name="left"> enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BarQuotaProperties(object left, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BarQuotaProperties(int left, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Left = left;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> enabled. </summary>
-        public object Left { get; set; }
+        public int Left { get; set; }
     }
 }

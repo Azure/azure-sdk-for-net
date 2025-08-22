@@ -4528,9 +4528,9 @@
                 "doc": "enabled",
                 "type": {
                   "$id": "385",
-                  "kind": "int16",
-                  "name": "int16",
-                  "crossLanguageDefinitionId": "TypeSpec.int16",
+                  "kind": "int32",
+                  "name": "int32",
+                  "crossLanguageDefinitionId": "TypeSpec.int32",
                   "decorators": []
                 },
                 "optional": false,

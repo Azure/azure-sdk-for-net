@@ -59,7 +59,7 @@ model BarQuotaResource is ProxyResource<BarQuotaProperties> {
 
 model BarQuotaProperties {
   /** enabled */
-  left: int16;
+  left: int32;
 }
 
 model BarSettingsProperties {
