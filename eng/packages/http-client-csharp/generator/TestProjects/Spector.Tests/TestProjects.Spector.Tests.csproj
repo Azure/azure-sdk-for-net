@@ -38,6 +38,8 @@
     <ProjectReference Include="..\Spector\http\authentication\http\custom\src\Authentication.Http.Custom.csproj" />
     <ProjectReference Include="..\Spector\http\authentication\oauth2\src\Authentication.OAuth2.csproj" />
     <ProjectReference Include="..\Spector\http\authentication\union\src\Authentication.Union.csproj" />
+    <ProjectReference Include="..\Spector\http\client\naming\src\Client.Naming.csproj" />
+    <ProjectReference Include="..\Spector\http\client\naming\enum-conflict\src\Client.Naming.EnumConflict.csproj" />
     <ProjectReference Include="..\Spector\http\client\structure\client-operation-group\src\Client.Structure.Service.csproj" Aliases="ClientStructureClientOperationGroup" />
     <ProjectReference Include="..\Spector\http\client\structure\default\src\Client.Structure.Service.Default.csproj" Aliases="ClientStructureDefault" />
     <ProjectReference Include="..\Spector\http\client\structure\multi-client\src\Client.Structure.Service.Multi.Client.csproj" Aliases="ClientStructureMultiClient" />

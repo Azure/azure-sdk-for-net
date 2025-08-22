@@ -66,10 +66,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The state name. </summary>
+        [WirePath("stateName")]
         public string StateName { get; }
         /// <summary> A list of Internet service providers. </summary>
+        [WirePath("providers")]
         public IReadOnlyList<string> Providers { get; }
         /// <summary> List of available cities or towns in the state. </summary>
+        [WirePath("cities")]
         public IReadOnlyList<AvailableProvidersListCity> Cities { get; }
     }
 }

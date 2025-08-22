@@ -44,14 +44,17 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A read-only string that represents the size of the FirewallPolicyRuleCollectionGroupProperties in MB. (ex 1.2MB). </summary>
+        [WirePath("properties.size")]
         public string Size { get; }
         /// <summary> Priority of the Firewall Policy Rule Collection Group resource. </summary>
+        [WirePath("properties.priority")]
         public int? Priority { get; set; }
         /// <summary>
         /// Group of Firewall Policy rule collections.
         /// Please note <see cref="FirewallPolicyRuleCollectionInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FirewallPolicyFilterRuleCollectionInfo"/> and <see cref="FirewallPolicyNatRuleCollectionInfo"/>.
         /// </summary>
+        [WirePath("properties.ruleCollections")]
         public IList<FirewallPolicyRuleCollectionInfo> RuleCollections { get; }
     }
 }

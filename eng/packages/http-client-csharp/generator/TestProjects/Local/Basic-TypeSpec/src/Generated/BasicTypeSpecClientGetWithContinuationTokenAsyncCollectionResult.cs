@@ -45,13 +45,14 @@ namespace BasicTypeSpec
                 {
                     yield break;
                 }
+                ListWithContinuationTokenResponse result = (ListWithContinuationTokenResponse)response;
                 List<BinaryData> items = new List<BinaryData>();
-                foreach (var item in ((ListWithContinuationTokenResponse)response).Things)
+                foreach (var item in result.Things)
                 {
                     items.Add(BinaryData.FromObjectAsJson(item));
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage, response);
-                nextPage = ((ListWithContinuationTokenResponse)response).NextToken;
+                nextPage = result.NextToken;
                 if (nextPage == null)
                 {
                     yield break;

@@ -14,7 +14,7 @@ try
         {
             CancellationToken = cancellationToken
         };
-        global::Azure.Core.HttpMessage message = _testClientRestClient.CreateGetRequest(this.Id.Name, global::System.Guid.Parse(this.Id.SubscriptionId), context);
+        global::Azure.Core.HttpMessage message = _testClientRestClient.CreateGetRequest(global::System.Guid.Parse(this.Id.SubscriptionId), this.Id.ResourceGroupName, this.Id.Name, context);
         global::Azure.Response result = this.Pipeline.ProcessMessage(message, context);
         global::Azure.Response<global::Samples.Models.ResponseTypeData> response = global::Azure.Response.FromValue(global::Samples.Models.ResponseTypeData.FromResponse(result), result);
         return global::Azure.Response.FromValue(new global::Samples.ResponseTypeResource(this.Client, response.Value), response.GetRawResponse());
@@ -22,9 +22,8 @@ try
     else
     {
         global::Samples.Models.ResponseTypeData current = (this.Get(cancellationToken)).Value.Data;
-        global::System.Threading.CancellationToken patch = new global::System.Threading.CancellationToken();
-        patch.Tags.ReplaceWith(tags);
-        global::Azure.ResourceManager.ArmOperation<global::Samples.ResponseTypeResource> result = this.Update(global::Azure.WaitUntil.Completed, patch, cancellationToken);
+        current.Tags.ReplaceWith(tags);
+        global::Azure.Response<global::Samples.ResponseTypeResource> result = this.Update(current, cancellationToken);
         return global::Azure.Response.FromValue(result.Value, result.GetRawResponse());
     }
 }

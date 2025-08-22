@@ -75,10 +75,13 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The available rulesets. </summary>
+        [WirePath("properties.availableRuleSets")]
         public IReadOnlyList<ApplicationGatewayFirewallManifestRuleSet> AvailableRuleSets { get; }
         /// <summary> The type of the web application firewall rule set. </summary>
+        [WirePath("properties.ruleSetType")]
         public string RuleSetType { get; }
         /// <summary> The version of the web application firewall rule set type. </summary>
+        [WirePath("properties.ruleSetVersion")]
         public string RuleSetVersion { get; }
     }
 }
