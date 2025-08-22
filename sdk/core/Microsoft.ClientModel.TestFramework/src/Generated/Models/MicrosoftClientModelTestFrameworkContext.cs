@@ -6,6 +6,8 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Microsoft.ClientModel.TestFramework.TestProxy;
+using Microsoft.ClientModel.TestFramework.TestProxy.Admin;
 
 namespace Microsoft.ClientModel.TestFramework
 {
@@ -13,6 +15,41 @@ namespace Microsoft.ClientModel.TestFramework
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(TestProxyStartInformation))]
+    [ModelReaderWriterBuildable(typeof(CustomDefaultMatcher))]
+    [ModelReaderWriterBuildable(typeof(SanitizerAddition))]
+    [ModelReaderWriterBuildable(typeof(UnknownSanitizerAddition))]
+    [ModelReaderWriterBuildable(typeof(BodyKeySanitizer))]
+    [ModelReaderWriterBuildable(typeof(BodyKeySanitizerBody))]
+    [ModelReaderWriterBuildable(typeof(ApplyCondition))]
+    [ModelReaderWriterBuildable(typeof(BodyRegexSanitizer))]
+    [ModelReaderWriterBuildable(typeof(BodyRegexSanitizerBody))]
+    [ModelReaderWriterBuildable(typeof(BodyStringSanitizer))]
+    [ModelReaderWriterBuildable(typeof(BodyStringSanitizerBody))]
+    [ModelReaderWriterBuildable(typeof(GeneralRegexSanitizer))]
+    [ModelReaderWriterBuildable(typeof(GeneralRegexSanitizerBody))]
+    [ModelReaderWriterBuildable(typeof(GeneralStringSanitizer))]
+    [ModelReaderWriterBuildable(typeof(GeneralStringSanitizerBody))]
+    [ModelReaderWriterBuildable(typeof(HeaderRegexSanitizer))]
+    [ModelReaderWriterBuildable(typeof(HeaderRegexSanitizerBody))]
+    [ModelReaderWriterBuildable(typeof(HeaderStringSanitizer))]
+    [ModelReaderWriterBuildable(typeof(HeaderStringSanitizerBody))]
+    [ModelReaderWriterBuildable(typeof(OAuthResponseSanitizer))]
+    [ModelReaderWriterBuildable(typeof(RegexEntrySanitizer))]
+    [ModelReaderWriterBuildable(typeof(RegexEntrySanitizerBody))]
+    [ModelReaderWriterBuildable(typeof(RemoveHeaderSanitizer))]
+    [ModelReaderWriterBuildable(typeof(RemoveHeaderSanitizerBody))]
+    [ModelReaderWriterBuildable(typeof(UriRegexSanitizer))]
+    [ModelReaderWriterBuildable(typeof(UriRegexSanitizerBody))]
+    [ModelReaderWriterBuildable(typeof(UriStringSanitizer))]
+    [ModelReaderWriterBuildable(typeof(UriStringSanitizerBody))]
+    [ModelReaderWriterBuildable(typeof(UriSubscriptionIdSanitizer))]
+    [ModelReaderWriterBuildable(typeof(UriSubscriptionIdSanitizerBody))]
+    [ModelReaderWriterBuildable(typeof(SanitizerList))]
+    [ModelReaderWriterBuildable(typeof(RemovedSanitizers))]
+    [ModelReaderWriterBuildable(typeof(RecordingOptions))]
+    [ModelReaderWriterBuildable(typeof(TransportCustomizations))]
+    [ModelReaderWriterBuildable(typeof(TestProxyCertificate))]
     public partial class MicrosoftClientModelTestFrameworkContext : ModelReaderWriterContext
     {
     }

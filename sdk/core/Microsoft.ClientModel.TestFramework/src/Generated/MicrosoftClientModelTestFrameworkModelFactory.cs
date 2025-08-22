@@ -307,7 +307,7 @@ namespace Microsoft.ClientModel.TestFramework
         {
             sanitizers ??= new ChangeTrackingList<string>();
 
-            return new SanitizerList(sanitizers?.ToList(), additionalBinaryDataProperties: null);
+            return new SanitizerList(sanitizers.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The RemovedSanitizers. </summary>
@@ -317,7 +317,7 @@ namespace Microsoft.ClientModel.TestFramework
         {
             removed ??= new ChangeTrackingList<string>();
 
-            return new RemovedSanitizers(removed?.ToList(), additionalBinaryDataProperties: null);
+            return new RemovedSanitizers(removed.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The RecordingOptions. </summary>
@@ -346,7 +346,7 @@ namespace Microsoft.ClientModel.TestFramework
                 allowAutoRedirect,
                 tlsValidationCert,
                 tlsValidationCertHost,
-                certificates?.ToList(),
+                certificates.ToList(),
                 playbackResponseTime,
                 additionalBinaryDataProperties: null);
         }

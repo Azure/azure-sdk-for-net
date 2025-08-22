@@ -15,7 +15,7 @@ using Microsoft.ClientModel.TestFramework;
 
 namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
 {
-    /// <summary></summary>
+    /// <summary> The TestProxyAdminClient sub-client. </summary>
     public partial class TestProxyAdminClient
     {
         private readonly Uri _endpoint;
