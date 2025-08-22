@@ -951,12 +951,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     }
     public partial class ManagedClusterMonitoringPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterMonitoringPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterMonitoringPolicy>
     {
-        public ManagedClusterMonitoringPolicy(System.TimeSpan healthCheckWaitDuration, System.TimeSpan healthCheckStableDuration, System.TimeSpan healthCheckRetryTimeout, System.TimeSpan upgradeTimeout, System.TimeSpan upgradeDomainTimeout) { }
-        public System.TimeSpan HealthCheckRetryTimeout { get { throw null; } set { } }
+        public ManagedClusterMonitoringPolicy(System.TimeSpan healthCheckWaitDuration, System.TimeSpan healthCheckStableDuration, string healthCheckRetryTimeout, string upgradeTimeout, string upgradeDomainTimeout) { }
+        public string HealthCheckRetryTimeout { get { throw null; } set { } }
         public System.TimeSpan HealthCheckStableDuration { get { throw null; } set { } }
         public System.TimeSpan HealthCheckWaitDuration { get { throw null; } set { } }
-        public System.TimeSpan UpgradeDomainTimeout { get { throw null; } set { } }
-        public System.TimeSpan UpgradeTimeout { get { throw null; } set { } }
+        public string UpgradeDomainTimeout { get { throw null; } set { } }
+        public string UpgradeTimeout { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterMonitoringPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterMonitoringPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterMonitoringPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
