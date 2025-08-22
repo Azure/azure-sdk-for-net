@@ -15,7 +15,7 @@ Use `azsdk_check_service_label` to check status:
 - **Exists**: Success - user can proceed with next steps in SDK release process
 - **InReview**: Label pending approval - user can proceed (will be available once merged)
 - **DoesNotExist**: Go to Step 3 to create new label
-- **NotAServiceLabel**: Label exists but wrong type - go to Step 3 for new service label
+- **NotAServiceLabel**: Label exists but it is not a service label - go to Step 3 for new service label
 
 ## Step 3: Create New Service Label
 When no valid service label exists, guide the user through creating a new one.
