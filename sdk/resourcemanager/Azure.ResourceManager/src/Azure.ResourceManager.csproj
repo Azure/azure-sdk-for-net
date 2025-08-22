@@ -30,9 +30,4 @@
     <EmbeddedResource Include="Assets\Profile\2020-09-01-hybrid.json" />
   </ItemGroup>
 
-  <ItemGroup>
-    <!-- TODO: Temporarily pin the version of generator here, will remove this in https://github.com/Azure/azure-sdk-for-net/issues/51436 -->
-    <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" VersionOverride="3.0.0-beta.20250718.1" PrivateAssets="All" />
-  </ItemGroup>
-
 </Project>

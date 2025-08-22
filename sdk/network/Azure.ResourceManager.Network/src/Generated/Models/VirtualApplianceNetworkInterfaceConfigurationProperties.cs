@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Gets the ip configurations. </summary>
+        [WirePath("ipConfigurations")]
         public IList<VirtualApplianceIPConfiguration> IPConfigurations { get; }
     }
 }

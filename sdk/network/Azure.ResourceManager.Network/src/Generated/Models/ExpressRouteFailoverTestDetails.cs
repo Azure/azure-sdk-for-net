@@ -79,22 +79,31 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Peering location of the test. </summary>
+        [WirePath("peeringLocation")]
         public string PeeringLocation { get; }
         /// <summary> All circuits in the peering location. </summary>
+        [WirePath("circuits")]
         public IReadOnlyList<ExpressRouteFailoverCircuitResourceDetails> Circuits { get; }
         /// <summary> The current status of the test. </summary>
+        [WirePath("status")]
         public FailoverTestStatus? Status { get; }
         /// <summary> Time when the test was started. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> Time when the test was completed. </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
         /// <summary> All connections to the circuits in the peering location. </summary>
+        [WirePath("connections")]
         public IReadOnlyList<ExpressRouteFailoverConnectionResourceDetails> Connections { get; }
         /// <summary> The unique GUID associated with the test. </summary>
+        [WirePath("testGuid")]
         public Guid? TestGuid { get; }
         /// <summary> The type of failover test. </summary>
+        [WirePath("testType")]
         public FailoverTestType? TestType { get; }
         /// <summary> A list of all issues with the test. </summary>
+        [WirePath("issues")]
         public IReadOnlyList<string> Issues { get; }
     }
 }

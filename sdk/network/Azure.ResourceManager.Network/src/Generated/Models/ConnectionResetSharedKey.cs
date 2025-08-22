@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The virtual network connection reset shared key length, should between 1 and 128. </summary>
+        [WirePath("keyLength")]
         public int KeyLength { get; set; }
     }
 }

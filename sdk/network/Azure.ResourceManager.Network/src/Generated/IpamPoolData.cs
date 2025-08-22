@@ -85,8 +85,10 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Properties of IpamPool resource properties which are specific to the Pool resource. </summary>
+        [WirePath("properties")]
         public IpamPoolProperties Properties { get; set; }
         /// <summary> String representing unique etag for the resource document. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
     }
 }
