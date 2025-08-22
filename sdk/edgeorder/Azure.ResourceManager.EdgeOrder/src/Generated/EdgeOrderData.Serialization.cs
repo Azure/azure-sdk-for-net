@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.EdgeOrder
             IReadOnlyList<ResourceIdentifier> orderItemIds = default;
             EdgeOrderStageDetails currentStage = default;
             IReadOnlyList<EdgeOrderStageDetails> orderStageHistory = default;
-            OrderMode? orderMode = default;
+            EdgeOrderItemMode? orderMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.EdgeOrder
                             {
                                 continue;
                             }
-                            orderMode = new OrderMode(property0.Value.GetString());
+                            orderMode = new EdgeOrderItemMode(property0.Value.GetString());
                             continue;
                         }
                     }

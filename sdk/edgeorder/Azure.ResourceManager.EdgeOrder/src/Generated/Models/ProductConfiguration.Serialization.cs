@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             IReadOnlyList<ProductSpecification> specifications = default;
             ProductDimensions dimensions = default;
-            ProvisioningSupport? provisioningSupport = default;
+            EdgeOrderProvisioningSupport? provisioningSupport = default;
             IReadOnlyList<ChildConfigurationType> childConfigurationTypes = default;
             IReadOnlyList<GroupedChildConfigurations> groupedChildConfigurations = default;
             IReadOnlyList<TimeSpan> supportedTermCommitmentDurations = default;
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             {
                                 continue;
                             }
-                            provisioningSupport = new ProvisioningSupport(property0.Value.GetString());
+                            provisioningSupport = new EdgeOrderProvisioningSupport(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("childConfigurationTypes"u8))

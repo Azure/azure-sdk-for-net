@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="identity"> Msi identity of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeOrderItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EdgeOrderItemDetails orderItemDetails, EdgeOrderItemAddressDetails addressDetails, DateTimeOffset? startOn, ResourceIdentifier orderId, ProvisioningState? provisioningState, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal EdgeOrderItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EdgeOrderItemDetails orderItemDetails, EdgeOrderItemAddressDetails addressDetails, DateTimeOffset? startOn, ResourceIdentifier orderId, EdgeOrderProvisioningState? provisioningState, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             OrderItemDetails = orderItemDetails;
             AddressDetails = addressDetails;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <summary> Id of the order to which order item belongs to. </summary>
         public ResourceIdentifier OrderId { get; set; }
         /// <summary> Provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public EdgeOrderProvisioningState? ProvisioningState { get; }
         /// <summary> Msi identity of the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
     }

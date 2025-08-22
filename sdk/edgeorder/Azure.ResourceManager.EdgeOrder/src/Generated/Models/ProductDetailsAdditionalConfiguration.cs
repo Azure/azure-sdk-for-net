@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Additional Configuration details. </summary>
-    public partial class AdditionalConfiguration
+    public partial class ProductDetailsAdditionalConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,25 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AdditionalConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductDetailsAdditionalConfiguration"/>. </summary>
         /// <param name="hierarchyInformation"> Hierarchy of the product which uniquely identifies the configuration. </param>
         /// <param name="quantity"> Quantity of the product. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="hierarchyInformation"/> is null. </exception>
-        public AdditionalConfiguration(HierarchyInformation hierarchyInformation, int quantity)
+        public ProductDetailsAdditionalConfiguration(HierarchyInformation hierarchyInformation, int quantity)
         {
             Argument.AssertNotNull(hierarchyInformation, nameof(hierarchyInformation));
 
             HierarchyInformation = hierarchyInformation;
             Quantity = quantity;
-            ProvisioningDetails = new ChangeTrackingList<ProvisioningDetails>();
+            ProvisioningDetails = new ChangeTrackingList<EdgeOrderProvisioningDetails>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AdditionalConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductDetailsAdditionalConfiguration"/>. </summary>
         /// <param name="hierarchyInformation"> Hierarchy of the product which uniquely identifies the configuration. </param>
         /// <param name="quantity"> Quantity of the product. </param>
         /// <param name="provisioningDetails"> List Provisioning Details for Devices in Additional Config. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AdditionalConfiguration(HierarchyInformation hierarchyInformation, int quantity, IList<ProvisioningDetails> provisioningDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProductDetailsAdditionalConfiguration(HierarchyInformation hierarchyInformation, int quantity, IList<EdgeOrderProvisioningDetails> provisioningDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             HierarchyInformation = hierarchyInformation;
             Quantity = quantity;
@@ -71,8 +71,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AdditionalConfiguration"/> for deserialization. </summary>
-        internal AdditionalConfiguration()
+        /// <summary> Initializes a new instance of <see cref="ProductDetailsAdditionalConfiguration"/> for deserialization. </summary>
+        internal ProductDetailsAdditionalConfiguration()
         {
         }
 
@@ -81,6 +81,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Quantity of the product. </summary>
         public int Quantity { get; set; }
         /// <summary> List Provisioning Details for Devices in Additional Config. </summary>
-        public IList<ProvisioningDetails> ProvisioningDetails { get; }
+        public IList<EdgeOrderProvisioningDetails> ProvisioningDetails { get; }
     }
 }

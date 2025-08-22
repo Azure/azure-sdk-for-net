@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Child configuration object. </summary>
-    public partial class ChildConfiguration
+    public partial class ProductChildConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ChildConfiguration"/>. </summary>
-        internal ChildConfiguration()
+        /// <summary> Initializes a new instance of <see cref="ProductChildConfiguration"/>. </summary>
+        internal ProductChildConfiguration()
         {
             Specifications = new ChangeTrackingList<ProductSpecification>();
             ChildConfigurationTypes = new ChangeTrackingList<ChildConfigurationType>();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             ImageInformation = new ChangeTrackingList<EdgeOrderProductImageInformation>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChildConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductChildConfiguration"/>. </summary>
         /// <param name="childConfigurationType"> Child configuration type. </param>
         /// <param name="isPartOfBaseConfiguration"> Flag to indicate if the child configuration is part of the base configuration, which means the customer need not pass this configuration in OptInAdditionalConfigurations while placing an order, it will be shipped by default. </param>
         /// <param name="minimumQuantity"> Minimum quantity a customer can order while choosing this configuration. </param>
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
         /// <param name="fulfilledBy"> The entity responsible for fulfillment of the item at the given hierarchy level. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChildConfiguration(ChildConfigurationType? childConfigurationType, bool? isPartOfBaseConfiguration, int? minimumQuantity, int? maximumQuantity, IReadOnlyList<ProductSpecification> specifications, ProductDimensions dimensions, ProvisioningSupport? provisioningSupport, IReadOnlyList<ChildConfigurationType> childConfigurationTypes, IReadOnlyList<GroupedChildConfigurations> groupedChildConfigurations, IReadOnlyList<TimeSpan> supportedTermCommitmentDurations, IReadOnlyList<FilterableProperty> filterableProperties, string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, FulfillmentType? fulfilledBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProductChildConfiguration(ChildConfigurationType? childConfigurationType, bool? isPartOfBaseConfiguration, int? minimumQuantity, int? maximumQuantity, IReadOnlyList<ProductSpecification> specifications, ProductDimensions dimensions, EdgeOrderProvisioningSupport? provisioningSupport, IReadOnlyList<ChildConfigurationType> childConfigurationTypes, IReadOnlyList<GroupedChildConfigurations> groupedChildConfigurations, IReadOnlyList<TimeSpan> supportedTermCommitmentDurations, IReadOnlyList<FilterableProperty> filterableProperties, string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, ConfigurationFulfillmentType? fulfilledBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ChildConfigurationType = childConfigurationType;
             IsPartOfBaseConfiguration = isPartOfBaseConfiguration;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Dimensions of the configuration. </summary>
         public ProductDimensions Dimensions { get; }
         /// <summary> Determining nature of provisioning that the configuration supports. </summary>
-        public ProvisioningSupport? ProvisioningSupport { get; }
+        public EdgeOrderProvisioningSupport? ProvisioningSupport { get; }
         /// <summary> Different types of child configurations which exist for this configuration, these can be used to populate the child configuration filter. </summary>
         public IReadOnlyList<ChildConfigurationType> ChildConfigurationTypes { get; }
         /// <summary> Child configurations present for the configuration after applying child configuration filter, grouped by the category name of the child configuration. </summary>
@@ -134,6 +134,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Hierarchy information of a product. </summary>
         public HierarchyInformation HierarchyInformation { get; }
         /// <summary> The entity responsible for fulfillment of the item at the given hierarchy level. </summary>
-        public FulfillmentType? FulfilledBy { get; }
+        public ConfigurationFulfillmentType? FulfilledBy { get; }
     }
 }

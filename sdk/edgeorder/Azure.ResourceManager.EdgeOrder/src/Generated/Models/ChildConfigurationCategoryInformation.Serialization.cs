@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class CategoryInformation : IUtf8JsonSerializable, IJsonModel<CategoryInformation>
+    public partial class ChildConfigurationCategoryInformation : IUtf8JsonSerializable, IJsonModel<ChildConfigurationCategoryInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CategoryInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChildConfigurationCategoryInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CategoryInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ChildConfigurationCategoryInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CategoryInformation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ChildConfigurationCategoryInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CategoryInformation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ChildConfigurationCategoryInformation)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(CategoryName))
@@ -76,19 +76,19 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
         }
 
-        CategoryInformation IJsonModel<CategoryInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ChildConfigurationCategoryInformation IJsonModel<ChildConfigurationCategoryInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CategoryInformation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ChildConfigurationCategoryInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CategoryInformation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ChildConfigurationCategoryInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCategoryInformation(document.RootElement, options);
+            return DeserializeChildConfigurationCategoryInformation(document.RootElement, options);
         }
 
-        internal static CategoryInformation DeserializeCategoryInformation(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ChildConfigurationCategoryInformation DeserializeChildConfigurationCategoryInformation(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -139,38 +139,38 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CategoryInformation(categoryName, categoryDisplayName, description, links ?? new ChangeTrackingList<ProductLink>(), serializedAdditionalRawData);
+            return new ChildConfigurationCategoryInformation(categoryName, categoryDisplayName, description, links ?? new ChangeTrackingList<ProductLink>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CategoryInformation>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ChildConfigurationCategoryInformation>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CategoryInformation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ChildConfigurationCategoryInformation>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerEdgeOrderContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CategoryInformation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChildConfigurationCategoryInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CategoryInformation IPersistableModel<CategoryInformation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ChildConfigurationCategoryInformation IPersistableModel<ChildConfigurationCategoryInformation>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CategoryInformation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ChildConfigurationCategoryInformation>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCategoryInformation(document.RootElement, options);
+                        return DeserializeChildConfigurationCategoryInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CategoryInformation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChildConfigurationCategoryInformation)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CategoryInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ChildConfigurationCategoryInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -148,11 +148,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             ProductDisplayInfo displayInfo = default;
             HierarchyInformation hierarchyInformation = default;
             DoubleEncryptionStatus? productDoubleEncryptionStatus = default;
-            IdentificationType? identificationType = default;
+            ConfigurationIdentificationType? identificationType = default;
             EdgeOrderProductDeviceDetails parentDeviceDetails = default;
-            ProvisioningDetails parentProvisioningDetails = default;
-            IList<AdditionalConfiguration> optInAdditionalConfigurations = default;
-            IReadOnlyList<ConfigurationDeviceDetails> childConfigurationDeviceDetails = default;
+            EdgeOrderProvisioningDetails parentProvisioningDetails = default;
+            IList<ProductDetailsAdditionalConfiguration> optInAdditionalConfigurations = default;
+            IReadOnlyList<ProductConfigurationDeviceDetails> childConfigurationDeviceDetails = default;
             TermCommitmentInformation termCommitmentInformation = default;
             int? count = default;
             IReadOnlyList<EdgeOrderProductDeviceDetails> deviceDetails = default;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    identificationType = new IdentificationType(property.Value.GetString());
+                    identificationType = new ConfigurationIdentificationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("parentDeviceDetails"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    parentProvisioningDetails = ProvisioningDetails.DeserializeProvisioningDetails(property.Value, options);
+                    parentProvisioningDetails = EdgeOrderProvisioningDetails.DeserializeEdgeOrderProvisioningDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("optInAdditionalConfigurations"u8))
@@ -216,10 +216,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    List<AdditionalConfiguration> array = new List<AdditionalConfiguration>();
+                    List<ProductDetailsAdditionalConfiguration> array = new List<ProductDetailsAdditionalConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AdditionalConfiguration.DeserializeAdditionalConfiguration(item, options));
+                        array.Add(ProductDetailsAdditionalConfiguration.DeserializeProductDetailsAdditionalConfiguration(item, options));
                     }
                     optInAdditionalConfigurations = array;
                     continue;
@@ -230,10 +230,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    List<ConfigurationDeviceDetails> array = new List<ConfigurationDeviceDetails>();
+                    List<ProductConfigurationDeviceDetails> array = new List<ProductConfigurationDeviceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConfigurationDeviceDetails.DeserializeConfigurationDeviceDetails(item, options));
+                        array.Add(ProductConfigurationDeviceDetails.DeserializeProductConfigurationDeviceDetails(item, options));
                     }
                     childConfigurationDeviceDetails = array;
                     continue;
@@ -284,8 +284,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 identificationType,
                 parentDeviceDetails,
                 parentProvisioningDetails,
-                optInAdditionalConfigurations ?? new ChangeTrackingList<AdditionalConfiguration>(),
-                childConfigurationDeviceDetails ?? new ChangeTrackingList<ConfigurationDeviceDetails>(),
+                optInAdditionalConfigurations ?? new ChangeTrackingList<ProductDetailsAdditionalConfiguration>(),
+                childConfigurationDeviceDetails ?? new ChangeTrackingList<ProductConfigurationDeviceDetails>(),
                 termCommitmentInformation,
                 count,
                 deviceDetails ?? new ChangeTrackingList<EdgeOrderProductDeviceDetails>(),

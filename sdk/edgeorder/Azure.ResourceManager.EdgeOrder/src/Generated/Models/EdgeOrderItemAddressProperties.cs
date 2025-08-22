@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="addressValidationStatus"> Status of address validation. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeOrderItemAddressProperties(AddressClassification? addressClassification, EdgeOrderShippingAddress shippingAddress, EdgeOrderAddressContactDetails contactDetails, EdgeOrderAddressValidationStatus? addressValidationStatus, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EdgeOrderItemAddressProperties(EdgeOrderAddressClassification? addressClassification, EdgeOrderShippingAddress shippingAddress, EdgeOrderAddressContactDetails contactDetails, EdgeOrderAddressValidationStatus? addressValidationStatus, EdgeOrderProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AddressClassification = addressClassification;
             ShippingAddress = shippingAddress;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> Type of address based on its usage context. </summary>
-        public AddressClassification? AddressClassification { get; set; }
+        public EdgeOrderAddressClassification? AddressClassification { get; set; }
         /// <summary> Shipping details for the address. </summary>
         public EdgeOrderShippingAddress ShippingAddress { get; set; }
         /// <summary> Contact details for the address. </summary>
@@ -76,6 +76,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Status of address validation. </summary>
         public EdgeOrderAddressValidationStatus? AddressValidationStatus { get; }
         /// <summary> Provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public EdgeOrderProvisioningState? ProvisioningState { get; }
     }
 }

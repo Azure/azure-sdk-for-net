@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="error"> Top level error for the job. </param>
         /// <param name="firstOrDefaultManagement"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeOrderItemDetails(ProductDetails productDetails, OrderItemType orderItemType, OrderMode? orderItemMode, SiteDetails siteDetails, EdgeOrderStageDetails currentStage, IReadOnlyList<EdgeOrderStageDetails> orderItemStageHistory, OrderItemPreferences preferences, ForwardShippingDetails forwardShippingDetails, ReverseShippingDetails reverseShippingDetails, IList<string> notificationEmailList, string cancellationReason, OrderItemCancellationStatus? cancellationStatus, EdgeOrderActionStatus? deletionStatus, string returnReason, OrderItemReturnStatus? returnStatus, IReadOnlyList<ResourceProviderDetails> managementRPDetailsList, ResponseError error, ResourceProviderDetails firstOrDefaultManagement, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EdgeOrderItemDetails(ProductDetails productDetails, OrderItemType orderItemType, EdgeOrderItemMode? orderItemMode, SiteDetails siteDetails, EdgeOrderStageDetails currentStage, IReadOnlyList<EdgeOrderStageDetails> orderItemStageHistory, OrderItemPreferences preferences, ForwardShippingDetails forwardShippingDetails, ReverseShippingDetails reverseShippingDetails, IList<string> notificationEmailList, string cancellationReason, OrderItemCancellationStatus? cancellationStatus, EdgeOrderActionStatus? deletionStatus, string returnReason, OrderItemReturnStatus? returnStatus, IReadOnlyList<ResourceProviderDetails> managementRPDetailsList, ResponseError error, ResourceProviderDetails firstOrDefaultManagement, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProductDetails = productDetails;
             OrderItemType = orderItemType;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Order item type. </summary>
         public OrderItemType OrderItemType { get; set; }
         /// <summary> Defines the mode of the Order item. </summary>
-        public OrderMode? OrderItemMode { get; set; }
+        public EdgeOrderItemMode? OrderItemMode { get; set; }
         /// <summary> Site Related Details. </summary>
         internal SiteDetails SiteDetails { get; set; }
         /// <summary> Unique Id, Identifying A Site. </summary>

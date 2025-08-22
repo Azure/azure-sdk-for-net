@@ -168,8 +168,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 null, // identificationType
                 deviceDetails?.ToList().FirstOrDefault(),
                 null, // parentProvisioningDetails
-                new ChangeTrackingList<AdditionalConfiguration>(),
-                new ChangeTrackingList<ConfigurationDeviceDetails>(),
+                new ChangeTrackingList<ProductDetailsAdditionalConfiguration>(),
+                new ChangeTrackingList<ProductConfigurationDeviceDetails>(),
                 null, // termCommitmentInformation
                 count,
                 deviceDetails?.ToList(),

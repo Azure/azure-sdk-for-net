@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class ChildConfiguration : IUtf8JsonSerializable, IJsonModel<ChildConfiguration>
+    public partial class ProductChildConfiguration : IUtf8JsonSerializable, IJsonModel<ProductChildConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChildConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProductChildConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ChildConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ProductChildConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChildConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProductChildConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChildConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ProductChildConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("properties"u8);
@@ -174,19 +174,19 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
         }
 
-        ChildConfiguration IJsonModel<ChildConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ProductChildConfiguration IJsonModel<ProductChildConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChildConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProductChildConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChildConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ProductChildConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeChildConfiguration(document.RootElement, options);
+            return DeserializeProductChildConfiguration(document.RootElement, options);
         }
 
-        internal static ChildConfiguration DeserializeChildConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ProductChildConfiguration DeserializeProductChildConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             int? maximumQuantity = default;
             IReadOnlyList<ProductSpecification> specifications = default;
             ProductDimensions dimensions = default;
-            ProvisioningSupport? provisioningSupport = default;
+            EdgeOrderProvisioningSupport? provisioningSupport = default;
             IReadOnlyList<ChildConfigurationType> childConfigurationTypes = default;
             IReadOnlyList<GroupedChildConfigurations> groupedChildConfigurations = default;
             IReadOnlyList<TimeSpan> supportedTermCommitmentDurations = default;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             EdgeOrderProductCostInformation costInformation = default;
             ProductAvailabilityInformation availabilityInformation = default;
             HierarchyInformation hierarchyInformation = default;
-            FulfillmentType? fulfilledBy = default;
+            ConfigurationFulfillmentType? fulfilledBy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             {
                                 continue;
                             }
-                            provisioningSupport = new ProvisioningSupport(property0.Value.GetString());
+                            provisioningSupport = new EdgeOrderProvisioningSupport(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("childConfigurationTypes"u8))
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             {
                                 continue;
                             }
-                            fulfilledBy = new FulfillmentType(property0.Value.GetString());
+                            fulfilledBy = new ConfigurationFulfillmentType(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ChildConfiguration(
+            return new ProductChildConfiguration(
                 childConfigurationType,
                 isPartOfBaseConfiguration,
                 minimumQuantity,
@@ -444,35 +444,35 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ChildConfiguration>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ProductChildConfiguration>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChildConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProductChildConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerEdgeOrderContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ChildConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProductChildConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ChildConfiguration IPersistableModel<ChildConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ProductChildConfiguration IPersistableModel<ProductChildConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChildConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProductChildConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeChildConfiguration(document.RootElement, options);
+                        return DeserializeProductChildConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChildConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProductChildConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ChildConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ProductChildConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

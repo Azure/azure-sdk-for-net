@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            CategoryInformation categoryInformation = default;
-            IReadOnlyList<ChildConfiguration> childConfigurations = default;
+            ChildConfigurationCategoryInformation categoryInformation = default;
+            IReadOnlyList<ProductChildConfiguration> childConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    categoryInformation = CategoryInformation.DeserializeCategoryInformation(property.Value, options);
+                    categoryInformation = ChildConfigurationCategoryInformation.DeserializeChildConfigurationCategoryInformation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("childConfigurations"u8))
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    List<ChildConfiguration> array = new List<ChildConfiguration>();
+                    List<ProductChildConfiguration> array = new List<ProductChildConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChildConfiguration.DeserializeChildConfiguration(item, options));
+                        array.Add(ProductChildConfiguration.DeserializeProductChildConfiguration(item, options));
                     }
                     childConfigurations = array;
                     continue;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new GroupedChildConfigurations(categoryInformation, childConfigurations ?? new ChangeTrackingList<ChildConfiguration>(), serializedAdditionalRawData);
+            return new GroupedChildConfigurations(categoryInformation, childConfigurations ?? new ChangeTrackingList<ProductChildConfiguration>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GroupedChildConfigurations>.Write(ModelReaderWriterOptions options)

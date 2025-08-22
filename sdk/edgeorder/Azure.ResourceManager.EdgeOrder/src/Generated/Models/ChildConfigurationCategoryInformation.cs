@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Category related properties of a child configuration. </summary>
-    public partial class CategoryInformation
+    public partial class ChildConfigurationCategoryInformation
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,19 +45,19 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CategoryInformation"/>. </summary>
-        internal CategoryInformation()
+        /// <summary> Initializes a new instance of <see cref="ChildConfigurationCategoryInformation"/>. </summary>
+        internal ChildConfigurationCategoryInformation()
         {
             Links = new ChangeTrackingList<ProductLink>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CategoryInformation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChildConfigurationCategoryInformation"/>. </summary>
         /// <param name="categoryName"> Category name of the child configuration. </param>
         /// <param name="categoryDisplayName"> Category display name of the child configuration. </param>
         /// <param name="description"> Description text for the category. </param>
         /// <param name="links"> Links for the category. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CategoryInformation(string categoryName, string categoryDisplayName, string description, IReadOnlyList<ProductLink> links, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ChildConfigurationCategoryInformation(string categoryName, string categoryDisplayName, string description, IReadOnlyList<ProductLink> links, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CategoryName = categoryName;
             CategoryDisplayName = categoryDisplayName;

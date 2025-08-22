@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Device details for configuration. </summary>
-    public partial class ConfigurationDeviceDetails
+    public partial class ProductConfigurationDeviceDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,13 +45,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ConfigurationDeviceDetails"/>. </summary>
-        internal ConfigurationDeviceDetails()
+        /// <summary> Initializes a new instance of <see cref="ProductConfigurationDeviceDetails"/>. </summary>
+        internal ProductConfigurationDeviceDetails()
         {
             DeviceDetails = new ChangeTrackingList<EdgeOrderProductDeviceDetails>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConfigurationDeviceDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProductConfigurationDeviceDetails"/>. </summary>
         /// <param name="displayInfo"> Display details of the product. </param>
         /// <param name="hierarchyInformation"> Hierarchy of the product which uniquely identifies the configuration. </param>
         /// <param name="quantity"> Quantity of the product. </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="deviceDetails"> List of device details. </param>
         /// <param name="termCommitmentInformation"> Term Commitment Information of the Device. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigurationDeviceDetails(ProductDisplayInfo displayInfo, HierarchyInformation hierarchyInformation, int? quantity, IdentificationType? identificationType, IReadOnlyList<EdgeOrderProductDeviceDetails> deviceDetails, TermCommitmentInformation termCommitmentInformation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProductConfigurationDeviceDetails(ProductDisplayInfo displayInfo, HierarchyInformation hierarchyInformation, int? quantity, ConfigurationIdentificationType? identificationType, IReadOnlyList<EdgeOrderProductDeviceDetails> deviceDetails, TermCommitmentInformation termCommitmentInformation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayInfo = displayInfo;
             HierarchyInformation = hierarchyInformation;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Quantity of the product. </summary>
         public int? Quantity { get; }
         /// <summary> Identification type of the configuration. </summary>
-        public IdentificationType? IdentificationType { get; }
+        public ConfigurationIdentificationType? IdentificationType { get; }
         /// <summary> List of device details. </summary>
         public IReadOnlyList<EdgeOrderProductDeviceDetails> DeviceDetails { get; }
         /// <summary> Term Commitment Information of the Device. </summary>

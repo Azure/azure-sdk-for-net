@@ -367,7 +367,6 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendPath(orderItemName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -697,7 +696,6 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendPath("/cancel", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(cancellationReason, ModelSerializationExtensions.WireOptions);
@@ -791,7 +789,6 @@ namespace Azure.ResourceManager.EdgeOrder
             uri.AppendPath("/return", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
             content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);

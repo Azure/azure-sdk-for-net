@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.EdgeOrder
             EdgeOrderItemAddressDetails addressDetails = default;
             DateTimeOffset? startTime = default;
             ResourceIdentifier orderId = default;
-            ProvisioningState? provisioningState = default;
+            EdgeOrderProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.EdgeOrder
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new EdgeOrderProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

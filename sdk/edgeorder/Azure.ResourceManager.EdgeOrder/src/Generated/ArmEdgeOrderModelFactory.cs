@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="addressValidationStatus"> Status of address validation. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <returns> A new <see cref="EdgeOrder.EdgeOrderAddressData"/> instance for mocking. </returns>
-        public static EdgeOrderAddressData EdgeOrderAddressData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, AddressClassification? addressClassification = null, EdgeOrderShippingAddress shippingAddress = null, EdgeOrderAddressContactDetails contactDetails = null, EdgeOrderAddressValidationStatus? addressValidationStatus = null, ProvisioningState? provisioningState = null)
+        public static EdgeOrderAddressData EdgeOrderAddressData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, EdgeOrderAddressClassification? addressClassification = null, EdgeOrderShippingAddress shippingAddress = null, EdgeOrderAddressContactDetails contactDetails = null, EdgeOrderAddressValidationStatus? addressValidationStatus = null, EdgeOrderProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="addressValidationStatus"> Status of address validation. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <returns> A new <see cref="Models.EdgeOrderItemAddressProperties"/> instance for mocking. </returns>
-        public static EdgeOrderItemAddressProperties EdgeOrderItemAddressProperties(AddressClassification? addressClassification = null, EdgeOrderShippingAddress shippingAddress = null, EdgeOrderAddressContactDetails contactDetails = null, EdgeOrderAddressValidationStatus? addressValidationStatus = null, ProvisioningState? provisioningState = null)
+        public static EdgeOrderItemAddressProperties EdgeOrderItemAddressProperties(EdgeOrderAddressClassification? addressClassification = null, EdgeOrderShippingAddress shippingAddress = null, EdgeOrderAddressContactDetails contactDetails = null, EdgeOrderAddressValidationStatus? addressValidationStatus = null, EdgeOrderProvisioningState? provisioningState = null)
         {
             return new EdgeOrderItemAddressProperties(
                 addressClassification,
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="identity"> Msi identity of the resource. </param>
         /// <returns> A new <see cref="EdgeOrder.EdgeOrderItemData"/> instance for mocking. </returns>
-        public static EdgeOrderItemData EdgeOrderItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, EdgeOrderItemDetails orderItemDetails = null, EdgeOrderItemAddressDetails addressDetails = null, DateTimeOffset? startOn = null, ResourceIdentifier orderId = null, ProvisioningState? provisioningState = null, ManagedServiceIdentity identity = null)
+        public static EdgeOrderItemData EdgeOrderItemData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, EdgeOrderItemDetails orderItemDetails = null, EdgeOrderItemAddressDetails addressDetails = null, DateTimeOffset? startOn = null, ResourceIdentifier orderId = null, EdgeOrderProvisioningState? provisioningState = null, ManagedServiceIdentity identity = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="error"> Top level error for the job. </param>
         /// <param name="firstOrDefaultManagementResourceProviderNamespace"></param>
         /// <returns> A new <see cref="Models.EdgeOrderItemDetails"/> instance for mocking. </returns>
-        public static EdgeOrderItemDetails EdgeOrderItemDetails(ProductDetails productDetails = null, OrderItemType orderItemType = default, OrderMode? orderItemMode = null, string siteId = null, EdgeOrderStageDetails currentStage = null, IEnumerable<EdgeOrderStageDetails> orderItemStageHistory = null, OrderItemPreferences preferences = null, ForwardShippingDetails forwardShippingDetails = null, ReverseShippingDetails reverseShippingDetails = null, IEnumerable<string> notificationEmailList = null, string cancellationReason = null, OrderItemCancellationStatus? cancellationStatus = null, EdgeOrderActionStatus? deletionStatus = null, string returnReason = null, OrderItemReturnStatus? returnStatus = null, IEnumerable<ResourceProviderDetails> managementRPDetailsList = null, ResponseError error = null, string firstOrDefaultManagementResourceProviderNamespace = null)
+        public static EdgeOrderItemDetails EdgeOrderItemDetails(ProductDetails productDetails = null, OrderItemType orderItemType = default, EdgeOrderItemMode? orderItemMode = null, string siteId = null, EdgeOrderStageDetails currentStage = null, IEnumerable<EdgeOrderStageDetails> orderItemStageHistory = null, OrderItemPreferences preferences = null, ForwardShippingDetails forwardShippingDetails = null, ReverseShippingDetails reverseShippingDetails = null, IEnumerable<string> notificationEmailList = null, string cancellationReason = null, OrderItemCancellationStatus? cancellationStatus = null, EdgeOrderActionStatus? deletionStatus = null, string returnReason = null, OrderItemReturnStatus? returnStatus = null, IEnumerable<ResourceProviderDetails> managementRPDetailsList = null, ResponseError error = null, string firstOrDefaultManagementResourceProviderNamespace = null)
         {
             orderItemStageHistory ??= new List<EdgeOrderStageDetails>();
             notificationEmailList ??= new List<string>();
@@ -162,10 +162,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="count"></param>
         /// <param name="deviceDetails"></param>
         /// <returns> A new <see cref="Models.ProductDetails"/> instance for mocking. </returns>
-        public static ProductDetails ProductDetails(ProductDisplayInfo displayInfo = null, HierarchyInformation hierarchyInformation = null, DoubleEncryptionStatus? productDoubleEncryptionStatus = null, IdentificationType? identificationType = null, EdgeOrderProductDeviceDetails parentDeviceDetails = null, ProvisioningDetails parentProvisioningDetails = null, IEnumerable<AdditionalConfiguration> optInAdditionalConfigurations = null, IEnumerable<ConfigurationDeviceDetails> childConfigurationDeviceDetails = null, TermCommitmentInformation termCommitmentInformation = null, int? count = null, IEnumerable<EdgeOrderProductDeviceDetails> deviceDetails = null)
+        public static ProductDetails ProductDetails(ProductDisplayInfo displayInfo = null, HierarchyInformation hierarchyInformation = null, DoubleEncryptionStatus? productDoubleEncryptionStatus = null, ConfigurationIdentificationType? identificationType = null, EdgeOrderProductDeviceDetails parentDeviceDetails = null, EdgeOrderProvisioningDetails parentProvisioningDetails = null, IEnumerable<ProductDetailsAdditionalConfiguration> optInAdditionalConfigurations = null, IEnumerable<ProductConfigurationDeviceDetails> childConfigurationDeviceDetails = null, TermCommitmentInformation termCommitmentInformation = null, int? count = null, IEnumerable<EdgeOrderProductDeviceDetails> deviceDetails = null)
         {
-            optInAdditionalConfigurations ??= new List<AdditionalConfiguration>();
-            childConfigurationDeviceDetails ??= new List<ConfigurationDeviceDetails>();
+            optInAdditionalConfigurations ??= new List<ProductDetailsAdditionalConfiguration>();
+            childConfigurationDeviceDetails ??= new List<ProductConfigurationDeviceDetails>();
             deviceDetails ??= new List<EdgeOrderProductDeviceDetails>();
 
             return new ProductDetails(
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="provisioningSupport"> Determining nature of provisioning that the configuration supports. </param>
         /// <param name="provisioningDetails"> Provisioning Details for the device. </param>
         /// <returns> A new <see cref="Models.EdgeOrderProductDeviceDetails"/> instance for mocking. </returns>
-        public static EdgeOrderProductDeviceDetails EdgeOrderProductDeviceDetails(string serialNumber = null, string displaySerialNumber = null, string managementResourceId = null, string managementResourceTenantId = null, ProvisioningSupport? provisioningSupport = null, ProvisioningDetails provisioningDetails = null)
+        public static EdgeOrderProductDeviceDetails EdgeOrderProductDeviceDetails(string serialNumber = null, string displaySerialNumber = null, string managementResourceId = null, string managementResourceTenantId = null, EdgeOrderProvisioningSupport? provisioningSupport = null, EdgeOrderProvisioningDetails provisioningDetails = null)
         {
             return new EdgeOrderProductDeviceDetails(
                 serialNumber,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProvisioningDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderProvisioningDetails"/>. </summary>
         /// <param name="quantity"> Quantity of the devices. </param>
         /// <param name="provisioningArmId"> Provisioning Resource Arm ID. </param>
         /// <param name="provisioningEndPoint"> Provisioning End Point. </param>
@@ -223,10 +223,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="uniqueDeviceIdentifier"> Unique Identity for a Device. </param>
         /// <param name="autoProvisioningStatus"> Auto Provisioning Details. </param>
         /// <param name="devicePresenceVerification"> Proof of possession details. </param>
-        /// <returns> A new <see cref="Models.ProvisioningDetails"/> instance for mocking. </returns>
-        public static ProvisioningDetails ProvisioningDetails(int? quantity = null, ResourceIdentifier provisioningArmId = null, string provisioningEndPoint = null, string serialNumber = null, string vendorName = null, ResourceIdentifier readyToConnectArmId = null, ResourceIdentifier managementResourceArmId = null, string uniqueDeviceIdentifier = null, AutoProvisioningStatus? autoProvisioningStatus = null, DevicePresenceVerificationDetails devicePresenceVerification = null)
+        /// <returns> A new <see cref="Models.EdgeOrderProvisioningDetails"/> instance for mocking. </returns>
+        public static EdgeOrderProvisioningDetails EdgeOrderProvisioningDetails(int? quantity = null, ResourceIdentifier provisioningArmId = null, string provisioningEndPoint = null, string serialNumber = null, string vendorName = null, ResourceIdentifier readyToConnectArmId = null, ResourceIdentifier managementResourceArmId = null, string uniqueDeviceIdentifier = null, EdgeOrderAutoProvisioningStatus? autoProvisioningStatus = null, DevicePresenceVerificationDetails devicePresenceVerification = null)
         {
-            return new ProvisioningDetails(
+            return new EdgeOrderProvisioningDetails(
                 quantity,
                 provisioningArmId,
                 provisioningEndPoint,
@@ -249,19 +249,19 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new DevicePresenceVerificationDetails(status, message, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConfigurationDeviceDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProductConfigurationDeviceDetails"/>. </summary>
         /// <param name="displayInfo"> Display details of the product. </param>
         /// <param name="hierarchyInformation"> Hierarchy of the product which uniquely identifies the configuration. </param>
         /// <param name="quantity"> Quantity of the product. </param>
         /// <param name="identificationType"> Identification type of the configuration. </param>
         /// <param name="deviceDetails"> List of device details. </param>
         /// <param name="termCommitmentInformation"> Term Commitment Information of the Device. </param>
-        /// <returns> A new <see cref="Models.ConfigurationDeviceDetails"/> instance for mocking. </returns>
-        public static ConfigurationDeviceDetails ConfigurationDeviceDetails(ProductDisplayInfo displayInfo = null, HierarchyInformation hierarchyInformation = null, int? quantity = null, IdentificationType? identificationType = null, IEnumerable<EdgeOrderProductDeviceDetails> deviceDetails = null, TermCommitmentInformation termCommitmentInformation = null)
+        /// <returns> A new <see cref="Models.ProductConfigurationDeviceDetails"/> instance for mocking. </returns>
+        public static ProductConfigurationDeviceDetails ProductConfigurationDeviceDetails(ProductDisplayInfo displayInfo = null, HierarchyInformation hierarchyInformation = null, int? quantity = null, ConfigurationIdentificationType? identificationType = null, IEnumerable<EdgeOrderProductDeviceDetails> deviceDetails = null, TermCommitmentInformation termCommitmentInformation = null)
         {
             deviceDetails ??= new List<EdgeOrderProductDeviceDetails>();
 
-            return new ConfigurationDeviceDetails(
+            return new ProductConfigurationDeviceDetails(
                 displayInfo,
                 hierarchyInformation,
                 quantity,
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="orderStageHistory"> Order status history. </param>
         /// <param name="orderMode"> Order mode. </param>
         /// <returns> A new <see cref="EdgeOrder.EdgeOrderData"/> instance for mocking. </returns>
-        public static EdgeOrderData EdgeOrderData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<ResourceIdentifier> orderItemIds = null, EdgeOrderStageDetails currentStage = null, IEnumerable<EdgeOrderStageDetails> orderStageHistory = null, OrderMode? orderMode = null)
+        public static EdgeOrderData EdgeOrderData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<ResourceIdentifier> orderItemIds = null, EdgeOrderStageDetails currentStage = null, IEnumerable<EdgeOrderStageDetails> orderStageHistory = null, EdgeOrderItemMode? orderMode = null)
         {
             orderItemIds ??= new List<ResourceIdentifier>();
             orderStageHistory ??= new List<EdgeOrderStageDetails>();
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="hierarchyInformation"></param>
         /// <param name="filterableProperties"></param>
         /// <returns> A new <see cref="Models.ProductConfiguration"/> instance for mocking. </returns>
-        public static ProductConfiguration ProductConfiguration(IEnumerable<ProductSpecification> specifications = null, ProductDimensions dimensions = null, ProvisioningSupport? provisioningSupport = null, IEnumerable<ChildConfigurationType> childConfigurationTypes = null, IEnumerable<GroupedChildConfigurations> groupedChildConfigurations = null, IEnumerable<TimeSpan> supportedTermCommitmentDurations = null, string displayName = null, ProductDescription description = null, IEnumerable<EdgeOrderProductImageInformation> imageInformation = null, EdgeOrderProductCostInformation costInformation = null, ProductAvailabilityInformation availabilityInformation = null, HierarchyInformation hierarchyInformation = null, IEnumerable<FilterableProperty> filterableProperties = null)
+        public static ProductConfiguration ProductConfiguration(IEnumerable<ProductSpecification> specifications = null, ProductDimensions dimensions = null, EdgeOrderProvisioningSupport? provisioningSupport = null, IEnumerable<ChildConfigurationType> childConfigurationTypes = null, IEnumerable<GroupedChildConfigurations> groupedChildConfigurations = null, IEnumerable<TimeSpan> supportedTermCommitmentDurations = null, string displayName = null, ProductDescription description = null, IEnumerable<EdgeOrderProductImageInformation> imageInformation = null, EdgeOrderProductCostInformation costInformation = null, ProductAvailabilityInformation availabilityInformation = null, HierarchyInformation hierarchyInformation = null, IEnumerable<FilterableProperty> filterableProperties = null)
         {
             specifications ??= new List<ProductSpecification>();
             childConfigurationTypes ??= new List<ChildConfigurationType>();
@@ -476,24 +476,24 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="categoryInformation"> Category information. </param>
         /// <param name="childConfigurations"> List of child configurations. </param>
         /// <returns> A new <see cref="Models.GroupedChildConfigurations"/> instance for mocking. </returns>
-        public static GroupedChildConfigurations GroupedChildConfigurations(CategoryInformation categoryInformation = null, IEnumerable<ChildConfiguration> childConfigurations = null)
+        public static GroupedChildConfigurations GroupedChildConfigurations(ChildConfigurationCategoryInformation categoryInformation = null, IEnumerable<ProductChildConfiguration> childConfigurations = null)
         {
-            childConfigurations ??= new List<ChildConfiguration>();
+            childConfigurations ??= new List<ProductChildConfiguration>();
 
             return new GroupedChildConfigurations(categoryInformation, childConfigurations?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CategoryInformation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ChildConfigurationCategoryInformation"/>. </summary>
         /// <param name="categoryName"> Category name of the child configuration. </param>
         /// <param name="categoryDisplayName"> Category display name of the child configuration. </param>
         /// <param name="description"> Description text for the category. </param>
         /// <param name="links"> Links for the category. </param>
-        /// <returns> A new <see cref="Models.CategoryInformation"/> instance for mocking. </returns>
-        public static CategoryInformation CategoryInformation(string categoryName = null, string categoryDisplayName = null, string description = null, IEnumerable<ProductLink> links = null)
+        /// <returns> A new <see cref="Models.ChildConfigurationCategoryInformation"/> instance for mocking. </returns>
+        public static ChildConfigurationCategoryInformation ChildConfigurationCategoryInformation(string categoryName = null, string categoryDisplayName = null, string description = null, IEnumerable<ProductLink> links = null)
         {
             links ??= new List<ProductLink>();
 
-            return new CategoryInformation(categoryName, categoryDisplayName, description, links?.ToList(), serializedAdditionalRawData: null);
+            return new ChildConfigurationCategoryInformation(categoryName, categoryDisplayName, description, links?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProductLink"/>. </summary>
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new ProductLink(linkType, linkUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ChildConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProductChildConfiguration"/>. </summary>
         /// <param name="childConfigurationType"> Child configuration type. </param>
         /// <param name="isPartOfBaseConfiguration"> Flag to indicate if the child configuration is part of the base configuration, which means the customer need not pass this configuration in OptInAdditionalConfigurations while placing an order, it will be shipped by default. </param>
         /// <param name="minimumQuantity"> Minimum quantity a customer can order while choosing this configuration. </param>
@@ -524,8 +524,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="availabilityInformation"> Availability information of the product system. </param>
         /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
         /// <param name="fulfilledBy"> The entity responsible for fulfillment of the item at the given hierarchy level. </param>
-        /// <returns> A new <see cref="Models.ChildConfiguration"/> instance for mocking. </returns>
-        public static ChildConfiguration ChildConfiguration(ChildConfigurationType? childConfigurationType = null, bool? isPartOfBaseConfiguration = null, int? minimumQuantity = null, int? maximumQuantity = null, IEnumerable<ProductSpecification> specifications = null, ProductDimensions dimensions = null, ProvisioningSupport? provisioningSupport = null, IEnumerable<ChildConfigurationType> childConfigurationTypes = null, IEnumerable<GroupedChildConfigurations> groupedChildConfigurations = null, IEnumerable<TimeSpan> supportedTermCommitmentDurations = null, IEnumerable<FilterableProperty> filterableProperties = null, string displayName = null, ProductDescription description = null, IEnumerable<EdgeOrderProductImageInformation> imageInformation = null, EdgeOrderProductCostInformation costInformation = null, ProductAvailabilityInformation availabilityInformation = null, HierarchyInformation hierarchyInformation = null, FulfillmentType? fulfilledBy = null)
+        /// <returns> A new <see cref="Models.ProductChildConfiguration"/> instance for mocking. </returns>
+        public static ProductChildConfiguration ProductChildConfiguration(ChildConfigurationType? childConfigurationType = null, bool? isPartOfBaseConfiguration = null, int? minimumQuantity = null, int? maximumQuantity = null, IEnumerable<ProductSpecification> specifications = null, ProductDimensions dimensions = null, EdgeOrderProvisioningSupport? provisioningSupport = null, IEnumerable<ChildConfigurationType> childConfigurationTypes = null, IEnumerable<GroupedChildConfigurations> groupedChildConfigurations = null, IEnumerable<TimeSpan> supportedTermCommitmentDurations = null, IEnumerable<FilterableProperty> filterableProperties = null, string displayName = null, ProductDescription description = null, IEnumerable<EdgeOrderProductImageInformation> imageInformation = null, EdgeOrderProductCostInformation costInformation = null, ProductAvailabilityInformation availabilityInformation = null, HierarchyInformation hierarchyInformation = null, ConfigurationFulfillmentType? fulfilledBy = null)
         {
             specifications ??= new List<ProductSpecification>();
             childConfigurationTypes ??= new List<ChildConfigurationType>();
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             filterableProperties ??= new List<FilterableProperty>();
             imageInformation ??= new List<EdgeOrderProductImageInformation>();
 
-            return new ChildConfiguration(
+            return new ProductChildConfiguration(
                 childConfigurationType,
                 isPartOfBaseConfiguration,
                 minimumQuantity,

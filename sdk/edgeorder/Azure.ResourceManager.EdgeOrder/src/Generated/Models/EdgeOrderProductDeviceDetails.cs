@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="provisioningSupport"> Determining nature of provisioning that the configuration supports. </param>
         /// <param name="provisioningDetails"> Provisioning Details for the device. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeOrderProductDeviceDetails(string serialNumber, string displaySerialNumber, string managementResourceId, string managementResourceTenantId, ProvisioningSupport? provisioningSupport, ProvisioningDetails provisioningDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EdgeOrderProductDeviceDetails(string serialNumber, string displaySerialNumber, string managementResourceId, string managementResourceTenantId, EdgeOrderProvisioningSupport? provisioningSupport, EdgeOrderProvisioningDetails provisioningDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SerialNumber = serialNumber;
             DisplaySerialNumber = displaySerialNumber;
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Management Resource Tenant ID. </summary>
         public string ManagementResourceTenantId { get; }
         /// <summary> Determining nature of provisioning that the configuration supports. </summary>
-        public ProvisioningSupport? ProvisioningSupport { get; }
+        public EdgeOrderProvisioningSupport? ProvisioningSupport { get; }
         /// <summary> Provisioning Details for the device. </summary>
-        public ProvisioningDetails ProvisioningDetails { get; }
+        public EdgeOrderProvisioningDetails ProvisioningDetails { get; }
     }
 }

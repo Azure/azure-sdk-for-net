@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="hierarchyInformation"></param>
         /// <param name="filterableProperties"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProductConfiguration(IReadOnlyList<ProductSpecification> specifications, ProductDimensions dimensions, ProvisioningSupport? provisioningSupport, IReadOnlyList<ChildConfigurationType> childConfigurationTypes, IReadOnlyList<GroupedChildConfigurations> groupedChildConfigurations, IReadOnlyList<TimeSpan> supportedTermCommitmentDurations, string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IReadOnlyList<FilterableProperty> filterableProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProductConfiguration(IReadOnlyList<ProductSpecification> specifications, ProductDimensions dimensions, EdgeOrderProvisioningSupport? provisioningSupport, IReadOnlyList<ChildConfigurationType> childConfigurationTypes, IReadOnlyList<GroupedChildConfigurations> groupedChildConfigurations, IReadOnlyList<TimeSpan> supportedTermCommitmentDurations, string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IReadOnlyList<FilterableProperty> filterableProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Specifications = specifications;
             Dimensions = dimensions;
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Dimensions of the configuration. </summary>
         public ProductDimensions Dimensions { get; }
         /// <summary> Determining nature of provisioning that the configuration supports. </summary>
-        public ProvisioningSupport? ProvisioningSupport { get; }
+        public EdgeOrderProvisioningSupport? ProvisioningSupport { get; }
         /// <summary> Different types of child configurations which exist for this configuration, these can be used to populate the child configuration filter. </summary>
         public IReadOnlyList<ChildConfigurationType> ChildConfigurationTypes { get; }
         /// <summary> Child configurations present for the configuration after applying child configuration filter, grouped by the category name of the child configuration. </summary>

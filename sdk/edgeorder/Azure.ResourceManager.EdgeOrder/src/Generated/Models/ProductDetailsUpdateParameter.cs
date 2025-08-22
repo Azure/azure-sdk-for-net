@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Initializes a new instance of <see cref="ProductDetailsUpdateParameter"/>. </summary>
         /// <param name="parentProvisioningDetails"> Device Provisioning Details for Parent. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProductDetailsUpdateParameter(ProvisioningDetails parentProvisioningDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProductDetailsUpdateParameter(EdgeOrderProvisioningDetails parentProvisioningDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ParentProvisioningDetails = parentProvisioningDetails;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Device Provisioning Details for Parent. </summary>
-        public ProvisioningDetails ParentProvisioningDetails { get; set; }
+        public EdgeOrderProvisioningDetails ParentProvisioningDetails { get; set; }
     }
 }

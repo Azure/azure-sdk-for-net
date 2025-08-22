@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            ProvisioningDetails parentProvisioningDetails = default;
+            EdgeOrderProvisioningDetails parentProvisioningDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    parentProvisioningDetails = ProvisioningDetails.DeserializeProvisioningDetails(property.Value, options);
+                    parentProvisioningDetails = EdgeOrderProvisioningDetails.DeserializeEdgeOrderProvisioningDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

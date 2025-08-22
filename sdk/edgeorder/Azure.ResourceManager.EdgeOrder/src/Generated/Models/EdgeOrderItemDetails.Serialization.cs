@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             ProductDetails productDetails = default;
             OrderItemType orderItemType = default;
-            OrderMode? orderItemMode = default;
+            EdgeOrderItemMode? orderItemMode = default;
             SiteDetails siteDetails = default;
             EdgeOrderStageDetails currentStage = default;
             IReadOnlyList<EdgeOrderStageDetails> orderItemStageHistory = default;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    orderItemMode = new OrderMode(property.Value.GetString());
+                    orderItemMode = new EdgeOrderItemMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("siteDetails"u8))

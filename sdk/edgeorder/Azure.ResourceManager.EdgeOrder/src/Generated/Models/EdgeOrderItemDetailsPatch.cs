@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Represents product details. </summary>
         internal ProductDetailsUpdateParameter ProductDetails { get; set; }
         /// <summary> Device Provisioning Details for Parent. </summary>
-        public ProvisioningDetails ParentProvisioningDetails
+        public EdgeOrderProvisioningDetails ParentProvisioningDetails
         {
             get => ProductDetails is null ? default : ProductDetails.ParentProvisioningDetails;
             set

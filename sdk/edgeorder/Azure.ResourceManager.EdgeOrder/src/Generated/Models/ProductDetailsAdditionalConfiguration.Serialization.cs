@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class AdditionalConfiguration : IUtf8JsonSerializable, IJsonModel<AdditionalConfiguration>
+    public partial class ProductDetailsAdditionalConfiguration : IUtf8JsonSerializable, IJsonModel<ProductDetailsAdditionalConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdditionalConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProductDetailsAdditionalConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AdditionalConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ProductDetailsAdditionalConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AdditionalConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProductDetailsAdditionalConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdditionalConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ProductDetailsAdditionalConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("hierarchyInformation"u8);
@@ -65,19 +65,19 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
         }
 
-        AdditionalConfiguration IJsonModel<AdditionalConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ProductDetailsAdditionalConfiguration IJsonModel<ProductDetailsAdditionalConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AdditionalConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProductDetailsAdditionalConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdditionalConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ProductDetailsAdditionalConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAdditionalConfiguration(document.RootElement, options);
+            return DeserializeProductDetailsAdditionalConfiguration(document.RootElement, options);
         }
 
-        internal static AdditionalConfiguration DeserializeAdditionalConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ProductDetailsAdditionalConfiguration DeserializeProductDetailsAdditionalConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             HierarchyInformation hierarchyInformation = default;
             int quantity = default;
-            IList<ProvisioningDetails> provisioningDetails = default;
+            IList<EdgeOrderProvisioningDetails> provisioningDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    List<ProvisioningDetails> array = new List<ProvisioningDetails>();
+                    List<EdgeOrderProvisioningDetails> array = new List<EdgeOrderProvisioningDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.ProvisioningDetails.DeserializeProvisioningDetails(item, options));
+                        array.Add(EdgeOrderProvisioningDetails.DeserializeEdgeOrderProvisioningDetails(item, options));
                     }
                     provisioningDetails = array;
                     continue;
@@ -122,38 +122,38 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AdditionalConfiguration(hierarchyInformation, quantity, provisioningDetails ?? new ChangeTrackingList<ProvisioningDetails>(), serializedAdditionalRawData);
+            return new ProductDetailsAdditionalConfiguration(hierarchyInformation, quantity, provisioningDetails ?? new ChangeTrackingList<EdgeOrderProvisioningDetails>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AdditionalConfiguration>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ProductDetailsAdditionalConfiguration>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AdditionalConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProductDetailsAdditionalConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerEdgeOrderContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AdditionalConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProductDetailsAdditionalConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AdditionalConfiguration IPersistableModel<AdditionalConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ProductDetailsAdditionalConfiguration IPersistableModel<ProductDetailsAdditionalConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AdditionalConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ProductDetailsAdditionalConfiguration>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAdditionalConfiguration(document.RootElement, options);
+                        return DeserializeProductDetailsAdditionalConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AdditionalConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProductDetailsAdditionalConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AdditionalConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ProductDetailsAdditionalConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Details Related To Provision Resource. </summary>
-    public partial class ProvisioningDetails
+    public partial class EdgeOrderProvisioningDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningDetails"/>. </summary>
-        public ProvisioningDetails()
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderProvisioningDetails"/>. </summary>
+        public EdgeOrderProvisioningDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeOrderProvisioningDetails"/>. </summary>
         /// <param name="quantity"> Quantity of the devices. </param>
         /// <param name="provisioningArmId"> Provisioning Resource Arm ID. </param>
         /// <param name="provisioningEndPoint"> Provisioning End Point. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="autoProvisioningStatus"> Auto Provisioning Details. </param>
         /// <param name="devicePresenceVerification"> Proof of possession details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProvisioningDetails(int? quantity, ResourceIdentifier provisioningArmId, string provisioningEndPoint, string serialNumber, string vendorName, ResourceIdentifier readyToConnectArmId, ResourceIdentifier managementResourceArmId, string uniqueDeviceIdentifier, AutoProvisioningStatus? autoProvisioningStatus, DevicePresenceVerificationDetails devicePresenceVerification, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EdgeOrderProvisioningDetails(int? quantity, ResourceIdentifier provisioningArmId, string provisioningEndPoint, string serialNumber, string vendorName, ResourceIdentifier readyToConnectArmId, ResourceIdentifier managementResourceArmId, string uniqueDeviceIdentifier, EdgeOrderAutoProvisioningStatus? autoProvisioningStatus, DevicePresenceVerificationDetails devicePresenceVerification, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Quantity = quantity;
             ProvisioningArmId = provisioningArmId;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Unique Identity for a Device. </summary>
         public string UniqueDeviceIdentifier { get; }
         /// <summary> Auto Provisioning Details. </summary>
-        public AutoProvisioningStatus? AutoProvisioningStatus { get; set; }
+        public EdgeOrderAutoProvisioningStatus? AutoProvisioningStatus { get; set; }
         /// <summary> Proof of possession details. </summary>
         public DevicePresenceVerificationDetails DevicePresenceVerification { get; set; }
     }

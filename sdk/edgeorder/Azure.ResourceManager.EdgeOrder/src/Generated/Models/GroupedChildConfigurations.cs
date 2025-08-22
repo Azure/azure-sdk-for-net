@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Initializes a new instance of <see cref="GroupedChildConfigurations"/>. </summary>
         internal GroupedChildConfigurations()
         {
-            ChildConfigurations = new ChangeTrackingList<ChildConfiguration>();
+            ChildConfigurations = new ChangeTrackingList<ProductChildConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GroupedChildConfigurations"/>. </summary>
         /// <param name="categoryInformation"> Category information. </param>
         /// <param name="childConfigurations"> List of child configurations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GroupedChildConfigurations(CategoryInformation categoryInformation, IReadOnlyList<ChildConfiguration> childConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GroupedChildConfigurations(ChildConfigurationCategoryInformation categoryInformation, IReadOnlyList<ProductChildConfiguration> childConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CategoryInformation = categoryInformation;
             ChildConfigurations = childConfigurations;
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> Category information. </summary>
-        public CategoryInformation CategoryInformation { get; }
+        public ChildConfigurationCategoryInformation CategoryInformation { get; }
         /// <summary> List of child configurations. </summary>
-        public IReadOnlyList<ChildConfiguration> ChildConfigurations { get; }
+        public IReadOnlyList<ProductChildConfiguration> ChildConfigurations { get; }
     }
 }
