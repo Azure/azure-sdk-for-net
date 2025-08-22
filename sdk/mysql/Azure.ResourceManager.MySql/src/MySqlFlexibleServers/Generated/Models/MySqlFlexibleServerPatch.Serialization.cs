@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, MySql.AzureResourceManagerMySqlContext.Default);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerMySqlContext.Default);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MySql.AzureResourceManagerMySqlContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMySqlContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MySqlFlexibleServerPatch)} does not support writing '{options.Format}' format.");
             }

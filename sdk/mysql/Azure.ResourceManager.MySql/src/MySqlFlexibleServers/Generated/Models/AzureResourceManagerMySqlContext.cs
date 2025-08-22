@@ -7,10 +7,11 @@
 
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.MySql.FlexibleServers;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
 using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.MySql.FlexibleServers
+namespace Azure.ResourceManager.MySql
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerVirtualNetworkSubnetUsageParameter))]
     [ModelReaderWriterBuildable(typeof(MySqlFlexibleServerVirtualNetworkSubnetUsageResult))]
     [ModelReaderWriterBuildable(typeof(OperationStatusExtendedResult))]
-    [ModelReaderWriterBuildable(typeof(Models.OperationStatusResult))]
+    [ModelReaderWriterBuildable(typeof(FlexibleServers.Models.OperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServerBackupV2ListResult))]
     [ModelReaderWriterBuildable(typeof(ServerEditionCapabilityV2))]
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownBackupStoreDetails))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
-    public partial class AzureResourceManagerMySqlFlexibleServersContext : ModelReaderWriterContext
+    public partial class AzureResourceManagerMySqlContext : ModelReaderWriterContext
     {
     }
 }
