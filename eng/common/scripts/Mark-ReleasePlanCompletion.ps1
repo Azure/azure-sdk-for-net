@@ -38,7 +38,7 @@ function Process-Package([string]$packageInfoPath)
         return
     }
 
-    # Check Azure DevOps Release Plan work items if LanguageShort is available
+    # Check Azure DevOps Release Plan work items
     Write-Host "Checking active release plan work items for package: $PackageName"
     $workItems = Get-ReleasePlanForPackage $PackageName
     if(!$workItems)
@@ -57,23 +57,13 @@ function Process-Package([string]$packageInfoPath)
     # Update release status
     Write-Host "Release plan work item ID: $($activeReleasePlan["id"])"
     Write-Host "Marking release completion for package, name: $PackageName version: $PackageVersion"
-    #Update-ReleaseStatusInReleasePlan $activeReleasePlan.id "Released" $PackageVersion
+    Update-ReleaseStatusInReleasePlan $activeReleasePlan.id "Released" $PackageVersion
     Write-Host "Successfully marked release completion for package, name: $PackageName version: $PackageVersion."
 }
 
-$InfoFileName = Split-Path $PackageInfoFilePath -Leaf
-# Process the package if given path is package info file
-if ($InfoFileName -like "*.json")
-{
-    Write-Host "Processing package info file: $PackageInfoFilePath"
-    Process-Package $PackageInfoFilePath
-}
-else
-{
-    Write-Host "Finding all package info files in directory: $PackageInfoFilePath"
-    # Get all package info file under the directory given in input param and process
-    Get-ChildItem -Path $PackageInfoFilePath -Filter "*.json" | ForEach-Object {
-        Write-Host "Processing package info file: $_"
-        Process-Package $_.FullName
-    }
+Write-Host "Finding all package info files in directory: $PackageInfoFilePath"
+# Get all package info file under the directory given in input param and process
+Get-ChildItem -Path $PackageInfoFilePath -Filter "*.json" | ForEach-Object {
+    Write-Host "Processing package info file: $_"
+    Process-Package $_.FullName
 }
