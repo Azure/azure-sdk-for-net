@@ -1743,12 +1743,6 @@
         "Inprogress",
         "Undeployed"
       ]
-    },    
-    {
-      "filename": "**/sdk/siteconfiguration/**/*.cs",
-      "words": [
-        "Inprogress"      
-      ]
     }
   ],
   "allowCompoundWords": true
