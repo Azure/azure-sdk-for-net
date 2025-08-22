@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MySql.FlexibleServers.Models
+namespace Azure.ResourceManager.MySql.Models
 {
     public partial class ServerEditionCapabilityV2 : IUtf8JsonSerializable, IJsonModel<ServerEditionCapabilityV2>
     {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedStorageEditions)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<StorageEditionCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedSkus)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<SkuCapabilityV2>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             string name = default;
             string defaultSku = default;
             int? defaultStorageSize = default;
-            IReadOnlyList<MySqlFlexibleServerStorageEditionCapability> supportedStorageEditions = default;
+            IReadOnlyList<StorageEditionCapability> supportedStorageEditions = default;
             IReadOnlyList<SkuCapabilityV2> supportedSkus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    List<MySqlFlexibleServerStorageEditionCapability> array = new List<MySqlFlexibleServerStorageEditionCapability>();
+                    List<StorageEditionCapability> array = new List<StorageEditionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlFlexibleServerStorageEditionCapability.DeserializeMySqlFlexibleServerStorageEditionCapability(item, options));
+                        array.Add(StorageEditionCapability.DeserializeStorageEditionCapability(item, options));
                     }
                     supportedStorageEditions = array;
                     continue;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 name,
                 defaultSku,
                 defaultStorageSize,
-                supportedStorageEditions ?? new ChangeTrackingList<MySqlFlexibleServerStorageEditionCapability>(),
+                supportedStorageEditions ?? new ChangeTrackingList<StorageEditionCapability>(),
                 supportedSkus ?? new ChangeTrackingList<SkuCapabilityV2>(),
                 serializedAdditionalRawData);
         }

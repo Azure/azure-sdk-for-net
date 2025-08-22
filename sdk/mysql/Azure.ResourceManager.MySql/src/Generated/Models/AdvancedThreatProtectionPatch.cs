@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.MySql.FlexibleServers.Models
+namespace Azure.ResourceManager.MySql.Models
 {
     /// <summary> Parameters allowed to update advanced threat protection for a server. </summary>
     public partial class AdvancedThreatProtectionPatch

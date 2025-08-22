@@ -11,15 +11,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.MySql.FlexibleServers.Models;
+using Azure.ResourceManager.MySql.Models;
 
-namespace Azure.ResourceManager.MySql.FlexibleServers
+namespace Azure.ResourceManager.MySql
 {
     /// <summary>
     /// A Class representing an AdvancedThreatProtection along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AdvancedThreatProtectionResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetAdvancedThreatProtectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MySqlFlexibleServerResource"/> using the GetAdvancedThreatProtection method.
+    /// Otherwise you can get one from its parent resource <see cref="ServerResource"/> using the GetAdvancedThreatProtection method.
     /// </summary>
     public partial class AdvancedThreatProtectionResource : ArmResource
     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AdvancedThreatProtectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _advancedThreatProtectionAdvancedThreatProtectionSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ResourceType.Namespace, Diagnostics);
+            _advancedThreatProtectionAdvancedThreatProtectionSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string advancedThreatProtectionAdvancedThreatProtectionSettingsApiVersion);
             _advancedThreatProtectionAdvancedThreatProtectionSettingsRestClient = new AdvancedThreatProtectionSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, advancedThreatProtectionAdvancedThreatProtectionSettingsApiVersion);
 #if DEBUG
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_Get</description>
+        /// <description>AdvancedThreatProtection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_Get</description>
+        /// <description>AdvancedThreatProtection_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_Update</description>
+        /// <description>AdvancedThreatProtection_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             try
             {
                 var response = await _advancedThreatProtectionAdvancedThreatProtectionSettingsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation<AdvancedThreatProtectionResource>(new AdvancedThreatProtectionOperationSource(Client), _advancedThreatProtectionAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, _advancedThreatProtectionAdvancedThreatProtectionSettingsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation<AdvancedThreatProtectionResource>(new AdvancedThreatProtectionOperationSource(Client), _advancedThreatProtectionAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, _advancedThreatProtectionAdvancedThreatProtectionSettingsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AdvancedThreatProtectionSettings_Update</description>
+        /// <description>AdvancedThreatProtection_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             try
             {
                 var response = _advancedThreatProtectionAdvancedThreatProtectionSettingsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new FlexibleServersArmOperation<AdvancedThreatProtectionResource>(new AdvancedThreatProtectionOperationSource(Client), _advancedThreatProtectionAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, _advancedThreatProtectionAdvancedThreatProtectionSettingsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new MySqlArmOperation<AdvancedThreatProtectionResource>(new AdvancedThreatProtectionOperationSource(Client), _advancedThreatProtectionAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, _advancedThreatProtectionAdvancedThreatProtectionSettingsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

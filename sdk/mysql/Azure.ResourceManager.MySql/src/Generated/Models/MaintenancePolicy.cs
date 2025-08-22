@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.MySql.FlexibleServers.Models
+namespace Azure.ResourceManager.MySql.Models
 {
     /// <summary> Maintenance policy of a server. </summary>
     internal partial class MaintenancePolicy
@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="MaintenancePolicy"/>. </summary>
         /// <param name="patchStrategy"> The patch strategy of this server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenancePolicy(MySqlFlexibleServerPatchStrategy? patchStrategy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MaintenancePolicy(PatchStrategy? patchStrategy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PatchStrategy = patchStrategy;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The patch strategy of this server. </summary>
-        public MySqlFlexibleServerPatchStrategy? PatchStrategy { get; set; }
+        public PatchStrategy? PatchStrategy { get; set; }
     }
 }

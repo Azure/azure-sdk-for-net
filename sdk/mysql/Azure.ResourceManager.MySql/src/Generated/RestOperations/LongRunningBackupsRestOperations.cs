@@ -11,9 +11,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.MySql.FlexibleServers.Models;
+using Azure.ResourceManager.MySql.Models;
 
-namespace Azure.ResourceManager.MySql.FlexibleServers
+namespace Azure.ResourceManager.MySql
 {
     internal partial class LongRunningBackupsRestOperations
     {
@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <summary> Initializes a new instance of LongRunningBackupsRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Service host. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public LongRunningBackupsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="backupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MySqlFlexibleServerBackupV2Data>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string backupName, CancellationToken cancellationToken = default)
+        public async Task<Response<ServerBackupV2Data>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -95,13 +95,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 case 200:
                     {
-                        MySqlFlexibleServerBackupV2Data value = default;
+                        ServerBackupV2Data value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = MySqlFlexibleServerBackupV2Data.DeserializeMySqlFlexibleServerBackupV2Data(document.RootElement);
+                        value = ServerBackupV2Data.DeserializeServerBackupV2Data(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MySqlFlexibleServerBackupV2Data)null, message.Response);
+                    return Response.FromValue((ServerBackupV2Data)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="backupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MySqlFlexibleServerBackupV2Data> Get(string subscriptionId, string resourceGroupName, string serverName, string backupName, CancellationToken cancellationToken = default)
+        public Response<ServerBackupV2Data> Get(string subscriptionId, string resourceGroupName, string serverName, string backupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -128,13 +128,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 case 200:
                     {
-                        MySqlFlexibleServerBackupV2Data value = default;
+                        ServerBackupV2Data value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = MySqlFlexibleServerBackupV2Data.DeserializeMySqlFlexibleServerBackupV2Data(document.RootElement);
+                        value = ServerBackupV2Data.DeserializeServerBackupV2Data(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((MySqlFlexibleServerBackupV2Data)null, message.Response);
+                    return Response.FromValue((ServerBackupV2Data)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MySql.FlexibleServers.Models
+namespace Azure.ResourceManager.MySql.Models
 {
     internal partial class MaintenanceListResult : IUtf8JsonSerializable, IJsonModel<MaintenanceListResult>
     {
@@ -40,14 +40,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<MaintenanceData>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink);
+                writer.WriteStringValue(NextLink.AbsoluteUri);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            IReadOnlyList<MySqlFlexibleServerMaintenanceData> value = default;
-            string nextLink = default;
+            IReadOnlyList<MaintenanceData> value = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,17 +98,21 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    List<MySqlFlexibleServerMaintenanceData> array = new List<MySqlFlexibleServerMaintenanceData>();
+                    List<MaintenanceData> array = new List<MaintenanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlFlexibleServerMaintenanceData.DeserializeMySqlFlexibleServerMaintenanceData(item, options));
+                        array.Add(MaintenanceData.DeserializeMaintenanceData(item, options));
                     }
                     value = array;
                     continue;
                 }
                 if (property.NameEquals("nextLink"u8))
                 {
-                    nextLink = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nextLink = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -117,7 +121,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MaintenanceListResult(value ?? new ChangeTrackingList<MySqlFlexibleServerMaintenanceData>(), nextLink, serializedAdditionalRawData);
+            return new MaintenanceListResult(value ?? new ChangeTrackingList<MaintenanceData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MaintenanceListResult>.Write(ModelReaderWriterOptions options)

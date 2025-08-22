@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-namespace Azure.ResourceManager.MySql.FlexibleServers.Models
+namespace Azure.ResourceManager.MySql.Models
 {
     /// <summary> The current status of an async operation. </summary>
     public partial class OperationStatusResult
@@ -59,7 +59,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         /// <summary> Initializes a new instance of <see cref="OperationStatusResult"/>. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
-        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="percentComplete"> Percent of the operation that is complete. </param>
@@ -67,11 +66,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <param name="endOn"> The end time of the operation. </param>
         /// <param name="operations"> The operations list. </param>
         /// <param name="error"> If present, details of the operation error. </param>
+        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OperationStatusResult(ResourceIdentifier id, ResourceIdentifier resourceId, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<OperationStatusResult> operations, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OperationStatusResult(ResourceIdentifier id, string name, string status, double? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<OperationStatusResult> operations, ResponseError error, ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
-            ResourceId = resourceId;
             Name = name;
             Status = status;
             PercentComplete = percentComplete;
@@ -79,6 +78,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             EndOn = endOn;
             Operations = operations;
             Error = error;
+            ResourceId = resourceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -89,14 +89,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         /// <summary> Fully qualified ID for the async operation. </summary>
         public ResourceIdentifier Id { get; }
-        /// <summary> Fully qualified ID of the resource against which the original async operation was started. </summary>
-        public ResourceIdentifier ResourceId { get; }
         /// <summary> Name of the async operation. </summary>
         public string Name { get; }
         /// <summary> Operation status. </summary>
         public string Status { get; }
         /// <summary> Percent of the operation that is complete. </summary>
-        public float? PercentComplete { get; }
+        public double? PercentComplete { get; }
         /// <summary> The start time of the operation. </summary>
         public DateTimeOffset? StartOn { get; }
         /// <summary> The end time of the operation. </summary>
@@ -105,5 +103,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public IReadOnlyList<OperationStatusResult> Operations { get; }
         /// <summary> If present, details of the operation error. </summary>
         public ResponseError Error { get; }
+        /// <summary> Fully qualified ID of the resource against which the original async operation was started. </summary>
+        public ResourceIdentifier ResourceId { get; }
     }
 }
