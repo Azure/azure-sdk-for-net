@@ -12,6 +12,7 @@ using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
+using System;
 using System.Collections.Generic;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
@@ -84,12 +85,15 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 ? new CSharpType(typeof(AsyncPageable<>), _actualItemType)
                 : new CSharpType(typeof(Pageable<>), _actualItemType);
 
+            // Generate return description for pageable methods
+            FormattableString returnDescription = $"A collection of {_actualItemType:C} that may take multiple service requests to iterate over.";
+
             return new MethodSignature(
                 _methodName,
                 _convenienceMethod.Signature.Description,
                 _convenienceMethod.Signature.Modifiers,
                 returnType,
-                _convenienceMethod.Signature.ReturnDescription,
+                returnDescription,
                 OperationMethodParameterHelper.GetOperationMethodParameters(_method, _contextualPath),
                 _convenienceMethod.Signature.Attributes,
                 _convenienceMethod.Signature.GenericArguments,

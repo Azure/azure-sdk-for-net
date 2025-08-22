@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Dictionary of &lt;string&gt;. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> Represents the IpamPool update properties. </summary>
+        [WirePath("properties")]
         public IpamPoolUpdateProperties Properties { get; set; }
     }
 }

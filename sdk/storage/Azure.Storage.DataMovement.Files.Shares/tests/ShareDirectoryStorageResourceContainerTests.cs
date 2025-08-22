@@ -98,59 +98,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         }
 
         [Test]
-        public async Task CreateIfNotExists()
-        {
-            // Arrange
-            Mock<ShareDirectoryClient> mock = new(new Uri("https://myaccount.file.core.windows.net/myshare/mydir"), new ShareClientOptions());
-            mock.Setup(b => b.CreateIfNotExistsAsync(It.IsAny<IDictionary<string, string>>(), It.IsAny<FileSmbProperties>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(Response.FromValue(
-                    SharesModelFactory.StorageDirectoryInfo(
-                        eTag: new ETag("etag"),
-                        lastModified: DateTimeOffset.UtcNow,
-                        filePermissionKey: default,
-                        fileAttributes: default,
-                        fileCreationTime: DateTimeOffset.MinValue,
-                        fileLastWriteTime: DateTimeOffset.MinValue,
-                        fileChangeTime: DateTimeOffset.MinValue,
-                        fileId: default,
-                        fileParentId: default),
-                    new MockResponse(200))));
-
-            ShareDirectoryStorageResourceContainer resourceContainer = new(mock.Object, default);
-
-            // Act
-            await resourceContainer.CreateIfNotExistsInternalAsync();
-
-            // Assert
-            mock.Verify(b => b.CreateIfNotExistsAsync(It.IsAny<IDictionary<string, string>>(), It.IsAny<FileSmbProperties>(), It.IsAny<string>(), It.IsAny<CancellationToken>()),
-                Times.Once());
-            mock.VerifyNoOtherCalls();
-        }
-
-        [Test]
-        public async Task CreateIfNotExists_Error()
-        {
-            // Arrange
-            Mock<ShareDirectoryClient> mock = new(new Uri("https://myaccount.file.core.windows.net/myshare/mydir"), new ShareClientOptions());
-            mock.Setup(b => b.CreateIfNotExistsAsync(It.IsAny<IDictionary<string, string>>(), It.IsAny<FileSmbProperties>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
-                .Throws(new RequestFailedException(status: 404, message: "The parent path does not exist.", errorCode: "ResourceNotFound", default));
-
-            ShareDirectoryStorageResourceContainer resourceContainer = new(mock.Object, default);
-
-            // Act
-            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                resourceContainer.CreateIfNotExistsInternalAsync(),
-                e =>
-                {
-                    Assert.AreEqual("ResourceNotFound", e.ErrorCode);
-                });
-
-            mock.Verify(b => b.CreateIfNotExistsAsync(It.IsAny<IDictionary<string, string>>(), It.IsAny<FileSmbProperties>(), It.IsAny<string>(), It.IsAny<CancellationToken>()),
-                Times.Once());
-            mock.VerifyNoOtherCalls();
-        }
-
-        [Test]
         public void GetChildStorageResourceContainer()
         {
             // Arrange

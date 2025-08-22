@@ -12,6 +12,9 @@ namespace Azure.Generator.Management.Utilities
 {
     internal class PropertyHelpers
     {
+        public static bool IsOverriddenValueType(PropertyProvider innerProperty)
+            => innerProperty.Type.IsValueType && !innerProperty.Type.IsNullable;
+
         public static string GetCombinedPropertyName(PropertyProvider innerProperty, PropertyProvider immediateParentProperty)
         {
             var immediateParentPropertyName = GetPropertyName(immediateParentProperty);

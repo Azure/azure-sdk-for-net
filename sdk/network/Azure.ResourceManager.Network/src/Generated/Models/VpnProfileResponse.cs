@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> URL to the VPN profile. </summary>
+        [WirePath("profileUrl")]
         public Uri ProfileUri { get; }
     }
 }

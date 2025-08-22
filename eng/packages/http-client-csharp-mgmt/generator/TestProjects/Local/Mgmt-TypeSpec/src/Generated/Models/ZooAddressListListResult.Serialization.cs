@@ -17,7 +17,7 @@ using MgmtTypeSpec;
 namespace MgmtTypeSpec.Models
 {
     /// <summary> Paged collection of ZooAddress items. </summary>
-    internal partial class ZooAddressListListResult : IJsonModel<ZooAddressListListResult>
+    public partial class ZooAddressListListResult : IJsonModel<ZooAddressListListResult>
     {
         /// <summary> Initializes a new instance of <see cref="ZooAddressListListResult"/> for deserialization. </summary>
         internal ZooAddressListListResult()

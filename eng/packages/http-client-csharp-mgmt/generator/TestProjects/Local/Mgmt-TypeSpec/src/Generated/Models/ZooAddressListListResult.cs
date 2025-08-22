@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace MgmtTypeSpec.Models
 {
     /// <summary> Paged collection of ZooAddress items. </summary>
-    internal partial class ZooAddressListListResult
+    public partial class ZooAddressListListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

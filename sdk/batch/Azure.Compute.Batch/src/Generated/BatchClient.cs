@@ -10207,7 +10207,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -10274,7 +10273,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -10303,7 +10301,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -10369,7 +10366,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -10401,7 +10397,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -10427,7 +10422,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -10487,7 +10481,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -10519,7 +10512,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -10549,7 +10541,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -10577,7 +10568,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -10676,7 +10666,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("force", force.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -10742,7 +10731,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -10773,7 +10761,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -10805,7 +10792,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -10837,7 +10823,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -10871,7 +10856,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("force", force.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -10901,7 +10885,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -11073,7 +11056,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -11139,7 +11121,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -11167,7 +11148,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -11224,7 +11204,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -11257,7 +11236,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("force", force.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -11323,7 +11301,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -11354,7 +11331,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -11386,7 +11362,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -11416,7 +11391,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -11450,7 +11424,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("force", force.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -11478,7 +11451,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -11546,7 +11518,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -11645,7 +11616,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -11715,7 +11685,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -11781,7 +11750,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -11813,7 +11781,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -11850,7 +11817,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("recursive", recursive.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -11916,7 +11882,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -11988,7 +11953,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -12019,7 +11983,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -12048,7 +12011,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -12109,7 +12071,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -12139,7 +12100,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -12167,7 +12127,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -12197,7 +12156,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -12227,7 +12185,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -12257,7 +12214,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -12455,7 +12411,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("recursive", recursive.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)
@@ -12521,7 +12476,6 @@ namespace Azure.Compute.Batch
                 uri.AppendQuery("timeOut", timeOutInSeconds.Value, "%s", true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("client-request-id", message.Request.ClientRequestId);
             request.Headers.Add("return-client-request-id", "true");
             if (ocpDate != null)

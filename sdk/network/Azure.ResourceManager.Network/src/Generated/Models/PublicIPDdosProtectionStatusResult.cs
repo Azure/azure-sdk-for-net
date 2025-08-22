@@ -68,12 +68,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Public IP ARM resource ID. </summary>
+        [WirePath("publicIpAddressId")]
         public ResourceIdentifier PublicIPAddressId { get; }
         /// <summary> IP Address of the Public IP Resource. </summary>
+        [WirePath("publicIpAddress")]
         public IPAddress PublicIPAddress { get; }
         /// <summary> Value indicating whether the IP address is DDoS workload protected or not. </summary>
+        [WirePath("isWorkloadProtected")]
         public WorkloadProtectedFlag? IsWorkloadProtected { get; }
         /// <summary> DDoS protection plan Resource Id of a if IP address is protected through a plan. </summary>
+        [WirePath("ddosProtectionPlanId")]
         public ResourceIdentifier DdosProtectionPlanId { get; }
     }
 }

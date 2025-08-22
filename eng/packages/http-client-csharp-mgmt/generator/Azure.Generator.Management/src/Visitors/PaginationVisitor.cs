@@ -6,6 +6,7 @@ using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
@@ -37,25 +38,54 @@ internal class PaginationVisitor : ScmLibraryVisitor
     }
 
     private static bool IsAsPagesMethod(MethodProvider method) => method.Signature.Name.Equals("AsPages");
-    private static bool IsGetNextResponseMethod(MethodProvider method) => method.Signature.Name.Equals("GetNextResponse");
+    private static bool IsGetNextResponseMethod(MethodProvider method)
+        => method.Signature.Name.Equals("GetNextResponseAsync") || method.Signature.Name.Equals("GetNextResponse");
 
     private void DoVisitAsPagesMethodStatements(MethodBodyStatements statements, MethodProvider method)
     {
-        var doWhileStatement = statements.OfType<DoWhileStatement>().FirstOrDefault();
-        if (doWhileStatement is not null)
+        var whileStatement = statements.OfType<WhileStatement>().FirstOrDefault();
+        if (whileStatement is not null)
         {
             // we manually go over the body statements because currently the framework does not do this.
             // TODO -- we do not have to do this once https://github.com/microsoft/typespec/issues/8177 is fixed.
-            foreach (var statement in doWhileStatement.Body)
+            foreach (var statement in whileStatement.Body)
             {
-                if (statement is ExpressionStatement { Expression: AssignmentExpression assignment } expressionStatement)
-                {
-                    var updatedExpression = DoVisitAssignmentExpressionForAsPagesMethod(assignment, method);
-                    if (updatedExpression is not null)
+                if (statement is YieldReturnStatement
                     {
-                        // update the expression in the statement.
-                        expressionStatement.Update(updatedExpression);
+                        Value: InvokeMethodExpression
+                        {
+                            MethodName: "FromValues",
+                            Arguments: [CastExpression castExpression, ..]
+                        } invokeMethodExpression
+                    } &&
+                    castExpression.Inner is MemberExpression
+                    {
+                        Inner: CastExpression innerCastExpression,
+                        MemberName: var memberName
+                    } &&
+                    IsResponseToModelCastExpression(innerCastExpression))
+                {
+                    // convert the implicit cast expression to a method call
+                    var updatedExpression = ConvertCastToMethodCall(innerCastExpression)
+                                            .Property(memberName) // wrap back by a MemberExpression
+                                            .CastTo(castExpression.Type); // wrap back by the outer CastExpression
+                    // use the above updated expression as the first argument of this method call inside the yield return
+                    IReadOnlyList<ValueExpression> newArguments = [updatedExpression, .. invokeMethodExpression.Arguments.Skip(1)];
+                    invokeMethodExpression.Update(arguments: newArguments);
+                }
+                else if (statement is ExpressionStatement
+                {
+                    Expression: AssignmentExpression
+                    {
+                        Variable: var variable,
+                        Value: MemberExpression { Inner: CastExpression castExpression1, MemberName: var memberName1 }
                     }
+                } expressionStatement)
+                {
+                    var updatedExpression = variable.Assign(
+                                            ConvertCastToMethodCall(castExpression1)
+                                            .Property(memberName1)); // wrap back by a MemberExpression
+                    expressionStatement.Update(updatedExpression);
                 }
             }
         }
@@ -89,23 +119,17 @@ internal class PaginationVisitor : ScmLibraryVisitor
     {
         if (expression.Value is CastExpression castExpression && IsResponseToModelCastExpression(castExpression))
         {
-            var value = Static(castExpression.Type!).Invoke(SerializationVisitor.FromResponseMethodName, [castExpression.Inner!]);
+            var value = ConvertCastToMethodCall(castExpression);
             var variable = expression.Variable;
             return variable.Assign(value);
         }
         // do nothing if nothing is changed.
         return null;
+    }
 
-        static bool IsResponseToModelCastExpression(CastExpression castExpression)
-        {
-            if (castExpression.Inner is VariableExpression variableExpression &&
-                variableExpression.Type is { IsFrameworkType: true, FrameworkType: { } frameworkType } &&
-                frameworkType == typeof(Response))
-            {
-                return true;
-            }
-            return false;
-        }
+    private static ValueExpression ConvertCastToMethodCall(CastExpression castExpression)
+    {
+        return Static(castExpression.Type!).Invoke(SerializationVisitor.FromResponseMethodName, [castExpression.Inner!]);
     }
 
     private ValueExpression? DoVisitAssignmentExpressionForGetNextResponseMethod(AssignmentExpression expression, MethodProvider method)
@@ -131,4 +155,9 @@ internal class PaginationVisitor : ScmLibraryVisitor
         // do nothing if nothing is changed.
         return null;
     }
+
+    private static bool IsResponseToModelCastExpression(CastExpression castExpression)
+        => castExpression.Inner is VariableExpression variableExpression
+            && variableExpression.Type is { IsFrameworkType: true, FrameworkType: { } frameworkType }
+            && frameworkType == typeof(Response);
 }
