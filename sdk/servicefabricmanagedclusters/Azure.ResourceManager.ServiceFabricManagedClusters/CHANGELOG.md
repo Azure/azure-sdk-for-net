@@ -1,8 +1,19 @@
 # Release History
 
-## 1.3.0-beta.4 (Unreleased)
+## 1.3.0-beta.4 (2025-08-22)
 
 ### Features Added
+
+- Upgraded api-version tag from 'package-2025-03-preview' to 'package-2025-06-preview'. Tag details available at https://github.com/Azure/azure-rest-api-specs/blob/92c00cbf368be3383c6d101296c704ab5e38b8a1/specification/servicefabricmanagedclusters/resource-manager/readme.md.
+
+Cluster features
+- EnableOutboundOnlyNodeTypes
+
+Nodetype features
+- IsOutboundOnly
+
+Service Endpoint
+- NetworkIdentifier
 
 ### Breaking Changes
 
