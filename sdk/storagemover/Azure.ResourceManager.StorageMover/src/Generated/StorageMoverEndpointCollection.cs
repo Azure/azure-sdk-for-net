@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Endpoints_CreateOrUpdate</description>
+        /// <description>Endpoint_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Endpoints_CreateOrUpdate</description>
+        /// <description>Endpoint_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Endpoints_Get</description>
+        /// <description>Endpoint_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Endpoints_Get</description>
+        /// <description>Endpoint_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Endpoints_List</description>
+        /// <description>Endpoint_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Endpoints_List</description>
+        /// <description>Endpoint_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Endpoints_Get</description>
+        /// <description>Endpoint_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Endpoints_Get</description>
+        /// <description>Endpoint_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Endpoints_Get</description>
+        /// <description>Endpoint_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Endpoints_Get</description>
+        /// <description>Endpoint_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

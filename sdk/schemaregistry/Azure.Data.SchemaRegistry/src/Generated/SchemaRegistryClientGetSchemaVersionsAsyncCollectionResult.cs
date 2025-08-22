@@ -54,13 +54,14 @@ namespace Azure.Data.SchemaRegistry
                 {
                     yield break;
                 }
+                SchemaVersions result = (SchemaVersions)response;
                 List<BinaryData> items = new List<BinaryData>();
-                foreach (var item in ((SchemaVersions)response).Value)
+                foreach (var item in result.Value)
                 {
                     items.Add(BinaryData.FromObjectAsJson(item));
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
-                nextPage = ((SchemaVersions)response).NextLink;
+                nextPage = result.NextLink;
                 if (nextPage == null)
                 {
                     yield break;

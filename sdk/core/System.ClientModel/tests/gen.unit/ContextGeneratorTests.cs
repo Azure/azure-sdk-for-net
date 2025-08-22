@@ -590,13 +590,31 @@ namespace TestProject
             string source =
 $$"""
 using System.ClientModel.Primitives;
+using System.Text.Json;
+using System;
 
 namespace TestProject
 {
-    [ModelReaderWriterBuildable(typeof(int))]
+    [ModelReaderWriterBuildable(typeof(JsonModel))]
     public partial class LocalContext1 : ModelReaderWriterContext { }
-    [ModelReaderWriterBuildable(typeof(int))]
+
+    [ModelReaderWriterBuildable(typeof(JsonModel))]
     public partial class LocalContext2 : ModelReaderWriterContext { }
+
+    public class JsonModel : IJsonModel<JsonModel>
+    {
+        public JsonModel Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+
+        public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        public void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+        }
+
+        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
 }
 """;
 
@@ -606,6 +624,47 @@ namespace TestProject
             Assert.IsNull(result.GenerationSpec);
             Assert.AreEqual(1, result.Diagnostics.Length);
             Assert.AreEqual(ModelReaderWriterContextGenerator.DiagnosticDescriptors.MultipleContextsNotSupported.Id, result.Diagnostics[0].Id);
+        }
+
+        [Test]
+        public void NestedContextShouldHaveNoResults()
+        {
+            string source =
+$$"""
+using System.ClientModel.Primitives;
+using System.Text.Json;
+using System;
+
+namespace TestProject
+{
+    public class Foo
+    {
+        [ModelReaderWriterBuildable(typeof(JsonModel))]
+        public partial class LocalContext : ModelReaderWriterContext { }
+    }
+
+    public class JsonModel : IJsonModel<JsonModel>
+    {
+        public JsonModel Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+
+        public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        public void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+        }
+
+        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
+}
+""";
+
+            Compilation compilation = CompilationHelper.CreateCompilation(source);
+            var result = CompilationHelper.RunSourceGenerator(compilation);
+
+            Assert.IsNull(result.GenerationSpec);
+            Assert.AreEqual(0, result.Diagnostics.Length);
         }
 
         [Test]
@@ -1085,6 +1144,83 @@ namespace TestProject
             Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
             Assert.AreEqual("JsonModel", result.GenerationSpec.TypeBuilders[0].Type.Name);
             Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[0].Type.Namespace);
+        }
+
+        [Test]
+        public void TwoPartialClassesSeparateFilesShouldPass()
+        {
+            // Each class/partial declaration is placed in its own "file" (syntax tree) to
+            // simulate a multi-file project layout. Assertions mirror TwoPartialClassesShouldPass.
+            const string localContextPart1 =
+@"using System;
+using System.ClientModel.Primitives;
+using System.Text.Json;
+
+namespace TestProject
+{
+    [ModelReaderWriterBuildable(typeof(JsonModel))]
+    public partial class LocalContext : ModelReaderWriterContext { }
+}";
+            const string jsonModelSource =
+@"using System;
+using System.ClientModel.Primitives;
+using System.Text.Json;
+
+namespace TestProject
+{
+    public class JsonModel : IJsonModel<JsonModel>
+    {
+        public JsonModel Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+        public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => ""J"";
+        public void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
+}";
+            const string localContextPart2 =
+@"using System;
+using System.ClientModel.Primitives;
+using System.Text.Json;
+
+namespace TestProject
+{
+    [ModelReaderWriterBuildable(typeof(JsonModel2))]
+    public partial class LocalContext : ModelReaderWriterContext { }
+}";
+            const string jsonModel2Source =
+@"using System;
+using System.ClientModel.Primitives;
+using System.Text.Json;
+
+namespace TestProject
+{
+    public class JsonModel2 : IJsonModel<JsonModel2>
+    {
+        public JsonModel2 Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel2();
+        public JsonModel2 Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel2();
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => ""J"";
+        public void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) { }
+        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
+}";
+
+            Compilation compilation = CompilationHelper.CreateCompilation([localContextPart1, localContextPart2, jsonModelSource, jsonModel2Source]);
+
+            var result = CompilationHelper.RunSourceGenerator(compilation, out var newCompilation);
+
+            Assert.IsNotNull(result.GenerationSpec);
+            Assert.AreEqual("LocalContext", result.GenerationSpec!.Type.Name);
+            Assert.AreEqual("TestProject", result.GenerationSpec.Type.Namespace);
+            Assert.AreEqual(0, result.Diagnostics.Length);
+            Assert.AreEqual("public", result.GenerationSpec!.Modifier);
+            Assert.AreEqual(2, result.GenerationSpec.TypeBuilders.Count);
+            Assert.AreEqual(0, result.GenerationSpec.ReferencedContexts.Count);
+
+            // Order should match the discovery order (first JsonModel, then JsonModel2).
+            Assert.AreEqual("JsonModel", result.GenerationSpec.TypeBuilders[0].Type.Name);
+            Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[0].Type.Namespace);
+            Assert.AreEqual("JsonModel2", result.GenerationSpec.TypeBuilders[1].Type.Name);
+            Assert.AreEqual("TestProject", result.GenerationSpec.TypeBuilders[1].Type.Namespace);
         }
 
         [Test]

@@ -207,24 +207,26 @@ namespace MgmtTypeSpec
 
         /// <summary> List Bar resources by Foo. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BarResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BarResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BarData, BarResource>(new BarsGetAsyncCollectionResultOfT(_barsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new BarResource(Client, data));
+            return new AsyncPageableWrapper<BarData, BarResource>(new BarsGetAllAsyncCollectionResultOfT(_barsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new BarResource(Client, data));
         }
 
         /// <summary> List Bar resources by Foo. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BarResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BarResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BarData, BarResource>(new BarsGetCollectionResultOfT(_barsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new BarResource(Client, data));
+            return new PageableWrapper<BarData, BarResource>(new BarsGetAllCollectionResultOfT(_barsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new BarResource(Client, data));
         }
 
         /// <summary> Checks to see if the resource exists in azure. </summary>
@@ -364,7 +366,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<BarResource> IAsyncEnumerable<BarResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

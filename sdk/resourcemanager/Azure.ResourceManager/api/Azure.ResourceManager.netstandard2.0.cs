@@ -841,7 +841,7 @@ namespace Azure.ResourceManager.Models
     }
     public abstract partial class TrackedResourceData : Azure.ResourceManager.Models.ResourceData
     {
-        protected TrackedResourceData() { }
+        protected internal TrackedResourceData() { }
         protected TrackedResourceData(Azure.Core.AzureLocation location) { }
         protected TrackedResourceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location) { }
         public Azure.Core.AzureLocation Location { get { throw null; } set { } }

@@ -22,13 +22,13 @@ namespace Azure.Identity
     /// <item><description><see cref="EnvironmentCredential"/></description></item>
     /// <item><description><see cref="WorkloadIdentityCredential"/></description></item>
     /// <item><description><see cref="ManagedIdentityCredential"/></description></item>
-    /// <item><description><see cref="SharedTokenCacheCredential"/></description></item>
     /// <item><description><see cref="VisualStudioCredential"/></description></item>
-    /// <item><description><see cref="VisualStudioCodeCredential"/> (enabled by default for SSO with VS Code on supported platforms when Azure.Identity.Broker is referenced)</description></item>
+    /// <item><description><see cref="VisualStudioCodeCredential"/> (enabled by default for SSO with VS Code on supported platforms when Azure.Identity.Broker is installed)</description></item>
     /// <item><description><see cref="AzureCliCredential"/></description></item>
     /// <item><description><see cref="AzurePowerShellCredential"/></description></item>
     /// <item><description><see cref="AzureDeveloperCliCredential"/></description></item>
     /// <item><description><see cref="InteractiveBrowserCredential"/></description></item>
+    /// <item><description>BrokerCredential (a broker-enabled instance of <see cref="InteractiveBrowserCredential"/> that requires Azure.Identity.Broker is installed)</description></item>
     /// </list>
     /// Consult the documentation of these credentials for more information on how they attempt authentication.
     /// </summary>

@@ -40,10 +40,13 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The provisioning state of the private dns zone group resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> A collection of private dns zone configurations of the private dns zone group. </summary>
+        [WirePath("properties.privateDnsZoneConfigs")]
         public IList<PrivateDnsZoneConfig> PrivateDnsZoneConfigs { get; }
     }
 }

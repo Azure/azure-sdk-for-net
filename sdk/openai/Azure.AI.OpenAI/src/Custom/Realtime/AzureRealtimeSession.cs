@@ -4,10 +4,7 @@
 #if !AZURE_OPENAI_GA
 
 using System.ClientModel;
-using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
-using System.Net;
-using System.Net.WebSockets;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Realtime;
@@ -20,13 +17,15 @@ internal partial class AzureRealtimeSession : RealtimeSession
     private readonly TokenCredential _tokenCredential;
     private readonly IEnumerable<string> _tokenAuthorizationScopes;
     private readonly string _userAgent;
+    private readonly IDictionary<string, string> _defaultHeaders;
 
     protected internal AzureRealtimeSession(
         AzureRealtimeClient parentClient,
         Uri endpoint,
         ApiKeyCredential credential,
-        string userAgent)
-            : this(parentClient, endpoint, userAgent)
+        string userAgent,
+        IDictionary<string, string> defaultHeaders)
+            : this(parentClient, endpoint, userAgent, defaultHeaders)
     {
         _keyCredential = credential;
     }
@@ -36,18 +35,20 @@ internal partial class AzureRealtimeSession : RealtimeSession
         Uri endpoint,
         TokenCredential credential,
         IEnumerable<string> tokenAuthorizationScopes,
-        string userAgent)
-            : this(parentClient, endpoint, userAgent)
+        string userAgent,
+        IDictionary<string, string> defaultHeaders)
+            : this(parentClient, endpoint, userAgent, defaultHeaders)
     {
         _tokenCredential = credential;
         _tokenAuthorizationScopes = tokenAuthorizationScopes;
     }
 
-    private AzureRealtimeSession(AzureRealtimeClient parentClient, Uri endpoint, string userAgent)
+    private AzureRealtimeSession(AzureRealtimeClient parentClient, Uri endpoint, string userAgent, IDictionary<string, string> defaultHeaders)
         : base(parentClient, endpoint, credential: new("placeholder"))
     {
         _endpoint = endpoint;
         _userAgent = userAgent;
+        _defaultHeaders = defaultHeaders;
     }
 }
 

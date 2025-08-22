@@ -45,8 +45,9 @@ namespace BasicTypeSpec
                 {
                     yield break;
                 }
-                yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)((ListWithContinuationTokenResponse)response).Things, nextPage, response);
-                nextPage = ((ListWithContinuationTokenResponse)response).NextToken;
+                ListWithContinuationTokenResponse result = (ListWithContinuationTokenResponse)response;
+                yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)result.Things, nextPage, response);
+                nextPage = result.NextToken;
                 if (nextPage == null)
                 {
                     yield break;
