@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The alias of the private link service. </summary>
+        [WirePath("privateLinkServiceAlias")]
         public string PrivateLinkServiceAlias { get; set; }
     }
 }

@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The list of application gateway rule sets. </summary>
+        [WirePath("value")]
         public IReadOnlyList<ApplicationGatewayFirewallRuleSet> Value { get; }
     }
 }

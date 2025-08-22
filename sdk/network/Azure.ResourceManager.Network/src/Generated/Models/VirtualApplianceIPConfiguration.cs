@@ -62,10 +62,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Name of the IP configuration. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Represents a single IP configuration properties. </summary>
         internal VirtualApplianceIPConfigurationProperties Properties { get; set; }
         /// <summary> Whether or not this is primary IP configuration of the NIC. </summary>
+        [WirePath("properties.primary")]
         public bool? IsPrimary
         {
             get => Properties is null ? default : Properties.IsPrimary;

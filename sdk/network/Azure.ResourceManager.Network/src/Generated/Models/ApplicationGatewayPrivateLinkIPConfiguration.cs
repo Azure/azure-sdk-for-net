@@ -42,14 +42,18 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The private IP address of the IP configuration. </summary>
+        [WirePath("properties.privateIPAddress")]
         public string PrivateIPAddress { get; set; }
         /// <summary> The private IP address allocation method. </summary>
+        [WirePath("properties.privateIPAllocationMethod")]
         public NetworkIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
         /// <summary> Reference to the subnet resource. </summary>
         internal WritableSubResource Subnet { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.subnet.id")]
         public ResourceIdentifier SubnetId
         {
             get => Subnet is null ? default : Subnet.Id;
@@ -62,8 +66,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Whether the ip configuration is primary or not. </summary>
+        [WirePath("properties.primary")]
         public bool? IsPrimary { get; set; }
         /// <summary> The provisioning state of the application gateway private link IP configuration. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

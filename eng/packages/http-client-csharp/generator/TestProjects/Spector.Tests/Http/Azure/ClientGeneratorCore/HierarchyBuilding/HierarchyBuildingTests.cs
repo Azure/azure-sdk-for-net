@@ -14,7 +14,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.HierarchyBui
         public Task Azure_ClientGenerator_Core_HierarchyBuilding_UpdateDogAsAnimal() => Test(async (host) =>
         {
             var dog = new Dog("Rex", true, "German Shepherd");
-            var response1 = await new HierarchyBuildingClient(host, null).UpdatePetAsync(dog);
+            var response1 = await new HierarchyBuildingClient(host, null).GetAnimalOperationsClient().UpdateDogAsAnimalAsync(dog);
             dog = response1.Value as Dog;
             Assert.IsNotNull(dog);
             Assert.AreEqual("Rex", dog!.Name);
@@ -28,7 +28,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.HierarchyBui
         public Task Azure_ClientGenerator_Core_HierarchyBuilding_UpdatePetAsAnimal() => Test(async (host) =>
         {
             var pet = new Pet("Buddy", true);
-            var response1 = await new HierarchyBuildingClient(host, null).UpdatePetAsync(pet);
+            var response1 = await new HierarchyBuildingClient(host, null).GetAnimalOperationsClient().UpdatePetAsAnimalAsync(pet);
             pet = response1.Value as Pet;
             Assert.IsNotNull(pet);
             Assert.AreEqual("Buddy", pet!.Name);
@@ -41,7 +41,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.HierarchyBui
         public Task Azure_ClientGenerator_Core_HierarchyBuilding_UpdateDogAsDog() => Test(async (host) =>
         {
             var dog = new Dog("Rex", true, "German Shepherd");
-            var response1 = await new HierarchyBuildingClient(host, null).UpdateDogAsync(dog);
+            var response1 = await new HierarchyBuildingClient(host, null).GetDogOperationsClient().UpdateDogAsDogAsync(dog);
             dog = response1.Value as Dog;
             Assert.IsNotNull(dog);
             Assert.AreEqual("Rex", dog!.Name);
@@ -55,7 +55,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.HierarchyBui
         public Task Azure_ClientGenerator_Core_HierarchyBuilding_UpdateDogAsPet() => Test(async (host) =>
         {
             var dog = new Dog("Rex", true, "German Shepherd");
-            var response1 = await new HierarchyBuildingClient(host, null).UpdatePetAsync(dog);
+            var response1 = await new HierarchyBuildingClient(host, null).GetAnimalOperationsClient().UpdateDogAsAnimalAsync(dog);
             dog = response1.Value as Dog;
             Assert.IsNotNull(dog);
             Assert.AreEqual("Rex", dog!.Name);

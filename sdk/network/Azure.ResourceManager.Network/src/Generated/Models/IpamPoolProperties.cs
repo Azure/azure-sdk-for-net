@@ -82,16 +82,22 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Gets or sets the description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> String representing a friendly name for the resource. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
         /// <summary> List of IP address type for the IpamPool. </summary>
+        [WirePath("ipAddressType")]
         public IReadOnlyList<IpamIPType> IPAddressType { get; }
         /// <summary> String representing parent IpamPool resource name. If empty the IpamPool will be a root pool. </summary>
+        [WirePath("parentPoolName")]
         public string ParentPoolName { get; set; }
         /// <summary> List of IP address prefixes of the resource. </summary>
+        [WirePath("addressPrefixes")]
         public IList<string> AddressPrefixes { get; }
         /// <summary> Provisioning states of a resource. </summary>
+        [WirePath("provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; set; }
     }
 }

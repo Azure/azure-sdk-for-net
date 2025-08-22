@@ -3,6 +3,7 @@
 ## 1.2.0-beta.3 (Unreleased)
 
 ### Features Added
+- Added delete operation for `ThreadMessages`.
 
 ### Breaking Changes
 
