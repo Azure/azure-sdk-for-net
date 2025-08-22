@@ -8,7 +8,6 @@ using Azure.Generator.Management.Providers.OperationMethodProviders;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
-using Humanizer;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -25,7 +24,7 @@ namespace Azure.Generator.Management.Providers
     internal class MockableResourceProvider : TypeProvider
     {
         private protected readonly IReadOnlyList<ResourceClientProvider> _resources;
-        private protected readonly IReadOnlyList<ResourceMethod> _resourceMethods;
+        private protected readonly IReadOnlyDictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>> _resourceMethods;
         private protected readonly IReadOnlyList<NonResourceMethod> _nonResourceMethods;
         private readonly Dictionary<InputClient, RestClientInfo> _clientInfos;
 
@@ -38,28 +37,27 @@ namespace Azure.Generator.Management.Providers
         /// <param name="resources">the resources in this scope.</param>
         /// <param name="resourceMethods">the resource methods that belong to this scope.</param>
         /// <param name="nonResourceMethods">the non-resource methods that belong to this scope.</param>
-        public MockableResourceProvider(ResourceScope resourceScope, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyList<ResourceMethod> resourceMethods, IReadOnlyList<NonResourceMethod> nonResourceMethods)
+        public MockableResourceProvider(ResourceScope resourceScope, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyDictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>> resourceMethods, IReadOnlyList<NonResourceMethod> nonResourceMethods)
             : this(ResourceHelpers.GetArmCoreTypeFromScope(resourceScope), RequestPathPattern.GetFromScope(resourceScope), resources, resourceMethods, nonResourceMethods)
         {
         }
 
-        private protected MockableResourceProvider(CSharpType armCoreType, RequestPathPattern contextualPath, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyList<ResourceMethod> resourceMethods, IReadOnlyList<NonResourceMethod> nonResourceMethods)
+        private protected MockableResourceProvider(CSharpType armCoreType, RequestPathPattern contextualPath, IReadOnlyList<ResourceClientProvider> resources, IReadOnlyDictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>> resourceMethods, IReadOnlyList<NonResourceMethod> nonResourceMethods)
         {
             _resources = resources;
             _resourceMethods = resourceMethods;
             _nonResourceMethods = nonResourceMethods;
             ArmCoreType = armCoreType;
             _contextualPath = contextualPath;
-            _clientInfos = BuildRestClientInfos(resourceMethods, nonResourceMethods, this);
+            _clientInfos = BuildRestClientInfos(resourceMethods.Values.SelectMany(m => m).Select(m => m.InputClient).Concat(nonResourceMethods.Select(m => m.InputClient)), this);
         }
 
         private static Dictionary<InputClient, RestClientInfo> BuildRestClientInfos(
-            IReadOnlyList<ResourceMethod> resourceMethods,
-            IReadOnlyList<NonResourceMethod> nonResourceMethods,
+            IEnumerable<InputClient> inputClients,
             TypeProvider enclosingType)
         {
             var clientInfos = new Dictionary<InputClient, RestClientInfo>();
-            foreach (var inputClient in resourceMethods.Select(m => m.InputClient).Concat(nonResourceMethods.Select(m => m.InputClient)))
+            foreach (var inputClient in inputClients)
             {
                 if (clientInfos.ContainsKey(inputClient))
                 {
@@ -184,10 +182,13 @@ namespace Azure.Generator.Management.Providers
                 methods.AddRange(BuildMethodsForResource(resource));
             }
 
-            foreach (var method in _resourceMethods)
+            foreach (var (resource, resourceMethods) in _resourceMethods)
             {
-                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, true));
-                methods.Add(BuildServiceMethod(method.InputMethod, method.InputClient, false));
+                foreach (var resourceMethod in resourceMethods)
+                {
+                    methods.Add(BuildResourceServiceMethod(resource, resourceMethod, true));
+                    methods.Add(BuildResourceServiceMethod(resource, resourceMethod, false));
+                }
             }
 
             foreach (var method in _nonResourceMethods)
@@ -203,14 +204,7 @@ namespace Azure.Generator.Management.Providers
         {
             if (resource.IsSingleton)
             {
-                var resourceMethodSignature = new MethodSignature(
-                    $"Get{resource.ResourceName}",
-                    $"Gets an object representing a {resource.Type:C} along with the instance operations that can be performed on it in the {ArmCoreType:C}.",
-                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
-                    resource.Type,
-                    $"Returns a {resource.Type:C} object.",
-                    []
-                    );
+                var resourceMethodSignature = resource.FactoryMethodSignature;
                 var bodyStatement = Return(
                     New.Instance(
                         resource.Type,
@@ -223,17 +217,9 @@ namespace Azure.Generator.Management.Providers
             }
             else
             {
-                var collection = resource.ResourceCollection!;
                 // the first method is returning the collection
-                var pluralOfResourceName = resource.ResourceName.Pluralize();
-                var collectionMethodSignature = new MethodSignature(
-                    $"Get{pluralOfResourceName}",
-                    $"Gets a collection of {pluralOfResourceName} in the {ArmCoreType:C}",
-                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
-                    collection.Type,
-                    $"An object representing collection of {pluralOfResourceName} and their operations over a {resource.Name}.",
-                    []
-                    );
+                var collection = resource.ResourceCollection!;
+                var collectionMethodSignature = resource.FactoryMethodSignature;
 
                 var bodyStatement = Return(This.As<ArmResource>().GetCachedClient(new CodeWriterDeclaration("client"), client => New.Instance(collection.Type, client, This.As<ArmResource>().Id())));
                 yield return new MethodProvider(
@@ -276,13 +262,20 @@ namespace Azure.Generator.Management.Providers
             }
         }
 
-        private MethodProvider BuildServiceMethod(InputServiceMethod method, InputClient inputClient, bool isAsync)
+        private MethodProvider BuildResourceServiceMethod(ResourceClientProvider resource, ResourceMethod resourceMethod, bool isAsync)
+        {
+            var methodName = ResourceHelpers.GetExtensionOperationMethodName(resourceMethod.Kind, resource.ResourceName, isAsync);
+
+            return BuildServiceMethod(resourceMethod.InputMethod, resourceMethod.InputClient, isAsync, methodName);
+        }
+
+        private MethodProvider BuildServiceMethod(InputServiceMethod method, InputClient inputClient, bool isAsync, string? methodName = null)
         {
             var clientInfo = _clientInfos[inputClient];
             return method switch
             {
-                InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, _contextualPath, clientInfo, pagingMethod, isAsync),
-                _ => new ResourceOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync)
+                InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, _contextualPath, clientInfo, pagingMethod, isAsync, methodName: methodName),
+                _ => new ResourceOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName: methodName)
             };
         }
 

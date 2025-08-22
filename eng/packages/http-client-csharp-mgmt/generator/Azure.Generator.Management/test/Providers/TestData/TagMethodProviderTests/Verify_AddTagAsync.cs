@@ -14,7 +14,7 @@ try
         {
             CancellationToken = cancellationToken
         };
-        global::Azure.Core.HttpMessage message = _testClientRestClient.CreateGetRequest(this.Id.Name, global::System.Guid.Parse(this.Id.SubscriptionId), context);
+        global::Azure.Core.HttpMessage message = _testClientRestClient.CreateGetRequest(global::System.Guid.Parse(this.Id.SubscriptionId), this.Id.ResourceGroupName, this.Id.Name, context);
         global::Azure.Response result = await this.Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
         global::Azure.Response<global::Samples.Models.ResponseTypeData> response = global::Azure.Response.FromValue(global::Samples.Models.ResponseTypeData.FromResponse(result), result);
         return global::Azure.Response.FromValue(new global::Samples.ResponseTypeResource(this.Client, response.Value), response.GetRawResponse());
@@ -22,13 +22,8 @@ try
     else
     {
         global::Samples.Models.ResponseTypeData current = (await this.GetAsync(cancellationToken).ConfigureAwait(false)).Value.Data;
-        global::Samples.Models.ResponseTypeData patch = new global::Samples.Models.ResponseTypeData();
-        foreach (global::System.Collections.Generic.KeyValuePair<string, string> tag in current.Tags)
-        {
-            patch.Tags.Add(tag);
-        }
-        patch.Tags[key] = value;
-        global::Azure.Response<global::Samples.ResponseTypeResource> result = await this.UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+        current.Tags[key] = value;
+        global::Azure.Response<global::Samples.ResponseTypeResource> result = await this.UpdateAsync(current, cancellationToken).ConfigureAwait(false);
         return global::Azure.Response.FromValue(result.Value, result.GetRawResponse());
     }
 }

@@ -72,16 +72,22 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Name of the rule. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Protocol. This should be either TCP or UDP. </summary>
+        [WirePath("protocol")]
         public InboundSecurityRulesProtocol? Protocol { get; set; }
         /// <summary> The CIDR or source IP range. </summary>
+        [WirePath("sourceAddressPrefix")]
         public string SourceAddressPrefix { get; set; }
         /// <summary> NVA port ranges to be opened up. One needs to provide specific ports. </summary>
+        [WirePath("destinationPortRange")]
         public int? DestinationPortRange { get; set; }
         /// <summary> NVA port ranges to be opened up. One can provide a range of ports. Allowed port value between 0 and 65535. </summary>
+        [WirePath("destinationPortRanges")]
         public IList<string> DestinationPortRanges { get; }
         /// <summary> Public IP name in case of Permanent Rule type &amp; Interface Name in case of Auto Expire Rule type. </summary>
+        [WirePath("appliesOn")]
         public IList<string> AppliesOn { get; }
     }
 }

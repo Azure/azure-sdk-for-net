@@ -110,6 +110,11 @@
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
+    "http-client-naming": {
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/client/naming -g AzureStubGenerator",
+      "commandName": "Executable",
+      "executablePath": "dotnet"
+    },
     "http-client-naming-enum-conflict": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/client/naming/enum-conflict -g AzureStubGenerator",
       "commandName": "Executable",

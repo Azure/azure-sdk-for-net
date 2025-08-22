@@ -85,7 +85,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="version"> The version of the image. </param>
         /// <param name="operatingSystem"> The operating system of the image. </param>
         /// <param name="osBuildNumber"> The operating system build number of the image. </param>
-        /// <param name="publishedDate"> The datetime that the backing image version was published. </param>
+        /// <param name="publishedDate"> The datetime that the backing image version was published, in RFC3339 format. </param>
         /// <returns> A new <see cref="Models.DevBoxImageReference"/> instance for mocking. </returns>
         public static DevBoxImageReference DevBoxImageReference(string name = null, string version = null, string operatingSystem = null, string osBuildNumber = null, DateTimeOffset? publishedDate = null)
         {
@@ -156,7 +156,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="hardwareProfile"> Information about the Dev Box's hardware resources. </param>
         /// <param name="storageProfile"> Storage settings for this Dev Box. </param>
         /// <param name="imageReference"> Information about the image used for this Dev Box. </param>
-        /// <param name="createdTime"> Creation time of this Dev Box. </param>
+        /// <param name="createdTime"> Creation time of this Dev Box, in RFC3339 format. </param>
         /// <param name="localAdministratorStatus"> Indicates whether the owner of the Dev Box is a local administrator. </param>
         /// <returns> A new <see cref="Models.DevBox"/> instance for mocking. </returns>
         public static DevBox DevBox(string name = null, string projectName = null, string poolName = null, HibernateSupport? hibernateSupport = null, DevBoxProvisioningState? provisioningState = null, string actionState = null, PowerState? powerState = null, Guid? uniqueId = null, ResponseError error = null, AzureLocation? location = null, DevBoxOSType? osType = null, Guid? userId = null, DevBoxHardwareProfile hardwareProfile = null, DevBoxStorageProfile storageProfile = null, DevBoxImageReference imageReference = null, DateTimeOffset? createdTime = null, LocalAdministratorStatus? localAdministratorStatus = null)
@@ -195,7 +195,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="name"> The name of the action. </param>
         /// <param name="actionType"> The action that will be taken. </param>
         /// <param name="sourceId"> The id of the resource which triggered this action. </param>
-        /// <param name="suspendedUntil"> The earliest time that the action could occur (UTC). </param>
+        /// <param name="suspendedUntil"> The earliest time that the action could occur (UTC), in RFC3339 format. </param>
         /// <param name="nextAction"> Details about the next run of this action. </param>
         /// <returns> A new <see cref="Models.DevBoxAction"/> instance for mocking. </returns>
         public static DevBoxAction DevBoxAction(string name = null, DevBoxActionType actionType = default, string sourceId = null, DateTimeOffset? suspendedUntil = null, DevBoxNextAction nextAction = null)
@@ -210,7 +210,7 @@ namespace Azure.Developer.DevCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DevBoxNextAction"/>. </summary>
-        /// <param name="scheduledTime"> The time the action will be triggered (UTC). </param>
+        /// <param name="scheduledTime"> The time the action will be triggered (UTC), in RFC3339 format. </param>
         /// <returns> A new <see cref="Models.DevBoxNextAction"/> instance for mocking. </returns>
         public static DevBoxNextAction DevBoxNextAction(DateTimeOffset scheduledTime = default)
         {
@@ -295,7 +295,7 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="defaultValue"> Default value of the parameter. </param>
         /// <param name="parameterType">
         /// A string of one of the basic JSON types (number, integer, array, object,
-        /// boolean, string)
+        /// boolean, string).
         /// </param>
         /// <param name="readOnly">
         /// Whether or not this parameter is read-only.  If true, default should have a

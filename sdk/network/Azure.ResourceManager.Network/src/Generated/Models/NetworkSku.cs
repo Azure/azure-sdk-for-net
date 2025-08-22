@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The name of the sku of this Bastion Host. </summary>
+        [WirePath("name")]
         public BastionHostSkuName? Name { get; set; }
     }
 }

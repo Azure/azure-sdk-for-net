@@ -116,13 +116,27 @@ namespace Azure.Generator.Management
         private IReadOnlyList<ResourceMetadata> DeserializeResourceMetadata()
         {
             var resourceMetadata = new List<ResourceMetadata>();
+            var resourceChildren = new Dictionary<string, List<string>>();
+            // we build the resource metadata instances first to ensure that we already have everything before we figure out the children
             foreach (var model in InputNamespace.Models)
             {
                 var decorator = model.Decorators.FirstOrDefault(d => d.Name == ResourceMetadataDecoratorName);
                 if (decorator?.Arguments != null)
                 {
-                    var metadata = ResourceMetadata.DeserializeResourceMetadata(decorator.Arguments, model);
+                    var children = new List<string>();
+                    var metadata = ResourceMetadata.DeserializeResourceMetadata(decorator.Arguments, model, children);
                     resourceMetadata.Add(metadata);
+                    resourceChildren.Add(metadata.ResourceIdPattern, children);
+                }
+            }
+            // we go a second pass to fulfill the children list
+            foreach (var resource in resourceMetadata)
+            {
+                // finds my parent
+                if (resource.ParentResourceId is not null)
+                {
+                    // add the resource id to the parent's children list
+                    resourceChildren[resource.ParentResourceId].Add(resource.ResourceIdPattern);
                 }
             }
             return resourceMetadata;

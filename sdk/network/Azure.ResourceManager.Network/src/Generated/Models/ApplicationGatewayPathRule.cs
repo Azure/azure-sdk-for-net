@@ -49,12 +49,15 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Path rules of URL path map. </summary>
+        [WirePath("properties.paths")]
         public IList<string> Paths { get; }
         /// <summary> Backend address pool resource of URL path map path rule. </summary>
         internal WritableSubResource BackendAddressPool { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.backendAddressPool.id")]
         public ResourceIdentifier BackendAddressPoolId
         {
             get => BackendAddressPool is null ? default : BackendAddressPool.Id;
@@ -69,6 +72,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Backend http settings resource of URL path map path rule. </summary>
         internal WritableSubResource BackendHttpSettings { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.backendHttpSettings.id")]
         public ResourceIdentifier BackendHttpSettingsId
         {
             get => BackendHttpSettings is null ? default : BackendHttpSettings.Id;
@@ -83,6 +87,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Redirect configuration resource of URL path map path rule. </summary>
         internal WritableSubResource RedirectConfiguration { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.redirectConfiguration.id")]
         public ResourceIdentifier RedirectConfigurationId
         {
             get => RedirectConfiguration is null ? default : RedirectConfiguration.Id;
@@ -97,6 +102,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Rewrite rule set resource of URL path map path rule. </summary>
         internal WritableSubResource RewriteRuleSet { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.rewriteRuleSet.id")]
         public ResourceIdentifier RewriteRuleSetId
         {
             get => RewriteRuleSet is null ? default : RewriteRuleSet.Id;
@@ -111,6 +117,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Load Distribution Policy resource of URL path map path rule. </summary>
         internal WritableSubResource LoadDistributionPolicy { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.loadDistributionPolicy.id")]
         public ResourceIdentifier LoadDistributionPolicyId
         {
             get => LoadDistributionPolicy is null ? default : LoadDistributionPolicy.Id;
@@ -123,10 +130,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The provisioning state of the path rule resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Reference to the FirewallPolicy resource. </summary>
         internal WritableSubResource FirewallPolicy { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.firewallPolicy.id")]
         public ResourceIdentifier FirewallPolicyId
         {
             get => FirewallPolicy is null ? default : FirewallPolicy.Id;

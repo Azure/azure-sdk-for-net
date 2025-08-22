@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Office 365 breakout categories. </summary>
+        [WirePath("breakOutCategories")]
         public BreakOutCategoryPolicies BreakOutCategories { get; set; }
     }
 }
