@@ -379,7 +379,7 @@ namespace Azure.Identity.Tests
                 expCredentialTypes.ConditionalAdd(!excludeAzurePowerShellCredential, typeof(AzurePowerShellCredential));
                 expCredentialTypes.ConditionalAdd(!excludeDeveloperCliCredential, typeof(AzureDeveloperCliCredential));
                 expCredentialTypes.ConditionalAdd(!excludeInteractiveBrowserCredential, typeof(InteractiveBrowserCredential));
-                expCredentialTypes.ConditionalAdd(!excludeBrokerCredential, typeof(InteractiveBrowserCredential));
+                expCredentialTypes.ConditionalAdd(!excludeBrokerCredential, typeof(BrokerCredential));
 
                 var options = new DefaultAzureCredentialOptions
                 {

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Azure.Core.TestFramework;
+using Azure.Identity.Credentials;
 using NUnit.Framework;
 
 namespace Azure.Identity.Broker.Tests
@@ -57,7 +58,7 @@ namespace Azure.Identity.Broker.Tests
                     Assert.IsTrue(chain.Any(cred => cred is VisualStudioCredential));
                     Assert.IsTrue(chain.Any(cred => cred is AzureDeveloperCliCredential));
                     Assert.IsTrue(chain.Any(cred => cred.GetType() == typeof(VisualStudioCodeCredential)));
-                    Assert.IsTrue(chain.Any(cred => cred.GetType() == typeof(InteractiveBrowserCredential)));
+                    Assert.IsTrue(chain.Any(cred => cred is BrokerCredential));
                 }
                 else if (credSelection == Constants.ProdCredentials)
                 {
