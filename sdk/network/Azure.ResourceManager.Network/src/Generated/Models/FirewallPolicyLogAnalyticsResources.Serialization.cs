@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -126,6 +127,62 @@ namespace Azure.ResourceManager.Network.Models
             return new FirewallPolicyLogAnalyticsResources(workspaces ?? new ChangeTrackingList<FirewallPolicyLogAnalyticsWorkspace>(), defaultWorkspaceId, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Workspaces), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  workspaces: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Workspaces))
+                {
+                    if (Workspaces.Any())
+                    {
+                        builder.Append("  workspaces: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Workspaces)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  workspaces: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("DefaultWorkspaceIdId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  defaultWorkspaceId: ");
+                builder.AppendLine("{");
+                builder.Append("    id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(DefaultWorkspaceId))
+                {
+                    builder.Append("  defaultWorkspaceId: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, DefaultWorkspaceId, options, 2, false, "  defaultWorkspaceId: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<FirewallPolicyLogAnalyticsResources>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyLogAnalyticsResources>)this).GetFormatFromOptions(options) : options.Format;
@@ -134,6 +191,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FirewallPolicyLogAnalyticsResources)} does not support writing '{options.Format}' format.");
             }

@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The vendor for the vpn device. </summary>
+        [WirePath("vendor")]
         public string Vendor { get; set; }
         /// <summary> The device family for the vpn device. </summary>
+        [WirePath("deviceFamily")]
         public string DeviceFamily { get; set; }
         /// <summary> The firmware version for the vpn device. </summary>
+        [WirePath("firmwareVersion")]
         public string FirmwareVersion { get; set; }
     }
 }

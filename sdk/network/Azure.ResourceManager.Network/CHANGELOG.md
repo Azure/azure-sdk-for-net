@@ -1,14 +1,10 @@
 # Release History
 
-## 1.12.0-beta.1 (Unreleased)
+## 1.11.3 (2025-08-21)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added `WirePath` attributes to all properties in all models for provisioning library to consume.
 
 ## 1.11.2 (2025-08-11)
 

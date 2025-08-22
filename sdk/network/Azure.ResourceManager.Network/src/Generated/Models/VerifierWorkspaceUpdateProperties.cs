@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Gets or sets the description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
     }
 }

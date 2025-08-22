@@ -41,8 +41,8 @@ internal partial class AzureRealtimeClient : RealtimeClient
     public override async Task<RealtimeSession> StartSessionAsync(string deploymentName, string intent, RequestOptions options)
     {
         RealtimeSession provisionalOperation = _tokenCredential is not null
-            ? new AzureRealtimeSession(this, BuildSessionEndpoint(deploymentName, intent), _tokenCredential, _tokenAuthorizationScopes, _userAgent)
-            : new AzureRealtimeSession(this, BuildSessionEndpoint(deploymentName, intent), _credential, _userAgent);
+            ? new AzureRealtimeSession(this, BuildSessionEndpoint(deploymentName, intent), _tokenCredential, _tokenAuthorizationScopes, _userAgent, _defaultHeaders)
+            : new AzureRealtimeSession(this, BuildSessionEndpoint(deploymentName, intent), _credential, _userAgent, _defaultHeaders);
         try
         {
             await provisionalOperation.ConnectAsync(options).ConfigureAwait(false);
@@ -71,6 +71,10 @@ internal partial class AzureRealtimeClient : RealtimeClient
         if (!string.IsNullOrEmpty(_apiVersion))
         {
             builder.AppendQuery("api-version", _apiVersion, escape: true);
+        }
+        foreach (KeyValuePair<string, string> defaultQueryParameter in _defaultQueryParameters)
+        {
+            builder.AppendQuery(defaultQueryParameter.Key, defaultQueryParameter.Value, escape: true);
         }
         return builder.ToUri();
     }

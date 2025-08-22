@@ -92,8 +92,10 @@ namespace Azure.ResourceManager.Network.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("body")]
         public BinaryData Body { get; set; }
         /// <summary> Allowed ranges of healthy status codes. Default range of healthy status codes is 200-399. </summary>
+        [WirePath("statusCodes")]
         public IList<string> StatusCodes { get; }
     }
 }

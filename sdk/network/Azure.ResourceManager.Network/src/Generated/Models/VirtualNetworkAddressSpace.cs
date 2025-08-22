@@ -64,8 +64,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A list of address blocks reserved for this virtual network in CIDR notation. </summary>
+        [WirePath("addressPrefixes")]
         public IList<string> AddressPrefixes { get; }
         /// <summary> A list of IPAM Pools allocating IP address prefixes. </summary>
+        [WirePath("ipamPoolPrefixAllocations")]
         public IList<IpamPoolPrefixAllocation> IpamPoolPrefixAllocations { get; }
     }
 }

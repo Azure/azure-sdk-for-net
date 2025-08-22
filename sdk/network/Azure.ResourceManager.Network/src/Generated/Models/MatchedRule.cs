@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Name of the matched network security rule. </summary>
+        [WirePath("ruleName")]
         public string RuleName { get; }
         /// <summary> The network traffic is allowed or denied. Possible values are 'Allow' and 'Deny'. </summary>
+        [WirePath("action")]
         public string Action { get; }
     }
 }

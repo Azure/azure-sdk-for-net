@@ -86,8 +86,7 @@ namespace Azure.Generator.Management.Providers
 
         protected override string BuildName() => ResourceName.EndsWith("Resource") ? ResourceName : $"{ResourceName}Resource";
 
-        // TODO: Add support for getting parent resource from a resource
-        protected override FormattableString BuildDescription() => $"A class representing a {ResourceName} along with the instance operations that can be performed on it.\nIf you have a {typeof(ResourceIdentifier):C} you can construct a {Type:C} from an instance of {typeof(ArmClient):C} using the GetResource method.\nOtherwise you can get one from its parent resource (TODO: add parent resource information).";
+        protected override FormattableString BuildDescription() => $"A class representing a {ResourceName} along with the instance operations that can be performed on it.\nIf you have a {typeof(ResourceIdentifier):C} you can construct a {Type:C} from an instance of {typeof(ArmClient):C} using the GetResource method.\nOtherwise you can get one from its parent resource {TypeOfParentResource:C} using the {FactoryMethodSignature.Name} method.";
 
         private OperationSourceProvider? _source;
         internal OperationSourceProvider Source => _source ??= new OperationSourceProvider(this);
@@ -107,24 +106,71 @@ namespace Azure.Generator.Management.Providers
         private IReadOnlyList<ResourceClientProvider>? _childResources;
         public IReadOnlyList<ResourceClientProvider> ChildResources => _childResources ??= BuildChildResources();
 
+        private CSharpType? _typeOfParentResource;
+        internal CSharpType TypeOfParentResource => _typeOfParentResource ??= BuildTypeOfParentResource();
+
         private IReadOnlyList<ResourceClientProvider> BuildChildResources()
         {
-            // first we find all the resources from the output library
-            var allResources = ManagementClientGenerator.Instance.OutputLibrary.TypeProviders
-                .OfType<ResourceClientProvider>();
-
-            var childResources = new List<ResourceClientProvider>();
-            // TODO -- this is quite cumbersome that every time we have to iterate all the resources to find the child resources of this resource.
-            // maybe later we could maintain a map in the OutputLibrary so that we could get them directly.
-            foreach (var candidate in allResources)
+            var childResources = new List<ResourceClientProvider>(_resourceMetadata.ChildResourceIds.Count);
+            // the resourcemetadata has a list of the ids of child resources
+            foreach (var childId in _resourceMetadata.ChildResourceIds)
             {
-                // check if the request path of this resource, is the same as the parent resource request path of the candidate.
-                if (_resourceMetadata.ResourceIdPattern == candidate._resourceMetadata.ParentResourceId)
+                // if the child resource id is not in the output library, we cannot find it.
+                var childResource = ManagementClientGenerator.Instance.OutputLibrary.GetResourceById(childId);
+                if (childResource is null)
                 {
-                    childResources.Add(candidate);
+                    ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                        "general-warning",
+                        $"Cannot find child resource with id {childId} for resource {ResourceName}."
+                    );
+                    continue;
                 }
+                childResources.Add(childResource);
             }
             return childResources;
+        }
+
+        private CSharpType BuildTypeOfParentResource()
+        {
+            // if the resource has a parent resource id, we can find it in the output library
+            if (_resourceMetadata.ParentResourceId is not null)
+            {
+                return ManagementClientGenerator.Instance.OutputLibrary.GetResourceById(_resourceMetadata.ParentResourceId).Type;
+            }
+            // if it does not, this resource's parent must be one of the MockableResource
+            return ManagementClientGenerator.Instance.OutputLibrary.GetMockableResourceByScope(_resourceMetadata.ResourceScope).ArmCoreType;
+        }
+
+        private MethodSignature? _factoryMethodSignature;
+        internal MethodSignature FactoryMethodSignature => _factoryMethodSignature ??= BuildFactoryMethodSignature();
+
+        private MethodSignature BuildFactoryMethodSignature()
+        {
+            if (ResourceCollection != null)
+            {
+                // we have the collection, we are not a singleton resource
+                var pluralOfResourceName = ResourceName.Pluralize();
+                return new MethodSignature(
+                    $"Get{pluralOfResourceName}",
+                    $"Gets a collection of {pluralOfResourceName} in the {TypeOfParentResource:C}",
+                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
+                    ResourceCollection.Type,
+                    $"An object representing collection of {pluralOfResourceName} and their operations over a {Name}.",
+                    []
+                    );
+            }
+            else
+            {
+                // we do not have a collection, we are a singleton resource
+                return new MethodSignature(
+                    $"Get{ResourceName}",
+                    $"Gets an object representing a {Type:C} along with the instance operations that can be performed on it in the {TypeOfParentResource:C}.",
+                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
+                    Type,
+                    $"Returns a {Type:C} object.",
+                    []
+                    );
+            }
         }
 
         protected override FieldProvider[] BuildFields()
@@ -429,13 +475,7 @@ namespace Azure.Generator.Management.Providers
             var thisResource = This.As<ArmResource>();
             if (childResource.IsSingleton)
             {
-                var signature = new MethodSignature(
-                    $"Get{childResource.ResourceName}",
-                    $"Gets an object representing a {childResource.ResourceName} along with the instance operations that can be performed on it in the {ResourceName}.",
-                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
-                    childResource.Type,
-                    $"Returns a {childResource.Type:C} object.",
-                    []);
+                var signature = childResource.FactoryMethodSignature;
                 var lastSegment = childResource.ResourceTypeValue.Split('/')[^1];
                 var bodyStatement = Return(New.Instance(childResource.Type, thisResource.Client(), thisResource.Id().AppendChildResource(Literal(lastSegment), Literal(childResource.SingletonResourceName!))));
                 return new MethodProvider(signature, bodyStatement, this);
@@ -443,14 +483,7 @@ namespace Azure.Generator.Management.Providers
             else
             {
                 Debug.Assert(childResource.ResourceCollection is not null, "Child resource collection should not be null for non-singleton resources.");
-                var pluralChildResourceName = childResource.ResourceName.Pluralize();
-                var signature = new MethodSignature(
-                    $"Get{pluralChildResourceName}",
-                    $"Gets a collection of {pluralChildResourceName} in the {ResourceName}.",
-                    MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
-                    childResource.ResourceCollection.Type,
-                    $"An object representing collection of {pluralChildResourceName} and their operations over a {ResourceName}.",
-                    []);
+                var signature = childResource.FactoryMethodSignature;
                 var bodyStatement = Return(thisResource.GetCachedClient(new CodeWriterDeclaration("client"), client => New.Instance(childResource.ResourceCollection.Type, client, thisResource.Id())));
                 return new MethodProvider(signature, bodyStatement, this);
             }
