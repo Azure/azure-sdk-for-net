@@ -28,6 +28,7 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(ConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(CosmosDBIndex))]
     [ModelReaderWriterBuildable(typeof(CustomCredential))]
+    [ModelReaderWriterBuildable(typeof(SASCredentials))]
     [ModelReaderWriterBuildable(typeof(DatasetCredential))]
     [ModelReaderWriterBuildable(typeof(DatasetVersion))]
     [ModelReaderWriterBuildable(typeof(DeveloperMessage))]

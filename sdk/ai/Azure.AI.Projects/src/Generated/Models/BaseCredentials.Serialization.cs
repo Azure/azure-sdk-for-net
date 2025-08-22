@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// A base class for connection credentials
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ApiKeyCredentials"/>, <see cref="EntraIDCredentials"/>, <see cref="CustomCredential"/>, <see cref="SASCredentials"/>, and <see cref="NoAuthenticationCredentials"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ApiKeyCredentials"/>, <see cref="EntraIDCredentials"/>, <see cref="CustomCredential"/>, <see cref="SasCredential"/>, and <see cref="NoAuthenticationCredentials"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownBaseCredentials))]
     public abstract partial class BaseCredentials : IJsonModel<BaseCredentials>
@@ -91,7 +91,7 @@ namespace Azure.AI.Projects
                     case "CustomKeys":
                         return CustomCredential.DeserializeCustomCredential(element, options);
                     case "SAS":
-                        return SASCredentials.DeserializeSASCredentials(element, options);
+                        return SasCredential.DeserializeSasCredential(element, options);
                     case "None":
                         return NoAuthenticationCredentials.DeserializeNoAuthenticationCredentials(element, options);
                 }
