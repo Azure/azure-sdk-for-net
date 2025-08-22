@@ -147,5 +147,65 @@ namespace Azure.Communication.Messages.Samples
             NotificationContent notificationContent = new TextNotificationContent(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new string[] { "<to>" }, "<content>");
             Response<SendMessageResult> response = await client.SendAsync(notificationContent);
         }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_NotificationMessagesClient_SendReadReceipt_SendsAReadReceipt()
+        {
+            NotificationMessagesClient client = new NotificationMessagesClient(null);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                channelRegistrationId = "0f0eb78e-a576-1dfc-b414-0f0756de3338",
+                messageId = "320fc2a1-4c4b-4387-9c1a-bd38b57795de",
+                typingIndicator = true,
+            });
+            Response response = client.SendReadReceipt(content);
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_NotificationMessagesClient_SendReadReceipt_SendsAReadReceipt_Async()
+        {
+            NotificationMessagesClient client = new NotificationMessagesClient(null);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                channelRegistrationId = "0f0eb78e-a576-1dfc-b414-0f0756de3338",
+                messageId = "320fc2a1-4c4b-4387-9c1a-bd38b57795de",
+                typingIndicator = true,
+            });
+            Response response = await client.SendReadReceiptAsync(content);
+
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_NotificationMessagesClient_SendReadReceipt_SendsAReadReceipt_Convenience()
+        {
+            NotificationMessagesClient client = new NotificationMessagesClient(null);
+
+            ReadReceiptContent body = new ReadReceiptContent("320fc2a1-4c4b-4387-9c1a-bd38b57795de", "0f0eb78e-a576-1dfc-b414-0f0756de3338")
+            {
+                TypingIndicator = true,
+            };
+            Response response = client.SendReadReceipt(body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_NotificationMessagesClient_SendReadReceipt_SendsAReadReceipt_Convenience_Async()
+        {
+            NotificationMessagesClient client = new NotificationMessagesClient(null);
+
+            ReadReceiptContent body = new ReadReceiptContent("320fc2a1-4c4b-4387-9c1a-bd38b57795de", "0f0eb78e-a576-1dfc-b414-0f0756de3338")
+            {
+                TypingIndicator = true,
+            };
+            Response response = await client.SendReadReceiptAsync(body);
+        }
     }
 }

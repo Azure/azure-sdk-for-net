@@ -121,5 +121,65 @@ Console.WriteLine(result.GetProperty("receipts")[0].GetProperty("messageId").ToS
 Console.WriteLine(result.GetProperty("receipts")[0].GetProperty("to").ToString());
 ]]></code></example>
     </member>
+    <member name="SendReadReceiptAsync(ReadReceiptContent,CancellationToken)">
+      <example>
+This sample shows how to call SendReadReceiptAsync.
+<code><![CDATA[
+NotificationMessagesClient client = new NotificationMessagesClient(null);
+
+ReadReceiptContent body = new ReadReceiptContent("320fc2a1-4c4b-4387-9c1a-bd38b57795de", "0f0eb78e-a576-1dfc-b414-0f0756de3338")
+{
+    TypingIndicator = true,
+};
+Response response = await client.SendReadReceiptAsync(body);
+]]></code></example>
+    </member>
+    <member name="SendReadReceipt(ReadReceiptContent,CancellationToken)">
+      <example>
+This sample shows how to call SendReadReceipt.
+<code><![CDATA[
+NotificationMessagesClient client = new NotificationMessagesClient(null);
+
+ReadReceiptContent body = new ReadReceiptContent("320fc2a1-4c4b-4387-9c1a-bd38b57795de", "0f0eb78e-a576-1dfc-b414-0f0756de3338")
+{
+    TypingIndicator = true,
+};
+Response response = client.SendReadReceipt(body);
+]]></code></example>
+    </member>
+    <member name="SendReadReceiptAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call SendReadReceiptAsync.
+<code><![CDATA[
+NotificationMessagesClient client = new NotificationMessagesClient(null);
+
+using RequestContent content = RequestContent.Create(new
+{
+    channelRegistrationId = "0f0eb78e-a576-1dfc-b414-0f0756de3338",
+    messageId = "320fc2a1-4c4b-4387-9c1a-bd38b57795de",
+    typingIndicator = true,
+});
+Response response = await client.SendReadReceiptAsync(content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="SendReadReceipt(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call SendReadReceipt.
+<code><![CDATA[
+NotificationMessagesClient client = new NotificationMessagesClient(null);
+
+using RequestContent content = RequestContent.Create(new
+{
+    channelRegistrationId = "0f0eb78e-a576-1dfc-b414-0f0756de3338",
+    messageId = "320fc2a1-4c4b-4387-9c1a-bd38b57795de",
+    typingIndicator = true,
+});
+Response response = client.SendReadReceipt(content);
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
   </members>
 </doc>

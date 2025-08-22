@@ -279,6 +279,16 @@ namespace Azure.Communication.Messages
             return new MessageReceipt(messageId, to, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Messages.ReadReceiptContent"/>. </summary>
+        /// <param name="messageId"> The id of the message this read receipt refers to. </param>
+        /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
+        /// <param name="typingIndicator"> Whether this status update includes a typing indicator. This field defaults to false when not provided. </param>
+        /// <returns> A new <see cref="Messages.ReadReceiptContent"/> instance for mocking. </returns>
+        public static ReadReceiptContent ReadReceiptContent(string messageId = null, string channelRegistrationId = null, bool? typingIndicator = null)
+        {
+            return new ReadReceiptContent(messageId, channelRegistrationId, typingIndicator, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplateItem"/>. </summary>
         /// <param name="name"> The template's name. </param>
         /// <param name="language"> The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'. </param>
