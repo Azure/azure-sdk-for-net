@@ -8,6 +8,7 @@ namespace Azure.AI.Agents.Persistent.Tests
     public class AIAgentsTestEnvironment : TestEnvironment
     {
         public string PROJECT_ENDPOINT => GetRecordedVariable("PROJECT_ENDPOINT");
+        public string PROJECT_CONNECTION_STRING => GetRecordedVariable("PROJECT_CONNECTION_STRING");
         public string BINGCONNECTIONNAME => GetRecordedVariable("BING_CONNECTION_NAME");
         public string MODELDEPLOYMENTNAME => GetRecordedVariable("MODEL_DEPLOYMENT_NAME");
         public string EMBEDDINGMODELDEPLOYMENTNAME => GetRecordedVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME");
