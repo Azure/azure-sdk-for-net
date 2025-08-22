@@ -202,8 +202,7 @@ namespace Azure.Identity
                 CreateVisualStudioCodeCredential(),
                 CreateAzureCliCredential(),
                 CreateAzurePowerShellCredential(),
-                CreateAzureDeveloperCliCredential(),
-                CreateInteractiveBrowserCredential()
+                CreateAzureDeveloperCliCredential()
             ];
 
             if (TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions brokerOptions))
