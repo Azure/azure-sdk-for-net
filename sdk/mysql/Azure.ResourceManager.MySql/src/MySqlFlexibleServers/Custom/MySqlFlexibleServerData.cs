@@ -3,9 +3,8 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using Azure.Core;
+using System.ComponentModel;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
@@ -18,6 +17,28 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     public partial class MySqlFlexibleServerData : TrackedResourceData
     {
         /// <summary> PrivateEndpointConnections related properties of a server. </summary>
-        public IReadOnlyList<MySqlFlexibleServersPrivateEndpointConnection> PrivateEndpointConnections { get; }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public IReadOnlyList<MySqlFlexibleServersPrivateEndpointConnection> PrivateEndpointConnections
+        {
+            get
+            {
+                if (ServerPrivateEndpointConnections == null)
+                    return null;
+                var list = new List<MySqlFlexibleServersPrivateEndpointConnection>();
+                foreach (var item in ServerPrivateEndpointConnections)
+                {
+                    var model = new MySqlFlexibleServersPrivateEndpointConnection();
+                    if (item.GroupIds != null && model.GroupIds is IList<string> modelGroupIds)
+                    {
+                        foreach (var gid in item.GroupIds)
+                            modelGroupIds.Add(gid);
+                    }
+                    model.PrivateEndpoint = item.PrivateEndpoint;
+                    model.ConnectionState = item.ConnectionState;
+                    list.Add(model);
+                }
+                return list;
+            }
+        }
     }
 }
