@@ -8,18 +8,18 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Shared Access Signature (SAS) credential definition. </summary>
-    public partial class SASCredentials : BaseCredentials
+    public partial class SasCredential : BaseCredentials
     {
-        /// <summary> Initializes a new instance of <see cref="SASCredentials"/>. </summary>
-        internal SASCredentials()
+        /// <summary> Initializes a new instance of <see cref="SasCredential"/>. </summary>
+        internal SasCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SASCredentials"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SasCredential"/>. </summary>
         /// <param name="type"> The type of credential used by the connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sasToken"> SAS token. </param>
-        internal SASCredentials(CredentialType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string sasToken) : base(@type, additionalBinaryDataProperties)
+        internal SasCredential(CredentialType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string sasToken) : base(@type, additionalBinaryDataProperties)
         {
             SasToken = sasToken;
         }

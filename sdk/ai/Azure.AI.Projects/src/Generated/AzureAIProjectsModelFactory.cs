@@ -39,7 +39,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// A base class for connection credentials
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ApiKeyCredentials"/>, <see cref="EntraIDCredentials"/>, <see cref="CustomCredential"/>, <see cref="SASCredentials"/>, and <see cref="NoAuthenticationCredentials"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ApiKeyCredentials"/>, <see cref="EntraIDCredentials"/>, <see cref="CustomCredential"/>, <see cref="SasCredential"/>, and <see cref="NoAuthenticationCredentials"/>.
         /// </summary>
         /// <param name="type"> The type of credential used by the connection. </param>
         /// <returns> A new <see cref="Projects.BaseCredentials"/> instance for mocking. </returns>
@@ -75,10 +75,10 @@ namespace Azure.AI.Projects
 
         /// <summary> Shared Access Signature (SAS) credential definition. </summary>
         /// <param name="sasToken"> SAS token. </param>
-        /// <returns> A new <see cref="Projects.SASCredentials"/> instance for mocking. </returns>
-        public static SASCredentials SASCredentials(string sasToken = default)
+        /// <returns> A new <see cref="Projects.SasCredential"/> instance for mocking. </returns>
+        public static SasCredential SasCredential(string sasToken = default)
         {
-            return new SASCredentials(CredentialType.SAS, additionalBinaryDataProperties: null, sasToken);
+            return new SasCredential(CredentialType.SAS, additionalBinaryDataProperties: null, sasToken);
         }
 
         /// <summary> Credentials that do not require authentication. </summary>

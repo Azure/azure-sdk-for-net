@@ -115,7 +115,7 @@ namespace Azure.AI.Projects
         /// <summary> Gets the client for managing indexes. </summary>
         public virtual IndexesOperations Indexes { get => GetIndexesOperationsClient(); }
         /// <summary> Gets the client for telemetry operations. </summary>
-        public virtual Telemetry Telemetry { get => new Telemetry(this); }
+        public virtual AIProjectTelemetry Telemetry { get => new AIProjectTelemetry(this); }
 
         private static ClientPipeline CreatePipeline(PipelinePolicy authenticationPolicy, AIProjectClientOptions options)
         => ClientPipeline.Create(

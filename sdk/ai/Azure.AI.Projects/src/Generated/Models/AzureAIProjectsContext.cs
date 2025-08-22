@@ -18,7 +18,7 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(ApiKeyCredentials))]
     [ModelReaderWriterBuildable(typeof(EntraIDCredentials))]
     [ModelReaderWriterBuildable(typeof(CustomCredential))]
-    [ModelReaderWriterBuildable(typeof(SASCredentials))]
+    [ModelReaderWriterBuildable(typeof(SasCredential))]
     [ModelReaderWriterBuildable(typeof(NoAuthenticationCredentials))]
     [ModelReaderWriterBuildable(typeof(PagedConnection))]
     [ModelReaderWriterBuildable(typeof(PagedDatasetVersion))]

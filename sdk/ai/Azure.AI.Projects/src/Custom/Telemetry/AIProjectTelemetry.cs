@@ -11,16 +11,16 @@ namespace Azure.AI.Projects
     /// <summary>
     /// Provides telemetry-related operations for the project.
     /// </summary>
-    public partial class Telemetry
+    public partial class AIProjectTelemetry
     {
         private readonly AIProjectClient _outerInstance;
         private string _connectionString;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Telemetry"/> class.
+        /// Initializes a new instance of the <see cref="AIProjectTelemetry"/> class.
         /// </summary>
         /// <param name="outerInstance">The parent AIProjectClient instance.</param>
-        public Telemetry(AIProjectClient outerInstance)
+        public AIProjectTelemetry(AIProjectClient outerInstance)
         {
             _outerInstance = outerInstance;
         }
