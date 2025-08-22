@@ -73,8 +73,10 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> The list of connected cluster API operations. </summary>
+        [WirePath("value")]
         public IReadOnlyList<QuotaOperationResult> Value { get; }
         /// <summary> The link to fetch the next page of connected cluster API operations. </summary>
+        [WirePath("nextLink")]
         public string NextLink { get; }
     }
 }

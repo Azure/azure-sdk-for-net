@@ -86,12 +86,16 @@ namespace Azure.ResourceManager.Quota.Models
         /// Please note <see cref="QuotaLimitJsonObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="QuotaLimitObject"/>.
         /// </summary>
+        [WirePath("limit")]
         public QuotaLimitJsonObject Limit { get; set; }
         /// <summary> The quota units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </summary>
+        [WirePath("unit")]
         public string Unit { get; }
         /// <summary> Resource name provided by the resource provider. Use this property name when requesting quota. </summary>
+        [WirePath("name")]
         public QuotaRequestResourceName Name { get; set; }
         /// <summary> The name of the resource type. Optional field. </summary>
+        [WirePath("resourceType")]
         public string ResourceTypeName { get; set; }
         /// <summary>
         /// The time period over which the quota usage values are summarized. For example:
@@ -100,8 +104,10 @@ namespace Azure.ResourceManager.Quota.Models
         /// *PT1S (per one second).
         /// This parameter is optional because, for some resources like compute, the period is irrelevant.
         /// </summary>
+        [WirePath("quotaPeriod")]
         public TimeSpan? QuotaPeriod { get; }
         /// <summary> States if quota can be requested for this resource. </summary>
+        [WirePath("isQuotaApplicable")]
         public bool? IsQuotaApplicable { get; }
         /// <summary>
         /// Additional properties for the specific resource provider.
@@ -133,6 +139,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties")]
         public BinaryData Properties { get; set; }
     }
 }

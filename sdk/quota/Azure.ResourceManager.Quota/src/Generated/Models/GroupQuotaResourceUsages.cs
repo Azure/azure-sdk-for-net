@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Resource details with usages and GroupQuota. </summary>
+        [WirePath("properties")]
         public GroupQuotaUsagesBase Properties { get; }
     }
 }

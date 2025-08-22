@@ -76,12 +76,16 @@ namespace Azure.ResourceManager.Quota
         }
 
         /// <summary> The new quota request allocated to subscription. </summary>
+        [WirePath("properties.requestedResource")]
         public QuotaAllocationRequestBase RequestedResource { get; set; }
         /// <summary> The request submission time. The date conforms to the following format specified by the ISO 8601 standard: yyyy-MM-ddTHH:mm:ssZ. </summary>
+        [WirePath("properties.requestSubmitTime")]
         public DateTimeOffset? RequestSubmittedOn { get; }
         /// <summary> Request status. </summary>
+        [WirePath("properties.provisioningState")]
         public QuotaRequestStatus? ProvisioningState { get; }
         /// <summary> Details of the failure. </summary>
+        [WirePath("properties.faultCode")]
         public string FaultCode { get; }
     }
 }

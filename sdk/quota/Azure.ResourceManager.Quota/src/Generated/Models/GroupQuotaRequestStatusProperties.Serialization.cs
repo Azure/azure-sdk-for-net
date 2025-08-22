@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -140,6 +141,90 @@ namespace Azure.ResourceManager.Quota.Models
             return new GroupQuotaRequestStatusProperties(requestedResource, requestSubmitTime, provisioningState, faultCode, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestedResource), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  requestedResource: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestedResource))
+                {
+                    builder.Append("  requestedResource: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RequestedResource, options, 2, false, "  requestedResource: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestSubmittedOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  requestSubmitTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestSubmittedOn))
+                {
+                    builder.Append("  requestSubmitTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(RequestSubmittedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("  provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FaultCode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  faultCode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FaultCode))
+                {
+                    builder.Append("  faultCode: ");
+                    if (FaultCode.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{FaultCode}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{FaultCode}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<GroupQuotaRequestStatusProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GroupQuotaRequestStatusProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -148,6 +233,8 @@ namespace Azure.ResourceManager.Quota.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerQuotaContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(GroupQuotaRequestStatusProperties)} does not support writing '{options.Format}' format.");
             }

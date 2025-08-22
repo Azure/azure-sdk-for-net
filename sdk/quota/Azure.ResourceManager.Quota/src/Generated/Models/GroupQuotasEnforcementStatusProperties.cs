@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Is the GroupQuota Enforcement enabled for the Azure region. </summary>
+        [WirePath("enforcementEnabled")]
         public EnforcementState? EnforcementEnabled { get; set; }
         /// <summary> Request status. </summary>
+        [WirePath("provisioningState")]
         public QuotaRequestStatus? ProvisioningState { get; }
         /// <summary> Details of the failure. </summary>
+        [WirePath("faultCode")]
         public string FaultCode { get; }
     }
 }

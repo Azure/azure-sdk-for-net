@@ -73,8 +73,10 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> The GroupQuotaSubscriptionId items on this page. </summary>
+        [WirePath("value")]
         public IReadOnlyList<GroupQuotaSubscriptionData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

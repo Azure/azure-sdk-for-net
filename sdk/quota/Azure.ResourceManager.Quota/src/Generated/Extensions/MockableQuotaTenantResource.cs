@@ -62,7 +62,8 @@ namespace Azure.ResourceManager.Quota.Mocking
         public virtual AsyncPageable<QuotaOperationResult> GetQuotaOperationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => QuotaOperationRestClient.CreateListRequest();
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => QuotaOperationResult.DeserializeQuotaOperationResult(e), QuotaOperationClientDiagnostics, Pipeline, "MockableQuotaTenantResource.GetQuotaOperations", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuotaOperationRestClient.CreateListNextPageRequest(nextLink);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => QuotaOperationResult.DeserializeQuotaOperationResult(e), QuotaOperationClientDiagnostics, Pipeline, "MockableQuotaTenantResource.GetQuotaOperations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -87,7 +88,8 @@ namespace Azure.ResourceManager.Quota.Mocking
         public virtual Pageable<QuotaOperationResult> GetQuotaOperations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => QuotaOperationRestClient.CreateListRequest();
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => QuotaOperationResult.DeserializeQuotaOperationResult(e), QuotaOperationClientDiagnostics, Pipeline, "MockableQuotaTenantResource.GetQuotaOperations", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuotaOperationRestClient.CreateListNextPageRequest(nextLink);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => QuotaOperationResult.DeserializeQuotaOperationResult(e), QuotaOperationClientDiagnostics, Pipeline, "MockableQuotaTenantResource.GetQuotaOperations", "value", "nextLink", cancellationToken);
         }
     }
 }

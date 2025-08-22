@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Provider name. </summary>
+        [WirePath("provider")]
         public string Provider { get; }
         /// <summary> Resource name. </summary>
+        [WirePath("resource")]
         public string Resource { get; }
         /// <summary> Operation name. </summary>
+        [WirePath("operation")]
         public string Operation { get; }
         /// <summary> Operation description. </summary>
+        [WirePath("description")]
         public string Description { get; }
     }
 }

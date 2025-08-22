@@ -73,8 +73,10 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> The GroupQuotasEntity items on this page. </summary>
+        [WirePath("value")]
         public IReadOnlyList<GroupQuotaEntityData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

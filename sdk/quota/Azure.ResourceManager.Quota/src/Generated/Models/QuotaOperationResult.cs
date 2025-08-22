@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Gets the name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Gets the display. </summary>
+        [WirePath("display")]
         public QuotaOperationDisplay Display { get; }
         /// <summary> Gets the origin. </summary>
+        [WirePath("origin")]
         public string Origin { get; }
     }
 }

@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> An Azure subscriptionId. </summary>
+        [WirePath("subscriptionId")]
         public string SubscriptionId { get; set; }
         /// <summary> Status of this subscriptionId being associated with the GroupQuotasEntity. </summary>
+        [WirePath("provisioningState")]
         public QuotaRequestStatus? ProvisioningState { get; }
     }
 }

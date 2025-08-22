@@ -74,22 +74,30 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> The resource name, such as SKU name. </summary>
+        [WirePath("resourceName")]
         public string ResourceName { get; set; }
         /// <summary> The current Group Quota Limit at the parentId level. </summary>
+        [WirePath("limit")]
         public long? Limit { get; set; }
         /// <summary> Any comment related to quota request. </summary>
+        [WirePath("comment")]
         public string Comment { get; set; }
         /// <summary> The usages units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </summary>
+        [WirePath("unit")]
         public string Unit { get; }
         /// <summary> Resource name. </summary>
+        [WirePath("name.value")]
         public string Value { get; }
         /// <summary> Resource display name. </summary>
+        [WirePath("name.localizedValue")]
         public string LocalizedValue { get; }
         /// <summary> The available Group Quota Limit at the MG level. This Group quota can be allocated to subscription(s). </summary>
+        [WirePath("availableLimit")]
         public long? AvailableLimit { get; }
         /// <summary> Quota allocated to subscriptions. </summary>
         internal AllocatedQuotaToSubscriptionList AllocatedToSubscriptions { get; }
         /// <summary> List of Group Quota Limit allocated to subscriptions. </summary>
+        [WirePath("allocatedToSubscriptions.value")]
         public IReadOnlyList<SubscriptionAllocatedQuota> AllocatedToSubscriptionsValue
         {
             get => AllocatedToSubscriptions?.Value;
