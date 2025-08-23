@@ -49,7 +49,8 @@ namespace Azure.Communication.CallAutomation
         /// The available derived classes include <see cref="WebSocketTranscriptionOptionsInternal"/>.
         /// </param>
         /// <param name="teamsAppSource"> The identifier of the source for creating call with Teams resource account ID. </param>
-        internal CreateCallRequestInternal(IList<CommunicationIdentifierModel> targets, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationUserIdentifierModel source, string operationContext, string callbackUri, CallIntelligenceOptionsInternal callIntelligenceOptions, MediaStreamingOptionsInternal mediaStreamingOptions, TranscriptionOptionsInternal transcriptionOptions, MicrosoftTeamsAppIdentifierModel teamsAppSource)
+        /// <param name="enableLoopbackAudio"> Enables loopback audio functionality for the call. </param>
+        internal CreateCallRequestInternal(IList<CommunicationIdentifierModel> targets, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationUserIdentifierModel source, string operationContext, string callbackUri, CallIntelligenceOptionsInternal callIntelligenceOptions, MediaStreamingOptionsInternal mediaStreamingOptions, TranscriptionOptionsInternal transcriptionOptions, MicrosoftTeamsAppIdentifierModel teamsAppSource, bool? enableLoopbackAudio)
         {
             Targets = targets;
             SourceCallerIdNumber = sourceCallerIdNumber;
@@ -61,6 +62,7 @@ namespace Azure.Communication.CallAutomation
             MediaStreamingOptions = mediaStreamingOptions;
             TranscriptionOptions = transcriptionOptions;
             TeamsAppSource = teamsAppSource;
+            EnableLoopbackAudio = enableLoopbackAudio;
         }
 
         /// <summary> The targets of the call. </summary>
@@ -94,5 +96,7 @@ namespace Azure.Communication.CallAutomation
         public TranscriptionOptionsInternal TranscriptionOptions { get; set; }
         /// <summary> The identifier of the source for creating call with Teams resource account ID. </summary>
         public MicrosoftTeamsAppIdentifierModel TeamsAppSource { get; set; }
+        /// <summary> Enables loopback audio functionality for the call. </summary>
+        public bool? EnableLoopbackAudio { get; set; }
     }
 }

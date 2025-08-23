@@ -209,6 +209,7 @@ namespace Azure.Communication.CallAutomation
             request.TranscriptionOptions = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
             request.AnsweredBy = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id);
             request.OperationContext = options.OperationContext;
+            request.EnableLoopbackAudio = options.IsLoopbackAudioEnabled;
 
             return request;
         }
@@ -675,6 +676,7 @@ namespace Azure.Communication.CallAutomation
             request.OperationContext = options.OperationContext;
             request.MediaStreamingOptions = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
             request.TranscriptionOptions = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
+            request.EnableLoopbackAudio = options.IsLoopbackAudioEnabled;
 
             return request;
         }
@@ -701,6 +703,7 @@ namespace Azure.Communication.CallAutomation
             request.OperationContext = options.OperationContext;
             request.MediaStreamingOptions = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
             request.TranscriptionOptions = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
+            request.EnableLoopbackAudio = options.IsLoopbackAudioEnabled;
 
             return request;
         }
@@ -716,6 +719,8 @@ namespace Azure.Communication.CallAutomation
             {
                 CognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri
             };
+
+            connectRequest.EnableLoopbackAudio = options.IsLoopbackAudioEnabled;
 
             return connectRequest;
         }
@@ -738,18 +743,33 @@ namespace Azure.Communication.CallAutomation
 
         private static WebSocketTranscriptionOptionsInternal CreateTranscriptionOptionsInternal(TranscriptionOptions configuration)
         {
-            return configuration == default
-                ? default
-                : new WebSocketTranscriptionOptionsInternal(
-                configuration.Locale)
+            if (configuration == default)
+            {
+                return default;
+            }
+
+            WebSocketTranscriptionOptionsInternal webSocketTranscriptionOptionsInternal = new WebSocketTranscriptionOptionsInternal()
+            {
+                Locale = configuration.Locale,
+                SpeechModelEndpointId = configuration.SpeechRecognitionModelEndpointId,
+                StartTranscription = configuration.StartTranscription,
+                TransportUrl = configuration.TransportUri?.AbsoluteUri,
+                TransportType = configuration.TranscriptionTransport,
+                EnableIntermediateResults = configuration.EnableIntermediateResults,
+                PiiRedactionOptions = configuration.PiiRedactionOptions == null ? null : new PiiRedactionOptionsInternal(configuration.PiiRedactionOptions.IsEnabled, configuration.PiiRedactionOptions.RedactionType),
+                EnableSentimentAnalysis = configuration.IsSentimentAnalysisEnabled,
+                SummarizationOptions = configuration.SummarizationOptions == null ? null : new SummarizationOptionsInternal(configuration.SummarizationOptions.IsEndCallSummaryEnabled, configuration.SummarizationOptions.Locale)
+            };
+
+            if (configuration.Locales != null && configuration.Locales.Any())
+            {
+                foreach (string locale in configuration.Locales)
                 {
-                    SpeechModelEndpointId = configuration.SpeechRecognitionModelEndpointId,
-                    StartTranscription = configuration.StartTranscription,
-                    TransportUrl = configuration.TransportUri?.AbsoluteUri,
-                    TransportType = configuration.TranscriptionTransport,
-                    EnableIntermediateResults = configuration.EnableIntermediateResults,
-                    SpeechRecognitionModelEndpointId = configuration.SpeechRecognitionModelEndpointId
-                };
+                    webSocketTranscriptionOptionsInternal.Locales.Add(locale);
+                }
+            }
+
+            return webSocketTranscriptionOptionsInternal;
         }
 
         /// <summary> Initializes a new instance of CallConnection. <see cref="CallConnection"/>.</summary>

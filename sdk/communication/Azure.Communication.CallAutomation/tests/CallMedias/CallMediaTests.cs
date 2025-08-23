@@ -113,6 +113,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 VoiceName = "LULU"
             },
             SpeechLanguage = "en-US",
+            SpeechLanguages = new List<string>() { "en-US", "fr-FR" },
+            IsSentimentAnalysisEnabled = true,
             SpeechModelEndpointId = "customModelEndpointId"
         };
 
@@ -147,6 +149,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 VoiceName = "LULU"
             },
             SpeechLanguage = "en-US",
+            SpeechLanguages = new List<string>() { "en-US", "fr-FR" },
+            IsSentimentAnalysisEnabled = true,
             SpeechModelEndpointId = "customModelEndpointId"
         };
 
@@ -182,6 +186,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 VoiceName = "LULU"
             },
             SpeechLanguage = "en-US",
+            SpeechLanguages = new List<string>() { "en-US", "fr-FR" },
+            IsSentimentAnalysisEnabled = true,
             SpeechModelEndpointId = "customModelEndpointId"
         };
 
@@ -312,6 +318,15 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             Assert.AreEqual((int)HttpStatusCode.Accepted, result.Status);
         }
 
+        [TestCaseSource(nameof(TestData_SummarizeCallOperationsAsync))]
+        public async Task SummarizeCallOperationsAsync_Return202Accepted(Func<CallMedia, Task<Response>> operation)
+        {
+            _callMedia = GetCallMedia(202);
+            var result = await operation(_callMedia);
+            Assert.IsNotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, result.Status);
+        }
+
         [TestCaseSource(nameof(TestData_StartMediaStreamingOperationsAsync))]
         public async Task StartMediaStreamingOperationsAsync_Return202Accepted(Func<CallMedia, Task<Response>> operation)
         {
@@ -420,6 +435,15 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             Assert.AreEqual((int)HttpStatusCode.Accepted, result.Status);
         }
 
+        [TestCaseSource(nameof(TestData_SummarizeCallOperations))]
+        public void SummarizeCallOperations_Return202Accepted(Func<CallMedia, Response> operation)
+        {
+            _callMedia = GetCallMedia(202);
+            var result = operation(_callMedia);
+            Assert.IsNotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, result.Status);
+        }
+
         [TestCaseSource(nameof(TestData_StartMediaStreamingOperations))]
         public void StartMediaStreamingOperations_Return202Accepted(Func<CallMedia, Response> operation)
         {
@@ -520,6 +544,16 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
 
         [TestCaseSource(nameof(TestData_StopTranscriptionOperationsAsync))]
         public void StopTranscriptionOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response>> operation)
+        {
+            _callMedia = GetCallMedia(404);
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(
+                async () => await operation(_callMedia));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_SummarizeCallOperationsAsync))]
+        public void SummarizeCallOperationsAsync_Return404NotFound(Func<CallMedia, Task<Response>> operation)
         {
             _callMedia = GetCallMedia(404);
             RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(
@@ -640,6 +674,16 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
 
         [TestCaseSource(nameof(TestData_UpdateTranscriptionOperations))]
         public void UpdateTranscriptionOperations_Return404NotFound(Func<CallMedia, Response> operation)
+        {
+            _callMedia = GetCallMedia(404);
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(
+                () => operation(_callMedia));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_SummarizeCallOperations))]
+        public void SummarizeCallOperations_Return404NotFound(Func<CallMedia, Response> operation)
         {
             _callMedia = GetCallMedia(404);
             RequestFailedException? ex = Assert.Throws<RequestFailedException>(
@@ -990,6 +1034,25 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 new Func<CallMedia, Task<Response>>?[]
                 {
                    callMedia => callMedia.StartTranscriptionAsync(new StartTranscriptionOptions(){OperationContext = "OperationContext"})
+                },
+                new Func<CallMedia, Task<Response>>?[]
+                {
+                   callMedia => callMedia.StartTranscriptionAsync(new StartTranscriptionOptions()
+                   {
+                       OperationContext = "OperationContext",
+                       PiiRedactionOptions = new PiiRedactionOptions()
+                       {
+                           IsEnabled = true,
+                           RedactionType = RedactionType.MaskWithCharacter
+                       },
+                       SummarizationOptions = new SummarizationOptions()
+                       {
+                           IsEndCallSummaryEnabled = true,
+                           Locale="en-US"
+                       },
+                       IsSentimentAnalysisEnabled = true,
+                       Locales = new List<string>() { "en-US", "fr-FR" },
+                   })
                 }
             };
         }
@@ -1022,7 +1085,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             {
                 new Func<CallMedia, Response>?[]
                 {
-                   callMedia => callMedia.UpdateTranscription(new UpdateTranscriptionOptions("locale"))
+                   callMedia => callMedia.UpdateTranscription(new UpdateTranscriptionOptions("en-US"))
                 }
             };
         }
@@ -1037,7 +1100,50 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 },
                 new Func<CallMedia, Task<Response>>?[]
                 {
-                   callMedia => callMedia.UpdateTranscriptionAsync(new UpdateTranscriptionOptions("locale"){SpeechRecognitionModelEndpointId = "customEndpoint", OperationContext="context" })
+                   callMedia => callMedia.UpdateTranscriptionAsync(new UpdateTranscriptionOptions("en-US") { OperationContext = "context" })
+                },
+                new Func<CallMedia, Task<Response>>?[]
+                {
+                   callMedia => callMedia.UpdateTranscriptionAsync(
+                       new UpdateTranscriptionOptions("en-US")
+                       {
+                           OperationContext = "OperationContext",
+                           SpeechRecognitionModelEndpointId = "customEndpoint",
+                           PiiRedactionOptions = new PiiRedactionOptions()
+                           {
+                               IsEnabled = true,
+                               RedactionType = RedactionType.MaskWithCharacter
+                           },
+                           SummarizationOptions = new SummarizationOptions()
+                           {
+                               IsEndCallSummaryEnabled = false,
+                               Locale = "en-US"
+                           },
+                           IsSentimentAnalysisEnabled = true
+                       }
+                   )
+                }
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_SummarizeCallOperations()
+        {
+            return new[]
+            {
+                new Func<CallMedia, Response>?[]
+                {
+                   callMedia => callMedia.SummarizeCall(new SummarizeCallOptions(){OperationContext="OperationContext",OperationCallbackUri = new Uri("https://test"), SummarizationOptions = new SummarizationOptions(){ Locale="en-US", IsEndCallSummaryEnabled = true } })
+                }
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_SummarizeCallOperationsAsync()
+        {
+            return new[]
+            {
+                new Func<CallMedia, Task<Response>>?[]
+                {
+                   callMedia => callMedia.SummarizeCallAsync(new SummarizeCallOptions(){OperationContext="OperationContext",OperationCallbackUri = new Uri("https://test"), SummarizationOptions = new SummarizationOptions(){ Locale="en-US", IsEndCallSummaryEnabled = true } })
                 }
             };
         }

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
@@ -14,14 +16,19 @@ namespace Azure.Communication.CallAutomation
     public partial class TranscriptionOptions
     {
         /// <summary> Initializes a new instance of <see cref="TranscriptionOptions"/>. </summary>
-        /// <param name="streamingTransport"> Transport URL for live transcription. </param>
         /// <param name="locale"> Defines the locale for the data e.g en-CA, en-AU. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locale"/> is null. </exception>
+        /// <param name="streamingTransport"> Transport URL for live transcription. </param>
         public TranscriptionOptions(string locale, StreamingTransport streamingTransport = default)
         {
-            Argument.AssertNotNull(locale, nameof(locale));
-            TranscriptionTransport = streamingTransport == default ? StreamingTransport.Websocket : streamingTransport;
             Locale = locale;
+            TranscriptionTransport = streamingTransport == default ? StreamingTransport.Websocket : streamingTransport;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TranscriptionOptions"/>. </summary>
+        /// <param name="streamingTransport"> Transport URL for live transcription. </param>
+        public TranscriptionOptions(StreamingTransport streamingTransport = default)
+        {
+            TranscriptionTransport = streamingTransport == default ? StreamingTransport.Websocket : streamingTransport;
         }
 
         /// <summary> Transport URL for live transcription. </summary>
@@ -36,5 +43,13 @@ namespace Azure.Communication.CallAutomation
         public string SpeechRecognitionModelEndpointId { get; set; }
         /// <summary> Enables intermediate results for the transcribed speech. </summary>
         public bool? EnableIntermediateResults { get; set; }
+        /// <summary> PII redaction configuration options. </summary>
+        public PiiRedactionOptions PiiRedactionOptions { get; set; }
+        /// <summary> Indicating if sentiment analysis should be used. </summary>
+        public bool? IsSentimentAnalysisEnabled { get; set; }
+        /// <summary>  List of locales for Language Identification. Supports upto 4 locales in the format: ["en-us", "fr-fr", "hi-in"] etc. </summary>
+        public IList<string> Locales { get; set; }
+        /// <summary> Summarization configuration options. </summary>
+        public SummarizationOptions SummarizationOptions { get; set; }
     }
 }
