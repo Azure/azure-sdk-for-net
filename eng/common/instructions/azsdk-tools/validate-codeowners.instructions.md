@@ -60,11 +60,11 @@ When no CODEOWNERS entry exists yet:
 4. Must have at least 2 valid owners from the start
 
 ### Fix Options:
-1. **Fix invalid owners** - If there are invalid owners after modifing the CODEOWNERS file ALWAYS provide guidance:
-   - Microsoft org: [Join here](https://repos.opensource.microsoft.com/orgs/Microsoft), set public visibility at [Microsoft Org Visibility](https://github.com/orgs/Microsoft/people?query={github_username})
-   - Azure org: [Join here](https://repos.opensource.microsoft.com/orgs/Azure), set public visibility at [Azure Org Visibility](https://github.com/orgs/Azure/people?query={github_username})
-   - Write access: [Request here](https://coreidentity.microsoft.com/manage/Entitlement/entitlement/azuresdkpart-heqj)
-   - Documentation about codeowners: [Read here](https://eng.ms/docs/products/azure-developer-experience/develop/supporting-sdk-customers/codeowners)
+1. **Fix invalid owners** - If there are invalid owners after modifing the CODEOWNERS file ALWAYS provide guidance.
+   Follow instructions [here](https://aka.ms/azsdk/access) for:
+   - Joining Microsoft and Azure GitHub orgs
+   - Setting public visibility
+   - Requesting write access
 2. **Add new owners** using `azsdk_engsys_codeowner_update` with `isAdding: true`
 3. **Remove invalid + add valid** owners using `azsdk_engsys_codeowner_update`
 
