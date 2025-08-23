@@ -129,7 +129,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
         }
 
         [Fact]
-        public void VerifyCustomEventWithClientAddress()
+        public void VerifyCustomEventWithClientIP()
         {
             // SETUP
             var uniqueTestId = Guid.NewGuid();
@@ -149,7 +149,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             // ACT
             var logger = loggerFactory.CreateLogger(logCategoryName);
-            logger.LogInformation("{microsoft.custom_event.name} {client.address}", "MyCustomEventName", "1.2.3.4");
+            logger.LogInformation("{microsoft.custom_event.name} {microsoft.client.ip}", "MyCustomEventName", "1.2.3.4");
 
             // CLEANUP
             loggerFactory.Dispose();

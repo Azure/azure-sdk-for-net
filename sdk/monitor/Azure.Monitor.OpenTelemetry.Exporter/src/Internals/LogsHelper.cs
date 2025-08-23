@@ -20,6 +20,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     internal static class LogsHelper
     {
         private const string CustomEventAttributeName = "microsoft.custom_event.name";
+        private const string ClientIpAttributeName = "microsoft.client.ip";
         private const int Version = 2;
         private static readonly Action<LogRecordScope, IDictionary<string, string>> s_processScope = (scope, properties) =>
         {
@@ -58,11 +59,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 try
                 {
                     var properties = new ChangeTrackingDictionary<string, string>();
-                    ProcessLogRecordProperties(logRecord, properties, out string? message, out string? eventName, out string? clientAddress);
+                    ProcessLogRecordProperties(logRecord, properties, out string? message, out string? eventName, out string? microsoftClientIp);
 
                     if (logRecord.Exception is not null)
                     {
-                        telemetryItem = new TelemetryItem("Exception", logRecord, resource, instrumentationKey, clientAddress)
+                        telemetryItem = new TelemetryItem("Exception", logRecord, resource, instrumentationKey, microsoftClientIp)
                         {
                             Data = new MonitorBase
                             {
@@ -73,7 +74,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     }
                     else if (eventName is not null)
                     {
-                        telemetryItem = new TelemetryItem("Event", logRecord, resource, instrumentationKey, clientAddress)
+                        telemetryItem = new TelemetryItem("Event", logRecord, resource, instrumentationKey, microsoftClientIp)
                         {
                             Data = new MonitorBase
                             {
@@ -84,7 +85,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     }
                     else
                     {
-                        telemetryItem = new TelemetryItem("Message", logRecord, resource, instrumentationKey, clientAddress)
+                        telemetryItem = new TelemetryItem("Message", logRecord, resource, instrumentationKey, microsoftClientIp)
                         {
                             Data = new MonitorBase
                             {
@@ -105,11 +106,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return telemetryItems;
         }
 
-        internal static void ProcessLogRecordProperties(LogRecord logRecord, IDictionary<string, string> properties, out string? message, out string? eventName, out string? clientAddress)
+        internal static void ProcessLogRecordProperties(LogRecord logRecord, IDictionary<string, string> properties, out string? message, out string? eventName, out string? microsoftClientIp)
         {
             eventName = null;
             message = logRecord.Exception?.Message ?? logRecord.FormattedMessage;
-            clientAddress = null;
+            microsoftClientIp = null;
 
             foreach (KeyValuePair<string, object?> item in logRecord.Attributes ?? Enumerable.Empty<KeyValuePair<string, object?>>())
             {
@@ -118,9 +119,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     eventName = item.Value?.ToString();
                 }
 
-                else if (item.Key == SemanticConventions.AttributeClientAddress)
+                else if (item.Key == ClientIpAttributeName)
                 {
-                    clientAddress = item.Value?.ToString().Truncate(SchemaConstants.MessageData_Properties_MaxValueLength);
+                    microsoftClientIp = item.Value?.ToString().Truncate(SchemaConstants.MessageData_Properties_MaxValueLength);
                 }
                 // Note: if Key exceeds MaxLength, the entire KVP will be dropped.
                 else if (item.Key.Length <= SchemaConstants.MessageData_Properties_MaxKeyLength && item.Value != null)

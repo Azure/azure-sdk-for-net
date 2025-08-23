@@ -163,5 +163,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         // Messaging v1.21.0 https://github.com/open-telemetry/opentelemetry-specification/blob/v1.21.0/specification/trace/semantic_conventions/messaging.md
         public const string AttributeMessagingDestinationName = "messaging.destination.name";
         public const string AttributeNetworkProtocolName = "network.protocol.name";
+
+        // fallback attributes in case client.address is not available
+        public const string AttributeHttpClientIp = "http.client_ip";
+        public const string AttributeNetSockPeerAddress = "net.sock.peer.addr";
     }
 }

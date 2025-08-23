@@ -24,6 +24,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
             Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
 
+            string? microsoftClientIp = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, "microsoft.client.ip")?.ToString();
             if (activity.GetTelemetryType() == TelemetryType.Request)
             {
                 if (activityTagsProcessor.activityType.HasFlag(OperationType.V2))
@@ -39,14 +40,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     Tags[ContextTagKeys.AiOperationName.ToString()] = activity.DisplayName.Truncate(SchemaConstants.Tags_AiOperationName_MaxLength);
                 }
 
-                // Set ip in case of server spans only.
                 if (activity.Kind == ActivityKind.Server)
                 {
-                    var locationIp = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeClientAddress)?.ToString();
+                    // according to spec, microsoft.client.ip is an override, and if not available we follow the precedence below
+                    var locationIp = microsoftClientIp ??
+                                     AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeClientAddress)?.ToString() ??
+                                     AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpClientIp)?.ToString() ??
+                                     AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeNetSockPeerAddress)?.ToString() ??
+                                     AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeNetPeerIp)?.ToString();
+
                     if (locationIp != null)
                     {
                         Tags[ContextTagKeys.AiLocationIp.ToString()] = locationIp;
                     }
+                }
+            }
+            else // dependency
+            {
+                if (microsoftClientIp != null) // not likely a customer would set this, but just in case
+                {
+                    Tags[ContextTagKeys.AiLocationIp.ToString()] = microsoftClientIp;
                 }
             }
 
@@ -92,7 +105,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
         }
 
-        public TelemetryItem (string name, LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey, string? clientAddress) :
+        public TelemetryItem (string name, LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey, string? microsoftClientIp) :
             this(name, FormatUtcTimestamp(logRecord.Timestamp))
         {
             if (logRecord.TraceId != default)
@@ -105,9 +118,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 Tags[ContextTagKeys.AiOperationParentId.ToString()] = logRecord.SpanId.ToHexString();
             }
 
-            if (clientAddress != null)
+            if (microsoftClientIp != null)
             {
-                Tags[ContextTagKeys.AiLocationIp.ToString()] = clientAddress.ToString();
+                Tags[ContextTagKeys.AiLocationIp.ToString()] = microsoftClientIp.ToString();
             }
 
             InstrumentationKey = instrumentationKey;

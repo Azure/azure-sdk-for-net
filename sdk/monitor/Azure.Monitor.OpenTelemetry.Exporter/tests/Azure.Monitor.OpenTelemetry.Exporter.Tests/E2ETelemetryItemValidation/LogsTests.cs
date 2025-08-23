@@ -166,7 +166,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
         }
 
         [Fact]
-        public void VerifyLogWithClientAddressMapsToAiLocationIp()
+        public void VerifyLogWithClientIPMapsToAiLocationIp()
         {
             // SETUP
             var uniqueTestId = Guid.NewGuid();
@@ -185,7 +185,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             // ACT
             var logger = loggerFactory.CreateLogger(logCategoryName);
-            logger.LogInformation("Client address: {client.address}", "1.2.3.4");
+            logger.LogInformation("Client IP: {microsoft.client.ip}", "1.2.3.4");
 
             // CLEANUP
             loggerFactory.Dispose();
@@ -198,7 +198,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             TelemetryItemValidationHelper.AssertMessageTelemetry(
                 telemetryItem: telemetryItem!,
                 expectedSeverityLevel: "Information",
-                expectedMessage: "Client address: {client.address}",
+                expectedMessage: "Client IP: {microsoft.client.ip}",
                 expectedMessageProperties: new Dictionary<string, string> { { "CategoryName", logCategoryName } },
                 expectedSpanId: null,
                 expectedTraceId: null,

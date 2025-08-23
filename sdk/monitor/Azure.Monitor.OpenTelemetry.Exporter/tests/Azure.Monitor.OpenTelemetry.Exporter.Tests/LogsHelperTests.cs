@@ -640,7 +640,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void VerifyClientAddress()
+        public void VerifyClientIP()
         {
             // Arrange.
             var logRecords = new List<LogRecord>(1);
@@ -653,14 +653,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             });
 
             var logger = loggerFactory.CreateLogger("Some category");
-            logger.LogInformation("{client.address}", "1.2.3.4");
+            logger.LogInformation("{microsoft.client.ip}", "1.2.3.4");
 
             // Assert.
             var logRecord = logRecords.Single();
             var properties = new ChangeTrackingDictionary<string, string>();
-            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientAddress);
+            LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out var clientIP);
 
-            Assert.Equal("1.2.3.4", clientAddress);
+            Assert.Equal("1.2.3.4", clientIP);
             Assert.Null(eventName);
         }
 
