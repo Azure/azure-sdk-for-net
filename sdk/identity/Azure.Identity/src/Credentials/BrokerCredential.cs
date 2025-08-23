@@ -17,7 +17,7 @@ namespace Azure.Identity.Credentials
         private readonly bool _isBrokerOptionsEnabled;
 
         public BrokerCredential(DevelopmentBrokerOptions options)
-            : base(TryGetBrokerOptionsWithCredentialOptions(FileSystemService.Default, options, out bool isBrokerEnabled) ?? CreateFallbackOptionsFromCredentialOptions(options))
+            : base(CredentialOptionsMapper.GetBrokerOptionsWithCredentialOptions(options, out bool isBrokerEnabled) ?? CreateFallbackOptionsFromCredentialOptions(options))
         {
             _isBrokerOptionsEnabled = isBrokerEnabled;
         }
@@ -52,27 +52,6 @@ namespace Azure.Identity.Credentials
             {
                 throw scope.FailWrapAndThrow(e, "BrokerCredential failed to silently authenticate via the broker", isCredentialUnavailable: true);
             }
-        }
-
-        private static InteractiveBrowserCredentialOptions TryGetBrokerOptionsWithCredentialOptions(IFileSystemService fileSystem, DevelopmentBrokerOptions credentialOptions, out bool isBrokerEnabled)
-        {
-            isBrokerEnabled = DefaultAzureCredentialFactory.TryCreateDevelopmentBrokerOptions(out InteractiveBrowserCredentialOptions options);
-
-            if (isBrokerEnabled && options != null)
-            {
-                if (credentialOptions != null)
-                {
-                    options.TenantId = credentialOptions.TenantId;
-                    options.AdditionallyAllowedTenants = credentialOptions.AdditionallyAllowedTenants;
-                    options.AuthorityHost = credentialOptions.AuthorityHost;
-                    options.IsUnsafeSupportLoggingEnabled = credentialOptions.IsUnsafeSupportLoggingEnabled;
-                    options.IsChainedCredential = credentialOptions.IsChainedCredential;
-                }
-
-                return options;
-            }
-
-            return null;
         }
 
         private static InteractiveBrowserCredentialOptions CreateFallbackOptionsFromCredentialOptions(DevelopmentBrokerOptions credentialOptions)
