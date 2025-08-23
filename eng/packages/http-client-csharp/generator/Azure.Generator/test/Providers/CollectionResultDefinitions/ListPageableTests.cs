@@ -19,7 +19,7 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
             CreatePagingOperation();
 
             var collectionResultDefinition = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
-                t => t is CollectionResultDefinition && t.Name == "CatClientGetCatsCollectionResult");
+                t => t is AzureCollectionResultDefinition && t.Name == "CatClientGetCatsCollectionResult");
             Assert.IsNotNull(collectionResultDefinition);
 
             var writer = new TypeProviderWriter(collectionResultDefinition!);
@@ -33,7 +33,7 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
             CreatePagingOperation();
 
             var collectionResultDefinition = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
-                t => t is CollectionResultDefinition && t.Name == "CatClientGetCatsAsyncCollectionResult");
+                t => t is AzureCollectionResultDefinition && t.Name == "CatClientGetCatsAsyncCollectionResult");
             Assert.IsNotNull(collectionResultDefinition);
 
             var writer = new TypeProviderWriter(collectionResultDefinition!);
@@ -47,7 +47,7 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
             CreatePagingOperation();
 
             var collectionResultDefinition = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
-                t => t is CollectionResultDefinition && t.Name == "CatClientGetCatsCollectionResultOfT");
+                t => t is AzureCollectionResultDefinition && t.Name == "CatClientGetCatsCollectionResultOfT");
             Assert.IsNotNull(collectionResultDefinition);
 
             var writer = new TypeProviderWriter(collectionResultDefinition!);
@@ -61,7 +61,7 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
             CreatePagingOperation();
 
             var collectionResultDefinition = AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(
-                t => t is CollectionResultDefinition && t.Name == "CatClientGetCatsAsyncCollectionResultOfT");
+                t => t is AzureCollectionResultDefinition && t.Name == "CatClientGetCatsAsyncCollectionResultOfT");
             Assert.IsNotNull(collectionResultDefinition);
 
             var writer = new TypeProviderWriter(collectionResultDefinition!);
@@ -75,7 +75,7 @@ namespace Azure.Generator.Tests.Providers.CollectionResultDefinitions
             [
                 InputFactory.Property("color", InputPrimitiveType.String, isRequired: true),
             ]);
-            var parameter = InputFactory.Parameter("animalKind", InputPrimitiveType.String, isRequired: true, location: InputRequestLocation.Query);
+            var parameter = InputFactory.QueryParameter("animalKind", InputPrimitiveType.String, isRequired: true);
             var pagingMetadata = InputFactory.PagingMetadata(["cats"], null, null);
             var response = InputFactory.OperationResponse(
                 [200],

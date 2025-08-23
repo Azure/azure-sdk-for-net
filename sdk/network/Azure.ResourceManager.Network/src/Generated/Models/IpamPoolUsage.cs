@@ -81,22 +81,31 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of IP address prefixes of the resource. </summary>
+        [WirePath("addressPrefixes")]
         public IReadOnlyList<string> AddressPrefixes { get; }
         /// <summary> List of IpamPool that are children of this IpamPool. </summary>
+        [WirePath("childPools")]
         public IReadOnlyList<IpamResourceBasics> ChildPools { get; }
         /// <summary> List of assigned IP address prefixes. </summary>
+        [WirePath("allocatedAddressPrefixes")]
         public IReadOnlyList<string> AllocatedAddressPrefixes { get; }
         /// <summary> List of reserved IP address prefixes. These IP addresses could be reclaimed if not assigned in the given time. </summary>
+        [WirePath("reservedAddressPrefixes")]
         public IReadOnlyList<string> ReservedAddressPrefixes { get; }
         /// <summary> List of available IP address prefixes. </summary>
+        [WirePath("availableAddressPrefixes")]
         public IReadOnlyList<string> AvailableAddressPrefixes { get; }
         /// <summary> Total number of IP addresses managed in the IpamPool. </summary>
+        [WirePath("totalNumberOfIPAddresses")]
         public string TotalNumberOfIPAddresses { get; }
         /// <summary> Total number of assigned IP addresses in the IpamPool. </summary>
+        [WirePath("numberOfAllocatedIPAddresses")]
         public string NumberOfAllocatedIPAddresses { get; }
         /// <summary> Total number of reserved IP addresses in the IpamPool. </summary>
+        [WirePath("numberOfReservedIPAddresses")]
         public string NumberOfReservedIPAddresses { get; }
         /// <summary> Total number of available IP addresses in the IpamPool. </summary>
+        [WirePath("numberOfAvailableIPAddresses")]
         public string NumberOfAvailableIPAddresses { get; }
     }
 }

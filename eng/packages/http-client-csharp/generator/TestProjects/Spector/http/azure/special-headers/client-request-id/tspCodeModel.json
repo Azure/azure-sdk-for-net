@@ -28,8 +28,9 @@
             "parameters": [
               {
                 "$id": "4",
+                "kind": "header",
                 "name": "clientRequestId",
-                "nameInRequest": "x-ms-client-request-id",
+                "serializedName": "x-ms-client-request-id",
                 "type": {
                   "$id": "5",
                   "kind": "string",
@@ -37,15 +38,13 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                 },
-                "location": "Header",
                 "isApiVersion": false,
+                "optional": true,
                 "isContentType": false,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": false,
-                "kind": "Method",
+                "scope": "Method",
+                "readOnly": false,
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "Azure.SpecialHeaders.XmsClientRequestId.get.clientRequestId"
               }
             ],
             "responses": [
@@ -69,8 +68,9 @@
           "parameters": [
             {
               "$id": "6",
+              "kind": "method",
               "name": "clientRequestId",
-              "nameInRequest": "x-ms-client-request-id",
+              "serializedName": "x-ms-client-request-id",
               "type": {
                 "$id": "7",
                 "kind": "string",
@@ -80,13 +80,12 @@
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": false,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": true,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "Azure.SpecialHeaders.XmsClientRequestId.get.clientRequestId",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             }
           ],
           "response": {},
@@ -99,8 +98,9 @@
       "parameters": [
         {
           "$id": "8",
+          "kind": "endpoint",
           "name": "endpoint",
-          "nameInRequest": "endpoint",
+          "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
             "$id": "9",
@@ -108,14 +108,10 @@
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
           },
-          "location": "Uri",
           "isApiVersion": false,
-          "isContentType": false,
-          "isRequired": true,
+          "optional": false,
+          "scope": "Client",
           "isEndpoint": true,
-          "skipUrlEncoding": false,
-          "explode": false,
-          "kind": "Client",
           "defaultValue": {
             "type": {
               "$id": "10",
@@ -125,7 +121,10 @@
             },
             "value": "http://localhost:3000"
           },
-          "serverUrlTemplate": "{endpoint}"
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Azure.SpecialHeaders.XmsClientRequestId.endpoint"
         }
       ],
       "decorators": [],

@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Describes the possible values. </summary>
+        [WirePath("filterValues")]
         public IReadOnlyList<string> FilterValues { get; }
     }
 }

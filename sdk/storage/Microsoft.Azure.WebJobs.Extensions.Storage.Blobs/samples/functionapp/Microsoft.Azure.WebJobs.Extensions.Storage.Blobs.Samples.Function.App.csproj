@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <RequiredTargetFrameworks>netcoreapp3.1</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks>net8.0</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <AzureFunctionsVersion>v3</AzureFunctionsVersion>
   </PropertyGroup>
@@ -10,6 +10,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Http" />
 		<PackageReference Include="Microsoft.Azure.WebJobs.Extensions" />
 		<PackageReference Include="Microsoft.NET.Sdk.Functions" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+    <PackageReference Include="Microsoft.Extensions.Logging" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">

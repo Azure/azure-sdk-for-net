@@ -82,19 +82,24 @@ namespace Azure.ResourceManager.Cdn
         /// Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'
         /// Serialized Name: AFDOriginGroup.properties.sessionAffinityState
         /// </param>
+        /// <param name="authentication">
+        /// Authentication settings for origin in origin group.
+        /// Serialized Name: AFDOriginGroup.properties.authentication
+        /// </param>
         /// <param name="provisioningState">
         /// Provisioning status
         /// Serialized Name: AFDOriginGroup.properties.provisioningState
         /// </param>
         /// <param name="deploymentStatus"> Serialized Name: AFDOriginGroup.properties.deploymentStatus. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FrontDoorOriginGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string profileName, LoadBalancingSettings loadBalancingSettings, HealthProbeSettings healthProbeSettings, int? trafficRestorationTimeInMinutes, EnabledState? sessionAffinityState, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal FrontDoorOriginGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string profileName, LoadBalancingSettings loadBalancingSettings, HealthProbeSettings healthProbeSettings, int? trafficRestorationTimeInMinutes, EnabledState? sessionAffinityState, OriginAuthenticationProperties authentication, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProfileName = profileName;
             LoadBalancingSettings = loadBalancingSettings;
             HealthProbeSettings = healthProbeSettings;
             TrafficRestorationTimeInMinutes = trafficRestorationTimeInMinutes;
             SessionAffinityState = sessionAffinityState;
+            Authentication = authentication;
             ProvisioningState = provisioningState;
             DeploymentStatus = deploymentStatus;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -125,6 +130,11 @@ namespace Azure.ResourceManager.Cdn
         /// Serialized Name: AFDOriginGroup.properties.sessionAffinityState
         /// </summary>
         public EnabledState? SessionAffinityState { get; set; }
+        /// <summary>
+        /// Authentication settings for origin in origin group.
+        /// Serialized Name: AFDOriginGroup.properties.authentication
+        /// </summary>
+        public OriginAuthenticationProperties Authentication { get; set; }
         /// <summary>
         /// Provisioning status
         /// Serialized Name: AFDOriginGroup.properties.provisioningState

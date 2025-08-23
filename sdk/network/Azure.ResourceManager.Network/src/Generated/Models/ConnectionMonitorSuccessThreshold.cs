@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The maximum percentage of failed checks permitted for a test to evaluate as successful. </summary>
+        [WirePath("checksFailedPercent")]
         public int? ChecksFailedPercent { get; set; }
         /// <summary> The maximum round-trip time in milliseconds permitted for a test to evaluate as successful. </summary>
+        [WirePath("roundTripTimeMs")]
         public float? RoundTripTimeMs { get; set; }
     }
 }

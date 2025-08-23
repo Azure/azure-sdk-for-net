@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.ResourceManager.Resources.Deployments.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Scenario\DeploymentTemplates\*.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
+  </ItemGroup>
+</Project>

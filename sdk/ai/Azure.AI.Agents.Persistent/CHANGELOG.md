@@ -1,16 +1,35 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.2.0-beta.4 (Unreleased)
 
 ### Features Added
-
-- Implemented streaming scenario for MCP tool.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.3 (2025-08-22)
+
+### Features Added
+- Added delete operation for `ThreadMessages`.
+- Add `RunStepDeltaCustomBingGroundingToolCall`, describing `BingCustomSearchTool` updates in streaming scenario.
+- Add `RunStepDeltaMicrosoftFabricToolCall`, describing `FabricTool` updates in streaming scenario.
+- Add `RunStepDeltaSharepointToolCall`, describing `SharepointTool` updates in streaming scenario.
+
+## 1.2.0-beta.2 (2025-08-13)
+
+### Features Added
+
+- Implemented streaming scenario for MCP tool.
+- Added `RunStepDetailsActivity`, describing MCP function parameters.
+
+### Bugs Fixed
+
+- Fixed the deserialization issue, when agent service returns the customized lists of trusted and requiring authentication MCP tools.
+- Added classes for deserialization of `RunStepDeltaAzureAISearchToolCall`, `RunStepDeltaOpenAPIToolCall` and `RunStepDeltaDeepResearchToolCall`, required to get the real time updates when Azure AI Search, OpenAPI or Deep Research tools are being used during streaming scenarios.
+- Added `RunStepConnectedAgentToolCall` and `RunStepDeltaConnectedAgentToolCall` for deserializing Connected Agent tool updates in non-streaming and streaming scenarios.
 
 ### Sample updates
 

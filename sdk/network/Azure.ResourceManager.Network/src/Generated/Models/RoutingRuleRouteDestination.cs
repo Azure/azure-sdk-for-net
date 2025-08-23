@@ -74,8 +74,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Destination type. </summary>
+        [WirePath("type")]
         public RoutingRuleDestinationType DestinationType { get; set; }
         /// <summary> Destination address. </summary>
+        [WirePath("destinationAddress")]
         public string DestinationAddress { get; set; }
     }
 }

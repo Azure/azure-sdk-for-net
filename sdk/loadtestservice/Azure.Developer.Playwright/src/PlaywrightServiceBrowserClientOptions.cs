@@ -183,37 +183,6 @@ namespace Azure.Developer.Playwright
             }
         }
 
-        private bool? _useCloudHostedBrowsers;
-        /// <summary>
-        /// Gets or sets a flag indicating whether to use cloud-hosted browsers.
-        /// </summary>
-        public bool UseCloudHostedBrowsers
-        {
-            get
-            {
-                if (_useCloudHostedBrowsers != null)
-                    return (bool)_useCloudHostedBrowsers!;
-                var envValue = _environment.GetEnvironmentVariable(Constants.s_playwright_service_use_cloud_hosted_browsers_environment_variable);
-                if (envValue != null)
-                {
-                    if (bool.TryParse(envValue, out var result))
-                        return result;
-                    throw new ArgumentException($"Invalid value for UseCloudHostedBrowsers. Supported values are true or false");
-                }
-                _environment.SetEnvironmentVariable(Constants.s_playwright_service_use_cloud_hosted_browsers_environment_variable, true.ToString());
-                return true;
-            }
-            set
-            {
-                _useCloudHostedBrowsers = value;
-                // Set use cloud hosted browsers if not already set in the environment
-                if (_environment.GetEnvironmentVariable(Constants.s_playwright_service_use_cloud_hosted_browsers_environment_variable) == null)
-                {
-                    _environment.SetEnvironmentVariable(Constants.s_playwright_service_use_cloud_hosted_browsers_environment_variable, value.ToString());
-                }
-            }
-        }
-
         /// <summary>
         /// Gets the service endpoint for Playwright service.
         /// </summary>

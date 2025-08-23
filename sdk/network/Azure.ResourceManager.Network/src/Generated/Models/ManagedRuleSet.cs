@@ -81,12 +81,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Defines the rule set type to use. </summary>
+        [WirePath("ruleSetType")]
         public string RuleSetType { get; set; }
         /// <summary> Defines the version of the rule set to use. </summary>
+        [WirePath("ruleSetVersion")]
         public string RuleSetVersion { get; set; }
         /// <summary> Defines the rule group overrides to apply to the rule set. </summary>
+        [WirePath("ruleGroupOverrides")]
         public IList<ManagedRuleGroupOverride> RuleGroupOverrides { get; }
         /// <summary> Stores the final list of disabled rule groups. </summary>
+        [WirePath("computedDisabledRules")]
         public IReadOnlyList<ManagedRuleSetRuleGroup> ComputedDisabledRules { get; }
     }
 }

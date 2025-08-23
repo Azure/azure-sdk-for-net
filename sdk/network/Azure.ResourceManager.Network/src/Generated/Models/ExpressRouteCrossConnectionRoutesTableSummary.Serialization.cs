@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -132,6 +133,105 @@ namespace Azure.ResourceManager.Network.Models
             return new ExpressRouteCrossConnectionRoutesTableSummary(neighbor, asn, upDown, stateOrPrefixesReceived, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Neighbor), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  neighbor: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Neighbor))
+                {
+                    builder.Append("  neighbor: ");
+                    if (Neighbor.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Neighbor}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Neighbor}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Asn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  asn: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Asn))
+                {
+                    builder.Append("  asn: ");
+                    builder.AppendLine($"{Asn.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UpDown), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  upDown: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UpDown))
+                {
+                    builder.Append("  upDown: ");
+                    if (UpDown.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UpDown}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UpDown}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StateOrPrefixesReceived), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  stateOrPrefixesReceived: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StateOrPrefixesReceived))
+                {
+                    builder.Append("  stateOrPrefixesReceived: ");
+                    if (StateOrPrefixesReceived.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{StateOrPrefixesReceived}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{StateOrPrefixesReceived}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ExpressRouteCrossConnectionRoutesTableSummary>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCrossConnectionRoutesTableSummary>)this).GetFormatFromOptions(options) : options.Format;
@@ -140,6 +240,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ExpressRouteCrossConnectionRoutesTableSummary)} does not support writing '{options.Format}' format.");
             }

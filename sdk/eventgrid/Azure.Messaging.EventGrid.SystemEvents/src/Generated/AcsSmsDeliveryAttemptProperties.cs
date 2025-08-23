@@ -13,37 +13,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema for details of a delivery attempt. </summary>
     public partial class AcsSmsDeliveryAttemptProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AcsSmsDeliveryAttemptProperties"/>. </summary>
         internal AcsSmsDeliveryAttemptProperties()
@@ -54,19 +25,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="timestamp"> TimeStamp when delivery was attempted. </param>
         /// <param name="segmentsSucceeded"> Number of segments that were successfully delivered. </param>
         /// <param name="segmentsFailed"> Number of segments whose delivery failed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AcsSmsDeliveryAttemptProperties(DateTimeOffset? timestamp, int? segmentsSucceeded, int? segmentsFailed, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AcsSmsDeliveryAttemptProperties(DateTimeOffset? timestamp, int? segmentsSucceeded, int? segmentsFailed, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Timestamp = timestamp;
             SegmentsSucceeded = segmentsSucceeded;
             SegmentsFailed = segmentsFailed;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> TimeStamp when delivery was attempted. </summary>
         public DateTimeOffset? Timestamp { get; }
+
         /// <summary> Number of segments that were successfully delivered. </summary>
         public int? SegmentsSucceeded { get; }
+
         /// <summary> Number of segments whose delivery failed. </summary>
         public int? SegmentsFailed { get; }
     }

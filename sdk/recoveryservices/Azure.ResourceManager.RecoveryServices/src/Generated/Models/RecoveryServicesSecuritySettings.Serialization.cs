@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 writer.WritePropertyName("multiUserAuthorization"u8);
                 writer.WriteStringValue(MultiUserAuthorization.Value.ToString());
             }
+            if (Optional.IsDefined(SourceScanConfiguration))
+            {
+                writer.WritePropertyName("sourceScanConfiguration"u8);
+                writer.WriteObjectValue(SourceScanConfiguration, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -89,6 +94,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             ImmutabilitySettings immutabilitySettings = default;
             RecoveryServicesSoftDeleteSettings softDeleteSettings = default;
             MultiUserAuthorization? multiUserAuthorization = default;
+            SourceScanConfiguration sourceScanConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -120,13 +126,22 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     multiUserAuthorization = new MultiUserAuthorization(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("sourceScanConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceScanConfiguration = SourceScanConfiguration.DeserializeSourceScanConfiguration(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RecoveryServicesSecuritySettings(immutabilitySettings, softDeleteSettings, multiUserAuthorization, serializedAdditionalRawData);
+            return new RecoveryServicesSecuritySettings(immutabilitySettings, softDeleteSettings, multiUserAuthorization, sourceScanConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecoveryServicesSecuritySettings>.Write(ModelReaderWriterOptions options)

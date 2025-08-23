@@ -5,21 +5,102 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    public partial class QueryResultDocumentInnerHit
+    public partial class QueryResultDocumentInnerHit : IUtf8JsonSerializable, IJsonModel<QueryResultDocumentInnerHit>
     {
-        internal static QueryResultDocumentInnerHit DeserializeQueryResultDocumentInnerHit(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryResultDocumentInnerHit>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<QueryResultDocumentInnerHit>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryResultDocumentInnerHit>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(QueryResultDocumentInnerHit)} does not support writing '{format}' format.");
+            }
+
+            if (options.Format != "W" && Optional.IsDefined(Ordinal))
+            {
+                writer.WritePropertyName("ordinal"u8);
+                writer.WriteNumberValue(Ordinal.Value);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Vectors))
+            {
+                writer.WritePropertyName("vectors"u8);
+                writer.WriteStartArray();
+                foreach (var item in Vectors)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStartObject();
+                    foreach (var item0 in item)
+                    {
+                        writer.WritePropertyName(item0.Key);
+                        writer.WriteObjectValue(item0.Value, options);
+                    }
+                    writer.WriteEndObject();
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        QueryResultDocumentInnerHit IJsonModel<QueryResultDocumentInnerHit>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryResultDocumentInnerHit>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(QueryResultDocumentInnerHit)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeQueryResultDocumentInnerHit(document.RootElement, options);
+        }
+
+        internal static QueryResultDocumentInnerHit DeserializeQueryResultDocumentInnerHit(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             long? ordinal = default;
             IReadOnlyList<IDictionary<string, SingleVectorFieldResult>> vectors = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ordinal"u8))
@@ -49,7 +130,7 @@ namespace Azure.Search.Documents.Models
                             Dictionary<string, SingleVectorFieldResult> dictionary = new Dictionary<string, SingleVectorFieldResult>();
                             foreach (var property0 in item.EnumerateObject())
                             {
-                                dictionary.Add(property0.Name, SingleVectorFieldResult.DeserializeSingleVectorFieldResult(property0.Value));
+                                dictionary.Add(property0.Name, SingleVectorFieldResult.DeserializeSingleVectorFieldResult(property0.Value, options));
                             }
                             array.Add(dictionary);
                         }
@@ -57,9 +138,45 @@ namespace Azure.Search.Documents.Models
                     vectors = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new QueryResultDocumentInnerHit(ordinal, vectors ?? new ChangeTrackingList<IDictionary<string, SingleVectorFieldResult>>());
+            serializedAdditionalRawData = rawDataDictionary;
+            return new QueryResultDocumentInnerHit(ordinal, vectors ?? new ChangeTrackingList<IDictionary<string, SingleVectorFieldResult>>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<QueryResultDocumentInnerHit>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryResultDocumentInnerHit>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(QueryResultDocumentInnerHit)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        QueryResultDocumentInnerHit IPersistableModel<QueryResultDocumentInnerHit>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryResultDocumentInnerHit>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
+                        return DeserializeQueryResultDocumentInnerHit(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(QueryResultDocumentInnerHit)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<QueryResultDocumentInnerHit>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -67,6 +184,14 @@ namespace Azure.Search.Documents.Models
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeQueryResultDocumentInnerHit(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

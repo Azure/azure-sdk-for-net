@@ -1,4 +1,4 @@
-# Azure.Provisioning.Kubernetes client library for .NET
+# Azure Provisioning Kubernetes client library for .NET
 
 Azure.Provisioning.Kubernetes simplifies declarative resource provisioning in .NET.
 

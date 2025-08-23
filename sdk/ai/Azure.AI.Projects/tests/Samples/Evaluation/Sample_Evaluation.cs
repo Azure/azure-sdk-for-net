@@ -1,12 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable
+// #nullable disable
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -57,11 +55,11 @@ public class Sample_Evaluations : SamplesBase<AIProjectsTestEnvironment>
         Console.WriteLine(evaluationResponse);
 
         Console.WriteLine("Get evaluation");
-        Evaluation getEvaluationResponse = projectClient.Evaluations.GetEvaluation(evaluationResponse.Name);
+        Evaluation getEvaluationResponse = projectClient.Evaluations.Get(evaluationResponse.Name);
         Console.WriteLine(getEvaluationResponse);
 
         Console.WriteLine("List evaluations");
-        foreach (var eval in projectClient.Evaluations.GetEvaluations())
+        foreach (var eval in projectClient.Evaluations.GetAll())
         {
             Console.WriteLine(eval);
         }
@@ -110,11 +108,11 @@ public class Sample_Evaluations : SamplesBase<AIProjectsTestEnvironment>
         Console.WriteLine(evaluationResponse);
 
         Console.WriteLine("Get evaluation");
-        Evaluation getEvaluationResponse = await projectClient.Evaluations.GetEvaluationAsync(evaluationResponse.Name);
+        Evaluation getEvaluationResponse = await projectClient.Evaluations.GetAsync(evaluationResponse.Name);
         Console.WriteLine(getEvaluationResponse);
 
         Console.WriteLine("List evaluations");
-        await foreach (var eval in projectClient.Evaluations.GetEvaluationsAsync())
+        await foreach (var eval in projectClient.Evaluations.GetAllAsync())
         {
             Console.WriteLine(eval);
         }
