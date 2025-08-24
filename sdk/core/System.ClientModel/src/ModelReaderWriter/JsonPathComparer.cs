@@ -52,7 +52,7 @@ internal class JsonPathComparer : IEqualityComparer<byte[]>
     public byte[] Create(ReadOnlySpan<byte> alternate)
         => alternate.ToArray();
 
-    public void Normalize(ReadOnlySpan<byte> jsonPath, ref Span<byte> buffer, out int bytesWritten)
+    public void Normalize(ReadOnlySpan<byte> jsonPath, Span<byte> buffer, out int bytesWritten)
     {
         ReadOnlySpan<byte> localPath = jsonPath;
         bytesWritten = 0;
@@ -112,7 +112,7 @@ internal class JsonPathComparer : IEqualityComparer<byte[]>
     public int GetNormalizedHashCode(ReadOnlySpan<byte> jsonPath)
     {
         Span<byte> buffer = stackalloc byte[jsonPath.Length];
-        Normalize(jsonPath, ref buffer, out int bytesWritten);
+        Normalize(jsonPath, buffer, out int bytesWritten);
         buffer = buffer.Slice(0, bytesWritten);
 #if NET8_0_OR_GREATER
         var hash = new HashCode();
@@ -139,8 +139,8 @@ internal class JsonPathComparer : IEqualityComparer<byte[]>
 
         Span<byte> bufferX = stackalloc byte[x.Length];
         Span<byte> bufferY = stackalloc byte[y.Length];
-        Normalize(x, ref bufferX, out int bytesWrittenX);
-        Normalize(y, ref bufferY, out int bytesWrittenY);
+        Normalize(x, bufferX, out int bytesWrittenX);
+        Normalize(y, bufferY, out int bytesWrittenY);
         if (bytesWrittenX != bytesWrittenY)
             return false;
         return bufferX.Slice(0, bytesWrittenX).SequenceEqual(bufferY.Slice(0, bytesWrittenY));

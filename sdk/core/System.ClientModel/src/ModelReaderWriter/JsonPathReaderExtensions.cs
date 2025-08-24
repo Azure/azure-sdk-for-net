@@ -69,9 +69,33 @@ internal static class JsonPathReaderExtensions
         return true;
     }
 
-    public static bool IsArrayIndex(this ReadOnlySpan<byte> jsonPath)
+    public static ReadOnlySpan<byte> GetFirstNonArray(this byte[] jsonPath)
     {
-        int index = jsonPath.Length - 1;
+        int index = 0;
+        ReadOnlySpan<byte> newPath = jsonPath.AsSpan();
+        while (!newPath.IsRoot())
+        {
+            if (!newPath.IsArrayIndex(out index))
+                break;
+            newPath = newPath.Slice(0, index + 1);
+        }
+
+        return newPath;
+    }
+
+    public static bool IsArrayIndex(this byte[] jsonPath)
+        => IsArrayIndex(jsonPath, out _);
+
+    public static bool IsArrayIndex(this ReadOnlySpan<byte> jsonPath)
+        => IsArrayIndex(jsonPath, out _);
+
+    private static bool IsArrayIndex(this ReadOnlySpan<byte> jsonPath, out int index)
+    {
+        index = 0;
+        if (jsonPath.Length < 4)
+            return false;
+
+        index = jsonPath.Length - 1;
         if (jsonPath[index] != (byte)']')
             return false;
 
@@ -84,6 +108,7 @@ internal static class JsonPathReaderExtensions
         if (index < 0 || jsonPath[index] != (byte)'[')
             return false;
 
+        index--;
         return true;
     }
 
@@ -345,6 +370,27 @@ internal static class JsonPathReaderExtensions
         jsonReader = new Utf8JsonReader(json);
 
         return jsonReader.Advance(jsonPath);
+    }
+
+    public static int GetArrayLength(ref this Utf8JsonReader jsonReader, ReadOnlySpan<byte> arrayPath)
+    {
+        if (!jsonReader.Advance(arrayPath))
+            throw new Exception($"{Encoding.UTF8.GetString(arrayPath.ToArray())} was not found in the JSON structure.");
+
+        if (jsonReader.TokenType == JsonTokenType.PropertyName)
+            jsonReader.Read(); // Move to the value after the property name
+
+        if (jsonReader.TokenType != JsonTokenType.StartArray)
+            throw new Exception($"{Encoding.UTF8.GetString(arrayPath.ToArray())} is not an array.");
+
+        int length = 0;
+        while (jsonReader.Read() && jsonReader.TokenType != JsonTokenType.EndArray)
+        {
+            length++;
+            jsonReader.Skip();
+        }
+
+        return length;
     }
 
     public static bool Advance(this Utf8JsonReader jsonReader, string jsonPath)

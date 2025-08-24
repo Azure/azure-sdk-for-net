@@ -22,39 +22,42 @@ public partial struct JsonPatch
 
         public int Count => _inner.Count;
 
+        public int MaxKeyLength { get; private set; }
+
         public bool TryGetValue(ReadOnlySpan<byte> key, out EncodedValue value)
         {
             Span<byte> normalizedKey = stackalloc byte[key.Length];
-            JsonPathComparer.Default.Normalize(key, ref normalizedKey, out int bytesWritten);
+            JsonPathComparer.Default.Normalize(key, normalizedKey, out int bytesWritten);
             normalizedKey = normalizedKey.Slice(0, bytesWritten);
 #if NET9_0_OR_GREATER
             return _inner.GetAlternateLookup<ReadOnlySpan<byte>>().TryGetValue(normalizedKey, out value);
 #else
-        return _inner.TryGetValue(normalizedKey.ToArray(), out value);
+            return _inner.TryGetValue(normalizedKey.ToArray(), out value);
 #endif
         }
 
         public bool ContainsKey(ReadOnlySpan<byte> key)
         {
             Span<byte> normalizedKey = stackalloc byte[key.Length];
-            JsonPathComparer.Default.Normalize(key, ref normalizedKey, out int bytesWritten);
+            JsonPathComparer.Default.Normalize(key, normalizedKey, out int bytesWritten);
             normalizedKey = normalizedKey.Slice(0, bytesWritten);
 #if NET9_0_OR_GREATER
             return _inner.GetAlternateLookup<ReadOnlySpan<byte>>().ContainsKey(normalizedKey);
 #else
-        return _inner.ContainsKey(normalizedKey.ToArray());
+            return _inner.ContainsKey(normalizedKey.ToArray());
 #endif
         }
 
         public void Set(ReadOnlySpan<byte> key, EncodedValue value)
         {
             Span<byte> normalizedKey = stackalloc byte[key.Length];
-            JsonPathComparer.Default.Normalize(key, ref normalizedKey, out int bytesWritten);
+            JsonPathComparer.Default.Normalize(key, normalizedKey, out int bytesWritten);
             normalizedKey = normalizedKey.Slice(0, bytesWritten);
+            MaxKeyLength = Math.Max(MaxKeyLength, normalizedKey.Length);
 #if NET9_0_OR_GREATER
             _inner.GetAlternateLookup<ReadOnlySpan<byte>>()[normalizedKey] = value;
 #else
-        _inner[normalizedKey.ToArray()] = value;
+            _inner[normalizedKey.ToArray()] = value;
 #endif
         }
 

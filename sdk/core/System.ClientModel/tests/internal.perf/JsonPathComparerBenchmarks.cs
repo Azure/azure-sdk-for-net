@@ -18,14 +18,14 @@ namespace System.ClientModel.Tests.Internal.Perf
         public void Normalize_Comparer()
         {
             Span<byte> buffer = stackalloc byte[_path1a.Length];
-            JsonPathComparer.Default.Normalize(_path1a, ref buffer, out int bytesWritten);
+            JsonPathComparer.Default.Normalize(_path1a, buffer, out int bytesWritten);
         }
 
         [Benchmark]
         public void Normalize_AlternateForm_Comparer()
         {
             Span<byte> buffer = stackalloc byte[_path1aPrime.Length];
-            JsonPathComparer.Default.Normalize(_path1aPrime, ref buffer, out int bytesWritten);
+            JsonPathComparer.Default.Normalize(_path1aPrime, buffer, out int bytesWritten);
         }
 
         [Benchmark]

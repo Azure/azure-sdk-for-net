@@ -320,7 +320,7 @@ public partial struct JsonPatch
             return;
 
         Span<byte> normalizedPrefix = stackalloc byte[prefix.Length];
-        JsonPathComparer.Default.Normalize(prefix, ref normalizedPrefix, out int bytesWritten);
+        JsonPathComparer.Default.Normalize(prefix, normalizedPrefix, out int bytesWritten);
         normalizedPrefix = normalizedPrefix.Slice(0, bytesWritten);
 
         foreach (var kvp in _properties)
@@ -370,6 +370,8 @@ public partial struct JsonPatch
         bool isWriterEmpty = writer.CurrentDepth == 0 && writer.BytesCommitted == 0 && writer.BytesPending == 0;
         bool isSeeded = !_rawJson.Value.IsEmpty;
 
+        SpanHashSet? arrays = null;
+
         if (!isSeeded && _properties is null && isWriterEmpty)
         {
             writer.WriteStartObject();
@@ -403,11 +405,21 @@ public partial struct JsonPatch
 
                 if (kvp.Value.Kind.HasFlag(ValueKind.ArrayItemAppend))
                 {
-                    if (!kvp.Key.IsRoot())
+                    var firstNonArray = kvp.Key.GetFirstNonArray();
+                    if (arrays?.Contains(firstNonArray) == true)
+                    {
+                        continue;
+                    }
+
+                    if (!kvp.Key.IsRoot() && !kvp.Key.IsArrayIndex())
                     {
                         writer.WritePropertyName(kvp.Key.GetPropertyName());
                     }
-                    writer.WriteRawValue(kvp.Value.Value.Span);
+                    _properties.TryGetValue(firstNonArray, out var existingArrayValue);
+                    var rawArray = GetCombinedArray(firstNonArray, existingArrayValue, true);
+                    writer.WriteRawValue(rawArray.Span);
+                    arrays ??= new();
+                    arrays.Add(firstNonArray);
                     continue;
                 }
 
@@ -519,7 +531,7 @@ public partial struct JsonPatch
             return false;
 
         Span<byte> normalizedPrefix = stackalloc byte[prefix.Length];
-        JsonPathComparer.Default.Normalize(prefix, ref normalizedPrefix, out int bytesWritten);
+        JsonPathComparer.Default.Normalize(prefix, normalizedPrefix, out int bytesWritten);
         normalizedPrefix = normalizedPrefix.Slice(0, bytesWritten);
 
         foreach (var kvp in _properties)

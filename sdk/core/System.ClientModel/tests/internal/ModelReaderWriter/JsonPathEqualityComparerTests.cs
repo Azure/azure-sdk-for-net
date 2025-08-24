@@ -88,7 +88,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             var a = Encoding.UTF8.GetBytes(input);
             Span<byte> buffer = stackalloc byte[a.Length];
-            JsonPathComparer.Default.Normalize(a.AsSpan(), ref buffer, out int bytesWritten);
+            JsonPathComparer.Default.Normalize(a.AsSpan(), buffer, out int bytesWritten);
             Assert.AreEqual(expected, Encoding.UTF8.GetString(buffer.Slice(0, bytesWritten).ToArray()));
         }
     }
