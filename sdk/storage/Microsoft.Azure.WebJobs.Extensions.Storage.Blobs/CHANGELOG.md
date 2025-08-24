@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed bug where the blob polling strategy will miss blobs that were created before the last scan time. The scan will now evaluate new blobs added to the container based on CreatedOn property and not the LastModifiedTime property (#51030).
 
 ### Other Changes
 
