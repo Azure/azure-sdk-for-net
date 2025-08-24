@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Fabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetACapacity()
         {
-            // Generated from example definition: 2023-11-01/FabricCapacities_Get.json
+            // Generated from example definition: 2025-01-15-preview/FabricCapacities_Get.json
             // this example is just showing the usage of "FabricCapacity_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Fabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteACapacity()
         {
-            // Generated from example definition: 2023-11-01/FabricCapacities_Delete.json
+            // Generated from example definition: 2025-01-15-preview/FabricCapacities_Delete.json
             // this example is just showing the usage of "FabricCapacity_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Fabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateCapacityProperties()
         {
-            // Generated from example definition: 2023-11-01/FabricCapacities_Update.json
+            // Generated from example definition: 2025-01-15-preview/FabricCapacities_Update.json
             // this example is just showing the usage of "FabricCapacity_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Fabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Resume_ResumeCapacity()
         {
-            // Generated from example definition: 2023-11-01/FabricCapacities_Resume.json
+            // Generated from example definition: 2025-01-15-preview/FabricCapacities_Resume.json
             // this example is just showing the usage of "FabricCapacities_Resume" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Fabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Suspend_SuspendCapacity()
         {
-            // Generated from example definition: 2023-11-01/FabricCapacities_Suspend.json
+            // Generated from example definition: 2025-01-15-preview/FabricCapacities_Suspend.json
             // this example is just showing the usage of "FabricCapacities_Suspend" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Fabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetSkusForCapacity_ListEligibleSKUsForAnExistingCapacity()
         {
-            // Generated from example definition: 2023-11-01/FabricCapacities_ListSkusForCapacity.json
+            // Generated from example definition: 2025-01-15-preview/FabricCapacities_ListSkusForCapacity.json
             // this example is just showing the usage of "FabricCapacities_ListSkusForCapacity" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
