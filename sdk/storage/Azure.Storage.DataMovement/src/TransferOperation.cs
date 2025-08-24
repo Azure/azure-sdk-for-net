@@ -1,10 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Storage.Common;
+using static Azure.Storage.DataMovement.TransferInternalState;
 
 namespace Azure.Storage.DataMovement
 {
@@ -12,7 +14,7 @@ namespace Azure.Storage.DataMovement
     /// Containers information about the transfer and its status as well as provides
     /// hooks to perform operations on the transfer.
     /// </summary>
-    public class TransferOperation
+    public class TransferOperation : IDisposable
     {
         /// <summary>
         /// Defines whether the transfer has completed.
@@ -49,15 +51,30 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Constructing a TransferOperation object.
         /// </summary>
+        /// <param name="removeTransferDelegate">Delegate to call to remove transfer from the respective TransferManager.</param>
         /// <param name="id">The transfer ID of the transfer object.</param>
         /// <param name="status">The Transfer Status of the Transfer. See <see cref="TransferStatus"/>.</param>
         internal TransferOperation(
+            RemoveTransferDelegate removeTransferDelegate,
             string id,
             TransferStatus status = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             status ??= new TransferStatus();
-            _state = new TransferInternalState(id, status);
+            _state = new TransferInternalState(
+                removeTransferDelegate,
+                id,
+                status);
+        }
+
+        /// <summary>
+        /// Disposes the TransferOperation,
+        /// </summary>
+        public void Dispose()
+        {
+            TransferManager = null;
+            _state?.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         /// <summary>
