@@ -47,21 +47,21 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         /// <summary> Initializes a new instance of <see cref="NotificationPreference"/>. </summary>
         /// <param name="stageName"> Name of the stage. </param>
-        /// <param name="isNotificationRequired"> Notification is required or not. </param>
-        public NotificationPreference(NotificationStageName stageName, bool isNotificationRequired)
+        /// <param name="sendNotification"> Notification is required or not. </param>
+        public NotificationPreference(NotificationStageName stageName, bool sendNotification)
         {
             StageName = stageName;
-            IsNotificationRequired = isNotificationRequired;
+            SendNotification = sendNotification;
         }
 
         /// <summary> Initializes a new instance of <see cref="NotificationPreference"/>. </summary>
         /// <param name="stageName"> Name of the stage. </param>
-        /// <param name="isNotificationRequired"> Notification is required or not. </param>
+        /// <param name="sendNotification"> Notification is required or not. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NotificationPreference(NotificationStageName stageName, bool isNotificationRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NotificationPreference(NotificationStageName stageName, bool sendNotification, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StageName = stageName;
-            IsNotificationRequired = isNotificationRequired;
+            SendNotification = sendNotification;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -73,6 +73,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Name of the stage. </summary>
         public NotificationStageName StageName { get; set; }
         /// <summary> Notification is required or not. </summary>
-        public bool IsNotificationRequired { get; set; }
+        public bool SendNotification { get; set; }
     }
 }

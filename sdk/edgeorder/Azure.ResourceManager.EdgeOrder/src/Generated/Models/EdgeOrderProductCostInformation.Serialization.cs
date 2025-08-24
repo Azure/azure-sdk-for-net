@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (options.Format != "W" && Optional.IsDefined(BillingInfoUri))
             {
                 writer.WritePropertyName("billingInfoUrl"u8);
-                writer.WriteStringValue(BillingInfoUri.AbsoluteUri);
+                writer.WriteStringValue(BillingInfoUri);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 return null;
             }
             IReadOnlyList<EdgeOrderProductBillingMeterDetails> billingMeterDetails = default;
-            Uri billingInfoUrl = default;
+            string billingInfoUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,11 +108,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 if (property.NameEquals("billingInfoUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    billingInfoUrl = new Uri(property.Value.GetString());
+                    billingInfoUrl = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrderItemReturnContent"/>. </summary>
-        /// <param name="returnAddress"> customer return address. </param>
+        /// <param name="returnAddress"> Customer return address. </param>
         /// <param name="returnReason"> Return Reason. </param>
         /// <param name="serviceTag"> Service tag (located on the bottom-right corner of the device). </param>
-        /// <param name="isShippingBoxRequired"> Shipping Box required. </param>
+        /// <param name="shippingBoxRequired"> Shipping Box required. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeOrderItemReturnContent(EdgeOrderItemAddressProperties returnAddress, string returnReason, string serviceTag, bool? isShippingBoxRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EdgeOrderItemReturnContent(EdgeOrderItemAddressProperties returnAddress, string returnReason, string serviceTag, bool? shippingBoxRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReturnAddress = returnAddress;
             ReturnReason = returnReason;
             ServiceTag = serviceTag;
-            IsShippingBoxRequired = isShippingBoxRequired;
+            ShippingBoxRequired = shippingBoxRequired;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -75,13 +75,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         {
         }
 
-        /// <summary> customer return address. </summary>
+        /// <summary> Customer return address. </summary>
         public EdgeOrderItemAddressProperties ReturnAddress { get; set; }
         /// <summary> Return Reason. </summary>
         public string ReturnReason { get; }
         /// <summary> Service tag (located on the bottom-right corner of the device). </summary>
         public string ServiceTag { get; set; }
         /// <summary> Shipping Box required. </summary>
-        public bool? IsShippingBoxRequired { get; set; }
+        public bool? ShippingBoxRequired { get; set; }
     }
 }
