@@ -23,6 +23,10 @@ namespace Azure.Security.ConfidentialLedger
         private readonly Uri _ledgerEndpoint;
         private readonly string _apiVersion;
 
+        // Secondary endpoint support for failover
+        private readonly Uri _secondaryLedgerEndpoint;
+        private readonly HttpPipeline _secondaryPipeline;
+
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
@@ -252,8 +256,21 @@ namespace Azure.Security.ConfidentialLedger
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetLedgerEntryRequest(transactionId, collectionId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                try
+                {
+                    Console.WriteLine("trying primary endpoint");
+                    using HttpMessage message = CreateGetLedgerEntryRequest(transactionId, collectionId, context);
+                    return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                }
+                catch (Exception ex) when ((ex is RequestFailedException || ex is System.Collections.Generic.KeyNotFoundException) && _secondaryLedgerEndpoint != null)
+                {
+                    Console.WriteLine("primary endpoint failed: " + ex.Message);
+                    Console.WriteLine("trying secondary endpoint");
+                    // If primary fails and secondary is available, try secondary
+                    using HttpMessage message = CreateGetLedgerEntryRequest(transactionId, collectionId, context, useSecondaryEndpoint: true);
+                    var pipeline = _secondaryPipeline ?? _pipeline;
+                    return await pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                }
             }
             catch (Exception e)
             {
@@ -288,8 +305,20 @@ namespace Azure.Security.ConfidentialLedger
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetLedgerEntryRequest(transactionId, collectionId, context);
-                return _pipeline.ProcessMessage(message, context);
+                try
+                {
+                    Console.WriteLine("trying primary endpoint");
+                    using HttpMessage message = CreateGetLedgerEntryRequest(transactionId, collectionId, context);
+                    return _pipeline.ProcessMessage(message, context);
+                }
+                catch (Exception ex) when ((ex is RequestFailedException || ex is System.Collections.Generic.KeyNotFoundException) && _secondaryLedgerEndpoint != null)
+                {
+                    Console.WriteLine("trying secondary endpoint");
+                    // If primary fails and secondary is available, try secondary
+                    using HttpMessage message = CreateGetLedgerEntryRequest(transactionId, collectionId, context, useSecondaryEndpoint: true);
+                    var pipeline = _secondaryPipeline ?? _pipeline;
+                    return pipeline.ProcessMessage(message, context);
+                }
             }
             catch (Exception e)
             {
@@ -459,8 +488,20 @@ namespace Azure.Security.ConfidentialLedger
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCurrentLedgerEntryRequest(collectionId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                try
+                {
+                    Console.WriteLine("trying primary endpoint");
+                    using HttpMessage message = CreateGetCurrentLedgerEntryRequest(collectionId, context);
+                    return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                }
+                catch (Exception ex) when ((ex is RequestFailedException || ex is System.Collections.Generic.KeyNotFoundException) && _secondaryLedgerEndpoint != null)
+                {
+                    Console.WriteLine("trying secondary endpoint");
+                    // If primary fails and secondary is available, try secondary
+                    using HttpMessage message = CreateGetCurrentLedgerEntryRequest(collectionId, context, useSecondaryEndpoint: true);
+                    var pipeline = _secondaryPipeline ?? _pipeline;
+                    return await pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                }
             }
             catch (Exception e)
             {
@@ -490,8 +531,20 @@ namespace Azure.Security.ConfidentialLedger
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetCurrentLedgerEntryRequest(collectionId, context);
-                return _pipeline.ProcessMessage(message, context);
+                try
+                {
+                    Console.WriteLine("trying primary endpoint");
+                    using HttpMessage message = CreateGetCurrentLedgerEntryRequest(collectionId, context);
+                    return _pipeline.ProcessMessage(message, context);
+                }
+                catch (Exception ex) when ((ex is RequestFailedException || ex is System.Collections.Generic.KeyNotFoundException) && _secondaryLedgerEndpoint != null)
+                {
+                    Console.WriteLine("trying secondary endpoint");
+                    // If primary fails and secondary is available, try secondary
+                    using HttpMessage message = CreateGetCurrentLedgerEntryRequest(collectionId, context, useSecondaryEndpoint: true);
+                    var pipeline = _secondaryPipeline ?? _pipeline;
+                    return pipeline.ProcessMessage(message, context);
+                }
             }
             catch (Exception e)
             {
@@ -2168,13 +2221,16 @@ namespace Azure.Security.ConfidentialLedger
             return message;
         }
 
-        internal HttpMessage CreateGetLedgerEntryRequest(string transactionId, string collectionId, RequestContext context)
+        internal HttpMessage CreateGetLedgerEntryRequest(string transactionId, string collectionId, RequestContext context, bool useSecondaryEndpoint = false)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var endpoint = useSecondaryEndpoint && _secondaryLedgerEndpoint != null ? _secondaryLedgerEndpoint : _ledgerEndpoint;
+            var pipeline = useSecondaryEndpoint && _secondaryPipeline != null ? _secondaryPipeline : _pipeline;
+            
+            var message = pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(endpoint);
             uri.AppendPath("/app/transactions/", false);
             uri.AppendPath(transactionId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -2219,13 +2275,16 @@ namespace Azure.Security.ConfidentialLedger
             return message;
         }
 
-        internal HttpMessage CreateGetCurrentLedgerEntryRequest(string collectionId, RequestContext context)
+        internal HttpMessage CreateGetCurrentLedgerEntryRequest(string collectionId, RequestContext context, bool useSecondaryEndpoint = false)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var endpoint = useSecondaryEndpoint && _secondaryLedgerEndpoint != null ? _secondaryLedgerEndpoint : _ledgerEndpoint;
+            var pipeline = useSecondaryEndpoint && _secondaryPipeline != null ? _secondaryPipeline : _pipeline;
+            
+            var message = pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.Reset(_ledgerEndpoint);
+            uri.Reset(endpoint);
             uri.AppendPath("/app/transactions/current", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (collectionId != null)
