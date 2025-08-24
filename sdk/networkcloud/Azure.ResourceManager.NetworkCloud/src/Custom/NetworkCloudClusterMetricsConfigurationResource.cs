@@ -128,12 +128,12 @@ namespace Azure.ResourceManager.NetworkCloud
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken)
         {
-            using var scope = _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationResource.Delete");
+            using var scope = _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationResource.Delete");
             scope.Start();
             try
             {
-                var response = await _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, null, cancellationToken).ConfigureAwait(false);
-                var operation = new CustomNetworkCloudArmOperation(_networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics, Pipeline, _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, null).Request, response, OperationFinalStateVia.Location);
+                var response = await _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, null, cancellationToken).ConfigureAwait(false);
+                var operation = new CustomNetworkCloudArmOperation(_networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics, Pipeline, _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, null).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -167,12 +167,12 @@ namespace Azure.ResourceManager.NetworkCloud
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken)
         {
-            using var scope = _networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationResource.Delete");
+            using var scope = _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics.CreateScope("NetworkCloudClusterMetricsConfigurationResource.Delete");
             scope.Start();
             try
             {
-                var response = _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, null, cancellationToken);
-                var operation = new CustomNetworkCloudArmOperation(_networkCloudClusterMetricsConfigurationMetricsConfigurationsClientDiagnostics, Pipeline, _networkCloudClusterMetricsConfigurationMetricsConfigurationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, null).Request, response, OperationFinalStateVia.Location);
+                var response = _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, null, cancellationToken);
+                var operation = new CustomNetworkCloudArmOperation(_networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsClientDiagnostics, Pipeline, _networkCloudClusterMetricsConfigurationClusterMetricsConfigurationsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, null).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

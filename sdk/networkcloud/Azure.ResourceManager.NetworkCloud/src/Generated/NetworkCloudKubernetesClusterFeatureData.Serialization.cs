@@ -263,7 +263,6 @@ namespace Azure.ResourceManager.NetworkCloud
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                etag,
                 availabilityLifecycle,
                 detailedStatus,
                 detailedStatusMessage,
@@ -271,6 +270,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 provisioningState,
                 required,
                 version,
+                etag,
                 serializedAdditionalRawData);
         }
 

@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AgentPools_Get</description>
+        /// <description>AgentPool_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AgentPools_Get</description>
+        /// <description>AgentPool_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>KubernetesClusterFeatures_Get</description>
+        /// <description>KubernetesClusterFeature_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>KubernetesClusterFeatures_Get</description>
+        /// <description>KubernetesClusterFeature_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>KubernetesClusters_Get</description>
+        /// <description>KubernetesCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>KubernetesClusters_Get</description>
+        /// <description>KubernetesCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>KubernetesClusters_Delete</description>
+        /// <description>KubernetesCluster_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>KubernetesClusters_Delete</description>
+        /// <description>KubernetesCluster_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>KubernetesClusters_Update</description>
+        /// <description>KubernetesCluster_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>KubernetesClusters_Update</description>
+        /// <description>KubernetesCluster_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>KubernetesClusters_Get</description>
+        /// <description>KubernetesCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>KubernetesClusters_Get</description>
+        /// <description>KubernetesCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>KubernetesClusters_Get</description>
+        /// <description>KubernetesCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -774,7 +774,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>KubernetesClusters_Get</description>
+        /// <description>KubernetesCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -831,7 +831,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>KubernetesClusters_Get</description>
+        /// <description>KubernetesCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -891,7 +891,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>KubernetesClusters_Get</description>
+        /// <description>KubernetesCluster_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

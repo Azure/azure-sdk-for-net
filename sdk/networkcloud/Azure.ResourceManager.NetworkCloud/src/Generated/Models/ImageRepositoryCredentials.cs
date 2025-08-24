@@ -46,14 +46,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ImageRepositoryCredentials"/>. </summary>
+        /// <param name="password"> The password or token used to access an image in the target repository. </param>
         /// <param name="registryUriString"> The URL of the authentication server used to validate the repository credentials. </param>
         /// <param name="username"> The username used to access an image in the target repository. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="registryUriString"/> or <paramref name="username"/> is null. </exception>
-        public ImageRepositoryCredentials(string registryUriString, string username)
+        /// <exception cref="ArgumentNullException"> <paramref name="password"/>, <paramref name="registryUriString"/> or <paramref name="username"/> is null. </exception>
+        public ImageRepositoryCredentials(string password, string registryUriString, string username)
         {
+            Argument.AssertNotNull(password, nameof(password));
             Argument.AssertNotNull(registryUriString, nameof(registryUriString));
             Argument.AssertNotNull(username, nameof(username));
 
+            Password = password;
             RegistryUriString = registryUriString;
             Username = username;
         }

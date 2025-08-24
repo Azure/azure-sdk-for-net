@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>L3Networks_Get</description>
+        /// <description>L3Network_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>L3Networks_Get</description>
+        /// <description>L3Network_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>L3Networks_Delete</description>
+        /// <description>L3Network_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>L3Networks_Delete</description>
+        /// <description>L3Network_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>L3Networks_Update</description>
+        /// <description>L3Network_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>L3Networks_Update</description>
+        /// <description>L3Network_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>L3Networks_Get</description>
+        /// <description>L3Network_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>L3Networks_Get</description>
+        /// <description>L3Network_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>L3Networks_Get</description>
+        /// <description>L3Network_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>L3Networks_Get</description>
+        /// <description>L3Network_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>L3Networks_Get</description>
+        /// <description>L3Network_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>L3Networks_Get</description>
+        /// <description>L3Network_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

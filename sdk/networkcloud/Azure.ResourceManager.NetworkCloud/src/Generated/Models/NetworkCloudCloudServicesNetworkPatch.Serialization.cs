@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkCloudCloudServicesNetworkPatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalEgressEndpoints ?? new ChangeTrackingList<EgressEndpoint>(), enableDefaultEgressEndpoints, serializedAdditionalRawData);
+            return new NetworkCloudCloudServicesNetworkPatch(additionalEgressEndpoints ?? new ChangeTrackingList<EgressEndpoint>(), enableDefaultEgressEndpoints, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkCloudCloudServicesNetworkPatch>.Write(ModelReaderWriterOptions options)

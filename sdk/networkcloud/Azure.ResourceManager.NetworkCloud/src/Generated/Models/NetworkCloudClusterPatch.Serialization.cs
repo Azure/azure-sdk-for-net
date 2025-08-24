@@ -399,7 +399,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new NetworkCloudClusterPatch(
                 identity,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 aggregatorOrSingleRackDefinition,
                 analyticsOutputSettings,
                 clusterLocation,
@@ -412,6 +411,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 secretArchiveSettings,
                 updateStrategy,
                 vulnerabilityScanningSettings,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 

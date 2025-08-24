@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetBaseboardManagementControllerKeySetOfCluster()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/BmcKeySets_Get.json
-            // this example is just showing the usage of "BmcKeySets_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/BmcKeySets_Get.json
+            // this example is just showing the usage of "BmcKeySet_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -49,10 +49,38 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteBaseboardManagementControllerKeySetOfCluster()
+        {
+            // Generated from example definition: 2025-02-01/BmcKeySets_Delete.json
+            // this example is just showing the usage of "BmcKeySet_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetworkCloudBmcKeySetResource created on azure
+            // for more information of creating NetworkCloudBmcKeySetResource, please refer to the document of NetworkCloudBmcKeySetResource
+            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
+            string resourceGroupName = "resourceGroupName";
+            string clusterName = "clusterName";
+            string bmcKeySetName = "bmcKeySetName";
+            ResourceIdentifier networkCloudBmcKeySetResourceId = NetworkCloudBmcKeySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, bmcKeySetName);
+            NetworkCloudBmcKeySetResource networkCloudBmcKeySet = client.GetNetworkCloudBmcKeySetResource(networkCloudBmcKeySetResourceId);
+
+            // invoke the operation
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudBmcKeySet.DeleteAsync(WaitUntil.Completed);
+            NetworkCloudOperationStatusResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchBaseboardManagementControllerKeySetOfCluster()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/BmcKeySets_Patch.json
-            // this example is just showing the usage of "BmcKeySets_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/BmcKeySets_Patch.json
+            // this example is just showing the usage of "BmcKeySet_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -76,16 +104,6 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 ["key1"] = "myvalue1",
 ["key2"] = "myvalue2"
 },
-                ExpireOn = DateTimeOffset.Parse("2022-12-31T23:59:59.008Z"),
-                UserList = {new KeySetUser("userABC", new NetworkCloudSshPublicKey("ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp+jfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsSXISTRnIDpcf5qytjs1Xo+yYyJMvzLL59mhAyb3p/cD+Y3/s3WhAx+l0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= admin@vm"))
-{
-Description = "Needs access for troubleshooting as a part of the support team",
-UserPrincipalName = "userABC@contoso.com",
-}, new KeySetUser("userXYZ", new NetworkCloudSshPublicKey("ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp+jfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsSXISTRnIDpcf5qytjs1Xo+yYyJMvzLL59mhAyb3p/cD+Y3/s3WhAx+l0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= admin@vm"))
-{
-Description = "Needs access for troubleshooting as a part of the support team",
-UserPrincipalName = "userABC@contoso.com",
-}},
             };
             ArmOperation<NetworkCloudBmcKeySetResource> lro = await networkCloudBmcKeySet.UpdateAsync(WaitUntil.Completed, patch);
             NetworkCloudBmcKeySetResource result = lro.Value;

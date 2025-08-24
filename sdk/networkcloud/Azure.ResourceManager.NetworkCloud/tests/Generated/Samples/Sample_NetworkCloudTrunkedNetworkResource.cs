@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetTrunkedNetwork()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/TrunkedNetworks_Get.json
-            // this example is just showing the usage of "TrunkedNetworks_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/TrunkedNetworks_Get.json
+            // this example is just showing the usage of "TrunkedNetwork_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -48,10 +48,37 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteTrunkedNetwork()
+        {
+            // Generated from example definition: 2025-02-01/TrunkedNetworks_Delete.json
+            // this example is just showing the usage of "TrunkedNetwork_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetworkCloudTrunkedNetworkResource created on azure
+            // for more information of creating NetworkCloudTrunkedNetworkResource, please refer to the document of NetworkCloudTrunkedNetworkResource
+            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
+            string resourceGroupName = "resourceGroupName";
+            string trunkedNetworkName = "trunkedNetworkName";
+            ResourceIdentifier networkCloudTrunkedNetworkResourceId = NetworkCloudTrunkedNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trunkedNetworkName);
+            NetworkCloudTrunkedNetworkResource networkCloudTrunkedNetwork = client.GetNetworkCloudTrunkedNetworkResource(networkCloudTrunkedNetworkResourceId);
+
+            // invoke the operation
+            ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudTrunkedNetwork.DeleteAsync(WaitUntil.Completed);
+            NetworkCloudOperationStatusResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchTrunkedNetwork()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/TrunkedNetworks_Patch.json
-            // this example is just showing the usage of "TrunkedNetworks_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2025-02-01/TrunkedNetworks_Patch.json
+            // this example is just showing the usage of "TrunkedNetwork_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
