@@ -67,15 +67,17 @@ namespace Azure.Quantum.Jobs
         }
 
         /// <summary> Return list of jobs. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<JobDetails> GetJobs(CancellationToken cancellationToken = default)
         {
-            return PageResponseEnumerator.CreateEnumerable(cont => ToPage(string.IsNullOrEmpty(cont) ? _jobs.List() : _jobs.ListNextPage(cont)));
+            return PageResponseEnumerator.CreateEnumerable(cont => ToPage(string.IsNullOrEmpty(cont) ? _jobs.List(cancellationToken) : _jobs.ListNextPage(cont, cancellationToken)));
         }
 
         /// <summary> Return list of jobs. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<JobDetails> GetJobsAsync(CancellationToken cancellationToken = default)
         {
-            return PageResponseEnumerator.CreateAsyncEnumerable(async cont => ToPage(string.IsNullOrEmpty(cont) ? await _jobs.ListAsync().ConfigureAwait(false) : await _jobs.ListNextPageAsync(cont).ConfigureAwait(false)));
+            return PageResponseEnumerator.CreateAsyncEnumerable(async cont => ToPage(string.IsNullOrEmpty(cont) ? await _jobs.ListAsync(cancellationToken).ConfigureAwait(false) : await _jobs.ListNextPageAsync(cont, cancellationToken).ConfigureAwait(false)));
         }
 
         /// <summary> Create a job. </summary>
@@ -120,28 +122,28 @@ namespace Azure.Quantum.Jobs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<ProviderStatus> GetProviderStatus(CancellationToken cancellationToken = default)
         {
-            return PageResponseEnumerator.CreateEnumerable(cont => ToPage(string.IsNullOrEmpty(cont) ? _providers.GetStatus() : _providers.GetStatusNextPage(cont)));
+            return PageResponseEnumerator.CreateEnumerable(cont => ToPage(string.IsNullOrEmpty(cont) ? _providers.GetStatus(cancellationToken) : _providers.GetStatusNextPage(cont, cancellationToken)));
         }
 
         /// <summary> Get provider status. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<ProviderStatus> GetProviderStatusAsync(CancellationToken cancellationToken = default)
         {
-            return PageResponseEnumerator.CreateAsyncEnumerable(async cont => ToPage(string.IsNullOrEmpty(cont) ? await _providers.GetStatusAsync().ConfigureAwait(false) : await _providers.GetStatusNextPageAsync(cont).ConfigureAwait(false)));
+            return PageResponseEnumerator.CreateAsyncEnumerable(async cont => ToPage(string.IsNullOrEmpty(cont) ? await _providers.GetStatusAsync(cancellationToken).ConfigureAwait(false) : await _providers.GetStatusNextPageAsync(cont, cancellationToken).ConfigureAwait(false)));
         }
 
         /// <summary> Get quota status. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Pageable<QuantumJobQuota> GetQuotas(CancellationToken cancellationToken = default)
         {
-            return PageResponseEnumerator.CreateEnumerable(cont => ToPage(string.IsNullOrEmpty(cont) ? _quotas.List() : _quotas.ListNextPage(cont)));
+            return PageResponseEnumerator.CreateEnumerable(cont => ToPage(string.IsNullOrEmpty(cont) ? _quotas.List(cancellationToken) : _quotas.ListNextPage(cont, cancellationToken)));
         }
 
         /// <summary> Get quota status. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual AsyncPageable<QuantumJobQuota> GetQuotasAsync(CancellationToken cancellationToken = default)
         {
-            return PageResponseEnumerator.CreateAsyncEnumerable(async cont => ToPage(string.IsNullOrEmpty(cont) ? await _quotas.ListAsync().ConfigureAwait(false) : await _quotas.ListNextPageAsync(cont).ConfigureAwait(false)));
+            return PageResponseEnumerator.CreateAsyncEnumerable(async cont => ToPage(string.IsNullOrEmpty(cont) ? await _quotas.ListAsync(cancellationToken).ConfigureAwait(false) : await _quotas.ListNextPageAsync(cont, cancellationToken).ConfigureAwait(false)));
         }
 
         /// <summary> Gets a URL with SAS token for a container/blob in the storage account associated with the workspace. The SAS URL can be used to upload job input and/or download job output. </summary>
