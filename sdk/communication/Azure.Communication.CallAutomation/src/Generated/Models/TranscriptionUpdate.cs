@@ -18,15 +18,19 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of <see cref="TranscriptionUpdate"/>. </summary>
         /// <param name="transcriptionStatus"></param>
         /// <param name="transcriptionStatusDetails"></param>
-        internal TranscriptionUpdate(TranscriptionStatus? transcriptionStatus, TranscriptionStatusDetails? transcriptionStatusDetails)
+        /// <param name="transcriptionMessage"> Optional message providing additional context about the transcription update. </param>
+        internal TranscriptionUpdate(TranscriptionStatus? transcriptionStatus, TranscriptionStatusDetails? transcriptionStatusDetails, string transcriptionMessage)
         {
             TranscriptionStatus = transcriptionStatus;
             TranscriptionStatusDetails = transcriptionStatusDetails;
+            TranscriptionMessage = transcriptionMessage;
         }
 
         /// <summary> Gets the transcription status. </summary>
         public TranscriptionStatus? TranscriptionStatus { get; }
         /// <summary> Gets the transcription status details. </summary>
         public TranscriptionStatusDetails? TranscriptionStatusDetails { get; }
+        /// <summary> Optional message providing additional context about the transcription update. </summary>
+        public string TranscriptionMessage { get; }
     }
 }

@@ -31,15 +31,10 @@ namespace Azure.Communication.CallAutomation
         /// Only ACS Users are supported.
         /// </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="operationCallbackUri">
-        /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
-        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
-        /// </param>
-        internal UnholdRequestInternal(CommunicationIdentifierModel targetParticipant, string operationContext, string operationCallbackUri)
+        internal UnholdRequestInternal(CommunicationIdentifierModel targetParticipant, string operationContext)
         {
             TargetParticipant = targetParticipant;
             OperationContext = operationContext;
-            OperationCallbackUri = operationCallbackUri;
         }
 
         /// <summary>
@@ -49,10 +44,5 @@ namespace Azure.Communication.CallAutomation
         public CommunicationIdentifierModel TargetParticipant { get; }
         /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
         public string OperationContext { get; set; }
-        /// <summary>
-        /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
-        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
-        /// </summary>
-        public string OperationCallbackUri { get; set; }
     }
 }
