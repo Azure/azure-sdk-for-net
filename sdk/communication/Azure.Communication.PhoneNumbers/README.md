@@ -32,7 +32,7 @@ Here's an example using the Azure CLI:
 
 This SDK provides functionality to easily manage `direct offer` and `direct routing` numbers.
 
-The `direct offer` numbers come in two types: Geographic and Toll-Free. Geographic phone plans are phone plans associated with a location, whose phone numbers' area codes are associated with the area code of a geographic location. Toll-Free phone plans are phone plans not associated location. For example, in the US, toll-free numbers can come with area codes such as 800 or 888.
+The `direct offer` numbers come in three types: Geographic, Toll-Free and Mobile. Geographic and Mobile phone plans are phone plans associated with a location, whose phone numbers' area codes are associated with the area code of a geographic location. Toll-Free phone plans are phone plans not associated location. For example, in the US, toll-free numbers can come with area codes such as 800 or 888.
 They are managed using the `PhoneNumbersClient`
 
 The `direct routing` feature enables connecting your existing telephony infrastructure to ACS.
@@ -73,9 +73,9 @@ client = new SipRoutingClient(endpoint, tokenCredential);
 ### Phone numbers client
 
 #### Phone number types overview
-Phone numbers come in two types: Geographic and Toll-Free. Geographic phone plans are phone plans associated with a location, whose phone numbers' area codes are associated with the area code of a geographic location. Toll-Free phone plans are phone plans not associated location. For example, in the US, toll-free numbers can come with area codes such as 800 or 888.
-
-All geographic phone plans within the same country are grouped into a phone plan group with a Geographic phone number type. All Toll-Free phone plans within the same country are grouped into a phone plan group.
+Phone numbers come in three types; Geographic, Toll-Free and Mobile. Toll-Free numbers are not associated with a location. For example, in the US, toll-free numbers can come with area codes such as 800 or 888. Geographic and Mobile phone numbers are phone numbers associated with a location.
+ 
+Phone number types with the same country are grouped into a phone plan group with that phone number type. For example all Toll-Free phone numbers within the same country are grouped into a phone plan group.
 
 #### Searching, purchasing and releasing phone numbers
 
