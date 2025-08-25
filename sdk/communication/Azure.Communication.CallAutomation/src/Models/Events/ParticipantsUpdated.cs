@@ -28,6 +28,7 @@ namespace Azure.Communication.CallAutomation
             ServerCallId = internalEvent.ServerCallId;
             CorrelationId = internalEvent.CorrelationId;
             SequenceNumber = internalEvent.SequenceNumber;
+            ResultInformation = internalEvent.ResultInformation;
         }
 
         /// <summary> List of current participants in the call. </summary>

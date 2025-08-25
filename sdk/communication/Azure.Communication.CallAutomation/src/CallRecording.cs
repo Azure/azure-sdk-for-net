@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -94,15 +95,6 @@ namespace Azure.Communication.CallAutomation
                     }
                 }
 
-                if (options.RecordingStorage != null)
-                {
-                    // This is required only when blob storage in use
-                    if (options.RecordingStorage is AzureBlobContainerRecordingStorage blobStorage)
-                    {
-                        request.ExternalStorage = new RecordingStorageInternal(blobStorage.RecordingStorageKind, blobStorage.RecordingDestinationContainerUri);
-                    }
-                }
-
                 return _callRecordingRestClient.StartRecording(request, cancellationToken: cancellationToken);
             }
             catch (Exception ex)
@@ -132,7 +124,7 @@ namespace Azure.Communication.CallAutomation
                     RecordingChannelType = options.RecordingChannel,
                     RecordingContentType = options.RecordingContent,
                     RecordingFormatType = options.RecordingFormat,
-                    PauseOnStart = options.PauseOnStart
+                    PauseOnStart = options.PauseOnStart,
                 };
 
                 if (options.CallLocator != null)
@@ -162,15 +154,6 @@ namespace Azure.Communication.CallAutomation
                             newChannelAffinity.Channel = c.Channel;
                         }
                         request.ChannelAffinity.Add(newChannelAffinity);
-                    }
-                }
-
-                if (options.RecordingStorage != null)
-                {
-                    // This is required only when blob storage in use
-                    if (options.RecordingStorage is AzureBlobContainerRecordingStorage blobStorage)
-                    {
-                        request.ExternalStorage = new RecordingStorageInternal(blobStorage.RecordingStorageKind, blobStorage.RecordingDestinationContainerUri);
                     }
                 }
 

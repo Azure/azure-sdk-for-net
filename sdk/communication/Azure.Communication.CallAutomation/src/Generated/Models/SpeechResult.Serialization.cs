@@ -18,7 +18,6 @@ namespace Azure.Communication.CallAutomation
                 return null;
             }
             string speech = default;
-            double? confidence = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("speech"u8))
@@ -26,17 +25,8 @@ namespace Azure.Communication.CallAutomation
                     speech = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("confidence"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    confidence = property.Value.GetDouble();
-                    continue;
-                }
             }
-            return new SpeechResult(speech, confidence);
+            return new SpeechResult(speech);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
