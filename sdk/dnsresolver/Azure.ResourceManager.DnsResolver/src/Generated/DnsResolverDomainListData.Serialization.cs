@@ -226,11 +226,11 @@ namespace Azure.ResourceManager.DnsResolver
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                etag,
                 domains ?? new ChangeTrackingList<string>(),
                 domainsUrl,
                 provisioningState,
                 resourceGuid,
+                etag,
                 serializedAdditionalRawData);
         }
 

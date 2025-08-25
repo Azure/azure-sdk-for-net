@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsSecurityRules_Get</description>
+        /// <description>DnsSecurityRule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsSecurityRules_Get</description>
+        /// <description>DnsSecurityRule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicyVirtualNetworkLinks_Get</description>
+        /// <description>DnsResolverPolicyVirtualNetworkLink_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicyVirtualNetworkLinks_Get</description>
+        /// <description>DnsResolverPolicyVirtualNetworkLink_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicies_Get</description>
+        /// <description>DnsResolverPolicy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicies_Get</description>
+        /// <description>DnsResolverPolicy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicies_Delete</description>
+        /// <description>DnsResolverPolicy_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicies_Delete</description>
+        /// <description>DnsResolverPolicy_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicies_Update</description>
+        /// <description>DnsResolverPolicy_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicies_Update</description>
+        /// <description>DnsResolverPolicy_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicies_Get</description>
+        /// <description>DnsResolverPolicy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicies_Get</description>
+        /// <description>DnsResolverPolicy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicies_Get</description>
+        /// <description>DnsResolverPolicy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicies_Get</description>
+        /// <description>DnsResolverPolicy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -735,7 +735,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicies_Get</description>
+        /// <description>DnsResolverPolicy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -795,7 +795,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicies_Get</description>
+        /// <description>DnsResolverPolicy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

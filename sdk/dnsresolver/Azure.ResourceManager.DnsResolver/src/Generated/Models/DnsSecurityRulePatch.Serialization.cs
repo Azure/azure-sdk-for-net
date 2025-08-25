@@ -195,11 +195,11 @@ namespace Azure.ResourceManager.DnsResolver.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new DnsSecurityRulePatch(
-                tags ?? new ChangeTrackingDictionary<string, string>(),
                 action,
                 dnsResolverDomainLists ?? new ChangeTrackingList<WritableSubResource>(),
                 dnsSecurityRuleState,
                 priority,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 

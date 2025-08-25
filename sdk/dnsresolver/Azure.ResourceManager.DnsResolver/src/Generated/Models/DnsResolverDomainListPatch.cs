@@ -48,24 +48,24 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <summary> Initializes a new instance of <see cref="DnsResolverDomainListPatch"/>. </summary>
         public DnsResolverDomainListPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
             Domains = new ChangeTrackingList<string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsResolverDomainListPatch"/>. </summary>
-        /// <param name="tags"> Tags for DNS resolver domain list. </param>
         /// <param name="domains"> The domains in the domain list. </param>
+        /// <param name="tags"> Tags for DNS resolver domain list. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DnsResolverDomainListPatch(IDictionary<string, string> tags, IList<string> domains, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DnsResolverDomainListPatch(IList<string> domains, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Tags = tags;
             Domains = domains;
+            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Tags for DNS resolver domain list. </summary>
-        public IDictionary<string, string> Tags { get; }
         /// <summary> The domains in the domain list. </summary>
         public IList<string> Domains { get; }
+        /// <summary> Tags for DNS resolver domain list. </summary>
+        public IDictionary<string, string> Tags { get; }
     }
 }

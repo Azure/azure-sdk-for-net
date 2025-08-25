@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OutboundEndpoints_Get</description>
+        /// <description>OutboundEndpoint_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OutboundEndpoints_Get</description>
+        /// <description>OutboundEndpoint_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OutboundEndpoints_Delete</description>
+        /// <description>OutboundEndpoint_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OutboundEndpoints_Delete</description>
+        /// <description>OutboundEndpoint_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OutboundEndpoints_Update</description>
+        /// <description>OutboundEndpoint_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OutboundEndpoints_Update</description>
+        /// <description>OutboundEndpoint_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OutboundEndpoints_Get</description>
+        /// <description>OutboundEndpoint_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OutboundEndpoints_Get</description>
+        /// <description>OutboundEndpoint_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OutboundEndpoints_Get</description>
+        /// <description>OutboundEndpoint_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OutboundEndpoints_Get</description>
+        /// <description>OutboundEndpoint_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OutboundEndpoints_Get</description>
+        /// <description>OutboundEndpoint_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OutboundEndpoints_Get</description>
+        /// <description>OutboundEndpoint_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

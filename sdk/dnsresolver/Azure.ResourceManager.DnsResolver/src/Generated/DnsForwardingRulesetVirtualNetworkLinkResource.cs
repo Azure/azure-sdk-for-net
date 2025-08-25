@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualNetworkLinks_Get</description>
+        /// <description>VirtualNetworkLink_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualNetworkLinks_Get</description>
+        /// <description>VirtualNetworkLink_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualNetworkLinks_Delete</description>
+        /// <description>VirtualNetworkLink_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualNetworkLinks_Delete</description>
+        /// <description>VirtualNetworkLink_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualNetworkLinks_Update</description>
+        /// <description>VirtualNetworkLink_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualNetworkLinks_Update</description>
+        /// <description>VirtualNetworkLink_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

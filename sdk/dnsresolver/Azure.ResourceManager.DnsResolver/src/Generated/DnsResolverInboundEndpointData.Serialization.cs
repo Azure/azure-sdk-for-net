@@ -204,10 +204,10 @@ namespace Azure.ResourceManager.DnsResolver
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                etag,
                 ipConfigurations,
                 provisioningState,
                 resourceGuid,
+                etag,
                 serializedAdditionalRawData);
         }
 

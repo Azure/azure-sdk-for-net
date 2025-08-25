@@ -1,0 +1,3 @@
+directory: specification/dnsresolver/Network.Management
+commit: 3e2ac28b6a0d57f7f5d7bea8250648143c68df1e
+repo: Azure/azure-rest-api-specs

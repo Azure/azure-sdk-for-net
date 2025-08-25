@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsSecurityRules_CreateOrUpdate</description>
+        /// <description>DnsSecurityRule_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsSecurityRules_CreateOrUpdate</description>
+        /// <description>DnsSecurityRule_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsSecurityRules_Get</description>
+        /// <description>DnsSecurityRule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsSecurityRules_Get</description>
+        /// <description>DnsSecurityRule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsSecurityRules_List</description>
+        /// <description>DnsSecurityRule_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsSecurityRules_List</description>
+        /// <description>DnsSecurityRule_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsSecurityRules_Get</description>
+        /// <description>DnsSecurityRule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsSecurityRules_Get</description>
+        /// <description>DnsSecurityRule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsSecurityRules_Get</description>
+        /// <description>DnsSecurityRule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsSecurityRules_Get</description>
+        /// <description>DnsSecurityRule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

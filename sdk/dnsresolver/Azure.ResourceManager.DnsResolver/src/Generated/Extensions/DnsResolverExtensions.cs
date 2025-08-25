@@ -10,7 +10,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver.Mocking;
+using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver
 {
@@ -223,25 +225,6 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VirtualNetworkDnsResolverResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="VirtualNetworkDnsResolverResource.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkDnsResolverResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDnsResolverArmClient.GetVirtualNetworkDnsResolverResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="VirtualNetworkDnsResolverResource"/> object. </returns>
-        public static VirtualNetworkDnsResolverResource GetVirtualNetworkDnsResolverResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableDnsResolverArmClient(client).GetVirtualNetworkDnsResolverResource(id);
-        }
-
-        /// <summary>
         /// Gets a collection of DnsResolverResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
@@ -267,7 +250,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolvers_Get</description>
+        /// <description>DnsResolver_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -305,7 +288,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolvers_Get</description>
+        /// <description>DnsResolver_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -360,7 +343,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsForwardingRulesets_Get</description>
+        /// <description>DnsForwardingRuleset_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -398,7 +381,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsForwardingRulesets_Get</description>
+        /// <description>DnsForwardingRuleset_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -453,7 +436,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicies_Get</description>
+        /// <description>DnsResolverPolicy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -491,7 +474,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicies_Get</description>
+        /// <description>DnsResolverPolicy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -546,7 +529,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverDomainLists_Get</description>
+        /// <description>DnsResolverDomainList_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -584,7 +567,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverDomainLists_Get</description>
+        /// <description>DnsResolverDomainList_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -622,7 +605,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolvers_List</description>
+        /// <description>DnsResolver_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -659,7 +642,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolvers_List</description>
+        /// <description>DnsResolver_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -696,7 +679,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsForwardingRulesets_List</description>
+        /// <description>DnsForwardingRuleset_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -733,7 +716,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsForwardingRulesets_List</description>
+        /// <description>DnsForwardingRuleset_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -770,7 +753,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicies_List</description>
+        /// <description>DnsResolverPolicy_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -807,7 +790,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicies_List</description>
+        /// <description>DnsResolverPolicy_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -844,7 +827,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverDomainLists_List</description>
+        /// <description>DnsResolverDomainList_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -881,7 +864,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverDomainLists_List</description>
+        /// <description>DnsResolverDomainList_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

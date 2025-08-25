@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverDomainLists_Get</description>
+        /// <description>DnsResolverDomainList_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverDomainLists_Get</description>
+        /// <description>DnsResolverDomainList_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverDomainLists_Delete</description>
+        /// <description>DnsResolverDomainList_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverDomainLists_Delete</description>
+        /// <description>DnsResolverDomainList_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverDomainLists_Update</description>
+        /// <description>DnsResolverDomainList_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverDomainLists_Update</description>
+        /// <description>DnsResolverDomainList_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverDomainLists_Get</description>
+        /// <description>DnsResolverDomainList_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverDomainLists_Get</description>
+        /// <description>DnsResolverDomainList_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverDomainLists_Get</description>
+        /// <description>DnsResolverDomainList_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverDomainLists_Get</description>
+        /// <description>DnsResolverDomainList_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverDomainLists_Get</description>
+        /// <description>DnsResolverDomainList_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -753,7 +753,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverDomainLists_Get</description>
+        /// <description>DnsResolverDomainList_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

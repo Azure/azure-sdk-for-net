@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DnsResolverDomainListPatch(tags ?? new ChangeTrackingDictionary<string, string>(), domains ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new DnsResolverDomainListPatch(domains ?? new ChangeTrackingList<string>(), tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsResolverDomainListPatch>.Write(ModelReaderWriterOptions options)

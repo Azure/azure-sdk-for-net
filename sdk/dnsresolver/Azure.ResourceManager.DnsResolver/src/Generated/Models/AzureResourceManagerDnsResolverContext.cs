@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.DnsResolver
     [ModelReaderWriterBuildable(typeof(DnsResolverData))]
     [ModelReaderWriterBuildable(typeof(DnsResolverDomainListBulk))]
     [ModelReaderWriterBuildable(typeof(DnsResolverDomainListData))]
+    [ModelReaderWriterBuildable(typeof(DnsResolverDomainListListResult))]
     [ModelReaderWriterBuildable(typeof(DnsResolverDomainListPatch))]
     [ModelReaderWriterBuildable(typeof(DnsResolverDomainListResource))]
-    [ModelReaderWriterBuildable(typeof(DnsResolverDomainListResult))]
     [ModelReaderWriterBuildable(typeof(DnsResolverInboundEndpointData))]
     [ModelReaderWriterBuildable(typeof(DnsResolverInboundEndpointPatch))]
     [ModelReaderWriterBuildable(typeof(DnsResolverInboundEndpointResource))]
@@ -64,7 +64,6 @@ namespace Azure.ResourceManager.DnsResolver
     [ModelReaderWriterBuildable(typeof(TargetDnsServer))]
     [ModelReaderWriterBuildable(typeof(VirtualNetworkDnsForwardingRuleset))]
     [ModelReaderWriterBuildable(typeof(VirtualNetworkDnsForwardingRulesetListResult))]
-    [ModelReaderWriterBuildable(typeof(VirtualNetworkDnsResolverResource))]
     [ModelReaderWriterBuildable(typeof(VirtualNetworkLinkListResult))]
     [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerDnsResolverContext : ModelReaderWriterContext

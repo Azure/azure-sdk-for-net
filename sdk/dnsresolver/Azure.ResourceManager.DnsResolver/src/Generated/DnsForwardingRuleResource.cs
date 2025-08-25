@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ForwardingRules_Get</description>
+        /// <description>ForwardingRule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ForwardingRules_Get</description>
+        /// <description>ForwardingRule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ForwardingRules_Delete</description>
+        /// <description>ForwardingRule_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ForwardingRules_Delete</description>
+        /// <description>ForwardingRule_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ForwardingRules_Update</description>
+        /// <description>ForwardingRule_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ForwardingRules_Update</description>
+        /// <description>ForwardingRule_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
