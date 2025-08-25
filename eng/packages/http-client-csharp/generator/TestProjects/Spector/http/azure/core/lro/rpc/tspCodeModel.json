@@ -231,7 +231,8 @@
             "json": {
               "name": "prompt"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -268,7 +269,8 @@
             "json": {
               "name": "id"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "25",
@@ -289,7 +291,8 @@
             "json": {
               "name": "status"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "26",
@@ -330,7 +333,8 @@
                   "json": {
                     "name": "code"
                   }
-                }
+                },
+                "isHttpMetadata": false
               },
               {
                 "$id": "30",
@@ -355,7 +359,8 @@
                   "json": {
                     "name": "message"
                   }
-                }
+                },
+                "isHttpMetadata": false
               },
               {
                 "$id": "32",
@@ -380,7 +385,8 @@
                   "json": {
                     "name": "target"
                   }
-                }
+                },
+                "isHttpMetadata": false
               },
               {
                 "$id": "34",
@@ -408,7 +414,8 @@
                   "json": {
                     "name": "details"
                   }
-                }
+                },
+                "isHttpMetadata": false
               },
               {
                 "$id": "36",
@@ -423,7 +430,7 @@
                   "namespace": "Azure.Core.Foundations",
                   "crossLanguageDefinitionId": "Azure.Core.Foundations.InnerError",
                   "usage": "Json,Exception,LroInitial,LroPolling,LroFinalEnvelope",
-                  "doc": "An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#handling-errors.",
+                  "doc": "An object containing more specific information about the error. As per Azure REST API guidelines - https://aka.ms/AzureRestApiGuidelines#handling-errors.",
                   "decorators": [],
                   "properties": [
                     {
@@ -449,7 +456,8 @@
                         "json": {
                           "name": "code"
                         }
-                      }
+                      },
+                      "isHttpMetadata": false
                     },
                     {
                       "$id": "40",
@@ -470,7 +478,8 @@
                         "json": {
                           "name": "innererror"
                         }
-                      }
+                      },
+                      "isHttpMetadata": false
                     }
                   ]
                 },
@@ -484,7 +493,8 @@
                   "json": {
                     "name": "innererror"
                   }
-                }
+                },
+                "isHttpMetadata": false
               }
             ]
           },
@@ -498,7 +508,8 @@
             "json": {
               "name": "error"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "41",
@@ -539,7 +550,8 @@
                   "json": {
                     "name": "data"
                   }
-                }
+                },
+                "isHttpMetadata": false
               }
             ]
           },
@@ -553,7 +565,8 @@
             "json": {
               "name": "result"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     },
@@ -595,13 +608,14 @@
             "json": {
               "name": "error"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "47",
-          "kind": "header",
+          "kind": "property",
           "name": "errorCode",
-          "serializedName": "x-ms-error-code",
+          "serializedName": "errorCode",
           "doc": "String error code indicating what went wrong.",
           "type": {
             "$id": "48",
@@ -612,9 +626,16 @@
           },
           "optional": true,
           "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
           "decorators": [],
           "crossLanguageDefinitionId": "Azure.Core.Foundations.ErrorResponse.errorCode",
-          "correspondingMethodParams": []
+          "serializationOptions": {
+            "json": {
+              "name": "errorCode"
+            }
+          },
+          "isHttpMetadata": true
         }
       ]
     },
@@ -651,7 +672,8 @@
             "json": {
               "name": "id"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "52",
@@ -672,7 +694,8 @@
             "json": {
               "name": "status"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "53",
@@ -693,7 +716,8 @@
             "json": {
               "name": "error"
             }
-          }
+          },
+          "isHttpMetadata": false
         },
         {
           "$id": "54",
@@ -714,7 +738,8 @@
             "json": {
               "name": "result"
             }
-          }
+          },
+          "isHttpMetadata": false
         }
       ]
     }
@@ -747,8 +772,9 @@
             "parameters": [
               {
                 "$id": "58",
+                "kind": "query",
                 "name": "apiVersion",
-                "nameInRequest": "api-version",
+                "serializedName": "api-version",
                 "doc": "The API version to use for this operation.",
                 "type": {
                   "$id": "59",
@@ -757,13 +783,8 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                 },
-                "location": "Query",
                 "isApiVersion": true,
-                "isContentType": false,
-                "isEndpoint": false,
                 "explode": false,
-                "isRequired": true,
-                "kind": "Client",
                 "defaultValue": {
                   "type": {
                     "$id": "60",
@@ -773,61 +794,64 @@
                   },
                   "value": "2022-12-01-preview"
                 },
+                "optional": false,
+                "scope": "Client",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.longRunningRpc.apiVersion",
+                "readOnly": false
               },
               {
                 "$id": "61",
+                "kind": "header",
                 "name": "contentType",
-                "nameInRequest": "Content-Type",
+                "serializedName": "Content-Type",
                 "doc": "Body parameter's content type. Known values are application/json",
                 "type": {
                   "$ref": "11"
                 },
-                "location": "Header",
                 "isApiVersion": false,
+                "optional": false,
                 "isContentType": true,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Constant",
+                "scope": "Constant",
+                "readOnly": false,
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.longRunningRpc.contentType"
               },
               {
                 "$id": "62",
+                "kind": "header",
                 "name": "accept",
-                "nameInRequest": "Accept",
+                "serializedName": "Accept",
                 "type": {
                   "$ref": "13"
                 },
-                "location": "Header",
                 "isApiVersion": false,
+                "optional": false,
                 "isContentType": false,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Constant",
+                "scope": "Constant",
+                "readOnly": false,
                 "decorators": [],
-                "skipUrlEncoding": false
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.longRunningRpc.accept"
               },
               {
                 "$id": "63",
+                "kind": "body",
                 "name": "body",
-                "nameInRequest": "body",
+                "serializedName": "body",
                 "doc": "The body parameter.",
                 "type": {
                   "$ref": "19"
                 },
-                "location": "Body",
                 "isApiVersion": false,
-                "isContentType": false,
-                "isEndpoint": false,
-                "explode": false,
-                "isRequired": true,
-                "kind": "Method",
+                "contentTypes": [
+                  "application/json"
+                ],
+                "defaultContentType": "application/json",
+                "optional": false,
+                "scope": "Method",
                 "decorators": [],
-                "skipUrlEncoding": false
+                "readOnly": false,
+                "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.longRunningRpc.body"
               }
             ],
             "responses": [
@@ -880,56 +904,56 @@
           "parameters": [
             {
               "$id": "66",
+              "kind": "method",
               "name": "body",
-              "nameInRequest": "body",
+              "serializedName": "body",
               "doc": "The body parameter.",
               "type": {
                 "$ref": "19"
               },
               "location": "Body",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Method",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.longRunningRpc.body",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
               "$id": "67",
+              "kind": "method",
               "name": "contentType",
-              "nameInRequest": "contentType",
+              "serializedName": "Content-Type",
               "doc": "Body parameter's content type. Known values are application/json",
               "type": {
                 "$ref": "15"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Constant",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.longRunningRpc.contentType",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             },
             {
               "$id": "68",
+              "kind": "method",
               "name": "accept",
-              "nameInRequest": "accept",
+              "serializedName": "Accept",
               "type": {
                 "$ref": "17"
               },
               "location": "Header",
               "isApiVersion": false,
-              "isContentType": false,
-              "isEndpoint": false,
-              "explode": false,
-              "isRequired": true,
-              "kind": "Constant",
-              "decorators": [],
-              "skipUrlEncoding": false
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.longRunningRpc.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
             }
           ],
           "response": {
@@ -961,8 +985,9 @@
       "parameters": [
         {
           "$id": "69",
+          "kind": "endpoint",
           "name": "endpoint",
-          "nameInRequest": "endpoint",
+          "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
             "$id": "70",
@@ -970,14 +995,10 @@
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
           },
-          "location": "Uri",
           "isApiVersion": false,
-          "isContentType": false,
-          "isRequired": true,
+          "optional": false,
+          "scope": "Client",
           "isEndpoint": true,
-          "skipUrlEncoding": false,
-          "explode": false,
-          "kind": "Client",
           "defaultValue": {
             "type": {
               "$id": "71",
@@ -987,7 +1008,10 @@
             },
             "value": "http://localhost:3000"
           },
-          "serverUrlTemplate": "{endpoint}"
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.endpoint"
         }
       ],
       "decorators": [],

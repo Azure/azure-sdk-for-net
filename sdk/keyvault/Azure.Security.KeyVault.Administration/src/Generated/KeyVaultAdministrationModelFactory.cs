@@ -26,7 +26,7 @@ namespace Azure.Security.KeyVault.Administration
             dataActions ??= new ChangeTrackingList<KeyVaultDataAction>();
             notDataActions ??= new ChangeTrackingList<KeyVaultDataAction>();
 
-            return new KeyVaultPermission(actions?.ToList(), notActions?.ToList(), dataActions?.ToList(), notDataActions?.ToList(), additionalBinaryDataProperties: null);
+            return new KeyVaultPermission(actions.ToList(), notActions.ToList(), dataActions.ToList(), notDataActions.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Role Assignments. </summary>
@@ -57,7 +57,7 @@ namespace Azure.Security.KeyVault.Administration
         {
             settings ??= new ChangeTrackingList<KeyVaultSetting>();
 
-            return new GetSettingsResult(settings?.ToList(), additionalBinaryDataProperties: null);
+            return new GetSettingsResult(settings.ToList(), additionalBinaryDataProperties: null);
         }
     }
 }

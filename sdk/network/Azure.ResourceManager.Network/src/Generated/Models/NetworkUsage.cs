@@ -85,14 +85,19 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Resource identifier. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
         /// <summary> An enum describing the unit of measurement. </summary>
+        [WirePath("unit")]
         public NetworkUsageUnit Unit { get; }
         /// <summary> The current value of the usage. </summary>
+        [WirePath("currentValue")]
         public long CurrentValue { get; }
         /// <summary> The limit of usage. </summary>
+        [WirePath("limit")]
         public long Limit { get; }
         /// <summary> The name of the type of usage. </summary>
+        [WirePath("name")]
         public NetworkUsageName Name { get; }
     }
 }

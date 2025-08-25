@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -25,11 +26,17 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="WebApiVectorizer"/>. </summary>
         /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
         /// <param name="kind"> The name of the kind of vectorization method being configured for use with vector search. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> Specifies the properties of the user-defined vectorizer. </param>
-        internal WebApiVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, WebApiVectorizerParameters parameters) : base(vectorizerName, kind)
+        internal WebApiVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, WebApiVectorizerParameters parameters) : base(vectorizerName, kind, serializedAdditionalRawData)
         {
             Parameters = parameters;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebApiVectorizer"/> for deserialization. </summary>
+        internal WebApiVectorizer()
+        {
         }
 
         /// <summary> Specifies the properties of the user-defined vectorizer. </summary>

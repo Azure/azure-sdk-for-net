@@ -51,20 +51,28 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Array of FirewallPolicyRuleNetworkProtocols. </summary>
+        [WirePath("ipProtocols")]
         public IList<FirewallPolicyRuleNetworkProtocol> IPProtocols { get; }
         /// <summary> List of source IP addresses for this rule. </summary>
+        [WirePath("sourceAddresses")]
         public IList<string> SourceAddresses { get; }
         /// <summary> List of destination IP addresses or Service Tags. </summary>
+        [WirePath("destinationAddresses")]
         public IList<string> DestinationAddresses { get; }
         /// <summary> List of destination ports. </summary>
+        [WirePath("destinationPorts")]
         public IList<string> DestinationPorts { get; }
         /// <summary> The translated address for this NAT rule. </summary>
+        [WirePath("translatedAddress")]
         public string TranslatedAddress { get; set; }
         /// <summary> The translated port for this NAT rule. </summary>
+        [WirePath("translatedPort")]
         public string TranslatedPort { get; set; }
         /// <summary> List of source IpGroups for this rule. </summary>
+        [WirePath("sourceIpGroups")]
         public IList<string> SourceIPGroups { get; }
         /// <summary> The translated FQDN for this NAT rule. </summary>
+        [WirePath("translatedFqdn")]
         public string TranslatedFqdn { get; set; }
     }
 }

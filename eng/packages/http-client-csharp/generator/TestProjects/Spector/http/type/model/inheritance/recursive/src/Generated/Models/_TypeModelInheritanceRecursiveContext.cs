@@ -9,6 +9,8 @@ using System.ClientModel.Primitives;
 
 namespace _Type.Model.Inheritance.Recursive
 {
+    [ModelReaderWriterBuildable(typeof(Extension))]
+    [ModelReaderWriterBuildable(typeof(Element))]
     public partial class _TypeModelInheritanceRecursiveContext : ModelReaderWriterContext
     {
     }

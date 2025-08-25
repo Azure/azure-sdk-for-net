@@ -1810,7 +1810,6 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath(testRunId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -2063,7 +2062,6 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath(testProfileRunId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 

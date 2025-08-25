@@ -54,20 +54,28 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Kind of service endpoint policy. This is metadata used for the Azure portal experience. </summary>
+        [WirePath("kind")]
         public string Kind { get; }
         /// <summary> A collection of service endpoint policy definitions of the service endpoint policy. </summary>
+        [WirePath("properties.serviceEndpointPolicyDefinitions")]
         public IList<ServiceEndpointPolicyDefinitionData> ServiceEndpointPolicyDefinitions { get; }
         /// <summary> A collection of references to subnets. </summary>
+        [WirePath("properties.subnets")]
         public IReadOnlyList<SubnetData> Subnets { get; }
         /// <summary> The resource GUID property of the service endpoint policy resource. </summary>
+        [WirePath("properties.resourceGuid")]
         public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the service endpoint policy resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The alias indicating if the policy belongs to a service. </summary>
+        [WirePath("properties.serviceAlias")]
         public string ServiceAlias { get; set; }
         /// <summary> A collection of contextual service endpoint policy. </summary>
+        [WirePath("properties.contextualServiceEndpointPolicies")]
         public IList<string> ContextualServiceEndpointPolicies { get; }
     }
 }

@@ -1,10 +1,9 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/train/jobs/a12078ff-ead0-41fb-951c-8a60b9a6a529_638763840000000000/:cancel?api-version=2024-11-15-preview",
+      "RequestUri": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/train/jobs/a12078ff-ead0-41fb-951c-8a60b9a6a529_638763840000000000/:cancel?api-version=2025-05-15-preview",
       "RequestMethod": "POST",
       "RequestHeaders": {
-        "Accept": "application/json",
         "Content-Length": "0",
         "Ocp-Apim-Subscription-Key": "Sanitized",
         "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20250228.1 (.NET 8.0.13; Microsoft Windows 10.0.26100)",
@@ -18,7 +17,7 @@
         "apim-request-id": "16e446f1-e3bb-4020-8fcc-de724d4fd2cb",
         "Content-Length": "0",
         "Date": "Sat, 01 Mar 2025 07:41:41 GMT",
-        "operation-location": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/train/jobs/a12078ff-ead0-41fb-951c-8a60b9a6a529_638763840000000000?api-version=2024-11-15-preview",
+        "operation-location": "https://sdk-test-01.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/Test-data-labels/train/jobs/a12078ff-ead0-41fb-951c-8a60b9a6a529_638763840000000000?api-version=2025-05-15-preview",
         "request-id": "16e446f1-e3bb-4020-8fcc-de724d4fd2cb",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
@@ -29,7 +28,7 @@
     }
   ],
   "Variables": {
-    "AZURE_AUTHORING_ENDPOINT": "https://gokulk-test.cognitiveservices.azure.com/",
+    "AZURE_AUTHORING_ENDPOINT": "https://sdk-test-01.cognitiveservices.azure.com/",
     "AZURE_AUTHORING_KEY": "Sanitized",
     "RandomSeed": "2145358276"
   }

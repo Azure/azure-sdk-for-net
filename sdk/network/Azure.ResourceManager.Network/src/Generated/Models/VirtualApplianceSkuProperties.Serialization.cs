@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -117,6 +118,90 @@ namespace Azure.ResourceManager.Network.Models
             return new VirtualApplianceSkuProperties(vendor, bundledScaleUnit, marketPlaceVersion, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Vendor), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  vendor: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Vendor))
+                {
+                    builder.Append("  vendor: ");
+                    if (Vendor.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Vendor}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Vendor}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BundledScaleUnit), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  bundledScaleUnit: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BundledScaleUnit))
+                {
+                    builder.Append("  bundledScaleUnit: ");
+                    if (BundledScaleUnit.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{BundledScaleUnit}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{BundledScaleUnit}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MarketPlaceVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  marketPlaceVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MarketPlaceVersion))
+                {
+                    builder.Append("  marketPlaceVersion: ");
+                    if (MarketPlaceVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MarketPlaceVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MarketPlaceVersion}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<VirtualApplianceSkuProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualApplianceSkuProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -125,6 +210,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VirtualApplianceSkuProperties)} does not support writing '{options.Format}' format.");
             }
