@@ -31,11 +31,11 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputAudioTimestampTypes"></param>
         /// <param name="tools"></param>
         /// <param name="temperature"></param>
-        /// <param name="servcieVoice"></param>
+        /// <param name="serviceVoice"></param>
         /// <param name="maxResponseOutputTokens"></param>
         /// <param name="toolChoice"></param>
         /// <returns> A new <see cref="VoiceLive.RequestSession"/> instance for mocking. </returns>
-        public static RequestSession RequestSession(string model = default, IEnumerable<InputModality> modalities = default, AnimationOptions animation = default, string instructions = default, InputAudio inputAudio = default, int? inputAudioSamplingRate = default, AudioFormat? inputAudioFormat = default, AudioFormat? outputAudioFormat = default, TurnDetection turnDetection = default, AudioNoiseReduction inputAudioNoiseReduction = default, AudioEchoCancellation inputAudioEchoCancellation = default, AvatarConfig avatar = default, AudioInputTranscriptionSettings inputAudioTranscription = default, IEnumerable<AudioTimestampType> outputAudioTimestampTypes = default, IEnumerable<ToolCall> tools = default, float? temperature = default, BinaryData servcieVoice = default, BinaryData maxResponseOutputTokens = default, BinaryData toolChoice = default)
+        public static RequestSession RequestSession(string model = default, IEnumerable<InputModality> modalities = default, AnimationOptions animation = default, string instructions = default, InputAudio inputAudio = default, int? inputAudioSamplingRate = default, AudioFormat? inputAudioFormat = default, AudioFormat? outputAudioFormat = default, TurnDetection turnDetection = default, AudioNoiseReduction inputAudioNoiseReduction = default, AudioEchoCancellation inputAudioEchoCancellation = default, AvatarConfig avatar = default, AudioInputTranscriptionSettings inputAudioTranscription = default, IEnumerable<AudioTimestampType> outputAudioTimestampTypes = default, IEnumerable<ToolCall> tools = default, float? temperature = default, BinaryData serviceVoice = default, BinaryData maxResponseOutputTokens = default, BinaryData toolChoice = default)
         {
             modalities ??= new ChangeTrackingList<InputModality>();
             outputAudioTimestampTypes ??= new ChangeTrackingList<AudioTimestampType>();
@@ -58,7 +58,7 @@ namespace Azure.AI.VoiceLive
                 outputAudioTimestampTypes.ToList(),
                 tools.ToList(),
                 temperature,
-                servcieVoice,
+                serviceVoice,
                 maxResponseOutputTokens,
                 toolChoice,
                 additionalBinaryDataProperties: null);

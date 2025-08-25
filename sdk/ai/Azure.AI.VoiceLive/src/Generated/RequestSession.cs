@@ -41,11 +41,11 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputAudioTimestampTypes"></param>
         /// <param name="tools"></param>
         /// <param name="temperature"></param>
-        /// <param name="servcieVoice"></param>
+        /// <param name="serviceVoice"></param>
         /// <param name="maxResponseOutputTokens"></param>
         /// <param name="toolChoice"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RequestSession(string model, IList<InputModality> modalities, AnimationOptions animation, string instructions, InputAudio inputAudio, int? inputAudioSamplingRate, AudioFormat? inputAudioFormat, AudioFormat? outputAudioFormat, TurnDetection turnDetection, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfig avatar, AudioInputTranscriptionSettings inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<ToolCall> tools, float? temperature, BinaryData servcieVoice, BinaryData maxResponseOutputTokens, BinaryData toolChoice, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RequestSession(string model, IList<InputModality> modalities, AnimationOptions animation, string instructions, InputAudio inputAudio, int? inputAudioSamplingRate, AudioFormat? inputAudioFormat, AudioFormat? outputAudioFormat, TurnDetection turnDetection, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfig avatar, AudioInputTranscriptionSettings inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<ToolCall> tools, float? temperature, BinaryData serviceVoice, BinaryData maxResponseOutputTokens, BinaryData toolChoice, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             Modalities = modalities;
@@ -63,7 +63,7 @@ namespace Azure.AI.VoiceLive
             OutputAudioTimestampTypes = outputAudioTimestampTypes;
             Tools = tools;
             Temperature = temperature;
-            _servcieVoice = servcieVoice;
+            _serviceVoice = serviceVoice;
             _maxResponseOutputTokens = maxResponseOutputTokens;
             _toolChoice = toolChoice;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

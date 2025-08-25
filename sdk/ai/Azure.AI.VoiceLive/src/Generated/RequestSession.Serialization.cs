@@ -128,13 +128,13 @@ namespace Azure.AI.VoiceLive
                 writer.WritePropertyName("temperature"u8);
                 writer.WriteNumberValue(Temperature.Value);
             }
-            if (Optional.IsDefined(_servcieVoice))
+            if (Optional.IsDefined(_serviceVoice))
             {
                 writer.WritePropertyName("voice"u8);
 #if NET6_0_OR_GREATER
-                writer.WriteRawValue(_servcieVoice);
+                writer.WriteRawValue(_serviceVoice);
 #else
-                using (JsonDocument document = JsonDocument.Parse(_servcieVoice))
+                using (JsonDocument document = JsonDocument.Parse(_serviceVoice))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -222,7 +222,7 @@ namespace Azure.AI.VoiceLive
             IList<AudioTimestampType> outputAudioTimestampTypes = default;
             IList<ToolCall> tools = default;
             float? temperature = default;
-            BinaryData servcieVoice = default;
+            BinaryData serviceVoice = default;
             BinaryData maxResponseOutputTokens = default;
             BinaryData toolChoice = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -386,7 +386,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    servcieVoice = BinaryData.FromString(prop.Value.GetRawText());
+                    serviceVoice = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("max_response_output_tokens"u8))
@@ -429,7 +429,7 @@ namespace Azure.AI.VoiceLive
                 outputAudioTimestampTypes ?? new ChangeTrackingList<AudioTimestampType>(),
                 tools ?? new ChangeTrackingList<ToolCall>(),
                 temperature,
-                servcieVoice,
+                serviceVoice,
                 maxResponseOutputTokens,
                 toolChoice,
                 additionalBinaryDataProperties);
