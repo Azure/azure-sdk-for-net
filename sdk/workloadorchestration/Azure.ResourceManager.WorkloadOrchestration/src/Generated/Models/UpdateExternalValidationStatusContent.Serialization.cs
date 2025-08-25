@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             if (Optional.IsDefined(ErrorDetails))
             {
                 writer.WritePropertyName("errorDetails"u8);
-                JsonSerializer.Serialize(writer, ErrorDetails);
+                ((IJsonModel<ResponseError>)ErrorDetails).Write(writer, options);
             }
             writer.WritePropertyName("externalValidationId"u8);
             writer.WriteStringValue(ExternalValidationId);
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     {
                         continue;
                     }
-                    errorDetails = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    errorDetails = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerWorkloadOrchestrationContext.Default);
                     continue;
                 }
                 if (property.NameEquals("externalValidationId"u8))
