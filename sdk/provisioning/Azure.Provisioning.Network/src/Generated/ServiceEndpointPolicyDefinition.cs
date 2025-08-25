@@ -9,19 +9,17 @@ using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
-using Azure.Provisioning.Resources;
 using System;
-using System.Net;
 
 namespace Azure.Provisioning.Network;
 
 /// <summary>
-/// ServiceEndpointPolicy.
+/// ServiceEndpointPolicyDefinition.
 /// </summary>
-public partial class ServiceEndpointPolicy : ProvisionableResource
+public partial class ServiceEndpointPolicyDefinition : ProvisionableResource
 {
     /// <summary>
-    /// The name of the service endpoint policy.
+    /// The name of the service endpoint policy definition name.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -31,14 +29,14 @@ public partial class ServiceEndpointPolicy : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// A collection of contextual service endpoint policy.
+    /// A description for this rule. Restricted to 140 chars.
     /// </summary>
-    public BicepList<string> ContextualServiceEndpointPolicies 
+    public BicepValue<string> Description 
     {
-        get { Initialize(); return _contextualServiceEndpointPolicies!; }
-        set { Initialize(); _contextualServiceEndpointPolicies!.Assign(value); }
+        get { Initialize(); return _description!; }
+        set { Initialize(); _description!.Assign(value); }
     }
-    private BicepList<string>? _contextualServiceEndpointPolicies;
+    private BicepValue<string>? _description;
 
     /// <summary>
     /// Resource ID.
@@ -51,45 +49,24 @@ public partial class ServiceEndpointPolicy : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
-    /// Resource location.
+    /// Service endpoint name.
     /// </summary>
-    public BicepValue<AzureLocation> Location 
+    public BicepValue<string> Service 
     {
-        get { Initialize(); return _location!; }
-        set { Initialize(); _location!.Assign(value); }
+        get { Initialize(); return _service!; }
+        set { Initialize(); _service!.Assign(value); }
     }
-    private BicepValue<AzureLocation>? _location;
+    private BicepValue<string>? _service;
 
     /// <summary>
-    /// The alias indicating if the policy belongs to a service.
+    /// A list of service resources.
     /// </summary>
-    public BicepValue<string> ServiceAlias 
+    public BicepList<ResourceIdentifier> ServiceResources 
     {
-        get { Initialize(); return _serviceAlias!; }
-        set { Initialize(); _serviceAlias!.Assign(value); }
+        get { Initialize(); return _serviceResources!; }
+        set { Initialize(); _serviceResources!.Assign(value); }
     }
-    private BicepValue<string>? _serviceAlias;
-
-    /// <summary>
-    /// A collection of service endpoint policy definitions of the service
-    /// endpoint policy.
-    /// </summary>
-    public BicepList<ServiceEndpointPolicyDefinition> ServiceEndpointPolicyDefinitions 
-    {
-        get { Initialize(); return _serviceEndpointPolicyDefinitions!; }
-        set { Initialize(); _serviceEndpointPolicyDefinitions!.Assign(value); }
-    }
-    private BicepList<ServiceEndpointPolicyDefinition>? _serviceEndpointPolicyDefinitions;
-
-    /// <summary>
-    /// Resource tags.
-    /// </summary>
-    public BicepDictionary<string> Tags 
-    {
-        get { Initialize(); return _tags!; }
-        set { Initialize(); _tags!.Assign(value); }
-    }
-    private BicepDictionary<string>? _tags;
+    private BicepList<ResourceIdentifier>? _serviceResources;
 
     /// <summary>
     /// A unique read-only string that changes whenever the resource is updated.
@@ -101,17 +78,8 @@ public partial class ServiceEndpointPolicy : ProvisionableResource
     private BicepValue<ETag>? _eTag;
 
     /// <summary>
-    /// Kind of service endpoint policy. This is metadata used for the Azure
-    /// portal experience.
-    /// </summary>
-    public BicepValue<string> Kind 
-    {
-        get { Initialize(); return _kind!; }
-    }
-    private BicepValue<string>? _kind;
-
-    /// <summary>
-    /// The provisioning state of the service endpoint policy resource.
+    /// The provisioning state of the service endpoint policy definition
+    /// resource.
     /// </summary>
     public BicepValue<NetworkProvisioningState> ProvisioningState 
     {
@@ -120,60 +88,49 @@ public partial class ServiceEndpointPolicy : ProvisionableResource
     private BicepValue<NetworkProvisioningState>? _provisioningState;
 
     /// <summary>
-    /// The resource GUID property of the service endpoint policy resource.
+    /// Gets or sets a reference to the parent ServiceEndpointPolicy.
     /// </summary>
-    public BicepValue<Guid> ResourceGuid 
+    public ServiceEndpointPolicy? Parent
     {
-        get { Initialize(); return _resourceGuid!; }
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
     }
-    private BicepValue<Guid>? _resourceGuid;
+    private ResourceReference<ServiceEndpointPolicy>? _parent;
 
     /// <summary>
-    /// A collection of references to subnets.
-    /// </summary>
-    public BicepList<Subnet> Subnets 
-    {
-        get { Initialize(); return _subnets!; }
-    }
-    private BicepList<Subnet>? _subnets;
-
-    /// <summary>
-    /// Creates a new ServiceEndpointPolicy.
+    /// Creates a new ServiceEndpointPolicyDefinition.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the ServiceEndpointPolicy resource.
-    /// This can be used to refer to the resource in expressions, but is not
-    /// the Azure name of the resource.  This value can contain letters,
-    /// numbers, and underscores.
+    /// The the Bicep identifier name of the ServiceEndpointPolicyDefinition
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the ServiceEndpointPolicy.</param>
-    public ServiceEndpointPolicy(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Network/serviceEndpointPolicies", resourceVersion ?? "2025-01-01")
+    /// <param name="resourceVersion">Version of the ServiceEndpointPolicyDefinition.</param>
+    public ServiceEndpointPolicyDefinition(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Network/serviceEndpointPolicies/serviceEndpointPolicyDefinitions", resourceVersion ?? "2025-01-01")
     {
     }
 
     /// <summary>
-    /// Define all the provisionable properties of ServiceEndpointPolicy.
+    /// Define all the provisionable properties of
+    /// ServiceEndpointPolicyDefinition.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _contextualServiceEndpointPolicies = DefineListProperty<string>("ContextualServiceEndpointPolicies", ["properties", "contextualServiceEndpointPolicies"]);
+        _description = DefineProperty<string>("Description", ["properties", "description"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
-        _location = DefineProperty<AzureLocation>("Location", ["location"]);
-        _serviceAlias = DefineProperty<string>("ServiceAlias", ["properties", "serviceAlias"]);
-        _serviceEndpointPolicyDefinitions = DefineListProperty<ServiceEndpointPolicyDefinition>("ServiceEndpointPolicyDefinitions", ["properties", "serviceEndpointPolicyDefinitions"]);
-        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _service = DefineProperty<string>("Service", ["properties", "service"]);
+        _serviceResources = DefineListProperty<ResourceIdentifier>("ServiceResources", ["properties", "serviceResources"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
-        _kind = DefineProperty<string>("Kind", ["kind"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _resourceGuid = DefineProperty<Guid>("ResourceGuid", ["properties", "resourceGuid"], isOutput: true);
-        _subnets = DefineListProperty<Subnet>("Subnets", ["properties", "subnets"], isOutput: true);
+        _parent = DefineResource<ServiceEndpointPolicy>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
-    /// Supported ServiceEndpointPolicy resource versions.
+    /// Supported ServiceEndpointPolicyDefinition resource versions.
     /// </summary>
     public static class ResourceVersions
     {
@@ -439,16 +396,16 @@ public partial class ServiceEndpointPolicy : ProvisionableResource
     }
 
     /// <summary>
-    /// Creates a reference to an existing ServiceEndpointPolicy.
+    /// Creates a reference to an existing ServiceEndpointPolicyDefinition.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the ServiceEndpointPolicy resource.
-    /// This can be used to refer to the resource in expressions, but is not
-    /// the Azure name of the resource.  This value can contain letters,
-    /// numbers, and underscores.
+    /// The the Bicep identifier name of the ServiceEndpointPolicyDefinition
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the ServiceEndpointPolicy.</param>
-    /// <returns>The existing ServiceEndpointPolicy resource.</returns>
-    public static ServiceEndpointPolicy FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+    /// <param name="resourceVersion">Version of the ServiceEndpointPolicyDefinition.</param>
+    /// <returns>The existing ServiceEndpointPolicyDefinition resource.</returns>
+    public static ServiceEndpointPolicyDefinition FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }
