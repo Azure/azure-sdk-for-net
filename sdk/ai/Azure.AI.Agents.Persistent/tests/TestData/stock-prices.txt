@@ -1,0 +1,6 @@
+NVIDIA Corporation (NVDA): $175.64 USD
+Microsoft Corporation (MSFT): $510.22 USD
+Apple Inc. (AAPL): $230.56 USD
+Alphabet Inc. (GOOGL): $201.57 USD
+Amazon.com, Inc. (AMZN): $228.01 USD
+Meta Platforms, Inc. (META): $751.48 USD
