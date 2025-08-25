@@ -103,6 +103,17 @@ namespace Azure.Provisioning.Network
             public static readonly string V2025_01_01;
         }
     }
+    public enum AutoLearnPrivateRangesMode
+    {
+        Enabled = 0,
+        Disabled = 1,
+    }
+    public enum AzureFirewallThreatIntelMode
+    {
+        Alert = 0,
+        Deny = 1,
+        Off = 2,
+    }
     public partial class BackendAddressPool : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public BackendAddressPool(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -153,6 +164,206 @@ namespace Azure.Provisioning.Network
         VirtualNetworkInherited = 0,
         Enabled = 1,
         Disabled = 2,
+    }
+    public partial class DnsSettings : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DnsSettings() { }
+        public Azure.Provisioning.BicepValue<bool> EnableProxy { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> RequireProxyForNetworkRules { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> Servers { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class FirewallPolicy : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public FirewallPolicy(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<bool> AllowSqlRedirect { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> BasePolicyId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.WritableSubResource> ChildPolicies { get { throw null; } }
+        public Azure.Provisioning.Network.DnsSettings DnsSettings { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
+        public Azure.Provisioning.Network.FirewallPolicyExplicitProxy ExplicitProxy { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.WritableSubResource> Firewalls { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.Provisioning.Network.FirewallPolicyInsights Insights { get { throw null; } set { } }
+        public Azure.Provisioning.Network.FirewallPolicyIntrusionDetection IntrusionDetection { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.WritableSubResource> RuleCollectionGroups { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Size { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.FirewallPolicySkuTier> SkuTier { get { throw null; } set { } }
+        public Azure.Provisioning.Network.FirewallPolicySnat Snat { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.AzureFirewallThreatIntelMode> ThreatIntelMode { get { throw null; } set { } }
+        public Azure.Provisioning.Network.FirewallPolicyThreatIntelWhitelist ThreatIntelWhitelist { get { throw null; } set { } }
+        public Azure.Provisioning.Network.FirewallPolicyCertificateAuthority TransportSecurityCertificateAuthority { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Network.FirewallPolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2019_06_01;
+            public static readonly string V2019_07_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_09_01;
+            public static readonly string V2019_11_01;
+            public static readonly string V2019_12_01;
+            public static readonly string V2020_01_01;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_05_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_07_01;
+            public static readonly string V2020_08_01;
+            public static readonly string V2020_11_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2021_04_01;
+            public static readonly string V2021_05_01;
+            public static readonly string V2021_06_01;
+            public static readonly string V2021_08_01;
+            public static readonly string V2021_12_01;
+            public static readonly string V2022_01_01;
+            public static readonly string V2022_05_01;
+            public static readonly string V2022_07_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2022_11_01;
+            public static readonly string V2023_02_01;
+            public static readonly string V2023_04_01;
+            public static readonly string V2023_05_01;
+            public static readonly string V2023_06_01;
+            public static readonly string V2023_09_01;
+            public static readonly string V2023_11_01;
+            public static readonly string V2024_01_01;
+            public static readonly string V2024_03_01;
+            public static readonly string V2024_05_01;
+            public static readonly string V2024_07_01;
+            public static readonly string V2024_10_01;
+            public static readonly string V2025_01_01;
+        }
+    }
+    public partial class FirewallPolicyCertificateAuthority : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public FirewallPolicyCertificateAuthority() { }
+        public Azure.Provisioning.BicepValue<string> KeyVaultSecretId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class FirewallPolicyExplicitProxy : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public FirewallPolicyExplicitProxy() { }
+        public Azure.Provisioning.BicepValue<bool> EnableExplicitProxy { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> EnablePacFile { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> HttpPort { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> HttpsPort { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> PacFile { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> PacFilePort { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class FirewallPolicyInsights : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public FirewallPolicyInsights() { }
+        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.Network.FirewallPolicyLogAnalyticsResources LogAnalyticsResources { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> RetentionDays { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class FirewallPolicyIntrusionDetection : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public FirewallPolicyIntrusionDetection() { }
+        public Azure.Provisioning.Network.FirewallPolicyIntrusionDetectionConfiguration Configuration { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.FirewallPolicyIntrusionDetectionStateType> Mode { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.FirewallPolicyIntrusionDetectionProfileType> Profile { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class FirewallPolicyIntrusionDetectionBypassTrafficSpecifications : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public FirewallPolicyIntrusionDetectionBypassTrafficSpecifications() { }
+        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> DestinationAddresses { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> DestinationIPGroups { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> DestinationPorts { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.FirewallPolicyIntrusionDetectionProtocol> Protocol { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> SourceAddresses { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> SourceIPGroups { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class FirewallPolicyIntrusionDetectionConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public FirewallPolicyIntrusionDetectionConfiguration() { }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Network.FirewallPolicyIntrusionDetectionBypassTrafficSpecifications> BypassTrafficSettings { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> PrivateRanges { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Network.FirewallPolicyIntrusionDetectionSignatureSpecification> SignatureOverrides { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public enum FirewallPolicyIntrusionDetectionProfileType
+    {
+        Basic = 0,
+        Standard = 1,
+        Advanced = 2,
+        Extended = 3,
+    }
+    public enum FirewallPolicyIntrusionDetectionProtocol
+    {
+        [System.Runtime.Serialization.DataMemberAttribute(Name="TCP")]
+        Tcp = 0,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="UDP")]
+        Udp = 1,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="ICMP")]
+        Icmp = 2,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="ANY")]
+        Any = 3,
+    }
+    public partial class FirewallPolicyIntrusionDetectionSignatureSpecification : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public FirewallPolicyIntrusionDetectionSignatureSpecification() { }
+        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.FirewallPolicyIntrusionDetectionStateType> Mode { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public enum FirewallPolicyIntrusionDetectionStateType
+    {
+        Off = 0,
+        Alert = 1,
+        Deny = 2,
+    }
+    public partial class FirewallPolicyLogAnalyticsResources : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public FirewallPolicyLogAnalyticsResources() { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> DefaultWorkspaceIdId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Network.FirewallPolicyLogAnalyticsWorkspace> Workspaces { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class FirewallPolicyLogAnalyticsWorkspace : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public FirewallPolicyLogAnalyticsWorkspace() { }
+        public Azure.Provisioning.BicepValue<string> Region { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> WorkspaceIdId { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public enum FirewallPolicySkuTier
+    {
+        Standard = 0,
+        Premium = 1,
+        Basic = 2,
+    }
+    public partial class FirewallPolicySnat : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public FirewallPolicySnat() { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.AutoLearnPrivateRangesMode> AutoLearnPrivateRanges { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> PrivateRanges { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class FirewallPolicyThreatIntelWhitelist : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public FirewallPolicyThreatIntelWhitelist() { }
+        public Azure.Provisioning.BicepList<string> Fqdns { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> IPAddresses { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class FlowLog : Azure.Provisioning.Primitives.ProvisionableResource
     {
