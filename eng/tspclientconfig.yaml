@@ -1,0 +1,5 @@
+supportedEmitters:
+  - name: "@azure-typespec/http-client-csharp"
+    path: eng/azure-typespec-http-client-csharp-emitter-package.json
+  - name: "@azure-typespec/http-client-csharp-mgmt"
+    path: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
