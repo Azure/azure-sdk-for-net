@@ -377,7 +377,7 @@ namespace Azure.AI.Agents.Persistent.Tests
 
         private PersistentAgentsClient GetClient()
         {
-            var projectEndpoint = TestEnvironment.PROJECT_CONNECTION_STRING;
+            var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
             PersistentAgentsAdministrationClientOptions opts = InstrumentClientOptions(new PersistentAgentsAdministrationClientOptions());
             PersistentAgentsAdministrationClient admClient;
 
