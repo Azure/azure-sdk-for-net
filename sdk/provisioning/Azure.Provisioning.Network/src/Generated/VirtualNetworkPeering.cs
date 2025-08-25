@@ -9,20 +9,17 @@ using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
-using Azure.Provisioning.Resources;
 using System;
-using System.ComponentModel;
-using System.Net;
 
 namespace Azure.Provisioning.Network;
 
 /// <summary>
-/// VirtualNetwork.
+/// VirtualNetworkPeering.
 /// </summary>
-public partial class VirtualNetwork : ProvisionableResource
+public partial class VirtualNetworkPeering : ProvisionableResource
 {
     /// <summary>
-    /// The name of the virtual network.
+    /// Gets or sets the Name.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -32,100 +29,77 @@ public partial class VirtualNetwork : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// The AddressSpace that contains an array of IP address ranges that can
-    /// be used by subnets.
+    /// Gets or sets the SyncRemoteAddressSpace.
     /// </summary>
-    public VirtualNetworkAddressSpace AddressSpace 
+    public BicepValue<SyncRemoteAddressSpace> SyncRemoteAddressSpace 
     {
-        get { Initialize(); return _addressSpace!; }
-        set { Initialize(); AssignOrReplace(ref _addressSpace, value); }
+        get { Initialize(); return _syncRemoteAddressSpace!; }
+        set { Initialize(); _syncRemoteAddressSpace!.Assign(value); }
     }
-    private VirtualNetworkAddressSpace? _addressSpace;
+    private BicepValue<SyncRemoteAddressSpace>? _syncRemoteAddressSpace;
 
     /// <summary>
-    /// Bgp Communities sent over ExpressRoute with each route corresponding to
-    /// a prefix in this VNET.
+    /// Whether the forwarded traffic from the VMs in the local virtual network
+    /// will be allowed/disallowed in remote virtual network.
     /// </summary>
-    public VirtualNetworkBgpCommunities BgpCommunities 
+    public BicepValue<bool> AllowForwardedTraffic 
     {
-        get { Initialize(); return _bgpCommunities!; }
-        set { Initialize(); AssignOrReplace(ref _bgpCommunities, value); }
+        get { Initialize(); return _allowForwardedTraffic!; }
+        set { Initialize(); _allowForwardedTraffic!.Assign(value); }
     }
-    private VirtualNetworkBgpCommunities? _bgpCommunities;
+    private BicepValue<bool>? _allowForwardedTraffic;
 
     /// <summary>
-    /// Gets or sets Id.
+    /// If gateway links can be used in remote virtual networking to link to
+    /// this virtual network.
     /// </summary>
-    public BicepValue<ResourceIdentifier> DdosProtectionPlanId 
+    public BicepValue<bool> AllowGatewayTransit 
     {
-        get { Initialize(); return _ddosProtectionPlanId!; }
-        set { Initialize(); _ddosProtectionPlanId!.Assign(value); }
+        get { Initialize(); return _allowGatewayTransit!; }
+        set { Initialize(); _allowGatewayTransit!.Assign(value); }
     }
-    private BicepValue<ResourceIdentifier>? _ddosProtectionPlanId;
+    private BicepValue<bool>? _allowGatewayTransit;
 
     /// <summary>
-    /// The list of DNS servers IP addresses.
+    /// Whether the VMs in the local virtual network space would be able to
+    /// access the VMs in remote virtual network space.
     /// </summary>
-    public BicepList<string> DhcpOptionsDnsServers 
+    public BicepValue<bool> AllowVirtualNetworkAccess 
     {
-        get { Initialize(); return _dhcpOptionsDnsServers!; }
-        set { Initialize(); _dhcpOptionsDnsServers!.Assign(value); }
+        get { Initialize(); return _allowVirtualNetworkAccess!; }
+        set { Initialize(); _allowVirtualNetworkAccess!.Assign(value); }
     }
-    private BicepList<string>? _dhcpOptionsDnsServers;
+    private BicepValue<bool>? _allowVirtualNetworkAccess;
 
     /// <summary>
-    /// Indicates if DDoS protection is enabled for all the protected resources
-    /// in the virtual network. It requires a DDoS protection plan associated
-    /// with the resource.
+    /// Whether complete virtual network address space is peered.
     /// </summary>
-    public BicepValue<bool> EnableDdosProtection 
+    public BicepValue<bool> AreCompleteVnetsPeered 
     {
-        get { Initialize(); return _enableDdosProtection!; }
-        set { Initialize(); _enableDdosProtection!.Assign(value); }
+        get { Initialize(); return _areCompleteVnetsPeered!; }
+        set { Initialize(); _areCompleteVnetsPeered!.Assign(value); }
     }
-    private BicepValue<bool>? _enableDdosProtection;
+    private BicepValue<bool>? _areCompleteVnetsPeered;
 
     /// <summary>
-    /// Indicates if VM protection is enabled for all the subnets in the
-    /// virtual network.
+    /// If we need to verify the provisioning state of the remote gateway.
     /// </summary>
-    public BicepValue<bool> EnableVmProtection 
+    public BicepValue<bool> DoNotVerifyRemoteGateways 
     {
-        get { Initialize(); return _enableVmProtection!; }
-        set { Initialize(); _enableVmProtection!.Assign(value); }
+        get { Initialize(); return _doNotVerifyRemoteGateways!; }
+        set { Initialize(); _doNotVerifyRemoteGateways!.Assign(value); }
     }
-    private BicepValue<bool>? _enableVmProtection;
+    private BicepValue<bool>? _doNotVerifyRemoteGateways;
 
     /// <summary>
-    /// Indicates if encryption is enabled on virtual network and if VM without
-    /// encryption is allowed in encrypted VNet.
+    /// Whether only Ipv6 address space is peered for subnet peering.
     /// </summary>
-    public VirtualNetworkEncryption Encryption 
+    public BicepValue<bool> EnableOnlyIPv6Peering 
     {
-        get { Initialize(); return _encryption!; }
-        set { Initialize(); AssignOrReplace(ref _encryption, value); }
+        get { Initialize(); return _enableOnlyIPv6Peering!; }
+        set { Initialize(); _enableOnlyIPv6Peering!.Assign(value); }
     }
-    private VirtualNetworkEncryption? _encryption;
-
-    /// <summary>
-    /// The extended location of the virtual network.
-    /// </summary>
-    public ExtendedAzureLocation ExtendedLocation 
-    {
-        get { Initialize(); return _extendedLocation!; }
-        set { Initialize(); AssignOrReplace(ref _extendedLocation, value); }
-    }
-    private ExtendedAzureLocation? _extendedLocation;
-
-    /// <summary>
-    /// The FlowTimeout value (in minutes) for the Virtual Network.
-    /// </summary>
-    public BicepValue<int> FlowTimeoutInMinutes 
-    {
-        get { Initialize(); return _flowTimeoutInMinutes!; }
-        set { Initialize(); _flowTimeoutInMinutes!.Assign(value); }
-    }
-    private BicepValue<int>? _flowTimeoutInMinutes;
+    private BicepValue<bool>? _enableOnlyIPv6Peering;
 
     /// <summary>
     /// Resource ID.
@@ -138,73 +112,123 @@ public partial class VirtualNetwork : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
-    /// Array of IpAllocation which reference this VNET.
+    /// The local address space of the local virtual network that is peered.
     /// </summary>
-    public BicepList<WritableSubResource> IPAllocations 
+    public VirtualNetworkAddressSpace LocalAddressSpace 
     {
-        get { Initialize(); return _iPAllocations!; }
-        set { Initialize(); _iPAllocations!.Assign(value); }
+        get { Initialize(); return _localAddressSpace!; }
+        set { Initialize(); AssignOrReplace(ref _localAddressSpace, value); }
     }
-    private BicepList<WritableSubResource>? _iPAllocations;
+    private VirtualNetworkAddressSpace? _localAddressSpace;
 
     /// <summary>
-    /// Resource location.
+    /// List of local subnet names that are subnet peered with remote virtual
+    /// network.
     /// </summary>
-    public BicepValue<AzureLocation> Location 
+    public BicepList<string> LocalSubnetNames 
     {
-        get { Initialize(); return _location!; }
-        set { Initialize(); _location!.Assign(value); }
+        get { Initialize(); return _localSubnetNames!; }
+        set { Initialize(); _localSubnetNames!.Assign(value); }
     }
-    private BicepValue<AzureLocation>? _location;
+    private BicepList<string>? _localSubnetNames;
 
     /// <summary>
-    /// Private Endpoint VNet Policies.
+    /// The current local address space of the local virtual network that is
+    /// peered.
     /// </summary>
-    public BicepValue<PrivateEndpointVnetPolicy> PrivateEndpointVnetPolicy 
+    public VirtualNetworkAddressSpace LocalVirtualNetworkAddressSpace 
     {
-        get { Initialize(); return _privateEndpointVnetPolicy!; }
-        set { Initialize(); _privateEndpointVnetPolicy!.Assign(value); }
+        get { Initialize(); return _localVirtualNetworkAddressSpace!; }
+        set { Initialize(); AssignOrReplace(ref _localVirtualNetworkAddressSpace, value); }
     }
-    private BicepValue<PrivateEndpointVnetPolicy>? _privateEndpointVnetPolicy;
+    private VirtualNetworkAddressSpace? _localVirtualNetworkAddressSpace;
 
     /// <summary>
-    /// A list of subnets in a Virtual Network.
+    /// The status of the virtual network peering.
     /// </summary>
-    public BicepList<Subnet> Subnets 
+    public BicepValue<VirtualNetworkPeeringState> PeeringState 
     {
-        get { Initialize(); return _subnets!; }
-        set { Initialize(); _subnets!.Assign(value); }
+        get { Initialize(); return _peeringState!; }
+        set { Initialize(); _peeringState!.Assign(value); }
     }
-    private BicepList<Subnet>? _subnets;
+    private BicepValue<VirtualNetworkPeeringState>? _peeringState;
 
     /// <summary>
-    /// Resource tags.
+    /// The peering sync status of the virtual network peering.
     /// </summary>
-    public BicepDictionary<string> Tags 
+    public BicepValue<VirtualNetworkPeeringLevel> PeeringSyncLevel 
     {
-        get { Initialize(); return _tags!; }
-        set { Initialize(); _tags!.Assign(value); }
+        get { Initialize(); return _peeringSyncLevel!; }
+        set { Initialize(); _peeringSyncLevel!.Assign(value); }
     }
-    private BicepDictionary<string>? _tags;
+    private BicepValue<VirtualNetworkPeeringLevel>? _peeringSyncLevel;
 
     /// <summary>
-    /// A list of peerings in a Virtual Network.
+    /// The reference to the address space peered with the remote virtual
+    /// network.
     /// </summary>
-    public BicepList<VirtualNetworkPeering> VirtualNetworkPeerings 
+    public VirtualNetworkAddressSpace RemoteAddressSpace 
     {
-        get { Initialize(); return _virtualNetworkPeerings!; }
-        set { Initialize(); _virtualNetworkPeerings!.Assign(value); }
+        get { Initialize(); return _remoteAddressSpace!; }
+        set { Initialize(); AssignOrReplace(ref _remoteAddressSpace, value); }
     }
-    private BicepList<VirtualNetworkPeering>? _virtualNetworkPeerings;
+    private VirtualNetworkAddressSpace? _remoteAddressSpace;
+
+    /// <summary>
+    /// The reference to the remote virtual network&apos;s Bgp Communities.
+    /// </summary>
+    public VirtualNetworkBgpCommunities RemoteBgpCommunities 
+    {
+        get { Initialize(); return _remoteBgpCommunities!; }
+        set { Initialize(); AssignOrReplace(ref _remoteBgpCommunities, value); }
+    }
+    private VirtualNetworkBgpCommunities? _remoteBgpCommunities;
+
+    /// <summary>
+    /// List of remote subnet names from remote virtual network that are subnet
+    /// peered.
+    /// </summary>
+    public BicepList<string> RemoteSubnetNames 
+    {
+        get { Initialize(); return _remoteSubnetNames!; }
+        set { Initialize(); _remoteSubnetNames!.Assign(value); }
+    }
+    private BicepList<string>? _remoteSubnetNames;
+
+    /// <summary>
+    /// The reference to the current address space of the remote virtual
+    /// network.
+    /// </summary>
+    public VirtualNetworkAddressSpace RemoteVirtualNetworkAddressSpace 
+    {
+        get { Initialize(); return _remoteVirtualNetworkAddressSpace!; }
+        set { Initialize(); AssignOrReplace(ref _remoteVirtualNetworkAddressSpace, value); }
+    }
+    private VirtualNetworkAddressSpace? _remoteVirtualNetworkAddressSpace;
 
     /// <summary>
     /// Gets or sets Id.
     /// </summary>
-    public BicepValue<ResourceIdentifier> DefaultPublicNatGatewayId 
+    public BicepValue<ResourceIdentifier> RemoteVirtualNetworkId 
     {
-        get { Initialize(); return _defaultPublicNatGatewayId!; }
+        get { Initialize(); return _remoteVirtualNetworkId!; }
+        set { Initialize(); _remoteVirtualNetworkId!.Assign(value); }
     }
-    private BicepValue<ResourceIdentifier>? _defaultPublicNatGatewayId;
+    private BicepValue<ResourceIdentifier>? _remoteVirtualNetworkId;
+
+    /// <summary>
+    /// If remote gateways can be used on this virtual network. If the flag is
+    /// set to true, and allowGatewayTransit on remote peering is also true,
+    /// virtual network will use gateways of remote virtual network for
+    /// transit. Only one peering can have this flag set to true. This flag
+    /// cannot be set if virtual network already has a gateway.
+    /// </summary>
+    public BicepValue<bool> UseRemoteGateways 
+    {
+        get { Initialize(); return _useRemoteGateways!; }
+        set { Initialize(); _useRemoteGateways!.Assign(value); }
+    }
+    private BicepValue<bool>? _useRemoteGateways;
 
     /// <summary>
     /// A unique read-only string that changes whenever the resource is updated.
@@ -216,16 +240,7 @@ public partial class VirtualNetwork : ProvisionableResource
     private BicepValue<ETag>? _eTag;
 
     /// <summary>
-    /// A collection of references to flow log resources.
-    /// </summary>
-    public BicepList<FlowLog> FlowLogs 
-    {
-        get { Initialize(); return _flowLogs!; }
-    }
-    private BicepList<FlowLog>? _flowLogs;
-
-    /// <summary>
-    /// The provisioning state of the virtual network resource.
+    /// The provisioning state of the virtual network peering resource.
     /// </summary>
     public BicepValue<NetworkProvisioningState> ProvisioningState 
     {
@@ -234,7 +249,16 @@ public partial class VirtualNetwork : ProvisionableResource
     private BicepValue<NetworkProvisioningState>? _provisioningState;
 
     /// <summary>
-    /// The resourceGuid property of the Virtual Network resource.
+    /// The reference to the remote virtual network&apos;s encryption.
+    /// </summary>
+    public VirtualNetworkEncryption RemoteVirtualNetworkEncryption 
+    {
+        get { Initialize(); return _remoteVirtualNetworkEncryption!; }
+    }
+    private VirtualNetworkEncryption? _remoteVirtualNetworkEncryption;
+
+    /// <summary>
+    /// The resourceGuid property of the Virtual Network peering resource.
     /// </summary>
     public BicepValue<Guid> ResourceGuid 
     {
@@ -243,52 +267,65 @@ public partial class VirtualNetwork : ProvisionableResource
     private BicepValue<Guid>? _resourceGuid;
 
     /// <summary>
-    /// Creates a new VirtualNetwork.
+    /// Gets or sets a reference to the parent VirtualNetwork.
+    /// </summary>
+    public VirtualNetwork? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<VirtualNetwork>? _parent;
+
+    /// <summary>
+    /// Creates a new VirtualNetworkPeering.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the VirtualNetwork resource.  This can
-    /// be used to refer to the resource in expressions, but is not the Azure
-    /// name of the resource.  This value can contain letters, numbers, and
-    /// underscores.
+    /// The the Bicep identifier name of the VirtualNetworkPeering resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the VirtualNetwork.</param>
-    public VirtualNetwork(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Network/virtualNetworks", resourceVersion ?? "2025-01-01")
+    /// <param name="resourceVersion">Version of the VirtualNetworkPeering.</param>
+    public VirtualNetworkPeering(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Network/virtualNetworks/virtualNetworkPeerings", resourceVersion ?? "2025-01-01")
     {
     }
 
     /// <summary>
-    /// Define all the provisionable properties of VirtualNetwork.
+    /// Define all the provisionable properties of VirtualNetworkPeering.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _addressSpace = DefineModelProperty<VirtualNetworkAddressSpace>("AddressSpace", ["properties", "addressSpace"]);
-        _bgpCommunities = DefineModelProperty<VirtualNetworkBgpCommunities>("BgpCommunities", ["properties", "bgpCommunities"]);
-        _ddosProtectionPlanId = DefineProperty<ResourceIdentifier>("DdosProtectionPlanId", ["properties", "ddosProtectionPlan", "id"]);
-        _dhcpOptionsDnsServers = DefineListProperty<string>("DhcpOptionsDnsServers", ["properties", "dhcpOptions", "dnsServers"]);
-        _enableDdosProtection = DefineProperty<bool>("EnableDdosProtection", ["properties", "enableDdosProtection"]);
-        _enableVmProtection = DefineProperty<bool>("EnableVmProtection", ["properties", "enableVmProtection"]);
-        _encryption = DefineModelProperty<VirtualNetworkEncryption>("Encryption", ["properties", "encryption"]);
-        _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["extendedLocation"]);
-        _flowTimeoutInMinutes = DefineProperty<int>("FlowTimeoutInMinutes", ["properties", "flowTimeoutInMinutes"]);
+        _syncRemoteAddressSpace = DefineProperty<SyncRemoteAddressSpace>("SyncRemoteAddressSpace", ["SyncRemoteAddressSpace"], isRequired: true);
+        _allowForwardedTraffic = DefineProperty<bool>("AllowForwardedTraffic", ["properties", "allowForwardedTraffic"]);
+        _allowGatewayTransit = DefineProperty<bool>("AllowGatewayTransit", ["properties", "allowGatewayTransit"]);
+        _allowVirtualNetworkAccess = DefineProperty<bool>("AllowVirtualNetworkAccess", ["properties", "allowVirtualNetworkAccess"]);
+        _areCompleteVnetsPeered = DefineProperty<bool>("AreCompleteVnetsPeered", ["properties", "peerCompleteVnets"]);
+        _doNotVerifyRemoteGateways = DefineProperty<bool>("DoNotVerifyRemoteGateways", ["properties", "doNotVerifyRemoteGateways"]);
+        _enableOnlyIPv6Peering = DefineProperty<bool>("EnableOnlyIPv6Peering", ["properties", "enableOnlyIPv6Peering"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
-        _iPAllocations = DefineListProperty<WritableSubResource>("IPAllocations", ["properties", "ipAllocations"]);
-        _location = DefineProperty<AzureLocation>("Location", ["location"]);
-        _privateEndpointVnetPolicy = DefineProperty<PrivateEndpointVnetPolicy>("PrivateEndpointVnetPolicy", ["properties", "privateEndpointVNetPolicies"]);
-        _subnets = DefineListProperty<Subnet>("Subnets", ["properties", "subnets"]);
-        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
-        _virtualNetworkPeerings = DefineListProperty<VirtualNetworkPeering>("VirtualNetworkPeerings", ["properties", "virtualNetworkPeerings"]);
-        _defaultPublicNatGatewayId = DefineProperty<ResourceIdentifier>("DefaultPublicNatGatewayId", ["properties", "defaultPublicNatGateway", "id"], isOutput: true);
+        _localAddressSpace = DefineModelProperty<VirtualNetworkAddressSpace>("LocalAddressSpace", ["properties", "localAddressSpace"]);
+        _localSubnetNames = DefineListProperty<string>("LocalSubnetNames", ["properties", "localSubnetNames"]);
+        _localVirtualNetworkAddressSpace = DefineModelProperty<VirtualNetworkAddressSpace>("LocalVirtualNetworkAddressSpace", ["properties", "localVirtualNetworkAddressSpace"]);
+        _peeringState = DefineProperty<VirtualNetworkPeeringState>("PeeringState", ["properties", "peeringState"]);
+        _peeringSyncLevel = DefineProperty<VirtualNetworkPeeringLevel>("PeeringSyncLevel", ["properties", "peeringSyncLevel"]);
+        _remoteAddressSpace = DefineModelProperty<VirtualNetworkAddressSpace>("RemoteAddressSpace", ["properties", "remoteAddressSpace"]);
+        _remoteBgpCommunities = DefineModelProperty<VirtualNetworkBgpCommunities>("RemoteBgpCommunities", ["properties", "remoteBgpCommunities"]);
+        _remoteSubnetNames = DefineListProperty<string>("RemoteSubnetNames", ["properties", "remoteSubnetNames"]);
+        _remoteVirtualNetworkAddressSpace = DefineModelProperty<VirtualNetworkAddressSpace>("RemoteVirtualNetworkAddressSpace", ["properties", "remoteVirtualNetworkAddressSpace"]);
+        _remoteVirtualNetworkId = DefineProperty<ResourceIdentifier>("RemoteVirtualNetworkId", ["properties", "remoteVirtualNetwork", "id"]);
+        _useRemoteGateways = DefineProperty<bool>("UseRemoteGateways", ["properties", "useRemoteGateways"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
-        _flowLogs = DefineListProperty<FlowLog>("FlowLogs", ["properties", "flowLogs"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _remoteVirtualNetworkEncryption = DefineModelProperty<VirtualNetworkEncryption>("RemoteVirtualNetworkEncryption", ["properties", "remoteVirtualNetworkEncryption"], isOutput: true);
         _resourceGuid = DefineProperty<Guid>("ResourceGuid", ["properties", "resourceGuid"], isOutput: true);
+        _parent = DefineResource<VirtualNetwork>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
-    /// Supported VirtualNetwork resource versions.
+    /// Supported VirtualNetworkPeering resource versions.
     /// </summary>
     public static class ResourceVersions
     {
@@ -634,24 +671,16 @@ public partial class VirtualNetwork : ProvisionableResource
     }
 
     /// <summary>
-    /// Creates a reference to an existing VirtualNetwork.
+    /// Creates a reference to an existing VirtualNetworkPeering.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the VirtualNetwork resource.  This can
-    /// be used to refer to the resource in expressions, but is not the Azure
-    /// name of the resource.  This value can contain letters, numbers, and
-    /// underscores.
+    /// The the Bicep identifier name of the VirtualNetworkPeering resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the VirtualNetwork.</param>
-    /// <returns>The existing VirtualNetwork resource.</returns>
-    public static VirtualNetwork FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+    /// <param name="resourceVersion">Version of the VirtualNetworkPeering.</param>
+    /// <returns>The existing VirtualNetworkPeering resource.</returns>
+    public static VirtualNetworkPeering FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
-
-    /// <summary>
-    /// Get the requirements for naming this VirtualNetwork resource.
-    /// </summary>
-    /// <returns>Naming requirements.</returns>
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public override ResourceNameRequirements GetResourceNameRequirements() =>
-        new(minLength: 2, maxLength: 64, validCharacters: ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen | ResourceNameCharacters.Underscore | ResourceNameCharacters.Period);
 }

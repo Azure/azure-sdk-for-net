@@ -85,6 +85,7 @@ public class NetworkSpecification() :
         typeof(PrivateLinkServiceResource),
         typeof(NetworkPrivateEndpointConnectionResource),
         typeof(VirtualNetworkTapResource),
+        typeof(VirtualNetworkPeeringResource),
     };
 
     private protected override Dictionary<Type, MethodInfo> FindConstructibleResources()
