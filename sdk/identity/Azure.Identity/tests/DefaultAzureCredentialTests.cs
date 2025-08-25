@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Diagnostics;
 using Azure.Core.TestFramework;
+using Azure.Identity.Credentials;
 using Azure.Identity.Tests.Mock;
 using Moq;
 using NUnit.Framework;
@@ -32,7 +33,7 @@ namespace Azure.Identity.Tests
             TokenCredential[] sources = cred._sources();
 
             Assert.NotNull(sources);
-            Assert.AreEqual(8, sources.Length);
+            Assert.AreEqual(9, sources.Length);
             Assert.IsInstanceOf(typeof(EnvironmentCredential), sources[0]);
             Assert.IsInstanceOf(typeof(WorkloadIdentityCredential), sources[1]);
             Assert.IsInstanceOf(typeof(ManagedIdentityCredential), sources[2]);
@@ -51,7 +52,7 @@ namespace Azure.Identity.Tests
             TokenCredential[] sources = cred._sources();
 
             Assert.NotNull(sources);
-            Assert.AreEqual(includeInteractive ? 9 : 8, sources.Length);
+            Assert.AreEqual(includeInteractive ? 10 : 9, sources.Length);
 
             Assert.IsInstanceOf(typeof(EnvironmentCredential), sources[0]);
             Assert.IsInstanceOf(typeof(WorkloadIdentityCredential), sources[1]);
@@ -515,6 +516,7 @@ namespace Azure.Identity.Tests
                 ExcludeAzureCliCredential = availableCredential != typeof(AzureCliCredential),
                 ExcludeAzurePowerShellCredential = availableCredential != typeof(AzurePowerShellCredential),
                 ExcludeInteractiveBrowserCredential = availableCredential != typeof(InteractiveBrowserCredential),
+                ExcludeBrokerCredential = availableCredential != typeof(BrokerCredential),
                 DisableInstanceDiscovery = disableInstanceDiscovery,
             };
             if (tenantId != null)
