@@ -9,19 +9,17 @@ using Azure;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
-using Azure.Provisioning.Resources;
 using System;
-using System.Net;
 
 namespace Azure.Provisioning.Network;
 
 /// <summary>
-/// NetworkSecurityGroup.
+/// SecurityRule.
 /// </summary>
-public partial class NetworkSecurityGroup : ProvisionableResource
+public partial class SecurityRule : ProvisionableResource
 {
     /// <summary>
-    /// The name of the network security group.
+    /// The name of the security rule.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -31,16 +29,89 @@ public partial class NetworkSecurityGroup : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// When enabled, flows created from Network Security Group connections
-    /// will be re-evaluated when rules are updates. Initial enablement will
-    /// trigger re-evaluation.
+    /// The network traffic is allowed or denied.
     /// </summary>
-    public BicepValue<bool> FlushConnection 
+    public BicepValue<SecurityRuleAccess> Access 
     {
-        get { Initialize(); return _flushConnection!; }
-        set { Initialize(); _flushConnection!.Assign(value); }
+        get { Initialize(); return _access!; }
+        set { Initialize(); _access!.Assign(value); }
     }
-    private BicepValue<bool>? _flushConnection;
+    private BicepValue<SecurityRuleAccess>? _access;
+
+    /// <summary>
+    /// A description for this rule. Restricted to 140 chars.
+    /// </summary>
+    public BicepValue<string> Description 
+    {
+        get { Initialize(); return _description!; }
+        set { Initialize(); _description!.Assign(value); }
+    }
+    private BicepValue<string>? _description;
+
+    /// <summary>
+    /// The destination address prefix. CIDR or destination IP range. Asterisk
+    /// &apos;*&apos; can also be used to match all source IPs. Default tags
+    /// such as &apos;VirtualNetwork&apos;, &apos;AzureLoadBalancer&apos; and
+    /// &apos;Internet&apos; can also be used.
+    /// </summary>
+    public BicepValue<string> DestinationAddressPrefix 
+    {
+        get { Initialize(); return _destinationAddressPrefix!; }
+        set { Initialize(); _destinationAddressPrefix!.Assign(value); }
+    }
+    private BicepValue<string>? _destinationAddressPrefix;
+
+    /// <summary>
+    /// The destination address prefixes. CIDR or destination IP ranges.
+    /// </summary>
+    public BicepList<string> DestinationAddressPrefixes 
+    {
+        get { Initialize(); return _destinationAddressPrefixes!; }
+        set { Initialize(); _destinationAddressPrefixes!.Assign(value); }
+    }
+    private BicepList<string>? _destinationAddressPrefixes;
+
+    /// <summary>
+    /// The application security group specified as destination.
+    /// </summary>
+    public BicepList<ApplicationSecurityGroup> DestinationApplicationSecurityGroups 
+    {
+        get { Initialize(); return _destinationApplicationSecurityGroups!; }
+        set { Initialize(); _destinationApplicationSecurityGroups!.Assign(value); }
+    }
+    private BicepList<ApplicationSecurityGroup>? _destinationApplicationSecurityGroups;
+
+    /// <summary>
+    /// The destination port or range. Integer or range between 0 and 65535.
+    /// Asterisk &apos;*&apos; can also be used to match all ports.
+    /// </summary>
+    public BicepValue<string> DestinationPortRange 
+    {
+        get { Initialize(); return _destinationPortRange!; }
+        set { Initialize(); _destinationPortRange!.Assign(value); }
+    }
+    private BicepValue<string>? _destinationPortRange;
+
+    /// <summary>
+    /// The destination port ranges.
+    /// </summary>
+    public BicepList<string> DestinationPortRanges 
+    {
+        get { Initialize(); return _destinationPortRanges!; }
+        set { Initialize(); _destinationPortRanges!.Assign(value); }
+    }
+    private BicepList<string>? _destinationPortRanges;
+
+    /// <summary>
+    /// The direction of the rule. The direction specifies if rule will be
+    /// evaluated on incoming or outgoing traffic.
+    /// </summary>
+    public BicepValue<SecurityRuleDirection> Direction 
+    {
+        get { Initialize(); return _direction!; }
+        set { Initialize(); _direction!.Assign(value); }
+    }
+    private BicepValue<SecurityRuleDirection>? _direction;
 
     /// <summary>
     /// Resource ID.
@@ -53,43 +124,81 @@ public partial class NetworkSecurityGroup : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
-    /// Resource location.
+    /// The priority of the rule. The value can be between 100 and 4096. The
+    /// priority number must be unique for each rule in the collection. The
+    /// lower the priority number, the higher the priority of the rule.
     /// </summary>
-    public BicepValue<AzureLocation> Location 
+    public BicepValue<int> Priority 
     {
-        get { Initialize(); return _location!; }
-        set { Initialize(); _location!.Assign(value); }
+        get { Initialize(); return _priority!; }
+        set { Initialize(); _priority!.Assign(value); }
     }
-    private BicepValue<AzureLocation>? _location;
+    private BicepValue<int>? _priority;
 
     /// <summary>
-    /// A collection of security rules of the network security group.
+    /// Network protocol this rule applies to.
     /// </summary>
-    public BicepList<SecurityRule> SecurityRules 
+    public BicepValue<SecurityRuleProtocol> Protocol 
     {
-        get { Initialize(); return _securityRules!; }
-        set { Initialize(); _securityRules!.Assign(value); }
+        get { Initialize(); return _protocol!; }
+        set { Initialize(); _protocol!.Assign(value); }
     }
-    private BicepList<SecurityRule>? _securityRules;
+    private BicepValue<SecurityRuleProtocol>? _protocol;
 
     /// <summary>
-    /// Resource tags.
+    /// The CIDR or source IP range. Asterisk &apos;*&apos; can also be used to
+    /// match all source IPs. Default tags such as &apos;VirtualNetwork&apos;,
+    /// &apos;AzureLoadBalancer&apos; and &apos;Internet&apos; can also be
+    /// used. If this is an ingress rule, specifies where network traffic
+    /// originates from.
     /// </summary>
-    public BicepDictionary<string> Tags 
+    public BicepValue<string> SourceAddressPrefix 
     {
-        get { Initialize(); return _tags!; }
-        set { Initialize(); _tags!.Assign(value); }
+        get { Initialize(); return _sourceAddressPrefix!; }
+        set { Initialize(); _sourceAddressPrefix!.Assign(value); }
     }
-    private BicepDictionary<string>? _tags;
+    private BicepValue<string>? _sourceAddressPrefix;
 
     /// <summary>
-    /// The default security rules of network security group.
+    /// The CIDR or source IP ranges.
     /// </summary>
-    public BicepList<SecurityRule> DefaultSecurityRules 
+    public BicepList<string> SourceAddressPrefixes 
     {
-        get { Initialize(); return _defaultSecurityRules!; }
+        get { Initialize(); return _sourceAddressPrefixes!; }
+        set { Initialize(); _sourceAddressPrefixes!.Assign(value); }
     }
-    private BicepList<SecurityRule>? _defaultSecurityRules;
+    private BicepList<string>? _sourceAddressPrefixes;
+
+    /// <summary>
+    /// The application security group specified as source.
+    /// </summary>
+    public BicepList<ApplicationSecurityGroup> SourceApplicationSecurityGroups 
+    {
+        get { Initialize(); return _sourceApplicationSecurityGroups!; }
+        set { Initialize(); _sourceApplicationSecurityGroups!.Assign(value); }
+    }
+    private BicepList<ApplicationSecurityGroup>? _sourceApplicationSecurityGroups;
+
+    /// <summary>
+    /// The source port or range. Integer or range between 0 and 65535.
+    /// Asterisk &apos;*&apos; can also be used to match all ports.
+    /// </summary>
+    public BicepValue<string> SourcePortRange 
+    {
+        get { Initialize(); return _sourcePortRange!; }
+        set { Initialize(); _sourcePortRange!.Assign(value); }
+    }
+    private BicepValue<string>? _sourcePortRange;
+
+    /// <summary>
+    /// The source port ranges.
+    /// </summary>
+    public BicepList<string> SourcePortRanges 
+    {
+        get { Initialize(); return _sourcePortRanges!; }
+        set { Initialize(); _sourcePortRanges!.Assign(value); }
+    }
+    private BicepList<string>? _sourcePortRanges;
 
     /// <summary>
     /// A unique read-only string that changes whenever the resource is updated.
@@ -101,25 +210,7 @@ public partial class NetworkSecurityGroup : ProvisionableResource
     private BicepValue<ETag>? _eTag;
 
     /// <summary>
-    /// A collection of references to flow log resources.
-    /// </summary>
-    public BicepList<FlowLog> FlowLogs 
-    {
-        get { Initialize(); return _flowLogs!; }
-    }
-    private BicepList<FlowLog>? _flowLogs;
-
-    /// <summary>
-    /// A collection of references to network interfaces.
-    /// </summary>
-    public BicepList<NetworkInterface> NetworkInterfaces 
-    {
-        get { Initialize(); return _networkInterfaces!; }
-    }
-    private BicepList<NetworkInterface>? _networkInterfaces;
-
-    /// <summary>
-    /// The provisioning state of the network security group resource.
+    /// The provisioning state of the security rule resource.
     /// </summary>
     public BicepValue<NetworkProvisioningState> ProvisioningState 
     {
@@ -128,61 +219,60 @@ public partial class NetworkSecurityGroup : ProvisionableResource
     private BicepValue<NetworkProvisioningState>? _provisioningState;
 
     /// <summary>
-    /// The resource GUID property of the network security group resource.
+    /// Gets or sets a reference to the parent NetworkSecurityGroup.
     /// </summary>
-    public BicepValue<Guid> ResourceGuid 
+    public NetworkSecurityGroup? Parent
     {
-        get { Initialize(); return _resourceGuid!; }
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
     }
-    private BicepValue<Guid>? _resourceGuid;
+    private ResourceReference<NetworkSecurityGroup>? _parent;
 
     /// <summary>
-    /// A collection of references to subnets.
-    /// </summary>
-    public BicepList<Subnet> Subnets 
-    {
-        get { Initialize(); return _subnets!; }
-    }
-    private BicepList<Subnet>? _subnets;
-
-    /// <summary>
-    /// Creates a new NetworkSecurityGroup.
+    /// Creates a new SecurityRule.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the NetworkSecurityGroup resource.
-    /// This can be used to refer to the resource in expressions, but is not
-    /// the Azure name of the resource.  This value can contain letters,
-    /// numbers, and underscores.
+    /// The the Bicep identifier name of the SecurityRule resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the NetworkSecurityGroup.</param>
-    public NetworkSecurityGroup(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Network/networkSecurityGroups", resourceVersion ?? "2025-01-01")
+    /// <param name="resourceVersion">Version of the SecurityRule.</param>
+    public SecurityRule(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Network/networkSecurityGroups/securityRules", resourceVersion ?? "2025-01-01")
     {
     }
 
     /// <summary>
-    /// Define all the provisionable properties of NetworkSecurityGroup.
+    /// Define all the provisionable properties of SecurityRule.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _flushConnection = DefineProperty<bool>("FlushConnection", ["properties", "flushConnection"]);
+        _access = DefineProperty<SecurityRuleAccess>("Access", ["properties", "access"]);
+        _description = DefineProperty<string>("Description", ["properties", "description"]);
+        _destinationAddressPrefix = DefineProperty<string>("DestinationAddressPrefix", ["properties", "destinationAddressPrefix"]);
+        _destinationAddressPrefixes = DefineListProperty<string>("DestinationAddressPrefixes", ["properties", "destinationAddressPrefixes"]);
+        _destinationApplicationSecurityGroups = DefineListProperty<ApplicationSecurityGroup>("DestinationApplicationSecurityGroups", ["properties", "destinationApplicationSecurityGroups"]);
+        _destinationPortRange = DefineProperty<string>("DestinationPortRange", ["properties", "destinationPortRange"]);
+        _destinationPortRanges = DefineListProperty<string>("DestinationPortRanges", ["properties", "destinationPortRanges"]);
+        _direction = DefineProperty<SecurityRuleDirection>("Direction", ["properties", "direction"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
-        _location = DefineProperty<AzureLocation>("Location", ["location"]);
-        _securityRules = DefineListProperty<SecurityRule>("SecurityRules", ["properties", "securityRules"]);
-        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
-        _defaultSecurityRules = DefineListProperty<SecurityRule>("DefaultSecurityRules", ["properties", "defaultSecurityRules"], isOutput: true);
+        _priority = DefineProperty<int>("Priority", ["properties", "priority"]);
+        _protocol = DefineProperty<SecurityRuleProtocol>("Protocol", ["properties", "protocol"]);
+        _sourceAddressPrefix = DefineProperty<string>("SourceAddressPrefix", ["properties", "sourceAddressPrefix"]);
+        _sourceAddressPrefixes = DefineListProperty<string>("SourceAddressPrefixes", ["properties", "sourceAddressPrefixes"]);
+        _sourceApplicationSecurityGroups = DefineListProperty<ApplicationSecurityGroup>("SourceApplicationSecurityGroups", ["properties", "sourceApplicationSecurityGroups"]);
+        _sourcePortRange = DefineProperty<string>("SourcePortRange", ["properties", "sourcePortRange"]);
+        _sourcePortRanges = DefineListProperty<string>("SourcePortRanges", ["properties", "sourcePortRanges"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
-        _flowLogs = DefineListProperty<FlowLog>("FlowLogs", ["properties", "flowLogs"], isOutput: true);
-        _networkInterfaces = DefineListProperty<NetworkInterface>("NetworkInterfaces", ["properties", "networkInterfaces"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _resourceGuid = DefineProperty<Guid>("ResourceGuid", ["properties", "resourceGuid"], isOutput: true);
-        _subnets = DefineListProperty<Subnet>("Subnets", ["properties", "subnets"], isOutput: true);
+        _parent = DefineResource<NetworkSecurityGroup>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
-    /// Supported NetworkSecurityGroup resource versions.
+    /// Supported SecurityRule resource versions.
     /// </summary>
     public static class ResourceVersions
     {
@@ -528,16 +618,16 @@ public partial class NetworkSecurityGroup : ProvisionableResource
     }
 
     /// <summary>
-    /// Creates a reference to an existing NetworkSecurityGroup.
+    /// Creates a reference to an existing SecurityRule.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the NetworkSecurityGroup resource.
-    /// This can be used to refer to the resource in expressions, but is not
-    /// the Azure name of the resource.  This value can contain letters,
-    /// numbers, and underscores.
+    /// The the Bicep identifier name of the SecurityRule resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the NetworkSecurityGroup.</param>
-    /// <returns>The existing NetworkSecurityGroup resource.</returns>
-    public static NetworkSecurityGroup FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+    /// <param name="resourceVersion">Version of the SecurityRule.</param>
+    /// <returns>The existing SecurityRule resource.</returns>
+    public static SecurityRule FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }
