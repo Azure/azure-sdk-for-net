@@ -919,16 +919,16 @@ function GetSDKProjectFolder()
         }
         if ($yml["options"] -And $yml["options"]["@azure-tools/typespec-csharp"]) {
             $csharpOpts = $yml["options"]["@azure-tools/typespec-csharp"]
-            if ($csharpOpts["package-dir"]) {
-                $packageDir = $csharpOpts["package-dir"]
+            if ($csharpOpts["namespace"]) {
+                $packageDir = $csharpOpts["namespace"]
             }
             if ($csharpOpts["service-dir"]) {
                 $service = $csharpOpts["service-dir"]
             }
         }
     }
-    if (!$service || !$packageDir) {
-        throw "[ERROR] 'serviceDir' or 'packageDir' not provided. Please configure these settings in the 'tspconfig.yaml' file."
+    if ([string]::IsNullOrEmpty($service) -or [string]::IsNullOrEmpty($packageDir)) {
+        throw "[ERROR] 'service-dir' or 'namespace' not provided. Please configure these settings in the 'tspconfig.yaml' file."
     }
     $projectFolder = (Join-Path $sdkRepoRoot $service $packageDir)
     return $projectFolder

@@ -123,3 +123,53 @@ Describe "Generate and Build SDK" -Tag "Unit" {
         $generatedSDKPackages[0].packageName | Should -Be "Azure.IoT.DeviceUpdate"
     }
 }
+
+Describe "GetSDKProjectFolder function" -Tag "UnitTest" {
+    BeforeAll {
+        $testTspConfigDir = Join-Path $PSScriptRoot "test-data"
+        $testTspConfigFile = Join-Path $testTspConfigDir "tspconfig.yaml"
+        
+        if (!(Test-Path $testTspConfigDir)) {
+            New-Item -ItemType Directory -Path $testTspConfigDir | Out-Null
+        }
+        
+        # Create a test tspconfig.yaml with namespace configuration
+        $testConfig = @"
+parameters:
+  service-dir:
+    default: testservice
+options:
+  "@azure-tools/typespec-csharp":
+    namespace: Azure.TestService.Client
+    service-dir: testservice
+"@
+        $testConfig | Out-File -FilePath $testTspConfigFile -Encoding UTF8
+    }
+    
+    AfterAll {
+        if (Test-Path $testTspConfigDir) {
+            Remove-Item -Recurse -Force $testTspConfigDir
+        }
+    }
+    
+    it("should read namespace configuration correctly") {
+        $testSdkRoot = "/test/sdk/root"
+        $result = GetSDKProjectFolder -typespecConfigurationFile $testTspConfigFile -sdkRepoRoot $testSdkRoot
+        $result | Should -Be "/test/sdk/root/testservice/Azure.TestService.Client"
+    }
+    
+    it("should throw error when namespace is missing") {
+        $testTspConfigFile2 = Join-Path $testTspConfigDir "tspconfig-missing-namespace.yaml"
+        $testConfigMissingNamespace = @"
+parameters:
+  service-dir:
+    default: testservice
+options:
+  "@azure-tools/typespec-csharp":
+    service-dir: testservice
+"@
+        $testConfigMissingNamespace | Out-File -FilePath $testTspConfigFile2 -Encoding UTF8
+        
+        {GetSDKProjectFolder -typespecConfigurationFile $testTspConfigFile2 -sdkRepoRoot "/test"} | Should -Throw "*namespace*"
+    }
+}
