@@ -10,46 +10,6 @@ namespace System.ClientModel.Primitives;
 
 internal static class JsonPathReaderExtensions
 {
-    public static string? GetString(this ReadOnlySpan<byte> encodedJson, ReadOnlySpan<byte> jsonPath)
-    {
-        Find(encodedJson, jsonPath, out Utf8JsonReader reader);
-
-        if (reader.TokenType == JsonTokenType.PropertyName)
-            reader.Read();
-
-        return reader.GetString();
-    }
-
-    public static int? GetNullableInt32(this ReadOnlySpan<byte> encodedJson, ReadOnlySpan<byte> jsonPath)
-    {
-        Find(encodedJson, jsonPath, out Utf8JsonReader reader);
-
-        if (reader.TokenType == JsonTokenType.PropertyName)
-            reader.Read();
-
-        return reader.TokenType == JsonTokenType.Null ? default : reader.GetInt32();
-    }
-
-    public static int GetInt32(this ReadOnlySpan<byte> encodedJson, ReadOnlySpan<byte> jsonPath)
-    {
-        Find(encodedJson, jsonPath, out Utf8JsonReader reader);
-
-        if (reader.TokenType == JsonTokenType.PropertyName)
-            reader.Read();
-
-        return reader.GetInt32();
-    }
-
-    public static bool GetBoolean(this ReadOnlySpan<byte> encodedJson, ReadOnlySpan<byte> jsonPath)
-    {
-        Find(encodedJson, jsonPath, out Utf8JsonReader reader);
-
-        if (reader.TokenType == JsonTokenType.PropertyName)
-            reader.Read();
-
-        return reader.GetBoolean();
-    }
-
     public static ReadOnlySpan<byte> GetPropertyName(this byte[] jsonPath)
          => GetPropertyName(jsonPath.AsSpan());
 
@@ -69,7 +29,7 @@ internal static class JsonPathReaderExtensions
         return true;
     }
 
-    public static ReadOnlySpan<byte> GetFirstNonArray(this byte[] jsonPath)
+    public static ReadOnlySpan<byte> GetFirstNonIndexParent(this byte[] jsonPath)
     {
         int index = 0;
         ReadOnlySpan<byte> newPath = jsonPath.AsSpan();
@@ -124,23 +84,26 @@ internal static class JsonPathReaderExtensions
         if (slice[0] == (byte)'$')
             slice = slice.Slice(1);
 
+        if (slice[0] == (byte)'.')
+            slice = slice.Slice(1);
+
         bool indexSyntax = slice[0] == (byte)'[';
-        int start = indexSyntax ? 2 : 1;
+        int start = indexSyntax ? 2 : 0;
         // we assume the slice starts at the property name
         for (int i = start; i < slice.Length; i++)
         {
             byte c = slice[i];
             if (c == (byte)'.')
             {
-                return slice.Slice(start, i);
+                return slice.Slice(start, i - start);
             }
-            if (c == (byte)']' && indexSyntax && slice[1] == slice[i - 1])
+            if (c == (byte)']' && (indexSyntax ? slice[1] == slice[i - 1] : (slice[i - 1] == (byte)'\'' || slice[i - 1] == (byte)'"')))
             {
-                return slice.Slice(start, i - 1);
+                return slice.Slice(start, i - 1 - start);
             }
             if (c == (byte)'[' && !indexSyntax)
             {
-                return slice.Slice(start, i - 1);
+                return slice.Slice(start, i);
             }
         }
 
@@ -257,19 +220,50 @@ internal static class JsonPathReaderExtensions
         jsonReader.Read();
         long startRight = jsonReader.TokenStartIndex;
 
+        if (jsonReader.TokenType == JsonTokenType.EndObject && !IsFirstProperty(json, jsonPath))
+        {
+            endLeft--; //remove trailing comma
+        }
+
         return [.. json.Slice(0, (int)endLeft).Span, .. json.Slice((int)startRight).Span];
+    }
+
+    private static bool IsFirstProperty(ReadOnlyMemory<byte> json, ReadOnlySpan<byte> jsonPath)
+    {
+        Find(json.Span, jsonPath.GetParent(), out var jsonReader);
+
+        if (jsonReader.TokenType != JsonTokenType.StartObject)
+            return false;
+
+        jsonReader.Read();
+
+        return jsonReader.TokenType == JsonTokenType.PropertyName &&
+               jsonReader.ValueSpan.SequenceEqual(jsonPath.GetPropertyName());
     }
 
     public static byte[] Set(this ReadOnlyMemory<byte> json, ReadOnlySpan<byte> jsonPath, ReadOnlyMemory<byte> jsonReplacement)
     {
         if (TryFind(json.Span, jsonPath, out Utf8JsonReader jsonReader))
         {
+            if (jsonReader.TokenType == JsonTokenType.PropertyName)
+            {
+                //move to the value
+                jsonReader.Read();
+            }
+
             long endLeft = jsonReader.TokenStartIndex;
             jsonReader.Skip();
             jsonReader.Read();
             long startRight = jsonReader.TokenStartIndex;
 
-            return [.. json.Slice(0, (int)endLeft).Span, .. jsonReplacement.Span, .. json.Slice((int)startRight).Span];
+            if (jsonReader.TokenType == JsonTokenType.EndObject || jsonReader.TokenType == JsonTokenType.EndArray)
+            {
+                return [.. json.Slice(0, (int)endLeft).Span, .. jsonReplacement.Span, .. json.Slice((int)startRight).Span];
+            }
+            else
+            {
+                return [.. json.Slice(0, (int)endLeft).Span, .. jsonReplacement.Span, (byte)',', .. json.Slice((int)startRight).Span];
+            }
         }
 
         return jsonReader.Insert(json, jsonPath.GetPropertyName(), jsonReplacement);
@@ -281,7 +275,7 @@ internal static class JsonPathReaderExtensions
         return jsonReader.Insert(json, ReadOnlySpan<byte>.Empty, jsonToInsert);
     }
 
-    internal static byte[] Insert(ref this Utf8JsonReader jsonReader, ReadOnlyMemory<byte> json, ReadOnlySpan<byte> propertyName, ReadOnlyMemory<byte> jsonToInsert)
+    internal static byte[] Insert(ref this Utf8JsonReader jsonReader, ReadOnlyMemory<byte> json, ReadOnlySpan<byte> propertyName, ReadOnlyMemory<byte> jsonToInsert, bool hasPreviousItems = false)
     {
         long endLeft;
 
@@ -296,6 +290,7 @@ internal static class JsonPathReaderExtensions
             //skip to the end of the array
             while (jsonReader.Read() && jsonReader.TokenType != JsonTokenType.EndArray)
             {
+                hasPreviousItems = true;
                 jsonReader.Skip();
             }
         }
@@ -303,13 +298,25 @@ internal static class JsonPathReaderExtensions
         if (jsonReader.TokenType == JsonTokenType.EndArray)
         {
             endLeft = jsonReader.TokenStartIndex;
-            return
-            [
-                .. json.Slice(0, (int)endLeft).Span,
-                (byte)',',
-                .. jsonToInsert.Span,
-                .. json.Slice((int)endLeft).Span
-            ];
+            if (!hasPreviousItems)
+            {
+                return
+                [
+                    .. json.Slice(0, (int)endLeft).Span,
+                    .. jsonToInsert.Span,
+                    .. json.Slice((int)endLeft).Span
+                ];
+            }
+            else
+            {
+                return
+                [
+                    .. json.Slice(0, (int)endLeft).Span,
+                    (byte)',',
+                    .. jsonToInsert.Span,
+                    .. json.Slice((int)endLeft).Span
+                ];
+            }
         }
 
         endLeft = jsonReader.TokenStartIndex;

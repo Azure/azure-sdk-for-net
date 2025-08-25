@@ -276,7 +276,7 @@ public partial struct JsonPatch
                     ReadOnlyMemory<byte> jsonToInsert = jsonReader.Advance(ref pathReader)
                         ? kvp.Value.Value.Slice(1, kvp.Value.Value.Length - 2)
                         : kvp.Value.Value;
-                    existingArray = jsonReader.Insert(existingArray, ReadOnlySpan<byte>.Empty, jsonToInsert);
+                    existingArray = jsonReader.Insert(existingArray, ReadOnlySpan<byte>.Empty, jsonToInsert, true);
                 }
             }
             return existingArray.IsEmpty ? encodedValue.Value : existingArray;
@@ -666,6 +666,11 @@ public partial struct JsonPatch
         ReadOnlyMemory<byte> data = encodedValue.Value;
         ReadOnlySpan<byte> propertyName = pathReader.Current.ValueSpan;
 
+        int index = 0;
+        if (pathReader.Current.TokenType == JsonPathTokenType.ArrayIndex)
+        {
+            Utf8Parser.TryParse(pathReader.Current.ValueSpan, out index, out _);
+        }
         if (pathReader.Current.TokenType != JsonPathTokenType.End)
         {
             data = GetNonRootNewJson(ref pathReader, jsonPath.GetParent().IsRoot(), jsonPath.IsArrayIndex(), encodedValue);
@@ -682,7 +687,7 @@ public partial struct JsonPatch
         }
         else
         {
-            return jsonReader.Insert(json, propertyName, data);
+            return jsonReader.Insert(json, propertyName, data, index > 0);
         }
     }
 

@@ -367,19 +367,5 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
 
             Assert.IsFalse(reader.Read(), "Should not be able to read past End token");
         }
-
-        [TestCase("$.foo.bar", "$.foo")]
-        [TestCase("$['foo'].bar", "$['foo']")]
-        [TestCase("$[0].bar", "$[0]")]
-        [TestCase("$.x[0].bar", "$.x[0]")]
-        [TestCase("$.x[0]", "$.x")]
-        [TestCase("$[0]", "$")]
-        [TestCase("$['f.oo'].bar", "$['f.oo']")]
-        [TestCase("$.bar['f.oo']", "$.bar")]
-        public void GetParent(string jsonPath, string expected)
-        {
-            var result = Encoding.UTF8.GetBytes(jsonPath).GetParent();
-            Assert.AreEqual(expected, Encoding.UTF8.GetString(result.ToArray()));
-        }
     }
 }

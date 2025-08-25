@@ -405,7 +405,7 @@ public partial struct JsonPatch
 
                 if (kvp.Value.Kind.HasFlag(ValueKind.ArrayItemAppend))
                 {
-                    var firstNonArray = kvp.Key.GetFirstNonArray();
+                    var firstNonArray = kvp.Key.GetFirstNonIndexParent();
                     if (arrays?.Contains(firstNonArray) == true)
                     {
                         continue;
