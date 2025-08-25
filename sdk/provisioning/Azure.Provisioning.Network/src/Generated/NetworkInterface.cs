@@ -164,12 +164,12 @@ public partial class NetworkInterface : ProvisionableResource
     /// <summary>
     /// Privatelinkservice of the network interface resource.
     /// </summary>
-    public PrivateLinkServiceData PrivateLinkService 
+    public PrivateLinkService PrivateLinkService 
     {
         get { Initialize(); return _privateLinkService!; }
         set { Initialize(); AssignOrReplace(ref _privateLinkService, value); }
     }
-    private PrivateLinkServiceData? _privateLinkService;
+    private PrivateLinkService? _privateLinkService;
 
     /// <summary>
     /// Resource tags.
@@ -335,7 +335,7 @@ public partial class NetworkInterface : ProvisionableResource
         _migrationPhase = DefineProperty<NetworkInterfaceMigrationPhase>("MigrationPhase", ["properties", "migrationPhase"]);
         _networkSecurityGroup = DefineModelProperty<NetworkSecurityGroup>("NetworkSecurityGroup", ["properties", "networkSecurityGroup"]);
         _nicType = DefineProperty<NetworkInterfaceNicType>("NicType", ["properties", "nicType"]);
-        _privateLinkService = DefineModelProperty<PrivateLinkServiceData>("PrivateLinkService", ["properties", "privateLinkService"]);
+        _privateLinkService = DefineModelProperty<PrivateLinkService>("PrivateLinkService", ["properties", "privateLinkService"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _workloadType = DefineProperty<string>("WorkloadType", ["properties", "workloadType"]);
         _defaultOutboundConnectivityEnabled = DefineProperty<bool>("DefaultOutboundConnectivityEnabled", ["properties", "defaultOutboundConnectivityEnabled"], isOutput: true);
