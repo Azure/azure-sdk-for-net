@@ -47,7 +47,7 @@ namespace Azure.AI.Projects.Tests
             }
         }
 
-        protected void DatasetsFileTestSync(AIProjectClient projectClient, string datasetName, string connectionName, string filePath, string datasetVersion)
+        public void DatasetsFileTestSync(AIProjectClient projectClient, string datasetName, string connectionName, string filePath, string datasetVersion)
         {
             Console.WriteLine($"Uploading a single file to create Dataset with name {datasetName} and version {datasetVersion}:");
             FileDatasetVersion fileDataset = projectClient.Datasets.UploadFile(
