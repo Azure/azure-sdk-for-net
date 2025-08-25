@@ -289,9 +289,9 @@ namespace Azure.Provisioning.Network
         [System.Runtime.Serialization.DataMemberAttribute(Name="VXLAN")]
         Vxlan = 2,
     }
-    public partial class InboundNatRuleData : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class InboundNatRule : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public InboundNatRuleData() { }
+        public InboundNatRule(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> BackendAddressPoolId { get { throw null; } set { } }
         public Azure.Provisioning.Network.NetworkInterfaceIPConfiguration BackendIPConfiguration { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> BackendPort { get { throw null; } set { } }
@@ -307,8 +307,8 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.LoadBalancingTransportProtocol> Protocol { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Network.InboundNatRule FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
     }
     public enum IPAddressDeleteOption
     {
@@ -461,7 +461,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> GatewayLoadBalancerId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.BackendAddressPool> LoadBalancerBackendAddressPools { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Network.InboundNatRuleData> LoadBalancerInboundNatRules { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Network.InboundNatRule> LoadBalancerInboundNatRules { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> Primary { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> PrivateIPAddress { get { throw null; } }

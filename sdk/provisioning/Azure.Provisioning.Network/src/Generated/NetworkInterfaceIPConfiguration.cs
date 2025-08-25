@@ -86,11 +86,11 @@ public partial class NetworkInterfaceIPConfiguration : ProvisionableResource
     /// <summary>
     /// A list of references of LoadBalancerInboundNatRules.
     /// </summary>
-    public BicepList<InboundNatRuleData> LoadBalancerInboundNatRules 
+    public BicepList<InboundNatRule> LoadBalancerInboundNatRules 
     {
         get { Initialize(); return _loadBalancerInboundNatRules!; }
     }
-    private BicepList<InboundNatRuleData>? _loadBalancerInboundNatRules;
+    private BicepList<InboundNatRule>? _loadBalancerInboundNatRules;
 
     /// <summary>
     /// Whether this is a primary customer address on the network interface.
@@ -215,7 +215,7 @@ public partial class NetworkInterfaceIPConfiguration : ProvisionableResource
         _gatewayLoadBalancerId = DefineProperty<ResourceIdentifier>("GatewayLoadBalancerId", ["properties", "gatewayLoadBalancer", "id"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _loadBalancerBackendAddressPools = DefineListProperty<BackendAddressPool>("LoadBalancerBackendAddressPools", ["properties", "loadBalancerBackendAddressPools"], isOutput: true);
-        _loadBalancerInboundNatRules = DefineListProperty<InboundNatRuleData>("LoadBalancerInboundNatRules", ["properties", "loadBalancerInboundNatRules"], isOutput: true);
+        _loadBalancerInboundNatRules = DefineListProperty<InboundNatRule>("LoadBalancerInboundNatRules", ["properties", "loadBalancerInboundNatRules"], isOutput: true);
         _primary = DefineProperty<bool>("Primary", ["properties", "primary"], isOutput: true);
         _privateIPAddress = DefineProperty<string>("PrivateIPAddress", ["properties", "privateIPAddress"], isOutput: true);
         _privateIPAddressPrefixLength = DefineProperty<int>("PrivateIPAddressPrefixLength", ["properties", "privateIPAddressPrefixLength"], isOutput: true);

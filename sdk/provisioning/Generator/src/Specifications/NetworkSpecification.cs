@@ -74,6 +74,7 @@ public class NetworkSpecification() :
         typeof(FlowLogResource),
         typeof(SubnetResource),
         typeof(FrontendIPConfigurationResource),
+        typeof(InboundNatRuleResource),
     };
 
     private protected override Dictionary<Type, MethodInfo> FindConstructibleResources()
