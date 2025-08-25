@@ -82,7 +82,8 @@ public class NetworkSpecification() :
         typeof(NetworkSecurityGroupResource),
         typeof(RouteResource),
         typeof(RouteTableResource),
-        typeof(PrivateLinkServiceResource)
+        typeof(PrivateLinkServiceResource),
+        typeof(NetworkPrivateEndpointConnectionResource)
     };
 
     private protected override Dictionary<Type, MethodInfo> FindConstructibleResources()

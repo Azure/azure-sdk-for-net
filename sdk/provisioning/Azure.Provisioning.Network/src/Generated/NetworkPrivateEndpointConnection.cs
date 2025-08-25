@@ -16,12 +16,12 @@ using System.Net;
 namespace Azure.Provisioning.Network;
 
 /// <summary>
-/// PrivateLinkService.
+/// NetworkPrivateEndpointConnection.
 /// </summary>
-public partial class PrivateLinkService : ProvisionableResource
+public partial class NetworkPrivateEndpointConnection : ProvisionableResource
 {
     /// <summary>
-    /// The name of the private link service.
+    /// The name of the private end point connection.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -31,54 +31,15 @@ public partial class PrivateLinkService : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// The list of subscriptions.
+    /// A collection of information about the state of the connection between
+    /// service consumer and provider.
     /// </summary>
-    public BicepList<string> AutoApprovalSubscriptions 
+    public NetworkPrivateLinkServiceConnectionState ConnectionState 
     {
-        get { Initialize(); return _autoApprovalSubscriptions!; }
-        set { Initialize(); _autoApprovalSubscriptions!.Assign(value); }
+        get { Initialize(); return _connectionState!; }
+        set { Initialize(); AssignOrReplace(ref _connectionState, value); }
     }
-    private BicepList<string>? _autoApprovalSubscriptions;
-
-    /// <summary>
-    /// The destination IP address of the private link service.
-    /// </summary>
-    public BicepValue<string> DestinationIPAddress 
-    {
-        get { Initialize(); return _destinationIPAddress!; }
-        set { Initialize(); _destinationIPAddress!.Assign(value); }
-    }
-    private BicepValue<string>? _destinationIPAddress;
-
-    /// <summary>
-    /// Whether the private link service is enabled for proxy protocol or not.
-    /// </summary>
-    public BicepValue<bool> EnableProxyProtocol 
-    {
-        get { Initialize(); return _enableProxyProtocol!; }
-        set { Initialize(); _enableProxyProtocol!.Assign(value); }
-    }
-    private BicepValue<bool>? _enableProxyProtocol;
-
-    /// <summary>
-    /// The extended location of the load balancer.
-    /// </summary>
-    public ExtendedAzureLocation ExtendedLocation 
-    {
-        get { Initialize(); return _extendedLocation!; }
-        set { Initialize(); AssignOrReplace(ref _extendedLocation, value); }
-    }
-    private ExtendedAzureLocation? _extendedLocation;
-
-    /// <summary>
-    /// The list of Fqdn.
-    /// </summary>
-    public BicepList<string> Fqdns 
-    {
-        get { Initialize(); return _fqdns!; }
-        set { Initialize(); _fqdns!.Assign(value); }
-    }
-    private BicepList<string>? _fqdns;
+    private NetworkPrivateLinkServiceConnectionState? _connectionState;
 
     /// <summary>
     /// Resource ID.
@@ -91,65 +52,6 @@ public partial class PrivateLinkService : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
-    /// An array of private link service IP configurations.
-    /// </summary>
-    public BicepList<PrivateLinkServiceIPConfiguration> IPConfigurations 
-    {
-        get { Initialize(); return _iPConfigurations!; }
-        set { Initialize(); _iPConfigurations!.Assign(value); }
-    }
-    private BicepList<PrivateLinkServiceIPConfiguration>? _iPConfigurations;
-
-    /// <summary>
-    /// An array of references to the load balancer IP configurations.
-    /// </summary>
-    public BicepList<FrontendIPConfiguration> LoadBalancerFrontendIPConfigurations 
-    {
-        get { Initialize(); return _loadBalancerFrontendIPConfigurations!; }
-        set { Initialize(); _loadBalancerFrontendIPConfigurations!.Assign(value); }
-    }
-    private BicepList<FrontendIPConfiguration>? _loadBalancerFrontendIPConfigurations;
-
-    /// <summary>
-    /// Resource location.
-    /// </summary>
-    public BicepValue<AzureLocation> Location 
-    {
-        get { Initialize(); return _location!; }
-        set { Initialize(); _location!.Assign(value); }
-    }
-    private BicepValue<AzureLocation>? _location;
-
-    /// <summary>
-    /// Resource tags.
-    /// </summary>
-    public BicepDictionary<string> Tags 
-    {
-        get { Initialize(); return _tags!; }
-        set { Initialize(); _tags!.Assign(value); }
-    }
-    private BicepDictionary<string>? _tags;
-
-    /// <summary>
-    /// The list of subscriptions.
-    /// </summary>
-    public BicepList<string> VisibilitySubscriptions 
-    {
-        get { Initialize(); return _visibilitySubscriptions!; }
-        set { Initialize(); _visibilitySubscriptions!.Assign(value); }
-    }
-    private BicepList<string>? _visibilitySubscriptions;
-
-    /// <summary>
-    /// The alias of the private link service.
-    /// </summary>
-    public BicepValue<string> Alias 
-    {
-        get { Initialize(); return _alias!; }
-    }
-    private BicepValue<string>? _alias;
-
-    /// <summary>
     /// A unique read-only string that changes whenever the resource is updated.
     /// </summary>
     public BicepValue<ETag> ETag 
@@ -159,26 +61,34 @@ public partial class PrivateLinkService : ProvisionableResource
     private BicepValue<ETag>? _eTag;
 
     /// <summary>
-    /// An array of references to the network interfaces created for this
-    /// private link service.
+    /// The consumer link id.
     /// </summary>
-    public BicepList<NetworkInterface> NetworkInterfaces 
+    public BicepValue<string> LinkIdentifier 
     {
-        get { Initialize(); return _networkInterfaces!; }
+        get { Initialize(); return _linkIdentifier!; }
     }
-    private BicepList<NetworkInterface>? _networkInterfaces;
+    private BicepValue<string>? _linkIdentifier;
 
     /// <summary>
-    /// An array of list about connections to the private endpoint.
+    /// The resource of private end point.
     /// </summary>
-    public BicepList<NetworkPrivateEndpointConnection> PrivateEndpointConnections 
+    public PrivateEndpointData PrivateEndpoint 
     {
-        get { Initialize(); return _privateEndpointConnections!; }
+        get { Initialize(); return _privateEndpoint!; }
     }
-    private BicepList<NetworkPrivateEndpointConnection>? _privateEndpointConnections;
+    private PrivateEndpointData? _privateEndpoint;
 
     /// <summary>
-    /// The provisioning state of the private link service resource.
+    /// The location of the private endpoint.
+    /// </summary>
+    public BicepValue<string> PrivateEndpointLocation 
+    {
+        get { Initialize(); return _privateEndpointLocation!; }
+    }
+    private BicepValue<string>? _privateEndpointLocation;
+
+    /// <summary>
+    /// The provisioning state of the private endpoint connection resource.
     /// </summary>
     public BicepValue<NetworkProvisioningState> ProvisioningState 
     {
@@ -187,47 +97,50 @@ public partial class PrivateLinkService : ProvisionableResource
     private BicepValue<NetworkProvisioningState>? _provisioningState;
 
     /// <summary>
-    /// Creates a new PrivateLinkService.
+    /// Gets or sets a reference to the parent PrivateLinkService.
+    /// </summary>
+    public PrivateLinkService? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<PrivateLinkService>? _parent;
+
+    /// <summary>
+    /// Creates a new NetworkPrivateEndpointConnection.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the PrivateLinkService resource.  This
-    /// can be used to refer to the resource in expressions, but is not the
-    /// Azure name of the resource.  This value can contain letters, numbers,
-    /// and underscores.
+    /// The the Bicep identifier name of the NetworkPrivateEndpointConnection
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the PrivateLinkService.</param>
-    public PrivateLinkService(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Network/privateLinkServices", resourceVersion ?? "2025-01-01")
+    /// <param name="resourceVersion">Version of the NetworkPrivateEndpointConnection.</param>
+    public NetworkPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Network/privateLinkServices/privateEndpointConnections", resourceVersion ?? "2025-01-01")
     {
     }
 
     /// <summary>
-    /// Define all the provisionable properties of PrivateLinkService.
+    /// Define all the provisionable properties of
+    /// NetworkPrivateEndpointConnection.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _autoApprovalSubscriptions = DefineListProperty<string>("AutoApprovalSubscriptions", ["properties", "autoApproval", "subscriptions"]);
-        _destinationIPAddress = DefineProperty<string>("DestinationIPAddress", ["properties", "destinationIPAddress"]);
-        _enableProxyProtocol = DefineProperty<bool>("EnableProxyProtocol", ["properties", "enableProxyProtocol"]);
-        _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["extendedLocation"]);
-        _fqdns = DefineListProperty<string>("Fqdns", ["properties", "fqdns"]);
+        _connectionState = DefineModelProperty<NetworkPrivateLinkServiceConnectionState>("ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
-        _iPConfigurations = DefineListProperty<PrivateLinkServiceIPConfiguration>("IPConfigurations", ["properties", "ipConfigurations"]);
-        _loadBalancerFrontendIPConfigurations = DefineListProperty<FrontendIPConfiguration>("LoadBalancerFrontendIPConfigurations", ["properties", "loadBalancerFrontendIpConfigurations"]);
-        _location = DefineProperty<AzureLocation>("Location", ["location"]);
-        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
-        _visibilitySubscriptions = DefineListProperty<string>("VisibilitySubscriptions", ["properties", "visibility", "subscriptions"]);
-        _alias = DefineProperty<string>("Alias", ["properties", "alias"], isOutput: true);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
-        _networkInterfaces = DefineListProperty<NetworkInterface>("NetworkInterfaces", ["properties", "networkInterfaces"], isOutput: true);
-        _privateEndpointConnections = DefineListProperty<NetworkPrivateEndpointConnection>("PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
+        _linkIdentifier = DefineProperty<string>("LinkIdentifier", ["properties", "linkIdentifier"], isOutput: true);
+        _privateEndpoint = DefineModelProperty<PrivateEndpointData>("PrivateEndpoint", ["properties", "privateEndpoint"], isOutput: true);
+        _privateEndpointLocation = DefineProperty<string>("PrivateEndpointLocation", ["properties", "privateEndpointLocation"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _parent = DefineResource<PrivateLinkService>("Parent", ["parent"], isRequired: true);
     }
 
     /// <summary>
-    /// Supported PrivateLinkService resource versions.
+    /// Supported NetworkPrivateEndpointConnection resource versions.
     /// </summary>
     public static class ResourceVersions
     {
@@ -458,16 +371,16 @@ public partial class PrivateLinkService : ProvisionableResource
     }
 
     /// <summary>
-    /// Creates a reference to an existing PrivateLinkService.
+    /// Creates a reference to an existing NetworkPrivateEndpointConnection.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the PrivateLinkService resource.  This
-    /// can be used to refer to the resource in expressions, but is not the
-    /// Azure name of the resource.  This value can contain letters, numbers,
-    /// and underscores.
+    /// The the Bicep identifier name of the NetworkPrivateEndpointConnection
+    /// resource.  This can be used to refer to the resource in expressions,
+    /// but is not the Azure name of the resource.  This value can contain
+    /// letters, numbers, and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the PrivateLinkService.</param>
-    /// <returns>The existing PrivateLinkService resource.</returns>
-    public static PrivateLinkService FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+    /// <param name="resourceVersion">Version of the NetworkPrivateEndpointConnection.</param>
+    /// <returns>The existing NetworkPrivateEndpointConnection resource.</returns>
+    public static NetworkPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }
