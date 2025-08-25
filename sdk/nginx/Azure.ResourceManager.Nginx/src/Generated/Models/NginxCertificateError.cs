@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> The NginxCertificateError. </summary>
+    /// <summary> Nginx Certificate Error Response Body. </summary>
     public partial class NginxCertificateError
     {
         /// <summary>

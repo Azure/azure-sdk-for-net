@@ -34,6 +34,11 @@ namespace Azure.ResourceManager.Nginx.Models
                 throw new FormatException($"The model {nameof(WebApplicationFirewallStatus)} does not support writing '{format}' format.");
             }
 
+            if (Optional.IsDefined(WafRelease))
+            {
+                writer.WritePropertyName("wafRelease"u8);
+                writer.WriteStringValue(WafRelease);
+            }
             if (options.Format != "W" && Optional.IsDefined(AttackSignaturesPackage))
             {
                 writer.WritePropertyName("attackSignaturesPackage"u8);
@@ -91,6 +96,7 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
+            string wafRelease = default;
             WebApplicationFirewallPackage attackSignaturesPackage = default;
             WebApplicationFirewallPackage botSignaturesPackage = default;
             WebApplicationFirewallPackage threatCampaignsPackage = default;
@@ -99,6 +105,11 @@ namespace Azure.ResourceManager.Nginx.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("wafRelease"u8))
+                {
+                    wafRelease = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("attackSignaturesPackage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -141,7 +152,13 @@ namespace Azure.ResourceManager.Nginx.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new WebApplicationFirewallStatus(attackSignaturesPackage, botSignaturesPackage, threatCampaignsPackage, componentVersions, serializedAdditionalRawData);
+            return new WebApplicationFirewallStatus(
+                wafRelease,
+                attackSignaturesPackage,
+                botSignaturesPackage,
+                threatCampaignsPackage,
+                componentVersions,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebApplicationFirewallStatus>.Write(ModelReaderWriterOptions options)

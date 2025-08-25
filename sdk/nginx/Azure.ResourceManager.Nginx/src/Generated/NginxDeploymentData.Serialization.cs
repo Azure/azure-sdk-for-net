@@ -38,15 +38,15 @@ namespace Azure.ResourceManager.Nginx
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
-            }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.Nginx
             {
                 return null;
             }
-            ManagedServiceIdentity identity = default;
             NginxDeploymentProperties properties = default;
+            ManagedServiceIdentity identity = default;
             NginxResourceSku sku = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -88,15 +88,6 @@ namespace Azure.ResourceManager.Nginx
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerNginxContext.Default);
-                    continue;
-                }
                 if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -104,6 +95,15 @@ namespace Azure.ResourceManager.Nginx
                         continue;
                     }
                     properties = NginxDeploymentProperties.DeserializeNginxDeploymentProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerNginxContext.Default);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -171,8 +171,8 @@ namespace Azure.ResourceManager.Nginx
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                identity,
                 properties,
+                identity,
                 sku,
                 serializedAdditionalRawData);
         }

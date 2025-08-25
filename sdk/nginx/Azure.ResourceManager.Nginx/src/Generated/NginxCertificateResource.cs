@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.Nginx
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _nginxCertificateCertificatesClientDiagnostics;
-        private readonly CertificatesRestOperations _nginxCertificateCertificatesRestClient;
+        private readonly ClientDiagnostics _nginxCertificateClientDiagnostics;
+        private readonly NginxCertificatesRestOperations _nginxCertificateRestClient;
         private readonly NginxCertificateData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -59,9 +59,9 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NginxCertificateResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _nginxCertificateCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Nginx", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string nginxCertificateCertificatesApiVersion);
-            _nginxCertificateCertificatesRestClient = new CertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, nginxCertificateCertificatesApiVersion);
+            _nginxCertificateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Nginx", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string nginxCertificateApiVersion);
+            _nginxCertificateRestClient = new NginxCertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, nginxCertificateApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Certificates_Get</description>
+        /// <description>NginxCertificate_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NginxCertificateResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _nginxCertificateCertificatesClientDiagnostics.CreateScope("NginxCertificateResource.Get");
+            using var scope = _nginxCertificateClientDiagnostics.CreateScope("NginxCertificateResource.Get");
             scope.Start();
             try
             {
-                var response = await _nginxCertificateCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _nginxCertificateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NginxCertificateResource(Client, response.Value), response.GetRawResponse());
@@ -137,11 +137,11 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Certificates_Get</description>
+        /// <description>NginxCertificate_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -152,11 +152,11 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NginxCertificateResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _nginxCertificateCertificatesClientDiagnostics.CreateScope("NginxCertificateResource.Get");
+            using var scope = _nginxCertificateClientDiagnostics.CreateScope("NginxCertificateResource.Get");
             scope.Start();
             try
             {
-                var response = _nginxCertificateCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _nginxCertificateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NginxCertificateResource(Client, response.Value), response.GetRawResponse());
@@ -177,11 +177,11 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Certificates_Delete</description>
+        /// <description>NginxCertificate_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -193,12 +193,12 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _nginxCertificateCertificatesClientDiagnostics.CreateScope("NginxCertificateResource.Delete");
+            using var scope = _nginxCertificateClientDiagnostics.CreateScope("NginxCertificateResource.Delete");
             scope.Start();
             try
             {
-                var response = await _nginxCertificateCertificatesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NginxArmOperation(_nginxCertificateCertificatesClientDiagnostics, Pipeline, _nginxCertificateCertificatesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _nginxCertificateRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new NginxArmOperation(_nginxCertificateClientDiagnostics, Pipeline, _nginxCertificateRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -219,11 +219,11 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Certificates_Delete</description>
+        /// <description>NginxCertificate_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -235,12 +235,12 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _nginxCertificateCertificatesClientDiagnostics.CreateScope("NginxCertificateResource.Delete");
+            using var scope = _nginxCertificateClientDiagnostics.CreateScope("NginxCertificateResource.Delete");
             scope.Start();
             try
             {
-                var response = _nginxCertificateCertificatesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new NginxArmOperation(_nginxCertificateCertificatesClientDiagnostics, Pipeline, _nginxCertificateCertificatesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _nginxCertificateRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new NginxArmOperation(_nginxCertificateClientDiagnostics, Pipeline, _nginxCertificateRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -261,11 +261,11 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Certificates_CreateOrUpdate</description>
+        /// <description>NginxCertificate_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -281,12 +281,12 @@ namespace Azure.ResourceManager.Nginx
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _nginxCertificateCertificatesClientDiagnostics.CreateScope("NginxCertificateResource.Update");
+            using var scope = _nginxCertificateClientDiagnostics.CreateScope("NginxCertificateResource.Update");
             scope.Start();
             try
             {
-                var response = await _nginxCertificateCertificatesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NginxArmOperation<NginxCertificateResource>(new NginxCertificateOperationSource(Client), _nginxCertificateCertificatesClientDiagnostics, Pipeline, _nginxCertificateCertificatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _nginxCertificateRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NginxArmOperation<NginxCertificateResource>(new NginxCertificateOperationSource(Client), _nginxCertificateClientDiagnostics, Pipeline, _nginxCertificateRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -307,11 +307,11 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Certificates_CreateOrUpdate</description>
+        /// <description>NginxCertificate_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -327,12 +327,12 @@ namespace Azure.ResourceManager.Nginx
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _nginxCertificateCertificatesClientDiagnostics.CreateScope("NginxCertificateResource.Update");
+            using var scope = _nginxCertificateClientDiagnostics.CreateScope("NginxCertificateResource.Update");
             scope.Start();
             try
             {
-                var response = _nginxCertificateCertificatesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new NginxArmOperation<NginxCertificateResource>(new NginxCertificateOperationSource(Client), _nginxCertificateCertificatesClientDiagnostics, Pipeline, _nginxCertificateCertificatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _nginxCertificateRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new NginxArmOperation<NginxCertificateResource>(new NginxCertificateOperationSource(Client), _nginxCertificateClientDiagnostics, Pipeline, _nginxCertificateRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

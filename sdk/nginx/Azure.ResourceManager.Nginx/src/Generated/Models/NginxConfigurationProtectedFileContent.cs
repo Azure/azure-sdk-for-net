@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> The NginxConfigurationProtectedFileContent. </summary>
+    /// <summary> Nginx Configuration Protected File Request. </summary>
     public partial class NginxConfigurationProtectedFileContent
     {
         /// <summary>

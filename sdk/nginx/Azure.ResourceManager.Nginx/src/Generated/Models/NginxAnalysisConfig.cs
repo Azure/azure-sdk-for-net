@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="rootFile"> The root file of the NGINX config file(s). It must match one of the files' filepath. </param>
         /// <param name="files"></param>
         /// <param name="protectedFiles"></param>
-        /// <param name="package"></param>
+        /// <param name="package"> Nginx Configuration Package. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NginxAnalysisConfig(string rootFile, IList<NginxConfigurationFile> files, IList<NginxConfigurationProtectedFileContent> protectedFiles, NginxConfigurationPackage package, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Nginx.Models
         public IList<NginxConfigurationFile> Files { get; }
         /// <summary> Gets the protected files. </summary>
         public IList<NginxConfigurationProtectedFileContent> ProtectedFiles { get; }
-        /// <summary> Gets or sets the package. </summary>
+        /// <summary> Nginx Configuration Package. </summary>
         public NginxConfigurationPackage Package { get; set; }
     }
 }

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Nginx.Models;
@@ -35,8 +36,10 @@ namespace Azure.ResourceManager.Nginx
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _nginxDeploymentDeploymentsClientDiagnostics;
-        private readonly DeploymentsRestOperations _nginxDeploymentDeploymentsRestClient;
+        private readonly ClientDiagnostics _nginxDeploymentClientDiagnostics;
+        private readonly NginxDeploymentsRestOperations _nginxDeploymentRestClient;
+        private readonly ClientDiagnostics _nginxDeploymentWafPolicyNginxDeploymentsClientDiagnostics;
+        private readonly NginxDeploymentsRestOperations _nginxDeploymentWafPolicyNginxDeploymentsRestClient;
         private readonly NginxDeploymentData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -61,9 +64,12 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NginxDeploymentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _nginxDeploymentDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Nginx", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string nginxDeploymentDeploymentsApiVersion);
-            _nginxDeploymentDeploymentsRestClient = new DeploymentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, nginxDeploymentDeploymentsApiVersion);
+            _nginxDeploymentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Nginx", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string nginxDeploymentApiVersion);
+            _nginxDeploymentRestClient = new NginxDeploymentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, nginxDeploymentApiVersion);
+            _nginxDeploymentWafPolicyNginxDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Nginx", NginxDeploymentWafPolicyResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(NginxDeploymentWafPolicyResource.ResourceType, out string nginxDeploymentWafPolicyNginxDeploymentsApiVersion);
+            _nginxDeploymentWafPolicyNginxDeploymentsRestClient = new NginxDeploymentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, nginxDeploymentWafPolicyNginxDeploymentsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -106,11 +112,11 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ApiKeys_Get</description>
+        /// <description>NginxDeploymentApiKeyResponse_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -137,11 +143,11 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ApiKeys_Get</description>
+        /// <description>NginxDeploymentApiKeyResponse_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -175,11 +181,11 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Certificates_Get</description>
+        /// <description>NginxCertificate_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -206,11 +212,11 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Certificates_Get</description>
+        /// <description>NginxCertificate_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -244,11 +250,11 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Configurations_Get</description>
+        /// <description>NginxConfigurationResponse_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -275,11 +281,11 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Configurations_Get</description>
+        /// <description>NginxConfigurationResponse_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -297,6 +303,75 @@ namespace Azure.ResourceManager.Nginx
             return GetNginxConfigurations().Get(configurationName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of NginxDeploymentWafPolicyResources in the NginxDeployment. </summary>
+        /// <returns> An object representing collection of NginxDeploymentWafPolicyResources and their operations over a NginxDeploymentWafPolicyResource. </returns>
+        public virtual NginxDeploymentWafPolicyCollection GetNginxDeploymentWafPolicies()
+        {
+            return GetCachedClient(client => new NginxDeploymentWafPolicyCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get the Nginx Waf Policy of given Nginx deployment
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/wafPolicies/{wafPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NginxDeploymentWafPolicy_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxDeploymentWafPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="wafPolicyName"> The name of Waf Policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="wafPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="wafPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NginxDeploymentWafPolicyResource>> GetNginxDeploymentWafPolicyAsync(string wafPolicyName, CancellationToken cancellationToken = default)
+        {
+            return await GetNginxDeploymentWafPolicies().GetAsync(wafPolicyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the Nginx Waf Policy of given Nginx deployment
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/wafPolicies/{wafPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NginxDeploymentWafPolicy_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxDeploymentWafPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="wafPolicyName"> The name of Waf Policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="wafPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="wafPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NginxDeploymentWafPolicyResource> GetNginxDeploymentWafPolicy(string wafPolicyName, CancellationToken cancellationToken = default)
+        {
+            return GetNginxDeploymentWafPolicies().Get(wafPolicyName, cancellationToken);
+        }
+
         /// <summary>
         /// Get the NGINX deployment
         /// <list type="bullet">
@@ -306,11 +381,11 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Deployments_Get</description>
+        /// <description>NginxDeployment_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -321,11 +396,11 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NginxDeploymentResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _nginxDeploymentDeploymentsClientDiagnostics.CreateScope("NginxDeploymentResource.Get");
+            using var scope = _nginxDeploymentClientDiagnostics.CreateScope("NginxDeploymentResource.Get");
             scope.Start();
             try
             {
-                var response = await _nginxDeploymentDeploymentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _nginxDeploymentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NginxDeploymentResource(Client, response.Value), response.GetRawResponse());
@@ -346,11 +421,11 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Deployments_Get</description>
+        /// <description>NginxDeployment_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -361,11 +436,11 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NginxDeploymentResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _nginxDeploymentDeploymentsClientDiagnostics.CreateScope("NginxDeploymentResource.Get");
+            using var scope = _nginxDeploymentClientDiagnostics.CreateScope("NginxDeploymentResource.Get");
             scope.Start();
             try
             {
-                var response = _nginxDeploymentDeploymentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _nginxDeploymentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new NginxDeploymentResource(Client, response.Value), response.GetRawResponse());
@@ -386,11 +461,11 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Deployments_Delete</description>
+        /// <description>NginxDeployment_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -402,12 +477,12 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _nginxDeploymentDeploymentsClientDiagnostics.CreateScope("NginxDeploymentResource.Delete");
+            using var scope = _nginxDeploymentClientDiagnostics.CreateScope("NginxDeploymentResource.Delete");
             scope.Start();
             try
             {
-                var response = await _nginxDeploymentDeploymentsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new NginxArmOperation(_nginxDeploymentDeploymentsClientDiagnostics, Pipeline, _nginxDeploymentDeploymentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _nginxDeploymentRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new NginxArmOperation(_nginxDeploymentClientDiagnostics, Pipeline, _nginxDeploymentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -428,11 +503,11 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Deployments_Delete</description>
+        /// <description>NginxDeployment_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -444,12 +519,12 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _nginxDeploymentDeploymentsClientDiagnostics.CreateScope("NginxDeploymentResource.Delete");
+            using var scope = _nginxDeploymentClientDiagnostics.CreateScope("NginxDeploymentResource.Delete");
             scope.Start();
             try
             {
-                var response = _nginxDeploymentDeploymentsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new NginxArmOperation(_nginxDeploymentDeploymentsClientDiagnostics, Pipeline, _nginxDeploymentDeploymentsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _nginxDeploymentRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new NginxArmOperation(_nginxDeploymentClientDiagnostics, Pipeline, _nginxDeploymentRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -470,11 +545,11 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Deployments_Update</description>
+        /// <description>NginxDeployment_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -483,19 +558,19 @@ namespace Azure.ResourceManager.Nginx
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The <see cref="NginxDeploymentPatch"/> to use. </param>
+        /// <param name="patch"> The Nginx deployment update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<ArmOperation<NginxDeploymentResource>> UpdateAsync(WaitUntil waitUntil, NginxDeploymentPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _nginxDeploymentDeploymentsClientDiagnostics.CreateScope("NginxDeploymentResource.Update");
+            using var scope = _nginxDeploymentClientDiagnostics.CreateScope("NginxDeploymentResource.Update");
             scope.Start();
             try
             {
-                var response = await _nginxDeploymentDeploymentsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new NginxArmOperation<NginxDeploymentResource>(new NginxDeploymentOperationSource(Client), _nginxDeploymentDeploymentsClientDiagnostics, Pipeline, _nginxDeploymentDeploymentsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var response = await _nginxDeploymentRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new NginxArmOperation<NginxDeploymentResource>(new NginxDeploymentOperationSource(Client), _nginxDeploymentClientDiagnostics, Pipeline, _nginxDeploymentRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -516,11 +591,11 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Deployments_Update</description>
+        /// <description>NginxDeployment_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -529,19 +604,19 @@ namespace Azure.ResourceManager.Nginx
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The <see cref="NginxDeploymentPatch"/> to use. </param>
+        /// <param name="patch"> The Nginx deployment update parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual ArmOperation<NginxDeploymentResource> Update(WaitUntil waitUntil, NginxDeploymentPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _nginxDeploymentDeploymentsClientDiagnostics.CreateScope("NginxDeploymentResource.Update");
+            using var scope = _nginxDeploymentClientDiagnostics.CreateScope("NginxDeploymentResource.Update");
             scope.Start();
             try
             {
-                var response = _nginxDeploymentDeploymentsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new NginxArmOperation<NginxDeploymentResource>(new NginxDeploymentOperationSource(Client), _nginxDeploymentDeploymentsClientDiagnostics, Pipeline, _nginxDeploymentDeploymentsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var response = _nginxDeploymentRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                var operation = new NginxArmOperation<NginxDeploymentResource>(new NginxDeploymentOperationSource(Client), _nginxDeploymentClientDiagnostics, Pipeline, _nginxDeploymentRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -554,6 +629,124 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
+        /// List Waf Policies of given Nginx deployment
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/wafPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NginxDeployments_GetWafPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxDeploymentWafPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NginxDeploymentWafPolicyMetadata"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NginxDeploymentWafPolicyMetadata> GetWafPoliciesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _nginxDeploymentWafPolicyNginxDeploymentsRestClient.CreateGetWafPoliciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nginxDeploymentWafPolicyNginxDeploymentsRestClient.CreateGetWafPoliciesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => NginxDeploymentWafPolicyMetadata.DeserializeNginxDeploymentWafPolicyMetadata(e), _nginxDeploymentWafPolicyNginxDeploymentsClientDiagnostics, Pipeline, "NginxDeploymentResource.GetWafPolicies", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List Waf Policies of given Nginx deployment
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/wafPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NginxDeployments_GetWafPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxDeploymentWafPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NginxDeploymentWafPolicyMetadata"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NginxDeploymentWafPolicyMetadata> GetWafPolicies(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _nginxDeploymentWafPolicyNginxDeploymentsRestClient.CreateGetWafPoliciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nginxDeploymentWafPolicyNginxDeploymentsRestClient.CreateGetWafPoliciesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => NginxDeploymentWafPolicyMetadata.DeserializeNginxDeploymentWafPolicyMetadata(e), _nginxDeploymentWafPolicyNginxDeploymentsClientDiagnostics, Pipeline, "NginxDeploymentResource.GetWafPolicies", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the Nginx Waf Policy of given Nginx deployment
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/listDefaultWafPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NginxDeployments_GetDefaultWafPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxDeploymentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NginxDeploymentDefaultWafPolicyProperties"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NginxDeploymentDefaultWafPolicyProperties> GetDefaultWafPoliciesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _nginxDeploymentRestClient.CreateGetDefaultWafPoliciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => NginxDeploymentDefaultWafPolicyProperties.DeserializeNginxDeploymentDefaultWafPolicyProperties(e), _nginxDeploymentClientDiagnostics, Pipeline, "NginxDeploymentResource.GetDefaultWafPolicies", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the Nginx Waf Policy of given Nginx deployment
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/listDefaultWafPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NginxDeployments_GetDefaultWafPolicies</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxDeploymentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NginxDeploymentDefaultWafPolicyProperties"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NginxDeploymentDefaultWafPolicyProperties> GetDefaultWafPolicies(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _nginxDeploymentRestClient.CreateGetDefaultWafPoliciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => NginxDeploymentDefaultWafPolicyProperties.DeserializeNginxDeploymentDefaultWafPolicyProperties(e), _nginxDeploymentClientDiagnostics, Pipeline, "NginxDeploymentResource.GetDefaultWafPolicies", "value", null, cancellationToken);
+        }
+
+        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>
@@ -562,11 +755,11 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Deployments_Get</description>
+        /// <description>NginxDeployment_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -583,7 +776,7 @@ namespace Azure.ResourceManager.Nginx
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _nginxDeploymentDeploymentsClientDiagnostics.CreateScope("NginxDeploymentResource.AddTag");
+            using var scope = _nginxDeploymentClientDiagnostics.CreateScope("NginxDeploymentResource.AddTag");
             scope.Start();
             try
             {
@@ -592,7 +785,7 @@ namespace Azure.ResourceManager.Nginx
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _nginxDeploymentDeploymentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _nginxDeploymentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new NginxDeploymentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -624,11 +817,11 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Deployments_Get</description>
+        /// <description>NginxDeployment_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -645,7 +838,7 @@ namespace Azure.ResourceManager.Nginx
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _nginxDeploymentDeploymentsClientDiagnostics.CreateScope("NginxDeploymentResource.AddTag");
+            using var scope = _nginxDeploymentClientDiagnostics.CreateScope("NginxDeploymentResource.AddTag");
             scope.Start();
             try
             {
@@ -654,7 +847,7 @@ namespace Azure.ResourceManager.Nginx
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _nginxDeploymentDeploymentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _nginxDeploymentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new NginxDeploymentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -686,11 +879,11 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Deployments_Get</description>
+        /// <description>NginxDeployment_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -705,7 +898,7 @@ namespace Azure.ResourceManager.Nginx
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _nginxDeploymentDeploymentsClientDiagnostics.CreateScope("NginxDeploymentResource.SetTags");
+            using var scope = _nginxDeploymentClientDiagnostics.CreateScope("NginxDeploymentResource.SetTags");
             scope.Start();
             try
             {
@@ -715,7 +908,7 @@ namespace Azure.ResourceManager.Nginx
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _nginxDeploymentDeploymentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _nginxDeploymentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new NginxDeploymentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -743,11 +936,11 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Deployments_Get</description>
+        /// <description>NginxDeployment_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -762,7 +955,7 @@ namespace Azure.ResourceManager.Nginx
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _nginxDeploymentDeploymentsClientDiagnostics.CreateScope("NginxDeploymentResource.SetTags");
+            using var scope = _nginxDeploymentClientDiagnostics.CreateScope("NginxDeploymentResource.SetTags");
             scope.Start();
             try
             {
@@ -772,7 +965,7 @@ namespace Azure.ResourceManager.Nginx
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _nginxDeploymentDeploymentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _nginxDeploymentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new NginxDeploymentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -800,11 +993,11 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Deployments_Get</description>
+        /// <description>NginxDeployment_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -819,7 +1012,7 @@ namespace Azure.ResourceManager.Nginx
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _nginxDeploymentDeploymentsClientDiagnostics.CreateScope("NginxDeploymentResource.RemoveTag");
+            using var scope = _nginxDeploymentClientDiagnostics.CreateScope("NginxDeploymentResource.RemoveTag");
             scope.Start();
             try
             {
@@ -828,7 +1021,7 @@ namespace Azure.ResourceManager.Nginx
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _nginxDeploymentDeploymentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _nginxDeploymentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new NginxDeploymentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -860,11 +1053,11 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Deployments_Get</description>
+        /// <description>NginxDeployment_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -879,7 +1072,7 @@ namespace Azure.ResourceManager.Nginx
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _nginxDeploymentDeploymentsClientDiagnostics.CreateScope("NginxDeploymentResource.RemoveTag");
+            using var scope = _nginxDeploymentClientDiagnostics.CreateScope("NginxDeploymentResource.RemoveTag");
             scope.Start();
             try
             {
@@ -888,7 +1081,7 @@ namespace Azure.ResourceManager.Nginx
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _nginxDeploymentDeploymentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    var originalResponse = _nginxDeploymentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                     return Response.FromValue(new NginxDeploymentResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else

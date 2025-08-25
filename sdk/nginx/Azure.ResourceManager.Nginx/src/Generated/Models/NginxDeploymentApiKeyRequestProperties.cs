@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> The NginxDeploymentApiKeyRequestProperties. </summary>
+    /// <summary> Nginx Deployment Api Key Request Properties. </summary>
     public partial class NginxDeploymentApiKeyRequestProperties
     {
         /// <summary>
