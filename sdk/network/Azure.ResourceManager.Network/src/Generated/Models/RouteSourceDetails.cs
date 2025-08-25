@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Express Route Circuit identifier. </summary>
+        [WirePath("circuit")]
         public string Circuit { get; }
         /// <summary> Flag to indicate if the route learned from the primary device is active or passive. </summary>
+        [WirePath("pri")]
         public string Pri { get; }
         /// <summary> Flag to indicate if the route learned from the secondary device is active or passive. </summary>
+        [WirePath("sec")]
         public string Sec { get; }
     }
 }

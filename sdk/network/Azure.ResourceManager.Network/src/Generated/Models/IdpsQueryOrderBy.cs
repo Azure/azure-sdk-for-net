@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Describes the actual column name to sort by. </summary>
+        [WirePath("field")]
         public string Field { get; set; }
         /// <summary> Describes if results should be in ascending/descending order. </summary>
+        [WirePath("order")]
         public FirewallPolicyIdpsQuerySortOrder? Order { get; set; }
     }
 }
