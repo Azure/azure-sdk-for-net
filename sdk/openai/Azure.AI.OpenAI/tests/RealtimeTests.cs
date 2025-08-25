@@ -117,7 +117,12 @@ public class RealtimeTests : RealtimeTestFixtureBase
     [TestCase(null)]
     public async Task TextOnlyWorks(AzureOpenAIClientOptions.ServiceVersion? version)
     {
-        RealtimeClient client = GetTestClient(GetTestClientOptions(version));
+        TestClientOptions options = GetTestClientOptions(version);
+        options.DisableClientWrapping = true;
+        options.DefaultHeaders.Add("test_header_key", "test_header_value");
+        options.DefaultQueryParameters.Add("test_query_parameter_key", "test_query_parameter_value");
+
+        RealtimeClient client = GetTestClient(options);
         using RealtimeSession session = await client.StartConversationSessionAsync(GetTestDeployment(), CancellationToken);
         await session.AddItemAsync(
             RealtimeItem.CreateUserMessage(["Hello, world!"]),

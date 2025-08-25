@@ -23,10 +23,10 @@ namespace Azure.Generator.Management.InputTransformation
         {
             foreach (var parameter in operation.Parameters)
             {
-                if (parameter.NameInRequest.Equals("subscriptionId", StringComparison.OrdinalIgnoreCase))
+                if (parameter is InputPathParameter pathParameter && pathParameter.SerializedName.Equals("subscriptionId", StringComparison.OrdinalIgnoreCase))
                 {
                     // Always set subscriptionId to method parameter
-                    parameter.Update(InputParameterKind.Method);
+                    pathParameter.Update(InputParameterScope.Method);
                 }
             }
         }

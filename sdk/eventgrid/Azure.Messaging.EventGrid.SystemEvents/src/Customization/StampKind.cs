@@ -9,7 +9,7 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Kind of environment where app service plan is. </summary>
-    [CodeGenModel("StampKind")]
+    [CodeGenType("StampKind")]
     public readonly partial struct StampKind
     {
     }

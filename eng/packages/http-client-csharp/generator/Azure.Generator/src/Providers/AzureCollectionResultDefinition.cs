@@ -117,14 +117,15 @@ namespace Azure.Generator.Providers
                     This.Invoke(_getNextResponseMethodName, [PageSizeHintParameter, nextPageVariable], IsAsync),
                     out var responseVariable),
                 // Early exit if response is null
-                new IfStatement(responseVariable.Is(Null)) { new YieldBreakStatement() }
+                new IfStatement(responseVariable.Is(Null)) { new YieldBreakStatement() },
+                Declare("result", ResponseModelType, responseVariable.CastTo(ResponseModelType), out var resultVariable),
             };
 
             var nextPageExpression = _paging.NextLink != null ? nextPageVariable.NullConditional().Property("AbsoluteUri") : nextPageVariable;
             if (_isProtocol)
             {
                 // Convert items to BinaryData
-                whileStatement.Add(ConvertItemsToListOfBinaryData(responseVariable, out var itemsVariable));
+                whileStatement.Add(ConvertItemsToListOfBinaryData(resultVariable, out var itemsVariable));
 
                 // Create and yield the page
                 whileStatement.Add(YieldReturn(Static(new CSharpType(typeof(Page<>), [_itemModelType])).Invoke("FromValues", [itemsVariable, nextPageExpression, responseVariable])));
@@ -132,11 +133,11 @@ namespace Azure.Generator.Providers
             else
             {
                 // Create and yield the page
-                whileStatement.Add(YieldReturn(Static(new CSharpType(typeof(Page<>), [_itemModelType])).Invoke("FromValues", [BuildGetPropertyExpression(Paging.ItemPropertySegments, responseVariable).CastTo(new CSharpType(typeof(IReadOnlyList<>), _itemModelType)), nextPageExpression, responseVariable])));
+                whileStatement.Add(YieldReturn(Static(new CSharpType(typeof(Page<>), [_itemModelType])).Invoke("FromValues", [BuildGetPropertyExpression(Paging.ItemPropertySegments, resultVariable).CastTo(new CSharpType(typeof(IReadOnlyList<>), _itemModelType)), nextPageExpression, responseVariable])));
             }
 
             // Extract next page
-            whileStatement.Add(AssignAndCheckNextPageVariable(responseVariable.ToApi<ClientResponseApi>(), nextPageVariable));
+            whileStatement.Add(AssignAndCheckNextPageVariable(responseVariable.ToApi<ClientResponseApi>(), resultVariable, nextPageVariable));
 
             statements.Add(whileStatement);
             return [.. statements];
@@ -162,17 +163,18 @@ namespace Azure.Generator.Providers
                 Declare("response", new CSharpType(typeof(Response), isNullable: true),
                     This.Invoke(_getNextResponseMethodName, [PageSizeHintParameter, Null], IsAsync),
                     out var responseVariable),
+                Declare("result", ResponseModelType, responseVariable.CastTo(ResponseModelType), out var resultVariable),
             };
 
             if (_isProtocol)
             {
-                statements.Add(ConvertItemsToListOfBinaryData(responseVariable, out var itemsVariable));
+                statements.Add(ConvertItemsToListOfBinaryData(resultVariable, out var itemsVariable));
                 statements.Add(
                     YieldReturn(Static(new CSharpType(typeof(Page<>), [_itemModelType])).Invoke("FromValues", [itemsVariable, Null, responseVariable])));
             }
             else
             {
-                statements.Add(YieldReturn(Static(new CSharpType(typeof(Page<>), [_itemModelType])).Invoke("FromValues", [BuildGetPropertyExpression(Paging.ItemPropertySegments, responseVariable).CastTo(new CSharpType(typeof(IReadOnlyList<>), _itemModelType)), Null, responseVariable])));
+                statements.Add(YieldReturn(Static(new CSharpType(typeof(Page<>), [_itemModelType])).Invoke("FromValues", [BuildGetPropertyExpression(Paging.ItemPropertySegments, resultVariable).CastTo(new CSharpType(typeof(IReadOnlyList<>), _itemModelType)), Null, responseVariable])));
             }
 
             return [..statements];
@@ -238,7 +240,7 @@ namespace Azure.Generator.Providers
 
         private ScopedApi<HttpMessage> InvokeCreateRequestForContinuationToken(ValueExpression continuationToken)
         {
-            var arguments = RequestFields.Select(f => f == NextTokenField ? continuationToken : f.AsValueExpression);
+            var arguments = RequestFields.Select(f => f.Name.Equals(NextTokenField?.Name) ? continuationToken : f.AsValueExpression);
 
             return ClientField.Invoke(CreateRequestMethodName, arguments).As<HttpMessage>();
         }

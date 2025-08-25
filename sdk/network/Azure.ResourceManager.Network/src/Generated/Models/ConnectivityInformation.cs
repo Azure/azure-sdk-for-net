@@ -73,18 +73,25 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of hops between the source and the destination. </summary>
+        [WirePath("hops")]
         public IReadOnlyList<ConnectivityHopInfo> Hops { get; }
         /// <summary> The connection status. </summary>
+        [WirePath("connectionStatus")]
         public NetworkConnectionStatus? NetworkConnectionStatus { get; }
         /// <summary> Average latency in milliseconds. </summary>
+        [WirePath("avgLatencyInMs")]
         public int? AvgLatencyInMs { get; }
         /// <summary> Minimum latency in milliseconds. </summary>
+        [WirePath("minLatencyInMs")]
         public int? MinLatencyInMs { get; }
         /// <summary> Maximum latency in milliseconds. </summary>
+        [WirePath("maxLatencyInMs")]
         public int? MaxLatencyInMs { get; }
         /// <summary> Total number of probes sent. </summary>
+        [WirePath("probesSent")]
         public int? ProbesSent { get; }
         /// <summary> Number of failed probes. </summary>
+        [WirePath("probesFailed")]
         public int? ProbesFailed { get; }
     }
 }

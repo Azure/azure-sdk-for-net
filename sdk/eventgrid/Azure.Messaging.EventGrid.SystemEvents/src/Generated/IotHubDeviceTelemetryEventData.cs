@@ -15,27 +15,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         /// <summary> Initializes a new instance of <see cref="IotHubDeviceTelemetryEventData"/>. </summary>
         /// <param name="body"> The content of the message from the device. </param>
-        /// <param name="properties"> Application properties are user-defined strings that can be added to the message. These fields are optional. </param>
-        /// <param name="systemProperties"> System properties help identify contents and source of the messages. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/>, <paramref name="properties"/> or <paramref name="systemProperties"/> is null. </exception>
-        internal IotHubDeviceTelemetryEventData(object body, IReadOnlyDictionary<string, string> properties, IReadOnlyDictionary<string, string> systemProperties) : base(body, properties, systemProperties)
+        internal IotHubDeviceTelemetryEventData(object body) : base(body)
         {
-            Argument.AssertNotNull(body, nameof(body));
-            Argument.AssertNotNull(properties, nameof(properties));
-            Argument.AssertNotNull(systemProperties, nameof(systemProperties));
         }
 
         /// <summary> Initializes a new instance of <see cref="IotHubDeviceTelemetryEventData"/>. </summary>
         /// <param name="body"> The content of the message from the device. </param>
         /// <param name="properties"> Application properties are user-defined strings that can be added to the message. These fields are optional. </param>
         /// <param name="systemProperties"> System properties help identify contents and source of the messages. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IotHubDeviceTelemetryEventData(object body, IReadOnlyDictionary<string, string> properties, IReadOnlyDictionary<string, string> systemProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(body, properties, systemProperties, serializedAdditionalRawData)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="IotHubDeviceTelemetryEventData"/> for deserialization. </summary>
-        internal IotHubDeviceTelemetryEventData()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubDeviceTelemetryEventData(object body, IReadOnlyDictionary<string, string> properties, IReadOnlyDictionary<string, string> systemProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(body, properties, systemProperties, additionalBinaryDataProperties)
         {
         }
     }

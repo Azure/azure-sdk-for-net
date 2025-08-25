@@ -1245,8 +1245,9 @@
       "parameters": [
         {
           "$id": "135",
+          "kind": "endpoint",
           "name": "endpoint",
-          "nameInRequest": "endpoint",
+          "serializedName": "endpoint",
           "doc": "Service host",
           "type": {
             "$id": "136",
@@ -1254,14 +1255,10 @@
             "name": "endpoint",
             "crossLanguageDefinitionId": "TypeSpec.url"
           },
-          "location": "Uri",
           "isApiVersion": false,
-          "isContentType": false,
-          "isRequired": true,
+          "optional": false,
+          "scope": "Client",
           "isEndpoint": true,
-          "skipUrlEncoding": false,
-          "explode": false,
-          "kind": "Client",
           "defaultValue": {
             "type": {
               "$id": "137",
@@ -1271,7 +1268,10 @@
             },
             "value": "http://localhost:3000"
           },
-          "serverUrlTemplate": "{endpoint}"
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
         }
       ],
       "decorators": [],
@@ -1300,20 +1300,19 @@
                 "parameters": [
                   {
                     "$id": "141",
+                    "kind": "header",
                     "name": "accept",
-                    "nameInRequest": "Accept",
+                    "serializedName": "Accept",
                     "type": {
                       "$ref": "1"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.String.getNonNull.accept"
                   }
                 ],
                 "responses": [
@@ -1343,20 +1342,20 @@
               "parameters": [
                 {
                   "$id": "142",
+                  "kind": "method",
                   "name": "accept",
-                  "nameInRequest": "Accept",
+                  "serializedName": "Accept",
                   "type": {
                     "$ref": "1"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.String.getNonNull.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {
@@ -1385,20 +1384,19 @@
                 "parameters": [
                   {
                     "$id": "145",
+                    "kind": "header",
                     "name": "accept",
-                    "nameInRequest": "Accept",
+                    "serializedName": "Accept",
                     "type": {
                       "$ref": "3"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.String.getNull.accept"
                   }
                 ],
                 "responses": [
@@ -1428,20 +1426,20 @@
               "parameters": [
                 {
                   "$id": "146",
+                  "kind": "method",
                   "name": "accept",
-                  "nameInRequest": "Accept",
+                  "serializedName": "Accept",
                   "type": {
                     "$ref": "3"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.String.getNull.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {
@@ -1470,38 +1468,39 @@
                 "parameters": [
                   {
                     "$id": "149",
+                    "kind": "header",
                     "name": "contentType",
-                    "nameInRequest": "Content-Type",
+                    "serializedName": "Content-Type",
                     "doc": "content-type is application/merge-patch+json",
                     "type": {
                       "$ref": "5"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": true,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.String.patchNonNull.contentType"
                   },
                   {
                     "$id": "150",
+                    "kind": "body",
                     "name": "body",
-                    "nameInRequest": "body",
+                    "serializedName": "body",
                     "type": {
                       "$ref": "85"
                     },
-                    "location": "Body",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "contentTypes": [
+                      "application/merge-patch+json"
+                    ],
+                    "defaultContentType": "application/merge-patch+json",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.String.patchNonNull.body"
                   }
                 ],
                 "responses": [
@@ -1528,38 +1527,38 @@
               "parameters": [
                 {
                   "$id": "151",
+                  "kind": "method",
                   "name": "contentType",
-                  "nameInRequest": "Content-Type",
+                  "serializedName": "Content-Type",
                   "doc": "content-type is application/merge-patch+json",
                   "type": {
                     "$ref": "7"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": true,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.String.patchNonNull.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 },
                 {
                   "$id": "152",
+                  "kind": "method",
                   "name": "body",
-                  "nameInRequest": "body",
+                  "serializedName": "body",
                   "type": {
                     "$ref": "85"
                   },
                   "location": "Body",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.String.patchNonNull.body",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {},
@@ -1584,38 +1583,39 @@
                 "parameters": [
                   {
                     "$id": "155",
+                    "kind": "header",
                     "name": "contentType",
-                    "nameInRequest": "Content-Type",
+                    "serializedName": "Content-Type",
                     "doc": "content-type is application/merge-patch+json",
                     "type": {
                       "$ref": "9"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": true,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.String.patchNull.contentType"
                   },
                   {
                     "$id": "156",
+                    "kind": "body",
                     "name": "body",
-                    "nameInRequest": "body",
+                    "serializedName": "body",
                     "type": {
                       "$ref": "85"
                     },
-                    "location": "Body",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "contentTypes": [
+                      "application/merge-patch+json"
+                    ],
+                    "defaultContentType": "application/merge-patch+json",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.String.patchNull.body"
                   }
                 ],
                 "responses": [
@@ -1642,38 +1642,38 @@
               "parameters": [
                 {
                   "$id": "157",
+                  "kind": "method",
                   "name": "contentType",
-                  "nameInRequest": "Content-Type",
+                  "serializedName": "Content-Type",
                   "doc": "content-type is application/merge-patch+json",
                   "type": {
                     "$ref": "11"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": true,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.String.patchNull.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 },
                 {
                   "$id": "158",
+                  "kind": "method",
                   "name": "body",
-                  "nameInRequest": "body",
+                  "serializedName": "body",
                   "type": {
                     "$ref": "85"
                   },
                   "location": "Body",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.String.patchNull.body",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {},
@@ -1686,8 +1686,9 @@
           "parameters": [
             {
               "$id": "159",
+              "kind": "endpoint",
               "name": "endpoint",
-              "nameInRequest": "endpoint",
+              "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
                 "$id": "160",
@@ -1695,14 +1696,10 @@
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
               },
-              "location": "Uri",
               "isApiVersion": false,
-              "isContentType": false,
-              "isRequired": true,
+              "optional": false,
+              "scope": "Client",
               "isEndpoint": true,
-              "skipUrlEncoding": false,
-              "explode": false,
-              "kind": "Client",
               "defaultValue": {
                 "type": {
                   "$id": "161",
@@ -1712,7 +1709,10 @@
                 },
                 "value": "http://localhost:3000"
               },
-              "serverUrlTemplate": "{endpoint}"
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
             }
           ],
           "decorators": [],
@@ -1744,20 +1744,19 @@
                 "parameters": [
                   {
                     "$id": "165",
+                    "kind": "header",
                     "name": "accept",
-                    "nameInRequest": "Accept",
+                    "serializedName": "Accept",
                     "type": {
                       "$ref": "13"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes.getNonNull.accept"
                   }
                 ],
                 "responses": [
@@ -1787,20 +1786,20 @@
               "parameters": [
                 {
                   "$id": "166",
+                  "kind": "method",
                   "name": "accept",
-                  "nameInRequest": "Accept",
+                  "serializedName": "Accept",
                   "type": {
                     "$ref": "13"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes.getNonNull.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {
@@ -1829,20 +1828,19 @@
                 "parameters": [
                   {
                     "$id": "169",
+                    "kind": "header",
                     "name": "accept",
-                    "nameInRequest": "Accept",
+                    "serializedName": "Accept",
                     "type": {
                       "$ref": "15"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes.getNull.accept"
                   }
                 ],
                 "responses": [
@@ -1872,20 +1870,20 @@
               "parameters": [
                 {
                   "$id": "170",
+                  "kind": "method",
                   "name": "accept",
-                  "nameInRequest": "Accept",
+                  "serializedName": "Accept",
                   "type": {
                     "$ref": "15"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes.getNull.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {
@@ -1914,38 +1912,39 @@
                 "parameters": [
                   {
                     "$id": "173",
+                    "kind": "header",
                     "name": "contentType",
-                    "nameInRequest": "Content-Type",
+                    "serializedName": "Content-Type",
                     "doc": "content-type is application/merge-patch+json",
                     "type": {
                       "$ref": "17"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": true,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes.patchNonNull.contentType"
                   },
                   {
                     "$id": "174",
+                    "kind": "body",
                     "name": "body",
-                    "nameInRequest": "body",
+                    "serializedName": "body",
                     "type": {
                       "$ref": "91"
                     },
-                    "location": "Body",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "contentTypes": [
+                      "application/merge-patch+json"
+                    ],
+                    "defaultContentType": "application/merge-patch+json",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes.patchNonNull.body"
                   }
                 ],
                 "responses": [
@@ -1972,38 +1971,38 @@
               "parameters": [
                 {
                   "$id": "175",
+                  "kind": "method",
                   "name": "contentType",
-                  "nameInRequest": "Content-Type",
+                  "serializedName": "Content-Type",
                   "doc": "content-type is application/merge-patch+json",
                   "type": {
                     "$ref": "19"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": true,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes.patchNonNull.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 },
                 {
                   "$id": "176",
+                  "kind": "method",
                   "name": "body",
-                  "nameInRequest": "body",
+                  "serializedName": "body",
                   "type": {
                     "$ref": "91"
                   },
                   "location": "Body",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes.patchNonNull.body",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {},
@@ -2028,38 +2027,39 @@
                 "parameters": [
                   {
                     "$id": "179",
+                    "kind": "header",
                     "name": "contentType",
-                    "nameInRequest": "Content-Type",
+                    "serializedName": "Content-Type",
                     "doc": "content-type is application/merge-patch+json",
                     "type": {
                       "$ref": "21"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": true,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes.patchNull.contentType"
                   },
                   {
                     "$id": "180",
+                    "kind": "body",
                     "name": "body",
-                    "nameInRequest": "body",
+                    "serializedName": "body",
                     "type": {
                       "$ref": "91"
                     },
-                    "location": "Body",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "contentTypes": [
+                      "application/merge-patch+json"
+                    ],
+                    "defaultContentType": "application/merge-patch+json",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes.patchNull.body"
                   }
                 ],
                 "responses": [
@@ -2086,38 +2086,38 @@
               "parameters": [
                 {
                   "$id": "181",
+                  "kind": "method",
                   "name": "contentType",
-                  "nameInRequest": "Content-Type",
+                  "serializedName": "Content-Type",
                   "doc": "content-type is application/merge-patch+json",
                   "type": {
                     "$ref": "23"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": true,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes.patchNull.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 },
                 {
                   "$id": "182",
+                  "kind": "method",
                   "name": "body",
-                  "nameInRequest": "body",
+                  "serializedName": "body",
                   "type": {
                     "$ref": "91"
                   },
                   "location": "Body",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes.patchNull.body",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {},
@@ -2130,8 +2130,9 @@
           "parameters": [
             {
               "$id": "183",
+              "kind": "endpoint",
               "name": "endpoint",
-              "nameInRequest": "endpoint",
+              "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
                 "$id": "184",
@@ -2139,14 +2140,10 @@
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
               },
-              "location": "Uri",
               "isApiVersion": false,
-              "isContentType": false,
-              "isRequired": true,
+              "optional": false,
+              "scope": "Client",
               "isEndpoint": true,
-              "skipUrlEncoding": false,
-              "explode": false,
-              "kind": "Client",
               "defaultValue": {
                 "type": {
                   "$id": "185",
@@ -2156,7 +2153,10 @@
                 },
                 "value": "http://localhost:3000"
               },
-              "serverUrlTemplate": "{endpoint}"
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
             }
           ],
           "decorators": [],
@@ -2188,20 +2188,19 @@
                 "parameters": [
                   {
                     "$id": "189",
+                    "kind": "header",
                     "name": "accept",
-                    "nameInRequest": "Accept",
+                    "serializedName": "Accept",
                     "type": {
                       "$ref": "25"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime.getNonNull.accept"
                   }
                 ],
                 "responses": [
@@ -2231,20 +2230,20 @@
               "parameters": [
                 {
                   "$id": "190",
+                  "kind": "method",
                   "name": "accept",
-                  "nameInRequest": "Accept",
+                  "serializedName": "Accept",
                   "type": {
                     "$ref": "25"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime.getNonNull.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {
@@ -2273,20 +2272,19 @@
                 "parameters": [
                   {
                     "$id": "193",
+                    "kind": "header",
                     "name": "accept",
-                    "nameInRequest": "Accept",
+                    "serializedName": "Accept",
                     "type": {
                       "$ref": "27"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime.getNull.accept"
                   }
                 ],
                 "responses": [
@@ -2316,20 +2314,20 @@
               "parameters": [
                 {
                   "$id": "194",
+                  "kind": "method",
                   "name": "accept",
-                  "nameInRequest": "Accept",
+                  "serializedName": "Accept",
                   "type": {
                     "$ref": "27"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime.getNull.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {
@@ -2358,38 +2356,39 @@
                 "parameters": [
                   {
                     "$id": "197",
+                    "kind": "header",
                     "name": "contentType",
-                    "nameInRequest": "Content-Type",
+                    "serializedName": "Content-Type",
                     "doc": "content-type is application/merge-patch+json",
                     "type": {
                       "$ref": "29"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": true,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime.patchNonNull.contentType"
                   },
                   {
                     "$id": "198",
+                    "kind": "body",
                     "name": "body",
-                    "nameInRequest": "body",
+                    "serializedName": "body",
                     "type": {
                       "$ref": "97"
                     },
-                    "location": "Body",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "contentTypes": [
+                      "application/merge-patch+json"
+                    ],
+                    "defaultContentType": "application/merge-patch+json",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime.patchNonNull.body"
                   }
                 ],
                 "responses": [
@@ -2416,38 +2415,38 @@
               "parameters": [
                 {
                   "$id": "199",
+                  "kind": "method",
                   "name": "contentType",
-                  "nameInRequest": "Content-Type",
+                  "serializedName": "Content-Type",
                   "doc": "content-type is application/merge-patch+json",
                   "type": {
                     "$ref": "31"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": true,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime.patchNonNull.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 },
                 {
                   "$id": "200",
+                  "kind": "method",
                   "name": "body",
-                  "nameInRequest": "body",
+                  "serializedName": "body",
                   "type": {
                     "$ref": "97"
                   },
                   "location": "Body",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime.patchNonNull.body",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {},
@@ -2472,38 +2471,39 @@
                 "parameters": [
                   {
                     "$id": "203",
+                    "kind": "header",
                     "name": "contentType",
-                    "nameInRequest": "Content-Type",
+                    "serializedName": "Content-Type",
                     "doc": "content-type is application/merge-patch+json",
                     "type": {
                       "$ref": "33"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": true,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime.patchNull.contentType"
                   },
                   {
                     "$id": "204",
+                    "kind": "body",
                     "name": "body",
-                    "nameInRequest": "body",
+                    "serializedName": "body",
                     "type": {
                       "$ref": "97"
                     },
-                    "location": "Body",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "contentTypes": [
+                      "application/merge-patch+json"
+                    ],
+                    "defaultContentType": "application/merge-patch+json",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime.patchNull.body"
                   }
                 ],
                 "responses": [
@@ -2530,38 +2530,38 @@
               "parameters": [
                 {
                   "$id": "205",
+                  "kind": "method",
                   "name": "contentType",
-                  "nameInRequest": "Content-Type",
+                  "serializedName": "Content-Type",
                   "doc": "content-type is application/merge-patch+json",
                   "type": {
                     "$ref": "35"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": true,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime.patchNull.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 },
                 {
                   "$id": "206",
+                  "kind": "method",
                   "name": "body",
-                  "nameInRequest": "body",
+                  "serializedName": "body",
                   "type": {
                     "$ref": "97"
                   },
                   "location": "Body",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime.patchNull.body",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {},
@@ -2574,8 +2574,9 @@
           "parameters": [
             {
               "$id": "207",
+              "kind": "endpoint",
               "name": "endpoint",
-              "nameInRequest": "endpoint",
+              "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
                 "$id": "208",
@@ -2583,14 +2584,10 @@
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
               },
-              "location": "Uri",
               "isApiVersion": false,
-              "isContentType": false,
-              "isRequired": true,
+              "optional": false,
+              "scope": "Client",
               "isEndpoint": true,
-              "skipUrlEncoding": false,
-              "explode": false,
-              "kind": "Client",
               "defaultValue": {
                 "type": {
                   "$id": "209",
@@ -2600,7 +2597,10 @@
                 },
                 "value": "http://localhost:3000"
               },
-              "serverUrlTemplate": "{endpoint}"
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
             }
           ],
           "decorators": [],
@@ -2632,20 +2632,19 @@
                 "parameters": [
                   {
                     "$id": "213",
+                    "kind": "header",
                     "name": "accept",
-                    "nameInRequest": "Accept",
+                    "serializedName": "Accept",
                     "type": {
                       "$ref": "37"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.Duration.getNonNull.accept"
                   }
                 ],
                 "responses": [
@@ -2675,20 +2674,20 @@
               "parameters": [
                 {
                   "$id": "214",
+                  "kind": "method",
                   "name": "accept",
-                  "nameInRequest": "Accept",
+                  "serializedName": "Accept",
                   "type": {
                     "$ref": "37"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.Duration.getNonNull.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {
@@ -2717,20 +2716,19 @@
                 "parameters": [
                   {
                     "$id": "217",
+                    "kind": "header",
                     "name": "accept",
-                    "nameInRequest": "Accept",
+                    "serializedName": "Accept",
                     "type": {
                       "$ref": "39"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.Duration.getNull.accept"
                   }
                 ],
                 "responses": [
@@ -2760,20 +2758,20 @@
               "parameters": [
                 {
                   "$id": "218",
+                  "kind": "method",
                   "name": "accept",
-                  "nameInRequest": "Accept",
+                  "serializedName": "Accept",
                   "type": {
                     "$ref": "39"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.Duration.getNull.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {
@@ -2802,38 +2800,39 @@
                 "parameters": [
                   {
                     "$id": "221",
+                    "kind": "header",
                     "name": "contentType",
-                    "nameInRequest": "Content-Type",
+                    "serializedName": "Content-Type",
                     "doc": "content-type is application/merge-patch+json",
                     "type": {
                       "$ref": "41"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": true,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.Duration.patchNonNull.contentType"
                   },
                   {
                     "$id": "222",
+                    "kind": "body",
                     "name": "body",
-                    "nameInRequest": "body",
+                    "serializedName": "body",
                     "type": {
                       "$ref": "104"
                     },
-                    "location": "Body",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "contentTypes": [
+                      "application/merge-patch+json"
+                    ],
+                    "defaultContentType": "application/merge-patch+json",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.Duration.patchNonNull.body"
                   }
                 ],
                 "responses": [
@@ -2860,38 +2859,38 @@
               "parameters": [
                 {
                   "$id": "223",
+                  "kind": "method",
                   "name": "contentType",
-                  "nameInRequest": "Content-Type",
+                  "serializedName": "Content-Type",
                   "doc": "content-type is application/merge-patch+json",
                   "type": {
                     "$ref": "43"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": true,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.Duration.patchNonNull.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 },
                 {
                   "$id": "224",
+                  "kind": "method",
                   "name": "body",
-                  "nameInRequest": "body",
+                  "serializedName": "body",
                   "type": {
                     "$ref": "104"
                   },
                   "location": "Body",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.Duration.patchNonNull.body",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {},
@@ -2916,38 +2915,39 @@
                 "parameters": [
                   {
                     "$id": "227",
+                    "kind": "header",
                     "name": "contentType",
-                    "nameInRequest": "Content-Type",
+                    "serializedName": "Content-Type",
                     "doc": "content-type is application/merge-patch+json",
                     "type": {
                       "$ref": "45"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": true,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.Duration.patchNull.contentType"
                   },
                   {
                     "$id": "228",
+                    "kind": "body",
                     "name": "body",
-                    "nameInRequest": "body",
+                    "serializedName": "body",
                     "type": {
                       "$ref": "104"
                     },
-                    "location": "Body",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "contentTypes": [
+                      "application/merge-patch+json"
+                    ],
+                    "defaultContentType": "application/merge-patch+json",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.Duration.patchNull.body"
                   }
                 ],
                 "responses": [
@@ -2974,38 +2974,38 @@
               "parameters": [
                 {
                   "$id": "229",
+                  "kind": "method",
                   "name": "contentType",
-                  "nameInRequest": "Content-Type",
+                  "serializedName": "Content-Type",
                   "doc": "content-type is application/merge-patch+json",
                   "type": {
                     "$ref": "47"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": true,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.Duration.patchNull.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 },
                 {
                   "$id": "230",
+                  "kind": "method",
                   "name": "body",
-                  "nameInRequest": "body",
+                  "serializedName": "body",
                   "type": {
                     "$ref": "104"
                   },
                   "location": "Body",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.Duration.patchNull.body",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {},
@@ -3018,8 +3018,9 @@
           "parameters": [
             {
               "$id": "231",
+              "kind": "endpoint",
               "name": "endpoint",
-              "nameInRequest": "endpoint",
+              "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
                 "$id": "232",
@@ -3027,14 +3028,10 @@
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
               },
-              "location": "Uri",
               "isApiVersion": false,
-              "isContentType": false,
-              "isRequired": true,
+              "optional": false,
+              "scope": "Client",
               "isEndpoint": true,
-              "skipUrlEncoding": false,
-              "explode": false,
-              "kind": "Client",
               "defaultValue": {
                 "type": {
                   "$id": "233",
@@ -3044,7 +3041,10 @@
                 },
                 "value": "http://localhost:3000"
               },
-              "serverUrlTemplate": "{endpoint}"
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
             }
           ],
           "decorators": [],
@@ -3076,20 +3076,19 @@
                 "parameters": [
                   {
                     "$id": "237",
+                    "kind": "header",
                     "name": "accept",
-                    "nameInRequest": "Accept",
+                    "serializedName": "Accept",
                     "type": {
                       "$ref": "49"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.getNonNull.accept"
                   }
                 ],
                 "responses": [
@@ -3119,20 +3118,20 @@
               "parameters": [
                 {
                   "$id": "238",
+                  "kind": "method",
                   "name": "accept",
-                  "nameInRequest": "Accept",
+                  "serializedName": "Accept",
                   "type": {
                     "$ref": "49"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.getNonNull.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {
@@ -3161,20 +3160,19 @@
                 "parameters": [
                   {
                     "$id": "241",
+                    "kind": "header",
                     "name": "accept",
-                    "nameInRequest": "Accept",
+                    "serializedName": "Accept",
                     "type": {
                       "$ref": "51"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.getNull.accept"
                   }
                 ],
                 "responses": [
@@ -3204,20 +3202,20 @@
               "parameters": [
                 {
                   "$id": "242",
+                  "kind": "method",
                   "name": "accept",
-                  "nameInRequest": "Accept",
+                  "serializedName": "Accept",
                   "type": {
                     "$ref": "51"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.getNull.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {
@@ -3246,38 +3244,39 @@
                 "parameters": [
                   {
                     "$id": "245",
+                    "kind": "header",
                     "name": "contentType",
-                    "nameInRequest": "Content-Type",
+                    "serializedName": "Content-Type",
                     "doc": "content-type is application/merge-patch+json",
                     "type": {
                       "$ref": "53"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": true,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.patchNonNull.contentType"
                   },
                   {
                     "$id": "246",
+                    "kind": "body",
                     "name": "body",
-                    "nameInRequest": "body",
+                    "serializedName": "body",
                     "type": {
                       "$ref": "111"
                     },
-                    "location": "Body",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "contentTypes": [
+                      "application/merge-patch+json"
+                    ],
+                    "defaultContentType": "application/merge-patch+json",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.patchNonNull.body"
                   }
                 ],
                 "responses": [
@@ -3304,38 +3303,38 @@
               "parameters": [
                 {
                   "$id": "247",
+                  "kind": "method",
                   "name": "contentType",
-                  "nameInRequest": "Content-Type",
+                  "serializedName": "Content-Type",
                   "doc": "content-type is application/merge-patch+json",
                   "type": {
                     "$ref": "55"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": true,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.patchNonNull.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 },
                 {
                   "$id": "248",
+                  "kind": "method",
                   "name": "body",
-                  "nameInRequest": "body",
+                  "serializedName": "body",
                   "type": {
                     "$ref": "111"
                   },
                   "location": "Body",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.patchNonNull.body",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {},
@@ -3360,38 +3359,39 @@
                 "parameters": [
                   {
                     "$id": "251",
+                    "kind": "header",
                     "name": "contentType",
-                    "nameInRequest": "Content-Type",
+                    "serializedName": "Content-Type",
                     "doc": "content-type is application/merge-patch+json",
                     "type": {
                       "$ref": "57"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": true,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.patchNull.contentType"
                   },
                   {
                     "$id": "252",
+                    "kind": "body",
                     "name": "body",
-                    "nameInRequest": "body",
+                    "serializedName": "body",
                     "type": {
                       "$ref": "111"
                     },
-                    "location": "Body",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "contentTypes": [
+                      "application/merge-patch+json"
+                    ],
+                    "defaultContentType": "application/merge-patch+json",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.patchNull.body"
                   }
                 ],
                 "responses": [
@@ -3418,38 +3418,38 @@
               "parameters": [
                 {
                   "$id": "253",
+                  "kind": "method",
                   "name": "contentType",
-                  "nameInRequest": "Content-Type",
+                  "serializedName": "Content-Type",
                   "doc": "content-type is application/merge-patch+json",
                   "type": {
                     "$ref": "59"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": true,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.patchNull.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 },
                 {
                   "$id": "254",
+                  "kind": "method",
                   "name": "body",
-                  "nameInRequest": "body",
+                  "serializedName": "body",
                   "type": {
                     "$ref": "111"
                   },
                   "location": "Body",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.patchNull.body",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {},
@@ -3462,8 +3462,9 @@
           "parameters": [
             {
               "$id": "255",
+              "kind": "endpoint",
               "name": "endpoint",
-              "nameInRequest": "endpoint",
+              "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
                 "$id": "256",
@@ -3471,14 +3472,10 @@
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
               },
-              "location": "Uri",
               "isApiVersion": false,
-              "isContentType": false,
-              "isRequired": true,
+              "optional": false,
+              "scope": "Client",
               "isEndpoint": true,
-              "skipUrlEncoding": false,
-              "explode": false,
-              "kind": "Client",
               "defaultValue": {
                 "type": {
                   "$id": "257",
@@ -3488,7 +3485,10 @@
                 },
                 "value": "http://localhost:3000"
               },
-              "serverUrlTemplate": "{endpoint}"
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
             }
           ],
           "decorators": [],
@@ -3520,20 +3520,19 @@
                 "parameters": [
                   {
                     "$id": "261",
+                    "kind": "header",
                     "name": "accept",
-                    "nameInRequest": "Accept",
+                    "serializedName": "Accept",
                     "type": {
                       "$ref": "61"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.getNonNull.accept"
                   }
                 ],
                 "responses": [
@@ -3563,20 +3562,20 @@
               "parameters": [
                 {
                   "$id": "262",
+                  "kind": "method",
                   "name": "accept",
-                  "nameInRequest": "Accept",
+                  "serializedName": "Accept",
                   "type": {
                     "$ref": "61"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.getNonNull.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {
@@ -3605,20 +3604,19 @@
                 "parameters": [
                   {
                     "$id": "265",
+                    "kind": "header",
                     "name": "accept",
-                    "nameInRequest": "Accept",
+                    "serializedName": "Accept",
                     "type": {
                       "$ref": "63"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.getNull.accept"
                   }
                 ],
                 "responses": [
@@ -3648,20 +3646,20 @@
               "parameters": [
                 {
                   "$id": "266",
+                  "kind": "method",
                   "name": "accept",
-                  "nameInRequest": "Accept",
+                  "serializedName": "Accept",
                   "type": {
                     "$ref": "63"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.getNull.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {
@@ -3690,38 +3688,39 @@
                 "parameters": [
                   {
                     "$id": "269",
+                    "kind": "header",
                     "name": "contentType",
-                    "nameInRequest": "Content-Type",
+                    "serializedName": "Content-Type",
                     "doc": "content-type is application/merge-patch+json",
                     "type": {
                       "$ref": "65"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": true,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.patchNonNull.contentType"
                   },
                   {
                     "$id": "270",
+                    "kind": "body",
                     "name": "body",
-                    "nameInRequest": "body",
+                    "serializedName": "body",
                     "type": {
                       "$ref": "118"
                     },
-                    "location": "Body",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "contentTypes": [
+                      "application/merge-patch+json"
+                    ],
+                    "defaultContentType": "application/merge-patch+json",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.patchNonNull.body"
                   }
                 ],
                 "responses": [
@@ -3748,38 +3747,38 @@
               "parameters": [
                 {
                   "$id": "271",
+                  "kind": "method",
                   "name": "contentType",
-                  "nameInRequest": "Content-Type",
+                  "serializedName": "Content-Type",
                   "doc": "content-type is application/merge-patch+json",
                   "type": {
                     "$ref": "67"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": true,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.patchNonNull.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 },
                 {
                   "$id": "272",
+                  "kind": "method",
                   "name": "body",
-                  "nameInRequest": "body",
+                  "serializedName": "body",
                   "type": {
                     "$ref": "118"
                   },
                   "location": "Body",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.patchNonNull.body",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {},
@@ -3804,38 +3803,39 @@
                 "parameters": [
                   {
                     "$id": "275",
+                    "kind": "header",
                     "name": "contentType",
-                    "nameInRequest": "Content-Type",
+                    "serializedName": "Content-Type",
                     "doc": "content-type is application/merge-patch+json",
                     "type": {
                       "$ref": "69"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": true,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.patchNull.contentType"
                   },
                   {
                     "$id": "276",
+                    "kind": "body",
                     "name": "body",
-                    "nameInRequest": "body",
+                    "serializedName": "body",
                     "type": {
                       "$ref": "118"
                     },
-                    "location": "Body",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "contentTypes": [
+                      "application/merge-patch+json"
+                    ],
+                    "defaultContentType": "application/merge-patch+json",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.patchNull.body"
                   }
                 ],
                 "responses": [
@@ -3862,38 +3862,38 @@
               "parameters": [
                 {
                   "$id": "277",
+                  "kind": "method",
                   "name": "contentType",
-                  "nameInRequest": "Content-Type",
+                  "serializedName": "Content-Type",
                   "doc": "content-type is application/merge-patch+json",
                   "type": {
                     "$ref": "71"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": true,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.patchNull.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 },
                 {
                   "$id": "278",
+                  "kind": "method",
                   "name": "body",
-                  "nameInRequest": "body",
+                  "serializedName": "body",
                   "type": {
                     "$ref": "118"
                   },
                   "location": "Body",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.patchNull.body",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {},
@@ -3906,8 +3906,9 @@
           "parameters": [
             {
               "$id": "279",
+              "kind": "endpoint",
               "name": "endpoint",
-              "nameInRequest": "endpoint",
+              "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
                 "$id": "280",
@@ -3915,14 +3916,10 @@
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
               },
-              "location": "Uri",
               "isApiVersion": false,
-              "isContentType": false,
-              "isRequired": true,
+              "optional": false,
+              "scope": "Client",
               "isEndpoint": true,
-              "skipUrlEncoding": false,
-              "explode": false,
-              "kind": "Client",
               "defaultValue": {
                 "type": {
                   "$id": "281",
@@ -3932,7 +3929,10 @@
                 },
                 "value": "http://localhost:3000"
               },
-              "serverUrlTemplate": "{endpoint}"
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
             }
           ],
           "decorators": [],
@@ -3964,20 +3964,19 @@
                 "parameters": [
                   {
                     "$id": "285",
+                    "kind": "header",
                     "name": "accept",
-                    "nameInRequest": "Accept",
+                    "serializedName": "Accept",
                     "type": {
                       "$ref": "73"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.getNonNull.accept"
                   }
                 ],
                 "responses": [
@@ -4007,20 +4006,20 @@
               "parameters": [
                 {
                   "$id": "286",
+                  "kind": "method",
                   "name": "accept",
-                  "nameInRequest": "Accept",
+                  "serializedName": "Accept",
                   "type": {
                     "$ref": "73"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.getNonNull.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {
@@ -4049,20 +4048,19 @@
                 "parameters": [
                   {
                     "$id": "289",
+                    "kind": "header",
                     "name": "accept",
-                    "nameInRequest": "Accept",
+                    "serializedName": "Accept",
                     "type": {
                       "$ref": "75"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.getNull.accept"
                   }
                 ],
                 "responses": [
@@ -4092,20 +4090,20 @@
               "parameters": [
                 {
                   "$id": "290",
+                  "kind": "method",
                   "name": "accept",
-                  "nameInRequest": "Accept",
+                  "serializedName": "Accept",
                   "type": {
                     "$ref": "75"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.getNull.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {
@@ -4134,38 +4132,39 @@
                 "parameters": [
                   {
                     "$id": "293",
+                    "kind": "header",
                     "name": "contentType",
-                    "nameInRequest": "Content-Type",
+                    "serializedName": "Content-Type",
                     "doc": "content-type is application/merge-patch+json",
                     "type": {
                       "$ref": "77"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": true,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.patchNonNull.contentType"
                   },
                   {
                     "$id": "294",
+                    "kind": "body",
                     "name": "body",
-                    "nameInRequest": "body",
+                    "serializedName": "body",
                     "type": {
                       "$ref": "127"
                     },
-                    "location": "Body",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "contentTypes": [
+                      "application/merge-patch+json"
+                    ],
+                    "defaultContentType": "application/merge-patch+json",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.patchNonNull.body"
                   }
                 ],
                 "responses": [
@@ -4192,38 +4191,38 @@
               "parameters": [
                 {
                   "$id": "295",
+                  "kind": "method",
                   "name": "contentType",
-                  "nameInRequest": "Content-Type",
+                  "serializedName": "Content-Type",
                   "doc": "content-type is application/merge-patch+json",
                   "type": {
                     "$ref": "79"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": true,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.patchNonNull.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 },
                 {
                   "$id": "296",
+                  "kind": "method",
                   "name": "body",
-                  "nameInRequest": "body",
+                  "serializedName": "body",
                   "type": {
                     "$ref": "127"
                   },
                   "location": "Body",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.patchNonNull.body",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {},
@@ -4248,38 +4247,39 @@
                 "parameters": [
                   {
                     "$id": "299",
+                    "kind": "header",
                     "name": "contentType",
-                    "nameInRequest": "Content-Type",
+                    "serializedName": "Content-Type",
                     "doc": "content-type is application/merge-patch+json",
                     "type": {
                       "$ref": "81"
                     },
-                    "location": "Header",
                     "isApiVersion": false,
+                    "optional": false,
                     "isContentType": true,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Constant",
+                    "scope": "Constant",
+                    "readOnly": false,
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.patchNull.contentType"
                   },
                   {
                     "$id": "300",
+                    "kind": "body",
                     "name": "body",
-                    "nameInRequest": "body",
+                    "serializedName": "body",
                     "type": {
                       "$ref": "127"
                     },
-                    "location": "Body",
                     "isApiVersion": false,
-                    "isContentType": false,
-                    "isEndpoint": false,
-                    "explode": false,
-                    "isRequired": true,
-                    "kind": "Method",
+                    "contentTypes": [
+                      "application/merge-patch+json"
+                    ],
+                    "defaultContentType": "application/merge-patch+json",
+                    "optional": false,
+                    "scope": "Method",
                     "decorators": [],
-                    "skipUrlEncoding": false
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.patchNull.body"
                   }
                 ],
                 "responses": [
@@ -4306,38 +4306,38 @@
               "parameters": [
                 {
                   "$id": "301",
+                  "kind": "method",
                   "name": "contentType",
-                  "nameInRequest": "Content-Type",
+                  "serializedName": "Content-Type",
                   "doc": "content-type is application/merge-patch+json",
                   "type": {
                     "$ref": "83"
                   },
                   "location": "Header",
                   "isApiVersion": false,
-                  "isContentType": true,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Constant",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.patchNull.contentType",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 },
                 {
                   "$id": "302",
+                  "kind": "method",
                   "name": "body",
-                  "nameInRequest": "body",
+                  "serializedName": "body",
                   "type": {
                     "$ref": "127"
                   },
                   "location": "Body",
                   "isApiVersion": false,
-                  "isContentType": false,
-                  "isEndpoint": false,
-                  "explode": false,
-                  "isRequired": true,
-                  "kind": "Method",
-                  "decorators": [],
-                  "skipUrlEncoding": false
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.patchNull.body",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
                 }
               ],
               "response": {},
@@ -4350,8 +4350,9 @@
           "parameters": [
             {
               "$id": "303",
+              "kind": "endpoint",
               "name": "endpoint",
-              "nameInRequest": "endpoint",
+              "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
                 "$id": "304",
@@ -4359,14 +4360,10 @@
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
               },
-              "location": "Uri",
               "isApiVersion": false,
-              "isContentType": false,
-              "isRequired": true,
+              "optional": false,
+              "scope": "Client",
               "isEndpoint": true,
-              "skipUrlEncoding": false,
-              "explode": false,
-              "kind": "Client",
               "defaultValue": {
                 "type": {
                   "$id": "305",
@@ -4376,7 +4373,10 @@
                 },
                 "value": "http://localhost:3000"
               },
-              "serverUrlTemplate": "{endpoint}"
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Type.Property.Nullable.endpoint"
             }
           ],
           "decorators": [],

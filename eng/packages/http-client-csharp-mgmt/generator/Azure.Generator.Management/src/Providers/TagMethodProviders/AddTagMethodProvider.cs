@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Generator.Management.Models;
+using Azure.Generator.Management.Providers.OperationMethodProviders;
 using Azure.Generator.Management.Snippets;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -17,7 +18,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         public AddTagMethodProvider(
             ResourceClientProvider resource,
             RequestPathPattern contextualPath,
-            MethodProvider updateMethodProvider,
+            ResourceOperationMethodProvider updateMethodProvider,
             RestClientInfo restClientInfo,
             bool isAsync)
             : base(resource, contextualPath, updateMethodProvider, restClientInfo, isAsync,

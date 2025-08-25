@@ -197,6 +197,149 @@ namespace Azure.ResourceManager.Network.Models
                 additionalProperties);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("FrontendIPConfigurationId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  frontendIPConfiguration: ");
+                builder.AppendLine("{");
+                builder.Append("    id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(FrontendIPConfiguration))
+                {
+                    builder.Append("  frontendIPConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, FrontendIPConfiguration, options, 2, false, "  frontendIPConfiguration: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Protocol), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  protocol: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  protocol: ");
+                builder.AppendLine($"'{Protocol.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FrontendPortRangeStart), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  frontendPortRangeStart: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  frontendPortRangeStart: ");
+                builder.AppendLine($"{FrontendPortRangeStart}");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FrontendPortRangeEnd), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  frontendPortRangeEnd: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  frontendPortRangeEnd: ");
+                builder.AppendLine($"{FrontendPortRangeEnd}");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackendPort), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  backendPort: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  backendPort: ");
+                builder.AppendLine($"{BackendPort}");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IdleTimeoutInMinutes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  idleTimeoutInMinutes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IdleTimeoutInMinutes))
+                {
+                    builder.Append("  idleTimeoutInMinutes: ");
+                    builder.AppendLine($"{IdleTimeoutInMinutes.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableFloatingIP), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enableFloatingIP: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnableFloatingIP))
+                {
+                    builder.Append("  enableFloatingIP: ");
+                    var boolValue = EnableFloatingIP.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableTcpReset), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  enableTcpReset: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnableTcpReset))
+                {
+                    builder.Append("  enableTcpReset: ");
+                    var boolValue = EnableTcpReset.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("  provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<LoadBalancerInboundNatPoolProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerInboundNatPoolProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -205,6 +348,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(LoadBalancerInboundNatPoolProperties)} does not support writing '{options.Format}' format.");
             }

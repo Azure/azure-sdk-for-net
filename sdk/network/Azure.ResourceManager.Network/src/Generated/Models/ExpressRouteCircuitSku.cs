@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The name of the SKU. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The tier of the SKU. </summary>
+        [WirePath("tier")]
         public ExpressRouteCircuitSkuTier? Tier { get; set; }
         /// <summary> The family of the SKU. </summary>
+        [WirePath("family")]
         public ExpressRouteCircuitSkuFamily? Family { get; set; }
     }
 }

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.StorageMover.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageMovers_ListBySubscription</description>
+        /// <description>StorageMover_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.StorageMover.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageMovers_ListBySubscription</description>
+        /// <description>StorageMover_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

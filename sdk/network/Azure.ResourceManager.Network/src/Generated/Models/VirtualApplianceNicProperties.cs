@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> NIC type - PublicNic, PrivateNic, or AdditionalNic. </summary>
+        [WirePath("nicType")]
         public NicTypeInResponse? NicType { get; }
         /// <summary> NIC name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Public IP address. </summary>
+        [WirePath("publicIpAddress")]
         public string PublicIPAddress { get; }
         /// <summary> Private IP address. </summary>
+        [WirePath("privateIpAddress")]
         public string PrivateIPAddress { get; }
         /// <summary> Instance on which nic is attached. </summary>
+        [WirePath("instanceName")]
         public string InstanceName { get; }
     }
 }

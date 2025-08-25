@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Agents_Get</description>
+        /// <description>Agent_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Agents_Get</description>
+        /// <description>Agent_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Endpoints_Get</description>
+        /// <description>Endpoint_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Endpoints_Get</description>
+        /// <description>Endpoint_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Projects_Get</description>
+        /// <description>Project_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Projects_Get</description>
+        /// <description>Project_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageMovers_Get</description>
+        /// <description>StorageMover_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageMovers_Get</description>
+        /// <description>StorageMover_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageMovers_Delete</description>
+        /// <description>StorageMover_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageMovers_Delete</description>
+        /// <description>StorageMover_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageMovers_Update</description>
+        /// <description>StorageMover_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageMovers_Update</description>
+        /// <description>StorageMover_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageMovers_Get</description>
+        /// <description>StorageMover_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageMovers_Get</description>
+        /// <description>StorageMover_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageMovers_Get</description>
+        /// <description>StorageMover_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -735,7 +735,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageMovers_Get</description>
+        /// <description>StorageMover_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -792,7 +792,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageMovers_Get</description>
+        /// <description>StorageMover_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -852,7 +852,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageMovers_Get</description>
+        /// <description>StorageMover_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

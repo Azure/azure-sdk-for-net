@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
     /// <summary> The type used for update operations of the CopilotSettingsResource. </summary>
     public partial class PortalServicesCopilotSettingPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PortalServicesCopilotSettingPatch"/>. </summary>
         public PortalServicesCopilotSettingPatch()
@@ -52,23 +23,29 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
 
         /// <summary> Initializes a new instance of <see cref="PortalServicesCopilotSettingPatch"/>. </summary>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PortalServicesCopilotSettingPatch(CopilotSettingsResourceUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PortalServicesCopilotSettingPatch(CopilotSettingsResourceUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
         internal CopilotSettingsResourceUpdateProperties Properties { get; set; }
+
         /// <summary> Boolean indicating if role-based access control is enabled for copilot in this tenant. </summary>
         public bool? AccessControlEnabled
         {
-            get => Properties is null ? default : Properties.AccessControlEnabled;
+            get
+            {
+                return Properties is null ? default : Properties.AccessControlEnabled;
+            }
             set
             {
                 if (Properties is null)
+                {
                     Properties = new CopilotSettingsResourceUpdateProperties();
+                }
                 Properties.AccessControlEnabled = value;
             }
         }
