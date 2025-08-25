@@ -846,6 +846,11 @@ namespace Azure.Communication.CallAutomation
         public DtmfConfigurationOptions() { }
         public bool EnableDtmfBroadcastInGroupCalls { get { throw null; } set { } }
     }
+    public partial class DtmfData : Azure.Communication.CallAutomation.StreamingData
+    {
+        public DtmfData(string data) { }
+        public string Data { get { throw null; } }
+    }
     public partial class DtmfResult : Azure.Communication.CallAutomation.RecognizeResult
     {
         internal DtmfResult() { }
@@ -1717,6 +1722,7 @@ namespace Azure.Communication.CallAutomation
         AudioMetadata = 1,
         TranscriptionData = 2,
         TranscriptionMetadata = 3,
+        DtmfData = 4,
     }
     public static partial class StreamingDataParser
     {
