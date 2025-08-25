@@ -1614,23 +1614,79 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<string> ServiceName { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class ServiceEndpointPolicyData : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class ServiceEndpointPolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceEndpointPolicyData() { }
+        public ServiceEndpointPolicy() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceEndpointPolicy(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<string> ContextualServiceEndpointPolicies { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Guid> ResourceGuid { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ServiceAlias { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.ServiceEndpointPolicyDefinitionData> ServiceEndpointPolicyDefinitions { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.Subnet> Subnets { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Network.ServiceEndpointPolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2018_01_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_03_01;
+            public static readonly string V2018_04_01;
+            public static readonly string V2018_05_01;
+            public static readonly string V2018_06_01;
+            public static readonly string V2018_07_01;
+            public static readonly string V2018_08_01;
+            public static readonly string V2018_10_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2018_12_01;
+            public static readonly string V2019_02_01;
+            public static readonly string V2019_04_01;
+            public static readonly string V2019_06_01;
+            public static readonly string V2019_07_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_09_01;
+            public static readonly string V2019_11_01;
+            public static readonly string V2019_12_01;
+            public static readonly string V2020_01_01;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_05_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_07_01;
+            public static readonly string V2020_08_01;
+            public static readonly string V2020_11_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2021_04_01;
+            public static readonly string V2021_05_01;
+            public static readonly string V2021_06_01;
+            public static readonly string V2021_08_01;
+            public static readonly string V2021_12_01;
+            public static readonly string V2022_01_01;
+            public static readonly string V2022_05_01;
+            public static readonly string V2022_07_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2022_11_01;
+            public static readonly string V2023_02_01;
+            public static readonly string V2023_04_01;
+            public static readonly string V2023_05_01;
+            public static readonly string V2023_06_01;
+            public static readonly string V2023_09_01;
+            public static readonly string V2023_11_01;
+            public static readonly string V2024_01_01;
+            public static readonly string V2024_03_01;
+            public static readonly string V2024_05_01;
+            public static readonly string V2024_07_01;
+            public static readonly string V2024_10_01;
+            public static readonly string V2025_01_01;
+        }
     }
     public partial class ServiceEndpointPolicyDefinitionData : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -1686,7 +1742,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.ResourceNavigationLink> ResourceNavigationLinks { get { throw null; } }
         public Azure.Provisioning.Network.RouteTable RouteTable { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.ServiceAssociationLink> ServiceAssociationLinks { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Network.ServiceEndpointPolicyData> ServiceEndpointPolicies { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Network.ServiceEndpointPolicy> ServiceEndpointPolicies { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.ServiceEndpointProperties> ServiceEndpoints { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.SharingScope> SharingScope { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }

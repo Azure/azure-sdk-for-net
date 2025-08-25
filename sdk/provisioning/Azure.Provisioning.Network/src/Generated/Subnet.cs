@@ -167,12 +167,12 @@ public partial class Subnet : ProvisionableResource
     /// <summary>
     /// An array of service endpoint policies.
     /// </summary>
-    public BicepList<ServiceEndpointPolicyData> ServiceEndpointPolicies 
+    public BicepList<ServiceEndpointPolicy> ServiceEndpointPolicies 
     {
         get { Initialize(); return _serviceEndpointPolicies!; }
         set { Initialize(); _serviceEndpointPolicies!.Assign(value); }
     }
-    private BicepList<ServiceEndpointPolicyData>? _serviceEndpointPolicies;
+    private BicepList<ServiceEndpointPolicy>? _serviceEndpointPolicies;
 
     /// <summary>
     /// An array of service endpoints.
@@ -316,7 +316,7 @@ public partial class Subnet : ProvisionableResource
         _privateEndpointNetworkPolicy = DefineProperty<VirtualNetworkPrivateEndpointNetworkPolicy>("PrivateEndpointNetworkPolicy", ["properties", "privateEndpointNetworkPolicies"]);
         _privateLinkServiceNetworkPolicy = DefineProperty<VirtualNetworkPrivateLinkServiceNetworkPolicy>("PrivateLinkServiceNetworkPolicy", ["properties", "privateLinkServiceNetworkPolicies"]);
         _routeTable = DefineModelProperty<RouteTable>("RouteTable", ["properties", "routeTable"]);
-        _serviceEndpointPolicies = DefineListProperty<ServiceEndpointPolicyData>("ServiceEndpointPolicies", ["properties", "serviceEndpointPolicies"]);
+        _serviceEndpointPolicies = DefineListProperty<ServiceEndpointPolicy>("ServiceEndpointPolicies", ["properties", "serviceEndpointPolicies"]);
         _serviceEndpoints = DefineListProperty<ServiceEndpointProperties>("ServiceEndpoints", ["properties", "serviceEndpoints"]);
         _sharingScope = DefineProperty<SharingScope>("SharingScope", ["properties", "sharingScope"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
