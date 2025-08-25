@@ -552,5 +552,75 @@ namespace Azure.ResourceManager.Confluent
             var response = GetSCEnvironmentRecord(environmentId, cancellationToken).Value;
             return response.GetSchemaRegistryClustersAsync(pageSize, pageToken, cancellationToken);
         }
+
+        /// <summary>
+        /// Creates API key for a schema registry Cluster ID or Kafka Cluster ID under a environment
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}/environments/{environmentId}/clusters/{clusterId}/createAPIKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Organization_CreateApiKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="environmentId"> Confluent environment id. </param>
+        /// <param name="clusterId"> Confluent kafka or schema registry cluster id. </param>
+        /// <param name="content"> Request payload for get creating API Key for schema registry Cluster ID or Kafka Cluster ID under a environment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="environmentId"/> or <paramref name="clusterId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/>, <paramref name="clusterId"/> or <paramref name="content"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Response<ConfluentApiKeyRecord> CreateApiKey(string environmentId, string clusterId, ConfluentApiKeyCreateContent content, CancellationToken cancellationToken = default)
+        {
+            var resource = GetSCEnvironmentRecord(environmentId, cancellationToken).Value;
+            var response = resource.GetSCClusterRecord(clusterId, cancellationToken).Value;
+            return response.CreateApiKey(content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Creates API key for a schema registry Cluster ID or Kafka Cluster ID under a environment
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}/environments/{environmentId}/clusters/{clusterId}/createAPIKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Organization_CreateApiKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="environmentId"> Confluent environment id. </param>
+        /// <param name="clusterId"> Confluent kafka or schema registry cluster id. </param>
+        /// <param name="content"> Request payload for get creating API Key for schema registry Cluster ID or Kafka Cluster ID under a environment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="environmentId"/> or <paramref name="clusterId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/>, <paramref name="clusterId"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<ConfluentApiKeyRecord>> CreateApiKeyAsync(string environmentId, string clusterId, ConfluentApiKeyCreateContent content, CancellationToken cancellationToken = default)
+        {
+            var resource = (await GetSCEnvironmentRecordAsync(environmentId, cancellationToken).ConfigureAwait(false)).Value;
+            var response = (await resource.GetSCClusterRecordAsync(clusterId, cancellationToken).ConfigureAwait(false)).Value;
+            return await response.CreateApiKeyAsync(content, cancellationToken).ConfigureAwait(false);
+        }
     }
 }
