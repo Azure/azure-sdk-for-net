@@ -22,6 +22,75 @@ dotnet add package Azure.Provisioning.Network
 
 This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
 
+## Examples
+
+### Create a Virtual Network with two Subnets
+
+```C# Snippet:VNetTwoSubnets
+Infrastructure infra = new();
+ProvisioningParameter vnetName = new("vnetName", typeof(string))
+{
+    Description = "VNet name",
+    Value = "VNet1"
+};
+infra.Add(vnetName);
+ProvisioningParameter vnetAddressPrefix = new("vnetAddressPrefix", typeof(string))
+{
+    Description = "Address prefix",
+    Value = "10.0.0.0/16"
+};
+infra.Add(vnetAddressPrefix);
+ProvisioningParameter subnet1Prefix = new("subnet1Prefix", typeof(string))
+{
+    Description = "Subnet 1 Prefix",
+    Value = "10.0.0.0/24"
+};
+infra.Add(subnet1Prefix);
+ProvisioningParameter subnet1Name = new("subnet1Name", typeof(string))
+{
+    Description = "Subnet 1 Name",
+    Value = "Subnet1"
+};
+infra.Add(subnet1Name);
+ProvisioningParameter subnet2Prefix = new("subnet2Prefix", typeof(string))
+{
+    Description = "Subnet 2 Prefix",
+    Value = "10.0.1.0/24"
+};
+infra.Add(subnet2Prefix);
+ProvisioningParameter subnet2Name = new("subnet2Name", typeof(string))
+{
+    Description = "Subnet 2 Name",
+    Value = "Subnet2"
+};
+infra.Add(subnet2Name);
+VirtualNetwork vnet = new("vnet", "2021-08-01")
+{
+    Name = vnetName,
+    AddressSpace = new VirtualNetworkAddressSpace()
+    {
+        AddressPrefixes =
+        [
+            vnetAddressPrefix
+        ]
+    },
+    Subnets =
+    [
+        new Subnet()
+        {
+            Name = subnet1Name,
+            AddressPrefix = subnet1Prefix
+        },
+        new Subnet()
+        {
+            Name = subnet2Name,
+            AddressPrefix = subnet2Prefix
+        }
+    ]
+};
+infra.Add(vnet);
+```
+
 ## Troubleshooting
 
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
