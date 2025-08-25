@@ -1,0 +1,3 @@
+directory: specification/signalr/SignalRService.Management
+commit: 642efbb0c5b9a38b091f39d26622ff8949484ba3
+repo: Azure/azure-rest-api-specs
