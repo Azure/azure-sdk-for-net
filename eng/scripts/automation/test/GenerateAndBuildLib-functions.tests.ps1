@@ -155,7 +155,8 @@ options:
     it("should read namespace configuration correctly") {
         $testSdkRoot = "/test/sdk/root"
         $result = GetSDKProjectFolder -typespecConfigurationFile $testTspConfigFile -sdkRepoRoot $testSdkRoot
-        $result | Should -Be "/test/sdk/root/testservice/Azure.TestService.Client"
+        $expected = Join-Path $testSdkRoot "testservice" "Azure.TestService.Client"
+        $result | Should -Be $expected
     }
     
     it("should prioritize package-dir over namespace when both are present") {
@@ -174,13 +175,15 @@ options:
         
         $testSdkRoot = "/test/sdk/root"
         $result = GetSDKProjectFolder -typespecConfigurationFile $testTspConfigFile3 -sdkRepoRoot $testSdkRoot
-        $result | Should -Be "/test/sdk/root/testservice/Azure.TestService.PackageDir"
+        $expected = Join-Path $testSdkRoot "testservice" "Azure.TestService.PackageDir"
+        $result | Should -Be $expected
     }
     
     it("should fallback to namespace when package-dir is not present") {
         $testSdkRoot = "/test/sdk/root"
         $result = GetSDKProjectFolder -typespecConfigurationFile $testTspConfigFile -sdkRepoRoot $testSdkRoot
-        $result | Should -Be "/test/sdk/root/testservice/Azure.TestService.Client"
+        $expected = Join-Path $testSdkRoot "testservice" "Azure.TestService.Client"
+        $result | Should -Be $expected
     }
     
     it("should throw error when namespace is missing") {
