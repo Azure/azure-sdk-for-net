@@ -181,12 +181,12 @@ public partial class PublicIPAddressData : ProvisionableConstruct
     /// <summary>
     /// The NatGateway for the Public IP address.
     /// </summary>
-    public NatGatewayData NatGateway 
+    public NatGateway NatGateway 
     {
         get { Initialize(); return _natGateway!; }
         set { Initialize(); AssignOrReplace(ref _natGateway, value); }
     }
-    private NatGatewayData? _natGateway;
+    private NatGateway? _natGateway;
 
     /// <summary>
     /// Migration phase of Public IP Address.
@@ -296,7 +296,7 @@ public partial class PublicIPAddressData : ProvisionableConstruct
         _resourceGuid = DefineProperty<Guid>("ResourceGuid", ["properties", "resourceGuid"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _servicePublicIPAddress = DefineModelProperty<PublicIPAddressData>("ServicePublicIPAddress", ["properties", "servicePublicIPAddress"]);
-        _natGateway = DefineModelProperty<NatGatewayData>("NatGateway", ["properties", "natGateway"]);
+        _natGateway = DefineModelProperty<NatGateway>("NatGateway", ["properties", "natGateway"]);
         _migrationPhase = DefineProperty<PublicIPAddressMigrationPhase>("MigrationPhase", ["properties", "migrationPhase"]);
         _linkedPublicIPAddress = DefineModelProperty<PublicIPAddressData>("LinkedPublicIPAddress", ["properties", "linkedPublicIPAddress"]);
         _deleteOption = DefineProperty<IPAddressDeleteOption>("DeleteOption", ["properties", "deleteOption"]);
