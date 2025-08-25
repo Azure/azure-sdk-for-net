@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
 
                     OccurrenceResource triggeredOccurrence = await DefaultResourceGroupResource.TriggerManualOccurrenceScheduledActionAsync(scheduledActionName);
 
-                    Assert.True(triggeredOccurrence.Data.Properties.ProvisioningState != OccurrenceState.Scheduled);
+                    Assert.IsTrue(triggeredOccurrence.Data.Properties.ProvisioningState != OccurrenceState.Scheduled);
 
                     RecurringScheduledActionUtils.ValidateTriggeredOccurrence(triggeredOccurrence.Data, scheduledActionName);
 
