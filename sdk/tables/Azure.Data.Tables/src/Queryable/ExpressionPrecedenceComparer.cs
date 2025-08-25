@@ -9,6 +9,7 @@ namespace Azure.Data.Tables.Queryable
     internal sealed class ExpressionPrecedenceComparer : IComparer<Expression>
     {
         //From (2.2.3.6.1.1.2 Operator Precedence) https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-odata/f3380585-3f87-41d9-a2dc-ff46cc38e7a6
+        //and https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/#operator-precedence
 
         private const byte UnknownPrecedenceCategory = byte.MaxValue;
         private const byte PrimaryPrecedenceCategory = 8;
@@ -44,6 +45,8 @@ namespace Azure.Data.Tables.Queryable
                 case ExpressionType.NegateChecked:
                 case ExpressionType.Not:
                 case ExpressionType.Convert:
+                case ExpressionType.ConvertChecked:
+                case ExpressionType.UnaryPlus:
                     return UnaryPrecedenceCategory;
                 case ExpressionType.Multiply:
                 case ExpressionType.MultiplyChecked:
@@ -59,6 +62,7 @@ namespace Azure.Data.Tables.Queryable
                 case ExpressionType.GreaterThan:
                 case ExpressionType.LessThanOrEqual:
                 case ExpressionType.GreaterThanOrEqual:
+                case ExpressionType.TypeAs:
                     return RelationalPrecedenceCategory;
                 case ExpressionType.Equal:
                 case ExpressionType.NotEqual:
