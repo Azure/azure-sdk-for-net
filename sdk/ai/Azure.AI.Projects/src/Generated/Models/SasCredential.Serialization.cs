@@ -9,17 +9,12 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> A message authored by a developer to guide the model during evaluation. </summary>
-    public partial class DeveloperMessage : IJsonModel<DeveloperMessage>
+    /// <summary> Shared Access Signature (SAS) credential definition. </summary>
+    public partial class SasCredential : IJsonModel<SasCredential>
     {
-        /// <summary> Initializes a new instance of <see cref="DeveloperMessage"/> for deserialization. </summary>
-        internal DeveloperMessage()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DeveloperMessage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SasCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,54 +25,57 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeveloperMessage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SasCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeveloperMessage)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SasCredential)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("content"u8);
-            writer.WriteStringValue(Content);
+            if (options.Format != "W" && Optional.IsDefined(SasToken))
+            {
+                writer.WritePropertyName("SAS"u8);
+                writer.WriteStringValue(SasToken);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeveloperMessage IJsonModel<DeveloperMessage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DeveloperMessage)JsonModelCreateCore(ref reader, options);
+        SasCredential IJsonModel<SasCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SasCredential)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Message JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override BaseCredentials JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeveloperMessage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SasCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeveloperMessage)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SasCredential)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeveloperMessage(document.RootElement, options);
+            return DeserializeSasCredential(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DeveloperMessage DeserializeDeveloperMessage(JsonElement element, ModelReaderWriterOptions options)
+        internal static SasCredential DeserializeSasCredential(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            MessageRole role = default;
+            CredentialType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string content = default;
+            string sasToken = default;
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("role"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    role = new MessageRole(prop.Value.GetString());
+                    @type = new CredentialType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("content"u8))
+                if (prop.NameEquals("SAS"u8))
                 {
-                    content = prop.Value.GetString();
+                    sasToken = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -85,47 +83,47 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeveloperMessage(role, additionalBinaryDataProperties, content);
+            return new SasCredential(@type, additionalBinaryDataProperties, sasToken);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DeveloperMessage>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SasCredential>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeveloperMessage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SasCredential>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DeveloperMessage)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SasCredential)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeveloperMessage IPersistableModel<DeveloperMessage>.Create(BinaryData data, ModelReaderWriterOptions options) => (DeveloperMessage)PersistableModelCreateCore(data, options);
+        SasCredential IPersistableModel<SasCredential>.Create(BinaryData data, ModelReaderWriterOptions options) => (SasCredential)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Message PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override BaseCredentials PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeveloperMessage>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SasCredential>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeDeveloperMessage(document.RootElement, options);
+                        return DeserializeSasCredential(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeveloperMessage)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SasCredential)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DeveloperMessage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SasCredential>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

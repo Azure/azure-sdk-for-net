@@ -112,12 +112,10 @@ namespace Azure.AI.Projects
         public virtual DatasetsOperations Datasets { get => GetDatasetsOperationsClient(); }
         /// <summary> Gets the client for managing deployments. </summary>
         public virtual DeploymentsOperations Deployments { get => GetDeploymentsOperationsClient(); }
-        /// <summary> Gets the client for evaluations operations. </summary>
-        public virtual Evaluations Evaluations { get => GetEvaluationsClient(); }
         /// <summary> Gets the client for managing indexes. </summary>
         public virtual IndexesOperations Indexes { get => GetIndexesOperationsClient(); }
         /// <summary> Gets the client for telemetry operations. </summary>
-        public virtual Telemetry Telemetry { get => new Telemetry(this); }
+        public virtual AIProjectTelemetry Telemetry { get => new AIProjectTelemetry(this); }
 
         private static ClientPipeline CreatePipeline(PipelinePolicy authenticationPolicy, AIProjectClientOptions options)
         => ClientPipeline.Create(
