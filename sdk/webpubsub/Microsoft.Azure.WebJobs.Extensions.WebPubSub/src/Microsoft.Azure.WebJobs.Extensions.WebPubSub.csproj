@@ -5,9 +5,9 @@
     <PackageId>Microsoft.Azure.WebJobs.Extensions.WebPubSub</PackageId>
     <PackageTags>Azure, WebPubSub</PackageTags>
     <Description>Azure Functions extension for the WebPubSub service</Description>
-    <Version>1.9.0-beta.1</Version>
+    <Version>1.10.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.8.0</ApiCompatVersion>
+    <ApiCompatVersion>1.9.0</ApiCompatVersion>
     <NoWarn>$(NoWarn);CS8632;CA1056;CA2227</NoWarn>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
   </PropertyGroup>
@@ -30,9 +30,9 @@
     <!--
 	TODO: Changing to a PackageReference since we only want to depend on the already GA'ed version of WebPubSub.  Change back after release.	-->
 	  <!--<ProjectReference Include="..\..\Azure.Messaging.WebPubSub\src\Azure.Messaging.WebPubSub.csproj" />-->
-    <ProjectReference Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Microsoft.Azure.WebPubSub.Common.csproj" />
+    <!--<ProjectReference Include="..\..\Microsoft.Azure.WebPubSub.Common\src\Microsoft.Azure.WebPubSub.Common.csproj" />-->
 
     <PackageReference Include="Azure.Messaging.WebPubSub" />
-    <!--<PackageReference Include="Microsoft.Azure.WebPubSub.Common" />-->
+    <PackageReference Include="Microsoft.Azure.WebPubSub.Common" />
   </ItemGroup>
 </Project>

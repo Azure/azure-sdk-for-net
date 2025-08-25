@@ -337,7 +337,14 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetMessagesRequest(threadId, runId, limit, order?.ToString(), continuationToken, before, context);
+            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetMessagesRequest(
+                threadId: threadId,
+                runId: runId,
+                limit: limit,
+                order: order?.ToString(),
+                after: continuationToken,
+                before: before,
+                context: context);
             var asyncPageable = new ContinuationTokenPageableAsync<PersistentThreadMessage>(
                 createPageRequest: PageRequest,
                 valueFactory: e => PersistentThreadMessage.DeserializePersistentThreadMessage(e),
@@ -348,7 +355,8 @@ namespace Azure.AI.Agents.Persistent
                 itemType: ContinuationItemType.ThreadMessage,
                 threadId: threadId,
                 runId: runId,
-                endpoint: _endpoint
+                endpoint: _endpoint,
+                after: after
             );
 
             return asyncPageable;
@@ -369,7 +377,14 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetMessagesRequest(threadId, runId, limit, order?.ToString(), continuationToken, before, context);
+            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetMessagesRequest(
+                threadId: threadId,
+                runId: runId,
+                limit: limit,
+                order: order?.ToString(),
+                after: continuationToken,
+                before: before,
+                context: context);
             var pageable = new ContinuationTokenPageable<PersistentThreadMessage>(
                 createPageRequest: PageRequest,
                 valueFactory: e => PersistentThreadMessage.DeserializePersistentThreadMessage(e),
@@ -380,7 +395,8 @@ namespace Azure.AI.Agents.Persistent
                 itemType: ContinuationItemType.ThreadMessage,
                 threadId: threadId,
                 runId: runId,
-                endpoint: _endpoint
+                endpoint: _endpoint,
+                after: after
             );
 
             return pageable;
@@ -418,7 +434,14 @@ namespace Azure.AI.Agents.Persistent
             // which is currently do not support next token.
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMessagesRequest(threadId, runId, limit, order, after, before, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMessagesRequest(
+                threadId: threadId,
+                runId: runId,
+                limit: limit,
+                order: order,
+                after: after,
+                before: before,
+                context:context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ThreadMessagesClient.GetMessages", "data", null, context);
         }
 
@@ -454,8 +477,67 @@ namespace Azure.AI.Agents.Persistent
             // which is currently do not support next token.
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMessagesRequest(threadId, runId, limit, order, after, before, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMessagesRequest(
+                threadId: threadId,
+                runId: runId,
+                limit: limit,
+                order: order,
+                after: after,
+                before: before,
+                context: context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ThreadMessagesClient.GetMessages", "data", null, context);
+        }
+
+        /// <summary> Deletes a thread message. </summary>
+        /// <param name="threadId"> The ID of the thread to delete. </param>
+        /// <param name="messageId">The ID of the message to delete. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> DeleteMessage(
+            string threadId,
+            string messageId,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsClient.DeleteThread");
+            scope.Start();
+            Response<MessageDeletionStatus> baseResponse
+                = InternalDeleteMessage(
+                    threadId:threadId,
+                    messageId: messageId,
+                    cancellationToken: cancellationToken);
+            bool simplifiedValue =
+                baseResponse.GetRawResponse() != null
+                && !baseResponse.GetRawResponse().IsError
+                && baseResponse.Value != null
+                && baseResponse.Value.Deleted;
+            return Response.FromValue(simplifiedValue, baseResponse.GetRawResponse());
+        }
+
+        /// <summary> Deletes a thread message. </summary>
+        /// <param name="threadId"> The ID of the thread to delete. </param>
+        /// <param name="messageId">The ID of the message to delete. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> DeleteMessageAsync(
+            string threadId,
+            string messageId,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsClient.DeleteThread");
+            scope.Start();
+            Response<MessageDeletionStatus> baseResponse
+                = await InternalDeleteMessageAsync(
+                    threadId: threadId,
+                    messageId: messageId,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+            bool simplifiedValue =
+                baseResponse.GetRawResponse() != null
+                && !baseResponse.GetRawResponse().IsError
+                && baseResponse.Value != null
+                && baseResponse.Value.Deleted;
+            return Response.FromValue(simplifiedValue, baseResponse.GetRawResponse());
         }
     }
 }

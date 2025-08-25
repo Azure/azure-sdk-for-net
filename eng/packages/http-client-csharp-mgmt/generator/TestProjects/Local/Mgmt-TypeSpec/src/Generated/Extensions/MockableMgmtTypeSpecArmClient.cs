@@ -11,7 +11,7 @@ using MgmtTypeSpec;
 
 namespace MgmtTypeSpec.Mocking
 {
-    /// <summary></summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableMgmtTypeSpecArmClient : ArmResource
     {
         /// <summary> Initializes a new instance of MockableMgmtTypeSpecArmClient for mocking. </summary>
@@ -60,6 +60,15 @@ namespace MgmtTypeSpec.Mocking
         {
             BarSettingsResource.ValidateResourceId(id);
             return new BarSettingsResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="BarQuotaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BarQuotaResource"/> object. </returns>
+        public virtual BarQuotaResource GetBarQuotaResource(ResourceIdentifier id)
+        {
+            BarQuotaResource.ValidateResourceId(id);
+            return new BarQuotaResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ZooResource"/> along with the instance operations that can be performed on it but with no data. </summary>

@@ -40,10 +40,13 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> List of routing policies. </summary>
+        [WirePath("properties.routingPolicies")]
         public IList<RoutingPolicy> RoutingPolicies { get; }
         /// <summary> The provisioning state of the RoutingIntent resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

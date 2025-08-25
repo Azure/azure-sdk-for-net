@@ -79,6 +79,6 @@ public class BicepValueTests
                 scriptContent: 'echo \'Hello, world!\''
               }
             }
-            """, result.Values.First());
+            """.NormalizeLineEndings(), result.Values.First().NormalizeLineEndings());
     }
 }

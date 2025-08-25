@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The identifier of the IP configuration for a VPN Gateway. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
         /// <summary> The public IP address of this IP configuration. </summary>
+        [WirePath("publicIpAddress")]
         public string PublicIPAddress { get; }
         /// <summary> The private IP address of this IP configuration. </summary>
+        [WirePath("privateIpAddress")]
         public string PrivateIPAddress { get; }
     }
 }

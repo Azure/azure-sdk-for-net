@@ -74,18 +74,25 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Duration of packet capture in seconds. </summary>
+        [WirePath("durationInSeconds")]
         public int? DurationInSeconds { get; set; }
         /// <summary> Number of packets to be captured. </summary>
+        [WirePath("numberOfPacketsToCapture")]
         public int? NumberOfPacketsToCapture { get; set; }
         /// <summary> Upload capture location. </summary>
+        [WirePath("sasUrl")]
         public Uri SasUri { get; set; }
         /// <summary> Name of file to be uploaded to sasURL. </summary>
+        [WirePath("fileName")]
         public string FileName { get; set; }
         /// <summary> The protocol of packets to capture. </summary>
+        [WirePath("protocol")]
         public AzureFirewallNetworkRuleProtocol? Protocol { get; set; }
         /// <summary> The tcp-flag type to be captured. Used with protocol TCP. </summary>
+        [WirePath("flags")]
         public IList<AzureFirewallPacketCaptureFlags> Flags { get; }
         /// <summary> Rules to filter packet captures. </summary>
+        [WirePath("filters")]
         public IList<AzureFirewallPacketCaptureRule> Filters { get; }
     }
 }

@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.StorageActions;
 
 namespace Azure.ResourceManager.StorageActions.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableStorageActionsArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableStorageActionsArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableStorageActionsArmClient for mocking. </summary>
         protected MockableStorageActionsArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableStorageActionsArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableStorageActionsArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableStorageActionsArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableStorageActionsArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StorageTaskResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageTaskResource.CreateResourceIdentifier" /> to create a <see cref="StorageTaskResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="StorageTaskResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="StorageTaskResource"/> object. </returns>
         public virtual StorageTaskResource GetStorageTaskResource(ResourceIdentifier id)

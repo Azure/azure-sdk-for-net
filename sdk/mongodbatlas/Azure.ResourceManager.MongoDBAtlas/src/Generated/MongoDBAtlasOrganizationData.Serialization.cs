@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
             }
         }
 
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                     {
                         continue;
                     }
-                    systemData = prop.Value.Deserialize<SystemData>();
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerMongoDBAtlasContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -151,16 +152,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                     {
                         continue;
                     }
-                    properties = MongoDBAtlasOrganizationProperties.DeserializeMongoDBAtlasOrganizationProperties(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("identity"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = prop.Value.Deserialize<ManagedServiceIdentity>();
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMongoDBAtlasContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

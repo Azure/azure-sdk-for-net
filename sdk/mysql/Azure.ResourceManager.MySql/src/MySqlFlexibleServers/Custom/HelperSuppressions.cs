@@ -10,4 +10,3 @@ using Azure.Core;
 [assembly: CodeGenSuppressType("Azure.ResourceManager.MySql.Utf8JsonRequestContent")]
 [assembly: CodeGenSuppressType("Azure.ResourceManager.MySql.ChangeTrackingDictionary")]
 [assembly: CodeGenSuppressType("Azure.ResourceManager.MySql.ModelSerializationExtensions")]
-[assembly: CodeGenSuppressType("Azure.ResourceManager.MySql.FlexibleServers.AzureResourceManagerMySqlFlexibleServersContext")]

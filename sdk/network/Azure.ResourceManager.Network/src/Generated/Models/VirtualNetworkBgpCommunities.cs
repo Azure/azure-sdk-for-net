@@ -72,8 +72,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The BGP community associated with the virtual network. </summary>
+        [WirePath("virtualNetworkCommunity")]
         public string VirtualNetworkCommunity { get; set; }
         /// <summary> The BGP community associated with the region of the virtual network. </summary>
+        [WirePath("regionalCommunity")]
         public string RegionalCommunity { get; }
     }
 }

@@ -22,16 +22,18 @@ public partial class Sample_PersistentAgents_Bing_Custom_Search : SamplesBase<AI
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
         var connectionId = System.Environment.GetEnvironmentVariable("BING_CUSTOM_CONNECTION_ID");
+        var configurationName = System.Environment.GetEnvironmentVariable("BING_CONFIGURATION_NAME");
 #else
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
         var connectionId = TestEnvironment.BING_CUSTOM_CONNECTION_ID;
+        var configurationName = TestEnvironment.BING_CONFIGURATION_NAME;
 #endif
         PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
         #endregion
         #region Snippet:AgentsBingCustomSearch_GetConnection
         BingCustomSearchToolDefinition bingCustomSearchTool = new(
-            new BingCustomSearchToolParameters(connectionId, "your_config_instance_name") // Replace with your actual configuration instance name
+            new BingCustomSearchToolParameters(connectionId, configurationName) // Replace with your actual configuration instance name
         );
         #endregion
         #region Snippet:AgentsBingCustomSearchAsync_CreateAgent
@@ -117,14 +119,16 @@ public partial class Sample_PersistentAgents_Bing_Custom_Search : SamplesBase<AI
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
         var connectionId = System.Environment.GetEnvironmentVariable("BING_CUSTOM_CONNECTION_ID");
+        var configurationName = System.Environment.GetEnvironmentVariable("BING_CONFIGURATION_NAME");
 #else
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
         var connectionId = TestEnvironment.BING_CUSTOM_CONNECTION_ID;
+        var configurationName = TestEnvironment.BING_CONFIGURATION_NAME;
 #endif
         PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCredential());
         BingCustomSearchToolDefinition bingCustomSearchTool = new(
-            new BingCustomSearchToolParameters(connectionId, "your_config_instance_name") // Replace with your actual configuration instance name
+            new BingCustomSearchToolParameters(connectionId, configurationName) // Replace with your actual configuration instance name
         );
         #region Snippet:AgentsBingCustomSearch_CreateAgent
         // NOTE: To reuse existing agent, fetch it with agentClient.Administration.GetAgent(agentId)

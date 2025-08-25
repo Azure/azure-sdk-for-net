@@ -102,7 +102,6 @@ namespace MgmtTypeSpec
             uri.AppendPath(barName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
@@ -129,7 +128,7 @@ namespace MgmtTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string fooName, RequestContext context)
+        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string resourceGroupName, string fooName, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -149,7 +148,7 @@ namespace MgmtTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateNextGetRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string fooName, RequestContext context)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string fooName, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;

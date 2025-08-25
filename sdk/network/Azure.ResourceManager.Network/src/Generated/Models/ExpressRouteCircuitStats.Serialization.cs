@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -144,6 +145,81 @@ namespace Azure.ResourceManager.Network.Models
             return new ExpressRouteCircuitStats(primarybytesIn, primarybytesOut, secondarybytesIn, secondarybytesOut, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimarybytesIn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  primarybytesIn: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrimarybytesIn))
+                {
+                    builder.Append("  primarybytesIn: ");
+                    builder.AppendLine($"'{PrimarybytesIn.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimarybytesOut), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  primarybytesOut: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrimarybytesOut))
+                {
+                    builder.Append("  primarybytesOut: ");
+                    builder.AppendLine($"'{PrimarybytesOut.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondarybytesIn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  secondarybytesIn: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SecondarybytesIn))
+                {
+                    builder.Append("  secondarybytesIn: ");
+                    builder.AppendLine($"'{SecondarybytesIn.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondarybytesOut), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  secondarybytesOut: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SecondarybytesOut))
+                {
+                    builder.Append("  secondarybytesOut: ");
+                    builder.AppendLine($"'{SecondarybytesOut.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ExpressRouteCircuitStats>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitStats>)this).GetFormatFromOptions(options) : options.Format;
@@ -152,6 +228,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ExpressRouteCircuitStats)} does not support writing '{options.Format}' format.");
             }

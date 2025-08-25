@@ -34,22 +34,8 @@ namespace Azure.ResourceManager
     [ModelReaderWriterBuildable(typeof(ManagementGroupPatch))]
     [ModelReaderWriterBuildable(typeof(ManagementGroupPathElement))]
     [ModelReaderWriterBuildable(typeof(ParentManagementGroupInfo))]
-    [ModelReaderWriterBuildable(typeof(ArmPlan))]
-    [ModelReaderWriterBuildable(typeof(ArmSku))]
-#pragma warning disable CS0618 // Type or member is obsolete
-    [ModelReaderWriterBuildable(typeof(EncryptionProperties))]
-#pragma warning restore CS0618 // Type or member is obsolete
-#pragma warning disable CS0618 // Type or member is obsolete
-    [ModelReaderWriterBuildable(typeof(KeyVaultProperties))]
-#pragma warning restore CS0618 // Type or member is obsolete
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
-#pragma warning disable CS0618 // Type or member is obsolete
-    [ModelReaderWriterBuildable(typeof(SystemAssignedServiceIdentity))]
-#pragma warning restore CS0618 // Type or member is obsolete
     [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
-    [ModelReaderWriterBuildable(typeof(TenantResource))]
     [ModelReaderWriterBuildable(typeof(FeatureResource))]
     [ModelReaderWriterBuildable(typeof(GenericResourceData))]
     [ModelReaderWriterBuildable(typeof(PolicyAssignmentData))]
@@ -147,19 +133,5 @@ namespace Azure.ResourceManager
     [ModelReaderWriterBuildable(typeof(ZoneMapping))]
     public partial class AzureResourceManagerContext
     {
-        partial void AddAdditionalFactories(Dictionary<Type, Func<ModelReaderWriterTypeBuilder>> factories)
-        {
-            factories.Add(typeof(ManagedServiceIdentity), () => new ManagedServiceIdentityTypeBuilder());
-        }
-
-        private class ManagedServiceIdentityTypeBuilder : ModelReaderWriterTypeBuilder
-        {
-            protected override Type BuilderType => typeof(ManagedServiceIdentity);
-
-            protected override object CreateInstance()
-            {
-                return new ManagedServiceIdentity(ManagedServiceIdentityType.None);
-            }
-        }
     }
 }

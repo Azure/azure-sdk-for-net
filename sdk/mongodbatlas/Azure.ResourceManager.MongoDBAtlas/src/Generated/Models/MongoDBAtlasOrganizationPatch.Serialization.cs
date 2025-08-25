@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
                     {
                         continue;
                     }
-                    identity = prop.Value.Deserialize<ManagedServiceIdentity>();
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerMongoDBAtlasContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))

@@ -1,12 +1,5 @@
 namespace Azure.ResourceManager.MongoDBAtlas
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasMarketplaceDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOfferDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasOrganizationProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasPartnerProperties))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasUserDetails))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationData))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.ResourceManager.MongoDBAtlas.MongoDBAtlasOrganizationResource))]
     public partial class AzureResourceManagerMongoDBAtlasContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerMongoDBAtlasContext() { }

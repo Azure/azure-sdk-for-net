@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.SelfHelp
     /// </summary>
     public partial class SelfHelpSolutionCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _selfHelpSolutionSolutionClientDiagnostics;
-        private readonly SolutionRestOperations _selfHelpSolutionSolutionRestClient;
+        private readonly ClientDiagnostics _selfHelpSolutionSolutionResourcesClientDiagnostics;
+        private readonly SolutionResourcesRestOperations _selfHelpSolutionSolutionResourcesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SelfHelpSolutionCollection"/> class for mocking. </summary>
         protected SelfHelpSolutionCollection()
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SelfHelpSolutionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _selfHelpSolutionSolutionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SelfHelp", SelfHelpSolutionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SelfHelpSolutionResource.ResourceType, out string selfHelpSolutionSolutionApiVersion);
-            _selfHelpSolutionSolutionRestClient = new SolutionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, selfHelpSolutionSolutionApiVersion);
+            _selfHelpSolutionSolutionResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SelfHelp", SelfHelpSolutionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SelfHelpSolutionResource.ResourceType, out string selfHelpSolutionSolutionResourcesApiVersion);
+            _selfHelpSolutionSolutionResourcesRestClient = new SolutionResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, selfHelpSolutionSolutionResourcesApiVersion);
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Solution_Create</description>
+        /// <description>SolutionResource_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.SelfHelp
             Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _selfHelpSolutionSolutionClientDiagnostics.CreateScope("SelfHelpSolutionCollection.CreateOrUpdate");
+            using var scope = _selfHelpSolutionSolutionResourcesClientDiagnostics.CreateScope("SelfHelpSolutionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _selfHelpSolutionSolutionRestClient.CreateAsync(Id, solutionResourceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SelfHelpArmOperation<SelfHelpSolutionResource>(new SelfHelpSolutionOperationSource(Client), _selfHelpSolutionSolutionClientDiagnostics, Pipeline, _selfHelpSolutionSolutionRestClient.CreateCreateRequest(Id, solutionResourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _selfHelpSolutionSolutionResourcesRestClient.CreateAsync(Id, solutionResourceName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SelfHelpArmOperation<SelfHelpSolutionResource>(new SelfHelpSolutionOperationSource(Client), _selfHelpSolutionSolutionResourcesClientDiagnostics, Pipeline, _selfHelpSolutionSolutionResourcesRestClient.CreateCreateRequest(Id, solutionResourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Solution_Create</description>
+        /// <description>SolutionResource_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -119,12 +119,12 @@ namespace Azure.ResourceManager.SelfHelp
             Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _selfHelpSolutionSolutionClientDiagnostics.CreateScope("SelfHelpSolutionCollection.CreateOrUpdate");
+            using var scope = _selfHelpSolutionSolutionResourcesClientDiagnostics.CreateScope("SelfHelpSolutionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _selfHelpSolutionSolutionRestClient.Create(Id, solutionResourceName, data, cancellationToken);
-                var operation = new SelfHelpArmOperation<SelfHelpSolutionResource>(new SelfHelpSolutionOperationSource(Client), _selfHelpSolutionSolutionClientDiagnostics, Pipeline, _selfHelpSolutionSolutionRestClient.CreateCreateRequest(Id, solutionResourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _selfHelpSolutionSolutionResourcesRestClient.Create(Id, solutionResourceName, data, cancellationToken);
+                var operation = new SelfHelpArmOperation<SelfHelpSolutionResource>(new SelfHelpSolutionOperationSource(Client), _selfHelpSolutionSolutionResourcesClientDiagnostics, Pipeline, _selfHelpSolutionSolutionResourcesRestClient.CreateCreateRequest(Id, solutionResourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Solution_Get</description>
+        /// <description>SolutionResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -165,11 +165,11 @@ namespace Azure.ResourceManager.SelfHelp
         {
             Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
 
-            using var scope = _selfHelpSolutionSolutionClientDiagnostics.CreateScope("SelfHelpSolutionCollection.Get");
+            using var scope = _selfHelpSolutionSolutionResourcesClientDiagnostics.CreateScope("SelfHelpSolutionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _selfHelpSolutionSolutionRestClient.GetAsync(Id, solutionResourceName, cancellationToken).ConfigureAwait(false);
+                var response = await _selfHelpSolutionSolutionResourcesRestClient.GetAsync(Id, solutionResourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SelfHelpSolutionResource(Client, response.Value), response.GetRawResponse());
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Solution_Get</description>
+        /// <description>SolutionResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -210,11 +210,11 @@ namespace Azure.ResourceManager.SelfHelp
         {
             Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
 
-            using var scope = _selfHelpSolutionSolutionClientDiagnostics.CreateScope("SelfHelpSolutionCollection.Get");
+            using var scope = _selfHelpSolutionSolutionResourcesClientDiagnostics.CreateScope("SelfHelpSolutionCollection.Get");
             scope.Start();
             try
             {
-                var response = _selfHelpSolutionSolutionRestClient.Get(Id, solutionResourceName, cancellationToken);
+                var response = _selfHelpSolutionSolutionResourcesRestClient.Get(Id, solutionResourceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SelfHelpSolutionResource(Client, response.Value), response.GetRawResponse());
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Solution_Get</description>
+        /// <description>SolutionResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -255,11 +255,11 @@ namespace Azure.ResourceManager.SelfHelp
         {
             Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
 
-            using var scope = _selfHelpSolutionSolutionClientDiagnostics.CreateScope("SelfHelpSolutionCollection.Exists");
+            using var scope = _selfHelpSolutionSolutionResourcesClientDiagnostics.CreateScope("SelfHelpSolutionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _selfHelpSolutionSolutionRestClient.GetAsync(Id, solutionResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _selfHelpSolutionSolutionResourcesRestClient.GetAsync(Id, solutionResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Solution_Get</description>
+        /// <description>SolutionResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -298,11 +298,11 @@ namespace Azure.ResourceManager.SelfHelp
         {
             Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
 
-            using var scope = _selfHelpSolutionSolutionClientDiagnostics.CreateScope("SelfHelpSolutionCollection.Exists");
+            using var scope = _selfHelpSolutionSolutionResourcesClientDiagnostics.CreateScope("SelfHelpSolutionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _selfHelpSolutionSolutionRestClient.Get(Id, solutionResourceName, cancellationToken: cancellationToken);
+                var response = _selfHelpSolutionSolutionResourcesRestClient.Get(Id, solutionResourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Solution_Get</description>
+        /// <description>SolutionResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -341,11 +341,11 @@ namespace Azure.ResourceManager.SelfHelp
         {
             Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
 
-            using var scope = _selfHelpSolutionSolutionClientDiagnostics.CreateScope("SelfHelpSolutionCollection.GetIfExists");
+            using var scope = _selfHelpSolutionSolutionResourcesClientDiagnostics.CreateScope("SelfHelpSolutionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _selfHelpSolutionSolutionRestClient.GetAsync(Id, solutionResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _selfHelpSolutionSolutionResourcesRestClient.GetAsync(Id, solutionResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<SelfHelpSolutionResource>(response.GetRawResponse());
                 return Response.FromValue(new SelfHelpSolutionResource(Client, response.Value), response.GetRawResponse());
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Solution_Get</description>
+        /// <description>SolutionResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -386,11 +386,11 @@ namespace Azure.ResourceManager.SelfHelp
         {
             Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
 
-            using var scope = _selfHelpSolutionSolutionClientDiagnostics.CreateScope("SelfHelpSolutionCollection.GetIfExists");
+            using var scope = _selfHelpSolutionSolutionResourcesClientDiagnostics.CreateScope("SelfHelpSolutionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _selfHelpSolutionSolutionRestClient.Get(Id, solutionResourceName, cancellationToken: cancellationToken);
+                var response = _selfHelpSolutionSolutionResourcesRestClient.Get(Id, solutionResourceName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<SelfHelpSolutionResource>(response.GetRawResponse());
                 return Response.FromValue(new SelfHelpSolutionResource(Client, response.Value), response.GetRawResponse());

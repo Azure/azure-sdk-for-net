@@ -1,14 +1,26 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
+using Azure.Generator.Management.Snippets;
+using Azure.Generator.Management.Utilities;
+using Azure.ResourceManager.ManagementGroups;
+using Azure.ResourceManager.Resources;
+using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.Generator.Management.Models
 {
+    /// <summary>
+    /// This class provides the pattern of an operation request path.
+    /// </summary>
     internal class RequestPathPattern : IEquatable<RequestPathPattern>, IReadOnlyList<RequestPathSegment>
     {
         private const string ProviderPath = "/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}";
@@ -18,6 +30,18 @@ namespace Azure.Generator.Management.Models
         public static readonly RequestPathPattern ResourceGroup = new("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}");
         public static readonly RequestPathPattern Subscription = new("/subscriptions/{subscriptionId}");
         public static readonly RequestPathPattern Tenant = new(string.Empty);
+
+        public static RequestPathPattern GetFromScope(ResourceScope scope)
+        {
+            return scope switch
+            {
+                ResourceScope.ResourceGroup => ResourceGroup,
+                ResourceScope.Subscription => Subscription,
+                ResourceScope.ManagementGroup => ManagementGroup,
+                ResourceScope.Tenant => Tenant,
+                _ => throw new InvalidOperationException($"Unhandled scope {scope}"),
+            };
+        }
 
         private string _path;
         private IReadOnlyList<RequestPathSegment> _segments;
@@ -161,6 +185,27 @@ namespace Azure.Generator.Management.Models
         public static implicit operator string(RequestPathPattern requestPath)
         {
             return requestPath._path;
+        }
+
+        private IReadOnlyDictionary<string, ContextualParameter>? _contextualParameters;
+
+        /// <summary>
+        /// Get the corresponding contextual parameter in this request path for a provided parameter.
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <param name="contextualParameter"></param>
+        /// <returns></returns>
+        public bool TryGetContextualParameter(ParameterProvider parameter, [MaybeNullWhen(false)] out ContextualParameter contextualParameter)
+        {
+            contextualParameter = null;
+            if (parameter.Location != ParameterLocation.Path)
+            {
+                return false;
+            }
+
+            _contextualParameters ??= ContextualParameterBuilder.BuildContextualParameters(this).ToDictionary(p => p.VariableName);
+
+            return _contextualParameters.TryGetValue(parameter.WireInfo.SerializedName, out contextualParameter);
         }
     }
 }

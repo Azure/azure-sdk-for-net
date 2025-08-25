@@ -1,33 +1,5 @@
 namespace Azure.AI.OpenAI
 {
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.OpenAI.AzureContentFilterCustomTopicResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.OpenAI.AzureContentFilterCustomTopicResultDetail))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.OpenAI.AzureContentFilterResultForChoiceError))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.OpenAI.Chat.AzureSearchChatDataSource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.OpenAI.Chat.ChatCitation))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.OpenAI.Chat.ChatDataSource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.OpenAI.Chat.ChatMessageContext))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.OpenAI.Chat.ChatRetrievedDocument))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.OpenAI.Chat.CosmosChatDataSource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.OpenAI.Chat.DataSourceAuthentication))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.OpenAI.Chat.DataSourceFieldMappings))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.OpenAI.Chat.DataSourceVectorizer))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.OpenAI.Chat.ElasticsearchChatDataSource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.OpenAI.Chat.MongoDBChatDataSource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.OpenAI.Chat.PineconeChatDataSource))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.OpenAI.ContentFilterBlocklistResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.OpenAI.ContentFilterDetectionResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.OpenAI.ContentFilterProtectedMaterialCitationResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.OpenAI.ContentFilterProtectedMaterialResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.OpenAI.ContentFilterSeverityResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.OpenAI.ContentFilterTextSpan))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.OpenAI.ContentFilterTextSpanResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.OpenAI.Files.AzureFileExpirationOptions))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.OpenAI.RequestContentFilterResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.OpenAI.RequestImageContentFilterResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.OpenAI.ResponseContentFilterResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.OpenAI.ResponseImageContentFilterResult))]
-    [System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute(typeof(Azure.AI.OpenAI.UserSecurityContext))]
     public partial class AzureAIOpenAIContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureAIOpenAIContext() { }
@@ -157,6 +129,10 @@ namespace Azure.AI.OpenAI
         public AzureOpenAIClientOptions() { }
         public AzureOpenAIClientOptions(Azure.AI.OpenAI.AzureOpenAIClientOptions.ServiceVersion version) { }
         public Azure.AI.OpenAI.AzureOpenAIAudience? Audience { get { throw null; } set { } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AOAI001")]
+        public System.Collections.Generic.IDictionary<string, string> DefaultHeaders { get { throw null; } set { } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AOAI001")]
+        public System.Collections.Generic.IDictionary<string, string> DefaultQueryParameters { get { throw null; } set { } }
         public string UserAgentApplicationId { get { throw null; } set { } }
         public enum ServiceVersion
         {
