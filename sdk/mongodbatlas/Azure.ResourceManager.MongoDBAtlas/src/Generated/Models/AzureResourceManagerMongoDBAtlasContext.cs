@@ -15,20 +15,18 @@ namespace Azure.ResourceManager.MongoDBAtlas
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(MongoDBAtlasOrganizationData))]
+    [ModelReaderWriterBuildable(typeof(MongoDBAtlasOrganizationProperties))]
     [ModelReaderWriterBuildable(typeof(MongoDBAtlasMarketplaceDetails))]
     [ModelReaderWriterBuildable(typeof(MongoDBAtlasOfferDetails))]
-    [ModelReaderWriterBuildable(typeof(MongoDBAtlasOrganizationData))]
-    [ModelReaderWriterBuildable(typeof(MongoDBAtlasOrganizationPatch))]
-    [ModelReaderWriterBuildable(typeof(MongoDBAtlasOrganizationProperties))]
-    [ModelReaderWriterBuildable(typeof(MongoDBAtlasOrganizationResource))]
-    [ModelReaderWriterBuildable(typeof(MongoDBAtlasOrganizationUpdateProperties))]
-    [ModelReaderWriterBuildable(typeof(MongoDBAtlasPartnerProperties))]
     [ModelReaderWriterBuildable(typeof(MongoDBAtlasUserDetails))]
-    [ModelReaderWriterBuildable(typeof(OrganizationResourceListResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SystemData))]
+    [ModelReaderWriterBuildable(typeof(MongoDBAtlasPartnerProperties))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(MongoDBAtlasOrganizationPatch))]
+    [ModelReaderWriterBuildable(typeof(OrganizationResourceUpdateProperties))]
+    [ModelReaderWriterBuildable(typeof(OrganizationResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(MongoDBAtlasOrganizationResource))]
     public partial class AzureResourceManagerMongoDBAtlasContext : ModelReaderWriterContext
     {
     }

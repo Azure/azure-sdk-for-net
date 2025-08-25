@@ -16,7 +16,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MongoDBAtlas
 {
-    /// <summary></summary>
+    /// <summary> A class to add extension methods to Azure.ResourceManager.MongoDBAtlas. </summary>
     public static partial class MongoDBAtlasExtensions
     {
         /// <param name="client"></param>
@@ -58,28 +58,26 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="organizationName"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="organizationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public static Response<MongoDBAtlasOrganizationResource> GetMongoDBAtlasOrganization(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<MongoDBAtlasOrganizationResource>> GetMongoDBAtlasOrganizationAsync(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            return GetMockableMongoDBAtlasResourceGroupResource(resourceGroupResource).GetMongoDBAtlasOrganization(organizationName, cancellationToken);
+            return await GetMockableMongoDBAtlasResourceGroupResource(resourceGroupResource).GetMongoDBAtlasOrganizationAsync(organizationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a OrganizationResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="organizationName"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="organizationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public static async Task<Response<MongoDBAtlasOrganizationResource>> GetMongoDBAtlasOrganizationAsync(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<MongoDBAtlasOrganizationResource> GetMongoDBAtlasOrganization(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-            Argument.AssertNotNullOrEmpty(organizationName, nameof(organizationName));
 
-            return await GetMockableMongoDBAtlasResourceGroupResource(resourceGroupResource).GetMongoDBAtlasOrganizationAsync(organizationName, cancellationToken).ConfigureAwait(false);
+            return GetMockableMongoDBAtlasResourceGroupResource(resourceGroupResource).GetMongoDBAtlasOrganization(organizationName, cancellationToken);
         }
     }
 }

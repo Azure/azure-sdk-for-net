@@ -117,7 +117,6 @@ namespace Azure.ResourceManager.MongoDBAtlas
             uri.AppendPath(organizationName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            _userAgent.Apply(message);
             return message;
         }
 

@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -44,7 +42,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <param name="clientDiagnostics"> The instance of <see cref="ClientDiagnostics"/>. </param>
         /// <param name="pipeline"> The instance of <see cref="HttpPipeline"/>. </param>
         /// <param name="request"> The operation request. </param>
-        /// <param name="response"> The opertion response. </param>
+        /// <param name="response"> The operation response. </param>
         /// <param name="finalStateVia"> The finalStateVia of the operation. </param>
         /// <param name="skipApiVersionOverride"> If should skip Api version override. </param>
         /// <param name="apiVersionOverrideValue"> The Api version override value. </param>
@@ -85,14 +83,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         /// <param name="rehydrationToken"> The token to rehydrate a long-running operation. </param>
         private string GetOperationId(RehydrationToken? rehydrationToken)
         {
-            if (rehydrationToken is null)
-            {
-                return null;
-            }
-            var data = ModelReaderWriter.Write(rehydrationToken, ModelReaderWriterOptions.Json, AzureResourceManagerMongoDBAtlasContext.Default);
-            using var document = JsonDocument.Parse(data);
-            var lroDetails = document.RootElement;
-            return lroDetails.GetProperty("id").GetString();
+            return rehydrationToken?.Id;
         }
 
         /// <inheritdoc/>

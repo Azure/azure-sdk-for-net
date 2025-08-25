@@ -11,7 +11,7 @@ using Azure.ResourceManager.MongoDBAtlas;
 
 namespace Azure.ResourceManager.MongoDBAtlas.Mocking
 {
-    /// <summary></summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableMongoDBAtlasArmClient : ArmResource
     {
         /// <summary> Initializes a new instance of MockableMongoDBAtlasArmClient for mocking. </summary>

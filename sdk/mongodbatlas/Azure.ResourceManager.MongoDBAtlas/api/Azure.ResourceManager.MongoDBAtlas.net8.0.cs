@@ -112,6 +112,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MongoDBAtlas.Models.MarketplaceSubscriptionStatus left, Azure.ResourceManager.MongoDBAtlas.Models.MarketplaceSubscriptionStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.MongoDBAtlas.Models.MarketplaceSubscriptionStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.MongoDBAtlas.Models.MarketplaceSubscriptionStatus? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.MongoDBAtlas.Models.MarketplaceSubscriptionStatus left, Azure.ResourceManager.MongoDBAtlas.Models.MarketplaceSubscriptionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
@@ -219,6 +220,7 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasResourceProvisioningState left, Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasResourceProvisioningState right) { throw null; }
         public static implicit operator Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasResourceProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasResourceProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasResourceProvisioningState left, Azure.ResourceManager.MongoDBAtlas.Models.MongoDBAtlasResourceProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }

@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// <param name="value"> The value. </param>
         public static implicit operator MarketplaceSubscriptionStatus(string value) => new MarketplaceSubscriptionStatus(value);
 
+        /// <summary> Converts a string to a <see cref="MarketplaceSubscriptionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MarketplaceSubscriptionStatus?(string value) => value == null ? null : new MarketplaceSubscriptionStatus(value);
+
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MarketplaceSubscriptionStatus other && Equals(other);

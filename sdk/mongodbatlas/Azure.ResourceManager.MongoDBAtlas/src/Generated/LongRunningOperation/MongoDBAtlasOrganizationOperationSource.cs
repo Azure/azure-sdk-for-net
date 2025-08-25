@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         MongoDBAtlasOrganizationResource IOperationSource<MongoDBAtlasOrganizationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            MongoDBAtlasOrganizationData data = MongoDBAtlasOrganizationData.DeserializeMongoDBAtlasOrganizationData(document.RootElement, new ModelReaderWriterOptions("W"));
+            MongoDBAtlasOrganizationData data = MongoDBAtlasOrganizationData.DeserializeMongoDBAtlasOrganizationData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new MongoDBAtlasOrganizationResource(_client, data);
         }
 

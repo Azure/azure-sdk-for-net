@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.MongoDBAtlas.Models
         /// <param name="value"> The value. </param>
         public static implicit operator MongoDBAtlasResourceProvisioningState(string value) => new MongoDBAtlasResourceProvisioningState(value);
 
+        /// <summary> Converts a string to a <see cref="MongoDBAtlasResourceProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MongoDBAtlasResourceProvisioningState?(string value) => value == null ? null : new MongoDBAtlasResourceProvisioningState(value);
+
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MongoDBAtlasResourceProvisioningState other && Equals(other);

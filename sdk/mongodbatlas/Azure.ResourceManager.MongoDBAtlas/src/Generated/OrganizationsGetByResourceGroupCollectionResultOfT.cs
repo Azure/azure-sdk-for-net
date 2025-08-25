@@ -45,18 +45,21 @@ namespace Azure.ResourceManager.MongoDBAtlas
         public override IEnumerable<Page<MongoDBAtlasOrganizationData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
-            do
+            while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
                 }
-                OrganizationResourceListResult responseWithType = OrganizationResourceListResult.FromResponse(response);
-                nextPage = responseWithType.NextLink;
-                yield return Page<MongoDBAtlasOrganizationData>.FromValues((IReadOnlyList<MongoDBAtlasOrganizationData>)responseWithType.Value, nextPage?.AbsoluteUri, response);
+                OrganizationResourceListResult result = OrganizationResourceListResult.FromResponse(response);
+                yield return Page<MongoDBAtlasOrganizationData>.FromValues((IReadOnlyList<MongoDBAtlasOrganizationData>)result.Value, nextPage?.AbsoluteUri, response);
+                nextPage = result.NextLink;
+                if (nextPage == null)
+                {
+                    yield break;
+                }
             }
-            while (nextPage != null);
         }
 
         /// <summary> Get next page. </summary>
@@ -65,7 +68,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _context) : _client.CreateGetByResourceGroupRequest(_subscriptionId, _resourceGroupName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("Organizations.GetByResourceGroup");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MongoDBAtlasOrganizationCollection.GetAll");
             scope.Start();
             try
             {
