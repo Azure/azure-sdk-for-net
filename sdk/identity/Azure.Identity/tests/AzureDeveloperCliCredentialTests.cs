@@ -88,6 +88,56 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        public void AzureDeveloperCliCredential_ClaimsChallenge_NoTenant_ThrowsWithGuidance()
+        {
+            var claims = "test-claims-challenge";
+            var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForAzureDeveloperCli();
+            var testProcess = new TestProcess { Error = "AADSTS50076: MFA required" }; // Force InvalidOperationException path
+            var credential = InstrumentClient(new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () =>
+                await credential.GetTokenAsync(new TokenRequestContext([Scope], claims: claims)));
+
+            Assert.That(ex.Message, Does.Contain("Azure Developer CLI authentication requires multi-factor authentication or additional claims."));
+            Assert.That(ex.Message, Does.Contain("azd auth login"));
+            Assert.That(ex.Message, Does.Not.Contain("--tenant-id"));
+        }
+
+        [Test]
+        public void AzureDeveloperCliCredential_ClaimsChallenge_WithTenant_ThrowsWithGuidance()
+        {
+            var claims = "test-claims-challenge";
+            var tenant = TenantId;
+            var testProcess = new TestProcess { Error = "AADSTS50076: MFA required" };
+            var credential = InstrumentClient(new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true), new AzureDeveloperCliCredentialOptions { TenantId = tenant }));
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () =>
+                await credential.GetTokenAsync(new TokenRequestContext([Scope], claims: claims)));
+
+            Assert.That(ex.Message, Does.Contain($"azd auth login --tenant-id {tenant}"));
+        }
+
+        [Test]
+        public async Task AzureDeveloperCliCredential_EmptyOrWhitespaceClaims_DoesNotIncludeClaimsArgument()
+        {
+            var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureDeveloperCli();
+            var testProcess = new TestProcess { Output = processOutput };
+            var credential = InstrumentClient(new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
+
+            // Empty
+            var token = await credential.GetTokenAsync(new TokenRequestContext([Scope], claims: string.Empty));
+            Assert.AreEqual(expectedToken, token.Token);
+            Assert.That(testProcess.StartInfo.Arguments, Does.Not.Contain("--claims"));
+
+            // Whitespace
+            testProcess = new TestProcess { Output = processOutput };
+            credential = InstrumentClient(new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
+            token = await credential.GetTokenAsync(new TokenRequestContext([Scope], claims: "   "));
+            Assert.AreEqual(expectedToken, token.Token);
+            Assert.That(testProcess.StartInfo.Arguments, Does.Not.Contain("--claims"));
+        }
+
+        [Test]
         public void AuthenticateWithCliCredential_InvalidJsonOutput(
             [Values("", "{}", "{\"Some\": false}", "{\"token\": \"token\"}", "{\"expiresOn\" : \"1900-01-01T00:00:00Z\"}")]
             string jsonContent)

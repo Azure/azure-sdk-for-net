@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- `AzureCliCredential`, `AzurePowerShellCredential`, and `AzureDeveloperCliCredential` now throw a `CredentialUnavailableException` when the `TokenRequestContext` includes claims, as these credentials do not support claims challenges. The exception message includes guidance for handling such scenarios.
+
 ### Breaking Changes
 
 ### Bugs Fixed
