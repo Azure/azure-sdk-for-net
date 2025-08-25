@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(ServiceProviderParameterType))
+            if (options.Format != "W" && Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ServiceProviderParameterType);
+                writer.WriteStringValue(Type);
             }
             if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.BotService.Models
             if (options.Format != "W" && Optional.IsDefined(HelpUri))
             {
                 writer.WritePropertyName("helpUrl"u8);
-                writer.WriteStringValue(HelpUri.AbsoluteUri);
+                writer.WriteStringValue(HelpUri);
             }
             if (options.Format != "W" && Optional.IsDefined(Default))
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.BotService.Models
             string type = default;
             string displayName = default;
             string description = default;
-            Uri helpUrl = default;
+            string helpUrl = default;
             string @default = default;
             ServiceProviderParameterMetadata metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -139,11 +139,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (property.NameEquals("helpUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    helpUrl = new Uri(property.Value.GetString());
+                    helpUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("default"u8))
