@@ -80,6 +80,8 @@ public class NetworkSpecification() :
         typeof(NetworkInterfaceResource),
         typeof(PublicIPAddressResource),
         typeof(NetworkSecurityGroupResource),
+        typeof(RouteResource),
+        typeof(RouteTableResource),
     };
 
     private protected override Dictionary<Type, MethodInfo> FindConstructibleResources()
