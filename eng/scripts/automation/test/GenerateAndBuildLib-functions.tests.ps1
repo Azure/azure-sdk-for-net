@@ -158,6 +158,31 @@ options:
         $result | Should -Be "/test/sdk/root/testservice/Azure.TestService.Client"
     }
     
+    it("should prioritize package-dir over namespace when both are present") {
+        $testTspConfigFile3 = Join-Path $testTspConfigDir "tspconfig-with-package-dir.yaml"
+        $testConfigWithPackageDir = @"
+parameters:
+  service-dir:
+    default: testservice
+options:
+  "@azure-tools/typespec-csharp":
+    package-dir: Azure.TestService.PackageDir
+    namespace: Azure.TestService.Client
+    service-dir: testservice
+"@
+        $testConfigWithPackageDir | Out-File -FilePath $testTspConfigFile3 -Encoding UTF8
+        
+        $testSdkRoot = "/test/sdk/root"
+        $result = GetSDKProjectFolder -typespecConfigurationFile $testTspConfigFile3 -sdkRepoRoot $testSdkRoot
+        $result | Should -Be "/test/sdk/root/testservice/Azure.TestService.PackageDir"
+    }
+    
+    it("should fallback to namespace when package-dir is not present") {
+        $testSdkRoot = "/test/sdk/root"
+        $result = GetSDKProjectFolder -typespecConfigurationFile $testTspConfigFile -sdkRepoRoot $testSdkRoot
+        $result | Should -Be "/test/sdk/root/testservice/Azure.TestService.Client"
+    }
+    
     it("should throw error when namespace is missing") {
         $testTspConfigFile2 = Join-Path $testTspConfigDir "tspconfig-missing-namespace.yaml"
         $testConfigMissingNamespace = @"
