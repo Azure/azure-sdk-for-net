@@ -74,11 +74,11 @@ public partial class PrivateLinkServiceData : ProvisionableConstruct
     /// An array of references to the network interfaces created for this
     /// private link service.
     /// </summary>
-    public BicepList<NetworkInterfaceData> NetworkInterfaces 
+    public BicepList<NetworkInterface> NetworkInterfaces 
     {
         get { Initialize(); return _networkInterfaces!; }
     }
-    private BicepList<NetworkInterfaceData>? _networkInterfaces;
+    private BicepList<NetworkInterface>? _networkInterfaces;
 
     /// <summary>
     /// The provisioning state of the private link service resource.
@@ -213,7 +213,7 @@ public partial class PrivateLinkServiceData : ProvisionableConstruct
         _loadBalancerFrontendIPConfigurations = DefineListProperty<FrontendIPConfiguration>("LoadBalancerFrontendIPConfigurations", ["properties", "loadBalancerFrontendIpConfigurations"]);
         _iPConfigurations = DefineListProperty<PrivateLinkServiceIPConfiguration>("IPConfigurations", ["properties", "ipConfigurations"]);
         _destinationIPAddress = DefineProperty<string>("DestinationIPAddress", ["properties", "destinationIPAddress"]);
-        _networkInterfaces = DefineListProperty<NetworkInterfaceData>("NetworkInterfaces", ["properties", "networkInterfaces"], isOutput: true);
+        _networkInterfaces = DefineListProperty<NetworkInterface>("NetworkInterfaces", ["properties", "networkInterfaces"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _privateEndpointConnections = DefineListProperty<NetworkPrivateEndpointConnectionData>("PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
         _visibilitySubscriptions = DefineListProperty<string>("VisibilitySubscriptions", ["properties", "visibility", "subscriptions"]);

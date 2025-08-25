@@ -54,11 +54,11 @@ public partial class PrivateEndpointData : ProvisionableConstruct
     /// An array of references to the network interfaces created for this
     /// private endpoint.
     /// </summary>
-    public BicepList<NetworkInterfaceData> NetworkInterfaces 
+    public BicepList<NetworkInterface> NetworkInterfaces 
     {
         get { Initialize(); return _networkInterfaces!; }
     }
-    private BicepList<NetworkInterfaceData>? _networkInterfaces;
+    private BicepList<NetworkInterface>? _networkInterfaces;
 
     /// <summary>
     /// The provisioning state of the private endpoint resource.
@@ -198,7 +198,7 @@ public partial class PrivateEndpointData : ProvisionableConstruct
         _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["extendedLocation"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
         _subnet = DefineModelProperty<Subnet>("Subnet", ["properties", "subnet"]);
-        _networkInterfaces = DefineListProperty<NetworkInterfaceData>("NetworkInterfaces", ["properties", "networkInterfaces"], isOutput: true);
+        _networkInterfaces = DefineListProperty<NetworkInterface>("NetworkInterfaces", ["properties", "networkInterfaces"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _privateLinkServiceConnections = DefineListProperty<NetworkPrivateLinkServiceConnection>("PrivateLinkServiceConnections", ["properties", "privateLinkServiceConnections"]);
         _manualPrivateLinkServiceConnections = DefineListProperty<NetworkPrivateLinkServiceConnection>("ManualPrivateLinkServiceConnections", ["properties", "manualPrivateLinkServiceConnections"]);

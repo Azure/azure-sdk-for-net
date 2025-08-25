@@ -187,6 +187,16 @@ public partial class NetworkInterfaceIPConfiguration : ProvisionableResource
     private BicepList<VirtualNetworkTapData>? _virtualNetworkTaps;
 
     /// <summary>
+    /// Gets or sets a reference to the parent NetworkInterface.
+    /// </summary>
+    public NetworkInterface? Parent
+    {
+        get { Initialize(); return _parent!.Value; }
+        set { Initialize(); _parent!.Value = value; }
+    }
+    private ResourceReference<NetworkInterface>? _parent;
+
+    /// <summary>
     /// Creates a new NetworkInterfaceIPConfiguration.
     /// </summary>
     /// <param name="bicepIdentifier">
@@ -197,7 +207,7 @@ public partial class NetworkInterfaceIPConfiguration : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the NetworkInterfaceIPConfiguration.</param>
     public NetworkInterfaceIPConfiguration(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Network/networkInterfaces/ipConfigurations", resourceVersion)
+        : base(bicepIdentifier, "Microsoft.Network/networkInterfaces/ipConfigurations", resourceVersion ?? "2025-01-01")
     {
     }
 
@@ -226,6 +236,353 @@ public partial class NetworkInterfaceIPConfiguration : ProvisionableResource
         _publicIPAddress = DefineModelProperty<PublicIPAddressData>("PublicIPAddress", ["properties", "publicIPAddress"], isOutput: true);
         _subnet = DefineModelProperty<Subnet>("Subnet", ["properties", "subnet"], isOutput: true);
         _virtualNetworkTaps = DefineListProperty<VirtualNetworkTapData>("VirtualNetworkTaps", ["properties", "virtualNetworkTaps"], isOutput: true);
+        _parent = DefineResource<NetworkInterface>("Parent", ["parent"], isRequired: true);
+    }
+
+    /// <summary>
+    /// Supported NetworkInterfaceIPConfiguration resource versions.
+    /// </summary>
+    public static class ResourceVersions
+    {
+        /// <summary>
+        /// 2025-01-01.
+        /// </summary>
+        public static readonly string V2025_01_01 = "2025-01-01";
+
+        /// <summary>
+        /// 2024-10-01.
+        /// </summary>
+        public static readonly string V2024_10_01 = "2024-10-01";
+
+        /// <summary>
+        /// 2024-07-01.
+        /// </summary>
+        public static readonly string V2024_07_01 = "2024-07-01";
+
+        /// <summary>
+        /// 2024-05-01.
+        /// </summary>
+        public static readonly string V2024_05_01 = "2024-05-01";
+
+        /// <summary>
+        /// 2024-03-01.
+        /// </summary>
+        public static readonly string V2024_03_01 = "2024-03-01";
+
+        /// <summary>
+        /// 2024-01-01.
+        /// </summary>
+        public static readonly string V2024_01_01 = "2024-01-01";
+
+        /// <summary>
+        /// 2023-11-01.
+        /// </summary>
+        public static readonly string V2023_11_01 = "2023-11-01";
+
+        /// <summary>
+        /// 2023-09-01.
+        /// </summary>
+        public static readonly string V2023_09_01 = "2023-09-01";
+
+        /// <summary>
+        /// 2023-06-01.
+        /// </summary>
+        public static readonly string V2023_06_01 = "2023-06-01";
+
+        /// <summary>
+        /// 2023-05-01.
+        /// </summary>
+        public static readonly string V2023_05_01 = "2023-05-01";
+
+        /// <summary>
+        /// 2023-04-01.
+        /// </summary>
+        public static readonly string V2023_04_01 = "2023-04-01";
+
+        /// <summary>
+        /// 2023-02-01.
+        /// </summary>
+        public static readonly string V2023_02_01 = "2023-02-01";
+
+        /// <summary>
+        /// 2022-11-01.
+        /// </summary>
+        public static readonly string V2022_11_01 = "2022-11-01";
+
+        /// <summary>
+        /// 2022-09-01.
+        /// </summary>
+        public static readonly string V2022_09_01 = "2022-09-01";
+
+        /// <summary>
+        /// 2022-07-01.
+        /// </summary>
+        public static readonly string V2022_07_01 = "2022-07-01";
+
+        /// <summary>
+        /// 2022-05-01.
+        /// </summary>
+        public static readonly string V2022_05_01 = "2022-05-01";
+
+        /// <summary>
+        /// 2022-01-01.
+        /// </summary>
+        public static readonly string V2022_01_01 = "2022-01-01";
+
+        /// <summary>
+        /// 2021-12-01.
+        /// </summary>
+        public static readonly string V2021_12_01 = "2021-12-01";
+
+        /// <summary>
+        /// 2021-08-01.
+        /// </summary>
+        public static readonly string V2021_08_01 = "2021-08-01";
+
+        /// <summary>
+        /// 2021-06-01.
+        /// </summary>
+        public static readonly string V2021_06_01 = "2021-06-01";
+
+        /// <summary>
+        /// 2021-05-01.
+        /// </summary>
+        public static readonly string V2021_05_01 = "2021-05-01";
+
+        /// <summary>
+        /// 2021-04-01.
+        /// </summary>
+        public static readonly string V2021_04_01 = "2021-04-01";
+
+        /// <summary>
+        /// 2021-03-01.
+        /// </summary>
+        public static readonly string V2021_03_01 = "2021-03-01";
+
+        /// <summary>
+        /// 2021-02-01.
+        /// </summary>
+        public static readonly string V2021_02_01 = "2021-02-01";
+
+        /// <summary>
+        /// 2021-01-01.
+        /// </summary>
+        public static readonly string V2021_01_01 = "2021-01-01";
+
+        /// <summary>
+        /// 2020-11-01.
+        /// </summary>
+        public static readonly string V2020_11_01 = "2020-11-01";
+
+        /// <summary>
+        /// 2020-08-01.
+        /// </summary>
+        public static readonly string V2020_08_01 = "2020-08-01";
+
+        /// <summary>
+        /// 2020-07-01.
+        /// </summary>
+        public static readonly string V2020_07_01 = "2020-07-01";
+
+        /// <summary>
+        /// 2020-06-01.
+        /// </summary>
+        public static readonly string V2020_06_01 = "2020-06-01";
+
+        /// <summary>
+        /// 2020-05-01.
+        /// </summary>
+        public static readonly string V2020_05_01 = "2020-05-01";
+
+        /// <summary>
+        /// 2020-04-01.
+        /// </summary>
+        public static readonly string V2020_04_01 = "2020-04-01";
+
+        /// <summary>
+        /// 2020-03-01.
+        /// </summary>
+        public static readonly string V2020_03_01 = "2020-03-01";
+
+        /// <summary>
+        /// 2020-01-01.
+        /// </summary>
+        public static readonly string V2020_01_01 = "2020-01-01";
+
+        /// <summary>
+        /// 2019-12-01.
+        /// </summary>
+        public static readonly string V2019_12_01 = "2019-12-01";
+
+        /// <summary>
+        /// 2019-11-01.
+        /// </summary>
+        public static readonly string V2019_11_01 = "2019-11-01";
+
+        /// <summary>
+        /// 2019-09-01.
+        /// </summary>
+        public static readonly string V2019_09_01 = "2019-09-01";
+
+        /// <summary>
+        /// 2019-08-01.
+        /// </summary>
+        public static readonly string V2019_08_01 = "2019-08-01";
+
+        /// <summary>
+        /// 2019-07-01.
+        /// </summary>
+        public static readonly string V2019_07_01 = "2019-07-01";
+
+        /// <summary>
+        /// 2019-06-01.
+        /// </summary>
+        public static readonly string V2019_06_01 = "2019-06-01";
+
+        /// <summary>
+        /// 2019-04-01.
+        /// </summary>
+        public static readonly string V2019_04_01 = "2019-04-01";
+
+        /// <summary>
+        /// 2019-02-01.
+        /// </summary>
+        public static readonly string V2019_02_01 = "2019-02-01";
+
+        /// <summary>
+        /// 2018-12-01.
+        /// </summary>
+        public static readonly string V2018_12_01 = "2018-12-01";
+
+        /// <summary>
+        /// 2018-11-01.
+        /// </summary>
+        public static readonly string V2018_11_01 = "2018-11-01";
+
+        /// <summary>
+        /// 2018-10-01.
+        /// </summary>
+        public static readonly string V2018_10_01 = "2018-10-01";
+
+        /// <summary>
+        /// 2018-08-01.
+        /// </summary>
+        public static readonly string V2018_08_01 = "2018-08-01";
+
+        /// <summary>
+        /// 2018-07-01.
+        /// </summary>
+        public static readonly string V2018_07_01 = "2018-07-01";
+
+        /// <summary>
+        /// 2018-06-01.
+        /// </summary>
+        public static readonly string V2018_06_01 = "2018-06-01";
+
+        /// <summary>
+        /// 2018-05-01.
+        /// </summary>
+        public static readonly string V2018_05_01 = "2018-05-01";
+
+        /// <summary>
+        /// 2018-04-01.
+        /// </summary>
+        public static readonly string V2018_04_01 = "2018-04-01";
+
+        /// <summary>
+        /// 2018-03-01.
+        /// </summary>
+        public static readonly string V2018_03_01 = "2018-03-01";
+
+        /// <summary>
+        /// 2018-02-01.
+        /// </summary>
+        public static readonly string V2018_02_01 = "2018-02-01";
+
+        /// <summary>
+        /// 2018-01-01.
+        /// </summary>
+        public static readonly string V2018_01_01 = "2018-01-01";
+
+        /// <summary>
+        /// 2017-11-01.
+        /// </summary>
+        public static readonly string V2017_11_01 = "2017-11-01";
+
+        /// <summary>
+        /// 2017-10-01.
+        /// </summary>
+        public static readonly string V2017_10_01 = "2017-10-01";
+
+        /// <summary>
+        /// 2017-09-01.
+        /// </summary>
+        public static readonly string V2017_09_01 = "2017-09-01";
+
+        /// <summary>
+        /// 2017-08-01.
+        /// </summary>
+        public static readonly string V2017_08_01 = "2017-08-01";
+
+        /// <summary>
+        /// 2017-06-01.
+        /// </summary>
+        public static readonly string V2017_06_01 = "2017-06-01";
+
+        /// <summary>
+        /// 2017-04-01.
+        /// </summary>
+        public static readonly string V2017_04_01 = "2017-04-01";
+
+        /// <summary>
+        /// 2017-03-01.
+        /// </summary>
+        public static readonly string V2017_03_01 = "2017-03-01";
+
+        /// <summary>
+        /// 2016-12-01.
+        /// </summary>
+        public static readonly string V2016_12_01 = "2016-12-01";
+
+        /// <summary>
+        /// 2016-11-01.
+        /// </summary>
+        public static readonly string V2016_11_01 = "2016-11-01";
+
+        /// <summary>
+        /// 2016-10-01.
+        /// </summary>
+        public static readonly string V2016_10_01 = "2016-10-01";
+
+        /// <summary>
+        /// 2016-09-01.
+        /// </summary>
+        public static readonly string V2016_09_01 = "2016-09-01";
+
+        /// <summary>
+        /// 2016-08-01.
+        /// </summary>
+        public static readonly string V2016_08_01 = "2016-08-01";
+
+        /// <summary>
+        /// 2016-07-01.
+        /// </summary>
+        public static readonly string V2016_07_01 = "2016-07-01";
+
+        /// <summary>
+        /// 2016-06-01.
+        /// </summary>
+        public static readonly string V2016_06_01 = "2016-06-01";
+
+        /// <summary>
+        /// 2016-03-30.
+        /// </summary>
+        public static readonly string V2016_03_30 = "2016-03-30";
+
+        /// <summary>
+        /// 2015-06-15.
+        /// </summary>
+        public static readonly string V2015_06_15 = "2015-06-15";
     }
 
     /// <summary>

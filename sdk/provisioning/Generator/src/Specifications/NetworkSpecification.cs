@@ -75,7 +75,8 @@ public class NetworkSpecification() :
         typeof(SubnetResource),
         typeof(FrontendIPConfigurationResource),
         typeof(InboundNatRuleResource),
-        typeof(NatGatewayResource)
+        typeof(NatGatewayResource),
+        typeof(NetworkInterfaceResource),
     };
 
     private protected override Dictionary<Type, MethodInfo> FindConstructibleResources()

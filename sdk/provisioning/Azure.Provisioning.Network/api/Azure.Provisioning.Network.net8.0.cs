@@ -438,24 +438,9 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<string> InboundNatRuleName { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    public enum NetworkInterfaceAuxiliaryMode
+    public partial class NetworkInterface : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        None = 0,
-        MaxConnections = 1,
-        Floating = 2,
-        AcceleratedConnections = 3,
-    }
-    public enum NetworkInterfaceAuxiliarySku
-    {
-        None = 0,
-        A1 = 1,
-        A2 = 2,
-        A4 = 3,
-        A8 = 4,
-    }
-    public partial class NetworkInterfaceData : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public NetworkInterfaceData() { }
+        public NetworkInterface(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkInterfaceAuxiliaryMode> AuxiliaryMode { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkInterfaceAuxiliarySku> AuxiliarySku { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> DefaultOutboundConnectivityEnabled { get { throw null; } }
@@ -472,7 +457,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> MacAddress { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkInterfaceMigrationPhase> MigrationPhase { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Network.NetworkSecurityGroupData NetworkSecurityGroup { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkInterfaceNicType> NicType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> Primary { get { throw null; } }
@@ -480,13 +465,99 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.Network.PrivateLinkServiceData PrivateLinkService { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Guid> ResourceGuid { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.NetworkInterfaceTapConfigurationData> TapConfigurations { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> VirtualMachineId { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> VnetEncryptionSupported { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> WorkloadType { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Network.NetworkInterface FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2015_06_15;
+            public static readonly string V2016_03_30;
+            public static readonly string V2016_06_01;
+            public static readonly string V2016_07_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2016_10_01;
+            public static readonly string V2016_11_01;
+            public static readonly string V2016_12_01;
+            public static readonly string V2017_03_01;
+            public static readonly string V2017_04_01;
+            public static readonly string V2017_06_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2017_09_01;
+            public static readonly string V2017_10_01;
+            public static readonly string V2017_11_01;
+            public static readonly string V2018_01_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_03_01;
+            public static readonly string V2018_04_01;
+            public static readonly string V2018_05_01;
+            public static readonly string V2018_06_01;
+            public static readonly string V2018_07_01;
+            public static readonly string V2018_08_01;
+            public static readonly string V2018_10_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2018_12_01;
+            public static readonly string V2019_02_01;
+            public static readonly string V2019_04_01;
+            public static readonly string V2019_06_01;
+            public static readonly string V2019_07_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_09_01;
+            public static readonly string V2019_11_01;
+            public static readonly string V2019_12_01;
+            public static readonly string V2020_01_01;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_05_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_07_01;
+            public static readonly string V2020_08_01;
+            public static readonly string V2020_11_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2021_04_01;
+            public static readonly string V2021_05_01;
+            public static readonly string V2021_06_01;
+            public static readonly string V2021_08_01;
+            public static readonly string V2021_12_01;
+            public static readonly string V2022_01_01;
+            public static readonly string V2022_05_01;
+            public static readonly string V2022_07_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2022_11_01;
+            public static readonly string V2023_02_01;
+            public static readonly string V2023_04_01;
+            public static readonly string V2023_05_01;
+            public static readonly string V2023_06_01;
+            public static readonly string V2023_09_01;
+            public static readonly string V2023_11_01;
+            public static readonly string V2024_01_01;
+            public static readonly string V2024_03_01;
+            public static readonly string V2024_05_01;
+            public static readonly string V2024_07_01;
+            public static readonly string V2024_10_01;
+            public static readonly string V2025_01_01;
+        }
+    }
+    public enum NetworkInterfaceAuxiliaryMode
+    {
+        None = 0,
+        MaxConnections = 1,
+        Floating = 2,
+        AcceleratedConnections = 3,
+    }
+    public enum NetworkInterfaceAuxiliarySku
+    {
+        None = 0,
+        A1 = 1,
+        A2 = 2,
+        A4 = 3,
+        A8 = 4,
     }
     public partial class NetworkInterfaceDnsSettings : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -510,6 +581,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.BackendAddressPool> LoadBalancerBackendAddressPools { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.InboundNatRule> LoadBalancerInboundNatRules { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.Network.NetworkInterface? Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> Primary { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> PrivateIPAddress { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> PrivateIPAddressPrefixLength { get { throw null; } }
@@ -522,6 +594,77 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.VirtualNetworkTapData> VirtualNetworkTaps { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Network.NetworkInterfaceIPConfiguration FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2015_06_15;
+            public static readonly string V2016_03_30;
+            public static readonly string V2016_06_01;
+            public static readonly string V2016_07_01;
+            public static readonly string V2016_08_01;
+            public static readonly string V2016_09_01;
+            public static readonly string V2016_10_01;
+            public static readonly string V2016_11_01;
+            public static readonly string V2016_12_01;
+            public static readonly string V2017_03_01;
+            public static readonly string V2017_04_01;
+            public static readonly string V2017_06_01;
+            public static readonly string V2017_08_01;
+            public static readonly string V2017_09_01;
+            public static readonly string V2017_10_01;
+            public static readonly string V2017_11_01;
+            public static readonly string V2018_01_01;
+            public static readonly string V2018_02_01;
+            public static readonly string V2018_03_01;
+            public static readonly string V2018_04_01;
+            public static readonly string V2018_05_01;
+            public static readonly string V2018_06_01;
+            public static readonly string V2018_07_01;
+            public static readonly string V2018_08_01;
+            public static readonly string V2018_10_01;
+            public static readonly string V2018_11_01;
+            public static readonly string V2018_12_01;
+            public static readonly string V2019_02_01;
+            public static readonly string V2019_04_01;
+            public static readonly string V2019_06_01;
+            public static readonly string V2019_07_01;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_09_01;
+            public static readonly string V2019_11_01;
+            public static readonly string V2019_12_01;
+            public static readonly string V2020_01_01;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_05_01;
+            public static readonly string V2020_06_01;
+            public static readonly string V2020_07_01;
+            public static readonly string V2020_08_01;
+            public static readonly string V2020_11_01;
+            public static readonly string V2021_01_01;
+            public static readonly string V2021_02_01;
+            public static readonly string V2021_03_01;
+            public static readonly string V2021_04_01;
+            public static readonly string V2021_05_01;
+            public static readonly string V2021_06_01;
+            public static readonly string V2021_08_01;
+            public static readonly string V2021_12_01;
+            public static readonly string V2022_01_01;
+            public static readonly string V2022_05_01;
+            public static readonly string V2022_07_01;
+            public static readonly string V2022_09_01;
+            public static readonly string V2022_11_01;
+            public static readonly string V2023_02_01;
+            public static readonly string V2023_04_01;
+            public static readonly string V2023_05_01;
+            public static readonly string V2023_06_01;
+            public static readonly string V2023_09_01;
+            public static readonly string V2023_11_01;
+            public static readonly string V2024_01_01;
+            public static readonly string V2024_03_01;
+            public static readonly string V2024_05_01;
+            public static readonly string V2024_07_01;
+            public static readonly string V2024_10_01;
+            public static readonly string V2025_01_01;
+        }
     }
     public partial class NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -645,7 +788,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Network.NetworkInterfaceData> NetworkInterfaces { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Network.NetworkInterface> NetworkInterfaces { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Guid> ResourceGuid { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
@@ -750,7 +893,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.NetworkPrivateLinkServiceConnection> ManualPrivateLinkServiceConnections { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Network.NetworkInterfaceData> NetworkInterfaces { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Network.NetworkInterface> NetworkInterfaces { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.NetworkPrivateLinkServiceConnection> PrivateLinkServiceConnections { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
@@ -789,7 +932,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.FrontendIPConfiguration> LoadBalancerFrontendIPConfigurations { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Network.NetworkInterfaceData> NetworkInterfaces { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Network.NetworkInterface> NetworkInterfaces { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.NetworkPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }

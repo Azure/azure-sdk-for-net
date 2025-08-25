@@ -64,11 +64,11 @@ public partial class NetworkSecurityGroupData : ProvisionableConstruct
     /// <summary>
     /// A collection of references to network interfaces.
     /// </summary>
-    public BicepList<NetworkInterfaceData> NetworkInterfaces 
+    public BicepList<NetworkInterface> NetworkInterfaces 
     {
         get { Initialize(); return _networkInterfaces!; }
     }
-    private BicepList<NetworkInterfaceData>? _networkInterfaces;
+    private BicepList<NetworkInterface>? _networkInterfaces;
 
     /// <summary>
     /// A collection of references to subnets.
@@ -171,7 +171,7 @@ public partial class NetworkSecurityGroupData : ProvisionableConstruct
         _flushConnection = DefineProperty<bool>("FlushConnection", ["properties", "flushConnection"]);
         _securityRules = DefineListProperty<SecurityRuleData>("SecurityRules", ["properties", "securityRules"]);
         _defaultSecurityRules = DefineListProperty<SecurityRuleData>("DefaultSecurityRules", ["properties", "defaultSecurityRules"], isOutput: true);
-        _networkInterfaces = DefineListProperty<NetworkInterfaceData>("NetworkInterfaces", ["properties", "networkInterfaces"], isOutput: true);
+        _networkInterfaces = DefineListProperty<NetworkInterface>("NetworkInterfaces", ["properties", "networkInterfaces"], isOutput: true);
         _subnets = DefineListProperty<Subnet>("Subnets", ["properties", "subnets"], isOutput: true);
         _flowLogs = DefineListProperty<FlowLog>("FlowLogs", ["properties", "flowLogs"], isOutput: true);
         _resourceGuid = DefineProperty<Guid>("ResourceGuid", ["properties", "resourceGuid"], isOutput: true);
