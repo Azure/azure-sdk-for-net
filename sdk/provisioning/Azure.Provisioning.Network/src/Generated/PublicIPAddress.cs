@@ -16,36 +16,211 @@ using System.Net;
 namespace Azure.Provisioning.Network;
 
 /// <summary>
-/// NetworkInterfaceIPConfiguration.
+/// PublicIPAddress.
 /// </summary>
-public partial class NetworkInterfaceIPConfiguration : ProvisionableResource
+public partial class PublicIPAddress : ProvisionableResource
 {
     /// <summary>
-    /// Resource name.
+    /// The name of the public IP address.
     /// </summary>
     public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// The reference to ApplicationGatewayBackendAddressPool resource.
+    /// The DDoS protection custom policy associated with the public IP address.
     /// </summary>
-    public BicepList<ApplicationGatewayBackendAddressPool> ApplicationGatewayBackendAddressPools 
+    public DdosSettings DdosSettings 
     {
-        get { Initialize(); return _applicationGatewayBackendAddressPools!; }
+        get { Initialize(); return _ddosSettings!; }
+        set { Initialize(); AssignOrReplace(ref _ddosSettings, value); }
     }
-    private BicepList<ApplicationGatewayBackendAddressPool>? _applicationGatewayBackendAddressPools;
+    private DdosSettings? _ddosSettings;
 
     /// <summary>
-    /// Application security groups in which the IP configuration is included.
+    /// Specify what happens to the public IP address when the VM using it is
+    /// deleted.
     /// </summary>
-    public BicepList<ApplicationSecurityGroup> ApplicationSecurityGroups 
+    public BicepValue<IPAddressDeleteOption> DeleteOption 
     {
-        get { Initialize(); return _applicationSecurityGroups!; }
+        get { Initialize(); return _deleteOption!; }
+        set { Initialize(); _deleteOption!.Assign(value); }
     }
-    private BicepList<ApplicationSecurityGroup>? _applicationSecurityGroups;
+    private BicepValue<IPAddressDeleteOption>? _deleteOption;
+
+    /// <summary>
+    /// The FQDN of the DNS record associated with the public IP address.
+    /// </summary>
+    public PublicIPAddressDnsSettings DnsSettings 
+    {
+        get { Initialize(); return _dnsSettings!; }
+        set { Initialize(); AssignOrReplace(ref _dnsSettings, value); }
+    }
+    private PublicIPAddressDnsSettings? _dnsSettings;
+
+    /// <summary>
+    /// The extended location of the public ip address.
+    /// </summary>
+    public ExtendedAzureLocation ExtendedLocation 
+    {
+        get { Initialize(); return _extendedLocation!; }
+        set { Initialize(); AssignOrReplace(ref _extendedLocation, value); }
+    }
+    private ExtendedAzureLocation? _extendedLocation;
+
+    /// <summary>
+    /// Resource ID.
+    /// </summary>
+    public BicepValue<ResourceIdentifier> Id 
+    {
+        get { Initialize(); return _id!; }
+        set { Initialize(); _id!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _id;
+
+    /// <summary>
+    /// The idle timeout of the public IP address.
+    /// </summary>
+    public BicepValue<int> IdleTimeoutInMinutes 
+    {
+        get { Initialize(); return _idleTimeoutInMinutes!; }
+        set { Initialize(); _idleTimeoutInMinutes!.Assign(value); }
+    }
+    private BicepValue<int>? _idleTimeoutInMinutes;
+
+    /// <summary>
+    /// The IP address associated with the public IP address resource.
+    /// </summary>
+    public BicepValue<string> IPAddress 
+    {
+        get { Initialize(); return _iPAddress!; }
+        set { Initialize(); _iPAddress!.Assign(value); }
+    }
+    private BicepValue<string>? _iPAddress;
+
+    /// <summary>
+    /// The list of tags associated with the public IP address.
+    /// </summary>
+    public BicepList<IPTag> IPTags 
+    {
+        get { Initialize(); return _iPTags!; }
+        set { Initialize(); _iPTags!.Assign(value); }
+    }
+    private BicepList<IPTag>? _iPTags;
+
+    /// <summary>
+    /// The linked public IP address of the public IP address resource.
+    /// </summary>
+    public PublicIPAddress LinkedPublicIPAddress 
+    {
+        get { Initialize(); return _linkedPublicIPAddress!; }
+        set { Initialize(); AssignOrReplace(ref _linkedPublicIPAddress, value); }
+    }
+    private PublicIPAddress? _linkedPublicIPAddress;
+
+    /// <summary>
+    /// Resource location.
+    /// </summary>
+    public BicepValue<AzureLocation> Location 
+    {
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
+    }
+    private BicepValue<AzureLocation>? _location;
+
+    /// <summary>
+    /// Migration phase of Public IP Address.
+    /// </summary>
+    public BicepValue<PublicIPAddressMigrationPhase> MigrationPhase 
+    {
+        get { Initialize(); return _migrationPhase!; }
+        set { Initialize(); _migrationPhase!.Assign(value); }
+    }
+    private BicepValue<PublicIPAddressMigrationPhase>? _migrationPhase;
+
+    /// <summary>
+    /// The NatGateway for the Public IP address.
+    /// </summary>
+    public NatGateway NatGateway 
+    {
+        get { Initialize(); return _natGateway!; }
+        set { Initialize(); AssignOrReplace(ref _natGateway, value); }
+    }
+    private NatGateway? _natGateway;
+
+    /// <summary>
+    /// The public IP address version.
+    /// </summary>
+    public BicepValue<NetworkIPVersion> PublicIPAddressVersion 
+    {
+        get { Initialize(); return _publicIPAddressVersion!; }
+        set { Initialize(); _publicIPAddressVersion!.Assign(value); }
+    }
+    private BicepValue<NetworkIPVersion>? _publicIPAddressVersion;
+
+    /// <summary>
+    /// The public IP address allocation method.
+    /// </summary>
+    public BicepValue<NetworkIPAllocationMethod> PublicIPAllocationMethod 
+    {
+        get { Initialize(); return _publicIPAllocationMethod!; }
+        set { Initialize(); _publicIPAllocationMethod!.Assign(value); }
+    }
+    private BicepValue<NetworkIPAllocationMethod>? _publicIPAllocationMethod;
+
+    /// <summary>
+    /// Gets or sets Id.
+    /// </summary>
+    public BicepValue<ResourceIdentifier> PublicIPPrefixId 
+    {
+        get { Initialize(); return _publicIPPrefixId!; }
+        set { Initialize(); _publicIPPrefixId!.Assign(value); }
+    }
+    private BicepValue<ResourceIdentifier>? _publicIPPrefixId;
+
+    /// <summary>
+    /// The service public IP address of the public IP address resource.
+    /// </summary>
+    public PublicIPAddress ServicePublicIPAddress 
+    {
+        get { Initialize(); return _servicePublicIPAddress!; }
+        set { Initialize(); AssignOrReplace(ref _servicePublicIPAddress, value); }
+    }
+    private PublicIPAddress? _servicePublicIPAddress;
+
+    /// <summary>
+    /// The public IP address SKU.
+    /// </summary>
+    public PublicIPAddressSku Sku 
+    {
+        get { Initialize(); return _sku!; }
+        set { Initialize(); AssignOrReplace(ref _sku, value); }
+    }
+    private PublicIPAddressSku? _sku;
+
+    /// <summary>
+    /// Resource tags.
+    /// </summary>
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
+
+    /// <summary>
+    /// A list of availability zones denoting the IP allocated for the resource
+    /// needs to come from.
+    /// </summary>
+    public BicepList<string> Zones 
+    {
+        get { Initialize(); return _zones!; }
+        set { Initialize(); _zones!.Assign(value); }
+    }
+    private BicepList<string>? _zones;
 
     /// <summary>
     /// A unique read-only string that changes whenever the resource is updated.
@@ -57,101 +232,16 @@ public partial class NetworkInterfaceIPConfiguration : ProvisionableResource
     private BicepValue<ETag>? _eTag;
 
     /// <summary>
-    /// Gets or sets Id.
+    /// The IP configuration associated with the public IP address.
     /// </summary>
-    public BicepValue<ResourceIdentifier> GatewayLoadBalancerId 
+    public NetworkIPConfiguration IPConfiguration 
     {
-        get { Initialize(); return _gatewayLoadBalancerId!; }
+        get { Initialize(); return _iPConfiguration!; }
     }
-    private BicepValue<ResourceIdentifier>? _gatewayLoadBalancerId;
+    private NetworkIPConfiguration? _iPConfiguration;
 
     /// <summary>
-    /// Resource ID.
-    /// </summary>
-    public BicepValue<ResourceIdentifier> Id 
-    {
-        get { Initialize(); return _id!; }
-    }
-    private BicepValue<ResourceIdentifier>? _id;
-
-    /// <summary>
-    /// The reference to LoadBalancerBackendAddressPool resource.
-    /// </summary>
-    public BicepList<BackendAddressPool> LoadBalancerBackendAddressPools 
-    {
-        get { Initialize(); return _loadBalancerBackendAddressPools!; }
-    }
-    private BicepList<BackendAddressPool>? _loadBalancerBackendAddressPools;
-
-    /// <summary>
-    /// A list of references of LoadBalancerInboundNatRules.
-    /// </summary>
-    public BicepList<InboundNatRule> LoadBalancerInboundNatRules 
-    {
-        get { Initialize(); return _loadBalancerInboundNatRules!; }
-    }
-    private BicepList<InboundNatRule>? _loadBalancerInboundNatRules;
-
-    /// <summary>
-    /// Whether this is a primary customer address on the network interface.
-    /// </summary>
-    public BicepValue<bool> Primary 
-    {
-        get { Initialize(); return _primary!; }
-    }
-    private BicepValue<bool>? _primary;
-
-    /// <summary>
-    /// Private IP address of the IP configuration. It can be a single IP
-    /// address or a CIDR block in the format
-    /// &lt;address&gt;/&lt;prefix-length&gt;.
-    /// </summary>
-    public BicepValue<string> PrivateIPAddress 
-    {
-        get { Initialize(); return _privateIPAddress!; }
-    }
-    private BicepValue<string>? _privateIPAddress;
-
-    /// <summary>
-    /// The private IP address prefix length. If specified and the allocation
-    /// method is dynamic, the service will allocate a CIDR block instead of a
-    /// single IP address.
-    /// </summary>
-    public BicepValue<int> PrivateIPAddressPrefixLength 
-    {
-        get { Initialize(); return _privateIPAddressPrefixLength!; }
-    }
-    private BicepValue<int>? _privateIPAddressPrefixLength;
-
-    /// <summary>
-    /// Whether the specific IP configuration is IPv4 or IPv6. Default is IPv4.
-    /// </summary>
-    public BicepValue<NetworkIPVersion> PrivateIPAddressVersion 
-    {
-        get { Initialize(); return _privateIPAddressVersion!; }
-    }
-    private BicepValue<NetworkIPVersion>? _privateIPAddressVersion;
-
-    /// <summary>
-    /// The private IP address allocation method.
-    /// </summary>
-    public BicepValue<NetworkIPAllocationMethod> PrivateIPAllocationMethod 
-    {
-        get { Initialize(); return _privateIPAllocationMethod!; }
-    }
-    private BicepValue<NetworkIPAllocationMethod>? _privateIPAllocationMethod;
-
-    /// <summary>
-    /// PrivateLinkConnection properties for the network interface.
-    /// </summary>
-    public NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties PrivateLinkConnectionProperties 
-    {
-        get { Initialize(); return _privateLinkConnectionProperties!; }
-    }
-    private NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties? _privateLinkConnectionProperties;
-
-    /// <summary>
-    /// The provisioning state of the network interface IP configuration.
+    /// The provisioning state of the public IP address resource.
     /// </summary>
     public BicepValue<NetworkProvisioningState> ProvisioningState 
     {
@@ -160,87 +250,63 @@ public partial class NetworkInterfaceIPConfiguration : ProvisionableResource
     private BicepValue<NetworkProvisioningState>? _provisioningState;
 
     /// <summary>
-    /// Public IP address bound to the IP configuration.
+    /// The resource GUID property of the public IP address resource.
     /// </summary>
-    public PublicIPAddress PublicIPAddress 
+    public BicepValue<Guid> ResourceGuid 
     {
-        get { Initialize(); return _publicIPAddress!; }
+        get { Initialize(); return _resourceGuid!; }
     }
-    private PublicIPAddress? _publicIPAddress;
+    private BicepValue<Guid>? _resourceGuid;
 
     /// <summary>
-    /// Subnet bound to the IP configuration.
-    /// </summary>
-    public Subnet Subnet 
-    {
-        get { Initialize(); return _subnet!; }
-    }
-    private Subnet? _subnet;
-
-    /// <summary>
-    /// The reference to Virtual Network Taps.
-    /// </summary>
-    public BicepList<VirtualNetworkTapData> VirtualNetworkTaps 
-    {
-        get { Initialize(); return _virtualNetworkTaps!; }
-    }
-    private BicepList<VirtualNetworkTapData>? _virtualNetworkTaps;
-
-    /// <summary>
-    /// Gets or sets a reference to the parent NetworkInterface.
-    /// </summary>
-    public NetworkInterface? Parent
-    {
-        get { Initialize(); return _parent!.Value; }
-        set { Initialize(); _parent!.Value = value; }
-    }
-    private ResourceReference<NetworkInterface>? _parent;
-
-    /// <summary>
-    /// Creates a new NetworkInterfaceIPConfiguration.
+    /// Creates a new PublicIPAddress.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the NetworkInterfaceIPConfiguration
-    /// resource.  This can be used to refer to the resource in expressions,
-    /// but is not the Azure name of the resource.  This value can contain
-    /// letters, numbers, and underscores.
+    /// The the Bicep identifier name of the PublicIPAddress resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the NetworkInterfaceIPConfiguration.</param>
-    public NetworkInterfaceIPConfiguration(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Network/networkInterfaces/ipConfigurations", resourceVersion ?? "2025-01-01")
+    /// <param name="resourceVersion">Version of the PublicIPAddress.</param>
+    public PublicIPAddress(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Network/publicIPAddresses", resourceVersion ?? "2025-01-01")
     {
     }
 
     /// <summary>
-    /// Define all the provisionable properties of
-    /// NetworkInterfaceIPConfiguration.
+    /// Define all the provisionable properties of PublicIPAddress.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
-        _applicationGatewayBackendAddressPools = DefineListProperty<ApplicationGatewayBackendAddressPool>("ApplicationGatewayBackendAddressPools", ["properties", "applicationGatewayBackendAddressPools"], isOutput: true);
-        _applicationSecurityGroups = DefineListProperty<ApplicationSecurityGroup>("ApplicationSecurityGroups", ["properties", "applicationSecurityGroups"], isOutput: true);
+        _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _ddosSettings = DefineModelProperty<DdosSettings>("DdosSettings", ["properties", "ddosSettings"]);
+        _deleteOption = DefineProperty<IPAddressDeleteOption>("DeleteOption", ["properties", "deleteOption"]);
+        _dnsSettings = DefineModelProperty<PublicIPAddressDnsSettings>("DnsSettings", ["properties", "dnsSettings"]);
+        _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["extendedLocation"]);
+        _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
+        _idleTimeoutInMinutes = DefineProperty<int>("IdleTimeoutInMinutes", ["properties", "idleTimeoutInMinutes"]);
+        _iPAddress = DefineProperty<string>("IPAddress", ["properties", "ipAddress"]);
+        _iPTags = DefineListProperty<IPTag>("IPTags", ["properties", "ipTags"]);
+        _linkedPublicIPAddress = DefineModelProperty<PublicIPAddress>("LinkedPublicIPAddress", ["properties", "linkedPublicIPAddress"]);
+        _location = DefineProperty<AzureLocation>("Location", ["location"]);
+        _migrationPhase = DefineProperty<PublicIPAddressMigrationPhase>("MigrationPhase", ["properties", "migrationPhase"]);
+        _natGateway = DefineModelProperty<NatGateway>("NatGateway", ["properties", "natGateway"]);
+        _publicIPAddressVersion = DefineProperty<NetworkIPVersion>("PublicIPAddressVersion", ["properties", "publicIPAddressVersion"]);
+        _publicIPAllocationMethod = DefineProperty<NetworkIPAllocationMethod>("PublicIPAllocationMethod", ["properties", "publicIPAllocationMethod"]);
+        _publicIPPrefixId = DefineProperty<ResourceIdentifier>("PublicIPPrefixId", ["properties", "publicIPPrefix", "id"]);
+        _servicePublicIPAddress = DefineModelProperty<PublicIPAddress>("ServicePublicIPAddress", ["properties", "servicePublicIPAddress"]);
+        _sku = DefineModelProperty<PublicIPAddressSku>("Sku", ["sku"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
+        _zones = DefineListProperty<string>("Zones", ["zones"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
-        _gatewayLoadBalancerId = DefineProperty<ResourceIdentifier>("GatewayLoadBalancerId", ["properties", "gatewayLoadBalancer", "id"], isOutput: true);
-        _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
-        _loadBalancerBackendAddressPools = DefineListProperty<BackendAddressPool>("LoadBalancerBackendAddressPools", ["properties", "loadBalancerBackendAddressPools"], isOutput: true);
-        _loadBalancerInboundNatRules = DefineListProperty<InboundNatRule>("LoadBalancerInboundNatRules", ["properties", "loadBalancerInboundNatRules"], isOutput: true);
-        _primary = DefineProperty<bool>("Primary", ["properties", "primary"], isOutput: true);
-        _privateIPAddress = DefineProperty<string>("PrivateIPAddress", ["properties", "privateIPAddress"], isOutput: true);
-        _privateIPAddressPrefixLength = DefineProperty<int>("PrivateIPAddressPrefixLength", ["properties", "privateIPAddressPrefixLength"], isOutput: true);
-        _privateIPAddressVersion = DefineProperty<NetworkIPVersion>("PrivateIPAddressVersion", ["properties", "privateIPAddressVersion"], isOutput: true);
-        _privateIPAllocationMethod = DefineProperty<NetworkIPAllocationMethod>("PrivateIPAllocationMethod", ["properties", "privateIPAllocationMethod"], isOutput: true);
-        _privateLinkConnectionProperties = DefineModelProperty<NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties>("PrivateLinkConnectionProperties", ["properties", "privateLinkConnectionProperties"], isOutput: true);
+        _iPConfiguration = DefineModelProperty<NetworkIPConfiguration>("IPConfiguration", ["properties", "ipConfiguration"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _publicIPAddress = DefineModelProperty<PublicIPAddress>("PublicIPAddress", ["properties", "publicIPAddress"], isOutput: true);
-        _subnet = DefineModelProperty<Subnet>("Subnet", ["properties", "subnet"], isOutput: true);
-        _virtualNetworkTaps = DefineListProperty<VirtualNetworkTapData>("VirtualNetworkTaps", ["properties", "virtualNetworkTaps"], isOutput: true);
-        _parent = DefineResource<NetworkInterface>("Parent", ["parent"], isRequired: true);
+        _resourceGuid = DefineProperty<Guid>("ResourceGuid", ["properties", "resourceGuid"], isOutput: true);
     }
 
     /// <summary>
-    /// Supported NetworkInterfaceIPConfiguration resource versions.
+    /// Supported PublicIPAddress resource versions.
     /// </summary>
     public static class ResourceVersions
     {
@@ -586,16 +652,16 @@ public partial class NetworkInterfaceIPConfiguration : ProvisionableResource
     }
 
     /// <summary>
-    /// Creates a reference to an existing NetworkInterfaceIPConfiguration.
+    /// Creates a reference to an existing PublicIPAddress.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the NetworkInterfaceIPConfiguration
-    /// resource.  This can be used to refer to the resource in expressions,
-    /// but is not the Azure name of the resource.  This value can contain
-    /// letters, numbers, and underscores.
+    /// The the Bicep identifier name of the PublicIPAddress resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the NetworkInterfaceIPConfiguration.</param>
-    /// <returns>The existing NetworkInterfaceIPConfiguration resource.</returns>
-    public static NetworkInterfaceIPConfiguration FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+    /// <param name="resourceVersion">Version of the PublicIPAddress.</param>
+    /// <returns>The existing PublicIPAddress resource.</returns>
+    public static PublicIPAddress FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

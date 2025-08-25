@@ -62,12 +62,12 @@ public partial class NetworkIPConfiguration : ProvisionableConstruct
     /// <summary>
     /// The reference to the public IP resource.
     /// </summary>
-    public PublicIPAddressData PublicIPAddress 
+    public PublicIPAddress PublicIPAddress 
     {
         get { Initialize(); return _publicIPAddress!; }
         set { Initialize(); AssignOrReplace(ref _publicIPAddress, value); }
     }
-    private PublicIPAddressData? _publicIPAddress;
+    private PublicIPAddress? _publicIPAddress;
 
     /// <summary>
     /// The provisioning state of the IP configuration resource.
@@ -124,7 +124,7 @@ public partial class NetworkIPConfiguration : ProvisionableConstruct
         _privateIPAddress = DefineProperty<string>("PrivateIPAddress", ["properties", "privateIPAddress"]);
         _privateIPAllocationMethod = DefineProperty<NetworkIPAllocationMethod>("PrivateIPAllocationMethod", ["properties", "privateIPAllocationMethod"]);
         _subnet = DefineModelProperty<Subnet>("Subnet", ["properties", "subnet"]);
-        _publicIPAddress = DefineModelProperty<PublicIPAddressData>("PublicIPAddress", ["properties", "publicIPAddress"]);
+        _publicIPAddress = DefineModelProperty<PublicIPAddress>("PublicIPAddress", ["properties", "publicIPAddress"]);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
         _name = DefineProperty<string>("Name", ["name"]);
