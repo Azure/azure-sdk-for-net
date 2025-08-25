@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsSecurityRules_Get</description>
+        /// <description>DnsSecurityRule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsSecurityRules_Get</description>
+        /// <description>DnsSecurityRule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsSecurityRules_Delete</description>
+        /// <description>DnsSecurityRule_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsSecurityRules_Delete</description>
+        /// <description>DnsSecurityRule_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsSecurityRules_Update</description>
+        /// <description>DnsSecurityRule_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsSecurityRules_Update</description>
+        /// <description>DnsSecurityRule_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsSecurityRules_Get</description>
+        /// <description>DnsSecurityRule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsSecurityRules_Get</description>
+        /// <description>DnsSecurityRule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsSecurityRules_Get</description>
+        /// <description>DnsSecurityRule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsSecurityRules_Get</description>
+        /// <description>DnsSecurityRule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsSecurityRules_Get</description>
+        /// <description>DnsSecurityRule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsSecurityRules_Get</description>
+        /// <description>DnsSecurityRule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

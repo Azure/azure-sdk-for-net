@@ -6,15 +6,28 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager.DnsResolver.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DnsResolver.Mocking
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableDnsResolverResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _dnsResolverClientDiagnostics;
+        private DnsResolversRestOperations _dnsResolverRestClient;
+        private ClientDiagnostics _dnsForwardingRulesetClientDiagnostics;
+        private DnsForwardingRulesetsRestOperations _dnsForwardingRulesetRestClient;
+        private ClientDiagnostics _dnsResolverPolicyClientDiagnostics;
+        private DnsResolverPoliciesRestOperations _dnsResolverPolicyRestClient;
+
         /// <summary> Initializes a new instance of the <see cref="MockableDnsResolverResourceGroupResource"/> class for mocking. </summary>
         protected MockableDnsResolverResourceGroupResource()
         {
@@ -26,6 +39,13 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         internal MockableDnsResolverResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics DnsResolverClientDiagnostics => _dnsResolverClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsResolverResource.ResourceType.Namespace, Diagnostics);
+        private DnsResolversRestOperations DnsResolverRestClient => _dnsResolverRestClient ??= new DnsResolversRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DnsResolverResource.ResourceType));
+        private ClientDiagnostics DnsForwardingRulesetClientDiagnostics => _dnsForwardingRulesetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsForwardingRulesetResource.ResourceType.Namespace, Diagnostics);
+        private DnsForwardingRulesetsRestOperations DnsForwardingRulesetRestClient => _dnsForwardingRulesetRestClient ??= new DnsForwardingRulesetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DnsForwardingRulesetResource.ResourceType));
+        private ClientDiagnostics DnsResolverPolicyClientDiagnostics => _dnsResolverPolicyClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsResolverPolicyResource.ResourceType.Namespace, Diagnostics);
+        private DnsResolverPoliciesRestOperations DnsResolverPolicyRestClient => _dnsResolverPolicyRestClient ??= new DnsResolverPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DnsResolverPolicyResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -49,7 +69,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolvers_Get</description>
+        /// <description>DnsResolver_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -80,7 +100,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolvers_Get</description>
+        /// <description>DnsResolver_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -118,7 +138,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsForwardingRulesets_Get</description>
+        /// <description>DnsForwardingRuleset_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -149,7 +169,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsForwardingRulesets_Get</description>
+        /// <description>DnsForwardingRuleset_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -187,7 +207,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicies_Get</description>
+        /// <description>DnsResolverPolicy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -218,7 +238,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverPolicies_Get</description>
+        /// <description>DnsResolverPolicy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -256,7 +276,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverDomainLists_Get</description>
+        /// <description>DnsResolverDomainList_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -287,7 +307,7 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DnsResolverDomainLists_Get</description>
+        /// <description>DnsResolverDomainList_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

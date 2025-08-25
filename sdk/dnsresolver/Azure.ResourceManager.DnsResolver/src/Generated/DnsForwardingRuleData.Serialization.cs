@@ -215,12 +215,12 @@ namespace Azure.ResourceManager.DnsResolver
                 name,
                 type,
                 systemData,
-                etag,
                 domainName,
                 targetDnsServers,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 forwardingRuleState,
                 provisioningState,
+                etag,
                 serializedAdditionalRawData);
         }
 

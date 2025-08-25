@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ForwardingRules_CreateOrUpdate</description>
+        /// <description>ForwardingRule_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ForwardingRules_CreateOrUpdate</description>
+        /// <description>ForwardingRule_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ForwardingRules_Get</description>
+        /// <description>ForwardingRule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ForwardingRules_Get</description>
+        /// <description>ForwardingRule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ForwardingRules_List</description>
+        /// <description>ForwardingRule_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ForwardingRules_List</description>
+        /// <description>ForwardingRule_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ForwardingRules_Get</description>
+        /// <description>ForwardingRule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ForwardingRules_Get</description>
+        /// <description>ForwardingRule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ForwardingRules_Get</description>
+        /// <description>ForwardingRule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ForwardingRules_Get</description>
+        /// <description>ForwardingRule_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

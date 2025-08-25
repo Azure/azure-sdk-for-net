@@ -183,10 +183,10 @@ namespace Azure.ResourceManager.DnsResolver
                 name,
                 type,
                 systemData,
-                etag,
                 virtualNetwork,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 provisioningState,
+                etag,
                 serializedAdditionalRawData);
         }
 

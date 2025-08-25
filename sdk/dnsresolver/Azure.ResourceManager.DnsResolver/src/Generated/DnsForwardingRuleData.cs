@@ -71,21 +71,21 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> ETag of the forwarding rule. </param>
         /// <param name="domainName"> The domain name for the forwarding rule. </param>
         /// <param name="targetDnsServers"> DNS servers to forward the DNS query to. </param>
         /// <param name="metadata"> Metadata attached to the forwarding rule. </param>
         /// <param name="dnsForwardingRuleState"> The state of forwarding rule. </param>
         /// <param name="provisioningState"> The current provisioning state of the forwarding rule. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DnsForwardingRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string domainName, IList<TargetDnsServer> targetDnsServers, IDictionary<string, string> metadata, DnsForwardingRuleState? dnsForwardingRuleState, DnsResolverProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DnsForwardingRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string domainName, IList<TargetDnsServer> targetDnsServers, IDictionary<string, string> metadata, DnsForwardingRuleState? dnsForwardingRuleState, DnsResolverProvisioningState? provisioningState, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            ETag = etag;
             DomainName = domainName;
             TargetDnsServers = targetDnsServers;
             Metadata = metadata;
             DnsForwardingRuleState = dnsForwardingRuleState;
             ProvisioningState = provisioningState;
+            ETag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -94,8 +94,6 @@ namespace Azure.ResourceManager.DnsResolver
         {
         }
 
-        /// <summary> ETag of the forwarding rule. </summary>
-        public ETag? ETag { get; }
         /// <summary> The domain name for the forwarding rule. </summary>
         public string DomainName { get; set; }
         /// <summary> DNS servers to forward the DNS query to. </summary>
@@ -106,5 +104,7 @@ namespace Azure.ResourceManager.DnsResolver
         public DnsForwardingRuleState? DnsForwardingRuleState { get; set; }
         /// <summary> The current provisioning state of the forwarding rule. This is a read-only property and any attempt to set this value will be ignored. </summary>
         public DnsResolverProvisioningState? ProvisioningState { get; }
+        /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
+        public ETag? ETag { get; }
     }
 }
