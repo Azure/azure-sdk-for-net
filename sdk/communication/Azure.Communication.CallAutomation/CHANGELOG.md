@@ -9,6 +9,16 @@
 - Added support for Personally Identifiable Information (PII) redaction and summarization in transcription, improving privacy and providing concise summaries of transcribed content.
 - Added support for sentiment analysis in both speech and choice recognition, allowing detection of participant sentiment during call interactions.
 
+## 1.5.0 (2025-08-25)
+
+### Features Added
+
+- Added support for Teams multipersona users in create call, add participant, transfer, and redirect scenarios in OPS calls
+- Added TeamsAppSource for use when creating outbound OPS calls
+- Recording with the call connection ID is now supported. OPS calls can be recorded using the call connection ID.
+- Added StartRecordingFailed event to indicate when the start recording API is unable to initiate the recording.
+- Adds support for SIP headers prefixed with 'X-' and 'X-MS-Custom-' within the CustomCallingContext.
+
 ## 1.4.0 (2025-06-04)
 
 ### Features Added

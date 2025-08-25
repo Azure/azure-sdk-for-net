@@ -10,10 +10,10 @@ using System.ClientModel.Primitives;
 namespace _Specs_.Azure.ClientGenerator.Core.HierarchyBuilding
 {
     [ModelReaderWriterBuildable(typeof(Animal))]
-    [ModelReaderWriterBuildable(typeof(UnknownAnimal))]
-    [ModelReaderWriterBuildable(typeof(Pet))]
-    [ModelReaderWriterBuildable(typeof(UnknownPet))]
     [ModelReaderWriterBuildable(typeof(Dog))]
+    [ModelReaderWriterBuildable(typeof(Pet))]
+    [ModelReaderWriterBuildable(typeof(UnknownAnimal))]
+    [ModelReaderWriterBuildable(typeof(UnknownPet))]
     public partial class _Specs_AzureClientGeneratorCoreHierarchyBuildingContext : ModelReaderWriterContext
     {
     }
