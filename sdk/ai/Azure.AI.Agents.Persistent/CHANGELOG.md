@@ -7,6 +7,9 @@
 - Add `RunStepDeltaCustomBingGroundingToolCall`, describing `BingCustomSearchTool` updates in streaming scenario.
 - Add `RunStepDeltaMicrosoftFabricToolCall`, describing `FabricTool` updates in streaming scenario.
 - Add `RunStepDeltaSharepointToolCall`, describing `SharepointTool` updates in streaming scenario.
+- Updated `Microsoft.Extensions.AI.Abstractions` dependency to version 9.8.0.`
+- Added support of `FileSearchTool` and `CodeInterpreterTool` for `PersistentAgentsChatClient`
+- Bugfix: Addressed issues related to `ResponseFormat` when using `PersistentAgentsChatClient` with Structured Outputs.
 
 ### Breaking Changes
 
