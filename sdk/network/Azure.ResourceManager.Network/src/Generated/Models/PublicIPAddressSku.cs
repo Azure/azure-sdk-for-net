@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Name of a public IP address SKU. </summary>
+        [WirePath("name")]
         public PublicIPAddressSkuName? Name { get; set; }
         /// <summary> Tier of a public IP address SKU. </summary>
+        [WirePath("tier")]
         public PublicIPAddressSkuTier? Tier { get; set; }
     }
 }

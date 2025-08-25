@@ -44,14 +44,18 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Rule type. </summary>
+        [WirePath("properties.ruleType")]
         public ApplicationGatewayRequestRoutingRuleType? RuleType { get; set; }
         /// <summary> Priority of the routing rule. </summary>
+        [WirePath("properties.priority")]
         public int? Priority { get; set; }
         /// <summary> Backend address pool resource of the application gateway. </summary>
         internal WritableSubResource BackendAddressPool { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.backendAddressPool.id")]
         public ResourceIdentifier BackendAddressPoolId
         {
             get => BackendAddressPool is null ? default : BackendAddressPool.Id;
@@ -66,6 +70,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Backend settings resource of the application gateway. </summary>
         internal WritableSubResource BackendSettings { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.backendSettings.id")]
         public ResourceIdentifier BackendSettingsId
         {
             get => BackendSettings is null ? default : BackendSettings.Id;
@@ -80,6 +85,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Listener resource of the application gateway. </summary>
         internal WritableSubResource Listener { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.listener.id")]
         public ResourceIdentifier ListenerId
         {
             get => Listener is null ? default : Listener.Id;
@@ -92,6 +98,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The provisioning state of the request routing rule resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

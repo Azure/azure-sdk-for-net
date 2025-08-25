@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The target resource where getting the flow log and traffic analytics (optional) status. </summary>
+        [WirePath("targetResourceId")]
         public ResourceIdentifier TargetResourceId { get; }
     }
 }

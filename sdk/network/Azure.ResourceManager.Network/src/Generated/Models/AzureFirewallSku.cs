@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Name of an Azure Firewall SKU. </summary>
+        [WirePath("name")]
         public AzureFirewallSkuName? Name { get; set; }
         /// <summary> Tier of an Azure Firewall. </summary>
+        [WirePath("tier")]
         public AzureFirewallSkuTier? Tier { get; set; }
     }
 }

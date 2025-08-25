@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableSelfHelpSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _discoverySolutionNlpClientDiagnostics;
-        private DiscoverySolutionNLPRestOperations _discoverySolutionNlpRestClient;
+        private ClientDiagnostics _discoverySolutionNLPClientDiagnostics;
+        private DiscoverySolutionNLPRestOperations _discoverySolutionNLPRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableSelfHelpSubscriptionResource"/> class for mocking. </summary>
         protected MockableSelfHelpSubscriptionResource()
@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         {
         }
 
-        private ClientDiagnostics DiscoverySolutionNLPClientDiagnostics => _discoverySolutionNlpClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SelfHelp", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private DiscoverySolutionNLPRestOperations DiscoverySolutionNLPRestClient => _discoverySolutionNlpRestClient ??= new DiscoverySolutionNLPRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics DiscoverySolutionNLPClientDiagnostics => _discoverySolutionNLPClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SelfHelp", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private DiscoverySolutionNLPRestOperations DiscoverySolutionNLPRestClient => _discoverySolutionNLPRestClient ??= new DiscoverySolutionNLPRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DiscoverySolutionNLP_DiscoverSolutionsBySubscription</description>
+        /// <description>DiscoverySolutionNLPOperationGroup_DiscoverSolutionsNlp</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Request body for discovering solutions using NLP. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SolutionNlpMetadata> DiscoverSolutionsNlpAsync(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionNLPRestClient.CreateDiscoverSolutionsBySubscriptionRequest(Id.SubscriptionId, content);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionNLPRestClient.CreateDiscoverSolutionsNlpRequest(Id.SubscriptionId, content);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SolutionNlpMetadata.DeserializeSolutionNlpMetadata(e), DiscoverySolutionNLPClientDiagnostics, Pipeline, "MockableSelfHelpSubscriptionResource.DiscoverSolutionsNlp", "value", null, cancellationToken);
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DiscoverySolutionNLP_DiscoverSolutionsBySubscription</description>
+        /// <description>DiscoverySolutionNLPOperationGroup_DiscoverSolutionsNlp</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Request body for discovering solutions using NLP. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SolutionNlpMetadata"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SolutionNlpMetadata> DiscoverSolutionsNlp(DiscoveryNlpContent content = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionNLPRestClient.CreateDiscoverSolutionsBySubscriptionRequest(Id.SubscriptionId, content);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => DiscoverySolutionNLPRestClient.CreateDiscoverSolutionsNlpRequest(Id.SubscriptionId, content);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SolutionNlpMetadata.DeserializeSolutionNlpMetadata(e), DiscoverySolutionNLPClientDiagnostics, Pipeline, "MockableSelfHelpSubscriptionResource.DiscoverSolutionsNlp", "value", null, cancellationToken);
         }
     }

@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The ID of the resource to which a connection attempt will be made. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary> The IP address or URI the resource to which a connection attempt will be made. </summary>
+        [WirePath("address")]
         public string Address { get; set; }
         /// <summary> Port on which check connectivity will be performed. </summary>
+        [WirePath("port")]
         public int? Port { get; set; }
     }
 }

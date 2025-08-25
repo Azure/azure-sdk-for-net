@@ -39,12 +39,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The reference to the address space resource which represents Address space for P2S VpnClient. </summary>
+        [WirePath("properties.vpnClientAddressPool")]
         public VirtualNetworkAddressSpace VpnClientAddressPool { get; set; }
         /// <summary> List of references to virtualNetworkGatewayPolicyGroups. </summary>
+        [WirePath("properties.virtualNetworkGatewayPolicyGroups")]
         public IList<WritableSubResource> VirtualNetworkGatewayPolicyGroups { get; }
         /// <summary> The provisioning state of the VngClientConnectionConfiguration resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

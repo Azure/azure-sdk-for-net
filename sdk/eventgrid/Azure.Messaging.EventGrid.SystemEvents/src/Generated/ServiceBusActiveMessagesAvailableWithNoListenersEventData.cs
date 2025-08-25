@@ -13,37 +13,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ServiceBus.ActiveMessagesAvailableWithNoListeners event. </summary>
     public partial class ServiceBusActiveMessagesAvailableWithNoListenersEventData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceBusActiveMessagesAvailableWithNoListenersEventData"/>. </summary>
         /// <param name="namespaceName"> The namespace name of the Microsoft.ServiceBus resource. </param>
@@ -52,13 +23,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="queueName"> The name of the Microsoft.ServiceBus queue. If the entity type is of type 'subscriber', then this value will be null. </param>
         /// <param name="topicName"> The name of the Microsoft.ServiceBus topic. If the entity type is of type 'queue', then this value will be null. </param>
         /// <param name="subscriptionName"> The name of the Microsoft.ServiceBus topic's subscription. If the entity type is of type 'queue', then this value will be null. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/>, <paramref name="requestUri"/> or <paramref name="entityType"/> is null. </exception>
         internal ServiceBusActiveMessagesAvailableWithNoListenersEventData(string namespaceName, string requestUri, string entityType, string queueName, string topicName, string subscriptionName)
         {
-            Argument.AssertNotNull(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNull(requestUri, nameof(requestUri));
-            Argument.AssertNotNull(entityType, nameof(entityType));
-
             NamespaceName = namespaceName;
             RequestUri = requestUri;
             EntityType = entityType;
@@ -74,8 +40,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="queueName"> The name of the Microsoft.ServiceBus queue. If the entity type is of type 'subscriber', then this value will be null. </param>
         /// <param name="topicName"> The name of the Microsoft.ServiceBus topic. If the entity type is of type 'queue', then this value will be null. </param>
         /// <param name="subscriptionName"> The name of the Microsoft.ServiceBus topic's subscription. If the entity type is of type 'queue', then this value will be null. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceBusActiveMessagesAvailableWithNoListenersEventData(string namespaceName, string requestUri, string entityType, string queueName, string topicName, string subscriptionName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceBusActiveMessagesAvailableWithNoListenersEventData(string namespaceName, string requestUri, string entityType, string queueName, string topicName, string subscriptionName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NamespaceName = namespaceName;
             RequestUri = requestUri;
@@ -83,24 +49,24 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             QueueName = queueName;
             TopicName = topicName;
             SubscriptionName = subscriptionName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ServiceBusActiveMessagesAvailableWithNoListenersEventData"/> for deserialization. </summary>
-        internal ServiceBusActiveMessagesAvailableWithNoListenersEventData()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The namespace name of the Microsoft.ServiceBus resource. </summary>
         public string NamespaceName { get; }
+
         /// <summary> The endpoint of the Microsoft.ServiceBus resource. </summary>
         public string RequestUri { get; }
+
         /// <summary> The entity type of the Microsoft.ServiceBus resource. Could be one of 'queue' or 'subscriber'. </summary>
         public string EntityType { get; }
+
         /// <summary> The name of the Microsoft.ServiceBus queue. If the entity type is of type 'subscriber', then this value will be null. </summary>
         public string QueueName { get; }
+
         /// <summary> The name of the Microsoft.ServiceBus topic. If the entity type is of type 'queue', then this value will be null. </summary>
         public string TopicName { get; }
+
         /// <summary> The name of the Microsoft.ServiceBus topic's subscription. If the entity type is of type 'queue', then this value will be null. </summary>
         public string SubscriptionName { get; }
     }
