@@ -406,7 +406,7 @@ namespace Azure.Storage.Test.Shared
                 return "auth token";
             }
 
-            scopes ??= scopes;
+            scopes ??= Scopes;
             TokenRequestContext tokenRequestContext = new TokenRequestContext(scopes);
             AccessToken accessToken = await TestEnvironment.Credential.GetTokenAsync(tokenRequestContext, CancellationToken.None);
             return accessToken.Token;
