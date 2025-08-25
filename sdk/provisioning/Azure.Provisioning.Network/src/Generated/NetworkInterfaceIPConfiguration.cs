@@ -180,11 +180,11 @@ public partial class NetworkInterfaceIPConfiguration : ProvisionableResource
     /// <summary>
     /// The reference to Virtual Network Taps.
     /// </summary>
-    public BicepList<VirtualNetworkTapData> VirtualNetworkTaps 
+    public BicepList<VirtualNetworkTap> VirtualNetworkTaps 
     {
         get { Initialize(); return _virtualNetworkTaps!; }
     }
-    private BicepList<VirtualNetworkTapData>? _virtualNetworkTaps;
+    private BicepList<VirtualNetworkTap>? _virtualNetworkTaps;
 
     /// <summary>
     /// Gets or sets a reference to the parent NetworkInterface.
@@ -235,7 +235,7 @@ public partial class NetworkInterfaceIPConfiguration : ProvisionableResource
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _publicIPAddress = DefineModelProperty<PublicIPAddress>("PublicIPAddress", ["properties", "publicIPAddress"], isOutput: true);
         _subnet = DefineModelProperty<Subnet>("Subnet", ["properties", "subnet"], isOutput: true);
-        _virtualNetworkTaps = DefineListProperty<VirtualNetworkTapData>("VirtualNetworkTaps", ["properties", "virtualNetworkTaps"], isOutput: true);
+        _virtualNetworkTaps = DefineListProperty<VirtualNetworkTap>("VirtualNetworkTaps", ["properties", "virtualNetworkTaps"], isOutput: true);
         _parent = DefineResource<NetworkInterface>("Parent", ["parent"], isRequired: true);
     }
 

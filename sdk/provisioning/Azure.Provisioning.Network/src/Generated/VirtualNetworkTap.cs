@@ -16,12 +16,12 @@ using System.Net;
 namespace Azure.Provisioning.Network;
 
 /// <summary>
-/// NetworkInterfaceTapConfiguration.
+/// VirtualNetworkTap.
 /// </summary>
-public partial class NetworkInterfaceTapConfiguration : ProvisionableResource
+public partial class VirtualNetworkTap : ProvisionableResource
 {
     /// <summary>
-    /// The name of the tap configuration.
+    /// The name of the virtual network tap.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -29,6 +29,38 @@ public partial class NetworkInterfaceTapConfiguration : ProvisionableResource
         set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
+
+    /// <summary>
+    /// The reference to the private IP address on the internal Load Balancer
+    /// that will receive the tap.
+    /// </summary>
+    public FrontendIPConfiguration DestinationLoadBalancerFrontEndIPConfiguration 
+    {
+        get { Initialize(); return _destinationLoadBalancerFrontEndIPConfiguration!; }
+        set { Initialize(); AssignOrReplace(ref _destinationLoadBalancerFrontEndIPConfiguration, value); }
+    }
+    private FrontendIPConfiguration? _destinationLoadBalancerFrontEndIPConfiguration;
+
+    /// <summary>
+    /// The reference to the private IP Address of the collector nic that will
+    /// receive the tap.
+    /// </summary>
+    public NetworkInterfaceIPConfiguration DestinationNetworkInterfaceIPConfiguration 
+    {
+        get { Initialize(); return _destinationNetworkInterfaceIPConfiguration!; }
+        set { Initialize(); AssignOrReplace(ref _destinationNetworkInterfaceIPConfiguration, value); }
+    }
+    private NetworkInterfaceIPConfiguration? _destinationNetworkInterfaceIPConfiguration;
+
+    /// <summary>
+    /// The VXLAN destination port that will receive the tapped traffic.
+    /// </summary>
+    public BicepValue<int> DestinationPort 
+    {
+        get { Initialize(); return _destinationPort!; }
+        set { Initialize(); _destinationPort!.Assign(value); }
+    }
+    private BicepValue<int>? _destinationPort;
 
     /// <summary>
     /// Resource ID.
@@ -41,14 +73,24 @@ public partial class NetworkInterfaceTapConfiguration : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
-    /// The reference to the Virtual Network Tap resource.
+    /// Resource location.
     /// </summary>
-    public VirtualNetworkTap VirtualNetworkTap 
+    public BicepValue<AzureLocation> Location 
     {
-        get { Initialize(); return _virtualNetworkTap!; }
-        set { Initialize(); AssignOrReplace(ref _virtualNetworkTap, value); }
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
     }
-    private VirtualNetworkTap? _virtualNetworkTap;
+    private BicepValue<AzureLocation>? _location;
+
+    /// <summary>
+    /// Resource tags.
+    /// </summary>
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
 
     /// <summary>
     /// A unique read-only string that changes whenever the resource is updated.
@@ -60,8 +102,17 @@ public partial class NetworkInterfaceTapConfiguration : ProvisionableResource
     private BicepValue<ETag>? _eTag;
 
     /// <summary>
-    /// The provisioning state of the network interface tap configuration
-    /// resource.
+    /// Specifies the list of resource IDs for the network interface IP
+    /// configuration that needs to be tapped.
+    /// </summary>
+    public BicepList<NetworkInterfaceTapConfiguration> NetworkInterfaceTapConfigurations 
+    {
+        get { Initialize(); return _networkInterfaceTapConfigurations!; }
+    }
+    private BicepList<NetworkInterfaceTapConfiguration>? _networkInterfaceTapConfigurations;
+
+    /// <summary>
+    /// The provisioning state of the virtual network tap resource.
     /// </summary>
     public BicepValue<NetworkProvisioningState> ProvisioningState 
     {
@@ -70,47 +121,50 @@ public partial class NetworkInterfaceTapConfiguration : ProvisionableResource
     private BicepValue<NetworkProvisioningState>? _provisioningState;
 
     /// <summary>
-    /// Gets or sets a reference to the parent NetworkInterface.
+    /// The resource GUID property of the virtual network tap resource.
     /// </summary>
-    public NetworkInterface? Parent
+    public BicepValue<Guid> ResourceGuid 
     {
-        get { Initialize(); return _parent!.Value; }
-        set { Initialize(); _parent!.Value = value; }
+        get { Initialize(); return _resourceGuid!; }
     }
-    private ResourceReference<NetworkInterface>? _parent;
+    private BicepValue<Guid>? _resourceGuid;
 
     /// <summary>
-    /// Creates a new NetworkInterfaceTapConfiguration.
+    /// Creates a new VirtualNetworkTap.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the NetworkInterfaceTapConfiguration
-    /// resource.  This can be used to refer to the resource in expressions,
-    /// but is not the Azure name of the resource.  This value can contain
-    /// letters, numbers, and underscores.
+    /// The the Bicep identifier name of the VirtualNetworkTap resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the NetworkInterfaceTapConfiguration.</param>
-    public NetworkInterfaceTapConfiguration(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Network/networkInterfaces/tapConfigurations", resourceVersion ?? "2025-01-01")
+    /// <param name="resourceVersion">Version of the VirtualNetworkTap.</param>
+    public VirtualNetworkTap(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Network/virtualNetworkTaps", resourceVersion ?? "2025-01-01")
     {
     }
 
     /// <summary>
-    /// Define all the provisionable properties of
-    /// NetworkInterfaceTapConfiguration.
+    /// Define all the provisionable properties of VirtualNetworkTap.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
+        _destinationLoadBalancerFrontEndIPConfiguration = DefineModelProperty<FrontendIPConfiguration>("DestinationLoadBalancerFrontEndIPConfiguration", ["properties", "destinationLoadBalancerFrontEndIPConfiguration"]);
+        _destinationNetworkInterfaceIPConfiguration = DefineModelProperty<NetworkInterfaceIPConfiguration>("DestinationNetworkInterfaceIPConfiguration", ["properties", "destinationNetworkInterfaceIPConfiguration"]);
+        _destinationPort = DefineProperty<int>("DestinationPort", ["properties", "destinationPort"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
-        _virtualNetworkTap = DefineModelProperty<VirtualNetworkTap>("VirtualNetworkTap", ["properties", "virtualNetworkTap"]);
+        _location = DefineProperty<AzureLocation>("Location", ["location"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
+        _networkInterfaceTapConfigurations = DefineListProperty<NetworkInterfaceTapConfiguration>("NetworkInterfaceTapConfigurations", ["properties", "networkInterfaceTapConfigurations"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _parent = DefineResource<NetworkInterface>("Parent", ["parent"], isRequired: true);
+        _resourceGuid = DefineProperty<Guid>("ResourceGuid", ["properties", "resourceGuid"], isOutput: true);
     }
 
     /// <summary>
-    /// Supported NetworkInterfaceTapConfiguration resource versions.
+    /// Supported VirtualNetworkTap resource versions.
     /// </summary>
     public static class ResourceVersions
     {
@@ -338,134 +392,19 @@ public partial class NetworkInterfaceTapConfiguration : ProvisionableResource
         /// 2018-08-01.
         /// </summary>
         public static readonly string V2018_08_01 = "2018-08-01";
-
-        /// <summary>
-        /// 2018-07-01.
-        /// </summary>
-        public static readonly string V2018_07_01 = "2018-07-01";
-
-        /// <summary>
-        /// 2018-06-01.
-        /// </summary>
-        public static readonly string V2018_06_01 = "2018-06-01";
-
-        /// <summary>
-        /// 2018-05-01.
-        /// </summary>
-        public static readonly string V2018_05_01 = "2018-05-01";
-
-        /// <summary>
-        /// 2018-04-01.
-        /// </summary>
-        public static readonly string V2018_04_01 = "2018-04-01";
-
-        /// <summary>
-        /// 2018-03-01.
-        /// </summary>
-        public static readonly string V2018_03_01 = "2018-03-01";
-
-        /// <summary>
-        /// 2018-02-01.
-        /// </summary>
-        public static readonly string V2018_02_01 = "2018-02-01";
-
-        /// <summary>
-        /// 2018-01-01.
-        /// </summary>
-        public static readonly string V2018_01_01 = "2018-01-01";
-
-        /// <summary>
-        /// 2017-11-01.
-        /// </summary>
-        public static readonly string V2017_11_01 = "2017-11-01";
-
-        /// <summary>
-        /// 2017-10-01.
-        /// </summary>
-        public static readonly string V2017_10_01 = "2017-10-01";
-
-        /// <summary>
-        /// 2017-09-01.
-        /// </summary>
-        public static readonly string V2017_09_01 = "2017-09-01";
-
-        /// <summary>
-        /// 2017-08-01.
-        /// </summary>
-        public static readonly string V2017_08_01 = "2017-08-01";
-
-        /// <summary>
-        /// 2017-06-01.
-        /// </summary>
-        public static readonly string V2017_06_01 = "2017-06-01";
-
-        /// <summary>
-        /// 2017-04-01.
-        /// </summary>
-        public static readonly string V2017_04_01 = "2017-04-01";
-
-        /// <summary>
-        /// 2017-03-01.
-        /// </summary>
-        public static readonly string V2017_03_01 = "2017-03-01";
-
-        /// <summary>
-        /// 2016-12-01.
-        /// </summary>
-        public static readonly string V2016_12_01 = "2016-12-01";
-
-        /// <summary>
-        /// 2016-11-01.
-        /// </summary>
-        public static readonly string V2016_11_01 = "2016-11-01";
-
-        /// <summary>
-        /// 2016-10-01.
-        /// </summary>
-        public static readonly string V2016_10_01 = "2016-10-01";
-
-        /// <summary>
-        /// 2016-09-01.
-        /// </summary>
-        public static readonly string V2016_09_01 = "2016-09-01";
-
-        /// <summary>
-        /// 2016-08-01.
-        /// </summary>
-        public static readonly string V2016_08_01 = "2016-08-01";
-
-        /// <summary>
-        /// 2016-07-01.
-        /// </summary>
-        public static readonly string V2016_07_01 = "2016-07-01";
-
-        /// <summary>
-        /// 2016-06-01.
-        /// </summary>
-        public static readonly string V2016_06_01 = "2016-06-01";
-
-        /// <summary>
-        /// 2016-03-30.
-        /// </summary>
-        public static readonly string V2016_03_30 = "2016-03-30";
-
-        /// <summary>
-        /// 2015-06-15.
-        /// </summary>
-        public static readonly string V2015_06_15 = "2015-06-15";
     }
 
     /// <summary>
-    /// Creates a reference to an existing NetworkInterfaceTapConfiguration.
+    /// Creates a reference to an existing VirtualNetworkTap.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the NetworkInterfaceTapConfiguration
-    /// resource.  This can be used to refer to the resource in expressions,
-    /// but is not the Azure name of the resource.  This value can contain
-    /// letters, numbers, and underscores.
+    /// The the Bicep identifier name of the VirtualNetworkTap resource.  This
+    /// can be used to refer to the resource in expressions, but is not the
+    /// Azure name of the resource.  This value can contain letters, numbers,
+    /// and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the NetworkInterfaceTapConfiguration.</param>
-    /// <returns>The existing NetworkInterfaceTapConfiguration resource.</returns>
-    public static NetworkInterfaceTapConfiguration FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+    /// <param name="resourceVersion">Version of the VirtualNetworkTap.</param>
+    /// <returns>The existing VirtualNetworkTap resource.</returns>
+    public static VirtualNetworkTap FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }

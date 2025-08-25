@@ -83,7 +83,8 @@ public class NetworkSpecification() :
         typeof(RouteResource),
         typeof(RouteTableResource),
         typeof(PrivateLinkServiceResource),
-        typeof(NetworkPrivateEndpointConnectionResource)
+        typeof(NetworkPrivateEndpointConnectionResource),
+        typeof(VirtualNetworkTapResource),
     };
 
     private protected override Dictionary<Type, MethodInfo> FindConstructibleResources()
