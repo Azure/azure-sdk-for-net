@@ -90,7 +90,13 @@ public abstract class BicepValue : IBicepValue
     public override string ToString() => Compile().ToString();
 
     /// <inheritdoc />
-    public BicepExpression Compile() => BicepTypeMapping.ToBicep(this, Format);
+    public BicepExpression Compile() => CompileCore();
+
+    /// <summary>
+    /// The core implementation of compiling this value to a Bicep expression.
+    /// </summary>
+    /// <returns></returns>
+    private protected virtual BicepExpression CompileCore() => BicepTypeMapping.ToBicep(this, Format);
 
     /// <inheritdoc />
     void IBicepValue.Assign(IBicepValue source) => Assign(source);
@@ -129,4 +135,18 @@ public abstract class BicepValue : IBicepValue
         value._kind == BicepValueKind.Expression ?
             value._expression :
             value._self?.GetReference();
+
+    public BicepExpression ToBicepExpression() => ToBicepExpressionCore();
+
+    private protected virtual BicepExpression ToBicepExpressionCore()
+    {
+        if (_self is not null)
+        {
+            return _self.GetReference();
+        }
+        else
+        {
+            return Compile();
+        }
+    }
 }
