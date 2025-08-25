@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -9,6 +10,7 @@ using NUnit.Framework;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests
 {
+    [Experimental("SCM0001")]
     internal class JsonPatchTests
     {
         [Test]

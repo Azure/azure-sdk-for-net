@@ -3,11 +3,13 @@
 
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
+    [Experimental("SCM0001")]
     internal partial class AvailabilitySetDataTests
     {
         [Test]
