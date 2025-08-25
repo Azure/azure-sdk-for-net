@@ -42,12 +42,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
                 if (activity.Kind == ActivityKind.Server)
                 {
-                    // according to spec, microsoft.client.ip is an override, and if not available we follow the precedence below
+                    // according to spec, microsoft.client.ip is an override
                     var locationIp = microsoftClientIp ??
-                                     AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeClientAddress)?.ToString() ??
-                                     AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpClientIp)?.ToString() ??
-                                     AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeNetSockPeerAddress)?.ToString() ??
-                                     AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeNetPeerIp)?.ToString();
+                                     AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeClientAddress)?.ToString();
 
                     if (locationIp != null)
                     {

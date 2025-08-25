@@ -24,7 +24,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             SemanticConventions.AttributeHttpTarget,
             SemanticConventions.AttributeHttpUserAgent,
             SemanticConventions.AttributeHttpRoute,
-            SemanticConventions.AttributeHttpClientIp, // added only as a fallback
 
             // required - HTTP V2
             SemanticConventions.AttributeHttpRequestMethod,
@@ -47,7 +46,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             SemanticConventions.AttributeNetPeerPort,
             SemanticConventions.AttributeNetHostPort,
             SemanticConventions.AttributeNetHostName,
-            SemanticConventions.AttributeNetSockPeerAddress, // added only as a fallback
             "otel.status_code",
 
             // required - Messaging
