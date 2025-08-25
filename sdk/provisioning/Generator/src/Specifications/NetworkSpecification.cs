@@ -23,12 +23,12 @@ public class NetworkSpecification() :
 
         // Naming requirements
         //AddNameRequirements<ApplicationGatewayResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
-        //AddNameRequirements<ApplicationSecurityGroupResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
+        AddNameRequirements<ApplicationSecurityGroupResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
         //AddNameRequirements<AzureFirewallResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
         //AddNameRequirements<BastionHostResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
         //AddNameRequirements<VirtualNetworkGatewayConnectionResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
         //AddNameRequirements<ExpressRouteCircuitResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
-        //AddNameRequirements<FirewallPolicyResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
+        AddNameRequirements<FirewallPolicyResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
         //AddNameRequirements<FirewallPolicyRuleCollectionGroupDraftResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
         //AddNameRequirements<LoadBalancerResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
         //AddNameRequirements<InboundNatRuleResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);
@@ -90,6 +90,7 @@ public class NetworkSpecification() :
         typeof(ServiceEndpointPolicyDefinitionResource),
         typeof(SecurityRuleResource),
         typeof(PrivateEndpointResource),
+        typeof(FirewallPolicyResource),
     };
 
     private protected override Dictionary<Type, MethodInfo> FindConstructibleResources()

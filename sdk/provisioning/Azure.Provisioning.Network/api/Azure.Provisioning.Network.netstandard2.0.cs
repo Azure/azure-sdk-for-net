@@ -42,6 +42,8 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Network.ApplicationSecurityGroup FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2017_09_01;
