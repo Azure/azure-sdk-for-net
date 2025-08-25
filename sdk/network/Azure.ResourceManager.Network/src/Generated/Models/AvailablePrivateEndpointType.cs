@@ -68,8 +68,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The name of the service and resource. </summary>
+        [WirePath("resourceName")]
         public string ResourceName { get; }
         /// <summary> Display name of the resource. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
     }
 }

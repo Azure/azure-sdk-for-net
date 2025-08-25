@@ -186,9 +186,11 @@ namespace Azure.Identity
     }
     public partial class DefaultAzureCredential : Azure.Core.TokenCredential
     {
+        public const string DefaultEnvironmentVariableName = "AZURE_TOKEN_CREDENTIALS";
         protected DefaultAzureCredential() { }
         public DefaultAzureCredential(Azure.Identity.DefaultAzureCredentialOptions options) { }
         public DefaultAzureCredential(bool includeInteractiveCredentials = false) { }
+        public DefaultAzureCredential(string configurationEnvironmentVariableName, Azure.Identity.DefaultAzureCredentialOptions options = null) { }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

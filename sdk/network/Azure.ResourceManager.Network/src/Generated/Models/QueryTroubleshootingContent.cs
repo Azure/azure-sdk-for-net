@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The target resource ID to query the troubleshooting result. </summary>
+        [WirePath("targetResourceId")]
         public ResourceIdentifier TargetResourceId { get; }
     }
 }

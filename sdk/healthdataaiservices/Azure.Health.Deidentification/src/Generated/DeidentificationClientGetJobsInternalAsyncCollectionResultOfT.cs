@@ -48,8 +48,9 @@ namespace Azure.Health.Deidentification
                 {
                     yield break;
                 }
-                yield return Page<DeidentificationJob>.FromValues((IReadOnlyList<DeidentificationJob>)((PagedDeidentificationJob)response).Value, nextPage?.AbsoluteUri, response);
-                nextPage = ((PagedDeidentificationJob)response).NextLink;
+                PagedDeidentificationJob result = (PagedDeidentificationJob)response;
+                yield return Page<DeidentificationJob>.FromValues((IReadOnlyList<DeidentificationJob>)result.Value, nextPage?.AbsoluteUri, response);
+                nextPage = result.NextLink;
                 if (nextPage == null)
                 {
                     yield break;

@@ -43,7 +43,7 @@ namespace Azure.Generator.Management.Providers
 
         private readonly RequestPathPattern _contextualPath;
 
-        internal ResourceCollectionClientProvider(ResourceClientProvider resource, InputModelType model, ResourceMetadata resourceMetadata)
+        internal ResourceCollectionClientProvider(ResourceClientProvider resource, InputModelType model, IReadOnlyList<ResourceMethod> resourceMethods, ResourceMetadata resourceMetadata)
         {
             _resourceMetadata = resourceMetadata;
             _contextualPath = GetContextualRequestPattern(resourceMetadata);
@@ -54,7 +54,7 @@ namespace Azure.Generator.Management.Providers
 
             _resourceTypeExpression = Static(_resource.Type).As<ArmResource>().ResourceType();
 
-            InitializeMethods(resourceMetadata, ref _get, ref _create, ref _getAll);
+            InitializeMethods(resourceMethods, ref _get, ref _create, ref _getAll);
         }
 
         /// <summary>
@@ -74,12 +74,12 @@ namespace Azure.Generator.Management.Providers
         }
 
         private static void InitializeMethods(
-            ResourceMetadata resourceMetadata,
+            IReadOnlyList<ResourceMethod> resourceMethods,
             ref ResourceMethod? getMethod,
             ref ResourceMethod? createMethod,
             ref ResourceMethod? getAllMethod)
         {
-            foreach (var method in resourceMetadata.Methods)
+            foreach (var method in resourceMethods)
             {
                 if (getAllMethod is not null && createMethod is not null && getMethod is not null)
                 {
@@ -111,7 +111,7 @@ namespace Azure.Generator.Management.Providers
         protected override string BuildName() => $"{ResourceName}Collection";
 
         // TODO: Add support for getting parent resource from a resource collection
-        protected override FormattableString BuildDescription() => $"A class representing a collection of {_resource.Type:C} and their operations. Each {_resource.Type:C} in the collection will belong to the same instance of a parent resource (TODO: add parent resource information). To get a {Type:C} instance call the Get{ResourceName.Pluralize()} method from an instance of the parent resource.";
+        protected override FormattableString BuildDescription() => $"A class representing a collection of {_resource.Type:C} and their operations.\nEach {_resource.Type:C} in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).\nTo get a {Type:C} instance call the Get{ResourceName.Pluralize()} method from an instance of the parent resource.";
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
 
@@ -254,7 +254,7 @@ namespace Azure.Generator.Management.Providers
                 this);
             var getEnumeratorAsyncMethod = new MethodProvider(
                 new MethodSignature("GetAsyncEnumerator", null, MethodSignatureModifiers.None, new CSharpType(typeof(IAsyncEnumerator<>), _resource.Type), null, [KnownAzureParameters.CancellationTokenWithoutDefault], ExplicitInterface: new CSharpType(typeof(IAsyncEnumerable<>), _resource.Type)),
-                Return(This.Invoke("GetAllAsync", [KnownAzureParameters.CancellationTokenWithoutDefault]).Invoke("GetAsyncEnumerator", [KnownAzureParameters.CancellationTokenWithoutDefault])),
+                Return(This.Invoke("GetAllAsync", [KnownAzureParameters.CancellationTokenWithoutDefault.PositionalReference(KnownAzureParameters.CancellationTokenWithoutDefault)]).Invoke("GetAsyncEnumerator", [KnownAzureParameters.CancellationTokenWithoutDefault])),
                 this);
             return [getEnumeratorOfTMethod, getEnumeratorMethod, getEnumeratorAsyncMethod];
         }

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Agents.Persistent
 {
-    /// <summary> Represents the function data in a streaming run step MCP call.*. </summary>
+    /// <summary> Represents the function data in a streaming run step MCP call. </summary>
     public partial class RunStepDeltaMcpToolCall : RunStepDeltaToolCall
     {
         /// <summary> Initializes a new instance of <see cref="RunStepDeltaMcpToolCall"/>. </summary>

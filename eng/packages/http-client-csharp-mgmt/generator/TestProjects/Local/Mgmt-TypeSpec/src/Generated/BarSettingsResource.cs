@@ -16,7 +16,11 @@ using Azure.ResourceManager;
 
 namespace MgmtTypeSpec
 {
-    /// <summary> A class representing a BarSettingsResource along with the instance operations that can be performed on it. If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BarSettingsResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method. Otherwise you can get one from its parent resource (TODO: add parent resource information). </summary>
+    /// <summary>
+    /// A class representing a BarSettingsResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BarSettingsResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="BarResource"/> using the GetBarSettingsResource method.
+    /// </summary>
     public partial class BarSettingsResource : ArmResource
     {
         private readonly ClientDiagnostics _barSettingsOperationsClientDiagnostics;
@@ -96,7 +100,7 @@ namespace MgmtTypeSpec
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _barSettingsOperationsClientDiagnostics.CreateScope("BarSettingsResource.CreateOrUpdateAsync");
+            using DiagnosticScope scope = _barSettingsOperationsClientDiagnostics.CreateScope("BarSettingsResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -169,7 +173,7 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BarSettingsResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _barSettingsOperationsClientDiagnostics.CreateScope("BarSettingsResource.GetAsync");
+            using DiagnosticScope scope = _barSettingsOperationsClientDiagnostics.CreateScope("BarSettingsResource.Get");
             scope.Start();
             try
             {

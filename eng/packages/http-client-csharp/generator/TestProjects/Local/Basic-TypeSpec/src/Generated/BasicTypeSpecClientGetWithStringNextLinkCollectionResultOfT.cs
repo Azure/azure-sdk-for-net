@@ -41,8 +41,9 @@ namespace BasicTypeSpec
                 {
                     yield break;
                 }
-                yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)((ListWithStringNextLinkResponse)response).Things, nextPage?.AbsoluteUri, response);
-                string nextPageString = ((ListWithStringNextLinkResponse)response).Next;
+                ListWithStringNextLinkResponse result = (ListWithStringNextLinkResponse)response;
+                yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)result.Things, nextPage?.AbsoluteUri, response);
+                string nextPageString = result.Next;
                 if (nextPageString == null)
                 {
                     yield break;

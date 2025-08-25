@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The resource whose effective routes are being requested. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary> The type of the specified resource like RouteTable, ExpressRouteConnection, HubVirtualNetworkConnection, VpnConnection and P2SConnection. </summary>
+        [WirePath("virtualWanResourceType")]
         public string VirtualWanResourceType { get; set; }
     }
 }

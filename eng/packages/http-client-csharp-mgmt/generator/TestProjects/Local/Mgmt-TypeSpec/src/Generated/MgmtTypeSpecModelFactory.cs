@@ -102,8 +102,10 @@ namespace MgmtTypeSpec.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="isEnabled"> enabled. </param>
         /// <param name="stringArray"></param>
+        /// <param name="propertyLeft"> enabled. </param>
+        /// <param name="anotherPropertyLeft"> enabled. </param>
         /// <returns> A new <see cref="MgmtTypeSpec.BarSettingsResourceData"/> instance for mocking. </returns>
-        public static BarSettingsResourceData BarSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default)
+        public static BarSettingsResourceData BarSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default, int? propertyLeft = default, int? anotherPropertyLeft = default)
         {
             stringArray ??= new ChangeTrackingList<string>();
 
@@ -114,7 +116,26 @@ namespace MgmtTypeSpec.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 isEnabled is null ? default : new BarSettingsProperties(isEnabled, new Dictionary<string, BinaryData>()),
-                stringArray.ToList());
+                stringArray.ToList(),
+                propertyLeft is null ? default : new BarQuotaProperties(propertyLeft.Value, new Dictionary<string, BinaryData>()),
+                anotherPropertyLeft is null ? default : new BarQuotaProperties(anotherPropertyLeft.Value, new Dictionary<string, BinaryData>()));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="barQuotaLeft"> enabled. </param>
+        /// <returns> A new <see cref="MgmtTypeSpec.BarQuotaResourceData"/> instance for mocking. </returns>
+        public static BarQuotaResourceData BarQuotaResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? barQuotaLeft = default)
+        {
+            return new BarQuotaResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                barQuotaLeft is null ? default : new BarQuotaProperties(barQuotaLeft.Value, new Dictionary<string, BinaryData>()));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -150,6 +171,17 @@ namespace MgmtTypeSpec.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new ZooPatch(tags, zooUpdateSomething is null ? default : new ZooUpdateProperties(zooUpdateSomething, new Dictionary<string, BinaryData>()), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Paged collection of ZooAddress items. </summary>
+        /// <param name="value"> The ZooAddress items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.ZooAddressListListResult"/> instance for mocking. </returns>
+        public static ZooAddressListListResult ZooAddressListListResult(IEnumerable<SubResource> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<SubResource>();
+
+            return new ZooAddressListListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The FooPreviewAction. </summary>

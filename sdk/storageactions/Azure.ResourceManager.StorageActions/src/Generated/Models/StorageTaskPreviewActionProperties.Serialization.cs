@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.StorageActions;
 
 namespace Azure.ResourceManager.StorageActions.Models
 {
-    public partial class StorageTaskPreviewActionProperties : IUtf8JsonSerializable, IJsonModel<StorageTaskPreviewActionProperties>
+    /// <summary> Storage task preview action properties. </summary>
+    public partial class StorageTaskPreviewActionProperties : IJsonModel<StorageTaskPreviewActionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageTaskPreviewActionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="StorageTaskPreviewActionProperties"/> for deserialization. </summary>
+        internal StorageTaskPreviewActionProperties()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageTaskPreviewActionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,32 +34,31 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageTaskPreviewActionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageTaskPreviewActionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageTaskPreviewActionProperties)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("container"u8);
             writer.WriteObjectValue(Container, options);
             writer.WritePropertyName("blobs"u8);
             writer.WriteStartArray();
-            foreach (var item in Blobs)
+            foreach (StorageTaskPreviewBlobProperties item in Blobs)
             {
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("action"u8);
             writer.WriteObjectValue(Action, options);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -62,22 +67,27 @@ namespace Azure.ResourceManager.StorageActions.Models
             }
         }
 
-        StorageTaskPreviewActionProperties IJsonModel<StorageTaskPreviewActionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageTaskPreviewActionProperties IJsonModel<StorageTaskPreviewActionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual StorageTaskPreviewActionProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageTaskPreviewActionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageTaskPreviewActionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageTaskPreviewActionProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeStorageTaskPreviewActionProperties(document.RootElement, options);
         }
 
-        internal static StorageTaskPreviewActionProperties DeserializeStorageTaskPreviewActionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static StorageTaskPreviewActionProperties DeserializeStorageTaskPreviewActionProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -85,43 +95,44 @@ namespace Azure.ResourceManager.StorageActions.Models
             StorageTaskPreviewContainerProperties container = default;
             IList<StorageTaskPreviewBlobProperties> blobs = default;
             StorageTaskPreviewActionCondition action = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("container"u8))
+                if (prop.NameEquals("container"u8))
                 {
-                    container = StorageTaskPreviewContainerProperties.DeserializeStorageTaskPreviewContainerProperties(property.Value, options);
+                    container = StorageTaskPreviewContainerProperties.DeserializeStorageTaskPreviewContainerProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("blobs"u8))
+                if (prop.NameEquals("blobs"u8))
                 {
                     List<StorageTaskPreviewBlobProperties> array = new List<StorageTaskPreviewBlobProperties>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(StorageTaskPreviewBlobProperties.DeserializeStorageTaskPreviewBlobProperties(item, options));
                     }
                     blobs = array;
                     continue;
                 }
-                if (property.NameEquals("action"u8))
+                if (prop.NameEquals("action"u8))
                 {
-                    action = StorageTaskPreviewActionCondition.DeserializeStorageTaskPreviewActionCondition(property.Value, options);
+                    action = StorageTaskPreviewActionCondition.DeserializeStorageTaskPreviewActionCondition(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new StorageTaskPreviewActionProperties(container, blobs, action, serializedAdditionalRawData);
+            return new StorageTaskPreviewActionProperties(container, blobs, action, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<StorageTaskPreviewActionProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageTaskPreviewActionProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<StorageTaskPreviewActionProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StorageTaskPreviewActionProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -131,15 +142,20 @@ namespace Azure.ResourceManager.StorageActions.Models
             }
         }
 
-        StorageTaskPreviewActionProperties IPersistableModel<StorageTaskPreviewActionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageTaskPreviewActionProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageTaskPreviewActionProperties IPersistableModel<StorageTaskPreviewActionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual StorageTaskPreviewActionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StorageTaskPreviewActionProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeStorageTaskPreviewActionProperties(document.RootElement, options);
                     }
                 default:
@@ -147,6 +163,7 @@ namespace Azure.ResourceManager.StorageActions.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<StorageTaskPreviewActionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

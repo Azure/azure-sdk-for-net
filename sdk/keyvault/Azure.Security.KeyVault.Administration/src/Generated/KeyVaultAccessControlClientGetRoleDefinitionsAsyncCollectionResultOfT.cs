@@ -53,8 +53,9 @@ namespace Azure.Security.KeyVault.Administration
                 {
                     yield break;
                 }
-                yield return Page<KeyVaultRoleDefinition>.FromValues((IReadOnlyList<KeyVaultRoleDefinition>)((RoleDefinitionListResult)response).Value, nextPage?.AbsoluteUri, response);
-                string nextPageString = ((RoleDefinitionListResult)response).NextLink;
+                RoleDefinitionListResult result = (RoleDefinitionListResult)response;
+                yield return Page<KeyVaultRoleDefinition>.FromValues((IReadOnlyList<KeyVaultRoleDefinition>)result.Value, nextPage?.AbsoluteUri, response);
+                string nextPageString = result.NextLink;
                 if (nextPageString == null)
                 {
                     yield break;
