@@ -32,17 +32,6 @@ public partial class VirtualNetwork : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// A list of address blocks reserved for this virtual network in CIDR
-    /// notation.
-    /// </summary>
-    public BicepList<string> AddressPrefixes 
-    {
-        get { Initialize(); return _addressPrefixes!; }
-        set { Initialize(); _addressPrefixes!.Assign(value); }
-    }
-    private BicepList<string>? _addressPrefixes;
-
-    /// <summary>
     /// The AddressSpace that contains an array of IP address ranges that can
     /// be used by subnets.
     /// </summary>
@@ -275,7 +264,6 @@ public partial class VirtualNetwork : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _addressPrefixes = DefineListProperty<string>("AddressPrefixes", ["AddressPrefixes"]);
         _addressSpace = DefineModelProperty<VirtualNetworkAddressSpace>("AddressSpace", ["properties", "addressSpace"]);
         _bgpCommunities = DefineModelProperty<VirtualNetworkBgpCommunities>("BgpCommunities", ["properties", "bgpCommunities"]);
         _ddosProtectionPlanId = DefineProperty<ResourceIdentifier>("DdosProtectionPlanId", ["properties", "ddosProtectionPlan", "id"]);

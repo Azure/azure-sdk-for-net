@@ -10,7 +10,7 @@ using System.Reflection;
 namespace Azure.Provisioning.Generator.Specifications;
 
 public class NetworkSpecification() :
-    Specification("Network", typeof(NetworkExtensions))
+    Specification("Network", typeof(NetworkExtensions), ignorePropertiesWithoutPath: true)
 {
     protected override void Customize()
     {

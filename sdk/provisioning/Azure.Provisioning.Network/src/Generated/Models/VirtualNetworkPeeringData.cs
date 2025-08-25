@@ -20,50 +20,6 @@ namespace Azure.Provisioning.Network;
 public partial class VirtualNetworkPeeringData : ProvisionableConstruct
 {
     /// <summary>
-    /// A list of address blocks reserved for this virtual network in CIDR
-    /// notation.
-    /// </summary>
-    public BicepList<string> LocalAddressPrefixes 
-    {
-        get { Initialize(); return _localAddressPrefixes!; }
-        set { Initialize(); _localAddressPrefixes!.Assign(value); }
-    }
-    private BicepList<string>? _localAddressPrefixes;
-
-    /// <summary>
-    /// A list of address blocks reserved for this virtual network in CIDR
-    /// notation.
-    /// </summary>
-    public BicepList<string> LocalVirtualNetworkAddressPrefixes 
-    {
-        get { Initialize(); return _localVirtualNetworkAddressPrefixes!; }
-        set { Initialize(); _localVirtualNetworkAddressPrefixes!.Assign(value); }
-    }
-    private BicepList<string>? _localVirtualNetworkAddressPrefixes;
-
-    /// <summary>
-    /// A list of address blocks reserved for this virtual network in CIDR
-    /// notation.
-    /// </summary>
-    public BicepList<string> RemoteAddressPrefixes 
-    {
-        get { Initialize(); return _remoteAddressPrefixes!; }
-        set { Initialize(); _remoteAddressPrefixes!.Assign(value); }
-    }
-    private BicepList<string>? _remoteAddressPrefixes;
-
-    /// <summary>
-    /// A list of address blocks reserved for this virtual network in CIDR
-    /// notation.
-    /// </summary>
-    public BicepList<string> RemoteVirtualNetworkAddressPrefixes 
-    {
-        get { Initialize(); return _remoteVirtualNetworkAddressPrefixes!; }
-        set { Initialize(); _remoteVirtualNetworkAddressPrefixes!.Assign(value); }
-    }
-    private BicepList<string>? _remoteVirtualNetworkAddressPrefixes;
-
-    /// <summary>
     /// A unique read-only string that changes whenever the resource is updated.
     /// </summary>
     public BicepValue<ETag> ETag 
@@ -324,10 +280,6 @@ public partial class VirtualNetworkPeeringData : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _localAddressPrefixes = DefineListProperty<string>("LocalAddressPrefixes", ["LocalAddressPrefixes"]);
-        _localVirtualNetworkAddressPrefixes = DefineListProperty<string>("LocalVirtualNetworkAddressPrefixes", ["LocalVirtualNetworkAddressPrefixes"]);
-        _remoteAddressPrefixes = DefineListProperty<string>("RemoteAddressPrefixes", ["RemoteAddressPrefixes"]);
-        _remoteVirtualNetworkAddressPrefixes = DefineListProperty<string>("RemoteVirtualNetworkAddressPrefixes", ["RemoteVirtualNetworkAddressPrefixes"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
         _allowVirtualNetworkAccess = DefineProperty<bool>("AllowVirtualNetworkAccess", ["properties", "allowVirtualNetworkAccess"]);
         _allowForwardedTraffic = DefineProperty<bool>("AllowForwardedTraffic", ["properties", "allowForwardedTraffic"]);
