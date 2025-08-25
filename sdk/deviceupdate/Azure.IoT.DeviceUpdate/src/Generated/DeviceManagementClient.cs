@@ -36,8 +36,8 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Initializes a new instance of DeviceManagementClient. </summary>
-        /// <param name="endpoint"> Account endpoint. </param>
-        /// <param name="instanceId"> Account instance identifier. </param>
+        /// <param name="endpoint"> The Device Update for IoT Hub account endpoint (hostname only, no protocol). </param>
+        /// <param name="instanceId"> The Device Update for IoT Hub account instance identifier. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="instanceId"/> or <paramref name="credential"/> is null. </exception>
         public DeviceManagementClient(Uri endpoint, string instanceId, TokenCredential credential) : this(endpoint, instanceId, credential, new DeviceUpdateClientOptions())
@@ -45,8 +45,8 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary> Initializes a new instance of DeviceManagementClient. </summary>
-        /// <param name="endpoint"> Account endpoint. </param>
-        /// <param name="instanceId"> Account instance identifier. </param>
+        /// <param name="endpoint"> The Device Update for IoT Hub account endpoint (hostname only, no protocol). </param>
+        /// <param name="instanceId"> The Device Update for IoT Hub account instance identifier. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="instanceId"/> or <paramref name="credential"/> is null. </exception>
@@ -210,7 +210,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary>
-        /// [Protocol Method] Deletes a device class.
+        /// [Protocol Method] Deletes a device class. Device classes are created automatically when Device Update-enabled devices are connected to the hub but are not automatically cleaned up since they are referenced by DeviceClassSubgroups. If the user has deleted all DeviceClassSubgroups for a device class they can also delete the device class to remove the records from the system and to stop checking the compatibility of this device class with new updates. If a device is ever reconnected for this device class it will be re-created.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -245,7 +245,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary>
-        /// [Protocol Method] Deletes a device class.
+        /// [Protocol Method] Deletes a device class. Device classes are created automatically when Device Update-enabled devices are connected to the hub but are not automatically cleaned up since they are referenced by DeviceClassSubgroups. If the user has deleted all DeviceClassSubgroups for a device class they can also delete the device class to remove the records from the system and to stop checking the compatibility of this device class with new updates. If a device is ever reconnected for this device class it will be re-created.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -493,7 +493,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -528,7 +528,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -554,7 +554,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary>
-        /// [Protocol Method] Deletes a device group.
+        /// [Protocol Method] Deletes a device group. This group is automatically created when a Device Update-enabled device is connected to the hub and reports its properties. Groups, subgroups, and deployments are not automatically cleaned up but are retained for history purposes. Users can call this method to delete a group if they do not need to retain any of the history of the group and no longer need it. If a device is ever connected again for this group after the group was deleted it will be automatically re-created but there will be no history.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -563,7 +563,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -589,7 +589,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary>
-        /// [Protocol Method] Deletes a device group.
+        /// [Protocol Method] Deletes a device group. This group is automatically created when a Device Update-enabled device is connected to the hub and reports its properties. Groups, subgroups, and deployments are not automatically cleaned up but are retained for history purposes. Users can call this method to delete a group if they do not need to retain any of the history of the group and no longer need it. If a device is ever connected again for this group after the group was deleted it will be automatically re-created but there will be no history.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -598,7 +598,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -633,22 +633,22 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetGroupUpdateComplianceAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetGroupUpdateComplianceAsync(string groupId, RequestContext context = null)
+        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetUpdateComplianceForGroupAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> GetUpdateComplianceForGroupAsync(string groupId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetGroupUpdateCompliance");
+            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetUpdateComplianceForGroup");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetGroupUpdateComplianceRequest(groupId, context);
+                using HttpMessage message = CreateGetUpdateComplianceForGroupRequest(groupId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -668,22 +668,22 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetGroupUpdateCompliance(string,RequestContext)']/*" />
-        public virtual Response GetGroupUpdateCompliance(string groupId, RequestContext context = null)
+        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetUpdateComplianceForGroup(string,RequestContext)']/*" />
+        public virtual Response GetUpdateComplianceForGroup(string groupId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetGroupUpdateCompliance");
+            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetUpdateComplianceForGroup");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetGroupUpdateComplianceRequest(groupId, context);
+                using HttpMessage message = CreateGetUpdateComplianceForGroupRequest(groupId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -703,7 +703,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
@@ -740,7 +740,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
@@ -777,7 +777,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -816,7 +816,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -855,7 +855,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
@@ -892,7 +892,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
@@ -929,7 +929,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
@@ -966,7 +966,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deploymentId"/> is null. </exception>
@@ -994,7 +994,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary>
-        /// [Protocol Method] Get the device class subgroups for the group.
+        /// [Protocol Method] Gets device class subgroup details. A device class subgroup is the set of devices within the group that share the same device class. All devices within the same device class are compatible with the same updates.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1003,23 +1003,24 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
-        /// <param name="filter"> Restricts the set of device class subgroups returned. You can filter on compat properties by name and value. </param>
+        /// <param name="groupId"> Group identifier. </param>
+        /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetDeviceClassSubgroupsForGroupsAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetDeviceClassSubgroupsForGroupsAsync(string groupId, string filter = null, RequestContext context = null)
+        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetDeviceClassSubgroupAsync(string,string,RequestContext)']/*" />
+        public virtual async Task<Response> GetDeviceClassSubgroupAsync(string groupId, string deviceClassId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
 
-            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeviceClassSubgroupsForGroups");
+            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeviceClassSubgroup");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDeviceClassSubgroupsForGroupsRequest(groupId, filter, context);
+                using HttpMessage message = CreateGetDeviceClassSubgroupRequest(groupId, deviceClassId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1030,7 +1031,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary>
-        /// [Protocol Method] Get the device class subgroups for the group.
+        /// [Protocol Method] Gets device class subgroup details. A device class subgroup is the set of devices within the group that share the same device class. All devices within the same device class are compatible with the same updates.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1039,23 +1040,24 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
-        /// <param name="filter"> Restricts the set of device class subgroups returned. You can filter on compat properties by name and value. </param>
+        /// <param name="groupId"> Group identifier. </param>
+        /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetDeviceClassSubgroupsForGroups(string,string,RequestContext)']/*" />
-        public virtual Response GetDeviceClassSubgroupsForGroups(string groupId, string filter = null, RequestContext context = null)
+        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetDeviceClassSubgroup(string,string,RequestContext)']/*" />
+        public virtual Response GetDeviceClassSubgroup(string groupId, string deviceClassId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
 
-            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeviceClassSubgroupsForGroups");
+            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeviceClassSubgroup");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetDeviceClassSubgroupsForGroupsRequest(groupId, filter, context);
+                using HttpMessage message = CreateGetDeviceClassSubgroupRequest(groupId, deviceClassId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1066,7 +1068,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary>
-        /// [Protocol Method] Gets device class subgroup details.
+        /// [Protocol Method] Deletes a device class subgroup. This subgroup is automatically created when a Device Update-enabled device is connected to the hub and reports its properties. Groups, subgroups, and deployments are not automatically cleaned up but are retained for history purposes. Users can call this method to delete a subgroup if they do not need to retain any of the history of the subgroup and no longer need it. If a device is ever connected again for this subgroup after the subgroup was deleted it will be automatically re-created but there will be no history.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1075,81 +1077,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetDeviceClassSubgroupDetailsAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetDeviceClassSubgroupDetailsAsync(string groupId, string deviceClassId, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
-
-            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeviceClassSubgroupDetails");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetDeviceClassSubgroupDetailsRequest(groupId, deviceClassId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets device class subgroup details.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="groupId"> Group identity. </param>
-        /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetDeviceClassSubgroupDetails(string,string,RequestContext)']/*" />
-        public virtual Response GetDeviceClassSubgroupDetails(string groupId, string deviceClassId, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
-            Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
-
-            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeviceClassSubgroupDetails");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetDeviceClassSubgroupDetailsRequest(groupId, deviceClassId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Deletes a device class subgroup.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is null. </exception>
@@ -1177,7 +1105,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary>
-        /// [Protocol Method] Deletes a device class subgroup.
+        /// [Protocol Method] Deletes a device class subgroup. This subgroup is automatically created when a Device Update-enabled device is connected to the hub and reports its properties. Groups, subgroups, and deployments are not automatically cleaned up but are retained for history purposes. Users can call this method to delete a subgroup if they do not need to retain any of the history of the subgroup and no longer need it. If a device is ever connected again for this subgroup after the subgroup was deleted it will be automatically re-created but there will be no history.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1186,7 +1114,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is null. </exception>
@@ -1223,7 +1151,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is null. </exception>
@@ -1260,7 +1188,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is null. </exception>
@@ -1297,24 +1225,24 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetBestUpdatesForDeviceClassSubgroupsAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetBestUpdatesForDeviceClassSubgroupsAsync(string groupId, string deviceClassId, RequestContext context = null)
+        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetBestUpdatesForDeviceClassSubgroupAsync(string,string,RequestContext)']/*" />
+        public virtual async Task<Response> GetBestUpdatesForDeviceClassSubgroupAsync(string groupId, string deviceClassId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
 
-            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetBestUpdatesForDeviceClassSubgroups");
+            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetBestUpdatesForDeviceClassSubgroup");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetBestUpdatesForDeviceClassSubgroupsRequest(groupId, deviceClassId, context);
+                using HttpMessage message = CreateGetBestUpdatesForDeviceClassSubgroupRequest(groupId, deviceClassId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1334,24 +1262,24 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetBestUpdatesForDeviceClassSubgroups(string,string,RequestContext)']/*" />
-        public virtual Response GetBestUpdatesForDeviceClassSubgroups(string groupId, string deviceClassId, RequestContext context = null)
+        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetBestUpdatesForDeviceClassSubgroup(string,string,RequestContext)']/*" />
+        public virtual Response GetBestUpdatesForDeviceClassSubgroup(string groupId, string deviceClassId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
 
-            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetBestUpdatesForDeviceClassSubgroups");
+            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetBestUpdatesForDeviceClassSubgroup");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetBestUpdatesForDeviceClassSubgroupsRequest(groupId, deviceClassId, context);
+                using HttpMessage message = CreateGetBestUpdatesForDeviceClassSubgroupRequest(groupId, deviceClassId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1371,7 +1299,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1410,7 +1338,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1449,7 +1377,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1457,18 +1385,18 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='DeleteDeviceClassSubgroupDeploymentAsync(string,string,string,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteDeviceClassSubgroupDeploymentAsync(string groupId, string deviceClassId, string deploymentId, RequestContext context = null)
+        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='DeleteDeploymentForDeviceClassSubgroupAsync(string,string,string,RequestContext)']/*" />
+        public virtual async Task<Response> DeleteDeploymentForDeviceClassSubgroupAsync(string groupId, string deviceClassId, string deploymentId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
 
-            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.DeleteDeviceClassSubgroupDeployment");
+            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.DeleteDeploymentForDeviceClassSubgroup");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteDeviceClassSubgroupDeploymentRequest(groupId, deviceClassId, deploymentId, context);
+                using HttpMessage message = CreateDeleteDeploymentForDeviceClassSubgroupRequest(groupId, deviceClassId, deploymentId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1488,7 +1416,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1496,18 +1424,18 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='DeleteDeviceClassSubgroupDeployment(string,string,string,RequestContext)']/*" />
-        public virtual Response DeleteDeviceClassSubgroupDeployment(string groupId, string deviceClassId, string deploymentId, RequestContext context = null)
+        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='DeleteDeploymentForDeviceClassSubgroup(string,string,string,RequestContext)']/*" />
+        public virtual Response DeleteDeploymentForDeviceClassSubgroup(string groupId, string deviceClassId, string deploymentId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
 
-            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.DeleteDeviceClassSubgroupDeployment");
+            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.DeleteDeploymentForDeviceClassSubgroup");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteDeviceClassSubgroupDeploymentRequest(groupId, deviceClassId, deploymentId, context);
+                using HttpMessage message = CreateDeleteDeploymentForDeviceClassSubgroupRequest(groupId, deviceClassId, deploymentId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1527,7 +1455,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1566,7 +1494,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1605,7 +1533,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1644,7 +1572,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1683,7 +1611,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1722,7 +1650,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -1768,16 +1696,16 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetOperationAsync(string,ETag?,RequestContext)']/*" />
-        public virtual async Task<Response> GetOperationAsync(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
+        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetOperationStatusAsync(string,ETag?,RequestContext)']/*" />
+        public virtual async Task<Response> GetOperationStatusAsync(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetOperation");
+            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetOperationStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetOperationRequest(operationId, ifNoneMatch, context);
+                using HttpMessage message = CreateGetOperationStatusRequest(operationId, ifNoneMatch, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1804,16 +1732,16 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetOperation(string,ETag?,RequestContext)']/*" />
-        public virtual Response GetOperation(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
+        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetOperationStatus(string,ETag?,RequestContext)']/*" />
+        public virtual Response GetOperationStatus(string operationId, ETag? ifNoneMatch = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetOperation");
+            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetOperationStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetOperationRequest(operationId, ifNoneMatch, context);
+                using HttpMessage message = CreateGetOperationStatusRequest(operationId, ifNoneMatch, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1824,7 +1752,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary>
-        /// [Protocol Method] Start the device diagnostics log collection operation on specified devices.
+        /// [Protocol Method] Start the device diagnostics log collection on specified devices.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1833,24 +1761,24 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="operationId"> Operation identifier. </param>
+        /// <param name="logCollectionId"> Log collection identifier. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="logCollectionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="logCollectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='CollectLogsAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CollectLogsAsync(string operationId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='StartLogCollectionAsync(string,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> StartLogCollectionAsync(string logCollectionId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            Argument.AssertNotNullOrEmpty(logCollectionId, nameof(logCollectionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.CollectLogs");
+            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.StartLogCollection");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCollectLogsRequest(operationId, content, context);
+                using HttpMessage message = CreateStartLogCollectionRequest(logCollectionId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1861,7 +1789,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary>
-        /// [Protocol Method] Start the device diagnostics log collection operation on specified devices.
+        /// [Protocol Method] Start the device diagnostics log collection on specified devices.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1870,24 +1798,24 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="operationId"> Operation identifier. </param>
+        /// <param name="logCollectionId"> Log collection identifier. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="logCollectionId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="logCollectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='CollectLogs(string,RequestContent,RequestContext)']/*" />
-        public virtual Response CollectLogs(string operationId, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='StartLogCollection(string,RequestContent,RequestContext)']/*" />
+        public virtual Response StartLogCollection(string logCollectionId, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            Argument.AssertNotNullOrEmpty(logCollectionId, nameof(logCollectionId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.CollectLogs");
+            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.StartLogCollection");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCollectLogsRequest(operationId, content, context);
+                using HttpMessage message = CreateStartLogCollectionRequest(logCollectionId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1898,7 +1826,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary>
-        /// [Protocol Method] Get the device diagnostics log collection operation
+        /// [Protocol Method] Get the device diagnostics log collection
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1907,22 +1835,22 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="operationId"> Operation identifier. </param>
+        /// <param name="logCollectionId"> Log collection identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="logCollectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="logCollectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetLogCollectionOperationAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetLogCollectionOperationAsync(string operationId, RequestContext context = null)
+        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetLogCollectionAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> GetLogCollectionAsync(string logCollectionId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            Argument.AssertNotNullOrEmpty(logCollectionId, nameof(logCollectionId));
 
-            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetLogCollectionOperation");
+            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetLogCollection");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetLogCollectionOperationRequest(operationId, context);
+                using HttpMessage message = CreateGetLogCollectionRequest(logCollectionId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1933,7 +1861,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary>
-        /// [Protocol Method] Get the device diagnostics log collection operation
+        /// [Protocol Method] Get the device diagnostics log collection
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1942,22 +1870,22 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="operationId"> Operation identifier. </param>
+        /// <param name="logCollectionId"> Log collection identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="logCollectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="logCollectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetLogCollectionOperation(string,RequestContext)']/*" />
-        public virtual Response GetLogCollectionOperation(string operationId, RequestContext context = null)
+        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetLogCollection(string,RequestContext)']/*" />
+        public virtual Response GetLogCollection(string logCollectionId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            Argument.AssertNotNullOrEmpty(logCollectionId, nameof(logCollectionId));
 
-            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetLogCollectionOperation");
+            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetLogCollection");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetLogCollectionOperationRequest(operationId, context);
+                using HttpMessage message = CreateGetLogCollectionRequest(logCollectionId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1968,7 +1896,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary>
-        /// [Protocol Method] Get device diagnostics log collection operation with detailed status
+        /// [Protocol Method] Get log collection with detailed status
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1977,22 +1905,22 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="operationId"> Operation identifier. </param>
+        /// <param name="logCollectionId"> Log collection identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="logCollectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="logCollectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetLogCollectionOperationDetailedStatusAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetLogCollectionOperationDetailedStatusAsync(string operationId, RequestContext context = null)
+        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetLogCollectionDetailedStatusAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> GetLogCollectionDetailedStatusAsync(string logCollectionId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            Argument.AssertNotNullOrEmpty(logCollectionId, nameof(logCollectionId));
 
-            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetLogCollectionOperationDetailedStatus");
+            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetLogCollectionDetailedStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetLogCollectionOperationDetailedStatusRequest(operationId, context);
+                using HttpMessage message = CreateGetLogCollectionDetailedStatusRequest(logCollectionId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2003,7 +1931,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary>
-        /// [Protocol Method] Get device diagnostics log collection operation with detailed status
+        /// [Protocol Method] Get log collection with detailed status
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -2012,22 +1940,22 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="operationId"> Operation identifier. </param>
+        /// <param name="logCollectionId"> Log collection identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="logCollectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="logCollectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetLogCollectionOperationDetailedStatus(string,RequestContext)']/*" />
-        public virtual Response GetLogCollectionOperationDetailedStatus(string operationId, RequestContext context = null)
+        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetLogCollectionDetailedStatus(string,RequestContext)']/*" />
+        public virtual Response GetLogCollectionDetailedStatus(string logCollectionId, RequestContext context = null)
         {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            Argument.AssertNotNullOrEmpty(logCollectionId, nameof(logCollectionId));
 
-            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetLogCollectionOperationDetailedStatus");
+            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetLogCollectionDetailedStatus");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetLogCollectionOperationDetailedStatusRequest(operationId, context);
+                using HttpMessage message = CreateGetLogCollectionDetailedStatusRequest(logCollectionId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2038,7 +1966,7 @@ namespace Azure.IoT.DeviceUpdate
         }
 
         /// <summary>
-        /// [Protocol Method] Get list of device health
+        /// [Protocol Method] Gets a list of all device classes (sets of devices compatible with the same updates based on the model Id and compat properties reported in the Device Update PnP interface in IoT Hub) for all devices connected to Device Update for IoT Hub.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -2047,87 +1975,20 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Filter list by specified properties. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetDeviceHealthsAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetDeviceHealthsAsync(string filter, RequestContext context = null)
-        {
-            Argument.AssertNotNull(filter, nameof(filter));
-
-            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeviceHealths");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetDeviceHealthsRequest(filter, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get list of device health
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> Filter list by specified properties. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetDeviceHealths(string,RequestContext)']/*" />
-        public virtual Response GetDeviceHealths(string filter, RequestContext context = null)
-        {
-            Argument.AssertNotNull(filter, nameof(filter));
-
-            using var scope = ClientDiagnostics.CreateScope("DeviceManagementClient.GetDeviceHealths");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetDeviceHealthsRequest(filter, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets a list of all device classes (unique combinations of device manufacturer and model) for all devices connected to Device Update for IoT Hub.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <param name="filter"> Restricts the set of device classes returned. You can filter on friendly name. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetDeviceClassesAsync(RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetDeviceClassesAsync(RequestContext context = null)
+        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetDeviceClassesAsync(string,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetDeviceClassesAsync(string filter = null, RequestContext context = null)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeviceClassesRequest(context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeviceClassesNextPageRequest(nextLink, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeviceClassesRequest(filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeviceClassesNextPageRequest(nextLink, filter, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDeviceClasses", "value", "nextLink", context);
         }
 
         /// <summary>
-        /// [Protocol Method] Gets a list of all device classes (unique combinations of device manufacturer and model) for all devices connected to Device Update for IoT Hub.
+        /// [Protocol Method] Gets a list of all device classes (sets of devices compatible with the same updates based on the model Id and compat properties reported in the Device Update PnP interface in IoT Hub) for all devices connected to Device Update for IoT Hub.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -2136,14 +1997,15 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="filter"> Restricts the set of device classes returned. You can filter on friendly name. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetDeviceClasses(RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetDeviceClasses(RequestContext context = null)
+        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetDeviceClasses(string,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetDeviceClasses(string filter = null, RequestContext context = null)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeviceClassesRequest(context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeviceClassesNextPageRequest(nextLink, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeviceClassesRequest(filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeviceClassesNextPageRequest(nextLink, filter, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDeviceClasses", "value", "nextLink", context);
         }
 
@@ -2209,7 +2071,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Restricts the set of devices returned. You can filter on GroupId, DeviceClassId, or GroupId and DeploymentStatus. </param>
+        /// <param name="filter"> Restricts the set of devices returned. You can filter on GroupId, DeviceClassId, or GroupId and DeploymentStatus. Use DeploymentStatus eq null to query for devices with no deployment status (that have never been deployed to). </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -2231,7 +2093,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Restricts the set of devices returned. You can filter on GroupId, DeviceClassId, or GroupId and DeploymentStatus. </param>
+        /// <param name="filter"> Restricts the set of devices returned. You can filter on GroupId, DeviceClassId, or GroupId and DeploymentStatus. Use DeploymentStatus eq null to query for devices with no deployment status (that have never been deployed to). </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -2253,15 +2115,15 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="orderby"> Orders the set of groups returned. You can order by any combination of groupId, device count, created date, subgroupsWithNewUpdatesAvailableCount, subgroupsWithUpdatesInProgressCount, or subgroupsOnLatestUpdateCount. </param>
+        /// <param name="orderBy"> Orders the set of groups returned. You can order by groupId, deviceCount, createdDate, subgroupsWithNewUpdatesAvailableCount, subgroupsWithUpdatesInProgressCount, or subgroupsOnLatestUpdateCount. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetGroupsAsync(string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetGroupsAsync(string orderby = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetGroupsAsync(string orderBy = null, RequestContext context = null)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetGroupsRequest(orderby, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetGroupsNextPageRequest(nextLink, orderby, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetGroupsRequest(orderBy, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetGroupsNextPageRequest(nextLink, orderBy, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetGroups", "value", "nextLink", context);
         }
 
@@ -2275,15 +2137,15 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="orderby"> Orders the set of groups returned. You can order by any combination of groupId, device count, created date, subgroupsWithNewUpdatesAvailableCount, subgroupsWithUpdatesInProgressCount, or subgroupsOnLatestUpdateCount. </param>
+        /// <param name="orderBy"> Orders the set of groups returned. You can order by groupId, deviceCount, createdDate, subgroupsWithNewUpdatesAvailableCount, subgroupsWithUpdatesInProgressCount, or subgroupsOnLatestUpdateCount. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetGroups(string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetGroups(string orderby = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetGroups(string orderBy = null, RequestContext context = null)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetGroupsRequest(orderby, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetGroupsNextPageRequest(nextLink, orderby, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetGroupsRequest(orderBy, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetGroupsNextPageRequest(nextLink, orderBy, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetGroups", "value", "nextLink", context);
         }
 
@@ -2297,20 +2159,19 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
-        /// <param name="filter"> Restricts the set of bestUpdates returned. You can filter on update Provider, Name and Version property. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetBestUpdatesForGroupsAsync(string,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetBestUpdatesForGroupsAsync(string groupId, string filter = null, RequestContext context = null)
+        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetBestUpdatesForGroupsAsync(string,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetBestUpdatesForGroupsAsync(string groupId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetBestUpdatesForGroupsRequest(groupId, filter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetBestUpdatesForGroupsNextPageRequest(nextLink, groupId, filter, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetBestUpdatesForGroupsRequest(groupId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetBestUpdatesForGroupsNextPageRequest(nextLink, groupId, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetBestUpdatesForGroups", "value", "nextLink", context);
         }
 
@@ -2324,20 +2185,19 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
-        /// <param name="filter"> Restricts the set of bestUpdates returned. You can filter on update Provider, Name and Version property. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetBestUpdatesForGroups(string,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetBestUpdatesForGroups(string groupId, string filter = null, RequestContext context = null)
+        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetBestUpdatesForGroups(string,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetBestUpdatesForGroups(string groupId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetBestUpdatesForGroupsRequest(groupId, filter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetBestUpdatesForGroupsNextPageRequest(nextLink, groupId, filter, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetBestUpdatesForGroupsRequest(groupId, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetBestUpdatesForGroupsNextPageRequest(nextLink, groupId, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetBestUpdatesForGroups", "value", "nextLink", context);
         }
 
@@ -2351,20 +2211,20 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
-        /// <param name="orderby"> Orders the set of deployments returned. You can order by start date. </param>
+        /// <param name="groupId"> Group identifier. </param>
+        /// <param name="orderBy"> Orders the set of deployments returned. You can order by start date. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetDeploymentsForGroupsAsync(string,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetDeploymentsForGroupsAsync(string groupId, string orderby = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetDeploymentsForGroupsAsync(string groupId, string orderBy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsForGroupsRequest(groupId, orderby, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsForGroupsNextPageRequest(nextLink, groupId, orderby, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsForGroupsRequest(groupId, orderBy, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsForGroupsNextPageRequest(nextLink, groupId, orderBy, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDeploymentsForGroups", "value", "nextLink", context);
         }
 
@@ -2378,21 +2238,75 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
-        /// <param name="orderby"> Orders the set of deployments returned. You can order by start date. </param>
+        /// <param name="groupId"> Group identifier. </param>
+        /// <param name="orderBy"> Orders the set of deployments returned. You can order by start date. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetDeploymentsForGroups(string,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetDeploymentsForGroups(string groupId, string orderby = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetDeploymentsForGroups(string groupId, string orderBy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsForGroupsRequest(groupId, orderby, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsForGroupsNextPageRequest(nextLink, groupId, orderby, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsForGroupsRequest(groupId, orderBy, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsForGroupsNextPageRequest(nextLink, groupId, orderBy, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDeploymentsForGroups", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the device class subgroups for the group. A device class subgroup is the set of devices within the group that share the same device class. All devices within the same device class are compatible with the same updates.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupId"> Group identifier. </param>
+        /// <param name="filter"> Restricts the set of device class subgroups returned. You can filter on compat properties by name and value. (i.e. filter=compatProperties/propertyName1 eq 'value1' and compatProperties/propertyName2 eq 'value2'). </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetDeviceClassSubgroupsForGroupsAsync(string,string,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetDeviceClassSubgroupsForGroupsAsync(string groupId, string filter = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeviceClassSubgroupsForGroupsRequest(groupId, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeviceClassSubgroupsForGroupsNextPageRequest(nextLink, groupId, filter, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDeviceClassSubgroupsForGroups", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the device class subgroups for the group. A device class subgroup is the set of devices within the group that share the same device class. All devices within the same device class are compatible with the same updates.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupId"> Group identifier. </param>
+        /// <param name="filter"> Restricts the set of device class subgroups returned. You can filter on compat properties by name and value. (i.e. filter=compatProperties/propertyName1 eq 'value1' and compatProperties/propertyName2 eq 'value2'). </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetDeviceClassSubgroupsForGroups(string,string,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetDeviceClassSubgroupsForGroups(string groupId, string filter = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeviceClassSubgroupsForGroupsRequest(groupId, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeviceClassSubgroupsForGroupsNextPageRequest(nextLink, groupId, filter, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDeviceClassSubgroupsForGroups", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -2405,22 +2319,22 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="orderby"> Orders the set of deployments returned. You can order by start date. </param>
+        /// <param name="orderBy"> Orders the set of deployments returned. You can order by start date. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetDeploymentsForDeviceClassSubgroupsAsync(string,string,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetDeploymentsForDeviceClassSubgroupsAsync(string groupId, string deviceClassId, string orderby = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetDeploymentsForDeviceClassSubgroupsAsync(string groupId, string deviceClassId, string orderBy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsForDeviceClassSubgroupsRequest(groupId, deviceClassId, orderby, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsForDeviceClassSubgroupsNextPageRequest(nextLink, groupId, deviceClassId, orderby, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsForDeviceClassSubgroupsRequest(groupId, deviceClassId, orderBy, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsForDeviceClassSubgroupsNextPageRequest(nextLink, groupId, deviceClassId, orderBy, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDeploymentsForDeviceClassSubgroups", "value", "nextLink", context);
         }
 
@@ -2434,22 +2348,22 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
-        /// <param name="orderby"> Orders the set of deployments returned. You can order by start date. </param>
+        /// <param name="orderBy"> Orders the set of deployments returned. You can order by start date. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="deviceClassId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetDeploymentsForDeviceClassSubgroups(string,string,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetDeploymentsForDeviceClassSubgroups(string groupId, string deviceClassId, string orderby = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetDeploymentsForDeviceClassSubgroups(string groupId, string deviceClassId, string orderBy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsForDeviceClassSubgroupsRequest(groupId, deviceClassId, orderby, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsForDeviceClassSubgroupsNextPageRequest(nextLink, groupId, deviceClassId, orderby, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsForDeviceClassSubgroupsRequest(groupId, deviceClassId, orderBy, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsForDeviceClassSubgroupsNextPageRequest(nextLink, groupId, deviceClassId, orderBy, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDeploymentsForDeviceClassSubgroups", "value", "nextLink", context);
         }
 
@@ -2463,7 +2377,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="filter"> Restricts the set of deployment device states returned. You can filter on deviceId and moduleId and/or deviceState. </param>
@@ -2472,16 +2386,16 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetDevicesForDeviceClassSubgroupDeploymentsAsync(string,string,string,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetDevicesForDeviceClassSubgroupDeploymentsAsync(string groupId, string deviceClassId, string deploymentId, string filter = null, RequestContext context = null)
+        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetDeviceStatesForDeviceClassSubgroupDeploymentsAsync(string,string,string,string,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetDeviceStatesForDeviceClassSubgroupDeploymentsAsync(string groupId, string deviceClassId, string deploymentId, string filter = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDevicesForDeviceClassSubgroupDeploymentsRequest(groupId, deviceClassId, deploymentId, filter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDevicesForDeviceClassSubgroupDeploymentsNextPageRequest(nextLink, groupId, deviceClassId, deploymentId, filter, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDevicesForDeviceClassSubgroupDeployments", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeviceStatesForDeviceClassSubgroupDeploymentsRequest(groupId, deviceClassId, deploymentId, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeviceStatesForDeviceClassSubgroupDeploymentsNextPageRequest(nextLink, groupId, deviceClassId, deploymentId, filter, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDeviceStatesForDeviceClassSubgroupDeployments", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -2494,7 +2408,7 @@ namespace Azure.IoT.DeviceUpdate
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="groupId"> Group identity. </param>
+        /// <param name="groupId"> Group identifier. </param>
         /// <param name="deviceClassId"> Device class identifier. </param>
         /// <param name="deploymentId"> Deployment identifier. </param>
         /// <param name="filter"> Restricts the set of deployment device states returned. You can filter on deviceId and moduleId and/or deviceState. </param>
@@ -2503,16 +2417,16 @@ namespace Azure.IoT.DeviceUpdate
         /// <exception cref="ArgumentException"> <paramref name="groupId"/>, <paramref name="deviceClassId"/> or <paramref name="deploymentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetDevicesForDeviceClassSubgroupDeployments(string,string,string,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetDevicesForDeviceClassSubgroupDeployments(string groupId, string deviceClassId, string deploymentId, string filter = null, RequestContext context = null)
+        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetDeviceStatesForDeviceClassSubgroupDeployments(string,string,string,string,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetDeviceStatesForDeviceClassSubgroupDeployments(string groupId, string deviceClassId, string deploymentId, string filter = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(deviceClassId, nameof(deviceClassId));
             Argument.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDevicesForDeviceClassSubgroupDeploymentsRequest(groupId, deviceClassId, deploymentId, filter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDevicesForDeviceClassSubgroupDeploymentsNextPageRequest(nextLink, groupId, deviceClassId, deploymentId, filter, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDevicesForDeviceClassSubgroupDeployments", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeviceStatesForDeviceClassSubgroupDeploymentsRequest(groupId, deviceClassId, deploymentId, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeviceStatesForDeviceClassSubgroupDeploymentsNextPageRequest(nextLink, groupId, deviceClassId, deploymentId, filter, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetDeviceStatesForDeviceClassSubgroupDeployments", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -2530,12 +2444,12 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetOperationsAsync(string,int?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetOperationsAsync(string filter = null, int? top = null, RequestContext context = null)
+        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetOperationStatusesAsync(string,int?,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetOperationStatusesAsync(string filter = null, int? top = null, RequestContext context = null)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetOperationsRequest(filter, top, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetOperationsNextPageRequest(nextLink, filter, top, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetOperations", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetOperationStatusesRequest(filter, top, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetOperationStatusesNextPageRequest(nextLink, filter, top, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetOperationStatuses", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -2553,16 +2467,16 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetOperations(string,int?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetOperations(string filter = null, int? top = null, RequestContext context = null)
+        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetOperationStatuses(string,int?,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetOperationStatuses(string filter = null, int? top = null, RequestContext context = null)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetOperationsRequest(filter, top, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetOperationsNextPageRequest(nextLink, filter, top, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetOperations", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetOperationStatusesRequest(filter, top, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetOperationStatusesNextPageRequest(nextLink, filter, top, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetOperationStatuses", "value", "nextLink", context);
         }
 
         /// <summary>
-        /// [Protocol Method] Get all device diagnostics log collection operations
+        /// [Protocol Method] Get all device diagnostics log collections
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -2574,16 +2488,16 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetLogCollectionOperationsAsync(RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetLogCollectionOperationsAsync(RequestContext context = null)
+        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetLogCollectionsAsync(RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetLogCollectionsAsync(RequestContext context = null)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLogCollectionOperationsRequest(context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLogCollectionOperationsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetLogCollectionOperations", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLogCollectionsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLogCollectionsNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetLogCollections", "value", "nextLink", context);
         }
 
         /// <summary>
-        /// [Protocol Method] Get all device diagnostics log collection operations
+        /// [Protocol Method] Get all device diagnostics log collections
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -2595,12 +2509,62 @@ namespace Azure.IoT.DeviceUpdate
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetLogCollectionOperations(RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetLogCollectionOperations(RequestContext context = null)
+        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetLogCollections(RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetLogCollections(RequestContext context = null)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLogCollectionOperationsRequest(context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLogCollectionOperationsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetLogCollectionOperations", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLogCollectionsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLogCollectionsNextPageRequest(nextLink, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetLogCollections", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get list of device health
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> Restricts the set of devices for which device health is returned. You can filter on status, device id and module id. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetHealthOfDevicesAsync(string,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetHealthOfDevicesAsync(string filter, RequestContext context = null)
+        {
+            Argument.AssertNotNull(filter, nameof(filter));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetHealthOfDevicesRequest(filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetHealthOfDevicesNextPageRequest(nextLink, filter, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetHealthOfDevices", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get list of device health
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> Restricts the set of devices for which device health is returned. You can filter on status, device id and module id. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/DeviceManagementClient.xml" path="doc/members/member[@name='GetHealthOfDevices(string,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetHealthOfDevices(string filter, RequestContext context = null)
+        {
+            Argument.AssertNotNull(filter, nameof(filter));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetHealthOfDevicesRequest(filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetHealthOfDevicesNextPageRequest(nextLink, filter, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeviceManagementClient.GetHealthOfDevices", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -2673,7 +2637,7 @@ namespace Azure.IoT.DeviceUpdate
             }
         }
 
-        internal HttpMessage CreateGetDeviceClassesRequest(RequestContext context)
+        internal HttpMessage CreateGetDeviceClassesRequest(string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2685,6 +2649,10 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendPath(_instanceId, false);
             uri.AppendPath("/management/deviceClasses", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("filter", filter, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -2860,7 +2828,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetGroupsRequest(string orderby, RequestContext context)
+        internal HttpMessage CreateGetGroupsRequest(string orderBy, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2871,9 +2839,9 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendPath("/deviceUpdate/", false);
             uri.AppendPath(_instanceId, false);
             uri.AppendPath("/management/groups", false);
-            if (orderby != null)
+            if (orderBy != null)
             {
-                uri.AppendQuery("orderby", orderby, true);
+                uri.AppendQuery("orderby", orderBy, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -2917,7 +2885,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetGroupUpdateComplianceRequest(string groupId, RequestContext context)
+        internal HttpMessage CreateGetUpdateComplianceForGroupRequest(string groupId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2936,7 +2904,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetBestUpdatesForGroupsRequest(string groupId, string filter, RequestContext context)
+        internal HttpMessage CreateGetBestUpdatesForGroupsRequest(string groupId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2949,17 +2917,13 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendPath("/management/groups/", false);
             uri.AppendPath(groupId, true);
             uri.AppendPath("/bestUpdates", false);
-            if (filter != null)
-            {
-                uri.AppendQuery("filter", filter, true);
-            }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetDeploymentsForGroupsRequest(string groupId, string orderby, RequestContext context)
+        internal HttpMessage CreateGetDeploymentsForGroupsRequest(string groupId, string orderBy, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -2973,9 +2937,9 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendPath(groupId, true);
             uri.AppendPath("/deployments", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (orderby != null)
+            if (orderBy != null)
             {
-                uri.AppendQuery("orderby", orderby, true);
+                uri.AppendQuery("orderby", orderBy, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -3088,7 +3052,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetDeviceClassSubgroupDetailsRequest(string groupId, string deviceClassId, RequestContext context)
+        internal HttpMessage CreateGetDeviceClassSubgroupRequest(string groupId, string deviceClassId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -3149,7 +3113,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetBestUpdatesForDeviceClassSubgroupsRequest(string groupId, string deviceClassId, RequestContext context)
+        internal HttpMessage CreateGetBestUpdatesForDeviceClassSubgroupRequest(string groupId, string deviceClassId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -3170,7 +3134,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetDeploymentsForDeviceClassSubgroupsRequest(string groupId, string deviceClassId, string orderby, RequestContext context)
+        internal HttpMessage CreateGetDeploymentsForDeviceClassSubgroupsRequest(string groupId, string deviceClassId, string orderBy, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -3186,9 +3150,9 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendPath(deviceClassId, true);
             uri.AppendPath("/deployments", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (orderby != null)
+            if (orderBy != null)
             {
-                uri.AppendQuery("orderby", orderby, true);
+                uri.AppendQuery("orderby", orderBy, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -3217,7 +3181,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateDeleteDeviceClassSubgroupDeploymentRequest(string groupId, string deviceClassId, string deploymentId, RequestContext context)
+        internal HttpMessage CreateDeleteDeploymentForDeviceClassSubgroupRequest(string groupId, string deviceClassId, string deploymentId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
@@ -3308,7 +3272,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetDevicesForDeviceClassSubgroupDeploymentsRequest(string groupId, string deviceClassId, string deploymentId, string filter, RequestContext context)
+        internal HttpMessage CreateGetDeviceStatesForDeviceClassSubgroupDeploymentsRequest(string groupId, string deviceClassId, string deploymentId, string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -3335,7 +3299,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetOperationRequest(string operationId, ETag? ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateGetOperationStatusRequest(string operationId, ETag? ifNoneMatch, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200304);
             var request = message.Request;
@@ -3357,7 +3321,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetOperationsRequest(string filter, int? top, RequestContext context)
+        internal HttpMessage CreateGetOperationStatusesRequest(string filter, int? top, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -3382,7 +3346,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateCollectLogsRequest(string operationId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateStartLogCollectionRequest(string logCollectionId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier201);
             var request = message.Request;
@@ -3393,7 +3357,7 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendPath("/deviceUpdate/", false);
             uri.AppendPath(_instanceId, false);
             uri.AppendPath("/management/deviceDiagnostics/logCollections/", false);
-            uri.AppendPath(operationId, true);
+            uri.AppendPath(logCollectionId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -3402,7 +3366,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetLogCollectionOperationRequest(string operationId, RequestContext context)
+        internal HttpMessage CreateGetLogCollectionRequest(string logCollectionId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -3413,14 +3377,14 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendPath("/deviceUpdate/", false);
             uri.AppendPath(_instanceId, false);
             uri.AppendPath("/management/deviceDiagnostics/logCollections/", false);
-            uri.AppendPath(operationId, true);
+            uri.AppendPath(logCollectionId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetLogCollectionOperationsRequest(RequestContext context)
+        internal HttpMessage CreateGetLogCollectionsRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -3437,7 +3401,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetLogCollectionOperationDetailedStatusRequest(string operationId, RequestContext context)
+        internal HttpMessage CreateGetLogCollectionDetailedStatusRequest(string logCollectionId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -3448,7 +3412,7 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendPath("/deviceUpdate/", false);
             uri.AppendPath(_instanceId, false);
             uri.AppendPath("/management/deviceDiagnostics/logCollections/", false);
-            uri.AppendPath(operationId, true);
+            uri.AppendPath(logCollectionId, true);
             uri.AppendPath("/detailedStatus", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -3456,7 +3420,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetDeviceHealthsRequest(string filter, RequestContext context)
+        internal HttpMessage CreateGetHealthOfDevicesRequest(string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -3474,7 +3438,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetDeviceClassesNextPageRequest(string nextLink, RequestContext context)
+        internal HttpMessage CreateGetDeviceClassesNextPageRequest(string nextLink, string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -3516,7 +3480,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetGroupsNextPageRequest(string nextLink, string orderby, RequestContext context)
+        internal HttpMessage CreateGetGroupsNextPageRequest(string nextLink, string orderBy, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -3530,7 +3494,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetBestUpdatesForGroupsNextPageRequest(string nextLink, string groupId, string filter, RequestContext context)
+        internal HttpMessage CreateGetBestUpdatesForGroupsNextPageRequest(string nextLink, string groupId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -3544,7 +3508,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetDeploymentsForGroupsNextPageRequest(string nextLink, string groupId, string orderby, RequestContext context)
+        internal HttpMessage CreateGetDeploymentsForGroupsNextPageRequest(string nextLink, string groupId, string orderBy, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -3558,7 +3522,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetDeploymentsForDeviceClassSubgroupsNextPageRequest(string nextLink, string groupId, string deviceClassId, string orderby, RequestContext context)
+        internal HttpMessage CreateGetDeviceClassSubgroupsForGroupsNextPageRequest(string nextLink, string groupId, string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -3572,7 +3536,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetDevicesForDeviceClassSubgroupDeploymentsNextPageRequest(string nextLink, string groupId, string deviceClassId, string deploymentId, string filter, RequestContext context)
+        internal HttpMessage CreateGetDeploymentsForDeviceClassSubgroupsNextPageRequest(string nextLink, string groupId, string deviceClassId, string orderBy, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -3586,7 +3550,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetOperationsNextPageRequest(string nextLink, string filter, int? top, RequestContext context)
+        internal HttpMessage CreateGetDeviceStatesForDeviceClassSubgroupDeploymentsNextPageRequest(string nextLink, string groupId, string deviceClassId, string deploymentId, string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -3600,7 +3564,35 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetLogCollectionOperationsNextPageRequest(string nextLink, RequestContext context)
+        internal HttpMessage CreateGetOperationStatusesNextPageRequest(string nextLink, string filter, int? top, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetLogCollectionsNextPageRequest(string nextLink, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetHealthOfDevicesNextPageRequest(string nextLink, string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
