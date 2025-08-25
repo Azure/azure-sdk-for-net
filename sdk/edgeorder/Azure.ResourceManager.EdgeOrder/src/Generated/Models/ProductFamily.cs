@@ -48,25 +48,27 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Initializes a new instance of <see cref="ProductFamily"/>. </summary>
         internal ProductFamily()
         {
-            ImageInformation = new ChangeTrackingList<EdgeOrderProductImageInformation>();
-            FilterableProperties = new ChangeTrackingList<FilterableProperty>();
             ProductLines = new ChangeTrackingList<ProductLine>();
             ResourceProviderDetails = new ChangeTrackingList<ResourceProviderDetails>();
+            ImageInformation = new ChangeTrackingList<EdgeOrderProductImageInformation>();
+            FilterableProperties = new ChangeTrackingList<FilterableProperty>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProductFamily"/>. </summary>
-        /// <param name="displayName"> Display Name for the product system. </param>
-        /// <param name="description"> Description related to the product system. </param>
-        /// <param name="imageInformation"> Image information for the product system. </param>
-        /// <param name="costInformation"> Cost information for the product system. </param>
-        /// <param name="availabilityInformation"> Availability information of the product system. </param>
-        /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
-        /// <param name="filterableProperties"> list of filters supported for a product. </param>
         /// <param name="productLines"> List of product lines supported in the product family. </param>
         /// <param name="resourceProviderDetails"> Contains details related to resource provider. </param>
+        /// <param name="displayName"></param>
+        /// <param name="description"></param>
+        /// <param name="imageInformation"></param>
+        /// <param name="costInformation"></param>
+        /// <param name="availabilityInformation"></param>
+        /// <param name="hierarchyInformation"></param>
+        /// <param name="filterableProperties"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProductFamily(string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IReadOnlyList<FilterableProperty> filterableProperties, IReadOnlyList<ProductLine> productLines, IReadOnlyList<ResourceProviderDetails> resourceProviderDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProductFamily(IReadOnlyList<ProductLine> productLines, IReadOnlyList<ResourceProviderDetails> resourceProviderDetails, string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IReadOnlyList<FilterableProperty> filterableProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            ProductLines = productLines;
+            ResourceProviderDetails = resourceProviderDetails;
             DisplayName = displayName;
             Description = description;
             ImageInformation = imageInformation;
@@ -74,25 +76,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             AvailabilityInformation = availabilityInformation;
             HierarchyInformation = hierarchyInformation;
             FilterableProperties = filterableProperties;
-            ProductLines = productLines;
-            ResourceProviderDetails = resourceProviderDetails;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Display Name for the product system. </summary>
-        public string DisplayName { get; }
-        /// <summary> Description related to the product system. </summary>
-        public ProductDescription Description { get; }
-        /// <summary> Image information for the product system. </summary>
-        public IReadOnlyList<EdgeOrderProductImageInformation> ImageInformation { get; }
-        /// <summary> Cost information for the product system. </summary>
-        public EdgeOrderProductCostInformation CostInformation { get; }
-        /// <summary> Availability information of the product system. </summary>
-        public ProductAvailabilityInformation AvailabilityInformation { get; }
-        /// <summary> Hierarchy information of a product. </summary>
-        public HierarchyInformation HierarchyInformation { get; }
-        /// <summary> list of filters supported for a product. </summary>
-        public IReadOnlyList<FilterableProperty> FilterableProperties { get; }
         /// <summary> List of product lines supported in the product family. </summary>
         public IReadOnlyList<ProductLine> ProductLines { get; }
         /// <summary> Contains details related to resource provider. </summary>

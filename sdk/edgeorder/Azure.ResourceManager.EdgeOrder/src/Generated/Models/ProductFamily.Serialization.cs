@@ -36,51 +36,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DisplayName))
-            {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteObjectValue(Description, options);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ImageInformation))
-            {
-                writer.WritePropertyName("imageInformation"u8);
-                writer.WriteStartArray();
-                foreach (var item in ImageInformation)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(CostInformation))
-            {
-                writer.WritePropertyName("costInformation"u8);
-                writer.WriteObjectValue(CostInformation, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(AvailabilityInformation))
-            {
-                writer.WritePropertyName("availabilityInformation"u8);
-                writer.WriteObjectValue(AvailabilityInformation, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(HierarchyInformation))
-            {
-                writer.WritePropertyName("hierarchyInformation"u8);
-                writer.WriteObjectValue(HierarchyInformation, options);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(FilterableProperties))
-            {
-                writer.WritePropertyName("filterableProperties"u8);
-                writer.WriteStartArray();
-                foreach (var item in FilterableProperties)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             if (options.Format != "W" && Optional.IsCollectionDefined(ProductLines))
             {
                 writer.WritePropertyName("productLines"u8);
@@ -98,6 +53,51 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 foreach (var item in ResourceProviderDetails)
                 {
                     writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteObjectValue<ProductDescription>(Description, options);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ImageInformation))
+            {
+                writer.WritePropertyName("imageInformation"u8);
+                writer.WriteStartArray();
+                foreach (var item in ImageInformation)
+                {
+                    writer.WriteObjectValue<EdgeOrderProductImageInformation>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(CostInformation))
+            {
+                writer.WritePropertyName("costInformation"u8);
+                writer.WriteObjectValue<EdgeOrderProductCostInformation>(CostInformation, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AvailabilityInformation))
+            {
+                writer.WritePropertyName("availabilityInformation"u8);
+                writer.WriteObjectValue<ProductAvailabilityInformation>(AvailabilityInformation, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(HierarchyInformation))
+            {
+                writer.WritePropertyName("hierarchyInformation"u8);
+                writer.WriteObjectValue<HierarchyInformation>(HierarchyInformation, options);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(FilterableProperties))
+            {
+                writer.WritePropertyName("filterableProperties"u8);
+                writer.WriteStartArray();
+                foreach (var item in FilterableProperties)
+                {
+                    writer.WriteObjectValue<FilterableProperty>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -139,6 +139,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
+            IReadOnlyList<ProductLine> productLines = default;
+            IReadOnlyList<ResourceProviderDetails> resourceProviderDetails = default;
             string displayName = default;
             ProductDescription description = default;
             IReadOnlyList<EdgeOrderProductImageInformation> imageInformation = default;
@@ -146,8 +148,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             ProductAvailabilityInformation availabilityInformation = default;
             HierarchyInformation hierarchyInformation = default;
             IReadOnlyList<FilterableProperty> filterableProperties = default;
-            IReadOnlyList<ProductLine> productLines = default;
-            IReadOnlyList<ResourceProviderDetails> resourceProviderDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,6 +161,34 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("productLines"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ProductLine> array = new List<ProductLine>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ProductLine.DeserializeProductLine(item, options));
+                            }
+                            productLines = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("resourceProviderDetails"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ResourceProviderDetails> array = new List<ResourceProviderDetails>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(Models.ResourceProviderDetails.DeserializeResourceProviderDetails(item, options));
+                            }
+                            resourceProviderDetails = array;
+                            continue;
+                        }
                         if (property0.NameEquals("displayName"u8))
                         {
                             displayName = property0.Value.GetString();
@@ -213,7 +241,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             {
                                 continue;
                             }
-                            hierarchyInformation = HierarchyInformation.DeserializeHierarchyInformation(property0.Value, options);
+                            hierarchyInformation = Models.HierarchyInformation.DeserializeHierarchyInformation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("filterableProperties"u8))
@@ -230,34 +258,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             filterableProperties = array;
                             continue;
                         }
-                        if (property0.NameEquals("productLines"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ProductLine> array = new List<ProductLine>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ProductLine.DeserializeProductLine(item, options));
-                            }
-                            productLines = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("resourceProviderDetails"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ResourceProviderDetails> array = new List<ResourceProviderDetails>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(Models.ResourceProviderDetails.DeserializeResourceProviderDetails(item, options));
-                            }
-                            resourceProviderDetails = array;
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -268,6 +268,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new ProductFamily(
+                productLines ?? new ChangeTrackingList<ProductLine>(),
+                resourceProviderDetails ?? new ChangeTrackingList<ResourceProviderDetails>(),
                 displayName,
                 description,
                 imageInformation ?? new ChangeTrackingList<EdgeOrderProductImageInformation>(),
@@ -275,8 +277,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 availabilityInformation,
                 hierarchyInformation,
                 filterableProperties ?? new ChangeTrackingList<FilterableProperty>(),
-                productLines ?? new ChangeTrackingList<ProductLine>(),
-                resourceProviderDetails ?? new ChangeTrackingList<ResourceProviderDetails>(),
                 serializedAdditionalRawData);
         }
 
