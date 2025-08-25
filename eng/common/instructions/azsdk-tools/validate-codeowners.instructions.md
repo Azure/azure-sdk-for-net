@@ -38,7 +38,7 @@ After any changes, re-validate with `azsdk_engsys_validate_codeowners_entry_for_
 
 ## Step 4: Create New Code Owner Entry
 When no CODEOWNERS entry exists yet:
-1. Ensure that you have information about
+1. Ensure you have the following information
    - repo - **Required** - Repository name mapping:
       - .NET/dotnet: use "azure-sdk-for-net"
       - Python: use "azure-sdk-for-python" 
