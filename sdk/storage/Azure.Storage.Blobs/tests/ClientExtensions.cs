@@ -33,16 +33,23 @@ internal static class ClientExtensions
 
         BlobContainerClient container = client.GetParentBlobContainerClient();
         List<string> result = new();
+
+        GetBlobsOptions options = new GetBlobsOptions
+        {
+            States = BlobStates.Version,
+            Prefix = blobName,
+        };
+
         if (async)
         {
-            await foreach (BlobItem item in container.GetBlobsAsync(states: BlobStates.Version, prefix: blobName, cancellationToken: cancellationToken))
+            await foreach (BlobItem item in container.GetBlobsAsync(options, cancellationToken: cancellationToken))
             {
                 result.Add(item.VersionId.ToString());
             }
         }
         else
         {
-            foreach (BlobItem item in container.GetBlobs(states: BlobStates.Version, prefix: blobName, cancellationToken: cancellationToken))
+            foreach (BlobItem item in container.GetBlobs(options, cancellationToken: cancellationToken))
             {
                 result.Add(item.VersionId.ToString());
             }

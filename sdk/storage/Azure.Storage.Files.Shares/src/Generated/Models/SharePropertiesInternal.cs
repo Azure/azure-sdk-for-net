@@ -54,7 +54,8 @@ namespace Azure.Storage.Files.Shares.Models
         /// <param name="maxBurstCreditsForIops"></param>
         /// <param name="nextAllowedProvisionedIopsDowngradeTime"></param>
         /// <param name="nextAllowedProvisionedBandwidthDowngradeTime"></param>
-        internal SharePropertiesInternal(DateTimeOffset lastModified, string etag, int quota, int? provisionedIops, int? provisionedIngressMBps, int? provisionedEgressMBps, int? provisionedBandwidthMiBps, DateTimeOffset? nextAllowedQuotaDowngradeTime, DateTimeOffset? deletedTime, int? remainingRetentionDays, string accessTier, DateTimeOffset? accessTierChangeTime, string accessTierTransitionState, ShareLeaseStatus? leaseStatus, ShareLeaseState? leaseState, ShareLeaseDuration? leaseDuration, string enabledProtocols, ShareRootSquash? rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxIops, long? paidBurstingMaxBandwidthMibps, long? includedBurstIops, long? maxBurstCreditsForIops, DateTimeOffset? nextAllowedProvisionedIopsDowngradeTime, DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeTime)
+        /// <param name="enableSmbDirectoryLease"></param>
+        internal SharePropertiesInternal(DateTimeOffset lastModified, string etag, int quota, int? provisionedIops, int? provisionedIngressMBps, int? provisionedEgressMBps, int? provisionedBandwidthMiBps, DateTimeOffset? nextAllowedQuotaDowngradeTime, DateTimeOffset? deletedTime, int? remainingRetentionDays, string accessTier, DateTimeOffset? accessTierChangeTime, string accessTierTransitionState, ShareLeaseStatus? leaseStatus, ShareLeaseState? leaseState, ShareLeaseDuration? leaseDuration, string enabledProtocols, ShareRootSquash? rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxIops, long? paidBurstingMaxBandwidthMibps, long? includedBurstIops, long? maxBurstCreditsForIops, DateTimeOffset? nextAllowedProvisionedIopsDowngradeTime, DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeTime, bool? enableSmbDirectoryLease)
         {
             LastModified = lastModified;
             Etag = etag;
@@ -82,6 +83,7 @@ namespace Azure.Storage.Files.Shares.Models
             MaxBurstCreditsForIops = maxBurstCreditsForIops;
             NextAllowedProvisionedIopsDowngradeTime = nextAllowedProvisionedIopsDowngradeTime;
             NextAllowedProvisionedBandwidthDowngradeTime = nextAllowedProvisionedBandwidthDowngradeTime;
+            EnableSmbDirectoryLease = enableSmbDirectoryLease;
         }
 
         /// <summary> Gets the last modified. </summary>
@@ -136,5 +138,7 @@ namespace Azure.Storage.Files.Shares.Models
         public DateTimeOffset? NextAllowedProvisionedIopsDowngradeTime { get; }
         /// <summary> Gets the next allowed provisioned bandwidth downgrade time. </summary>
         public DateTimeOffset? NextAllowedProvisionedBandwidthDowngradeTime { get; }
+        /// <summary> Gets the enable smb directory lease. </summary>
+        public bool? EnableSmbDirectoryLease { get; }
     }
 }

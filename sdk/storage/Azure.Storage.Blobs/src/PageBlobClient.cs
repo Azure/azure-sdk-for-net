@@ -3380,8 +3380,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// incremental copies.
         ///
         /// The <see cref="BlobBaseClient.GetProperties"/>,
-        /// <see cref="BlobContainerClient.GetBlobs"/>, and
-        /// <see cref="BlobContainerClient.GetBlobsByHierarchy"/>
+        /// <see cref="BlobContainerClient.GetBlobsAsync(GetBlobsOptions, CancellationToken)"/>, and
+        /// <see cref="BlobContainerClient.GetBlobsByHierarchyAsync(GetBlobsByHierarchyOptions, CancellationToken)"/>
         /// operations indicate whether the blob is an incremental copy blob
         /// created in this way.  Incremental copy blobs may not be downloaded
         /// directly.  The only supported operations are
@@ -3491,8 +3491,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// incremental copies.
         ///
         /// The <see cref="BlobBaseClient.GetPropertiesAsync"/>,
-        /// <see cref="BlobContainerClient.GetBlobsAsync"/>, and
-        /// <see cref="BlobContainerClient.GetBlobsByHierarchyAsync"/>
+        /// <see cref="BlobContainerClient.GetBlobsAsync(GetBlobsOptions, CancellationToken)"/>, and
+        /// <see cref="BlobContainerClient.GetBlobsByHierarchyAsync(GetBlobsByHierarchyOptions, CancellationToken)"/>
         /// operations indicate whether the blob is an incremental copy blob
         /// created in this way.  Incremental copy blobs may not be downloaded
         /// directly.  The only supported operations are
@@ -3606,8 +3606,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// incremental copies.
         ///
         /// The <see cref="BlobBaseClient.GetPropertiesAsync"/>,
-        /// <see cref="BlobContainerClient.GetBlobsAsync"/>, and
-        /// <see cref="BlobContainerClient.GetBlobsByHierarchyAsync"/>
+        /// <see cref="BlobContainerClient.GetBlobsAsync(GetBlobsOptions, CancellationToken)"/>, and
+        /// <see cref="BlobContainerClient.GetBlobsByHierarchyAsync(GetBlobsByHierarchyOptions, CancellationToken)"/>
         /// operations indicate whether the blob is an incremental copy blob
         /// created in this way.  Incremental copy blobs may not be downloaded
         /// directly.  The only supported operations are
