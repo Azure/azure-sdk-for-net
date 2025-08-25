@@ -79,6 +79,7 @@ public class NetworkSpecification() :
         typeof(NatGatewayResource),
         typeof(NetworkInterfaceResource),
         typeof(PublicIPAddressResource),
+        typeof(NetworkSecurityGroupResource),
     };
 
     private protected override Dictionary<Type, MethodInfo> FindConstructibleResources()

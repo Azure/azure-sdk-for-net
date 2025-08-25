@@ -125,12 +125,12 @@ public partial class Subnet : ProvisionableResource
     /// <summary>
     /// The reference to the NetworkSecurityGroup resource.
     /// </summary>
-    public NetworkSecurityGroupData NetworkSecurityGroup 
+    public NetworkSecurityGroup NetworkSecurityGroup 
     {
         get { Initialize(); return _networkSecurityGroup!; }
         set { Initialize(); AssignOrReplace(ref _networkSecurityGroup, value); }
     }
-    private NetworkSecurityGroupData? _networkSecurityGroup;
+    private NetworkSecurityGroup? _networkSecurityGroup;
 
     /// <summary>
     /// Enable or Disable apply network policies on private end point in the
@@ -312,7 +312,7 @@ public partial class Subnet : ProvisionableResource
         _iPAllocations = DefineListProperty<WritableSubResource>("IPAllocations", ["properties", "ipAllocations"]);
         _ipamPoolPrefixAllocations = DefineListProperty<IpamPoolPrefixAllocation>("IpamPoolPrefixAllocations", ["properties", "ipamPoolPrefixAllocations"]);
         _natGatewayId = DefineProperty<ResourceIdentifier>("NatGatewayId", ["properties", "natGateway", "id"]);
-        _networkSecurityGroup = DefineModelProperty<NetworkSecurityGroupData>("NetworkSecurityGroup", ["properties", "networkSecurityGroup"]);
+        _networkSecurityGroup = DefineModelProperty<NetworkSecurityGroup>("NetworkSecurityGroup", ["properties", "networkSecurityGroup"]);
         _privateEndpointNetworkPolicy = DefineProperty<VirtualNetworkPrivateEndpointNetworkPolicy>("PrivateEndpointNetworkPolicy", ["properties", "privateEndpointNetworkPolicies"]);
         _privateLinkServiceNetworkPolicy = DefineProperty<VirtualNetworkPrivateLinkServiceNetworkPolicy>("PrivateLinkServiceNetworkPolicy", ["properties", "privateLinkServiceNetworkPolicies"]);
         _routeTable = DefineModelProperty<RouteTableData>("RouteTable", ["properties", "routeTable"]);

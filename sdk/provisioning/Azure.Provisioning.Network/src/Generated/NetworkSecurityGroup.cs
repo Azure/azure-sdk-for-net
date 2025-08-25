@@ -16,12 +16,12 @@ using System.Net;
 namespace Azure.Provisioning.Network;
 
 /// <summary>
-/// NetworkInterface.
+/// NetworkSecurityGroup.
 /// </summary>
-public partial class NetworkInterface : ProvisionableResource
+public partial class NetworkSecurityGroup : ProvisionableResource
 {
     /// <summary>
-    /// The name of the network interface.
+    /// The name of the network security group.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -31,75 +31,16 @@ public partial class NetworkInterface : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// Auxiliary mode of Network Interface resource.
+    /// When enabled, flows created from Network Security Group connections
+    /// will be re-evaluated when rules are updates. Initial enablement will
+    /// trigger re-evaluation.
     /// </summary>
-    public BicepValue<NetworkInterfaceAuxiliaryMode> AuxiliaryMode 
+    public BicepValue<bool> FlushConnection 
     {
-        get { Initialize(); return _auxiliaryMode!; }
-        set { Initialize(); _auxiliaryMode!.Assign(value); }
+        get { Initialize(); return _flushConnection!; }
+        set { Initialize(); _flushConnection!.Assign(value); }
     }
-    private BicepValue<NetworkInterfaceAuxiliaryMode>? _auxiliaryMode;
-
-    /// <summary>
-    /// Auxiliary sku of Network Interface resource.
-    /// </summary>
-    public BicepValue<NetworkInterfaceAuxiliarySku> AuxiliarySku 
-    {
-        get { Initialize(); return _auxiliarySku!; }
-        set { Initialize(); _auxiliarySku!.Assign(value); }
-    }
-    private BicepValue<NetworkInterfaceAuxiliarySku>? _auxiliarySku;
-
-    /// <summary>
-    /// Indicates whether to disable tcp state tracking.
-    /// </summary>
-    public BicepValue<bool> DisableTcpStateTracking 
-    {
-        get { Initialize(); return _disableTcpStateTracking!; }
-        set { Initialize(); _disableTcpStateTracking!.Assign(value); }
-    }
-    private BicepValue<bool>? _disableTcpStateTracking;
-
-    /// <summary>
-    /// The DNS settings in network interface.
-    /// </summary>
-    public NetworkInterfaceDnsSettings DnsSettings 
-    {
-        get { Initialize(); return _dnsSettings!; }
-        set { Initialize(); AssignOrReplace(ref _dnsSettings, value); }
-    }
-    private NetworkInterfaceDnsSettings? _dnsSettings;
-
-    /// <summary>
-    /// If the network interface is configured for accelerated networking. Not
-    /// applicable to VM sizes which require accelerated networking.
-    /// </summary>
-    public BicepValue<bool> EnableAcceleratedNetworking 
-    {
-        get { Initialize(); return _enableAcceleratedNetworking!; }
-        set { Initialize(); _enableAcceleratedNetworking!.Assign(value); }
-    }
-    private BicepValue<bool>? _enableAcceleratedNetworking;
-
-    /// <summary>
-    /// Indicates whether IP forwarding is enabled on this network interface.
-    /// </summary>
-    public BicepValue<bool> EnableIPForwarding 
-    {
-        get { Initialize(); return _enableIPForwarding!; }
-        set { Initialize(); _enableIPForwarding!.Assign(value); }
-    }
-    private BicepValue<bool>? _enableIPForwarding;
-
-    /// <summary>
-    /// The extended location of the network interface.
-    /// </summary>
-    public ExtendedAzureLocation ExtendedLocation 
-    {
-        get { Initialize(); return _extendedLocation!; }
-        set { Initialize(); AssignOrReplace(ref _extendedLocation, value); }
-    }
-    private ExtendedAzureLocation? _extendedLocation;
+    private BicepValue<bool>? _flushConnection;
 
     /// <summary>
     /// Resource ID.
@@ -112,16 +53,6 @@ public partial class NetworkInterface : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
-    /// A list of IPConfigurations of the network interface.
-    /// </summary>
-    public BicepList<NetworkInterfaceIPConfiguration> IPConfigurations 
-    {
-        get { Initialize(); return _iPConfigurations!; }
-        set { Initialize(); _iPConfigurations!.Assign(value); }
-    }
-    private BicepList<NetworkInterfaceIPConfiguration>? _iPConfigurations;
-
-    /// <summary>
     /// Resource location.
     /// </summary>
     public BicepValue<AzureLocation> Location 
@@ -132,44 +63,14 @@ public partial class NetworkInterface : ProvisionableResource
     private BicepValue<AzureLocation>? _location;
 
     /// <summary>
-    /// Migration phase of Network Interface resource.
+    /// A collection of security rules of the network security group.
     /// </summary>
-    public BicepValue<NetworkInterfaceMigrationPhase> MigrationPhase 
+    public BicepList<SecurityRuleData> SecurityRules 
     {
-        get { Initialize(); return _migrationPhase!; }
-        set { Initialize(); _migrationPhase!.Assign(value); }
+        get { Initialize(); return _securityRules!; }
+        set { Initialize(); _securityRules!.Assign(value); }
     }
-    private BicepValue<NetworkInterfaceMigrationPhase>? _migrationPhase;
-
-    /// <summary>
-    /// The reference to the NetworkSecurityGroup resource.
-    /// </summary>
-    public NetworkSecurityGroup NetworkSecurityGroup 
-    {
-        get { Initialize(); return _networkSecurityGroup!; }
-        set { Initialize(); AssignOrReplace(ref _networkSecurityGroup, value); }
-    }
-    private NetworkSecurityGroup? _networkSecurityGroup;
-
-    /// <summary>
-    /// Type of Network Interface resource.
-    /// </summary>
-    public BicepValue<NetworkInterfaceNicType> NicType 
-    {
-        get { Initialize(); return _nicType!; }
-        set { Initialize(); _nicType!.Assign(value); }
-    }
-    private BicepValue<NetworkInterfaceNicType>? _nicType;
-
-    /// <summary>
-    /// Privatelinkservice of the network interface resource.
-    /// </summary>
-    public PrivateLinkServiceData PrivateLinkService 
-    {
-        get { Initialize(); return _privateLinkService!; }
-        set { Initialize(); AssignOrReplace(ref _privateLinkService, value); }
-    }
-    private PrivateLinkServiceData? _privateLinkService;
+    private BicepList<SecurityRuleData>? _securityRules;
 
     /// <summary>
     /// Resource tags.
@@ -182,32 +83,13 @@ public partial class NetworkInterface : ProvisionableResource
     private BicepDictionary<string>? _tags;
 
     /// <summary>
-    /// WorkloadType of the NetworkInterface for BareMetal resources.
+    /// The default security rules of network security group.
     /// </summary>
-    public BicepValue<string> WorkloadType 
+    public BicepList<SecurityRuleData> DefaultSecurityRules 
     {
-        get { Initialize(); return _workloadType!; }
-        set { Initialize(); _workloadType!.Assign(value); }
+        get { Initialize(); return _defaultSecurityRules!; }
     }
-    private BicepValue<string>? _workloadType;
-
-    /// <summary>
-    /// Whether default outbound connectivity for nic was configured or not.
-    /// </summary>
-    public BicepValue<bool> DefaultOutboundConnectivityEnabled 
-    {
-        get { Initialize(); return _defaultOutboundConnectivityEnabled!; }
-    }
-    private BicepValue<bool>? _defaultOutboundConnectivityEnabled;
-
-    /// <summary>
-    /// Gets or sets Id.
-    /// </summary>
-    public BicepValue<ResourceIdentifier> DscpConfigurationId 
-    {
-        get { Initialize(); return _dscpConfigurationId!; }
-    }
-    private BicepValue<ResourceIdentifier>? _dscpConfigurationId;
+    private BicepList<SecurityRuleData>? _defaultSecurityRules;
 
     /// <summary>
     /// A unique read-only string that changes whenever the resource is updated.
@@ -219,44 +101,25 @@ public partial class NetworkInterface : ProvisionableResource
     private BicepValue<ETag>? _eTag;
 
     /// <summary>
-    /// A list of references to linked BareMetal resources.
+    /// A collection of references to flow log resources.
     /// </summary>
-    public BicepList<string> HostedWorkloads 
+    public BicepList<FlowLog> FlowLogs 
     {
-        get { Initialize(); return _hostedWorkloads!; }
+        get { Initialize(); return _flowLogs!; }
     }
-    private BicepList<string>? _hostedWorkloads;
+    private BicepList<FlowLog>? _flowLogs;
 
     /// <summary>
-    /// The MAC address of the network interface.
+    /// A collection of references to network interfaces.
     /// </summary>
-    public BicepValue<string> MacAddress 
+    public BicepList<NetworkInterface> NetworkInterfaces 
     {
-        get { Initialize(); return _macAddress!; }
+        get { Initialize(); return _networkInterfaces!; }
     }
-    private BicepValue<string>? _macAddress;
+    private BicepList<NetworkInterface>? _networkInterfaces;
 
     /// <summary>
-    /// Whether this is a primary network interface on a virtual machine.
-    /// </summary>
-    public BicepValue<bool> Primary 
-    {
-        get { Initialize(); return _primary!; }
-    }
-    private BicepValue<bool>? _primary;
-
-    /// <summary>
-    /// A reference to the private endpoint to which the network interface is
-    /// linked.
-    /// </summary>
-    public PrivateEndpointData PrivateEndpoint 
-    {
-        get { Initialize(); return _privateEndpoint!; }
-    }
-    private PrivateEndpointData? _privateEndpoint;
-
-    /// <summary>
-    /// The provisioning state of the network interface resource.
+    /// The provisioning state of the network security group resource.
     /// </summary>
     public BicepValue<NetworkProvisioningState> ProvisioningState 
     {
@@ -265,7 +128,7 @@ public partial class NetworkInterface : ProvisionableResource
     private BicepValue<NetworkProvisioningState>? _provisioningState;
 
     /// <summary>
-    /// The resource GUID property of the network interface resource.
+    /// The resource GUID property of the network security group resource.
     /// </summary>
     public BicepValue<Guid> ResourceGuid 
     {
@@ -274,86 +137,52 @@ public partial class NetworkInterface : ProvisionableResource
     private BicepValue<Guid>? _resourceGuid;
 
     /// <summary>
-    /// A list of TapConfigurations of the network interface.
+    /// A collection of references to subnets.
     /// </summary>
-    public BicepList<NetworkInterfaceTapConfiguration> TapConfigurations 
+    public BicepList<Subnet> Subnets 
     {
-        get { Initialize(); return _tapConfigurations!; }
+        get { Initialize(); return _subnets!; }
     }
-    private BicepList<NetworkInterfaceTapConfiguration>? _tapConfigurations;
+    private BicepList<Subnet>? _subnets;
 
     /// <summary>
-    /// Gets or sets Id.
-    /// </summary>
-    public BicepValue<ResourceIdentifier> VirtualMachineId 
-    {
-        get { Initialize(); return _virtualMachineId!; }
-    }
-    private BicepValue<ResourceIdentifier>? _virtualMachineId;
-
-    /// <summary>
-    /// Whether the virtual machine this nic is attached to supports encryption.
-    /// </summary>
-    public BicepValue<bool> VnetEncryptionSupported 
-    {
-        get { Initialize(); return _vnetEncryptionSupported!; }
-    }
-    private BicepValue<bool>? _vnetEncryptionSupported;
-
-    /// <summary>
-    /// Creates a new NetworkInterface.
+    /// Creates a new NetworkSecurityGroup.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the NetworkInterface resource.  This
-    /// can be used to refer to the resource in expressions, but is not the
-    /// Azure name of the resource.  This value can contain letters, numbers,
-    /// and underscores.
+    /// The the Bicep identifier name of the NetworkSecurityGroup resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the NetworkInterface.</param>
-    public NetworkInterface(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Network/networkInterfaces", resourceVersion ?? "2025-01-01")
+    /// <param name="resourceVersion">Version of the NetworkSecurityGroup.</param>
+    public NetworkSecurityGroup(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Network/networkSecurityGroups", resourceVersion ?? "2025-01-01")
     {
     }
 
     /// <summary>
-    /// Define all the provisionable properties of NetworkInterface.
+    /// Define all the provisionable properties of NetworkSecurityGroup.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _auxiliaryMode = DefineProperty<NetworkInterfaceAuxiliaryMode>("AuxiliaryMode", ["properties", "auxiliaryMode"]);
-        _auxiliarySku = DefineProperty<NetworkInterfaceAuxiliarySku>("AuxiliarySku", ["properties", "auxiliarySku"]);
-        _disableTcpStateTracking = DefineProperty<bool>("DisableTcpStateTracking", ["properties", "disableTcpStateTracking"]);
-        _dnsSettings = DefineModelProperty<NetworkInterfaceDnsSettings>("DnsSettings", ["properties", "dnsSettings"]);
-        _enableAcceleratedNetworking = DefineProperty<bool>("EnableAcceleratedNetworking", ["properties", "enableAcceleratedNetworking"]);
-        _enableIPForwarding = DefineProperty<bool>("EnableIPForwarding", ["properties", "enableIPForwarding"]);
-        _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["extendedLocation"]);
+        _flushConnection = DefineProperty<bool>("FlushConnection", ["properties", "flushConnection"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
-        _iPConfigurations = DefineListProperty<NetworkInterfaceIPConfiguration>("IPConfigurations", ["properties", "ipConfigurations"]);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
-        _migrationPhase = DefineProperty<NetworkInterfaceMigrationPhase>("MigrationPhase", ["properties", "migrationPhase"]);
-        _networkSecurityGroup = DefineModelProperty<NetworkSecurityGroup>("NetworkSecurityGroup", ["properties", "networkSecurityGroup"]);
-        _nicType = DefineProperty<NetworkInterfaceNicType>("NicType", ["properties", "nicType"]);
-        _privateLinkService = DefineModelProperty<PrivateLinkServiceData>("PrivateLinkService", ["properties", "privateLinkService"]);
+        _securityRules = DefineListProperty<SecurityRuleData>("SecurityRules", ["properties", "securityRules"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
-        _workloadType = DefineProperty<string>("WorkloadType", ["properties", "workloadType"]);
-        _defaultOutboundConnectivityEnabled = DefineProperty<bool>("DefaultOutboundConnectivityEnabled", ["properties", "defaultOutboundConnectivityEnabled"], isOutput: true);
-        _dscpConfigurationId = DefineProperty<ResourceIdentifier>("DscpConfigurationId", ["properties", "dscpConfiguration", "id"], isOutput: true);
+        _defaultSecurityRules = DefineListProperty<SecurityRuleData>("DefaultSecurityRules", ["properties", "defaultSecurityRules"], isOutput: true);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
-        _hostedWorkloads = DefineListProperty<string>("HostedWorkloads", ["properties", "hostedWorkloads"], isOutput: true);
-        _macAddress = DefineProperty<string>("MacAddress", ["properties", "macAddress"], isOutput: true);
-        _primary = DefineProperty<bool>("Primary", ["properties", "primary"], isOutput: true);
-        _privateEndpoint = DefineModelProperty<PrivateEndpointData>("PrivateEndpoint", ["properties", "privateEndpoint"], isOutput: true);
+        _flowLogs = DefineListProperty<FlowLog>("FlowLogs", ["properties", "flowLogs"], isOutput: true);
+        _networkInterfaces = DefineListProperty<NetworkInterface>("NetworkInterfaces", ["properties", "networkInterfaces"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _resourceGuid = DefineProperty<Guid>("ResourceGuid", ["properties", "resourceGuid"], isOutput: true);
-        _tapConfigurations = DefineListProperty<NetworkInterfaceTapConfiguration>("TapConfigurations", ["properties", "tapConfigurations"], isOutput: true);
-        _virtualMachineId = DefineProperty<ResourceIdentifier>("VirtualMachineId", ["properties", "virtualMachine", "id"], isOutput: true);
-        _vnetEncryptionSupported = DefineProperty<bool>("VnetEncryptionSupported", ["properties", "vnetEncryptionSupported"], isOutput: true);
+        _subnets = DefineListProperty<Subnet>("Subnets", ["properties", "subnets"], isOutput: true);
     }
 
     /// <summary>
-    /// Supported NetworkInterface resource versions.
+    /// Supported NetworkSecurityGroup resource versions.
     /// </summary>
     public static class ResourceVersions
     {
@@ -699,16 +528,16 @@ public partial class NetworkInterface : ProvisionableResource
     }
 
     /// <summary>
-    /// Creates a reference to an existing NetworkInterface.
+    /// Creates a reference to an existing NetworkSecurityGroup.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the NetworkInterface resource.  This
-    /// can be used to refer to the resource in expressions, but is not the
-    /// Azure name of the resource.  This value can contain letters, numbers,
-    /// and underscores.
+    /// The the Bicep identifier name of the NetworkSecurityGroup resource.
+    /// This can be used to refer to the resource in expressions, but is not
+    /// the Azure name of the resource.  This value can contain letters,
+    /// numbers, and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the NetworkInterface.</param>
-    /// <returns>The existing NetworkInterface resource.</returns>
-    public static NetworkInterface FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+    /// <param name="resourceVersion">Version of the NetworkSecurityGroup.</param>
+    /// <returns>The existing NetworkSecurityGroup resource.</returns>
+    public static NetworkSecurityGroup FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }
