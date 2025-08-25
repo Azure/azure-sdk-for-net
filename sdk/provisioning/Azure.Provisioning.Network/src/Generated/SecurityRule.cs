@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using System;
+using System.ComponentModel;
 
 namespace Azure.Provisioning.Network;
 
@@ -630,4 +631,12 @@ public partial class SecurityRule : ProvisionableResource
     /// <returns>The existing SecurityRule resource.</returns>
     public static SecurityRule FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
+
+    /// <summary>
+    /// Get the requirements for naming this SecurityRule resource.
+    /// </summary>
+    /// <returns>Naming requirements.</returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override ResourceNameRequirements GetResourceNameRequirements() =>
+        new(minLength: 1, maxLength: 80, validCharacters: ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen | ResourceNameCharacters.Underscore | ResourceNameCharacters.Period);
 }

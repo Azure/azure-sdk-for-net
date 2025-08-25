@@ -12,17 +12,16 @@ using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using System;
 using System.ComponentModel;
-using System.Net;
 
 namespace Azure.Provisioning.Network;
 
 /// <summary>
-/// PublicIPAddress.
+/// PublicIPPrefix.
 /// </summary>
-public partial class PublicIPAddress : ProvisionableResource
+public partial class PublicIPPrefix : ProvisionableResource
 {
     /// <summary>
-    /// The name of the public IP address.
+    /// The name of the public IP prefix.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -32,35 +31,14 @@ public partial class PublicIPAddress : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// The DDoS protection custom policy associated with the public IP address.
+    /// Gets or sets Id.
     /// </summary>
-    public DdosSettings DdosSettings 
+    public BicepValue<ResourceIdentifier> CustomIPPrefixId 
     {
-        get { Initialize(); return _ddosSettings!; }
-        set { Initialize(); AssignOrReplace(ref _ddosSettings, value); }
+        get { Initialize(); return _customIPPrefixId!; }
+        set { Initialize(); _customIPPrefixId!.Assign(value); }
     }
-    private DdosSettings? _ddosSettings;
-
-    /// <summary>
-    /// Specify what happens to the public IP address when the VM using it is
-    /// deleted.
-    /// </summary>
-    public BicepValue<IPAddressDeleteOption> DeleteOption 
-    {
-        get { Initialize(); return _deleteOption!; }
-        set { Initialize(); _deleteOption!.Assign(value); }
-    }
-    private BicepValue<IPAddressDeleteOption>? _deleteOption;
-
-    /// <summary>
-    /// The FQDN of the DNS record associated with the public IP address.
-    /// </summary>
-    public PublicIPAddressDnsSettings DnsSettings 
-    {
-        get { Initialize(); return _dnsSettings!; }
-        set { Initialize(); AssignOrReplace(ref _dnsSettings, value); }
-    }
-    private PublicIPAddressDnsSettings? _dnsSettings;
+    private BicepValue<ResourceIdentifier>? _customIPPrefixId;
 
     /// <summary>
     /// The extended location of the public ip address.
@@ -83,27 +61,7 @@ public partial class PublicIPAddress : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
-    /// The idle timeout of the public IP address.
-    /// </summary>
-    public BicepValue<int> IdleTimeoutInMinutes 
-    {
-        get { Initialize(); return _idleTimeoutInMinutes!; }
-        set { Initialize(); _idleTimeoutInMinutes!.Assign(value); }
-    }
-    private BicepValue<int>? _idleTimeoutInMinutes;
-
-    /// <summary>
-    /// The IP address associated with the public IP address resource.
-    /// </summary>
-    public BicepValue<string> IPAddress 
-    {
-        get { Initialize(); return _iPAddress!; }
-        set { Initialize(); _iPAddress!.Assign(value); }
-    }
-    private BicepValue<string>? _iPAddress;
-
-    /// <summary>
-    /// The list of tags associated with the public IP address.
+    /// The list of tags associated with the public IP prefix.
     /// </summary>
     public BicepList<IPTag> IPTags 
     {
@@ -111,16 +69,6 @@ public partial class PublicIPAddress : ProvisionableResource
         set { Initialize(); _iPTags!.Assign(value); }
     }
     private BicepList<IPTag>? _iPTags;
-
-    /// <summary>
-    /// The linked public IP address of the public IP address resource.
-    /// </summary>
-    public PublicIPAddress LinkedPublicIPAddress 
-    {
-        get { Initialize(); return _linkedPublicIPAddress!; }
-        set { Initialize(); AssignOrReplace(ref _linkedPublicIPAddress, value); }
-    }
-    private PublicIPAddress? _linkedPublicIPAddress;
 
     /// <summary>
     /// Resource location.
@@ -133,17 +81,7 @@ public partial class PublicIPAddress : ProvisionableResource
     private BicepValue<AzureLocation>? _location;
 
     /// <summary>
-    /// Migration phase of Public IP Address.
-    /// </summary>
-    public BicepValue<PublicIPAddressMigrationPhase> MigrationPhase 
-    {
-        get { Initialize(); return _migrationPhase!; }
-        set { Initialize(); _migrationPhase!.Assign(value); }
-    }
-    private BicepValue<PublicIPAddressMigrationPhase>? _migrationPhase;
-
-    /// <summary>
-    /// The NatGateway for the Public IP address.
+    /// NatGateway of Public IP Prefix.
     /// </summary>
     public NatGateway NatGateway 
     {
@@ -151,6 +89,16 @@ public partial class PublicIPAddress : ProvisionableResource
         set { Initialize(); AssignOrReplace(ref _natGateway, value); }
     }
     private NatGateway? _natGateway;
+
+    /// <summary>
+    /// The Length of the Public IP Prefix.
+    /// </summary>
+    public BicepValue<int> PrefixLength 
+    {
+        get { Initialize(); return _prefixLength!; }
+        set { Initialize(); _prefixLength!.Assign(value); }
+    }
+    private BicepValue<int>? _prefixLength;
 
     /// <summary>
     /// The public IP address version.
@@ -163,44 +111,14 @@ public partial class PublicIPAddress : ProvisionableResource
     private BicepValue<NetworkIPVersion>? _publicIPAddressVersion;
 
     /// <summary>
-    /// The public IP address allocation method.
+    /// The public IP prefix SKU.
     /// </summary>
-    public BicepValue<NetworkIPAllocationMethod> PublicIPAllocationMethod 
-    {
-        get { Initialize(); return _publicIPAllocationMethod!; }
-        set { Initialize(); _publicIPAllocationMethod!.Assign(value); }
-    }
-    private BicepValue<NetworkIPAllocationMethod>? _publicIPAllocationMethod;
-
-    /// <summary>
-    /// Gets or sets Id.
-    /// </summary>
-    public BicepValue<ResourceIdentifier> PublicIPPrefixId 
-    {
-        get { Initialize(); return _publicIPPrefixId!; }
-        set { Initialize(); _publicIPPrefixId!.Assign(value); }
-    }
-    private BicepValue<ResourceIdentifier>? _publicIPPrefixId;
-
-    /// <summary>
-    /// The service public IP address of the public IP address resource.
-    /// </summary>
-    public PublicIPAddress ServicePublicIPAddress 
-    {
-        get { Initialize(); return _servicePublicIPAddress!; }
-        set { Initialize(); AssignOrReplace(ref _servicePublicIPAddress, value); }
-    }
-    private PublicIPAddress? _servicePublicIPAddress;
-
-    /// <summary>
-    /// The public IP address SKU.
-    /// </summary>
-    public PublicIPAddressSku Sku 
+    public PublicIPPrefixSku Sku 
     {
         get { Initialize(); return _sku!; }
         set { Initialize(); AssignOrReplace(ref _sku, value); }
     }
-    private PublicIPAddressSku? _sku;
+    private PublicIPPrefixSku? _sku;
 
     /// <summary>
     /// Resource tags.
@@ -233,16 +151,25 @@ public partial class PublicIPAddress : ProvisionableResource
     private BicepValue<ETag>? _eTag;
 
     /// <summary>
-    /// The IP configuration associated with the public IP address.
+    /// The allocated Prefix.
     /// </summary>
-    public NetworkIPConfiguration IPConfiguration 
+    public BicepValue<string> IPPrefix 
     {
-        get { Initialize(); return _iPConfiguration!; }
+        get { Initialize(); return _iPPrefix!; }
     }
-    private NetworkIPConfiguration? _iPConfiguration;
+    private BicepValue<string>? _iPPrefix;
 
     /// <summary>
-    /// The provisioning state of the public IP address resource.
+    /// Gets or sets Id.
+    /// </summary>
+    public BicepValue<ResourceIdentifier> LoadBalancerFrontendIPConfigurationId 
+    {
+        get { Initialize(); return _loadBalancerFrontendIPConfigurationId!; }
+    }
+    private BicepValue<ResourceIdentifier>? _loadBalancerFrontendIPConfigurationId;
+
+    /// <summary>
+    /// The provisioning state of the public IP prefix resource.
     /// </summary>
     public BicepValue<NetworkProvisioningState> ProvisioningState 
     {
@@ -251,7 +178,16 @@ public partial class PublicIPAddress : ProvisionableResource
     private BicepValue<NetworkProvisioningState>? _provisioningState;
 
     /// <summary>
-    /// The resource GUID property of the public IP address resource.
+    /// The list of all referenced PublicIPAddresses.
+    /// </summary>
+    public BicepList<SubResource> PublicIPAddresses 
+    {
+        get { Initialize(); return _publicIPAddresses!; }
+    }
+    private BicepList<SubResource>? _publicIPAddresses;
+
+    /// <summary>
+    /// The resource GUID property of the public IP prefix resource.
     /// </summary>
     public BicepValue<Guid> ResourceGuid 
     {
@@ -260,54 +196,48 @@ public partial class PublicIPAddress : ProvisionableResource
     private BicepValue<Guid>? _resourceGuid;
 
     /// <summary>
-    /// Creates a new PublicIPAddress.
+    /// Creates a new PublicIPPrefix.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the PublicIPAddress resource.  This
-    /// can be used to refer to the resource in expressions, but is not the
-    /// Azure name of the resource.  This value can contain letters, numbers,
-    /// and underscores.
+    /// The the Bicep identifier name of the PublicIPPrefix resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the PublicIPAddress.</param>
-    public PublicIPAddress(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Network/publicIPAddresses", resourceVersion ?? "2025-01-01")
+    /// <param name="resourceVersion">Version of the PublicIPPrefix.</param>
+    public PublicIPPrefix(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.Network/publicIPPrefixes", resourceVersion ?? "2025-01-01")
     {
     }
 
     /// <summary>
-    /// Define all the provisionable properties of PublicIPAddress.
+    /// Define all the provisionable properties of PublicIPPrefix.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _ddosSettings = DefineModelProperty<DdosSettings>("DdosSettings", ["properties", "ddosSettings"]);
-        _deleteOption = DefineProperty<IPAddressDeleteOption>("DeleteOption", ["properties", "deleteOption"]);
-        _dnsSettings = DefineModelProperty<PublicIPAddressDnsSettings>("DnsSettings", ["properties", "dnsSettings"]);
+        _customIPPrefixId = DefineProperty<ResourceIdentifier>("CustomIPPrefixId", ["properties", "customIPPrefix", "id"]);
         _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["extendedLocation"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
-        _idleTimeoutInMinutes = DefineProperty<int>("IdleTimeoutInMinutes", ["properties", "idleTimeoutInMinutes"]);
-        _iPAddress = DefineProperty<string>("IPAddress", ["properties", "ipAddress"]);
         _iPTags = DefineListProperty<IPTag>("IPTags", ["properties", "ipTags"]);
-        _linkedPublicIPAddress = DefineModelProperty<PublicIPAddress>("LinkedPublicIPAddress", ["properties", "linkedPublicIPAddress"]);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
-        _migrationPhase = DefineProperty<PublicIPAddressMigrationPhase>("MigrationPhase", ["properties", "migrationPhase"]);
         _natGateway = DefineModelProperty<NatGateway>("NatGateway", ["properties", "natGateway"]);
+        _prefixLength = DefineProperty<int>("PrefixLength", ["properties", "prefixLength"]);
         _publicIPAddressVersion = DefineProperty<NetworkIPVersion>("PublicIPAddressVersion", ["properties", "publicIPAddressVersion"]);
-        _publicIPAllocationMethod = DefineProperty<NetworkIPAllocationMethod>("PublicIPAllocationMethod", ["properties", "publicIPAllocationMethod"]);
-        _publicIPPrefixId = DefineProperty<ResourceIdentifier>("PublicIPPrefixId", ["properties", "publicIPPrefix", "id"]);
-        _servicePublicIPAddress = DefineModelProperty<PublicIPAddress>("ServicePublicIPAddress", ["properties", "servicePublicIPAddress"]);
-        _sku = DefineModelProperty<PublicIPAddressSku>("Sku", ["sku"]);
+        _sku = DefineModelProperty<PublicIPPrefixSku>("Sku", ["sku"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _zones = DefineListProperty<string>("Zones", ["zones"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
-        _iPConfiguration = DefineModelProperty<NetworkIPConfiguration>("IPConfiguration", ["properties", "ipConfiguration"], isOutput: true);
+        _iPPrefix = DefineProperty<string>("IPPrefix", ["properties", "ipPrefix"], isOutput: true);
+        _loadBalancerFrontendIPConfigurationId = DefineProperty<ResourceIdentifier>("LoadBalancerFrontendIPConfigurationId", ["properties", "loadBalancerFrontendIpConfiguration", "id"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
+        _publicIPAddresses = DefineListProperty<SubResource>("PublicIPAddresses", ["properties", "publicIPAddresses"], isOutput: true);
         _resourceGuid = DefineProperty<Guid>("ResourceGuid", ["properties", "resourceGuid"], isOutput: true);
     }
 
     /// <summary>
-    /// Supported PublicIPAddress resource versions.
+    /// Supported PublicIPPrefix resource versions.
     /// </summary>
     public static class ResourceVersions
     {
@@ -540,134 +470,24 @@ public partial class PublicIPAddress : ProvisionableResource
         /// 2018-07-01.
         /// </summary>
         public static readonly string V2018_07_01 = "2018-07-01";
-
-        /// <summary>
-        /// 2018-06-01.
-        /// </summary>
-        public static readonly string V2018_06_01 = "2018-06-01";
-
-        /// <summary>
-        /// 2018-05-01.
-        /// </summary>
-        public static readonly string V2018_05_01 = "2018-05-01";
-
-        /// <summary>
-        /// 2018-04-01.
-        /// </summary>
-        public static readonly string V2018_04_01 = "2018-04-01";
-
-        /// <summary>
-        /// 2018-03-01.
-        /// </summary>
-        public static readonly string V2018_03_01 = "2018-03-01";
-
-        /// <summary>
-        /// 2018-02-01.
-        /// </summary>
-        public static readonly string V2018_02_01 = "2018-02-01";
-
-        /// <summary>
-        /// 2018-01-01.
-        /// </summary>
-        public static readonly string V2018_01_01 = "2018-01-01";
-
-        /// <summary>
-        /// 2017-11-01.
-        /// </summary>
-        public static readonly string V2017_11_01 = "2017-11-01";
-
-        /// <summary>
-        /// 2017-10-01.
-        /// </summary>
-        public static readonly string V2017_10_01 = "2017-10-01";
-
-        /// <summary>
-        /// 2017-09-01.
-        /// </summary>
-        public static readonly string V2017_09_01 = "2017-09-01";
-
-        /// <summary>
-        /// 2017-08-01.
-        /// </summary>
-        public static readonly string V2017_08_01 = "2017-08-01";
-
-        /// <summary>
-        /// 2017-06-01.
-        /// </summary>
-        public static readonly string V2017_06_01 = "2017-06-01";
-
-        /// <summary>
-        /// 2017-04-01.
-        /// </summary>
-        public static readonly string V2017_04_01 = "2017-04-01";
-
-        /// <summary>
-        /// 2017-03-01.
-        /// </summary>
-        public static readonly string V2017_03_01 = "2017-03-01";
-
-        /// <summary>
-        /// 2016-12-01.
-        /// </summary>
-        public static readonly string V2016_12_01 = "2016-12-01";
-
-        /// <summary>
-        /// 2016-11-01.
-        /// </summary>
-        public static readonly string V2016_11_01 = "2016-11-01";
-
-        /// <summary>
-        /// 2016-10-01.
-        /// </summary>
-        public static readonly string V2016_10_01 = "2016-10-01";
-
-        /// <summary>
-        /// 2016-09-01.
-        /// </summary>
-        public static readonly string V2016_09_01 = "2016-09-01";
-
-        /// <summary>
-        /// 2016-08-01.
-        /// </summary>
-        public static readonly string V2016_08_01 = "2016-08-01";
-
-        /// <summary>
-        /// 2016-07-01.
-        /// </summary>
-        public static readonly string V2016_07_01 = "2016-07-01";
-
-        /// <summary>
-        /// 2016-06-01.
-        /// </summary>
-        public static readonly string V2016_06_01 = "2016-06-01";
-
-        /// <summary>
-        /// 2016-03-30.
-        /// </summary>
-        public static readonly string V2016_03_30 = "2016-03-30";
-
-        /// <summary>
-        /// 2015-06-15.
-        /// </summary>
-        public static readonly string V2015_06_15 = "2015-06-15";
     }
 
     /// <summary>
-    /// Creates a reference to an existing PublicIPAddress.
+    /// Creates a reference to an existing PublicIPPrefix.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the PublicIPAddress resource.  This
-    /// can be used to refer to the resource in expressions, but is not the
-    /// Azure name of the resource.  This value can contain letters, numbers,
-    /// and underscores.
+    /// The the Bicep identifier name of the PublicIPPrefix resource.  This can
+    /// be used to refer to the resource in expressions, but is not the Azure
+    /// name of the resource.  This value can contain letters, numbers, and
+    /// underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the PublicIPAddress.</param>
-    /// <returns>The existing PublicIPAddress resource.</returns>
-    public static PublicIPAddress FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+    /// <param name="resourceVersion">Version of the PublicIPPrefix.</param>
+    /// <returns>The existing PublicIPPrefix resource.</returns>
+    public static PublicIPPrefix FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 
     /// <summary>
-    /// Get the requirements for naming this PublicIPAddress resource.
+    /// Get the requirements for naming this PublicIPPrefix resource.
     /// </summary>
     /// <returns>Naming requirements.</returns>
     [EditorBrowsable(EditorBrowsableState.Never)]

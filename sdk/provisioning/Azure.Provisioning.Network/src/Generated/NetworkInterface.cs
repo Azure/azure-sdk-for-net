@@ -11,6 +11,7 @@ using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using System;
+using System.ComponentModel;
 using System.Net;
 
 namespace Azure.Provisioning.Network;
@@ -711,4 +712,12 @@ public partial class NetworkInterface : ProvisionableResource
     /// <returns>The existing NetworkInterface resource.</returns>
     public static NetworkInterface FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
+
+    /// <summary>
+    /// Get the requirements for naming this NetworkInterface resource.
+    /// </summary>
+    /// <returns>Naming requirements.</returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override ResourceNameRequirements GetResourceNameRequirements() =>
+        new(minLength: 1, maxLength: 80, validCharacters: ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen | ResourceNameCharacters.Underscore | ResourceNameCharacters.Period);
 }
