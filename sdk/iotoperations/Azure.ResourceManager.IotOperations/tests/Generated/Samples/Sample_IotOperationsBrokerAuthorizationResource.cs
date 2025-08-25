@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_BrokerAuthorizationGet()
         {
-            // Generated from example definition: 2024-11-01/BrokerAuthorization_Get_MaximumSet_Gen.json
+            // Generated from example definition: 2025-07-01-preview/BrokerAuthorization_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "BrokerAuthorizationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_BrokerAuthorizationDelete()
         {
-            // Generated from example definition: 2024-11-01/BrokerAuthorization_Delete_MaximumSet_Gen.json
+            // Generated from example definition: 2025-07-01-preview/BrokerAuthorization_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "BrokerAuthorizationResource_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_BrokerAuthorizationCreateOrUpdateComplex()
         {
-            // Generated from example definition: 2024-11-01/BrokerAuthorization_CreateOrUpdate_Complex.json
+            // Generated from example definition: 2025-07-01-preview/BrokerAuthorization_CreateOrUpdate_Complex.json
             // this example is just showing the usage of "BrokerAuthorizationResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
             IotOperationsBrokerAuthorizationResource iotOperationsBrokerAuthorization = client.GetIotOperationsBrokerAuthorizationResource(iotOperationsBrokerAuthorizationResourceId);
 
             // invoke the operation
-            IotOperationsBrokerAuthorizationData data = new IotOperationsBrokerAuthorizationData(new IotOperationsExtendedLocation("qmbrfwcpwwhggszhrdjv", IotOperationsExtendedLocationType.CustomLocation))
+            IotOperationsBrokerAuthorizationData data = new IotOperationsBrokerAuthorizationData
             {
                 Properties = new IotOperationsBrokerAuthorizationProperties(new BrokerAuthorizationConfig
                 {
@@ -132,6 +132,7 @@ Usernames = {"temperature-sensor", "humidity-sensor"},
 StateStoreResources = {new StateStoreResourceRule(StateStoreResourceKeyType.Pattern, new string[]{"myreadkey", "myotherkey?", "mynumerickeysuffix[0-9]", "clients:{principal.clientId}:*"}, StateStoreResourceDefinitionMethod.Read), new StateStoreResourceRule(StateStoreResourceKeyType.Binary, new string[]{"MTE2IDEwMSAxMTUgMTE2"}, StateStoreResourceDefinitionMethod.ReadWrite)},
 }},
                 }),
+                ExtendedLocation = new IotOperationsExtendedLocation("/subscriptions/F8C729F9-DF9C-4743-848F-96EE433D8E53/resourceGroups/rgiotoperations/providers/Microsoft.ExtendedLocation/customLocations/resource-123", IotOperationsExtendedLocationType.CustomLocation),
             };
             ArmOperation<IotOperationsBrokerAuthorizationResource> lro = await iotOperationsBrokerAuthorization.UpdateAsync(WaitUntil.Completed, data);
             IotOperationsBrokerAuthorizationResource result = lro.Value;
@@ -147,7 +148,7 @@ StateStoreResources = {new StateStoreResourceRule(StateStoreResourceKeyType.Patt
         [Ignore("Only validating compilation of examples")]
         public async Task Update_BrokerAuthorizationCreateOrUpdate()
         {
-            // Generated from example definition: 2024-11-01/BrokerAuthorization_CreateOrUpdate_MaximumSet_Gen.json
+            // Generated from example definition: 2025-07-01-preview/BrokerAuthorization_CreateOrUpdate_MaximumSet_Gen.json
             // this example is just showing the usage of "BrokerAuthorizationResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -166,7 +167,7 @@ StateStoreResources = {new StateStoreResourceRule(StateStoreResourceKeyType.Patt
             IotOperationsBrokerAuthorizationResource iotOperationsBrokerAuthorization = client.GetIotOperationsBrokerAuthorizationResource(iotOperationsBrokerAuthorizationResourceId);
 
             // invoke the operation
-            IotOperationsBrokerAuthorizationData data = new IotOperationsBrokerAuthorizationData(new IotOperationsExtendedLocation("qmbrfwcpwwhggszhrdjv", IotOperationsExtendedLocationType.CustomLocation))
+            IotOperationsBrokerAuthorizationData data = new IotOperationsBrokerAuthorizationData
             {
                 Properties = new IotOperationsBrokerAuthorizationProperties(new BrokerAuthorizationConfig
                 {
@@ -191,6 +192,7 @@ Usernames = {"iozngyqndrteikszkbasinzdjtm"},
 StateStoreResources = {new StateStoreResourceRule(StateStoreResourceKeyType.Pattern, new string[]{"tkounsqtwvzyaklxjqoerpu"}, StateStoreResourceDefinitionMethod.Read)},
 }},
                 }),
+                ExtendedLocation = new IotOperationsExtendedLocation("/subscriptions/F8C729F9-DF9C-4743-848F-96EE433D8E53/resourceGroups/rgiotoperations/providers/Microsoft.ExtendedLocation/customLocations/resource-123", IotOperationsExtendedLocationType.CustomLocation),
             };
             ArmOperation<IotOperationsBrokerAuthorizationResource> lro = await iotOperationsBrokerAuthorization.UpdateAsync(WaitUntil.Completed, data);
             IotOperationsBrokerAuthorizationResource result = lro.Value;
@@ -206,7 +208,7 @@ StateStoreResources = {new StateStoreResourceRule(StateStoreResourceKeyType.Patt
         [Ignore("Only validating compilation of examples")]
         public async Task Update_BrokerAuthorizationCreateOrUpdateSimple()
         {
-            // Generated from example definition: 2024-11-01/BrokerAuthorization_CreateOrUpdate_Simple.json
+            // Generated from example definition: 2025-07-01-preview/BrokerAuthorization_CreateOrUpdate_Simple.json
             // this example is just showing the usage of "BrokerAuthorizationResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -225,7 +227,7 @@ StateStoreResources = {new StateStoreResourceRule(StateStoreResourceKeyType.Patt
             IotOperationsBrokerAuthorizationResource iotOperationsBrokerAuthorization = client.GetIotOperationsBrokerAuthorizationResource(iotOperationsBrokerAuthorizationResourceId);
 
             // invoke the operation
-            IotOperationsBrokerAuthorizationData data = new IotOperationsBrokerAuthorizationData(new IotOperationsExtendedLocation("qmbrfwcpwwhggszhrdjv", IotOperationsExtendedLocationType.CustomLocation))
+            IotOperationsBrokerAuthorizationData data = new IotOperationsBrokerAuthorizationData
             {
                 Properties = new IotOperationsBrokerAuthorizationProperties(new BrokerAuthorizationConfig
                 {
@@ -250,6 +252,7 @@ ClientIds = {"my-client-id"},
 StateStoreResources = {new StateStoreResourceRule(StateStoreResourceKeyType.Pattern, new string[]{"*"}, StateStoreResourceDefinitionMethod.ReadWrite)},
 }},
                 }),
+                ExtendedLocation = new IotOperationsExtendedLocation("/subscriptions/F8C729F9-DF9C-4743-848F-96EE433D8E53/resourceGroups/rgiotoperations/providers/Microsoft.ExtendedLocation/customLocations/resource-123", IotOperationsExtendedLocationType.CustomLocation),
             };
             ArmOperation<IotOperationsBrokerAuthorizationResource> lro = await iotOperationsBrokerAuthorization.UpdateAsync(WaitUntil.Completed, data);
             IotOperationsBrokerAuthorizationResource result = lro.Value;
