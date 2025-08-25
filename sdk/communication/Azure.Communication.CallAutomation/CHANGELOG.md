@@ -1,5 +1,14 @@
 # Release History
 
+## 1.6.0-beta.1 (2025-08-25)
+
+### Features Added
+
+- Added support for moving a participant from one call to another, enabling seamless participant transfer between active calls.
+- Added support for retrieving Teams phone call details, including the ability to specify a custom calling context for enhanced integration scenarios.
+- Added support for Personally Identifiable Information (PII) redaction and summarization in transcription, improving privacy and providing concise summaries of transcribed content.
+- Added support for sentiment analysis in both speech and choice recognition, allowing detection of participant sentiment during call interactions.
+
 ## 1.5.0 (2025-08-25)
 
 ### Features Added
