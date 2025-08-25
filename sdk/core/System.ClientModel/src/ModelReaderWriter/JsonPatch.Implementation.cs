@@ -287,7 +287,7 @@ public partial struct JsonPatch
         }
         else
         {
-            if (existingArray.IsEmpty)// && items?.Count == 0)
+            if (existingArray.IsEmpty)
             {
                 return encodedValue.Value;
             }
@@ -640,12 +640,6 @@ public partial struct JsonPatch
     {
         GetSubPath(parentPath, fullPath, subPath, out var bytesWritten);
         subPath = subPath.Slice(0, bytesWritten);
-    }
-
-    private static ReadOnlySpan<byte> GetSubPath(ReadOnlySpan<byte> parentPath, ReadOnlySpan<byte> fullPath, Span<byte> subPath)
-    {
-        GetSubPath(parentPath, fullPath, subPath, out var bytesWritten);
-        return subPath.Slice(0, bytesWritten);
     }
 
     private ReadOnlyMemory<byte> ModifyJson(EncodedValue currentValue, ReadOnlySpan<byte> jsonPath, EncodedValue encodedValue)
