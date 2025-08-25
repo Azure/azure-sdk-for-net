@@ -18,7 +18,7 @@ Use `azsdk_check_service_label` to check status:
 - **NotAServiceLabel**: Label exists but it is not a service label - go to Step 3 for new service label
 
 ## Step 3: Create New Service Label
-When no valid service label exists, guide the user through creating a new one.
+If no valid service label exists, guide the user through creating a new one.
 
 1. **Check existing labels**: Search for related service labels, offer alternatives
 2. **Generate recommendation**: Suggest label name following guidelines:
