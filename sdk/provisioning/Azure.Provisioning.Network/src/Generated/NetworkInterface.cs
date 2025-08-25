@@ -249,11 +249,11 @@ public partial class NetworkInterface : ProvisionableResource
     /// A reference to the private endpoint to which the network interface is
     /// linked.
     /// </summary>
-    public PrivateEndpointData PrivateEndpoint 
+    public PrivateEndpoint PrivateEndpoint 
     {
         get { Initialize(); return _privateEndpoint!; }
     }
-    private PrivateEndpointData? _privateEndpoint;
+    private PrivateEndpoint? _privateEndpoint;
 
     /// <summary>
     /// The provisioning state of the network interface resource.
@@ -344,7 +344,7 @@ public partial class NetworkInterface : ProvisionableResource
         _hostedWorkloads = DefineListProperty<string>("HostedWorkloads", ["properties", "hostedWorkloads"], isOutput: true);
         _macAddress = DefineProperty<string>("MacAddress", ["properties", "macAddress"], isOutput: true);
         _primary = DefineProperty<bool>("Primary", ["properties", "primary"], isOutput: true);
-        _privateEndpoint = DefineModelProperty<PrivateEndpointData>("PrivateEndpoint", ["properties", "privateEndpoint"], isOutput: true);
+        _privateEndpoint = DefineModelProperty<PrivateEndpoint>("PrivateEndpoint", ["properties", "privateEndpoint"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _resourceGuid = DefineProperty<Guid>("ResourceGuid", ["properties", "resourceGuid"], isOutput: true);
         _tapConfigurations = DefineListProperty<NetworkInterfaceTapConfiguration>("TapConfigurations", ["properties", "tapConfigurations"], isOutput: true);

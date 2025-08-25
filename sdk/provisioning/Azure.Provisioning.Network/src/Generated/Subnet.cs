@@ -228,11 +228,11 @@ public partial class Subnet : ProvisionableResource
     /// <summary>
     /// An array of references to private endpoints.
     /// </summary>
-    public BicepList<PrivateEndpointData> PrivateEndpoints 
+    public BicepList<PrivateEndpoint> PrivateEndpoints 
     {
         get { Initialize(); return _privateEndpoints!; }
     }
-    private BicepList<PrivateEndpointData>? _privateEndpoints;
+    private BicepList<PrivateEndpoint>? _privateEndpoints;
 
     /// <summary>
     /// The provisioning state of the subnet resource.
@@ -322,7 +322,7 @@ public partial class Subnet : ProvisionableResource
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
         _iPConfigurationProfiles = DefineListProperty<NetworkIPConfigurationProfile>("IPConfigurationProfiles", ["properties", "ipConfigurationProfiles"], isOutput: true);
         _iPConfigurations = DefineListProperty<NetworkIPConfiguration>("IPConfigurations", ["properties", "ipConfigurations"], isOutput: true);
-        _privateEndpoints = DefineListProperty<PrivateEndpointData>("PrivateEndpoints", ["properties", "privateEndpoints"], isOutput: true);
+        _privateEndpoints = DefineListProperty<PrivateEndpoint>("PrivateEndpoints", ["properties", "privateEndpoints"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _purpose = DefineProperty<string>("Purpose", ["properties", "purpose"], isOutput: true);
         _resourceNavigationLinks = DefineListProperty<ResourceNavigationLink>("ResourceNavigationLinks", ["properties", "resourceNavigationLinks"], isOutput: true);

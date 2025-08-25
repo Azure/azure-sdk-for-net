@@ -88,7 +88,8 @@ public class NetworkSpecification() :
         typeof(VirtualNetworkPeeringResource),
         typeof(ServiceEndpointPolicyResource),
         typeof(ServiceEndpointPolicyDefinitionResource),
-        typeof(SecurityRuleResource)
+        typeof(SecurityRuleResource),
+        typeof(PrivateEndpointResource),
     };
 
     private protected override Dictionary<Type, MethodInfo> FindConstructibleResources()
