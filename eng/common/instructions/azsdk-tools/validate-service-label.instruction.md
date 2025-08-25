@@ -29,4 +29,4 @@ If no valid service label exists, guide the user through creating a new one.
 3. **Get confirmation**: User confirms or modifies suggested name
 4. **Create label**: Use `azsdk_create_service_label` with confirmed name and documentation link given by user
 
-Display pull request results and inform user they can proceed.
+Inform user they can proceed.
