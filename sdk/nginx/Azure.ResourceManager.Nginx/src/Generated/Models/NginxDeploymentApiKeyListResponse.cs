@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> The NginxDeploymentApiKeyListResponse. </summary>
+    /// <summary> Nginx Deployment Api Key List Response. </summary>
     internal partial class NginxDeploymentApiKeyListResponse
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Nginx.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NginxDeploymentApiKeyListResponse"/>. </summary>
-        internal NginxDeploymentApiKeyListResponse()
+        /// <param name="value"> The NginxDeploymentApiKeyResponse items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal NginxDeploymentApiKeyListResponse(IEnumerable<NginxDeploymentApiKeyData> value)
         {
-            Value = new ChangeTrackingList<NginxDeploymentApiKeyData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="NginxDeploymentApiKeyListResponse"/>. </summary>
-        /// <param name="value"></param>
-        /// <param name="nextLink"></param>
+        /// <param name="value"> The NginxDeploymentApiKeyResponse items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxDeploymentApiKeyListResponse(IReadOnlyList<NginxDeploymentApiKeyData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NginxDeploymentApiKeyListResponse(IReadOnlyList<NginxDeploymentApiKeyData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the value. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentApiKeyListResponse"/> for deserialization. </summary>
+        internal NginxDeploymentApiKeyListResponse()
+        {
+        }
+
+        /// <summary> The NginxDeploymentApiKeyResponse items on this page. </summary>
         public IReadOnlyList<NginxDeploymentApiKeyData> Value { get; }
-        /// <summary> Gets the next link. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

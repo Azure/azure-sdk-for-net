@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> The NginxProvisioningState. </summary>
+    /// <summary> Provisioning State. </summary>
     public readonly partial struct NginxProvisioningState : IEquatable<NginxProvisioningState>
     {
         private readonly string _value;

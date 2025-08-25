@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> The NginxPrivateIPAddress. </summary>
+    /// <summary> Nginx Private IP Address. </summary>
     public partial class NginxPrivateIPAddress
     {
         /// <summary>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Nginx.Models
 
         /// <summary> Initializes a new instance of <see cref="NginxPrivateIPAddress"/>. </summary>
         /// <param name="privateIPAddress"></param>
-        /// <param name="privateIPAllocationMethod"></param>
+        /// <param name="privateIPAllocationMethod"> Nginx Private IP Allocation Method. </param>
         /// <param name="subnetId"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NginxPrivateIPAddress(IPAddress privateIPAddress, NginxPrivateIPAllocationMethod? privateIPAllocationMethod, ResourceIdentifier subnetId, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Nginx.Models
 
         /// <summary> Gets or sets the private ip address. </summary>
         public IPAddress PrivateIPAddress { get; set; }
-        /// <summary> Gets or sets the private ip allocation method. </summary>
+        /// <summary> Nginx Private IP Allocation Method. </summary>
         public NginxPrivateIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
         /// <summary> Gets or sets the subnet id. </summary>
         public ResourceIdentifier SubnetId { get; set; }
