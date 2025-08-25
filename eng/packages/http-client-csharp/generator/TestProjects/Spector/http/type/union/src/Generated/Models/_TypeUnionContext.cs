@@ -9,22 +9,22 @@ using System.ClientModel.Primitives;
 
 namespace _Type.Union
 {
+    [ModelReaderWriterBuildable(typeof(Cat))]
+    [ModelReaderWriterBuildable(typeof(Dog))]
+    [ModelReaderWriterBuildable(typeof(EnumsOnlyCases))]
     [ModelReaderWriterBuildable(typeof(GetResponse))]
     [ModelReaderWriterBuildable(typeof(GetResponse1))]
     [ModelReaderWriterBuildable(typeof(GetResponse2))]
     [ModelReaderWriterBuildable(typeof(GetResponse3))]
     [ModelReaderWriterBuildable(typeof(GetResponse4))]
     [ModelReaderWriterBuildable(typeof(GetResponse5))]
-    [ModelReaderWriterBuildable(typeof(Cat))]
-    [ModelReaderWriterBuildable(typeof(Dog))]
     [ModelReaderWriterBuildable(typeof(GetResponse6))]
-    [ModelReaderWriterBuildable(typeof(EnumsOnlyCases))]
     [ModelReaderWriterBuildable(typeof(GetResponse7))]
-    [ModelReaderWriterBuildable(typeof(StringAndArrayCases))]
     [ModelReaderWriterBuildable(typeof(GetResponse8))]
-    [ModelReaderWriterBuildable(typeof(MixedLiteralsCases))]
     [ModelReaderWriterBuildable(typeof(GetResponse9))]
+    [ModelReaderWriterBuildable(typeof(MixedLiteralsCases))]
     [ModelReaderWriterBuildable(typeof(MixedTypesCases))]
+    [ModelReaderWriterBuildable(typeof(StringAndArrayCases))]
     public partial class _TypeUnionContext : ModelReaderWriterContext
     {
     }

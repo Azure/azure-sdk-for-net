@@ -9,10 +9,10 @@ using System.ClientModel.Primitives;
 
 namespace _Specs_.Azure.ClientGenerator.Core.FlattenProperty
 {
-    [ModelReaderWriterBuildable(typeof(FlattenModel))]
-    [ModelReaderWriterBuildable(typeof(ChildModel))]
-    [ModelReaderWriterBuildable(typeof(NestedFlattenModel))]
     [ModelReaderWriterBuildable(typeof(ChildFlattenModel))]
+    [ModelReaderWriterBuildable(typeof(ChildModel))]
+    [ModelReaderWriterBuildable(typeof(FlattenModel))]
+    [ModelReaderWriterBuildable(typeof(NestedFlattenModel))]
     public partial class _Specs_AzureClientGeneratorCoreFlattenPropertyContext : ModelReaderWriterContext
     {
     }
