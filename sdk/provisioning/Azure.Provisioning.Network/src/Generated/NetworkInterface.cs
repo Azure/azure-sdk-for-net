@@ -276,11 +276,11 @@ public partial class NetworkInterface : ProvisionableResource
     /// <summary>
     /// A list of TapConfigurations of the network interface.
     /// </summary>
-    public BicepList<NetworkInterfaceTapConfigurationData> TapConfigurations 
+    public BicepList<NetworkInterfaceTapConfiguration> TapConfigurations 
     {
         get { Initialize(); return _tapConfigurations!; }
     }
-    private BicepList<NetworkInterfaceTapConfigurationData>? _tapConfigurations;
+    private BicepList<NetworkInterfaceTapConfiguration>? _tapConfigurations;
 
     /// <summary>
     /// Gets or sets Id.
@@ -347,7 +347,7 @@ public partial class NetworkInterface : ProvisionableResource
         _privateEndpoint = DefineModelProperty<PrivateEndpointData>("PrivateEndpoint", ["properties", "privateEndpoint"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _resourceGuid = DefineProperty<Guid>("ResourceGuid", ["properties", "resourceGuid"], isOutput: true);
-        _tapConfigurations = DefineListProperty<NetworkInterfaceTapConfigurationData>("TapConfigurations", ["properties", "tapConfigurations"], isOutput: true);
+        _tapConfigurations = DefineListProperty<NetworkInterfaceTapConfiguration>("TapConfigurations", ["properties", "tapConfigurations"], isOutput: true);
         _virtualMachineId = DefineProperty<ResourceIdentifier>("VirtualMachineId", ["properties", "virtualMachine", "id"], isOutput: true);
         _vnetEncryptionSupported = DefineProperty<bool>("VnetEncryptionSupported", ["properties", "vnetEncryptionSupported"], isOutput: true);
     }

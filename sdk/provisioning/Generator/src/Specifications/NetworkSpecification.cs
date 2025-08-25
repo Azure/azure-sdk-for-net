@@ -69,6 +69,7 @@ public class NetworkSpecification() :
         typeof(BackendAddressPoolResource),
         typeof(ApplicationSecurityGroupResource),
         typeof(NetworkInterfaceIPConfigurationResource), // NetworkInterfaceIPConfigurationResource will not be generated because it does not have a createOrUpdate method.
+        typeof(NetworkInterfaceTapConfigurationResource),
         typeof(NetworkWatcherCollection),
         typeof(NetworkWatcherResource),
         typeof(FlowLogResource),
@@ -77,7 +78,7 @@ public class NetworkSpecification() :
         typeof(InboundNatRuleResource),
         typeof(NatGatewayResource),
         typeof(NetworkInterfaceResource),
-        typeof(PublicIPAddressResource)
+        typeof(PublicIPAddressResource),
     };
 
     private protected override Dictionary<Type, MethodInfo> FindConstructibleResources()

@@ -34,11 +34,11 @@ public partial class VirtualNetworkTapData : ProvisionableConstruct
     /// Specifies the list of resource IDs for the network interface IP
     /// configuration that needs to be tapped.
     /// </summary>
-    public BicepList<NetworkInterfaceTapConfigurationData> NetworkInterfaceTapConfigurations 
+    public BicepList<NetworkInterfaceTapConfiguration> NetworkInterfaceTapConfigurations 
     {
         get { Initialize(); return _networkInterfaceTapConfigurations!; }
     }
-    private BicepList<NetworkInterfaceTapConfigurationData>? _networkInterfaceTapConfigurations;
+    private BicepList<NetworkInterfaceTapConfiguration>? _networkInterfaceTapConfigurations;
 
     /// <summary>
     /// The resource GUID property of the virtual network tap resource.
@@ -152,7 +152,7 @@ public partial class VirtualNetworkTapData : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
-        _networkInterfaceTapConfigurations = DefineListProperty<NetworkInterfaceTapConfigurationData>("NetworkInterfaceTapConfigurations", ["properties", "networkInterfaceTapConfigurations"], isOutput: true);
+        _networkInterfaceTapConfigurations = DefineListProperty<NetworkInterfaceTapConfiguration>("NetworkInterfaceTapConfigurations", ["properties", "networkInterfaceTapConfigurations"], isOutput: true);
         _resourceGuid = DefineProperty<Guid>("ResourceGuid", ["properties", "resourceGuid"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _destinationNetworkInterfaceIPConfiguration = DefineModelProperty<NetworkInterfaceIPConfiguration>("DestinationNetworkInterfaceIPConfiguration", ["properties", "destinationNetworkInterfaceIPConfiguration"]);
