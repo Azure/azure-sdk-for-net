@@ -64,8 +64,10 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of IP addresses for the ThreatIntel Whitelist. </summary>
+        [WirePath("ipAddresses")]
         public IList<string> IPAddresses { get; }
         /// <summary> List of FQDNs for the ThreatIntel Whitelist. </summary>
+        [WirePath("fqdns")]
         public IList<string> Fqdns { get; }
     }
 }

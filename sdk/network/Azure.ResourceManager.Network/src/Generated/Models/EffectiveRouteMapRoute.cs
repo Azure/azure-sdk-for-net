@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The address prefix of the route. </summary>
+        [WirePath("prefix")]
         public string Prefix { get; }
         /// <summary> BGP communities of the route. </summary>
+        [WirePath("bgpCommunities")]
         public string BgpCommunities { get; }
         /// <summary> The ASPath of this route. </summary>
+        [WirePath("asPath")]
         public string AsPath { get; }
     }
 }

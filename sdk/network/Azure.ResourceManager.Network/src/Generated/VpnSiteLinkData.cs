@@ -45,16 +45,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The link provider properties. </summary>
+        [WirePath("properties.linkProperties")]
         public VpnLinkProviderProperties LinkProperties { get; set; }
         /// <summary> The ip-address for the vpn-site-link. </summary>
+        [WirePath("properties.ipAddress")]
         public string IPAddress { get; set; }
         /// <summary> FQDN of vpn-site-link. </summary>
+        [WirePath("properties.fqdn")]
         public string Fqdn { get; set; }
         /// <summary> The set of bgp properties. </summary>
+        [WirePath("properties.bgpProperties")]
         public VpnLinkBgpSettings BgpProperties { get; set; }
         /// <summary> The provisioning state of the VPN site link resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

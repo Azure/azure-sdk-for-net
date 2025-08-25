@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Value indicating whether path evaluation with trace route should be disabled. </summary>
+        [WirePath("disableTraceRoute")]
         public bool? DisableTraceRoute { get; set; }
     }
 }

@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Properties of static CIDR resource. </summary>
+        [WirePath("properties")]
         public StaticCidrProperties Properties { get; set; }
     }
 }

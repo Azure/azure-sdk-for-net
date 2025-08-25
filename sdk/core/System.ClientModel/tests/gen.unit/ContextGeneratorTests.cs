@@ -590,13 +590,31 @@ namespace TestProject
             string source =
 $$"""
 using System.ClientModel.Primitives;
+using System.Text.Json;
+using System;
 
 namespace TestProject
 {
-    [ModelReaderWriterBuildable(typeof(int))]
+    [ModelReaderWriterBuildable(typeof(JsonModel))]
     public partial class LocalContext1 : ModelReaderWriterContext { }
-    [ModelReaderWriterBuildable(typeof(int))]
+
+    [ModelReaderWriterBuildable(typeof(JsonModel))]
     public partial class LocalContext2 : ModelReaderWriterContext { }
+
+    public class JsonModel : IJsonModel<JsonModel>
+    {
+        public JsonModel Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+
+        public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        public void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+        }
+
+        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
 }
 """;
 
@@ -606,6 +624,47 @@ namespace TestProject
             Assert.IsNull(result.GenerationSpec);
             Assert.AreEqual(1, result.Diagnostics.Length);
             Assert.AreEqual(ModelReaderWriterContextGenerator.DiagnosticDescriptors.MultipleContextsNotSupported.Id, result.Diagnostics[0].Id);
+        }
+
+        [Test]
+        public void NestedContextShouldHaveNoResults()
+        {
+            string source =
+$$"""
+using System.ClientModel.Primitives;
+using System.Text.Json;
+using System;
+
+namespace TestProject
+{
+    public class Foo
+    {
+        [ModelReaderWriterBuildable(typeof(JsonModel))]
+        public partial class LocalContext : ModelReaderWriterContext { }
+    }
+
+    public class JsonModel : IJsonModel<JsonModel>
+    {
+        public JsonModel Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => new JsonModel();
+
+        public JsonModel Create(BinaryData data, ModelReaderWriterOptions options) => new JsonModel();
+
+        public string GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        public void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+        }
+
+        public BinaryData Write(ModelReaderWriterOptions options) => BinaryData.Empty;
+    }
+}
+""";
+
+            Compilation compilation = CompilationHelper.CreateCompilation(source);
+            var result = CompilationHelper.RunSourceGenerator(compilation);
+
+            Assert.IsNull(result.GenerationSpec);
+            Assert.AreEqual(0, result.Diagnostics.Length);
         }
 
         [Test]

@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Name of the failover connection. </summary>
+        [WirePath("failoverConnectionName")]
         public string FailoverConnectionName { get; set; }
         /// <summary> Location of the failover connection. </summary>
+        [WirePath("failoverLocation")]
         public string FailoverLocation { get; set; }
         /// <summary> Whether the customer was able to establish connectivity through this failover connection or not. </summary>
+        [WirePath("isVerified")]
         public bool? IsVerified { get; set; }
     }
 }

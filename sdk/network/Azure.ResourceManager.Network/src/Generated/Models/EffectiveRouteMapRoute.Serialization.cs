@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -117,6 +118,90 @@ namespace Azure.ResourceManager.Network.Models
             return new EffectiveRouteMapRoute(prefix, bgpCommunities, asPath, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Prefix), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  prefix: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Prefix))
+                {
+                    builder.Append("  prefix: ");
+                    if (Prefix.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Prefix}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Prefix}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BgpCommunities), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  bgpCommunities: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(BgpCommunities))
+                {
+                    builder.Append("  bgpCommunities: ");
+                    if (BgpCommunities.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{BgpCommunities}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{BgpCommunities}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AsPath), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  asPath: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AsPath))
+                {
+                    builder.Append("  asPath: ");
+                    if (AsPath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AsPath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AsPath}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<EffectiveRouteMapRoute>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EffectiveRouteMapRoute>)this).GetFormatFromOptions(options) : options.Format;
@@ -125,6 +210,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EffectiveRouteMapRoute)} does not support writing '{options.Format}' format.");
             }

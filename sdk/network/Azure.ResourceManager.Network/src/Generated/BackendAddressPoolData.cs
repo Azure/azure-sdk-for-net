@@ -66,36 +66,48 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The location of the backend address pool. </summary>
+        [WirePath("properties.location")]
         public AzureLocation? Location { get; set; }
         /// <summary> An array of gateway load balancer tunnel interfaces. </summary>
+        [WirePath("properties.tunnelInterfaces")]
         public IList<GatewayLoadBalancerTunnelInterface> TunnelInterfaces { get; }
         /// <summary> An array of backend addresses. </summary>
+        [WirePath("properties.loadBalancerBackendAddresses")]
         public IList<LoadBalancerBackendAddress> LoadBalancerBackendAddresses { get; }
         /// <summary> An array of references to IP addresses defined in network interfaces. </summary>
+        [WirePath("properties.backendIPConfigurations")]
         public IReadOnlyList<NetworkInterfaceIPConfigurationData> BackendIPConfigurations { get; }
         /// <summary> An array of references to load balancing rules that use this backend address pool. </summary>
+        [WirePath("properties.loadBalancingRules")]
         public IReadOnlyList<WritableSubResource> LoadBalancingRules { get; }
         /// <summary> A reference to an outbound rule that uses this backend address pool. </summary>
         internal WritableSubResource OutboundRule { get; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.outboundRule.id")]
         public ResourceIdentifier OutboundRuleId
         {
             get => OutboundRule?.Id;
         }
 
         /// <summary> An array of references to outbound rules that use this backend address pool. </summary>
+        [WirePath("properties.outboundRules")]
         public IReadOnlyList<WritableSubResource> OutboundRules { get; }
         /// <summary> An array of references to inbound NAT rules that use this backend address pool. </summary>
+        [WirePath("properties.inboundNatRules")]
         public IReadOnlyList<WritableSubResource> InboundNatRules { get; }
         /// <summary> The provisioning state of the backend address pool resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Amount of seconds Load Balancer waits for before sending RESET to client and backend address. </summary>
+        [WirePath("properties.drainPeriodInSeconds")]
         public int? DrainPeriodInSeconds { get; set; }
         /// <summary> A reference to a virtual network. </summary>
         internal WritableSubResource VirtualNetwork { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.virtualNetwork.id")]
         public ResourceIdentifier VirtualNetworkId
         {
             get => VirtualNetwork is null ? default : VirtualNetwork.Id;
@@ -108,6 +120,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> Backend address synchronous mode for the backend pool. </summary>
+        [WirePath("properties.syncMode")]
         public BackendAddressSyncMode? SyncMode { get; set; }
     }
 }
