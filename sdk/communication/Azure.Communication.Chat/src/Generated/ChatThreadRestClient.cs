@@ -706,7 +706,7 @@ namespace Azure.Communication.Chat
             }
         }
 
-        internal HttpMessage CreateRemoveChatParticipantRequest(string chatThreadId, CommunicationIdentifierModelKind? kind, string rawId, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser, MicrosoftTeamsAppIdentifierModel microsoftTeamsApp)
+        internal HttpMessage CreateRemoveChatParticipantRequest(string chatThreadId, CommunicationIdentifierModelKind? kind, string rawId, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser, MicrosoftTeamsAppIdentifierModel microsoftTeamsApp, TeamsExtensionUserIdentifierModel teamsExtensionUser)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -727,7 +727,8 @@ namespace Azure.Communication.Chat
                 CommunicationUser = communicationUser,
                 PhoneNumber = phoneNumber,
                 MicrosoftTeamsUser = microsoftTeamsUser,
-                MicrosoftTeamsApp = microsoftTeamsApp
+                MicrosoftTeamsApp = microsoftTeamsApp,
+                TeamsExtensionUser = teamsExtensionUser
             };
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
@@ -743,16 +744,17 @@ namespace Azure.Communication.Chat
         /// <param name="phoneNumber"> The phone number. </param>
         /// <param name="microsoftTeamsUser"> The Microsoft Teams user. </param>
         /// <param name="microsoftTeamsApp"> The Microsoft Teams application. </param>
+        /// <param name="teamsExtensionUser"> The Microsoft Teams Extension user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
-        public async Task<Response> RemoveChatParticipantAsync(string chatThreadId, CommunicationIdentifierModelKind? kind = null, string rawId = null, CommunicationUserIdentifierModel communicationUser = null, PhoneNumberIdentifierModel phoneNumber = null, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = null, MicrosoftTeamsAppIdentifierModel microsoftTeamsApp = null, CancellationToken cancellationToken = default)
+        public async Task<Response> RemoveChatParticipantAsync(string chatThreadId, CommunicationIdentifierModelKind? kind = null, string rawId = null, CommunicationUserIdentifierModel communicationUser = null, PhoneNumberIdentifierModel phoneNumber = null, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = null, MicrosoftTeamsAppIdentifierModel microsoftTeamsApp = null, TeamsExtensionUserIdentifierModel teamsExtensionUser = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
                 throw new ArgumentNullException(nameof(chatThreadId));
             }
 
-            using var message = CreateRemoveChatParticipantRequest(chatThreadId, kind, rawId, communicationUser, phoneNumber, microsoftTeamsUser, microsoftTeamsApp);
+            using var message = CreateRemoveChatParticipantRequest(chatThreadId, kind, rawId, communicationUser, phoneNumber, microsoftTeamsUser, microsoftTeamsApp, teamsExtensionUser);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -771,16 +773,17 @@ namespace Azure.Communication.Chat
         /// <param name="phoneNumber"> The phone number. </param>
         /// <param name="microsoftTeamsUser"> The Microsoft Teams user. </param>
         /// <param name="microsoftTeamsApp"> The Microsoft Teams application. </param>
+        /// <param name="teamsExtensionUser"> The Microsoft Teams Extension user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
-        public Response RemoveChatParticipant(string chatThreadId, CommunicationIdentifierModelKind? kind = null, string rawId = null, CommunicationUserIdentifierModel communicationUser = null, PhoneNumberIdentifierModel phoneNumber = null, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = null, MicrosoftTeamsAppIdentifierModel microsoftTeamsApp = null, CancellationToken cancellationToken = default)
+        public Response RemoveChatParticipant(string chatThreadId, CommunicationIdentifierModelKind? kind = null, string rawId = null, CommunicationUserIdentifierModel communicationUser = null, PhoneNumberIdentifierModel phoneNumber = null, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = null, MicrosoftTeamsAppIdentifierModel microsoftTeamsApp = null, TeamsExtensionUserIdentifierModel teamsExtensionUser = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
                 throw new ArgumentNullException(nameof(chatThreadId));
             }
 
-            using var message = CreateRemoveChatParticipantRequest(chatThreadId, kind, rawId, communicationUser, phoneNumber, microsoftTeamsUser, microsoftTeamsApp);
+            using var message = CreateRemoveChatParticipantRequest(chatThreadId, kind, rawId, communicationUser, phoneNumber, microsoftTeamsUser, microsoftTeamsApp, teamsExtensionUser);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
