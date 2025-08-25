@@ -141,13 +141,14 @@ Uri endpoint = new Uri("https://your-resource.cognitiveservices.azure.com");
 DefaultAzureCredential credential = new DefaultAzureCredential();
 VoiceLiveClient client = new VoiceLiveClient(endpoint, credential);
 
+var model = "gpt-4o-mini-realtime-preview"; // Specify the model to use
 // Start a new session
-VoiceLiveSession session = await client.StartSessionAsync().ConfigureAwait(false);
+VoiceLiveSession session = await client.StartSessionAsync(model).ConfigureAwait(false);
 
 // Configure session for voice conversation
 SessionOptions sessionOptions = new SessionOptions()
 {
-    Model = "gpt-4o-mini-realtime-preview",
+    Model = model,
     Instructions = "You are a helpful AI assistant. Respond naturally and conversationally.",
     Voice = new AzureStandardVoice("en-US-AvaNeural", AzureStandardVoiceType.AzureStandard),
     TurnDetection = new ServerVad()
@@ -189,7 +190,7 @@ await foreach (ServerEvent serverEvent in session.GetUpdatesAsync().ConfigureAwa
 ```C# Snippet:AdvancedVoiceConfiguration
 SessionOptions sessionOptions = new SessionOptions()
 {
-    Model = "gpt-4o-realtime-preview",
+    Model = model,
     Instructions = "You are a customer service representative. Be helpful and professional.",
     Voice = new AzureCustomVoice("your-custom-voice-name", "your-custom-voice-endpoint-id", AzureCustomVoiceType.AzureCustom)
     {
@@ -236,7 +237,7 @@ var getCurrentWeatherFunction = new FunctionTool("get_current_weather")
 
 SessionOptions sessionOptions = new SessionOptions()
 {
-    Model = "gpt-4o-mini-realtime-preview",
+    Model = model,
     Instructions = "You are a weather assistant. Use the get_current_weather function to help users with weather information.",
     Voice = new AzureStandardVoice("en-US-AvaNeural", AzureStandardVoiceType.AzureStandard),
     InputAudioFormat = AudioFormat.Pcm16,
