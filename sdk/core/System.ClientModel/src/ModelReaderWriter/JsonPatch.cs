@@ -466,11 +466,19 @@ public partial struct JsonPatch
                 }
                 else if (kvp.Value.Kind.HasFlag(ValueKind.ArrayItemAppend))
                 {
-                    newJson = newJson.Append(kvp.Key, kvp.Value.Value.Slice(1, kvp.Value.Value.Length - 2));
+                        newJson = newJson.Append(kvp.Key, kvp.Value.Value.Slice(1, kvp.Value.Value.Length - 2));
                 }
                 else
                 {
-                    newJson = newJson.Set(kvp.Key, kvp.Value.Value);
+                    if (kvp.Key.IsArrayIndex())
+                    {
+                        Utf8Parser.TryParse(kvp.Key.GetIndexSpan(), out int index, out _);
+                        newJson = newJson.InsertAt(kvp.Key, index, kvp.Value.Value);
+                    }
+                    else
+                    {
+                        newJson = newJson.Set(kvp.Key, kvp.Value.Value);
+                    }
                 }
             }
             writer.WriteRawValue(newJson.Span);

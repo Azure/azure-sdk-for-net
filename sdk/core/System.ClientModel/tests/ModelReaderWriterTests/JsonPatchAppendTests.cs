@@ -9,7 +9,138 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
     public class JsonPatchAppendTests
     {
         [Test]
-        public void ArrayIndex_RootAndInsert_ThreeDimensionTwoDimension_WithProperty()
+        public void RootAndInsert_ParentBeforeOutOfOrder()
+        {
+            JsonPatch jp = new("{\"a\":{\"b\":[[\"value1\",\"value3\"],[\"value2\"]]}}"u8.ToArray());
+
+            Assert.AreEqual("{\"b\":[[\"value1\",\"value3\"],[\"value2\"]]}", jp.GetJson("$.a"u8).ToString());
+            Assert.AreEqual("[[\"value1\",\"value3\"],[\"value2\"]]", jp.GetJson("$.a.b"u8).ToString());
+            Assert.AreEqual("[\"value1\",\"value3\"]", jp.GetJson("$.a.b[0]"u8).ToArray());
+            Assert.AreEqual("value1", jp.GetString("$.a.b[0][0]"u8));
+            Assert.AreEqual("value3", jp.GetString("$.a.b[0][1]"u8));
+            Assert.AreEqual("[\"value2\"]", jp.GetJson("$.a.b[1]"u8).ToArray());
+            Assert.AreEqual("value2", jp.GetString("$.a.b[1][0]"u8));
+
+            jp.Append("$.a.b"u8, "[\"value4\"]"u8);
+
+            Assert.AreEqual("[[\"value1\",\"value3\"],[\"value2\"],[\"value4\"]]", jp.GetJson("$.a.b"u8).ToString());
+
+            jp.Append("$.a.b[1]"u8, "value5");
+
+            Assert.AreEqual("[[\"value1\",\"value3\"],[\"value2\",\"value5\"],[\"value4\"]]", jp.GetJson("$.a.b"u8).ToString());
+
+            jp.Append("$.a.b[0]"u8, "value6");
+
+            Assert.AreEqual("[[\"value1\",\"value3\",\"value6\"],[\"value2\",\"value5\"],[\"value4\"]]", jp.GetJson("$.a.b"u8).ToString());
+            Assert.AreEqual("[\"value1\",\"value3\",\"value6\"]", jp.GetJson("$.a.b[0]"u8).ToString());
+            Assert.AreEqual("value1", jp.GetString("$.a.b[0][0]"u8));
+            Assert.AreEqual("value3", jp.GetString("$.a.b[0][1]"u8));
+            Assert.AreEqual("value6", jp.GetString("$.a.b[0][2]"u8));
+            Assert.AreEqual("[\"value2\",\"value5\"]", jp.GetJson("$.a.b[1]"u8).ToString());
+            Assert.AreEqual("value2", jp.GetString("$.a.b[1][0]"u8));
+            Assert.AreEqual("value5", jp.GetString("$.a.b[1][1]"u8));
+            Assert.AreEqual("[\"value4\"]", jp.GetJson("$.a.b[2]"u8).ToString());
+            Assert.AreEqual("value4", jp.GetString("$.a.b[2][0]"u8));
+
+            Assert.AreEqual("{\"a\":{\"b\":[[\"value1\",\"value3\",\"value6\"],[\"value2\",\"value5\"],[\"value4\"]]}}", JsonPatchTests.GetJsonString(jp));
+        }
+
+        [Test]
+        public void Insert_ParentBeforeOutOfOrder()
+        {
+            JsonPatch jp = new();
+
+            jp.Append("$.a.b"u8, "[\"value1\"]"u8);
+
+            Assert.AreEqual("{\"b\":[[\"value1\"]]}", jp.GetJson("$.a"u8).ToString());
+
+            jp.Append("$.a.b[1]"u8, "value2");
+
+            Assert.AreEqual("{\"b\":[[\"value1\"],[\"value2\"]]}", jp.GetJson("$.a"u8).ToString());
+
+            jp.Append("$.a.b[0]"u8, "value3");
+
+            Assert.AreEqual("{\"b\":[[\"value1\",\"value3\"],[\"value2\"]]}", jp.GetJson("$.a"u8).ToString());
+            Assert.AreEqual("[[\"value1\",\"value3\"],[\"value2\"]]", jp.GetJson("$.a.b"u8).ToString());
+            Assert.AreEqual("[\"value1\",\"value3\"]", jp.GetJson("$.a.b[0]"u8).ToArray());
+            Assert.AreEqual("value1", jp.GetString("$.a.b[0][0]"u8));
+            Assert.AreEqual("value3", jp.GetString("$.a.b[0][1]"u8));
+            Assert.AreEqual("[\"value2\"]", jp.GetJson("$.a.b[1]"u8).ToArray());
+            Assert.AreEqual("value2", jp.GetString("$.a.b[1][0]"u8));
+
+            Assert.AreEqual("{\"a\":{\"b\":[[\"value1\",\"value3\"],[\"value2\"]]}}", JsonPatchTests.GetJsonString(jp));
+        }
+
+        [Test]
+        public void RootAndInsert_OutOfOrder()
+        {
+            JsonPatch jp = new("{\"a\":{\"b\":[[\"value1\"],[\"value2\"]]}}"u8.ToArray());
+
+            Assert.AreEqual("{\"b\":[[\"value1\"],[\"value2\"]]}", jp.GetJson("$.a"u8).ToString());
+            Assert.AreEqual("[[\"value1\"],[\"value2\"]]", jp.GetJson("$.a.b"u8).ToString());
+            Assert.AreEqual("[\"value1\"]", jp.GetJson("$.a.b[0]"u8).ToArray());
+            Assert.AreEqual("value1", jp.GetString("$.a.b[0][0]"u8));
+            Assert.AreEqual("[\"value2\"]", jp.GetJson("$.a.b[1]"u8).ToArray());
+            Assert.AreEqual("value2", jp.GetString("$.a.b[1][0]"u8));
+
+            jp.Append("$.a.b[0]"u8, "value1b");
+
+            Assert.AreEqual("[\"value1\",\"value1b\"]", jp.GetJson("$.a.b[0]"u8).ToString());
+
+            jp.Append("$.a.b[1]"u8, "value2b");
+
+            Assert.AreEqual("[\"value2\",\"value2b\"]", jp.GetJson("$.a.b[1]"u8).ToString());
+
+            jp.Append("$.a.b[3]"u8, "value4");
+
+            Assert.AreEqual("[\"value4\"]", jp.GetJson("$.a.b[3]"u8).ToString());
+
+            jp.Append("$.a.b[2]"u8, "value3");
+
+            Assert.AreEqual("[\"value3\"]", jp.GetJson("$.a.b[2]"u8).ToString());
+
+            jp.Append("$.a.b"u8, "[\"value5\"]"u8);
+
+            Assert.AreEqual("[[\"value1\",\"value1b\"],[\"value2\",\"value2b\"],[\"value3\"],[\"value4\"],[\"value5\"]]", jp.GetJson("$.a.b"u8).ToString());
+            Assert.AreEqual("[\"value1\",\"value1b\"]", jp.GetJson("$.a.b[0]"u8).ToString());
+            Assert.AreEqual("value1", jp.GetString("$.a.b[0][0]"u8));
+            Assert.AreEqual("value1b", jp.GetString("$.a.b[0][1]"u8));
+            Assert.AreEqual("[\"value2\",\"value2b\"]", jp.GetJson("$.a.b[1]"u8).ToString());
+            Assert.AreEqual("value2", jp.GetString("$.a.b[1][0]"u8));
+            Assert.AreEqual("value2b", jp.GetString("$.a.b[1][1]"u8));
+            Assert.AreEqual("[\"value3\"]", jp.GetJson("$.a.b[2]"u8).ToString());
+            Assert.AreEqual("value3", jp.GetString("$.a.b[2][0]"u8));
+            Assert.AreEqual("[\"value4\"]", jp.GetJson("$.a.b[3]"u8).ToString());
+            Assert.AreEqual("value4", jp.GetString("$.a.b[3][0]"u8));
+            Assert.AreEqual("[\"value5\"]", jp.GetJson("$.a.b[4]"u8).ToString());
+            Assert.AreEqual("value5", jp.GetString("$.a.b[4][0]"u8));
+
+            Assert.AreEqual("{\"a\":{\"b\":[[\"value1\",\"value1b\"],[\"value2\",\"value2b\"],[\"value3\"],[\"value4\"],[\"value5\"]]}}", JsonPatchTests.GetJsonString(jp));
+        }
+
+        [Test]
+        public void Insert_OutOfOrder()
+        {
+            JsonPatch jp = new();
+
+            jp.Append("$.a.b[1]"u8, "value2");
+
+            Assert.AreEqual("{\"b\":[null,[\"value2\"]]}", jp.GetJson("$.a"u8).ToString());
+
+            jp.Append("$.a.b[0]"u8, "value1");
+
+            Assert.AreEqual("{\"b\":[[\"value1\"],[\"value2\"]]}", jp.GetJson("$.a"u8).ToString());
+            Assert.AreEqual("[[\"value1\"],[\"value2\"]]", jp.GetJson("$.a.b"u8).ToString());
+            Assert.AreEqual("[\"value1\"]", jp.GetJson("$.a.b[0]"u8).ToArray());
+            Assert.AreEqual("value1", jp.GetString("$.a.b[0][0]"u8));
+            Assert.AreEqual("[\"value2\"]", jp.GetJson("$.a.b[1]"u8).ToArray());
+            Assert.AreEqual("value2", jp.GetString("$.a.b[1][0]"u8));
+
+            Assert.AreEqual("{\"a\":{\"b\":[[\"value1\"],[\"value2\"]]}}", JsonPatchTests.GetJsonString(jp));
+        }
+
+        [Test]
+        public void RootAndInsert_ThreeDimensionTwoDimension_WithProperty()
         {
             JsonPatch jp = new("{\"x\":{\"y\":[[[{\"z\":{\"a\":[[{\"b\":\"value1\"},{\"b\":\"value2\"}],[{\"b\":\"value3\"},{\"b\":\"value4\"}]]}},{\"z\":{\"a\":[[{\"b\":\"value5\"},{\"b\":\"value6\"}]]}}],[{\"z\":{\"a\":[[{\"b\":\"value7\"},{\"b\":\"value8\"}],[{\"b\":\"value9\"},{\"b\":\"value10\"}]]}}]],[[{\"z\":{\"a\":[[{\"b\":\"value11\"}]]}}]]]}}"u8.ToArray());
 
@@ -164,7 +295,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_RootAndInsert_ThreeDimensionTwoDimension()
+        public void RootAndInsert_ThreeDimensionTwoDimension()
         {
             JsonPatch jp = new("{\"x\":{\"y\":[[[{\"z\":{\"a\":[[\"value1\",\"value2\"],[\"value3\",\"value4\"]]}},{\"z\":{\"a\":[[\"value5\",\"value6\"]]}}],[{\"z\":{\"a\":[[\"value7\",\"value8\"],[\"value9\",\"value10\"]]}}]],[[{\"z\":{\"a\":[[\"value11\"]]}}]]]}}"u8.ToArray());
 
@@ -289,7 +420,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_Insert_ThreeDimensionTwoDimension_WithProperty()
+        public void Insert_ThreeDimensionTwoDimension_WithProperty()
         {
             JsonPatch jp = new();
 
@@ -386,7 +517,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_Insert_ThreeDimensionTwoDimension()
+        public void Insert_ThreeDimensionTwoDimension()
         {
             JsonPatch jp = new();
 
@@ -473,7 +604,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_RootAndInsert_TwoDimensionTwoLevel_WithProperty()
+        public void RootAndInsert_TwoDimensionTwoLevel_WithProperty()
         {
             JsonPatch jp = new("{\"x\":{\"y\":[[{\"a\":\"value1\"},{\"a\":\"value2\"}],[{\"a\":\"value3\"},{\"a\":\"value4\"}]]}}"u8.ToArray());
 
@@ -535,7 +666,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_RootAndInsert_TwoDimensionTwoLevel()
+        public void RootAndInsert_TwoDimensionTwoLevel()
         {
             JsonPatch jp = new("{\"x\":{\"y\":[[\"value1\",\"value2\"],[\"value3\",\"value4\"]]}}"u8.ToArray());
 
@@ -585,7 +716,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_Insert_TwoDimensionTwoLevel_WithProperty()
+        public void Insert_TwoDimensionTwoLevel_WithProperty()
         {
             JsonPatch jp = new();
 
@@ -627,7 +758,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_Insert_TwoDimensionTwoLevel()
+        public void Insert_TwoDimensionTwoLevel()
         {
             JsonPatch jp = new();
 
@@ -664,7 +795,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_RootAndInsert_TwoDimensionOneLevel_WithProperty()
+        public void RootAndInsert_TwoDimensionOneLevel_WithProperty()
         {
             JsonPatch jp = new("{\"x\":[[{\"a\":\"value1\"},{\"a\":\"value2\"}],[{\"a\":\"value3\"},{\"a\":\"value4\"}]]}"u8.ToArray());
 
@@ -725,7 +856,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_RootAndInsert_TwoDimensionOneLevel()
+        public void RootAndInsert_TwoDimensionOneLevel()
         {
             JsonPatch jp = new("{\"x\":[[\"value1\",\"value2\"],[\"value3\",\"value4\"]]}"u8.ToArray());
 
@@ -773,7 +904,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_Insert_TwoDimensionOneLevel_WithProperty()
+        public void Insert_TwoDimensionOneLevel_WithProperty()
         {
             JsonPatch jp = new();
 
@@ -814,7 +945,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_Insert_TwoDimensionOneLevel()
+        public void Insert_TwoDimensionOneLevel()
         {
             JsonPatch jp = new();
 
@@ -849,7 +980,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_RootAndInsert_TwoDimension_WithProperty()
+        public void RootAndInsert_TwoDimension_WithProperty()
         {
             JsonPatch jp = new("[[{\"a\":\"value1\"},{\"a\":\"value2\"}],[{\"a\":\"value3\"},{\"a\":\"value4\"}]]"u8.ToArray());
 
@@ -909,7 +1040,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_RootAndInsert_TwoDimension()
+        public void RootAndInsert_TwoDimension()
         {
             JsonPatch jp = new("[[\"value1\",\"value2\"],[\"value3\",\"value4\"]]"u8.ToArray());
 
@@ -956,7 +1087,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_Insert_TwoDimension_WithProperty()
+        public void Insert_TwoDimension_WithProperty()
         {
             JsonPatch jp = new();
 
@@ -997,7 +1128,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_Insert_TwoDimension()
+        public void Insert_TwoDimension()
         {
             JsonPatch jp = new();
 
@@ -1033,7 +1164,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_RootAndInsert_TwoLevelTwoLevel_WithProperty()
+        public void RootAndInsert_TwoLevelTwoLevel_WithProperty()
         {
             JsonPatch jp = new("{\"x\":{\"y\":[{\"z\":{\"a\":[{\"b\":\"value1\"},{\"b\":\"value2\"}]}},{\"z\":{\"a\":[{\"b\":\"value3\"},{\"b\":\"value4\"}]}}]}}"u8.ToArray());
 
@@ -1106,7 +1237,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_RootAndInsert_TwoLevelTwoLevel()
+        public void RootAndInsert_TwoLevelTwoLevel()
         {
             JsonPatch jp = new("{\"x\":{\"y\":[{\"z\":{\"a\":[\"value1\",\"value2\"]}},{\"z\":{\"a\":[\"value3\",\"value4\"]}}]}}"u8.ToArray());
 
@@ -1166,7 +1297,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_Insert_TwoLevelTwoLevel_WithProperty()
+        public void Insert_TwoLevelTwoLevel_WithProperty()
         {
             JsonPatch jp = new();
 
@@ -1214,7 +1345,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_Insert_TwoLevelTwoLevel()
+        public void Insert_TwoLevelTwoLevel()
         {
             JsonPatch jp = new();
 
@@ -1257,7 +1388,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_RootAndInsert_TwoLevel_WithProperty()
+        public void RootAndInsert_TwoLevel_WithProperty()
         {
             JsonPatch jp = new("{\"x\":{\"y\":[{\"a\":\"value1\"},{\"a\":\"value2\"}]}}"u8.ToArray());
 
@@ -1289,7 +1420,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_RootAndInsert_TwoLevel()
+        public void RootAndInsert_TwoLevel()
         {
             JsonPatch jp = new("{\"x\":{\"y\":[\"value1\",\"value2\"]}}"u8.ToArray());
 
@@ -1315,7 +1446,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_Insert_TwoLevel_WithProperty()
+        public void Insert_TwoLevel_WithProperty()
         {
             JsonPatch jp = new();
 
@@ -1336,7 +1467,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_Insert_TwoLevel()
+        public void Insert_TwoLevel()
         {
             JsonPatch jp = new();
 
@@ -1355,7 +1486,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_RootAndInsert_OneLevelTwoLevel_WithProperty()
+        public void RootAndInsert_OneLevelTwoLevel_WithProperty()
         {
             JsonPatch jp = new("{\"x\":[{\"y\":{\"z\":[{\"a\":\"value1\"},{\"a\":\"value2\"}]}},{\"y\":{\"z\":[{\"a\":\"value3\"},{\"a\":\"value4\"}]}}]}"u8.ToArray());
 
@@ -1426,7 +1557,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_RootAndInsert_OneLevelTwoLevel()
+        public void RootAndInsert_OneLevelTwoLevel()
         {
             JsonPatch jp = new("{\"x\":[{\"y\":{\"z\":[\"value1\",\"value2\"]}},{\"y\":{\"z\":[\"value3\",\"value4\"]}}]}"u8.ToArray());
 
@@ -1484,7 +1615,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_Insert_OneLevelTwoLevel_WithProperty()
+        public void Insert_OneLevelTwoLevel_WithProperty()
         {
             JsonPatch jp = new();
 
@@ -1531,7 +1662,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_Insert_OneLevelTwoLevel()
+        public void Insert_OneLevelTwoLevel()
         {
             JsonPatch jp = new();
 
@@ -1573,7 +1704,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_RootAndInsert_OneLevelTwice_WithProperty()
+        public void RootAndInsert_OneLevelTwice_WithProperty()
         {
             JsonPatch jp = new(new("{\"x\":[{\"y\":[{\"a\":\"value1\"},{\"a\":\"value2\"}]},{\"y\":[{\"a\":\"value3\"},{\"a\":\"value4\"}]}]}"u8.ToArray()));
 
@@ -1639,7 +1770,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_RootAndInsert_OneLevelTwice()
+        public void RootAndInsert_OneLevelTwice()
         {
             JsonPatch jp = new(new("{\"x\":[{\"y\":[\"value1\",\"value2\"]},{\"y\":[\"value3\",\"value4\"]}]}"u8.ToArray()));
 
@@ -1692,7 +1823,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_Insert_OneLevelTwice_WithProperty()
+        public void Insert_OneLevelTwice_WithProperty()
         {
             JsonPatch jp = new();
 
@@ -1738,7 +1869,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_Insert_OneLevelTwice()
+        public void Insert_OneLevelTwice()
         {
             JsonPatch jp = new();
 
@@ -1778,7 +1909,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_RootAndInsert_OneLevel_WithProperty()
+        public void RootAndInsert_OneLevel_WithProperty()
         {
             JsonPatch jp = new(new("{\"x\":[{\"a\":\"value1\"},{\"a\":\"value2\"}]}"u8.ToArray()));
 
@@ -1808,7 +1939,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_RootAndInsert_OneLevel()
+        public void RootAndInsert_OneLevel()
         {
             JsonPatch jp = new(new("{\"x\":[\"value1\",\"value2\"]}"u8.ToArray()));
 
@@ -1832,7 +1963,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_Insert_OneLevel_WithProperty()
+        public void Insert_OneLevel_WithProperty()
         {
             JsonPatch jp = new();
 
@@ -1852,7 +1983,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_Insert_OneLevel()
+        public void Insert_OneLevel()
         {
             JsonPatch jp = new();
 
@@ -1870,7 +2001,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_RootAndInsert_Root_WithProperty()
+        public void RootAndInsert_Root_WithProperty()
         {
             JsonPatch jp = new(new("[{\"a\":\"value1\"},{\"a\":\"value2\"}]"u8.ToArray()));
 
@@ -1899,7 +2030,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_RootAndInsert_Root()
+        public void RootAndInsert_Root()
         {
             JsonPatch jp = new(new("[\"value1\",\"value2\"]"u8.ToArray()));
 
@@ -1922,7 +2053,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_Insert_Root_WithProperty()
+        public void Insert_Root_WithProperty()
         {
             JsonPatch jp = new();
 
@@ -1942,7 +2073,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         }
 
         [Test]
-        public void ArrayIndex_Insert_Root()
+        public void Insert_Root()
         {
             JsonPatch jp = new();
 

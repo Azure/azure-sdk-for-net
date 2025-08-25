@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Buffers;
 using System.Buffers.Text;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -243,7 +244,13 @@ internal static class JsonPathReaderExtensions
 
     public static byte[] Set(this ReadOnlyMemory<byte> json, ReadOnlySpan<byte> jsonPath, ReadOnlyMemory<byte> jsonReplacement)
     {
-        if (TryFind(json.Span, jsonPath, out Utf8JsonReader jsonReader))
+        bool found = TryFind(json.Span, jsonPath, out Utf8JsonReader jsonReader);
+        return jsonReader.SetCurrentValue(found, jsonPath.GetPropertyName(), json, jsonReplacement);
+    }
+
+    public static byte[] SetCurrentValue(this Utf8JsonReader jsonReader, bool wasFound, ReadOnlySpan<byte> propertyName, ReadOnlyMemory<byte> json, ReadOnlyMemory<byte> jsonReplacement)
+    {
+        if (wasFound)
         {
             if (jsonReader.TokenType == JsonTokenType.PropertyName)
             {
@@ -253,8 +260,8 @@ internal static class JsonPathReaderExtensions
 
             long endLeft = jsonReader.TokenStartIndex;
             jsonReader.Skip();
-            jsonReader.Read();
-            long startRight = jsonReader.TokenStartIndex;
+            var atEnd = !jsonReader.Read();
+            long startRight = atEnd ? jsonReader.BytesConsumed : jsonReader.TokenStartIndex;
 
             if (jsonReader.TokenType == JsonTokenType.EndObject || jsonReader.TokenType == JsonTokenType.EndArray)
             {
@@ -265,8 +272,58 @@ internal static class JsonPathReaderExtensions
                 return [.. json.Slice(0, (int)endLeft).Span, .. jsonReplacement.Span, (byte)',', .. json.Slice((int)startRight).Span];
             }
         }
+        else
+        {
+            return jsonReader.Insert(json, propertyName, jsonReplacement);
+        }
+    }
 
-        return jsonReader.Insert(json, jsonPath.GetPropertyName(), jsonReplacement);
+    public static byte[] InsertAt(this ReadOnlyMemory<byte> json, ReadOnlySpan<byte> arrayPath, int index, ReadOnlyMemory<byte> jsonToInsert)
+    {
+        ReadOnlySpan<byte> jsonSpan = json.Span;
+        Utf8JsonReader jsonReader = new(jsonSpan);
+        bool isArrayIndex = arrayPath.IsArrayIndex();
+        ReadOnlySpan<byte> arrayPathCopy = arrayPath;
+        if (isArrayIndex)
+        {
+            arrayPathCopy = arrayPathCopy.GetParent();
+        }
+        JsonPathReader pathReader = new(arrayPathCopy);
+        ReadOnlyMemory<byte> insert = jsonReader.Advance(ref pathReader)
+            ? jsonToInsert.Slice(1, jsonToInsert.Length - 2)
+            : jsonToInsert;
+
+        if (jsonReader.TokenType == JsonTokenType.PropertyName)
+            jsonReader.Read(); // Move to the value after the property name
+
+        if (isArrayIndex)
+        {
+            insert = jsonReader.SkipToIndex(index, out int nextIndex) && jsonReader.TokenType != JsonTokenType.Null
+                ? jsonToInsert.Slice(1, jsonToInsert.Length - 2)
+                : jsonToInsert;
+
+            if (index > nextIndex)
+            {
+                int gap = index - nextIndex;
+                byte[] rented = ArrayPool<byte>.Shared.Rent(gap * 5);
+                var rentedSpan = rented.AsSpan();
+                for (int i = 0; i < gap; i++)
+                {
+                    "null,"u8.CopyTo(rentedSpan);
+                    rentedSpan = rentedSpan.Slice(5);
+                }
+                insert = new([.. rented.AsSpan(0, 5 * gap), .. insert.Span]);
+                ArrayPool<byte>.Shared.Return(rented);
+            }
+        }
+        if (jsonReader.TokenType == JsonTokenType.Null)
+        {
+            return jsonReader.SetCurrentValue(true, ReadOnlySpan<byte>.Empty, json, insert);
+        }
+        else
+        {
+            return jsonReader.Insert(json, ReadOnlySpan<byte>.Empty, insert, true);
+        }
     }
 
     public static byte[] Append(this ReadOnlyMemory<byte> json, ReadOnlySpan<byte> arrayPath, ReadOnlyMemory<byte> jsonToInsert)
@@ -275,10 +332,14 @@ internal static class JsonPathReaderExtensions
         return jsonReader.Insert(json, ReadOnlySpan<byte>.Empty, jsonToInsert);
     }
 
-    internal static byte[] Insert(ref this Utf8JsonReader jsonReader, ReadOnlyMemory<byte> json, ReadOnlySpan<byte> propertyName, ReadOnlyMemory<byte> jsonToInsert, bool hasPreviousItems = false)
+    internal static byte[] Insert(
+        ref this Utf8JsonReader jsonReader,
+        ReadOnlyMemory<byte> json,
+        ReadOnlySpan<byte> propertyName,
+        ReadOnlyMemory<byte> jsonToInsert,
+        bool hasPreviousItems = false)
     {
         long endLeft;
-
         if (jsonReader.TokenType == JsonTokenType.PropertyName)
         {
             //move to the value

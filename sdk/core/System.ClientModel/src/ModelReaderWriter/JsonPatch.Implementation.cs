@@ -270,13 +270,17 @@ public partial struct JsonPatch
                 }
                 else
                 {
-                    Utf8JsonReader jsonReader = new(existingArray.Span);
                     GetSubPath(normalizedPrefix, kvp.Key, childPath, out int childPathLength);
-                    JsonPathReader pathReader = new(childPath.AsSpan(0, childPathLength));
-                    ReadOnlyMemory<byte> jsonToInsert = jsonReader.Advance(ref pathReader)
-                        ? kvp.Value.Value.Slice(1, kvp.Value.Value.Length - 2)
-                        : kvp.Value.Value;
-                    existingArray = jsonReader.Insert(existingArray, ReadOnlySpan<byte>.Empty, jsonToInsert, true);
+                    ReadOnlySpan<byte> childJsonPath = childPath.AsSpan(0, childPathLength);
+                    if (childJsonPath.IsArrayIndex())
+                    {
+                        Utf8Parser.TryParse(kvp.Key.GetIndexSpan(), out int index, out _);
+                        existingArray = existingArray.InsertAt(childJsonPath, index, kvp.Value.Value);
+                    }
+                    else
+                    {
+                        existingArray = existingArray.Append(childJsonPath, kvp.Value.Value.Slice(1, kvp.Value.Value.Length - 2));
+                    }
                 }
             }
             return existingArray.IsEmpty ? encodedValue.Value : existingArray;
@@ -539,7 +543,7 @@ public partial struct JsonPatch
         }
 
         Span<byte> childPath = stackalloc byte[localPath.Length];
-        var parentPath = localPath;
+        var parentPath = localPath.SequenceEqual(jsonPath) ? localPath : localPath.GetParent();
         var nextPath = localPath;
 
         if (_properties is not null)
@@ -585,11 +589,11 @@ public partial struct JsonPatch
                 // since parentPath is not root we need to find how much of localPath exists in _rawJson
                 // we need to set the key in _properties to that subPath of localPath
 
-                JsonPathReader pathReader = new(localPath);
+                JsonPathReader pathReader = new(jsonPath);
                 Utf8JsonReader jsonReader = new(_rawJson.Value.Span);
                 if (jsonReader.Advance(ref pathReader))
                 {
-                    nextPath = localPath;
+                    nextPath = jsonPath;
                     parentPath = jsonParentPath;
                 }
                 else
@@ -671,19 +675,19 @@ public partial struct JsonPatch
         {
             Utf8Parser.TryParse(pathReader.Current.ValueSpan, out index, out _);
         }
-        if (pathReader.Current.TokenType != JsonPathTokenType.End)
+        if (pathReader.Current.TokenType != JsonPathTokenType.End || jsonReader.TokenType == JsonTokenType.Null)
         {
             data = GetNonRootNewJson(ref pathReader, jsonPath.GetParent().IsRoot(), jsonPath.IsArrayIndex(), encodedValue);
         }
 
-        if (jsonFound && !encodedValue.Kind.HasFlag(ValueKind.ArrayItemAppend))
+        if (jsonReader.TokenType == JsonTokenType.PropertyName)
         {
-            long endLeft = jsonReader.TokenStartIndex;
-            jsonReader.Skip();
-            var atEnd = !jsonReader.Read();
-            long startRight = atEnd ? jsonReader.BytesConsumed : jsonReader.TokenStartIndex;
+            jsonReader.Read();
+        }
 
-            return new ReadOnlyMemory<byte>([.. json.Slice(0, (int)endLeft).Span, .. data.Span, .. json.Slice((int)startRight).Span]);
+        if (jsonFound && (jsonReader.TokenType != JsonTokenType.StartArray || !encodedValue.Kind.HasFlag(ValueKind.ArrayItemAppend)))
+        {
+            return jsonReader.SetCurrentValue(jsonFound, propertyName, json, data);
         }
         else
         {
