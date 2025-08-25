@@ -54,11 +54,11 @@ public partial class ServiceEndpointPolicyData : ProvisionableConstruct
     /// <summary>
     /// A collection of references to subnets.
     /// </summary>
-    public BicepList<SubnetData> Subnets 
+    public BicepList<Subnet> Subnets 
     {
         get { Initialize(); return _subnets!; }
     }
-    private BicepList<SubnetData>? _subnets;
+    private BicepList<Subnet>? _subnets;
 
     /// <summary>
     /// The resource GUID property of the service endpoint policy resource.
@@ -162,7 +162,7 @@ public partial class ServiceEndpointPolicyData : ProvisionableConstruct
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
         _kind = DefineProperty<string>("Kind", ["kind"], isOutput: true);
         _serviceEndpointPolicyDefinitions = DefineListProperty<ServiceEndpointPolicyDefinitionData>("ServiceEndpointPolicyDefinitions", ["properties", "serviceEndpointPolicyDefinitions"]);
-        _subnets = DefineListProperty<SubnetData>("Subnets", ["properties", "subnets"], isOutput: true);
+        _subnets = DefineListProperty<Subnet>("Subnets", ["properties", "subnets"], isOutput: true);
         _resourceGuid = DefineProperty<Guid>("ResourceGuid", ["properties", "resourceGuid"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _serviceAlias = DefineProperty<string>("ServiceAlias", ["properties", "serviceAlias"]);

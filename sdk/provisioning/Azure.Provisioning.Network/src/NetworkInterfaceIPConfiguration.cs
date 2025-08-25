@@ -10,5 +10,5 @@ public partial class NetworkInterfaceIPConfiguration
     /// <summary>
     /// Creates a new NetworkInterfaceIPConfiguration as a <see cref="ProvisionableConstruct"/>.
     /// </summary>
-    public NetworkInterfaceIPConfiguration() : base(string.Empty, "Microsoft.Network/networkInterfaces/ipConfigurations") { }
+    public NetworkInterfaceIPConfiguration() : base("ipConfigurations", "Microsoft.Network/networkInterfaces/ipConfigurations") { }
 }

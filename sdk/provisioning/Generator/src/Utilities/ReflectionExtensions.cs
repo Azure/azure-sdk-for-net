@@ -89,6 +89,7 @@ public static class ReflectionExtensions
         typeof(ResourceWithWritableName).IsAssignableFrom(type) ||
         // hack for Network
         typeof(NetworkResourceData).IsAssignableFrom(type) ||
+        typeof(NetworkWritableResourceData).IsAssignableFrom(type) ||
         typeof(NetworkTrackedResourceData).IsAssignableFrom(type);
 
     public static bool IsModelType(this Type type, List<Type>? visited = default) =>

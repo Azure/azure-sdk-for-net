@@ -77,6 +77,7 @@ public class NetworkSpecification() :
         typeof(NetworkWatcherResource),
         typeof(FlowLogCollection),
         typeof(FlowLogResource),
+        typeof(SubnetResource),
     };
 
     private protected override Dictionary<Type, MethodInfo> FindConstructibleResources()

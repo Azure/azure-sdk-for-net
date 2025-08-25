@@ -112,12 +112,12 @@ public partial class FrontendIPConfigurationData : ProvisionableConstruct
     /// <summary>
     /// The reference to the subnet resource.
     /// </summary>
-    public SubnetData Subnet 
+    public Subnet Subnet 
     {
         get { Initialize(); return _subnet!; }
         set { Initialize(); AssignOrReplace(ref _subnet, value); }
     }
-    private SubnetData? _subnet;
+    private Subnet? _subnet;
 
     /// <summary>
     /// The reference to the Public IP resource.
@@ -209,7 +209,7 @@ public partial class FrontendIPConfigurationData : ProvisionableConstruct
         _privateIPAddress = DefineProperty<string>("PrivateIPAddress", ["properties", "privateIPAddress"]);
         _privateIPAllocationMethod = DefineProperty<NetworkIPAllocationMethod>("PrivateIPAllocationMethod", ["properties", "privateIPAllocationMethod"]);
         _privateIPAddressVersion = DefineProperty<NetworkIPVersion>("PrivateIPAddressVersion", ["properties", "privateIPAddressVersion"]);
-        _subnet = DefineModelProperty<SubnetData>("Subnet", ["properties", "subnet"]);
+        _subnet = DefineModelProperty<Subnet>("Subnet", ["properties", "subnet"]);
         _publicIPAddress = DefineModelProperty<PublicIPAddressData>("PublicIPAddress", ["properties", "publicIPAddress"]);
         _publicIPPrefixId = DefineProperty<ResourceIdentifier>("PublicIPPrefixId", ["properties", "publicIPPrefix", "id"]);
         _gatewayLoadBalancerId = DefineProperty<ResourceIdentifier>("GatewayLoadBalancerId", ["properties", "gatewayLoadBalancer", "id"]);

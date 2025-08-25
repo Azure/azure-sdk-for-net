@@ -43,12 +43,12 @@ public partial class PrivateEndpointData : ProvisionableConstruct
     /// <summary>
     /// The ID of the subnet from which the private IP will be allocated.
     /// </summary>
-    public SubnetData Subnet 
+    public Subnet Subnet 
     {
         get { Initialize(); return _subnet!; }
         set { Initialize(); AssignOrReplace(ref _subnet, value); }
     }
-    private SubnetData? _subnet;
+    private Subnet? _subnet;
 
     /// <summary>
     /// An array of references to the network interfaces created for this
@@ -197,7 +197,7 @@ public partial class PrivateEndpointData : ProvisionableConstruct
         base.DefineProvisionableProperties();
         _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["extendedLocation"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
-        _subnet = DefineModelProperty<SubnetData>("Subnet", ["properties", "subnet"]);
+        _subnet = DefineModelProperty<Subnet>("Subnet", ["properties", "subnet"]);
         _networkInterfaces = DefineListProperty<NetworkInterfaceData>("NetworkInterfaces", ["properties", "networkInterfaces"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _privateLinkServiceConnections = DefineListProperty<NetworkPrivateLinkServiceConnection>("PrivateLinkServiceConnections", ["properties", "privateLinkServiceConnections"]);

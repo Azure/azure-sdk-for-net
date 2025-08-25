@@ -43,11 +43,11 @@ public partial class RouteTableData : ProvisionableConstruct
     /// <summary>
     /// A collection of references to subnets.
     /// </summary>
-    public BicepList<SubnetData> Subnets 
+    public BicepList<Subnet> Subnets 
     {
         get { Initialize(); return _subnets!; }
     }
-    private BicepList<SubnetData>? _subnets;
+    private BicepList<Subnet>? _subnets;
 
     /// <summary>
     /// Whether to disable the routes learned by BGP on that route table. True
@@ -141,7 +141,7 @@ public partial class RouteTableData : ProvisionableConstruct
         base.DefineProvisionableProperties();
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
         _routes = DefineListProperty<RouteData>("Routes", ["properties", "routes"]);
-        _subnets = DefineListProperty<SubnetData>("Subnets", ["properties", "subnets"], isOutput: true);
+        _subnets = DefineListProperty<Subnet>("Subnets", ["properties", "subnets"], isOutput: true);
         _disableBgpRoutePropagation = DefineProperty<bool>("DisableBgpRoutePropagation", ["properties", "disableBgpRoutePropagation"]);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _resourceGuid = DefineProperty<Guid>("ResourceGuid", ["properties", "resourceGuid"], isOutput: true);

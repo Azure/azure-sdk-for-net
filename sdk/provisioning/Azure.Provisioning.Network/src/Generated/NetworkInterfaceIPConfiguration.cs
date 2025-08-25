@@ -171,11 +171,11 @@ public partial class NetworkInterfaceIPConfiguration : ProvisionableResource
     /// <summary>
     /// Subnet bound to the IP configuration.
     /// </summary>
-    public SubnetData Subnet 
+    public Subnet Subnet 
     {
         get { Initialize(); return _subnet!; }
     }
-    private SubnetData? _subnet;
+    private Subnet? _subnet;
 
     /// <summary>
     /// The reference to Virtual Network Taps.
@@ -224,7 +224,7 @@ public partial class NetworkInterfaceIPConfiguration : ProvisionableResource
         _privateLinkConnectionProperties = DefineModelProperty<NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties>("PrivateLinkConnectionProperties", ["properties", "privateLinkConnectionProperties"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _publicIPAddress = DefineModelProperty<PublicIPAddressData>("PublicIPAddress", ["properties", "publicIPAddress"], isOutput: true);
-        _subnet = DefineModelProperty<SubnetData>("Subnet", ["properties", "subnet"], isOutput: true);
+        _subnet = DefineModelProperty<Subnet>("Subnet", ["properties", "subnet"], isOutput: true);
         _virtualNetworkTaps = DefineListProperty<VirtualNetworkTapData>("VirtualNetworkTaps", ["properties", "virtualNetworkTaps"], isOutput: true);
     }
 

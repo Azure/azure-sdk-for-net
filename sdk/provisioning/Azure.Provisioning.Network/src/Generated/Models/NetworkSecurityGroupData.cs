@@ -73,11 +73,11 @@ public partial class NetworkSecurityGroupData : ProvisionableConstruct
     /// <summary>
     /// A collection of references to subnets.
     /// </summary>
-    public BicepList<SubnetData> Subnets 
+    public BicepList<Subnet> Subnets 
     {
         get { Initialize(); return _subnets!; }
     }
-    private BicepList<SubnetData>? _subnets;
+    private BicepList<Subnet>? _subnets;
 
     /// <summary>
     /// A collection of references to flow log resources.
@@ -172,7 +172,7 @@ public partial class NetworkSecurityGroupData : ProvisionableConstruct
         _securityRules = DefineListProperty<SecurityRuleData>("SecurityRules", ["properties", "securityRules"]);
         _defaultSecurityRules = DefineListProperty<SecurityRuleData>("DefaultSecurityRules", ["properties", "defaultSecurityRules"], isOutput: true);
         _networkInterfaces = DefineListProperty<NetworkInterfaceData>("NetworkInterfaces", ["properties", "networkInterfaces"], isOutput: true);
-        _subnets = DefineListProperty<SubnetData>("Subnets", ["properties", "subnets"], isOutput: true);
+        _subnets = DefineListProperty<Subnet>("Subnets", ["properties", "subnets"], isOutput: true);
         _flowLogs = DefineListProperty<FlowLog>("FlowLogs", ["properties", "flowLogs"], isOutput: true);
         _resourceGuid = DefineProperty<Guid>("ResourceGuid", ["properties", "resourceGuid"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
