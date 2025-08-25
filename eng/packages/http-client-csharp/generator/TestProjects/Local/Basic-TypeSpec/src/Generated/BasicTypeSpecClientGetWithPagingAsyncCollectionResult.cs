@@ -34,10 +34,10 @@ namespace BasicTypeSpec
         /// <returns> The pages of BasicTypeSpecClientGetWithPagingAsyncCollectionResult as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Response response = await GetNextResponse(pageSizeHint, null).ConfigureAwait(false);
-            PageThingModel responseWithType = (PageThingModel)response;
+            Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
+            PageThingModel result = (PageThingModel)response;
             List<BinaryData> items = new List<BinaryData>();
-            foreach (var item in responseWithType.Items)
+            foreach (var item in result.Items)
             {
                 items.Add(BinaryData.FromObjectAsJson(item));
             }
@@ -47,19 +47,14 @@ namespace BasicTypeSpec
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
-        private async ValueTask<Response> GetNextResponse(int? pageSizeHint, string continuationToken)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, string continuationToken)
         {
-            HttpMessage message = _client.CreateListWithPagingRequest(_context);
+            HttpMessage message = _client.CreateGetWithPagingRequest(_context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithPaging");
             scope.Start();
             try
             {
-                await _client.Pipeline.SendAsync(message, CancellationToken).ConfigureAwait(false);
-                if (message.Response.IsError && _context.ErrorOptions != ErrorOptions.NoThrow)
-                {
-                    throw new RequestFailedException(message.Response);
-                }
-                return message.Response;
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

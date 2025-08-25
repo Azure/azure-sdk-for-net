@@ -78,7 +78,8 @@ public class BearerTokenPolicy : AuthenticationPolicy
         }
         else if (_flowContext is not null && _flowContext.Properties.Count > 0)
         {
-            token = _tokenProvider.GetToken(_flowContext, message.CancellationToken);
+            token = async ? await _tokenProvider.GetTokenAsync(_flowContext, message.CancellationToken).ConfigureAwait(false) :
+                _tokenProvider.GetToken(_flowContext, message.CancellationToken);
         }
 
         if (token is not null)
@@ -87,13 +88,13 @@ public class BearerTokenPolicy : AuthenticationPolicy
         }
 
         if (async)
-            {
-                await ProcessNextAsync(message, pipeline, currentIndex).ConfigureAwait(false);
-            }
-            else
-            {
-                ProcessNext(message, pipeline, currentIndex);
-            }
+        {
+            await ProcessNextAsync(message, pipeline, currentIndex).ConfigureAwait(false);
+        }
+        else
+        {
+            ProcessNext(message, pipeline, currentIndex);
+        }
     }
 
     internal static GetTokenOptions? GetOptionsFromContexts(IEnumerable<IReadOnlyDictionary<string, object>> contexts, AuthenticationTokenProvider tokenProvider)

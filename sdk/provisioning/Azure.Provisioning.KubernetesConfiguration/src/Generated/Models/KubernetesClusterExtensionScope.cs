@@ -52,7 +52,7 @@ public partial class KubernetesClusterExtensionScope : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _clusterReleaseNamespace = DefineProperty<string>("ClusterReleaseNamespace", ["cluster", "releaseNamespace"]);
-        _targetNamespace = DefineProperty<string>("TargetNamespace", ["namespace", "targetNamespace"]);
+        _clusterReleaseNamespace = DefineProperty<string>("ClusterReleaseNamespace", ["ClusterReleaseNamespace"]);
+        _targetNamespace = DefineProperty<string>("TargetNamespace", ["TargetNamespace"]);
     }
 }

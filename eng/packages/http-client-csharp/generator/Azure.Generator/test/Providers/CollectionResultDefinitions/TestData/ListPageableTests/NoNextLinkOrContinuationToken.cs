@@ -42,9 +42,9 @@ namespace Samples
         public override global::System.Collections.Generic.IEnumerable<global::Azure.Page<global::System.BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             global::Azure.Response response = this.GetNextResponse(pageSizeHint, null);
-            global::Samples.Models.Page responseWithType = ((global::Samples.Models.Page)response);
+            global::Samples.Models.Page result = ((global::Samples.Models.Page)response);
             global::System.Collections.Generic.List<global::System.BinaryData> items = new global::System.Collections.Generic.List<global::System.BinaryData>();
-            foreach (var item in responseWithType.Cats)
+            foreach (var item in result.Cats)
             {
                 items.Add(global::System.BinaryData.FromObjectAsJson(item));
             }
@@ -61,12 +61,7 @@ namespace Samples
             scope.Start();
             try
             {
-                _client.Pipeline.Send(message, this.CancellationToken);
-                if ((message.Response.IsError && (_context.ErrorOptions != global::Azure.ErrorOptions.NoThrow)))
-                {
-                    throw new global::Azure.RequestFailedException(message.Response);
-                }
-                return message.Response;
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (global::System.Exception e)
             {

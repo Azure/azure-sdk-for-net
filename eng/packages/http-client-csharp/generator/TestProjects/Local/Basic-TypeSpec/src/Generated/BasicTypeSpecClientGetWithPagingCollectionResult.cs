@@ -34,9 +34,9 @@ namespace BasicTypeSpec
         public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = GetNextResponse(pageSizeHint, null);
-            PageThingModel responseWithType = (PageThingModel)response;
+            PageThingModel result = (PageThingModel)response;
             List<BinaryData> items = new List<BinaryData>();
-            foreach (var item in responseWithType.Items)
+            foreach (var item in result.Items)
             {
                 items.Add(BinaryData.FromObjectAsJson(item));
             }
@@ -48,17 +48,12 @@ namespace BasicTypeSpec
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         private Response GetNextResponse(int? pageSizeHint, string continuationToken)
         {
-            HttpMessage message = _client.CreateListWithPagingRequest(_context);
+            HttpMessage message = _client.CreateGetWithPagingRequest(_context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithPaging");
             scope.Start();
             try
             {
-                _client.Pipeline.Send(message, CancellationToken);
-                if (message.Response.IsError && _context.ErrorOptions != ErrorOptions.NoThrow)
-                {
-                    throw new RequestFailedException(message.Response);
-                }
-                return message.Response;
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (Exception e)
             {

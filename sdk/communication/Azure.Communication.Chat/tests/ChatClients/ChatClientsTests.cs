@@ -25,7 +25,8 @@ namespace Azure.Communication.Chat.Tests.ChatClients
 
         private const string AddParticipantsdWithErrorsApiResponsePayload = "{\"invalidParticipants\":[{\"code\":\"404\",\"message\":\"Not found\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345677\"},{\"code\":\"401\",\"message\":\"Authentication failed\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345678\"},{\"code\":\"403\",\"message\":\"Permissions check failed\",\"target\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-1234-1234-1234-223a12345679\"}]}";
 
-        private const string CreateChatThreadSuccessApiResponsePayload = "{\"chatThread\":{\"id\":\"19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2\",\"topic\":\"Topic for testing success\",\"createdOn\":\"2021-02-25T22:34:48Z\",\"createdByCommunicationIdentifier\":{\"rawId\":\"8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c\",\"communicationUser\":{\"id\":\"8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c\"}}}}";
+        private const string CreateChatThreadSuccessApiResponsePayload = "{\"chatThread\":{\"id\":\"19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2\",\"topic\":\"Topic for testing success\",\"createdOn\":\"2021-02-25T22:34:48Z\",\"createdByCommunicationIdentifier\":{\"rawId\":\"8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c\",\"communicationUser\":{\"id\":\"8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c\"}},\"metadata\": {\"MetaKey1\":\"MetaValue1\",\"MetaKey2\": \"MetaValue2\"}, \"retentionPolicy\":{ \"kind\":\"threadCreationDate\", \"deleteThreadAfterDays\":40 }}}";
+        private const string CreateChatThreadNoneRetentionSuccessApiResponsePayload = "{\"chatThread\":{\"id\":\"19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2\",\"topic\":\"Topic for testing success\",\"createdOn\":\"2021-02-25T22:34:48Z\",\"createdByCommunicationIdentifier\":{\"rawId\":\"8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c\",\"communicationUser\":{\"id\":\"8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c\"}},\"metadata\": {\"MetaKey1\":\"MetaValue1\",\"MetaKey2\": \"MetaValue2\"}, \"retentionPolicy\":{ \"kind\":\"none\"}}}";
 
         private const string GetThreadApiResponsePayload = "{\"id\":\"19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2\",\"topic\":\"Test Thread\",\"createdOn\":\"2021-02-26T00:46:08Z\",\"createdByCommunicationIdentifier\":{\"rawId\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\",\"communicationUser\":{\"id\":\"8:acs:1b5cc06b-f352-4571-b1e6-d9b259b7c776_00000007-8f5e-776d-ea7c-5a3a0d0027b7\"}}}";
 
@@ -882,6 +883,99 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         }
 
         [Test]
+        public async Task UpdateProperties_TopicOnly_Succeeds()
+        {
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(204);
+
+            var options = new UpdateChatThreadPropertiesOptions
+            {
+                Topic = "Updated Topic"
+            };
+
+            var response = await chatThreadClient.UpdatePropertiesAsync(options);
+
+            Assert.AreEqual(204, response.Status);
+        }
+
+        [Test]
+        public async Task UpdateProperties_MetadataOnly_Succeeds()
+        {
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(204);
+
+            var updateOptionsWithNewMetadata = new UpdateChatThreadPropertiesOptions();
+            updateOptionsWithNewMetadata.Metadata.Add("MetaKeyNew1", "MetaValueNew1");
+            updateOptionsWithNewMetadata.Metadata.Add("MetaKeyNew2", "MetaValueNew2");
+
+            var response = await chatThreadClient.UpdatePropertiesAsync(updateOptionsWithNewMetadata);
+
+            Assert.AreEqual(204, response.Status);
+        }
+
+        [Test]
+        public async Task UpdateProperties_RetentionPolicyToNull_Succeeds()
+        {
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(204);
+
+            var options = new UpdateChatThreadPropertiesOptions
+            {
+                RetentionPolicy = null
+            };
+
+            var response = await chatThreadClient.UpdatePropertiesAsync(options);
+
+            Assert.AreEqual(204, response.Status);
+        }
+
+        [Test]
+        public async Task UpdateProperties_RetentionPolicyToValue_Succeeds()
+        {
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(204);
+
+            var options = new UpdateChatThreadPropertiesOptions();
+            options.RetentionPolicy = ChatRetentionPolicy.ThreadCreationDate(40);
+
+            var response = await chatThreadClient.UpdatePropertiesAsync(options);
+
+            Assert.AreEqual(204, response.Status);
+        }
+
+        [Test]
+        public async Task UpdateProperties_TopicAndMetadata_Succeeds()
+        {
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(204);
+
+            var options = new UpdateChatThreadPropertiesOptions
+            {
+                Topic = "Topic + Metadata"
+            };
+            options.Metadata.Add("MetaKeyNew1", "MetaValueNew1");
+            options.Metadata.Add("MetaKeyNew2", "MetaValueNew2");
+
+            var response = await chatThreadClient.UpdatePropertiesAsync(options);
+
+            Assert.AreEqual(204, response.Status);
+        }
+
+        [Test]
+        public async Task UpdateProperties_AllFields_Succeeds()
+        {
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(204);
+
+            var options = new UpdateChatThreadPropertiesOptions
+            {
+                Topic = "Full Update"
+            };
+
+            options.Metadata.Add("MetaKeyNew1", "MetaValueNew1");
+            options.Metadata.Add("MetaKeyNew2", "MetaValueNew2");
+            options.RetentionPolicy = ChatRetentionPolicy.ThreadCreationDate(40);
+
+            var response = await chatThreadClient.UpdatePropertiesAsync(options);
+
+            Assert.AreEqual(204, response.Status);
+        }
+
+        [Test]
         public async Task GetThreadsAsyncWithDateTimeShouldSucceed()
         {
             //arrange
@@ -1261,6 +1355,45 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         }
 
         [Test]
+        public void CreateChatThreadWithThreadRetentionPolicyShouldSucceed()
+        {
+            //act
+            var chatClient = CreateMockChatClient(201, CreateChatThreadSuccessApiResponsePayload);
+            var chatParticipant = new ChatParticipant(new CommunicationUserIdentifier("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c"));
+            CreateChatThreadResult createChatThreadResult = chatClient.CreateChatThread(new CreateChatThreadOptions("new topic") { RetentionPolicy = ChatRetentionPolicy.ThreadCreationDate(40) });
+
+            //assert
+            var chatThread = createChatThreadResult.ChatThread;
+            Assert.AreEqual("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c", CommunicationIdentifierSerializer.Serialize(chatThread.CreatedBy).CommunicationUser.Id);
+            Assert.AreEqual("Topic for testing success", chatThread.Topic);
+            Assert.AreEqual("19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2", chatThread.Id);
+
+            var threadCreationDateRetentionPolicy = chatThread.RetentionPolicy as ThreadCreationDateRetentionPolicy;
+
+            Assert.IsNotNull(threadCreationDateRetentionPolicy);
+            Assert.AreEqual(40, threadCreationDateRetentionPolicy?.DeleteThreadAfterDays);
+        }
+
+        [Test]
+        public void CreateChatThreadWithNoneRetentionPolicyShouldSucceed()
+        {
+            //act
+            var chatClient = CreateMockChatClient(201, CreateChatThreadNoneRetentionSuccessApiResponsePayload);
+            var chatParticipant = new ChatParticipant(new CommunicationUserIdentifier("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c"));
+            CreateChatThreadResult createChatThreadResult = chatClient.CreateChatThread(new CreateChatThreadOptions("new topic") { RetentionPolicy = ChatRetentionPolicy.None() });
+
+            //assert
+            var chatThread = createChatThreadResult.ChatThread;
+            Assert.AreEqual("8:acs:46849534-eb08-4ab7-bde7-c36928cd1547_00000007-165c-9b10-b0b7-3a3a0d00076c", CommunicationIdentifierSerializer.Serialize(chatThread.CreatedBy).CommunicationUser.Id);
+            Assert.AreEqual("Topic for testing success", chatThread.Topic);
+            Assert.AreEqual("19:e5e7a3fa5f314a01b2d12c6c7b37f433@thread.v2", chatThread.Id);
+
+            var noneRetentionPolicy = chatThread.RetentionPolicy as NoneRetentionPolicy;
+
+            Assert.IsNotNull(noneRetentionPolicy);
+        }
+
+        [Test]
         public void CreateChatThreadShouldExposePartialErrors()
         {
             //arrange
@@ -1335,7 +1468,7 @@ namespace Azure.Communication.Chat.Tests.ChatClients
             Assert.AreEqual(chatError.Details, chatErrorDetails);
             Assert.AreEqual(chatError.InnerError, innerChatError);
 
-            var chatParticipant = ChatModelFactory.ChatParticipant(It.IsAny<CommunicationIdentifier>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>());
+            var chatParticipant = ChatModelFactory.ChatParticipant(It.IsAny<CommunicationIdentifier>(), It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<IDictionary<string, string>>());
             Assert.IsNotNull(chatParticipant);
 
             var addChatParticipantsResult = ChatModelFactory.AddChatParticipantsResult(It.IsAny<IEnumerable<ChatError>>());

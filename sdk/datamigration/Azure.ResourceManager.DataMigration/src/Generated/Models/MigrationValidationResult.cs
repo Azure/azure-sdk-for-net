@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="summaryResults"> Validation summary results for each database. </param>
         /// <param name="status"> Current status of validation at the migration level. Status from the database validation result status will be aggregated here. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationValidationResult(string id, string migrationId, IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult> summaryResults, ValidationStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MigrationValidationResult(string id, string migrationId, IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult> summaryResults, MigrationValidationStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             MigrationId = migrationId;
@@ -73,6 +73,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Validation summary results for each database. </summary>
         public IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult> SummaryResults { get; }
         /// <summary> Current status of validation at the migration level. Status from the database validation result status will be aggregated here. </summary>
-        public ValidationStatus? Status { get; }
+        public MigrationValidationStatus? Status { get; }
     }
 }

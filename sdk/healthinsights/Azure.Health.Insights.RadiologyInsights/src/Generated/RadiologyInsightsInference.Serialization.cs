@@ -93,9 +93,12 @@ namespace Azure.Health.Insights.RadiologyInsights
                     case "finding": return FindingInference.DeserializeFindingInference(element, options);
                     case "followupCommunication": return FollowupCommunicationInference.DeserializeFollowupCommunicationInference(element, options);
                     case "followupRecommendation": return FollowupRecommendationInference.DeserializeFollowupRecommendationInference(element, options);
+                    case "guidance": return GuidanceInference.DeserializeGuidanceInference(element, options);
                     case "lateralityDiscrepancy": return LateralityDiscrepancyInference.DeserializeLateralityDiscrepancyInference(element, options);
                     case "limitedOrderDiscrepancy": return LimitedOrderDiscrepancyInference.DeserializeLimitedOrderDiscrepancyInference(element, options);
+                    case "qualityMeasure": return QualityMeasureInference.DeserializeQualityMeasureInference(element, options);
                     case "radiologyProcedure": return RadiologyProcedureInference.DeserializeRadiologyProcedureInference(element, options);
+                    case "scoringAndAssessment": return ScoringAndAssessmentInference.DeserializeScoringAndAssessmentInference(element, options);
                     case "sexMismatch": return SexMismatchInference.DeserializeSexMismatchInference(element, options);
                 }
             }

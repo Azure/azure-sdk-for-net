@@ -46,13 +46,37 @@ public partial class PostgreSqlFlexibleServerStorage : ProvisionableConstruct
     private BicepValue<PostgreSqlManagedDiskPerformanceTier>? _tier;
 
     /// <summary>
-    /// Storage tier IOPS quantity.
+    /// Storage tier IOPS quantity. This property is required to be set for
+    /// storage Type PremiumV2_LRS.
     /// </summary>
     public BicepValue<int> Iops 
     {
         get { Initialize(); return _iops!; }
+        set { Initialize(); _iops!.Assign(value); }
     }
     private BicepValue<int>? _iops;
+
+    /// <summary>
+    /// Storage throughput for the server. This is required to be set for
+    /// storage Type PremiumV2_LRS.
+    /// </summary>
+    public BicepValue<int> Throughput 
+    {
+        get { Initialize(); return _throughput!; }
+        set { Initialize(); _throughput!.Assign(value); }
+    }
+    private BicepValue<int>? _throughput;
+
+    /// <summary>
+    /// Storage type for the server. Allowed values are Premium_LRS and
+    /// PremiumV2_LRS, and default is Premium_LRS if not specified.
+    /// </summary>
+    public BicepValue<PostgreSqlFlexibleServersStorageType> StorageType 
+    {
+        get { Initialize(); return _storageType!; }
+        set { Initialize(); _storageType!.Assign(value); }
+    }
+    private BicepValue<PostgreSqlFlexibleServersStorageType>? _storageType;
 
     /// <summary>
     /// Creates a new PostgreSqlFlexibleServerStorage.
@@ -71,6 +95,8 @@ public partial class PostgreSqlFlexibleServerStorage : ProvisionableConstruct
         _storageSizeInGB = DefineProperty<int>("StorageSizeInGB", ["storageSizeGB"]);
         _autoGrow = DefineProperty<StorageAutoGrow>("AutoGrow", ["autoGrow"]);
         _tier = DefineProperty<PostgreSqlManagedDiskPerformanceTier>("Tier", ["tier"]);
-        _iops = DefineProperty<int>("Iops", ["iops"], isOutput: true);
+        _iops = DefineProperty<int>("Iops", ["iops"]);
+        _throughput = DefineProperty<int>("Throughput", ["throughput"]);
+        _storageType = DefineProperty<PostgreSqlFlexibleServersStorageType>("StorageType", ["type"]);
     }
 }

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -43,7 +45,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(NetworkIdentifier))
             {
                 writer.WritePropertyName("networkIdentifier"u8);
-                JsonSerializer.Serialize(writer, NetworkIdentifier);
+                ((IJsonModel<WritableSubResource>)NetworkIdentifier).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Locations))
             {
@@ -116,7 +118,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    networkIdentifier = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    networkIdentifier = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                     continue;
                 }
                 if (property.NameEquals("locations"u8))
@@ -151,6 +153,100 @@ namespace Azure.ResourceManager.Network.Models
             return new ServiceEndpointProperties(service, networkIdentifier, locations ?? new ChangeTrackingList<AzureLocation>(), provisioningState, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Service), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  service: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Service))
+                {
+                    builder.Append("  service: ");
+                    if (Service.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Service}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Service}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("NetworkIdentifierId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  networkIdentifier: ");
+                builder.AppendLine("{");
+                builder.Append("    id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(NetworkIdentifier))
+                {
+                    builder.Append("  networkIdentifier: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, NetworkIdentifier, options, 2, false, "  networkIdentifier: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Locations), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  locations: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Locations))
+                {
+                    if (Locations.Any())
+                    {
+                        builder.Append("  locations: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Locations)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("  provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ServiceEndpointProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -159,6 +255,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ServiceEndpointProperties)} does not support writing '{options.Format}' format.");
             }

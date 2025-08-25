@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The network virtual appliance instance id for which boot diagnostic logs is being requested. </summary>
+        [WirePath("instanceId")]
         public int? InstanceId { get; set; }
         /// <summary> Specifies the sas-url to the storage blob into which serial console logs for the requested instance will be written. </summary>
+        [WirePath("serialConsoleStorageSasUrl")]
         public Uri SerialConsoleStorageSasUri { get; set; }
         /// <summary> Specifies the sas-url to the storage blob into which console screen shot for the requested instance will be written. </summary>
+        [WirePath("consoleScreenshotStorageSasUrl")]
         public Uri ConsoleScreenshotStorageSasUri { get; set; }
     }
 }

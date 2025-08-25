@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> A list of network security perimeter configurations for a server. </summary>
+    /// <summary> Result of a list NSP (network security perimeter) configurations request. </summary>
     internal partial class NetworkSecurityPerimeterConfigurationListResult
     {
         /// <summary>
@@ -48,23 +48,23 @@ namespace Azure.ResourceManager.Search.Models
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationListResult"/>. </summary>
         internal NetworkSecurityPerimeterConfigurationListResult()
         {
-            Value = new ChangeTrackingList<NetworkSecurityPerimeterConfigurationData>();
+            Value = new ChangeTrackingList<SearchServiceNetworkSecurityPerimeterConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationListResult"/>. </summary>
-        /// <param name="value"> Array of results. </param>
-        /// <param name="nextLink"> Link to retrieve next page of results. </param>
+        /// <param name="value"> Array of network security perimeter results. </param>
+        /// <param name="nextLink"> The link used to get the next page of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterConfigurationListResult(IReadOnlyList<NetworkSecurityPerimeterConfigurationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkSecurityPerimeterConfigurationListResult(IReadOnlyList<SearchServiceNetworkSecurityPerimeterConfigurationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Array of results. </summary>
-        public IReadOnlyList<NetworkSecurityPerimeterConfigurationData> Value { get; }
-        /// <summary> Link to retrieve next page of results. </summary>
-        public string NextLink { get; }
+        /// <summary> Array of network security perimeter results. </summary>
+        public IReadOnlyList<SearchServiceNetworkSecurityPerimeterConfigurationData> Value { get; }
+        /// <summary> The link used to get the next page of results. </summary>
+        public Uri NextLink { get; }
     }
 }

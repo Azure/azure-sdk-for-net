@@ -11,7 +11,8 @@ using System;
 namespace Azure.Provisioning.CognitiveServices;
 
 /// <summary>
-/// Properties of Cognitive Services account deployment model.
+/// Properties of Cognitive Services account deployment model. (Deprecated,
+/// please use Deployment.sku instead.).
 /// </summary>
 public partial class CognitiveServicesAccountDeploymentScaleSettings : ProvisionableConstruct
 {

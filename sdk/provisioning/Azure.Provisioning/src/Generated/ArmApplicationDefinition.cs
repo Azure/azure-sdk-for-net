@@ -266,6 +266,7 @@ public partial class ArmApplicationDefinition : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _lockLevel = DefineProperty<ArmApplicationLockLevel>("LockLevel", ["properties", "lockLevel"], isRequired: true);

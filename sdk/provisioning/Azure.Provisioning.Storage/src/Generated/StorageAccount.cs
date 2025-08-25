@@ -83,7 +83,7 @@ public partial class StorageAccount : ProvisionableResource
 
     /// <summary>
     /// Allow or disallow public access to all blobs or containers in the
-    /// storage account. The default interpretation is true for this property.
+    /// storage account. The default interpretation is false for this property.
     /// </summary>
     public BicepValue<bool> AllowBlobPublicAccess 
     {
@@ -93,8 +93,11 @@ public partial class StorageAccount : ProvisionableResource
     private BicepValue<bool>? _allowBlobPublicAccess;
 
     /// <summary>
-    /// Allow or disallow cross AAD tenant object replication. The default
-    /// interpretation is true for this property.
+    /// Allow or disallow cross AAD tenant object replication. Set this
+    /// property to true for new or existing accounts only if object
+    /// replication policies will involve storage accounts in different AAD
+    /// tenants. The default interpretation is false for new accounts to
+    /// follow best security practices by default.
     /// </summary>
     public BicepValue<bool> AllowCrossTenantReplication 
     {
@@ -232,6 +235,16 @@ public partial class StorageAccount : ProvisionableResource
     private BicepValue<bool>? _isDefaultToOAuthAuthentication;
 
     /// <summary>
+    /// Enables extended group support with local users feature, if set to true.
+    /// </summary>
+    public BicepValue<bool> IsExtendedGroupEnabled 
+    {
+        get { Initialize(); return _isExtendedGroupEnabled!; }
+        set { Initialize(); _isExtendedGroupEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isExtendedGroupEnabled;
+
+    /// <summary>
     /// Account HierarchicalNamespace enabled if sets to true.
     /// </summary>
     public BicepValue<bool> IsHnsEnabled 
@@ -314,9 +327,10 @@ public partial class StorageAccount : ProvisionableResource
     private StorageAccountNetworkRuleSet? _networkRuleSet;
 
     /// <summary>
-    /// Allow or disallow public network access to Storage Account. Value is
-    /// optional but if passed in, must be &apos;Enabled&apos; or
-    /// &apos;Disabled&apos;.
+    /// Allow, disallow, or let Network Security Perimeter configuration to
+    /// evaluate public network access to Storage Account. Value is optional
+    /// but if passed in, must be &apos;Enabled&apos;, &apos;Disabled&apos; or
+    /// &apos;SecuredByPerimeter&apos;.
     /// </summary>
     public BicepValue<StoragePublicNetworkAccess> PublicNetworkAccess 
     {
@@ -397,6 +411,16 @@ public partial class StorageAccount : ProvisionableResource
     private BicepValue<ResourceIdentifier>? _id;
 
     /// <summary>
+    /// If customer initiated account migration is in progress, the value will
+    /// be true else it will be null.
+    /// </summary>
+    public BicepValue<bool> IsAccountMigrationInProgress 
+    {
+        get { Initialize(); return _isAccountMigrationInProgress!; }
+    }
+    private BicepValue<bool>? _isAccountMigrationInProgress;
+
+    /// <summary>
     /// If the failover is in progress, the value will be true, otherwise, it
     /// will be null.
     /// </summary>
@@ -405,6 +429,16 @@ public partial class StorageAccount : ProvisionableResource
         get { Initialize(); return _isFailoverInProgress!; }
     }
     private BicepValue<bool>? _isFailoverInProgress;
+
+    /// <summary>
+    /// This property will be set to true or false on an event of ongoing
+    /// migration. Default value is null.
+    /// </summary>
+    public BicepValue<bool> IsSkuConversionBlocked 
+    {
+        get { Initialize(); return _isSkuConversionBlocked!; }
+    }
+    private BicepValue<bool>? _isSkuConversionBlocked;
 
     /// <summary>
     /// Storage account keys creation time.
@@ -511,6 +545,16 @@ public partial class StorageAccount : ProvisionableResource
     private BicepValue<StorageAccountStatus>? _statusOfSecondary;
 
     /// <summary>
+    /// Gets the status of the storage account at the time the operation was
+    /// called.
+    /// </summary>
+    public BicepValue<StorageAccountProvisioningState> StorageAccountProvisioningState 
+    {
+        get { Initialize(); return _storageAccountProvisioningState!; }
+    }
+    private BicepValue<StorageAccountProvisioningState>? _storageAccountProvisioningState;
+
+    /// <summary>
     /// This property is readOnly and is set by server during asynchronous
     /// storage account sku conversion operations.
     /// </summary>
@@ -549,6 +593,7 @@ public partial class StorageAccount : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _kind = DefineProperty<StorageKind>("Kind", ["kind"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
@@ -567,6 +612,7 @@ public partial class StorageAccount : ProvisionableResource
         _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
         _immutableStorageWithVersioning = DefineModelProperty<ImmutableStorageAccount>("ImmutableStorageWithVersioning", ["properties", "immutableStorageWithVersioning"]);
         _isDefaultToOAuthAuthentication = DefineProperty<bool>("IsDefaultToOAuthAuthentication", ["properties", "defaultToOAuthAuthentication"]);
+        _isExtendedGroupEnabled = DefineProperty<bool>("IsExtendedGroupEnabled", ["properties", "enableExtendedGroups"]);
         _isHnsEnabled = DefineProperty<bool>("IsHnsEnabled", ["properties", "isHnsEnabled"]);
         _isLocalUserEnabled = DefineProperty<bool>("IsLocalUserEnabled", ["properties", "isLocalUserEnabled"]);
         _isNfsV3Enabled = DefineProperty<bool>("IsNfsV3Enabled", ["properties", "isNfsV3Enabled"]);
@@ -583,7 +629,9 @@ public partial class StorageAccount : ProvisionableResource
         _createdOn = DefineProperty<DateTimeOffset>("CreatedOn", ["properties", "creationTime"], isOutput: true);
         _geoReplicationStats = DefineModelProperty<GeoReplicationStatistics>("GeoReplicationStats", ["properties", "geoReplicationStats"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
+        _isAccountMigrationInProgress = DefineProperty<bool>("IsAccountMigrationInProgress", ["properties", "accountMigrationInProgress"], isOutput: true);
         _isFailoverInProgress = DefineProperty<bool>("IsFailoverInProgress", ["properties", "failoverInProgress"], isOutput: true);
+        _isSkuConversionBlocked = DefineProperty<bool>("IsSkuConversionBlocked", ["properties", "isSkuConversionBlocked"], isOutput: true);
         _keyCreationTime = DefineModelProperty<StorageAccountKeyCreationTime>("KeyCreationTime", ["properties", "keyCreationTime"], isOutput: true);
         _lastGeoFailoverOn = DefineProperty<DateTimeOffset>("LastGeoFailoverOn", ["properties", "lastGeoFailoverTime"], isOutput: true);
         _primaryEndpoints = DefineModelProperty<StorageAccountEndpoints>("PrimaryEndpoints", ["properties", "primaryEndpoints"], isOutput: true);
@@ -594,6 +642,7 @@ public partial class StorageAccount : ProvisionableResource
         _secondaryLocation = DefineProperty<AzureLocation>("SecondaryLocation", ["properties", "secondaryLocation"], isOutput: true);
         _statusOfPrimary = DefineProperty<StorageAccountStatus>("StatusOfPrimary", ["properties", "statusOfPrimary"], isOutput: true);
         _statusOfSecondary = DefineProperty<StorageAccountStatus>("StatusOfSecondary", ["properties", "statusOfSecondary"], isOutput: true);
+        _storageAccountProvisioningState = DefineProperty<StorageAccountProvisioningState>("StorageAccountProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _storageAccountSkuConversionStatus = DefineModelProperty<StorageAccountSkuConversionStatus>("StorageAccountSkuConversionStatus", ["properties", "storageAccountSkuConversionStatus"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);
     }

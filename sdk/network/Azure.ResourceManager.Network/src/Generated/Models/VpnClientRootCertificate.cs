@@ -45,6 +45,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary>
         /// The certificate public data.
@@ -76,8 +77,10 @@ namespace Azure.ResourceManager.Network.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.publicCertData")]
         public BinaryData PublicCertData { get; set; }
         /// <summary> The provisioning state of the VPN client root certificate resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

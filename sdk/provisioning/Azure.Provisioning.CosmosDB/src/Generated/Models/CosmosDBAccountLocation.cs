@@ -47,16 +47,7 @@ public partial class CosmosDBAccountLocation : ProvisionableConstruct
     private BicepValue<string>? _documentEndpoint;
 
     /// <summary>
-    /// The status of the Cosmos DB account at the time the operation was
-    /// called. The status can be one of following. &apos;Creating&apos; – the
-    /// Cosmos DB account is being created. When an account is in Creating
-    /// state, only properties that are specified as input for the Create
-    /// Cosmos DB account operation are returned. &apos;Succeeded&apos; – the
-    /// Cosmos DB account is active for use. &apos;Updating&apos; – the Cosmos
-    /// DB account is being updated. &apos;Deleting&apos; – the Cosmos DB
-    /// account is being deleted. &apos;Failed&apos; – the Cosmos DB account
-    /// failed creation. &apos;DeletionFailed&apos; – the Cosmos DB account
-    /// deletion failed.
+    /// The provisioning state of the resource.
     /// </summary>
     public BicepValue<string> ProvisioningState 
     {

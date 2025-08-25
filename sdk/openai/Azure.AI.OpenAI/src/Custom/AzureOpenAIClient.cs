@@ -14,7 +14,7 @@ global using OpenAI.Models;
 global using OpenAI.Moderations;
 global using OpenAI.VectorStores;
 #if !AZURE_OPENAI_GA
-global using OpenAI.RealtimeConversation;
+global using OpenAI.Realtime;
 global using OpenAI.Responses;
 #endif
 
@@ -33,9 +33,11 @@ using Azure.Core;
 #if !AZURE_OPENAI_GA
 using Azure.AI.OpenAI.Assistants;
 using Azure.AI.OpenAI.FineTuning;
-using Azure.AI.OpenAI.RealtimeConversation;
+using Azure.AI.OpenAI.Realtime;
 using Azure.AI.OpenAI.VectorStores;
 using Azure.AI.OpenAI.Responses;
+using OpenAI.Evals;
+using Azure.AI.OpenAI.Evals;
 #endif
 
 #pragma warning disable AZC0007
@@ -199,6 +201,14 @@ public partial class AzureOpenAIClient : OpenAIClient
         => new AzureEmbeddingClient(Pipeline, deploymentName, _endpoint, _options);
 
     /// <summary>
+    /// Gets a new <see cref="EvaluationClient"/> instance configured for batch operation use with the Azure OpenAI service.
+    /// </summary>
+    /// <returns> A new <see cref="EvaluationClient"/> instance. </returns>
+    [Experimental("OPENAI001")]
+    public override EvaluationClient GetEvaluationClient()
+        => new AzureEvaluationClient(Pipeline, _endpoint, _options);
+
+    /// <summary>
     /// Gets a new <see cref="OpenAIFileClient"/> instance configured for file operation use with the Azure OpenAI service.
     /// </summary>
     /// <returns> A new <see cref="OpenAIFileClient"/> instance. </returns>
@@ -264,25 +274,20 @@ public partial class AzureOpenAIClient : OpenAIClient
 
 #if !AZURE_OPENAI_GA
     [Experimental("OPENAI002")]
-    public override RealtimeConversationClient GetRealtimeConversationClient(string deploymentName)
+    public override RealtimeClient GetRealtimeClient()
     {
         if (_tokenCredential is not null)
         {
-            return new AzureRealtimeConversationClient(_endpoint, deploymentName, _tokenCredential, _options);
+            return new AzureRealtimeClient(_endpoint, _tokenCredential, _options);
         }
         else
         {
-            return new AzureRealtimeConversationClient(_endpoint, deploymentName, _keyCredential, _options);
+            return new AzureRealtimeClient(_endpoint, _keyCredential, _options);
         }
     }
 #else
     // Not yet present in OpenAI GA dependency
 #endif
-
-    public override OpenAIResponseClient GetOpenAIResponseClient()
-    {
-        return new AzureOpenAIResponseClient(Pipeline, null, _endpoint, _options);
-    }
 
     public override OpenAIResponseClient GetOpenAIResponseClient(string deploymentName)
     {
@@ -297,6 +302,8 @@ public partial class AzureOpenAIClient : OpenAIClient
             [
                 CreateAddUserAgentHeaderPolicy(options),
                 CreateAddClientRequestIdHeaderPolicy(),
+                CreateAddUserDefinedDefaultHeadersPolicy(options),
+                CreateAddUserDefinedDefaultQueryParametersPolicy(options),
             ],
             perTryPolicies:
             [
@@ -341,6 +348,37 @@ public partial class AzureOpenAIClient : OpenAIClient
                     ? existingHeader
                     : Guid.NewGuid().ToString().ToLowerInvariant();
                 request.Headers.Set(s_clientRequestIdHeaderKey, requestId);
+            }
+        });
+    }
+
+    private static PipelinePolicy CreateAddUserDefinedDefaultHeadersPolicy(AzureOpenAIClientOptions options = null)
+    {
+        return new GenericActionPipelinePolicy(request =>
+        {
+            if (request?.Headers is not null && options?.DefaultHeaders?.Count > 0 == true)
+            {
+                foreach (KeyValuePair<string, string> defaultHeaderPair in options.DefaultHeaders)
+                {
+                    request.Headers.Add(defaultHeaderPair.Key, defaultHeaderPair.Value);
+                }
+            }
+        });
+    }
+
+    private static PipelinePolicy CreateAddUserDefinedDefaultQueryParametersPolicy(AzureOpenAIClientOptions options = null)
+    {
+        return new GenericActionPipelinePolicy(request =>
+        {
+            if (request?.Uri is not null && options?.DefaultQueryParameters?.Count > 0 == true)
+            {
+                ClientUriBuilder uriBuilder = new();
+                uriBuilder.Reset(request.Uri);
+                foreach (KeyValuePair<string, string> defaultQueryParameter in options.DefaultQueryParameters)
+                {
+                    uriBuilder.AppendQuery(defaultQueryParameter.Key, defaultQueryParameter.Value, escape: true);
+                }
+                request.Uri = uriBuilder.ToUri();
             }
         });
     }

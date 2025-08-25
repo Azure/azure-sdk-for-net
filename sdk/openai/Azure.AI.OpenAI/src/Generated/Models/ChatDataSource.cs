@@ -19,19 +19,24 @@ namespace Azure.AI.OpenAI.Chat
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        private protected ChatDataSource(string @type)
+        /// <summary> Initializes a new instance of <see cref="ChatDataSource"/>. </summary>
+        /// <param name="kind"> The differentiating type identifier for the data source. </param>
+        private protected ChatDataSource(InternalAzureChatDataSourceKind kind)
         {
-            Type = @type;
+            Kind = kind;
         }
 
-        internal ChatDataSource(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <summary> Initializes a new instance of <see cref="ChatDataSource"/>. </summary>
+        /// <param name="kind"> The differentiating type identifier for the data source. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ChatDataSource(InternalAzureChatDataSourceKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The differentiating type identifier for the data source. </summary>
-        internal string Type { get; set; }
+        internal InternalAzureChatDataSourceKind Kind { get; set; }
 
         /// <summary></summary>
         internal IDictionary<string, BinaryData> SerializedAdditionalRawData

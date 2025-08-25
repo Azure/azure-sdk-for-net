@@ -1,593 +1,581 @@
 {
- "$id": "1",
- "name": "Type.Model.Usage",
- "apiVersions": [],
- "enums": [],
- "constants": [
-  {
-   "$id": "2",
-   "kind": "constant",
-   "name": "inputContentType",
-   "namespace": "",
-   "usage": "None",
-   "valueType": {
-    "$id": "3",
-    "kind": "string",
-    "name": "string",
-    "crossLanguageDefinitionId": "TypeSpec.string",
-    "decorators": []
-   },
-   "value": "application/json",
-   "decorators": []
-  },
-  {
-   "$id": "4",
-   "kind": "constant",
-   "name": "outputContentType",
-   "namespace": "",
-   "usage": "None",
-   "valueType": {
-    "$id": "5",
-    "kind": "string",
-    "name": "string",
-    "crossLanguageDefinitionId": "TypeSpec.string",
-    "decorators": []
-   },
-   "value": "application/json",
-   "decorators": []
-  },
-  {
-   "$id": "6",
-   "kind": "constant",
-   "name": "inputAndOutputContentType",
-   "namespace": "",
-   "usage": "None",
-   "valueType": {
-    "$id": "7",
-    "kind": "string",
-    "name": "string",
-    "crossLanguageDefinitionId": "TypeSpec.string",
-    "decorators": []
-   },
-   "value": "application/json",
-   "decorators": []
-  },
-  {
-   "$id": "8",
-   "kind": "constant",
-   "name": "inputAndOutputContentType1",
-   "namespace": "",
-   "usage": "None",
-   "valueType": {
-    "$id": "9",
-    "kind": "string",
-    "name": "string",
-    "crossLanguageDefinitionId": "TypeSpec.string",
-    "decorators": []
-   },
-   "value": "application/json",
-   "decorators": []
-  }
- ],
- "models": [
-  {
-   "$id": "10",
-   "kind": "model",
-   "name": "InputRecord",
-   "namespace": "Type.Model.Usage",
-   "crossLanguageDefinitionId": "Type.Model.Usage.InputRecord",
-   "usage": "Input,Json",
-   "doc": "Record used in operation parameters",
-   "decorators": [],
-   "properties": [
+  "name": "Type.Model.Usage",
+  "apiVersions": [],
+  "enums": [],
+  "constants": [
     {
-     "$id": "11",
-     "kind": "property",
-     "name": "requiredProp",
-     "serializedName": "requiredProp",
-     "type": {
+      "$id": "1",
+      "kind": "constant",
+      "name": "inputContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "2",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "3",
+      "kind": "constant",
+      "name": "outputContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "4",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "5",
+      "kind": "constant",
+      "name": "inputAndOutputContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "6",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    },
+    {
+      "$id": "7",
+      "kind": "constant",
+      "name": "inputAndOutputContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "8",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": []
+    }
+  ],
+  "models": [
+    {
+      "$id": "9",
+      "kind": "model",
+      "name": "InputRecord",
+      "namespace": "Type.Model.Usage",
+      "crossLanguageDefinitionId": "Type.Model.Usage.InputRecord",
+      "usage": "Input,Json",
+      "doc": "Record used in operation parameters",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "10",
+          "kind": "property",
+          "name": "requiredProp",
+          "serializedName": "requiredProp",
+          "type": {
+            "$id": "11",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Type.Model.Usage.InputRecord.requiredProp",
+          "serializationOptions": {
+            "json": {
+              "name": "requiredProp"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    },
+    {
       "$id": "12",
-      "kind": "string",
-      "name": "string",
-      "crossLanguageDefinitionId": "TypeSpec.string",
-      "decorators": []
-     },
-     "optional": false,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Type.Model.Usage.InputRecord.requiredProp",
-     "serializationOptions": {
-      "$id": "13",
-      "json": {
-       "$id": "14",
-       "name": "requiredProp"
-      }
-     }
-    }
-   ]
-  },
-  {
-   "$id": "15",
-   "kind": "model",
-   "name": "OutputRecord",
-   "namespace": "Type.Model.Usage",
-   "crossLanguageDefinitionId": "Type.Model.Usage.OutputRecord",
-   "usage": "Output,Json",
-   "doc": "Record used in operation return type",
-   "decorators": [],
-   "properties": [
+      "kind": "model",
+      "name": "OutputRecord",
+      "namespace": "Type.Model.Usage",
+      "crossLanguageDefinitionId": "Type.Model.Usage.OutputRecord",
+      "usage": "Output,Json",
+      "doc": "Record used in operation return type",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "13",
+          "kind": "property",
+          "name": "requiredProp",
+          "serializedName": "requiredProp",
+          "type": {
+            "$id": "14",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Type.Model.Usage.OutputRecord.requiredProp",
+          "serializationOptions": {
+            "json": {
+              "name": "requiredProp"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    },
     {
-     "$id": "16",
-     "kind": "property",
-     "name": "requiredProp",
-     "serializedName": "requiredProp",
-     "type": {
-      "$id": "17",
-      "kind": "string",
-      "name": "string",
-      "crossLanguageDefinitionId": "TypeSpec.string",
-      "decorators": []
-     },
-     "optional": false,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Type.Model.Usage.OutputRecord.requiredProp",
-     "serializationOptions": {
+      "$id": "15",
+      "kind": "model",
+      "name": "InputOutputRecord",
+      "namespace": "Type.Model.Usage",
+      "crossLanguageDefinitionId": "Type.Model.Usage.InputOutputRecord",
+      "usage": "Input,Output,Json",
+      "doc": "Record used both as operation parameter and return type",
+      "decorators": [],
+      "properties": [
+        {
+          "$id": "16",
+          "kind": "property",
+          "name": "requiredProp",
+          "serializedName": "requiredProp",
+          "type": {
+            "$id": "17",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Type.Model.Usage.InputOutputRecord.requiredProp",
+          "serializationOptions": {
+            "json": {
+              "name": "requiredProp"
+            }
+          },
+          "isHttpMetadata": false
+        }
+      ]
+    }
+  ],
+  "clients": [
+    {
       "$id": "18",
-      "json": {
-       "$id": "19",
-       "name": "requiredProp"
-      }
-     }
-    }
-   ]
-  },
-  {
-   "$id": "20",
-   "kind": "model",
-   "name": "InputOutputRecord",
-   "namespace": "Type.Model.Usage",
-   "crossLanguageDefinitionId": "Type.Model.Usage.InputOutputRecord",
-   "usage": "Input,Output,Json",
-   "doc": "Record used both as operation parameter and return type",
-   "decorators": [],
-   "properties": [
-    {
-     "$id": "21",
-     "kind": "property",
-     "name": "requiredProp",
-     "serializedName": "requiredProp",
-     "type": {
-      "$id": "22",
-      "kind": "string",
-      "name": "string",
-      "crossLanguageDefinitionId": "TypeSpec.string",
-      "decorators": []
-     },
-     "optional": false,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Type.Model.Usage.InputOutputRecord.requiredProp",
-     "serializationOptions": {
-      "$id": "23",
-      "json": {
-       "$id": "24",
-       "name": "requiredProp"
-      }
-     }
-    }
-   ]
-  }
- ],
- "clients": [
-  {
-   "$id": "25",
-   "kind": "client",
-   "name": "UsageClient",
-   "namespace": "Type.Model.Usage",
-   "doc": "Illustrates usage of Record in different places(Operation parameters, return type or both).",
-   "methods": [
-    {
-     "$id": "26",
-     "kind": "basic",
-     "name": "input",
-     "accessibility": "public",
-     "apiVersions": [],
-     "operation": {
-      "$id": "27",
-      "name": "input",
-      "resourceName": "Usage",
-      "accessibility": "public",
+      "kind": "client",
+      "name": "UsageClient",
+      "namespace": "Type.Model.Usage",
+      "doc": "Illustrates usage of Record in different places(Operation parameters, return type or both).",
+      "methods": [
+        {
+          "$id": "19",
+          "kind": "basic",
+          "name": "input",
+          "accessibility": "public",
+          "apiVersions": [],
+          "operation": {
+            "$id": "20",
+            "name": "input",
+            "resourceName": "Usage",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "21",
+                "kind": "header",
+                "name": "contentType",
+                "serializedName": "Content-Type",
+                "doc": "Body parameter's content type. Known values are application/json",
+                "type": {
+                  "$ref": "1"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": true,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Type.Model.Usage.input.contentType"
+              },
+              {
+                "$id": "22",
+                "kind": "body",
+                "name": "input",
+                "serializedName": "input",
+                "type": {
+                  "$ref": "9"
+                },
+                "isApiVersion": false,
+                "contentTypes": [
+                  "application/json"
+                ],
+                "defaultContentType": "application/json",
+                "optional": false,
+                "scope": "Method",
+                "decorators": [],
+                "readOnly": false,
+                "crossLanguageDefinitionId": "Type.Model.Usage.input.input"
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  204
+                ],
+                "headers": [],
+                "isErrorResponse": false
+              }
+            ],
+            "httpMethod": "POST",
+            "uri": "{endpoint}",
+            "path": "/type/model/usage/input",
+            "requestMediaTypes": [
+              "application/json"
+            ],
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Type.Model.Usage.input",
+            "decorators": []
+          },
+          "parameters": [
+            {
+              "$id": "23",
+              "kind": "method",
+              "name": "input",
+              "serializedName": "input",
+              "type": {
+                "$ref": "9"
+              },
+              "location": "Body",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "Type.Model.Usage.input.input",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            },
+            {
+              "$id": "24",
+              "kind": "method",
+              "name": "contentType",
+              "serializedName": "Content-Type",
+              "doc": "Body parameter's content type. Known values are application/json",
+              "type": {
+                "$ref": "1"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Type.Model.Usage.input.contentType",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            }
+          ],
+          "response": {},
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Type.Model.Usage.input"
+        },
+        {
+          "$id": "25",
+          "kind": "basic",
+          "name": "output",
+          "accessibility": "public",
+          "apiVersions": [],
+          "operation": {
+            "$id": "26",
+            "name": "output",
+            "resourceName": "Usage",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "27",
+                "kind": "header",
+                "name": "accept",
+                "serializedName": "Accept",
+                "type": {
+                  "$ref": "3"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": false,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Type.Model.Usage.output.accept"
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "12"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ]
+              }
+            ],
+            "httpMethod": "GET",
+            "uri": "{endpoint}",
+            "path": "/type/model/usage/output",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Type.Model.Usage.output",
+            "decorators": []
+          },
+          "parameters": [
+            {
+              "$id": "28",
+              "kind": "method",
+              "name": "accept",
+              "serializedName": "Accept",
+              "type": {
+                "$ref": "3"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Type.Model.Usage.output.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "12"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Type.Model.Usage.output"
+        },
+        {
+          "$id": "29",
+          "kind": "basic",
+          "name": "inputAndOutput",
+          "accessibility": "public",
+          "apiVersions": [],
+          "operation": {
+            "$id": "30",
+            "name": "inputAndOutput",
+            "resourceName": "Usage",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "31",
+                "kind": "header",
+                "name": "contentType",
+                "serializedName": "Content-Type",
+                "doc": "Body parameter's content type. Known values are application/json",
+                "type": {
+                  "$ref": "5"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": true,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Type.Model.Usage.inputAndOutput.contentType"
+              },
+              {
+                "$id": "32",
+                "kind": "header",
+                "name": "accept",
+                "serializedName": "Accept",
+                "type": {
+                  "$ref": "7"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": false,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Type.Model.Usage.inputAndOutput.accept"
+              },
+              {
+                "$id": "33",
+                "kind": "body",
+                "name": "body",
+                "serializedName": "body",
+                "type": {
+                  "$ref": "15"
+                },
+                "isApiVersion": false,
+                "contentTypes": [
+                  "application/json"
+                ],
+                "defaultContentType": "application/json",
+                "optional": false,
+                "scope": "Method",
+                "decorators": [],
+                "readOnly": false,
+                "crossLanguageDefinitionId": "Type.Model.Usage.inputAndOutput.body"
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "15"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ]
+              }
+            ],
+            "httpMethod": "POST",
+            "uri": "{endpoint}",
+            "path": "/type/model/usage/input-output",
+            "requestMediaTypes": [
+              "application/json"
+            ],
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Type.Model.Usage.inputAndOutput",
+            "decorators": []
+          },
+          "parameters": [
+            {
+              "$id": "34",
+              "kind": "method",
+              "name": "body",
+              "serializedName": "body",
+              "type": {
+                "$ref": "15"
+              },
+              "location": "Body",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Method",
+              "crossLanguageDefinitionId": "Type.Model.Usage.inputAndOutput.body",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            },
+            {
+              "$id": "35",
+              "kind": "method",
+              "name": "contentType",
+              "serializedName": "Content-Type",
+              "doc": "Body parameter's content type. Known values are application/json",
+              "type": {
+                "$ref": "5"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Type.Model.Usage.inputAndOutput.contentType",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            },
+            {
+              "$id": "36",
+              "kind": "method",
+              "name": "accept",
+              "serializedName": "Accept",
+              "type": {
+                "$ref": "7"
+              },
+              "location": "Header",
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Constant",
+              "crossLanguageDefinitionId": "Type.Model.Usage.inputAndOutput.accept",
+              "readOnly": false,
+              "access": "public",
+              "decorators": []
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "15"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Type.Model.Usage.inputAndOutput"
+        }
+      ],
       "parameters": [
-       {
-        "$id": "28",
-        "name": "contentType",
-        "nameInRequest": "Content-Type",
-        "doc": "Body parameter's content type. Known values are application/json",
-        "type": {
-         "$ref": "2"
-        },
-        "location": "Header",
-        "isApiVersion": false,
-        "isContentType": true,
-        "isEndpoint": false,
-        "explode": false,
-        "isRequired": true,
-        "kind": "Constant",
-        "decorators": [],
-        "skipUrlEncoding": false
-       },
-       {
-        "$id": "29",
-        "name": "input",
-        "nameInRequest": "input",
-        "type": {
-         "$ref": "10"
-        },
-        "location": "Body",
-        "isApiVersion": false,
-        "isContentType": false,
-        "isEndpoint": false,
-        "explode": false,
-        "isRequired": true,
-        "kind": "Method",
-        "decorators": [],
-        "skipUrlEncoding": false
-       }
+        {
+          "$id": "37",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "Service host",
+          "type": {
+            "$id": "38",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "defaultValue": {
+            "type": {
+              "$id": "39",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "http://localhost:3000"
+          },
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Type.Model.Usage.endpoint"
+        }
       ],
-      "responses": [
-       {
-        "$id": "30",
-        "statusCodes": [
-         204
-        ],
-        "headers": [],
-        "isErrorResponse": false
-       }
-      ],
-      "httpMethod": "POST",
-      "uri": "{endpoint}",
-      "path": "/type/model/usage/input",
-      "requestMediaTypes": [
-       "application/json"
-      ],
-      "bufferResponse": true,
-      "generateProtocolMethod": true,
-      "generateConvenienceMethod": true,
-      "crossLanguageDefinitionId": "Type.Model.Usage.input",
-      "decorators": []
-     },
-     "parameters": [
-      {
-       "$id": "31",
-       "name": "input",
-       "nameInRequest": "input",
-       "type": {
-        "$ref": "10"
-       },
-       "location": "Body",
-       "isApiVersion": false,
-       "isContentType": false,
-       "isEndpoint": false,
-       "explode": false,
-       "isRequired": true,
-       "kind": "Method",
-       "decorators": [],
-       "skipUrlEncoding": false
-      },
-      {
-       "$id": "32",
-       "name": "contentType",
-       "nameInRequest": "contentType",
-       "doc": "Body parameter's content type. Known values are application/json",
-       "type": {
-        "$ref": "2"
-       },
-       "location": "Header",
-       "isApiVersion": false,
-       "isContentType": false,
-       "isEndpoint": false,
-       "explode": false,
-       "isRequired": true,
-       "kind": "Constant",
-       "decorators": [],
-       "skipUrlEncoding": false
-      }
-     ],
-     "response": {
-      "$id": "33"
-     },
-     "isOverride": false,
-     "generateConvenient": true,
-     "generateProtocol": true,
-     "crossLanguageDefinitionId": "Type.Model.Usage.input"
-    },
-    {
-     "$id": "34",
-     "kind": "basic",
-     "name": "output",
-     "accessibility": "public",
-     "apiVersions": [],
-     "operation": {
-      "$id": "35",
-      "name": "output",
-      "resourceName": "Usage",
-      "accessibility": "public",
-      "parameters": [
-       {
-        "$id": "36",
-        "name": "accept",
-        "nameInRequest": "Accept",
-        "type": {
-         "$ref": "4"
-        },
-        "location": "Header",
-        "isApiVersion": false,
-        "isContentType": false,
-        "isEndpoint": false,
-        "explode": false,
-        "isRequired": true,
-        "kind": "Constant",
-        "decorators": [],
-        "skipUrlEncoding": false
-       }
-      ],
-      "responses": [
-       {
-        "$id": "37",
-        "statusCodes": [
-         200
-        ],
-        "bodyType": {
-         "$ref": "15"
-        },
-        "headers": [],
-        "isErrorResponse": false,
-        "contentTypes": [
-         "application/json"
-        ]
-       }
-      ],
-      "httpMethod": "GET",
-      "uri": "{endpoint}",
-      "path": "/type/model/usage/output",
-      "bufferResponse": true,
-      "generateProtocolMethod": true,
-      "generateConvenienceMethod": true,
-      "crossLanguageDefinitionId": "Type.Model.Usage.output",
-      "decorators": []
-     },
-     "parameters": [
-      {
-       "$id": "38",
-       "name": "accept",
-       "nameInRequest": "accept",
-       "type": {
-        "$ref": "4"
-       },
-       "location": "Header",
-       "isApiVersion": false,
-       "isContentType": false,
-       "isEndpoint": false,
-       "explode": false,
-       "isRequired": true,
-       "kind": "Constant",
-       "decorators": [],
-       "skipUrlEncoding": false
-      }
-     ],
-     "response": {
-      "$id": "39",
-      "type": {
-       "$ref": "15"
-      }
-     },
-     "isOverride": false,
-     "generateConvenient": true,
-     "generateProtocol": true,
-     "crossLanguageDefinitionId": "Type.Model.Usage.output"
-    },
-    {
-     "$id": "40",
-     "kind": "basic",
-     "name": "inputAndOutput",
-     "accessibility": "public",
-     "apiVersions": [],
-     "operation": {
-      "$id": "41",
-      "name": "inputAndOutput",
-      "resourceName": "Usage",
-      "accessibility": "public",
-      "parameters": [
-       {
-        "$id": "42",
-        "name": "contentType",
-        "nameInRequest": "Content-Type",
-        "doc": "Body parameter's content type. Known values are application/json",
-        "type": {
-         "$ref": "6"
-        },
-        "location": "Header",
-        "isApiVersion": false,
-        "isContentType": true,
-        "isEndpoint": false,
-        "explode": false,
-        "isRequired": true,
-        "kind": "Constant",
-        "decorators": [],
-        "skipUrlEncoding": false
-       },
-       {
-        "$id": "43",
-        "name": "accept",
-        "nameInRequest": "Accept",
-        "type": {
-         "$ref": "8"
-        },
-        "location": "Header",
-        "isApiVersion": false,
-        "isContentType": false,
-        "isEndpoint": false,
-        "explode": false,
-        "isRequired": true,
-        "kind": "Constant",
-        "decorators": [],
-        "skipUrlEncoding": false
-       },
-       {
-        "$id": "44",
-        "name": "body",
-        "nameInRequest": "body",
-        "type": {
-         "$ref": "20"
-        },
-        "location": "Body",
-        "isApiVersion": false,
-        "isContentType": false,
-        "isEndpoint": false,
-        "explode": false,
-        "isRequired": true,
-        "kind": "Method",
-        "decorators": [],
-        "skipUrlEncoding": false
-       }
-      ],
-      "responses": [
-       {
-        "$id": "45",
-        "statusCodes": [
-         200
-        ],
-        "bodyType": {
-         "$ref": "20"
-        },
-        "headers": [],
-        "isErrorResponse": false,
-        "contentTypes": [
-         "application/json"
-        ]
-       }
-      ],
-      "httpMethod": "POST",
-      "uri": "{endpoint}",
-      "path": "/type/model/usage/input-output",
-      "requestMediaTypes": [
-       "application/json"
-      ],
-      "bufferResponse": true,
-      "generateProtocolMethod": true,
-      "generateConvenienceMethod": true,
-      "crossLanguageDefinitionId": "Type.Model.Usage.inputAndOutput",
-      "decorators": []
-     },
-     "parameters": [
-      {
-       "$id": "46",
-       "name": "body",
-       "nameInRequest": "body",
-       "type": {
-        "$ref": "20"
-       },
-       "location": "Body",
-       "isApiVersion": false,
-       "isContentType": false,
-       "isEndpoint": false,
-       "explode": false,
-       "isRequired": true,
-       "kind": "Method",
-       "decorators": [],
-       "skipUrlEncoding": false
-      },
-      {
-       "$id": "47",
-       "name": "contentType",
-       "nameInRequest": "contentType",
-       "doc": "Body parameter's content type. Known values are application/json",
-       "type": {
-        "$ref": "6"
-       },
-       "location": "Header",
-       "isApiVersion": false,
-       "isContentType": false,
-       "isEndpoint": false,
-       "explode": false,
-       "isRequired": true,
-       "kind": "Constant",
-       "decorators": [],
-       "skipUrlEncoding": false
-      },
-      {
-       "$id": "48",
-       "name": "accept",
-       "nameInRequest": "accept",
-       "type": {
-        "$ref": "8"
-       },
-       "location": "Header",
-       "isApiVersion": false,
-       "isContentType": false,
-       "isEndpoint": false,
-       "explode": false,
-       "isRequired": true,
-       "kind": "Constant",
-       "decorators": [],
-       "skipUrlEncoding": false
-      }
-     ],
-     "response": {
-      "$id": "49",
-      "type": {
-       "$ref": "20"
-      }
-     },
-     "isOverride": false,
-     "generateConvenient": true,
-     "generateProtocol": true,
-     "crossLanguageDefinitionId": "Type.Model.Usage.inputAndOutput"
+      "decorators": [],
+      "crossLanguageDefinitionId": "Type.Model.Usage",
+      "apiVersions": []
     }
-   ],
-   "parameters": [
-    {
-     "$id": "50",
-     "name": "endpoint",
-     "nameInRequest": "endpoint",
-     "doc": "Service host",
-     "type": {
-      "$id": "51",
-      "kind": "url",
-      "name": "endpoint",
-      "crossLanguageDefinitionId": "TypeSpec.url"
-     },
-     "location": "Uri",
-     "isApiVersion": false,
-     "isContentType": false,
-     "isRequired": true,
-     "isEndpoint": true,
-     "skipUrlEncoding": false,
-     "explode": false,
-     "kind": "Client",
-     "defaultValue": {
-      "$id": "52",
-      "type": {
-       "$id": "53",
-       "kind": "string",
-       "name": "string",
-       "crossLanguageDefinitionId": "TypeSpec.string"
-      },
-      "value": "http://localhost:3000"
-     },
-     "serverUrlTemplate": "{endpoint}"
-    }
-   ],
-   "decorators": [],
-   "crossLanguageDefinitionId": "Type.Model.Usage",
-   "apiVersions": []
-  }
- ]
+  ]
 }

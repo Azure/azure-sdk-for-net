@@ -1,6 +1,16 @@
 # Release History
 
-## 1.1.0-beta.3 (Unreleased)
+## 1.1.0-beta.4 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.1.0-beta.3 (2025-06-12)
 
 ### Features Added
  - Introduced Messaging Connect support in the .NET SDK.

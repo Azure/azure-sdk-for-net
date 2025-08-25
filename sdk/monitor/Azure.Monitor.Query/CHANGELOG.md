@@ -1,6 +1,6 @@
 # Release History
 
-## 1.7.0-beta.1 (Unreleased)
+## 1.8.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,17 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.7.1 (2025-08-12)
+
+### Other Changes
+- Updated internal serialization paths to use an AOT-friendly approach.  The package now fully supports AOT and is trimmable.
+
+## 1.7.0 (2025-06-26)
+
+### Features Added
+
+- Added support for the `2024-02-01` metric namespaces service version to `MetricsQueryClient`.
 
 ## 1.6.0 (2024-12-03)
 

@@ -47,8 +47,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <summary> Initializes a new instance of <see cref="OracleGIVersionProperties"/>. </summary>
         /// <param name="version"> A valid Oracle Grid Infrastructure (GI) software version. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         public OracleGIVersionProperties(string version)
         {
+            Argument.AssertNotNull(version, nameof(version));
+
             Version = version;
         }
 
@@ -67,6 +70,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         }
 
         /// <summary> A valid Oracle Grid Infrastructure (GI) software version. </summary>
-        public string Version { get; }
+        public string Version { get; set; }
     }
 }

@@ -4868,7 +4868,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendRaw("/datamap/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk/classification", false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -4960,7 +4959,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/classification/", false);
             uri.AppendPath(classificationName, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -4992,7 +4990,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath(guid, true);
             uri.AppendPath("/classifications", false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -5010,7 +5007,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath(guid, true);
             uri.AppendPath("/classifications", false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -5100,7 +5096,6 @@ namespace Azure.Analytics.Purview.DataMap
                 uri.AppendQuery("attr:qualifiedName", attribute, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             return message;
         }
 
@@ -5120,7 +5115,6 @@ namespace Azure.Analytics.Purview.DataMap
                 uri.AppendQuery("attr:qualifiedName", attribute, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -5142,7 +5136,6 @@ namespace Azure.Analytics.Purview.DataMap
                 uri.AppendQuery("attr:qualifiedName", attribute, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -5219,7 +5212,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath(guid, true);
             uri.AppendPath("/businessmetadata", false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -5241,7 +5233,6 @@ namespace Azure.Analytics.Purview.DataMap
                 uri.AppendQuery("isOverwrite", overwrite.Value, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -5260,7 +5251,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/businessmetadata/", false);
             uri.AppendPath(businessMetadataName, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -5279,7 +5269,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath("/businessmetadata/", false);
             uri.AppendPath(businessMetadataName, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -5327,7 +5316,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath(guid, true);
             uri.AppendPath("/labels", false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -5345,7 +5333,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath(guid, true);
             uri.AppendPath("/labels", false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -5363,7 +5350,6 @@ namespace Azure.Analytics.Purview.DataMap
             uri.AppendPath(guid, true);
             uri.AppendPath("/labels", false);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -5385,7 +5371,6 @@ namespace Azure.Analytics.Purview.DataMap
                 uri.AppendQuery("attr:qualifiedName", attribute, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -5407,7 +5392,6 @@ namespace Azure.Analytics.Purview.DataMap
                 uri.AppendQuery("attr:qualifiedName", attribute, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;
@@ -5429,7 +5413,6 @@ namespace Azure.Analytics.Purview.DataMap
                 uri.AppendQuery("attr:qualifiedName", attribute, true);
             }
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = content;
             return message;

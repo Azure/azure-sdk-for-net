@@ -179,6 +179,8 @@ RadiologyInsightsJob resource = new RadiologyInsightsJob
                 {
                     ProvideFocusedSentenceEvidence = true,
                 },
+                GuidanceOptions = new GuidanceOptions(true),
+                QualityMeasureOptions = new QualityMeasureOptions(new QualityMeasureType[] { QualityMeasureType.Mips76 }),
             },
             Locale = "<locale>",
         },
@@ -366,6 +368,8 @@ RadiologyInsightsJob resource = new RadiologyInsightsJob
                 {
                     ProvideFocusedSentenceEvidence = true,
                 },
+                GuidanceOptions = new GuidanceOptions(true),
+                QualityMeasureOptions = new QualityMeasureOptions(new QualityMeasureType[] { QualityMeasureType.Mips76 }),
             },
             Locale = "<locale>",
         },
@@ -626,6 +630,17 @@ using RequestContent content = RequestContent.Create(new
                 findingOptions = new
                 {
                     provideFocusedSentenceEvidence = true,
+                },
+                guidanceOptions = new
+                {
+                    showGuidanceInHistory = true,
+                },
+                qualityMeasureOptions = new
+                {
+                    measureTypes = new object[]
+                    {
+                        "mips76"
+                    },
                 },
             },
             locale = "<locale>",
@@ -972,6 +987,17 @@ using RequestContent content = RequestContent.Create(new
                 findingOptions = new
                 {
                     provideFocusedSentenceEvidence = true,
+                },
+                guidanceOptions = new
+                {
+                    showGuidanceInHistory = true,
+                },
+                qualityMeasureOptions = new
+                {
+                    measureTypes = new object[]
+                    {
+                        "mips76"
+                    },
                 },
             },
             locale = "<locale>",

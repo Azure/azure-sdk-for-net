@@ -39,6 +39,17 @@ public partial class ObjectReplicationPolicy : ProvisionableResource
     private BicepValue<string>? _destinationAccount;
 
     /// <summary>
+    /// Indicates whether object replication metrics feature is enabled for the
+    /// policy.
+    /// </summary>
+    public BicepValue<bool> IsMetricsEnabled 
+    {
+        get { Initialize(); return _isMetricsEnabled!; }
+        set { Initialize(); _isMetricsEnabled!.Assign(value); }
+    }
+    private BicepValue<bool>? _isMetricsEnabled;
+
+    /// <summary>
     /// The storage account object replication rules.
     /// </summary>
     public BicepList<ObjectReplicationPolicyRule> Rules 
@@ -125,8 +136,10 @@ public partial class ObjectReplicationPolicy : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _destinationAccount = DefineProperty<string>("DestinationAccount", ["properties", "destinationAccount"]);
+        _isMetricsEnabled = DefineProperty<bool>("IsMetricsEnabled", ["properties", "metrics", "enabled"]);
         _rules = DefineListProperty<ObjectReplicationPolicyRule>("Rules", ["properties", "rules"]);
         _sourceAccount = DefineProperty<string>("SourceAccount", ["properties", "sourceAccount"]);
         _enabledOn = DefineProperty<DateTimeOffset>("EnabledOn", ["properties", "enabledTime"], isOutput: true);

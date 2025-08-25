@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="ConnectToSourceMySqlTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Information for connecting to MySQL source. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/> is null. </exception>
-        public ConnectToSourceMySqlTaskInput(MySqlConnectionInfo sourceConnectionInfo)
+        public ConnectToSourceMySqlTaskInput(DataMigrationMySqlConnectionInfo sourceConnectionInfo)
         {
             Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="checkPermissionsGroup"> Permission group for validations. </param>
         /// <param name="isOfflineMigration"> Flag for whether or not the migration is offline. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectToSourceMySqlTaskInput(MySqlConnectionInfo sourceConnectionInfo, MySqlTargetPlatformType? targetPlatform, ServerLevelPermissionsGroup? checkPermissionsGroup, bool? isOfflineMigration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectToSourceMySqlTaskInput(DataMigrationMySqlConnectionInfo sourceConnectionInfo, DataMigrationMySqlTargetPlatformType? targetPlatform, ServerLevelPermissionsGroup? checkPermissionsGroup, bool? isOfflineMigration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceConnectionInfo = sourceConnectionInfo;
             TargetPlatform = targetPlatform;
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Information for connecting to MySQL source. </summary>
-        public MySqlConnectionInfo SourceConnectionInfo { get; set; }
+        public DataMigrationMySqlConnectionInfo SourceConnectionInfo { get; set; }
         /// <summary> Target Platform for the migration. </summary>
-        public MySqlTargetPlatformType? TargetPlatform { get; set; }
+        public DataMigrationMySqlTargetPlatformType? TargetPlatform { get; set; }
         /// <summary> Permission group for validations. </summary>
         public ServerLevelPermissionsGroup? CheckPermissionsGroup { get; set; }
         /// <summary> Flag for whether or not the migration is offline. </summary>

@@ -77,7 +77,7 @@ public partial class SqlServerJobTargetGroup : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the SqlServerJobTargetGroup.</param>
     public SqlServerJobTargetGroup(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Sql/servers/jobAgents/targetGroups", resourceVersion ?? "2021-11-01")
+        : base(bicepIdentifier, "Microsoft.Sql/servers/jobAgents/targetGroups", resourceVersion ?? "2023-08-01")
     {
     }
 
@@ -98,6 +98,11 @@ public partial class SqlServerJobTargetGroup : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2023-08-01.
+        /// </summary>
+        public static readonly string V2023_08_01 = "2023-08-01";
+
         /// <summary>
         /// 2021-11-01.
         /// </summary>

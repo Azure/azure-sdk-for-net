@@ -13,66 +13,30 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Message Reaction Content. </summary>
     public partial class AcsMessageReactionContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AcsMessageReactionContent"/>. </summary>
         /// <param name="messageId"> Required. WhatsApp message ID of the message that the emoji is applied to. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="messageId"/> is null. </exception>
         internal AcsMessageReactionContent(string messageId)
         {
-            Argument.AssertNotNull(messageId, nameof(messageId));
-
             MessageId = messageId;
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsMessageReactionContent"/>. </summary>
         /// <param name="messageId"> Required. WhatsApp message ID of the message that the emoji is applied to. </param>
         /// <param name="emoji"> Optional. Unicode escape sequence of the emoji. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AcsMessageReactionContent(string messageId, string emoji, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AcsMessageReactionContent(string messageId, string emoji, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MessageId = messageId;
             Emoji = emoji;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AcsMessageReactionContent"/> for deserialization. </summary>
-        internal AcsMessageReactionContent()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Required. WhatsApp message ID of the message that the emoji is applied to. </summary>
         public string MessageId { get; }
+
         /// <summary> Optional. Unicode escape sequence of the emoji. </summary>
         public string Emoji { get; }
     }

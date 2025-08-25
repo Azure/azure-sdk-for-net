@@ -26,6 +26,16 @@ public partial class ContainerAppCertificateProperties : ProvisionableConstruct
     private BicepValue<ContainerAppCertificateProvisioningState>? _provisioningState;
 
     /// <summary>
+    /// Properties for a certificate stored in a Key Vault.
+    /// </summary>
+    public ContainerAppCertificateKeyVaultProperties CertificateKeyVaultProperties 
+    {
+        get { Initialize(); return _certificateKeyVaultProperties!; }
+        set { Initialize(); AssignOrReplace(ref _certificateKeyVaultProperties, value); }
+    }
+    private ContainerAppCertificateKeyVaultProperties? _certificateKeyVaultProperties;
+
+    /// <summary>
     /// Certificate password.
     /// </summary>
     public BicepValue<string> Password 
@@ -132,6 +142,7 @@ public partial class ContainerAppCertificateProperties : ProvisionableConstruct
     {
         base.DefineProvisionableProperties();
         _provisioningState = DefineProperty<ContainerAppCertificateProvisioningState>("ProvisioningState", ["provisioningState"], isOutput: true);
+        _certificateKeyVaultProperties = DefineModelProperty<ContainerAppCertificateKeyVaultProperties>("CertificateKeyVaultProperties", ["certificateKeyVaultProperties"]);
         _password = DefineProperty<string>("Password", ["password"]);
         _subjectName = DefineProperty<string>("SubjectName", ["subjectName"], isOutput: true);
         _subjectAlternativeNames = DefineListProperty<string>("SubjectAlternativeNames", ["subjectAlternativeNames"], isOutput: true);

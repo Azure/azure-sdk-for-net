@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ExpressRouteCircuitPeering))
             {
                 writer.WritePropertyName("expressRouteCircuitPeering"u8);
-                JsonSerializer.Serialize(writer, ExpressRouteCircuitPeering);
+                ((IJsonModel<WritableSubResource>)ExpressRouteCircuitPeering).Write(writer, options);
             }
             if (Optional.IsDefined(AuthorizationKey))
             {
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            expressRouteCircuitPeering = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            expressRouteCircuitPeering = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("authorizationKey"u8))
@@ -241,6 +242,198 @@ namespace Azure.ResourceManager.Network
                 routingConfiguration);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
+                {
+                    builder.Append("  id: ");
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
+                {
+                    builder.Append("    provisioningState: ");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ExpressRouteCircuitPeeringId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    expressRouteCircuitPeering: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      expressRouteCircuitPeering: {");
+                builder.Append("        id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(ExpressRouteCircuitPeering))
+                {
+                    builder.Append("    expressRouteCircuitPeering: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ExpressRouteCircuitPeering, options, 4, false, "    expressRouteCircuitPeering: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthorizationKey), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    authorizationKey: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AuthorizationKey))
+                {
+                    builder.Append("    authorizationKey: ");
+                    if (AuthorizationKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AuthorizationKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AuthorizationKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoutingWeight), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    routingWeight: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RoutingWeight))
+                {
+                    builder.Append("    routingWeight: ");
+                    builder.AppendLine($"{RoutingWeight.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableInternetSecurity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    enableInternetSecurity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnableInternetSecurity))
+                {
+                    builder.Append("    enableInternetSecurity: ");
+                    var boolValue = EnableInternetSecurity.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpressRouteGatewayBypass), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    expressRouteGatewayBypass: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ExpressRouteGatewayBypass))
+                {
+                    builder.Append("    expressRouteGatewayBypass: ");
+                    var boolValue = ExpressRouteGatewayBypass.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnablePrivateLinkFastPath), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    enablePrivateLinkFastPath: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnablePrivateLinkFastPath))
+                {
+                    builder.Append("    enablePrivateLinkFastPath: ");
+                    var boolValue = EnablePrivateLinkFastPath.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoutingConfiguration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    routingConfiguration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RoutingConfiguration))
+                {
+                    builder.Append("    routingConfiguration: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, RoutingConfiguration, options, 4, false, "    routingConfiguration: ");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ExpressRouteConnectionData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteConnectionData>)this).GetFormatFromOptions(options) : options.Format;
@@ -249,6 +442,8 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ExpressRouteConnectionData)} does not support writing '{options.Format}' format.");
             }

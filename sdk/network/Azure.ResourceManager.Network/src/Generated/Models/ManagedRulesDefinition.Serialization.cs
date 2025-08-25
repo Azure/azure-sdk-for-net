@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -152,6 +154,90 @@ namespace Azure.ResourceManager.Network.Models
             return new ManagedRulesDefinition(exceptions ?? new ChangeTrackingList<ExceptionEntry>(), exclusions ?? new ChangeTrackingList<OwaspCrsExclusionEntry>(), managedRuleSets, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Exceptions), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  exceptions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Exceptions))
+                {
+                    if (Exceptions.Any())
+                    {
+                        builder.Append("  exceptions: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Exceptions)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  exceptions: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Exclusions), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  exclusions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Exclusions))
+                {
+                    if (Exclusions.Any())
+                    {
+                        builder.Append("  exclusions: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Exclusions)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  exclusions: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ManagedRuleSets), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  managedRuleSets: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ManagedRuleSets))
+                {
+                    if (ManagedRuleSets.Any())
+                    {
+                        builder.Append("  managedRuleSets: ");
+                        builder.AppendLine("[");
+                        foreach (var item in ManagedRuleSets)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  managedRuleSets: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ManagedRulesDefinition>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedRulesDefinition>)this).GetFormatFromOptions(options) : options.Format;
@@ -160,6 +246,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedRulesDefinition)} does not support writing '{options.Format}' format.");
             }

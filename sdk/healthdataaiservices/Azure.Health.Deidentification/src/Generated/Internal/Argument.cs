@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Azure.Health.Deidentification
 {
@@ -29,6 +31,29 @@ namespace Azure.Health.Deidentification
             if (!value.HasValue)
             {
                 throw new ArgumentNullException(name);
+            }
+        }
+
+        /// <param name="value"> The value. </param>
+        /// <param name="name"> The name. </param>
+        public static void AssertNotNullOrEmpty<T>(IEnumerable<T> value, string name)
+        {
+            if (value is null)
+            {
+                throw new ArgumentNullException(name);
+            }
+            if (value is ICollection<T> collectionOfT && collectionOfT.Count == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty collection.", name);
+            }
+            if (value is ICollection collection && collection.Count == 0)
+            {
+                throw new ArgumentException("Value cannot be an empty collection.", name);
+            }
+            using IEnumerator<T> e = value.GetEnumerator();
+            if (!e.MoveNext())
+            {
+                throw new ArgumentException("Value cannot be an empty collection.", name);
             }
         }
 

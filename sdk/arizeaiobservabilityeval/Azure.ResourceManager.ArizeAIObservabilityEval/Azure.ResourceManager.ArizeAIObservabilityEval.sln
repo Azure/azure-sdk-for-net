@@ -7,8 +7,6 @@ Project("{12A709AF-3761-455D-8CD0-2DC507CFB77D}") = "Azure.ResourceManager.Arize
 EndProject
 Project("{12A709AF-3761-455D-8CD0-2DC507CFB77D}") = "Azure.ResourceManager.ArizeAIObservabilityEval.Tests", "tests\Azure.ResourceManager.ArizeAIObservabilityEval.Tests.csproj", "{6BD39C42-2CD3-4EFC-AB89-2603B91AA927}"
 EndProject
-Project("{12A709AF-3761-455D-8CD0-2DC507CFB77D}") = "Azure.ResourceManager.ArizeAIObservabilityEval.Samples", "samples\Azure.ResourceManager.ArizeAIObservabilityEval.Samples.csproj", "{C089D605-9881-4BB7-8355-E95DEF659FAF}"
-EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -16,17 +16,14 @@ namespace BasicTypeSpec
     internal partial class BasicTypeSpecClientGetWithNextLinkCollectionResultOfT : Pageable<ThingModel>
     {
         private readonly BasicTypeSpecClient _client;
-        private readonly Uri _nextPage;
         private readonly RequestContext _context;
 
         /// <summary> Initializes a new instance of BasicTypeSpecClientGetWithNextLinkCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BasicTypeSpecClient client used to send requests. </param>
-        /// <param name="nextPage"> The url of the next page of responses. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BasicTypeSpecClientGetWithNextLinkCollectionResultOfT(BasicTypeSpecClient client, Uri nextPage, RequestContext context) : base(context?.CancellationToken ?? default)
+        public BasicTypeSpecClientGetWithNextLinkCollectionResultOfT(BasicTypeSpecClient client, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
-            _nextPage = nextPage;
             _context = context;
         }
 
@@ -36,19 +33,22 @@ namespace BasicTypeSpec
         /// <returns> The pages of BasicTypeSpecClientGetWithNextLinkCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<ThingModel>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : _nextPage;
-            do
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
                 }
-                ListWithNextLinkResponse responseWithType = (ListWithNextLinkResponse)response;
-                nextPage = responseWithType.Next;
-                yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)responseWithType.Things, nextPage?.AbsoluteUri, response);
+                ListWithNextLinkResponse result = (ListWithNextLinkResponse)response;
+                yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)result.Things, nextPage?.AbsoluteUri, response);
+                nextPage = result.Next;
+                if (nextPage == null)
+                {
+                    yield break;
+                }
             }
-            while (nextPage != null);
         }
 
         /// <summary> Get next page. </summary>
@@ -56,17 +56,12 @@ namespace BasicTypeSpec
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateListWithNextLinkRequest(nextLink, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetWithNextLinkRequest(nextLink, _context) : _client.CreateGetWithNextLinkRequest(_context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithNextLink");
             scope.Start();
             try
             {
-                _client.Pipeline.Send(message, CancellationToken);
-                if (message.Response.IsError && _context.ErrorOptions != ErrorOptions.NoThrow)
-                {
-                    throw new RequestFailedException(message.Response);
-                }
-                return message.Response;
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (Exception e)
             {

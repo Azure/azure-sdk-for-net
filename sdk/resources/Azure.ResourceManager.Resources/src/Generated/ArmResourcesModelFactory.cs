@@ -1169,7 +1169,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="identity"> Optional property. Managed identity to be used for this deployment script. Currently, only user-assigned MSI is supported. </param>
         /// <param name="location"> The location of the ACI and the storage account for the deployment script. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="containerGroupName"> Container settings. </param>
+        /// <param name="containerSettings"> Container settings. </param>
         /// <param name="storageAccountSettings"> Storage Account settings. </param>
         /// <param name="cleanupPreference"> The clean up preference when the script execution gets in a terminal state. Default setting is 'Always'. </param>
         /// <param name="provisioningState"> State of the script execution. This only appears in the response. </param>
@@ -1185,7 +1185,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="timeout"> Maximum allowed script execution time specified in ISO 8601 format. Default value is P1D. </param>
         /// <param name="azPowerShellVersion"> Azure PowerShell module version to be used. </param>
         /// <returns> A new <see cref="Models.AzurePowerShellScript"/> instance for mocking. </returns>
-        public static AzurePowerShellScript AzurePowerShellScript(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ArmDeploymentScriptManagedIdentity identity = null, AzureLocation location = default, IDictionary<string, string> tags = null, string containerGroupName = null, ScriptStorageConfiguration storageAccountSettings = null, ScriptCleanupOptions? cleanupPreference = null, ScriptProvisioningState? provisioningState = null, ScriptStatus status = null, BinaryData outputs = null, Uri primaryScriptUri = null, IEnumerable<Uri> supportingScriptUris = null, string scriptContent = null, string arguments = null, IEnumerable<ScriptEnvironmentVariable> environmentVariables = null, string forceUpdateTag = null, TimeSpan retentionInterval = default, TimeSpan? timeout = null, string azPowerShellVersion = null)
+        public static AzurePowerShellScript AzurePowerShellScript(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ArmDeploymentScriptManagedIdentity identity = null, AzureLocation location = default, IDictionary<string, string> tags = null, ScriptContainerConfiguration containerSettings = null, ScriptStorageConfiguration storageAccountSettings = null, ScriptCleanupOptions? cleanupPreference = null, ScriptProvisioningState? provisioningState = null, ScriptStatus status = null, BinaryData outputs = null, Uri primaryScriptUri = null, IEnumerable<Uri> supportingScriptUris = null, string scriptContent = null, string arguments = null, IEnumerable<ScriptEnvironmentVariable> environmentVariables = null, string forceUpdateTag = null, TimeSpan retentionInterval = default, TimeSpan? timeout = null, string azPowerShellVersion = null)
         {
             tags ??= new Dictionary<string, string>();
             supportingScriptUris ??= new List<Uri>();
@@ -1201,7 +1201,7 @@ namespace Azure.ResourceManager.Resources.Models
                 tags,
                 ScriptType.AzurePowerShell,
                 serializedAdditionalRawData: null,
-                containerGroupName != null ? new ContainerConfiguration(containerGroupName, serializedAdditionalRawData: null) : null,
+                containerSettings,
                 storageAccountSettings,
                 cleanupPreference,
                 provisioningState,
@@ -1246,7 +1246,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="identity"> Optional property. Managed identity to be used for this deployment script. Currently, only user-assigned MSI is supported. </param>
         /// <param name="location"> The location of the ACI and the storage account for the deployment script. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="containerGroupName"> Container settings. </param>
+        /// <param name="containerSettings"> Container settings. </param>
         /// <param name="storageAccountSettings"> Storage Account settings. </param>
         /// <param name="cleanupPreference"> The clean up preference when the script execution gets in a terminal state. Default setting is 'Always'. </param>
         /// <param name="provisioningState"> State of the script execution. This only appears in the response. </param>
@@ -1262,7 +1262,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="timeout"> Maximum allowed script execution time specified in ISO 8601 format. Default value is P1D. </param>
         /// <param name="azCliVersion"> Azure CLI module version to be used. </param>
         /// <returns> A new <see cref="Models.AzureCliScript"/> instance for mocking. </returns>
-        public static AzureCliScript AzureCliScript(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ArmDeploymentScriptManagedIdentity identity = null, AzureLocation location = default, IDictionary<string, string> tags = null, string containerGroupName = null, ScriptStorageConfiguration storageAccountSettings = null, ScriptCleanupOptions? cleanupPreference = null, ScriptProvisioningState? provisioningState = null, ScriptStatus status = null, BinaryData outputs = null, Uri primaryScriptUri = null, IEnumerable<Uri> supportingScriptUris = null, string scriptContent = null, string arguments = null, IEnumerable<ScriptEnvironmentVariable> environmentVariables = null, string forceUpdateTag = null, TimeSpan retentionInterval = default, TimeSpan? timeout = null, string azCliVersion = null)
+        public static AzureCliScript AzureCliScript(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ArmDeploymentScriptManagedIdentity identity = null, AzureLocation location = default, IDictionary<string, string> tags = null, ScriptContainerConfiguration containerSettings = null, ScriptStorageConfiguration storageAccountSettings = null, ScriptCleanupOptions? cleanupPreference = null, ScriptProvisioningState? provisioningState = null, ScriptStatus status = null, BinaryData outputs = null, Uri primaryScriptUri = null, IEnumerable<Uri> supportingScriptUris = null, string scriptContent = null, string arguments = null, IEnumerable<ScriptEnvironmentVariable> environmentVariables = null, string forceUpdateTag = null, TimeSpan retentionInterval = default, TimeSpan? timeout = null, string azCliVersion = null)
         {
             tags ??= new Dictionary<string, string>();
             supportingScriptUris ??= new List<Uri>();
@@ -1278,7 +1278,7 @@ namespace Azure.ResourceManager.Resources.Models
                 tags,
                 ScriptType.AzureCLI,
                 serializedAdditionalRawData: null,
-                containerGroupName != null ? new ContainerConfiguration(containerGroupName, serializedAdditionalRawData: null) : null,
+                containerSettings,
                 storageAccountSettings,
                 cleanupPreference,
                 provisioningState,

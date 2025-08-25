@@ -5,20 +5,6 @@ VisualStudioVersion = 17.7.34009.444
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator", "Generator\src\Generator.csproj", "{3D02BC0E-3866-4B21-9C3B-69B893F702B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.Communication", "..\communication\Azure.ResourceManager.Communication\src\Azure.ResourceManager.Communication.csproj", "{C62B1CD6-7CDD-46D6-8022-5FFBD40291ED}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.AppContainers", "..\containerapps\Azure.ResourceManager.AppContainers\src\Azure.ResourceManager.AppContainers.csproj", "{93E0943E-B421-4618-AF39-71A46C20D6A1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.ContainerRegistry", "..\containerregistry\Azure.ResourceManager.ContainerRegistry\src\Azure.ResourceManager.ContainerRegistry.csproj", "{79300207-98CA-41A7-BEF2-40B5F3B71C1C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.ContainerService", "..\containerservice\Azure.ResourceManager.ContainerService\src\Azure.ResourceManager.ContainerService.csproj", "{1205BF01-3BC3-412A-876E-A0728666FB4E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.EventGrid", "..\eventgrid\Azure.ResourceManager.EventGrid\src\Azure.ResourceManager.EventGrid.csproj", "{E78AB758-A612-435D-A442-6A2D314504E6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.Kubernetes", "..\hybridkubernetes\Azure.ResourceManager.Kubernetes\src\Azure.ResourceManager.Kubernetes.csproj", "{89A32B03-3C0C-4078-87BD-D34D014A5CCE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ResourceManager.KubernetesConfiguration", "..\kubernetesconfiguration\Azure.ResourceManager.KubernetesConfiguration\src\Azure.ResourceManager.KubernetesConfiguration.csproj", "{80397475-7247-4825-9F64-AA6552B77706}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,34 +15,6 @@ Global
 		{3D02BC0E-3866-4B21-9C3B-69B893F702B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D02BC0E-3866-4B21-9C3B-69B893F702B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D02BC0E-3866-4B21-9C3B-69B893F702B0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C62B1CD6-7CDD-46D6-8022-5FFBD40291ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C62B1CD6-7CDD-46D6-8022-5FFBD40291ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C62B1CD6-7CDD-46D6-8022-5FFBD40291ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C62B1CD6-7CDD-46D6-8022-5FFBD40291ED}.Release|Any CPU.Build.0 = Release|Any CPU
-		{93E0943E-B421-4618-AF39-71A46C20D6A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{93E0943E-B421-4618-AF39-71A46C20D6A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{93E0943E-B421-4618-AF39-71A46C20D6A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{93E0943E-B421-4618-AF39-71A46C20D6A1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{79300207-98CA-41A7-BEF2-40B5F3B71C1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{79300207-98CA-41A7-BEF2-40B5F3B71C1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{79300207-98CA-41A7-BEF2-40B5F3B71C1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{79300207-98CA-41A7-BEF2-40B5F3B71C1C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1205BF01-3BC3-412A-876E-A0728666FB4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1205BF01-3BC3-412A-876E-A0728666FB4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1205BF01-3BC3-412A-876E-A0728666FB4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1205BF01-3BC3-412A-876E-A0728666FB4E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E78AB758-A612-435D-A442-6A2D314504E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E78AB758-A612-435D-A442-6A2D314504E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E78AB758-A612-435D-A442-6A2D314504E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E78AB758-A612-435D-A442-6A2D314504E6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{89A32B03-3C0C-4078-87BD-D34D014A5CCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{89A32B03-3C0C-4078-87BD-D34D014A5CCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{89A32B03-3C0C-4078-87BD-D34D014A5CCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{89A32B03-3C0C-4078-87BD-D34D014A5CCE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{80397475-7247-4825-9F64-AA6552B77706}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{80397475-7247-4825-9F64-AA6552B77706}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{80397475-7247-4825-9F64-AA6552B77706}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{80397475-7247-4825-9F64-AA6552B77706}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

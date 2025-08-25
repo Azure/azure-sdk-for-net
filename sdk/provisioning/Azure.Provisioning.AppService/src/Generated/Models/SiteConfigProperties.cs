@@ -213,7 +213,9 @@ public partial class SiteConfigProperties : ProvisionableConstruct
     private BicepValue<string>? _publishingUsername;
 
     /// <summary>
-    /// Application settings.
+    /// Application settings. This property is not returned in response to
+    /// normal create and read requests since it may contain sensitive
+    /// information.
     /// </summary>
     public BicepList<AppServiceNameValuePair> AppSettings 
     {
@@ -234,7 +236,8 @@ public partial class SiteConfigProperties : ProvisionableConstruct
     private BicepList<AppServiceNameValuePair>? _metadata;
 
     /// <summary>
-    /// Connection strings.
+    /// Connection strings. This property is not returned in response to normal
+    /// create and read requests since it may contain sensitive information.
     /// </summary>
     public BicepList<ConnStringInfo> ConnectionStrings 
     {
@@ -621,6 +624,18 @@ public partial class SiteConfigProperties : ProvisionableConstruct
     private BicepValue<bool>? _isHttp20Enabled;
 
     /// <summary>
+    /// Http20ProxyFlag: Configures a website to allow http2.0 to pass be
+    /// proxied all the way to the app. 0 = disabled, 1 = pass through all
+    /// http2 traffic, 2 = pass through gRPC only.
+    /// </summary>
+    public BicepValue<int> Http20ProxyFlag 
+    {
+        get { Initialize(); return _http20ProxyFlag!; }
+        set { Initialize(); _http20ProxyFlag!.Assign(value); }
+    }
+    private BicepValue<int>? _http20ProxyFlag;
+
+    /// <summary>
     /// MinTlsVersion: configures the minimum version of TLS required for SSL
     /// requests.
     /// </summary>
@@ -840,6 +855,7 @@ public partial class SiteConfigProperties : ProvisionableConstruct
         _scmIPSecurityRestrictionsDefaultAction = DefineProperty<SiteDefaultAction>("ScmIPSecurityRestrictionsDefaultAction", ["scmIpSecurityRestrictionsDefaultAction"]);
         _allowIPSecurityRestrictionsForScmToUseMain = DefineProperty<bool>("AllowIPSecurityRestrictionsForScmToUseMain", ["scmIpSecurityRestrictionsUseMain"]);
         _isHttp20Enabled = DefineProperty<bool>("IsHttp20Enabled", ["http20Enabled"]);
+        _http20ProxyFlag = DefineProperty<int>("Http20ProxyFlag", ["http20ProxyFlag"]);
         _minTlsVersion = DefineProperty<AppServiceSupportedTlsVersion>("MinTlsVersion", ["minTlsVersion"]);
         _minTlsCipherSuite = DefineProperty<AppServiceTlsCipherSuite>("MinTlsCipherSuite", ["minTlsCipherSuite"]);
         _scmMinTlsVersion = DefineProperty<AppServiceSupportedTlsVersion>("ScmMinTlsVersion", ["scmMinTlsVersion"]);

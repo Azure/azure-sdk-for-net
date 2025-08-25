@@ -702,7 +702,7 @@ namespace Azure.ResourceManager.Models
     }
     public partial class OperationStatusResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Models.OperationStatusResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Models.OperationStatusResult>
     {
-        protected OperationStatusResult() { }
+        protected internal OperationStatusResult() { }
         protected OperationStatusResult(Azure.Core.ResourceIdentifier id, string name, string status, float? percentComplete, System.DateTimeOffset? startOn, System.DateTimeOffset? endOn, System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Models.OperationStatusResult> operations, Azure.ResponseError error) { }
         public OperationStatusResult(string status) { }
         public System.DateTimeOffset? EndOn { get { throw null; } }
@@ -842,7 +842,7 @@ namespace Azure.ResourceManager.Models
     }
     public abstract partial class TrackedResourceData : Azure.ResourceManager.Models.ResourceData
     {
-        protected TrackedResourceData() { }
+        protected internal TrackedResourceData() { }
         protected TrackedResourceData(Azure.Core.AzureLocation location) { }
         protected TrackedResourceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location) { }
         public Azure.Core.AzureLocation Location { get { throw null; } set { } }
@@ -2655,6 +2655,7 @@ namespace Microsoft.Extensions.Azure
     public static partial class ArmClientBuilderExtensions
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.ResourceManager.ArmClient, Azure.ResourceManager.ArmClientOptions> AddArmClient<TBuilder>(this TBuilder builder, string defaultSubscription) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Binding strongly typed objects to configuration values requires generating dynamic code at runtime, for example instantiating generic types. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.ResourceManager.ArmClient, Azure.ResourceManager.ArmClientOptions> AddArmClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

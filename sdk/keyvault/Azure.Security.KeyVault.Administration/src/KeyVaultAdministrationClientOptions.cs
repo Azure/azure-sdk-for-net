@@ -9,7 +9,7 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary>
     /// Options to configure the requests sent to Key Vault.
     /// </summary>
-    [CodeGenModel("AzureSecurityKeyVaultAdministrationClientOptions")]
+    [CodeGenType("KeyVaultAccessControlClientOptions")]
     public partial class KeyVaultAdministrationClientOptions : ClientOptions
     {
         internal const string CallerShouldAuditReason = "https://aka.ms/azsdk/callershouldaudit/security-keyvault-administration";
@@ -62,7 +62,7 @@ namespace Azure.Security.KeyVault.Administration
             /// <summary>
             /// Service version "7.6-preview.1".
             /// </summary>
-            V7_6_Preview_2 = 5,
+            V7_6 = 5,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -79,7 +79,7 @@ namespace Azure.Security.KeyVault.Administration
                 ServiceVersion.V7_3 => "7.3",
                 ServiceVersion.V7_4 => "7.4",
                 ServiceVersion.V7_5 => "7.5",
-                ServiceVersion.V7_6_Preview_2 => "7.6-preview.2",
+                ServiceVersion.V7_6 => "7.6",
                 _ => throw new ArgumentOutOfRangeException(nameof(Version), Version, null)
             };
         }
