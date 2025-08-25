@@ -28,7 +28,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
 
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             writer.WriteStartObject();
             if (options.Format == "J" && !Patch.Contains("$.name"u8))
             {
@@ -132,7 +132,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             Patch.Write(writer);
 
             writer.WriteEndObject();
-#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         }
 
         public static AvailabilitySetData DeserializeAvailabilitySetData(JsonElement element, ModelReaderWriterOptions options, BinaryData data)
@@ -153,9 +153,9 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             OptionalProperty<IList<WritableSubResource>> virtualMachines = default;
             OptionalProperty<WritableSubResource> proximityPlacementGroup = default;
             OptionalProperty<IReadOnlyList<InstanceViewStatus>> statuses = default;
-#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             JsonPatch jsonPatch = new(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
-#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -357,7 +357,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
 
         string IPersistableModel<AvailabilitySetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         private bool PropagateSet(ReadOnlySpan<byte> jsonPath, JsonPatch.EncodedValue value)
         {
             ReadOnlySpan<byte> local = jsonPath.SliceToStartOfPropertyName();
@@ -384,15 +384,15 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             return false;
         }
 
-        private bool PropagateGet(ReadOnlySpan<byte> jsonPath, out ReadOnlyMemory<byte> value)
+        //should i out EncodedValue here ???
+        private bool PropagateGet(ReadOnlySpan<byte> jsonPath, out JsonPatch.EncodedValue value)
         {
             ReadOnlySpan<byte> local = jsonPath.SliceToStartOfPropertyName();
-            value = ReadOnlyMemory<byte>.Empty;
+            value = default;
 
             if (local.StartsWith("sku"u8))
             {
-                value = Sku.Patch.GetJson([.. "$"u8, .. local.Slice("sku"u8.Length)]);
-                return true;
+                return Sku.Patch.TryGetRawValue([.. "$"u8, .. local.Slice("sku"u8.Length)], out value);
             }
             else if (local.StartsWith("properties.virtualMachines"u8))
             {
@@ -403,13 +403,13 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
 
                 if (VirtualMachines.Count > index)
                 {
-                    return VirtualMachines[index].Patch.TryGetJson([.. "$"u8, .. indexSlice.Slice(bytesConsumed + 2)], out value);
+                    return VirtualMachines[index].Patch.TryGetRawValue([.. "$"u8, .. indexSlice.Slice(bytesConsumed + 2)], out value);
                 }
             }
 
             return false;
         }
-#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 
         private bool IsFlattened(ReadOnlySpan<byte> jsonPath)
         {

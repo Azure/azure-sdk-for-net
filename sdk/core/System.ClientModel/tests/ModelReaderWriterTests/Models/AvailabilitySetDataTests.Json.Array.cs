@@ -265,7 +265,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.AreEqual("myExistingVmId2", model2.Patch.GetString("$.properties.virtualMachines[1].id"u8));
             Assert.AreEqual("myExistingVmId3", model2.Patch.GetString("$.properties.virtualMachines[2].id"u8));
 
-            model2.Patch.Set("$.properties.virtualMachines[1]"u8, new WritableSubResource() { Id = "myNewVmId" });
+            model2.Patch.Set<WritableSubResource>("$.properties.virtualMachines[1]"u8, new WritableSubResource() { Id = "myNewVmId" });
 
             var data2 = ModelReaderWriter.Write(model2);
             Assert.AreEqual(

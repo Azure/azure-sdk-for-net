@@ -3,13 +3,11 @@
 
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
-    [Experimental("SCM0001")]
     internal partial class AvailabilitySetDataTests
     {
         [Test]
@@ -20,7 +18,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             model.Patch.Set(pointer, 5);
 
             Assert.AreEqual(5, model.Patch.GetInt32(pointer));
-            Assert.AreEqual(5, model.Patch.GetNullableInt32(pointer));
+            Assert.AreEqual(5, model.Patch.GetNullableValue<int>(pointer));
 
             var data = ModelReaderWriter.Write(model);
             Assert.AreEqual(
@@ -29,7 +27,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             var model2 = GetRoundTripModel(data);
             Assert.AreEqual(5, model2.Patch.GetInt32(pointer));
-            Assert.AreEqual(5, model2.Patch.GetNullableInt32(pointer));
+            Assert.AreEqual(5, model2.Patch.GetNullableValue<int>(pointer));
 
             AssertCommon(model, model2);
         }
@@ -47,7 +45,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 data.ToString());
 
             var model2 = GetRoundTripModel(data);
-            Assert.AreEqual(null, model2.Patch.GetNullableInt32("$.foobar"u8));
+            Assert.AreEqual(null, model2.Patch.GetNullableValue<int>("$.foobar"u8));
             Assert.Throws<FormatException>(() => model2.Patch.GetInt32("$.foobar"u8));
 
             AssertCommon(model, model2);
@@ -107,7 +105,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             var model = GetInitialModel();
             model.Patch.SetNull(pointer);
             Assert.AreEqual(null, model.Patch.GetString(pointer));
-            Assert.AreEqual(null, model.Patch.GetNullableInt32(pointer));
+            Assert.AreEqual(null, model.Patch.GetNullableValue<int>(pointer));
 
             var data = ModelReaderWriter.Write(model);
             Assert.AreEqual(
@@ -116,7 +114,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             var model2 = GetRoundTripModel(data);
             Assert.AreEqual(null, model2.Patch.GetString(pointer));
-            Assert.AreEqual(null, model2.Patch.GetNullableInt32(pointer));
+            Assert.AreEqual(null, model2.Patch.GetNullableValue<int>(pointer));
 
             AssertCommon(model, model2);
         }
@@ -132,7 +130,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             model.Patch.Set(propertyNameSpan, expectedValue);
 
             Assert.AreEqual(expectedValue, model.Patch.GetInt32(propertyNameSpan));
-            Assert.AreEqual(expectedValue, model.Patch.GetNullableInt32(propertyNameSpan));
+            Assert.AreEqual(expectedValue, model.Patch.GetNullableValue<int>(propertyNameSpan));
 
             var data = ModelReaderWriter.Write(model);
             Assert.AreEqual(
@@ -238,7 +236,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             CollectionAssert.AreEqual(expectedValue.ToArray(), model.Patch.GetJson(pointer).ToArray());
             Assert.AreEqual("{\"y\":123}"u8.ToArray(), model.Patch.GetJson("$.foobar.x"u8).ToArray());
             Assert.AreEqual(123, model.Patch.GetInt32("$.foobar.x.y"u8));
-            Assert.AreEqual(123, model.Patch.GetNullableInt32("$.foobar.x.y"u8));
+            Assert.AreEqual(123, model.Patch.GetNullableValue<int>("$.foobar.x.y"u8));
 
             var data = ModelReaderWriter.Write(model);
             Assert.AreEqual(
@@ -250,7 +248,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             CollectionAssert.AreEqual(expectedValue.ToArray(), model2.Patch.GetJson(pointer).ToArray());
             Assert.AreEqual("{\"y\":123}"u8.ToArray(), model2.Patch.GetJson("$.foobar.x"u8).ToArray());
             Assert.AreEqual(123, model2.Patch.GetInt32("$.foobar.x.y"u8));
-            Assert.AreEqual(123, model2.Patch.GetNullableInt32("$.foobar.x.y"u8));
+            Assert.AreEqual(123, model2.Patch.GetNullableValue<int>("$.foobar.x.y"u8));
 
             AssertCommon(model, model2);
         }

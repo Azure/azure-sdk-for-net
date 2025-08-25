@@ -10,10 +10,10 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager
     /// <summary> Common fields that are returned in the response for all Azure Resource Manager resources. </summary>
     public abstract partial class ResourceData
     {
-        [Experimental("SCM0001")]
+        [Experimental("SCME0001")]
         private JsonPatch _patch;
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Experimental("SCM0001")]
+        [Experimental("SCME0001")]
         public ref JsonPatch Patch => ref _patch;
 
         /// <summary> Initializes a new instance of Resource. </summary>
@@ -26,17 +26,15 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         protected ResourceData(string id, string name, string resourceType, SystemData systemData, in JsonPatch jsonPatch)
-#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         {
             Id = id;
             Name = name;
             ResourceType = resourceType;
             SystemData = systemData;
-#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             _patch = jsonPatch;
-#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         }
 
         /// <summary> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </summary>

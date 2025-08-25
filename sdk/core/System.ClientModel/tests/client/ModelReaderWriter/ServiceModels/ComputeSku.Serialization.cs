@@ -16,17 +16,17 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
 {
     public partial class ComputeSku : IJsonModel<ComputeSku>
     {
-        [Experimental("SCM0001")]
+        [Experimental("SCME0001")]
         private JsonPatch _patch = new();
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Experimental("SCM0001")]
+        [Experimental("SCME0001")]
         public ref JsonPatch Patch => ref _patch;
 
         void IJsonModel<ComputeSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
 
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             if (Patch.Contains("$"u8))
             {
                 writer.WriteRawValue(Patch.GetJson("$"u8));
@@ -53,7 +53,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             Patch.Write(writer);
 
             writer.WriteEndObject();
-#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         }
 
         internal static ComputeSku DeserializeComputeSku(JsonElement element, ModelReaderWriterOptions options, BinaryData data)
@@ -67,9 +67,9 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute
             OptionalProperty<string> name = default;
             OptionalProperty<string> tier = default;
             OptionalProperty<long> capacity = default;
-#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             JsonPatch jsonPatch = new(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
-#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))

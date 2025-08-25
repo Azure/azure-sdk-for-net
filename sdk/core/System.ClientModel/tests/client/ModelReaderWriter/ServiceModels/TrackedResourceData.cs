@@ -30,9 +30,9 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         protected TrackedResourceData(string id, string name, string resourceType, SystemData systemData, IDictionary<string, string> tags, string location, in JsonPatch jsonPatch) : base(id, name, resourceType, systemData, jsonPatch)
-#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         {
             Tags = tags;
             Location = location;

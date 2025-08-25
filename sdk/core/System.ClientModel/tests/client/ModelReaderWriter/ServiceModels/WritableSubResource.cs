@@ -12,10 +12,10 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
     /// </summary>
     public partial class WritableSubResource
     {
-        [Experimental("SCM0001")]
+        [Experimental("SCME0001")]
         private JsonPatch _patch = new();
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Experimental("SCM0001")]
+        [Experimental("SCME0001")]
         public ref JsonPatch Patch => ref _patch;
 
         /// <summary>
@@ -27,14 +27,12 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager.Resources
 
         /// <summary> Initializes a new instance of <see cref="WritableSubResource"/>. </summary>
         /// <param name="id"> ARM resource Id. </param>
-#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         protected internal WritableSubResource(string? id, in JsonPatch jsonPatch)
-#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         {
             Id = id;
-#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             _patch = jsonPatch;
-#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         }
 
         /// <summary>

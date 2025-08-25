@@ -12,7 +12,7 @@ using BenchmarkDotNet.Attributes;
 
 namespace System.ClientModel.Tests.Internal.Perf
 {
-#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
     public class PatchSetBenchmarks
     {
         private BinaryData _data;
@@ -102,5 +102,5 @@ namespace System.ClientModel.Tests.Internal.Perf
             }
         }
     }
-#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 }

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Buffers;
 using System.Buffers.Text;
 using System.ClientModel.Internal;
 using System.Diagnostics.CodeAnalysis;
@@ -42,19 +43,19 @@ public partial struct JsonPatch
         s_falseBooleanArray = new(ValueKind.BooleanFalse, "false"u8.ToArray());
     }
 
-    private ReadOnlyMemory<byte> GetValue(ReadOnlySpan<byte> jsonPath)
+    private ReadOnlyMemory<byte> GetEncodedValue(ReadOnlySpan<byte> jsonPath)
     {
-        if (TryGetValue(jsonPath, out var value))
+        if (TryGetEncodedValue(jsonPath, out var value))
         {
-            return value;
+            return value.Value;
         }
         ThrowPropertyNotFoundException(jsonPath);
         return ReadOnlyMemory<byte>.Empty;
     }
 
-    private bool TryGetValue(ReadOnlySpan<byte> jsonPath, out ReadOnlyMemory<byte> value)
+    private bool TryGetEncodedValue(ReadOnlySpan<byte> jsonPath, out EncodedValue value)
     {
-        value = ReadOnlyMemory<byte>.Empty;
+        value = EncodedValue.Empty;
         EncodedValue encodedValue;
 
         // if root is overridden we should not propagate.
@@ -64,11 +65,11 @@ public partial struct JsonPatch
             {
                 if (encodedValue.Kind.HasFlag(ValueKind.ArrayItemAppend))
                 {
-                    value = GetCombinedArray(jsonPath, encodedValue);
+                    value = new(encodedValue.Kind, GetCombinedArray(jsonPath, encodedValue));
                 }
                 else
                 {
-                    value = encodedValue.Value;
+                    value = encodedValue;
                 }
                 return true;
             }
@@ -85,7 +86,7 @@ public partial struct JsonPatch
         {
             if (TryGetParentMatch(jsonPath, true, out _, out encodedValue))
             {
-                value = encodedValue.Value.GetJson(jsonPath);
+                value = new(encodedValue.Kind, encodedValue.Value.GetJson(jsonPath));
                 return true;
             }
             return false;
@@ -95,11 +96,11 @@ public partial struct JsonPatch
         {
             if (encodedValue.Kind.HasFlag(ValueKind.ArrayItemAppend))
             {
-                value = GetCombinedArray(jsonPath, encodedValue);
+                value = new(ValueKind.Json, GetCombinedArray(jsonPath, encodedValue));
             }
             else
             {
-                value = encodedValue.Value;
+                value = encodedValue;
             }
             return true;
         }
@@ -112,7 +113,7 @@ public partial struct JsonPatch
             !parentValue.Kind.HasFlag(ValueKind.ArrayItemAppend))
         {
             GetSubPath(directParent, jsonPath, ref childPath);
-            value = parentValue.Value.GetJson(childPath);
+            value = new(parentValue.Kind, parentValue.Value.GetJson(childPath));
             return true;
         }
 
@@ -127,7 +128,7 @@ public partial struct JsonPatch
             {
                 // no array in path
                 GetSubPath(parentPath, jsonPath, ref childPath);
-                value = encodedValue.Value.GetJson(childPath);
+                value = new(encodedValue.Kind, encodedValue.Value.GetJson(childPath));
                 return true;
             }
 
@@ -152,7 +153,7 @@ public partial struct JsonPatch
                 if (TryGetArrayItemFromRoot(arrayPath, reader, out indexRequested, out var length, out var arrayItem))
                 {
                     GetSubPath(arrayPath, jsonPath, ref childPath);
-                    value = GetCombinedArray(jsonPath, arrayItem.GetJson(childPath), EncodedValue.Empty);
+                    value = new(ValueKind.Json, GetCombinedArray(jsonPath, arrayItem.GetJson(childPath), EncodedValue.Empty));
                     return true;
                 }
 
@@ -185,7 +186,7 @@ public partial struct JsonPatch
             }
 
             GetSubPath(parentPath, adjustedJsonPath.Slice(0, adjustLength), ref childPath);
-            value = encodedValue.Value.GetJson(childPath);
+            value = new(encodedValue.Kind, encodedValue.Value.GetJson(childPath));
             return true;
         }
 
@@ -369,8 +370,177 @@ public partial struct JsonPatch
             && (type.Attributes & TypeAttributes.NotPublic) == TypeAttributes.NotPublic;
     }
 
+    #region Encode Value
     private static EncodedValue EncodeValue(bool value)
         => value ? s_trueBooleanArray : s_falseBooleanArray;
+
+    private static EncodedValue EncodeValue(byte value)
+    {
+        Span<byte> buffer = stackalloc byte[11];
+        if (Utf8Formatter.TryFormat(value, buffer, out var bytesWritten))
+        {
+            return new(ValueKind.Number, buffer.Slice(0, bytesWritten).ToArray());
+        }
+
+        // not sure how we could ever get here.
+        throw new InvalidOperationException($"Failed to encode value '{value}'.");
+    }
+
+    private static EncodedValue EncodeValue(DateTime value, StandardFormat format = default)
+    {
+        Span<byte> buffer = stackalloc byte[64];
+        if (Utf8Formatter.TryFormat(value, buffer, out var bytesWritten, format))
+        {
+            return new(ValueKind.DateTime, buffer.Slice(0, bytesWritten).ToArray());
+        }
+
+        // not sure how we could ever get here.
+        throw new InvalidOperationException($"Failed to encode value '{value}'.");
+    }
+
+    private static EncodedValue EncodeValue(DateTimeOffset value, StandardFormat format = default)
+    {
+        Span<byte> buffer = stackalloc byte[64];
+        if (Utf8Formatter.TryFormat(value, buffer, out var bytesWritten, format))
+        {
+            return new(ValueKind.DateTime, buffer.Slice(0, bytesWritten).ToArray());
+        }
+
+        // not sure how we could ever get here.
+        throw new InvalidOperationException($"Failed to encode value '{value}'.");
+    }
+
+    private static EncodedValue EncodeValue(decimal value)
+    {
+        Span<byte> buffer = stackalloc byte[64];
+        if (Utf8Formatter.TryFormat(value, buffer, out var bytesWritten))
+        {
+            return new(ValueKind.Number, buffer.Slice(0, bytesWritten).ToArray());
+        }
+
+        // not sure how we could ever get here.
+        throw new InvalidOperationException($"Failed to encode value '{value}'.");
+    }
+
+    private static EncodedValue EncodeValue(double value)
+    {
+        Span<byte> buffer = stackalloc byte[64];
+        if (Utf8Formatter.TryFormat(value, buffer, out var bytesWritten))
+        {
+            return new(ValueKind.Number, buffer.Slice(0, bytesWritten).ToArray());
+        }
+
+        // not sure how we could ever get here.
+        throw new InvalidOperationException($"Failed to encode value '{value}'.");
+    }
+
+    private static EncodedValue EncodeValue(Guid value)
+    {
+        Span<byte> buffer = stackalloc byte[128];
+        if (Utf8Formatter.TryFormat(value, buffer, out var bytesWritten))
+        {
+            return new(ValueKind.Guid, buffer.Slice(0, bytesWritten).ToArray());
+        }
+
+        // not sure how we could ever get here.
+        throw new InvalidOperationException($"Failed to encode value '{value}'.");
+    }
+
+    private static EncodedValue EncodeValue(int value)
+    {
+        Span<byte> buffer = stackalloc byte[11];
+        if (Utf8Formatter.TryFormat(value, buffer, out var bytesWritten))
+        {
+            return new(ValueKind.Number, buffer.Slice(0, bytesWritten).ToArray());
+        }
+
+        // not sure how we could ever get here.
+        throw new InvalidOperationException($"Failed to encode value '{value}'.");
+    }
+
+    private static EncodedValue EncodeValue(long value)
+    {
+        Span<byte> buffer = stackalloc byte[20];
+        if (Utf8Formatter.TryFormat(value, buffer, out var bytesWritten))
+        {
+            return new(ValueKind.Number, buffer.Slice(0, bytesWritten).ToArray());
+        }
+
+        // not sure how we could ever get here.
+        throw new InvalidOperationException($"Failed to encode value '{value}'.");
+    }
+
+    private static EncodedValue EncodeValue(sbyte value)
+    {
+        Span<byte> buffer = stackalloc byte[8];
+        if (Utf8Formatter.TryFormat(value, buffer, out var bytesWritten))
+        {
+            return new(ValueKind.Number, buffer.Slice(0, bytesWritten).ToArray());
+        }
+
+        // not sure how we could ever get here.
+        throw new InvalidOperationException($"Failed to encode value '{value}'.");
+    }
+
+    private static EncodedValue EncodeValue(short value)
+    {
+        Span<byte> buffer = stackalloc byte[11];
+        if (Utf8Formatter.TryFormat(value, buffer, out var bytesWritten))
+        {
+            return new(ValueKind.Number, buffer.Slice(0, bytesWritten).ToArray());
+        }
+
+        // not sure how we could ever get here.
+        throw new InvalidOperationException($"Failed to encode value '{value}'.");
+    }
+
+    private static EncodedValue EncodeValue(TimeSpan value, StandardFormat format = default)
+    {
+        Span<byte> buffer = stackalloc byte[64];
+        if (Utf8Formatter.TryFormat(value, buffer, out var bytesWritten, format))
+        {
+            return new(ValueKind.TimeSpan, buffer.Slice(0, bytesWritten).ToArray());
+        }
+
+        // not sure how we could ever get here.
+        throw new InvalidOperationException($"Failed to encode value '{value}'.");
+    }
+
+    private static EncodedValue EncodeValue(uint value)
+    {
+        Span<byte> buffer = stackalloc byte[11];
+        if (Utf8Formatter.TryFormat(value, buffer, out var bytesWritten))
+        {
+            return new(ValueKind.Number, buffer.Slice(0, bytesWritten).ToArray());
+        }
+
+        // not sure how we could ever get here.
+        throw new InvalidOperationException($"Failed to encode value '{value}'.");
+    }
+
+    private static EncodedValue EncodeValue(ulong value)
+    {
+        Span<byte> buffer = stackalloc byte[20];
+        if (Utf8Formatter.TryFormat(value, buffer, out var bytesWritten))
+        {
+            return new(ValueKind.Number, buffer.Slice(0, bytesWritten).ToArray());
+        }
+
+        // not sure how we could ever get here.
+        throw new InvalidOperationException($"Failed to encode value '{value}'.");
+    }
+
+    private static EncodedValue EncodeValue(ushort value)
+    {
+        Span<byte> buffer = stackalloc byte[11];
+        if (Utf8Formatter.TryFormat(value, buffer, out var bytesWritten))
+        {
+            return new(ValueKind.Number, buffer.Slice(0, bytesWritten).ToArray());
+        }
+
+        // not sure how we could ever get here.
+        throw new InvalidOperationException($"Failed to encode value '{value}'.");
+    }
 
     private static EncodedValue EncodeValue(byte[] value)
         => new(ValueKind.Json, value);
@@ -397,25 +567,12 @@ public partial struct JsonPatch
         return new(ValueKind.Json, value.ToMemory());
     }
 
-    private static EncodedValue EncodeValue(int value)
-    {
-        Span<byte> buffer = stackalloc byte[11];
-        if (Utf8Formatter.TryFormat(value, buffer, out var bytesWritten))
-        {
-            return new(ValueKind.Int32, buffer.Slice(0, bytesWritten).ToArray());
-        }
-
-        // not sure how we could ever get here.
-        throw new InvalidOperationException($"Failed to encode integer value '{value}'.");
-    }
-
     private static EncodedValue EncodeValue(ReadOnlySpan<byte> value)
         => new(ValueKind.Json, value.ToArray());
 
     private static EncodedValue EncodeValue(string value)
     {
-        byte[] bytes = [(byte)'"', .. Encoding.UTF8.GetBytes(value), (byte)'"'];
-        return new(ValueKind.Utf8String, bytes);
+        return new(ValueKind.Utf8String, Encoding.UTF8.GetBytes(value));
     }
 
     // Helper methods to encode objects to byte arrays (similar to PropertyRecord format)
@@ -440,59 +597,7 @@ public partial struct JsonPatch
                 throw new NotSupportedException($"Unsupported value type: {value?.GetType()}");
         }
     }
-
-    // Helper method to decode byte arrays back to objects (for backward compatibility)
-    private static object DecodeValue(EncodedValue encodedValue)
-    {
-        if (encodedValue.Value.Length == 0)
-            throw new ArgumentException("Empty encoded value");
-
-        ValueKind kind = encodedValue.Kind;
-        ReadOnlySpan<byte> valueBytes = encodedValue.Value.Span;
-
-        switch (kind)
-        {
-            case ValueKind.Utf8String:
-                // Parse JSON string representation using Utf8JsonReader
-                Utf8JsonReader reader = new Utf8JsonReader(valueBytes);
-                if (reader.Read() && reader.TokenType == JsonTokenType.String)
-                {
-                    return reader.GetString() ?? string.Empty;
-                }
-                throw new FormatException("Invalid JSON string format.");
-
-            case ValueKind.Int32:
-                // Parse JSON number representation
-#if NET6_0_OR_GREATER
-                string jsonInt = Encoding.UTF8.GetString(valueBytes);
-#else
-                string jsonInt = Encoding.UTF8.GetString(valueBytes.ToArray());
-#endif
-                return int.Parse(jsonInt);
-
-            case ValueKind.BooleanTrue:
-            case ValueKind.BooleanFalse:
-                // Parse JSON boolean representation
-#if NET6_0_OR_GREATER
-                string jsonBool = Encoding.UTF8.GetString(valueBytes);
-#else
-                string jsonBool = Encoding.UTF8.GetString(valueBytes.ToArray());
-#endif
-                return bool.Parse(jsonBool);
-
-            case ValueKind.Json:
-                return valueBytes.ToArray();
-
-            case ValueKind.Removed:
-                return s_removedValueArray.Value;
-
-            case ValueKind.Null:
-                return s_nullValueArray.Value;
-
-            default:
-                throw new ArgumentException($"Unknown value kind: {kind}");
-        }
-    }
+    #endregion
 
     private void SetInternal(ReadOnlySpan<byte> jsonPath, EncodedValue encodedValue)
     {
@@ -721,7 +826,7 @@ public partial struct JsonPatch
             }
             else
             {
-                writer.WriteRawValue(encodedValue.Value.Span);
+                WriteEncodedValueAsJson(writer, ReadOnlySpan<byte>.Empty, encodedValue);
             }
         }
         else
@@ -783,7 +888,7 @@ public partial struct JsonPatch
                         }
                         else
                         {
-                            writer.WriteRawValue(encodedValue.Value.Span);
+                            WriteEncodedValueAsJson(writer, ReadOnlySpan<byte>.Empty, encodedValue);
                         }
                     }
                     else
@@ -817,38 +922,20 @@ public partial struct JsonPatch
 
     private static void WriteEncodedValueAsJson(Utf8JsonWriter writer, ReadOnlySpan<byte> propertyName, EncodedValue encodedValue)
     {
-        // Helper method to write encoded byte values as JSON
-
         if (encodedValue.Value.Length == 0)
             throw new ArgumentException("Empty encoded value");
 
         ValueKind kind = encodedValue.Kind & ~ValueKind.ArrayItemAppend;
         ReadOnlySpan<byte> valueBytes = encodedValue.Value.Span;
 
-        writer.WritePropertyName(propertyName);
+        if (!propertyName.IsEmpty)
+            writer.WritePropertyName(propertyName);
 
         switch (kind)
         {
-            case ValueKind.Utf8String:
-                // valueBytes contains JSON string representation, parse and write properly
-                writer.WriteRawValue(valueBytes);
-                break;
-
-            case ValueKind.Int32:
+            case ValueKind.Number:
                 // valueBytes contains JSON number representation
-#if NET6_0_OR_GREATER
-                var temp = Encoding.UTF8.GetString(valueBytes);
-#else
-                var temp = Encoding.UTF8.GetString(valueBytes.ToArray());
-#endif
-                if (int.TryParse(temp, out int intValue))
-                {
-                    writer.WriteNumberValue(intValue);
-                }
-                else
-                {
-                    throw new FormatException("Invalid integer format in encoded value.");
-                }
+                writer.WriteRawValue(valueBytes);
                 break;
 
             case ValueKind.BooleanTrue:
@@ -868,6 +955,13 @@ public partial struct JsonPatch
 
             case ValueKind.Removed:
                 // Skip removed properties during serialization
+                break;
+
+            case ValueKind.Utf8String:
+            case ValueKind.TimeSpan:
+            case ValueKind.Guid:
+            case ValueKind.DateTime:
+                writer.WriteStringValue(valueBytes);
                 break;
 
             default:

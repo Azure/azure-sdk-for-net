@@ -11,7 +11,7 @@ public partial struct JsonPatch
     {
         None = 0,
         Json = 1 << 0,
-        Int32 = 1 << 1,
+        Number = 1 << 1,
         Utf8String = 1 << 2,
         Removed = 1 << 3,
         Null = 1 << 4,
@@ -19,8 +19,11 @@ public partial struct JsonPatch
         BooleanFalse = 1 << 6,
         ArrayItemAppend = 1 << 7,
         Written = 1 << 8,
+        DateTime = 1 << 9,
+        Guid = 1 << 10,
+        TimeSpan = 1 << 11,
         Boolean = BooleanTrue | BooleanFalse,
-        NullableInt32 = Int32 | Null,
+        NullableNumber = Number | Null,
         NullableBoolean = Boolean | Null,
         NullableUtf8String = Utf8String | Null,
     }

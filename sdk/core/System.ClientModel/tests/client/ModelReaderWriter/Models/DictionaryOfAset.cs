@@ -14,11 +14,11 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 {
     public partial class DictionaryOfAset : IJsonModel<DictionaryOfAset>
     {
-        [Experimental("SCM0001")]
+        [Experimental("SCME0001")]
         private JsonPatch _patch;
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Experimental("SCM0001")]
+        [Experimental("SCME0001")]
         public ref JsonPatch Patch => ref _patch;
 
         public IDictionary<string, AvailabilitySetData> Items { get; private set; }
@@ -36,15 +36,13 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         /// </summary>
         /// <param name="items">The dictionary of availability set data items.</param>
         /// <param name="patch">Additional properties for patching.</param>
-#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         internal DictionaryOfAset(IDictionary<string, AvailabilitySetData> items, JsonPatch patch)
-#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         {
             Items = items ?? new Dictionary<string, AvailabilitySetData>();
-#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             _patch = patch;
             _patch.SetPropagators(PropagateSet, PropagateGet, IsFlattened);
-#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         }
 
         void IJsonModel<DictionaryOfAset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -60,7 +58,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             //TODO: 12% perf hit to call this helper
             //writer.WriteDictionaryWithPatch(
             //    options,
@@ -105,7 +103,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             Patch.Write(writer, "$"u8);
             writer.WriteEndObject();
 
-#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         }
 
         DictionaryOfAset IJsonModel<DictionaryOfAset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -151,9 +149,9 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             }
 
             Dictionary<string, AvailabilitySetData> items = new Dictionary<string, AvailabilitySetData>();
-#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             JsonPatch additionalProperties = new(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
-#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 
             foreach (var property in element.EnumerateObject())
             {
@@ -183,16 +181,16 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             }
         }
 
-#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
-        private bool PropagateGet(ReadOnlySpan<byte> jsonPath, out ReadOnlyMemory<byte> value)
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+        private bool PropagateGet(ReadOnlySpan<byte> jsonPath, out JsonPatch.EncodedValue value)
         {
             string key = jsonPath.GetFirstPropertyName(out int i);
-            value = ReadOnlyMemory<byte>.Empty;
+            value = default;
 
             if (!Items.TryGetValue(key, out var aset))
                 return false;
 
-            return aset.Patch.TryGetJson([.. "$"u8, .. GetRemainder(jsonPath, i)], out value);
+            return aset.Patch.TryGetRawValue([.. "$"u8, .. GetRemainder(jsonPath, i)], out value);
         }
 
         private bool PropagateSet(ReadOnlySpan<byte> jsonPath, JsonPatch.EncodedValue value)
@@ -207,7 +205,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         }
 
         private bool IsFlattened(ReadOnlySpan<byte> jsonPath) => false;
-#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 
         private static ReadOnlySpan<byte> GetRemainder(ReadOnlySpan<byte> jsonPath, int i)
         {

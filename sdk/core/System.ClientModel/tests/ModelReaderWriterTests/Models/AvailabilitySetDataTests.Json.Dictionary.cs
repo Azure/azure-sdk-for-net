@@ -85,7 +85,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.AreEqual("testAS-3375", model.Patch.GetString("$.testAS-3375.name"u8));
             Assert.AreEqual("testAS-3376", model.Patch.GetString("$.testAS-3376.name"u8));
 
-            model.Patch.Set("$.testAS-3375"u8, new AvailabilitySetData(AzureLocation.BrazilSouth)
+            model.Patch.Set<AvailabilitySetData>("$.testAS-3375"u8, new AvailabilitySetData(AzureLocation.BrazilSouth)
             {
                 Name = "testAS-3377",
                 Id = "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3377",
@@ -160,7 +160,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.AreEqual("testAS-3375", model.Patch.GetString("$.testAS-3375.name"u8));
             Assert.AreEqual("testAS-3376", model.Patch.GetString("$.testAS-3376.name"u8));
 
-            model.Patch.Set("$.testAS-3377"u8, new AvailabilitySetData(AzureLocation.BrazilSouth)
+            model.Patch.Set<AvailabilitySetData>("$.testAS-3377"u8, new AvailabilitySetData(AzureLocation.BrazilSouth)
             {
                 Name = "testAS-3377",
                 Id = "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS-3377",

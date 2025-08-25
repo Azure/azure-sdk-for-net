@@ -2,30 +2,16 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests
 {
-    [Experimental("SCM0001")]
     internal class JsonPatchTests
     {
-        [Test]
-        public void AddPrimitive_String()
-        {
-            JsonPatch jp = new();
-
-            jp.Set("$.property"u8, "value");
-
-            Assert.IsTrue(jp.Contains("$.property"u8));
-            Assert.AreEqual("value", jp.GetString("$.property"u8));
-
-            Assert.AreEqual("{\"property\":\"value\"}", GetJsonString(jp));
-        }
-
         [Test]
         public void AddPrimitive_StringAndInt()
         {
@@ -157,7 +143,10 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public static string GetJsonString(JsonPatch patch)
         {
             using var stream = new MemoryStream();
-            Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+            JsonWriterOptions options = new();
+            // this stops it from escaping things like + int \u002B to make the expected strings nice to read.
+            options.Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping;
+            Utf8JsonWriter writer = new Utf8JsonWriter(stream, options);
             patch.Write(writer);
             writer.Flush();
             return Encoding.UTF8.GetString(stream.GetBuffer().AsSpan().Slice(0, (int)stream.Position).ToArray());

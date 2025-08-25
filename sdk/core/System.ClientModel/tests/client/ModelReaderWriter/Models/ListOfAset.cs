@@ -15,11 +15,11 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 {
     public partial class ListOfAset : IJsonModel<ListOfAset>
     {
-        [Experimental("SCM0001")]
+        [Experimental("SCME0001")]
         private JsonPatch _patch;
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Experimental("SCM0001")]
+        [Experimental("SCME0001")]
         public ref JsonPatch Patch => ref _patch;
 
         public List<AvailabilitySetData> Items { get; private set; }
@@ -37,14 +37,12 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         /// </summary>
         /// <param name="items">The list of availability set data items.</param>
         /// <param name="patch">Additional properties for patching.</param>
-#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         internal ListOfAset(IList<AvailabilitySetData> items, JsonPatch patch)
-#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         {
             Items = items?.ToList() ?? new();
-#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             _patch = patch;
-#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         }
 
         void IJsonModel<ListOfAset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -60,7 +58,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             if (Patch.Contains("$"u8))
             {
                 writer.WriteRawValue(Patch.GetJson("$"u8));
@@ -77,7 +75,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             }
 
             Patch.Write(writer);
-#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
         }
 
         ListOfAset IJsonModel<ListOfAset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -123,9 +121,9 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             }
 
             List<AvailabilitySetData> items = new List<AvailabilitySetData>();
-#pragma warning disable SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
             JsonPatch additionalProperties = new(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
-#pragma warning restore SCM0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
 
             foreach (var arrayItem in element.EnumerateArray())
             {
