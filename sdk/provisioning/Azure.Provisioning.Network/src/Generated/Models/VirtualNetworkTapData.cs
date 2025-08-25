@@ -62,12 +62,12 @@ public partial class VirtualNetworkTapData : ProvisionableConstruct
     /// The reference to the private IP Address of the collector nic that will
     /// receive the tap.
     /// </summary>
-    public NetworkInterfaceIPConfigurationData DestinationNetworkInterfaceIPConfiguration 
+    public NetworkInterfaceIPConfiguration DestinationNetworkInterfaceIPConfiguration 
     {
         get { Initialize(); return _destinationNetworkInterfaceIPConfiguration!; }
         set { Initialize(); AssignOrReplace(ref _destinationNetworkInterfaceIPConfiguration, value); }
     }
-    private NetworkInterfaceIPConfigurationData? _destinationNetworkInterfaceIPConfiguration;
+    private NetworkInterfaceIPConfiguration? _destinationNetworkInterfaceIPConfiguration;
 
     /// <summary>
     /// The reference to the private IP address on the internal Load Balancer
@@ -155,7 +155,7 @@ public partial class VirtualNetworkTapData : ProvisionableConstruct
         _networkInterfaceTapConfigurations = DefineListProperty<NetworkInterfaceTapConfigurationData>("NetworkInterfaceTapConfigurations", ["properties", "networkInterfaceTapConfigurations"], isOutput: true);
         _resourceGuid = DefineProperty<Guid>("ResourceGuid", ["properties", "resourceGuid"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _destinationNetworkInterfaceIPConfiguration = DefineModelProperty<NetworkInterfaceIPConfigurationData>("DestinationNetworkInterfaceIPConfiguration", ["properties", "destinationNetworkInterfaceIPConfiguration"]);
+        _destinationNetworkInterfaceIPConfiguration = DefineModelProperty<NetworkInterfaceIPConfiguration>("DestinationNetworkInterfaceIPConfiguration", ["properties", "destinationNetworkInterfaceIPConfiguration"]);
         _destinationLoadBalancerFrontEndIPConfiguration = DefineModelProperty<FrontendIPConfigurationData>("DestinationLoadBalancerFrontEndIPConfiguration", ["properties", "destinationLoadBalancerFrontEndIPConfiguration"]);
         _destinationPort = DefineProperty<int>("DestinationPort", ["properties", "destinationPort"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);

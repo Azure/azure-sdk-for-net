@@ -2,7 +2,10 @@
 // Licensed under the MIT License.
 
 using Azure.Provisioning.Generator.Model;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -68,8 +71,8 @@ public class NetworkSpecification() :
         typeof(BackendAddressPoolResource),
         typeof(ApplicationSecurityGroupCollection),
         typeof(ApplicationSecurityGroupResource),
-        typeof(NetworkInterfaceIPConfigurationCollection), // these are not working, why?
-        typeof(NetworkInterfaceIPConfigurationResource),
+        typeof(NetworkInterfaceIPConfigurationCollection), // NetworkInterfaceIPConfigurationResource will not be generated because it does not have a createOrUpdate method.
+        typeof(NetworkInterfaceIPConfigurationResource), // NetworkInterfaceIPConfigurationResource will not be generated because it does not have a createOrUpdate method.
         typeof(NetworkWatcherCollection),
         typeof(NetworkWatcherResource),
         typeof(FlowLogCollection),
@@ -89,6 +92,12 @@ public class NetworkSpecification() :
             }
         }
 
+        // NetworkInterfaceIPConfigurationResource does not have a creator method, we need to add it here manually.
+        resources.Add(typeof(NetworkInterfaceIPConfigurationResource), typeof(NetworkSpecification).GetMethod(nameof(CreateOrUpdateNetworkInterfaceIPConfiguration), BindingFlags.NonPublic | BindingFlags.Static)!);
+
         return resources;
     }
+
+    // These methods are here as a workaround to generate those resources without a createOrUpdate method.
+    private static ArmOperation<NetworkInterfaceIPConfigurationResource> CreateOrUpdateNetworkInterfaceIPConfiguration() { return null!; }
 }

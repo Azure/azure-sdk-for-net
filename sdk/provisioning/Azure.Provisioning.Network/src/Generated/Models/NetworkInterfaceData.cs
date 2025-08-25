@@ -72,12 +72,12 @@ public partial class NetworkInterfaceData : ProvisionableConstruct
     /// <summary>
     /// A list of IPConfigurations of the network interface.
     /// </summary>
-    public BicepList<NetworkInterfaceIPConfigurationData> IPConfigurations 
+    public BicepList<NetworkInterfaceIPConfiguration> IPConfigurations 
     {
         get { Initialize(); return _iPConfigurations!; }
         set { Initialize(); _iPConfigurations!.Assign(value); }
     }
-    private BicepList<NetworkInterfaceIPConfigurationData>? _iPConfigurations;
+    private BicepList<NetworkInterfaceIPConfiguration>? _iPConfigurations;
 
     /// <summary>
     /// A list of TapConfigurations of the network interface.
@@ -327,7 +327,7 @@ public partial class NetworkInterfaceData : ProvisionableConstruct
         _virtualMachineId = DefineProperty<ResourceIdentifier>("VirtualMachineId", ["properties", "virtualMachine", "id"], isOutput: true);
         _networkSecurityGroup = DefineModelProperty<NetworkSecurityGroupData>("NetworkSecurityGroup", ["properties", "networkSecurityGroup"]);
         _privateEndpoint = DefineModelProperty<PrivateEndpointData>("PrivateEndpoint", ["properties", "privateEndpoint"], isOutput: true);
-        _iPConfigurations = DefineListProperty<NetworkInterfaceIPConfigurationData>("IPConfigurations", ["properties", "ipConfigurations"]);
+        _iPConfigurations = DefineListProperty<NetworkInterfaceIPConfiguration>("IPConfigurations", ["properties", "ipConfigurations"]);
         _tapConfigurations = DefineListProperty<NetworkInterfaceTapConfigurationData>("TapConfigurations", ["properties", "tapConfigurations"], isOutput: true);
         _dnsSettings = DefineModelProperty<NetworkInterfaceDnsSettings>("DnsSettings", ["properties", "dnsSettings"]);
         _macAddress = DefineProperty<string>("MacAddress", ["properties", "macAddress"], isOutput: true);

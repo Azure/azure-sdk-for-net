@@ -32,11 +32,11 @@ public partial class ApplicationGatewayBackendAddressPool : ProvisionableConstru
     /// <summary>
     /// Collection of references to IPs defined in network interfaces.
     /// </summary>
-    public BicepList<NetworkInterfaceIPConfigurationData> BackendIPConfigurations 
+    public BicepList<NetworkInterfaceIPConfiguration> BackendIPConfigurations 
     {
         get { Initialize(); return _backendIPConfigurations!; }
     }
-    private BicepList<NetworkInterfaceIPConfigurationData>? _backendIPConfigurations;
+    private BicepList<NetworkInterfaceIPConfiguration>? _backendIPConfigurations;
 
     /// <summary>
     /// Backend addresses.
@@ -101,7 +101,7 @@ public partial class ApplicationGatewayBackendAddressPool : ProvisionableConstru
     {
         base.DefineProvisionableProperties();
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
-        _backendIPConfigurations = DefineListProperty<NetworkInterfaceIPConfigurationData>("BackendIPConfigurations", ["properties", "backendIPConfigurations"], isOutput: true);
+        _backendIPConfigurations = DefineListProperty<NetworkInterfaceIPConfiguration>("BackendIPConfigurations", ["properties", "backendIPConfigurations"], isOutput: true);
         _backendAddresses = DefineListProperty<ApplicationGatewayBackendAddress>("BackendAddresses", ["properties", "backendAddresses"]);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);

@@ -45,11 +45,11 @@ public partial class InboundNatRuleData : ProvisionableConstruct
     /// VM. Traffic sent to the frontend port of each of the frontend IP
     /// configurations is forwarded to the backend IP.
     /// </summary>
-    public NetworkInterfaceIPConfigurationData BackendIPConfiguration 
+    public NetworkInterfaceIPConfiguration BackendIPConfiguration 
     {
         get { Initialize(); return _backendIPConfiguration!; }
     }
-    private NetworkInterfaceIPConfigurationData? _backendIPConfiguration;
+    private NetworkInterfaceIPConfiguration? _backendIPConfiguration;
 
     /// <summary>
     /// The reference to the transport protocol used by the load balancing rule.
@@ -213,7 +213,7 @@ public partial class InboundNatRuleData : ProvisionableConstruct
         base.DefineProvisionableProperties();
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
         _frontendIPConfigurationId = DefineProperty<ResourceIdentifier>("FrontendIPConfigurationId", ["properties", "frontendIPConfiguration", "id"]);
-        _backendIPConfiguration = DefineModelProperty<NetworkInterfaceIPConfigurationData>("BackendIPConfiguration", ["properties", "backendIPConfiguration"], isOutput: true);
+        _backendIPConfiguration = DefineModelProperty<NetworkInterfaceIPConfiguration>("BackendIPConfiguration", ["properties", "backendIPConfiguration"], isOutput: true);
         _protocol = DefineProperty<LoadBalancingTransportProtocol>("Protocol", ["properties", "protocol"]);
         _frontendPort = DefineProperty<int>("FrontendPort", ["properties", "frontendPort"]);
         _backendPort = DefineProperty<int>("BackendPort", ["properties", "backendPort"]);

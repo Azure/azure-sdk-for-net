@@ -104,11 +104,11 @@ public partial class BackendAddressPool : ProvisionableResource
     /// <summary>
     /// An array of references to IP addresses defined in network interfaces.
     /// </summary>
-    public BicepList<NetworkInterfaceIPConfigurationData> BackendIPConfigurations 
+    public BicepList<NetworkInterfaceIPConfiguration> BackendIPConfigurations 
     {
         get { Initialize(); return _backendIPConfigurations!; }
     }
-    private BicepList<NetworkInterfaceIPConfigurationData>? _backendIPConfigurations;
+    private BicepList<NetworkInterfaceIPConfiguration>? _backendIPConfigurations;
 
     /// <summary>
     /// A unique read-only string that changes whenever the resource is updated.
@@ -196,7 +196,7 @@ public partial class BackendAddressPool : ProvisionableResource
         _syncMode = DefineProperty<BackendAddressSyncMode>("SyncMode", ["properties", "syncMode"]);
         _tunnelInterfaces = DefineListProperty<GatewayLoadBalancerTunnelInterface>("TunnelInterfaces", ["properties", "tunnelInterfaces"]);
         _virtualNetworkId = DefineProperty<ResourceIdentifier>("VirtualNetworkId", ["properties", "virtualNetwork", "id"]);
-        _backendIPConfigurations = DefineListProperty<NetworkInterfaceIPConfigurationData>("BackendIPConfigurations", ["properties", "backendIPConfigurations"], isOutput: true);
+        _backendIPConfigurations = DefineListProperty<NetworkInterfaceIPConfiguration>("BackendIPConfigurations", ["properties", "backendIPConfigurations"], isOutput: true);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
         _inboundNatRules = DefineListProperty<WritableSubResource>("InboundNatRules", ["properties", "inboundNatRules"], isOutput: true);
         _loadBalancingRules = DefineListProperty<WritableSubResource>("LoadBalancingRules", ["properties", "loadBalancingRules"], isOutput: true);

@@ -154,6 +154,7 @@ public abstract partial class Specification
         // First look to collections
         foreach (Type type in ArmAssembly.GetExportedTypes())
         {
+            var typeName = type.Name;
             if (!type.IsClass) { continue; }
             if (type.BaseType != typeof(ArmCollection)) { continue; }
             if (type.Name.StartsWith("Mockable")) { continue; }
