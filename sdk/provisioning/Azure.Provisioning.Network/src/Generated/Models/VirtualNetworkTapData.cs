@@ -73,12 +73,12 @@ public partial class VirtualNetworkTapData : ProvisionableConstruct
     /// The reference to the private IP address on the internal Load Balancer
     /// that will receive the tap.
     /// </summary>
-    public FrontendIPConfigurationData DestinationLoadBalancerFrontEndIPConfiguration 
+    public FrontendIPConfiguration DestinationLoadBalancerFrontEndIPConfiguration 
     {
         get { Initialize(); return _destinationLoadBalancerFrontEndIPConfiguration!; }
         set { Initialize(); AssignOrReplace(ref _destinationLoadBalancerFrontEndIPConfiguration, value); }
     }
-    private FrontendIPConfigurationData? _destinationLoadBalancerFrontEndIPConfiguration;
+    private FrontendIPConfiguration? _destinationLoadBalancerFrontEndIPConfiguration;
 
     /// <summary>
     /// The VXLAN destination port that will receive the tapped traffic.
@@ -156,7 +156,7 @@ public partial class VirtualNetworkTapData : ProvisionableConstruct
         _resourceGuid = DefineProperty<Guid>("ResourceGuid", ["properties", "resourceGuid"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _destinationNetworkInterfaceIPConfiguration = DefineModelProperty<NetworkInterfaceIPConfiguration>("DestinationNetworkInterfaceIPConfiguration", ["properties", "destinationNetworkInterfaceIPConfiguration"]);
-        _destinationLoadBalancerFrontEndIPConfiguration = DefineModelProperty<FrontendIPConfigurationData>("DestinationLoadBalancerFrontEndIPConfiguration", ["properties", "destinationLoadBalancerFrontEndIPConfiguration"]);
+        _destinationLoadBalancerFrontEndIPConfiguration = DefineModelProperty<FrontendIPConfiguration>("DestinationLoadBalancerFrontEndIPConfiguration", ["properties", "destinationLoadBalancerFrontEndIPConfiguration"]);
         _destinationPort = DefineProperty<int>("DestinationPort", ["properties", "destinationPort"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);

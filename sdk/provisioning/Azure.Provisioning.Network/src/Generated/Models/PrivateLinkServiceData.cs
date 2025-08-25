@@ -43,12 +43,12 @@ public partial class PrivateLinkServiceData : ProvisionableConstruct
     /// <summary>
     /// An array of references to the load balancer IP configurations.
     /// </summary>
-    public BicepList<FrontendIPConfigurationData> LoadBalancerFrontendIPConfigurations 
+    public BicepList<FrontendIPConfiguration> LoadBalancerFrontendIPConfigurations 
     {
         get { Initialize(); return _loadBalancerFrontendIPConfigurations!; }
         set { Initialize(); _loadBalancerFrontendIPConfigurations!.Assign(value); }
     }
-    private BicepList<FrontendIPConfigurationData>? _loadBalancerFrontendIPConfigurations;
+    private BicepList<FrontendIPConfiguration>? _loadBalancerFrontendIPConfigurations;
 
     /// <summary>
     /// An array of private link service IP configurations.
@@ -210,7 +210,7 @@ public partial class PrivateLinkServiceData : ProvisionableConstruct
         base.DefineProvisionableProperties();
         _extendedLocation = DefineModelProperty<ExtendedAzureLocation>("ExtendedLocation", ["extendedLocation"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
-        _loadBalancerFrontendIPConfigurations = DefineListProperty<FrontendIPConfigurationData>("LoadBalancerFrontendIPConfigurations", ["properties", "loadBalancerFrontendIpConfigurations"]);
+        _loadBalancerFrontendIPConfigurations = DefineListProperty<FrontendIPConfiguration>("LoadBalancerFrontendIPConfigurations", ["properties", "loadBalancerFrontendIpConfigurations"]);
         _iPConfigurations = DefineListProperty<PrivateLinkServiceIPConfiguration>("IPConfigurations", ["properties", "ipConfigurations"]);
         _destinationIPAddress = DefineProperty<string>("DestinationIPAddress", ["properties", "destinationIPAddress"]);
         _networkInterfaces = DefineListProperty<NetworkInterfaceData>("NetworkInterfaces", ["properties", "networkInterfaces"], isOutput: true);

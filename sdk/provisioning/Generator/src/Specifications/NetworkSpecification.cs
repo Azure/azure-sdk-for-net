@@ -65,19 +65,15 @@ public class NetworkSpecification() :
     // More resources could be added later
     private readonly HashSet<Type> _generatedResources = new()
     {
-        typeof(VirtualNetworkCollection),
         typeof(VirtualNetworkResource),
-        typeof(BackendAddressPoolCollection),
         typeof(BackendAddressPoolResource),
-        typeof(ApplicationSecurityGroupCollection),
         typeof(ApplicationSecurityGroupResource),
-        typeof(NetworkInterfaceIPConfigurationCollection), // NetworkInterfaceIPConfigurationResource will not be generated because it does not have a createOrUpdate method.
         typeof(NetworkInterfaceIPConfigurationResource), // NetworkInterfaceIPConfigurationResource will not be generated because it does not have a createOrUpdate method.
         typeof(NetworkWatcherCollection),
         typeof(NetworkWatcherResource),
-        typeof(FlowLogCollection),
         typeof(FlowLogResource),
         typeof(SubnetResource),
+        typeof(FrontendIPConfigurationResource),
     };
 
     private protected override Dictionary<Type, MethodInfo> FindConstructibleResources()
@@ -95,10 +91,12 @@ public class NetworkSpecification() :
 
         // NetworkInterfaceIPConfigurationResource does not have a creator method, we need to add it here manually.
         resources.Add(typeof(NetworkInterfaceIPConfigurationResource), typeof(NetworkSpecification).GetMethod(nameof(CreateOrUpdateNetworkInterfaceIPConfiguration), BindingFlags.NonPublic | BindingFlags.Static)!);
+        resources.Add(typeof(FrontendIPConfigurationResource), typeof(NetworkSpecification).GetMethod(nameof(CreateOrUpdateFrontendIPConfiguration), BindingFlags.NonPublic | BindingFlags.Static)!);
 
         return resources;
     }
 
     // These methods are here as a workaround to generate those resources without a createOrUpdate method.
     private static ArmOperation<NetworkInterfaceIPConfigurationResource> CreateOrUpdateNetworkInterfaceIPConfiguration() { return null!; }
+    private static ArmOperation<FrontendIPConfigurationResource> CreateOrUpdateFrontendIPConfiguration() { return null!; }
 }

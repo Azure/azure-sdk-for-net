@@ -8,9 +8,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Network;
 
-/// <summary>
-/// Subnet.
-/// </summary>
 [SuppressMessage("Usage", "AZC0012:Avoid single word type names", Justification = "This name has be to Subnet")]
 public partial class Subnet
 {

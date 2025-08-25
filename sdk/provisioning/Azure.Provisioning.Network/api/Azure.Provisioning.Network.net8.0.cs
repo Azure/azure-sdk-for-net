@@ -244,27 +244,28 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<int> Version { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class FrontendIPConfigurationData : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class FrontendIPConfiguration : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public FrontendIPConfigurationData() { }
+        public FrontendIPConfiguration() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public FrontendIPConfiguration(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> GatewayLoadBalancerId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> GatewayLoadBalancerId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.WritableSubResource> InboundNatPools { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.WritableSubResource> InboundNatRules { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.WritableSubResource> LoadBalancingRules { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.WritableSubResource> OutboundRules { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> PrivateIPAddress { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkIPVersion> PrivateIPAddressVersion { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkIPAllocationMethod> PrivateIPAllocationMethod { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> PrivateIPAddress { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkIPVersion> PrivateIPAddressVersion { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkIPAllocationMethod> PrivateIPAllocationMethod { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.Network.PublicIPAddressData PublicIPAddress { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PublicIPPrefixId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceType> ResourceType { get { throw null; } }
-        public Azure.Provisioning.Network.Subnet Subnet { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<string> Zones { get { throw null; } set { } }
+        public Azure.Provisioning.Network.PublicIPAddressData PublicIPAddress { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PublicIPPrefixId { get { throw null; } }
+        public Azure.Provisioning.Network.Subnet Subnet { get { throw null; } }
+        public Azure.Provisioning.BicepList<string> Zones { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Network.FrontendIPConfiguration FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
     }
     public partial class GatewayLoadBalancerTunnelInterface : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -738,7 +739,7 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepList<string> Fqdns { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.PrivateLinkServiceIPConfiguration> IPConfigurations { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Network.FrontendIPConfigurationData> LoadBalancerFrontendIPConfigurations { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Network.FrontendIPConfiguration> LoadBalancerFrontendIPConfigurations { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.NetworkInterfaceData> NetworkInterfaces { get { throw null; } }
@@ -1307,7 +1308,7 @@ namespace Azure.Provisioning.Network
     public partial class VirtualNetworkTapData : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public VirtualNetworkTapData() { }
-        public Azure.Provisioning.Network.FrontendIPConfigurationData DestinationLoadBalancerFrontEndIPConfiguration { get { throw null; } set { } }
+        public Azure.Provisioning.Network.FrontendIPConfiguration DestinationLoadBalancerFrontEndIPConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.Network.NetworkInterfaceIPConfiguration DestinationNetworkInterfaceIPConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> DestinationPort { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
