@@ -21,7 +21,7 @@ public partial class ManagementGroupPolicySetDefinition : ProvisionableResource
     /// <summary>
     /// The name of the policy set definition to create.
     /// </summary>
-    public BicepValue<string> Name 
+    public BicepValue<string> Name
     {
         get { Initialize(); return _name!; }
         set { Initialize(); _name!.Assign(value); }
@@ -31,7 +31,7 @@ public partial class ManagementGroupPolicySetDefinition : ProvisionableResource
     /// <summary>
     /// The policy set definition description.
     /// </summary>
-    public BicepValue<string> Description 
+    public BicepValue<string> Description
     {
         get { Initialize(); return _description!; }
         set { Initialize(); _description!.Assign(value); }
@@ -41,7 +41,7 @@ public partial class ManagementGroupPolicySetDefinition : ProvisionableResource
     /// <summary>
     /// The display name of the policy set definition.
     /// </summary>
-    public BicepValue<string> DisplayName 
+    public BicepValue<string> DisplayName
     {
         get { Initialize(); return _displayName!; }
         set { Initialize(); _displayName!.Assign(value); }
@@ -65,7 +65,7 @@ public partial class ManagementGroupPolicySetDefinition : ProvisionableResource
     /// \&quot;value\&quot;}&quot;)Creates a payload of { &quot;key&quot;:
     /// &quot;value&quot; }.
     /// </summary>
-    public BicepValue<BinaryData> Metadata 
+    public BicepValue<BinaryData> Metadata
     {
         get { Initialize(); return _metadata!; }
         set { Initialize(); _metadata!.Assign(value); }
@@ -76,7 +76,7 @@ public partial class ManagementGroupPolicySetDefinition : ProvisionableResource
     /// The policy set definition parameters that can be used in policy
     /// definition references.
     /// </summary>
-    public BicepDictionary<ArmPolicyParameter> Parameters 
+    public BicepDictionary<ArmPolicyParameter> Parameters
     {
         get { Initialize(); return _parameters!; }
         set { Initialize(); _parameters!.Assign(value); }
@@ -87,7 +87,7 @@ public partial class ManagementGroupPolicySetDefinition : ProvisionableResource
     /// The metadata describing groups of policy definition references within
     /// the policy set definition.
     /// </summary>
-    public BicepList<PolicyDefinitionGroup> PolicyDefinitionGroups 
+    public BicepList<PolicyDefinitionGroup> PolicyDefinitionGroups
     {
         get { Initialize(); return _policyDefinitionGroups!; }
         set { Initialize(); _policyDefinitionGroups!.Assign(value); }
@@ -97,7 +97,7 @@ public partial class ManagementGroupPolicySetDefinition : ProvisionableResource
     /// <summary>
     /// An array of policy definition references.
     /// </summary>
-    public BicepList<PolicyDefinitionReference> PolicyDefinitions 
+    public BicepList<PolicyDefinitionReference> PolicyDefinitions
     {
         get { Initialize(); return _policyDefinitions!; }
         set { Initialize(); _policyDefinitions!.Assign(value); }
@@ -108,7 +108,7 @@ public partial class ManagementGroupPolicySetDefinition : ProvisionableResource
     /// The type of policy definition. Possible values are NotSpecified,
     /// BuiltIn, Custom, and Static.
     /// </summary>
-    public BicepValue<PolicyType> PolicyType 
+    public BicepValue<PolicyType> PolicyType
     {
         get { Initialize(); return _policyType!; }
         set { Initialize(); _policyType!.Assign(value); }
@@ -119,7 +119,7 @@ public partial class ManagementGroupPolicySetDefinition : ProvisionableResource
     /// Fully qualified resource ID for the resource. Ex -
     /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id 
+    public BicepValue<ResourceIdentifier> Id
     {
         get { Initialize(); return _id!; }
     }
@@ -129,7 +129,7 @@ public partial class ManagementGroupPolicySetDefinition : ProvisionableResource
     /// Azure Resource Manager metadata containing createdBy and modifiedBy
     /// information.
     /// </summary>
-    public SystemData SystemData 
+    public SystemData SystemData
     {
         get { Initialize(); return _systemData!; }
     }
@@ -146,7 +146,7 @@ public partial class ManagementGroupPolicySetDefinition : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the ManagementGroupPolicySetDefinition.</param>
     public ManagementGroupPolicySetDefinition(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Authorization/policySetDefinitions", resourceVersion ?? "2025-03-01")
+        : base(bicepIdentifier, "Microsoft.Authorization/policySetDefinitions", resourceVersion ?? "2025-01-01")
     {
     }
 
@@ -174,11 +174,6 @@ public partial class ManagementGroupPolicySetDefinition : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2025-03-01.
-        /// </summary>
-        public static readonly string V2025_03_01 = "2025-03-01";
-
         /// <summary>
         /// 2025-01-01.
         /// </summary>

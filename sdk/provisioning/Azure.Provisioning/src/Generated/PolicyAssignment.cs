@@ -21,7 +21,7 @@ public partial class PolicyAssignment : ProvisionableResource
     /// <summary>
     /// The name of the policy assignment.
     /// </summary>
-    public BicepValue<string> Name 
+    public BicepValue<string> Name
     {
         get { Initialize(); return _name!; }
         set { Initialize(); _name!.Assign(value); }
@@ -31,7 +31,7 @@ public partial class PolicyAssignment : ProvisionableResource
     /// <summary>
     /// This message will be part of response in case of policy violation.
     /// </summary>
-    public BicepValue<string> Description 
+    public BicepValue<string> Description
     {
         get { Initialize(); return _description!; }
         set { Initialize(); _description!.Assign(value); }
@@ -41,7 +41,7 @@ public partial class PolicyAssignment : ProvisionableResource
     /// <summary>
     /// The display name of the policy assignment.
     /// </summary>
-    public BicepValue<string> DisplayName 
+    public BicepValue<string> DisplayName
     {
         get { Initialize(); return _displayName!; }
         set { Initialize(); _displayName!.Assign(value); }
@@ -52,7 +52,7 @@ public partial class PolicyAssignment : ProvisionableResource
     /// The policy assignment enforcement mode. Possible values are Default and
     /// DoNotEnforce.
     /// </summary>
-    public BicepValue<EnforcementMode> EnforcementMode 
+    public BicepValue<EnforcementMode> EnforcementMode
     {
         get { Initialize(); return _enforcementMode!; }
         set { Initialize(); _enforcementMode!.Assign(value); }
@@ -62,7 +62,7 @@ public partial class PolicyAssignment : ProvisionableResource
     /// <summary>
     /// The policy&apos;s excluded scopes.
     /// </summary>
-    public BicepList<string> ExcludedScopes 
+    public BicepList<string> ExcludedScopes
     {
         get { Initialize(); return _excludedScopes!; }
         set { Initialize(); _excludedScopes!.Assign(value); }
@@ -73,7 +73,7 @@ public partial class PolicyAssignment : ProvisionableResource
     /// The location of the policy assignment. Only required when utilizing
     /// managed identity.
     /// </summary>
-    public BicepValue<AzureLocation> Location 
+    public BicepValue<AzureLocation> Location
     {
         get { Initialize(); return _location!; }
         set { Initialize(); _location!.Assign(value); }
@@ -84,7 +84,7 @@ public partial class PolicyAssignment : ProvisionableResource
     /// The managed identity associated with the policy assignment. Current
     /// supported identity types: None, SystemAssigned, UserAssigned.
     /// </summary>
-    public ManagedServiceIdentity ManagedIdentity 
+    public ManagedServiceIdentity ManagedIdentity
     {
         get { Initialize(); return _managedIdentity!; }
         set { Initialize(); AssignOrReplace(ref _managedIdentity, value); }
@@ -108,7 +108,7 @@ public partial class PolicyAssignment : ProvisionableResource
     /// \&quot;value\&quot;}&quot;)Creates a payload of { &quot;key&quot;:
     /// &quot;value&quot; }.
     /// </summary>
-    public BicepValue<BinaryData> Metadata 
+    public BicepValue<BinaryData> Metadata
     {
         get { Initialize(); return _metadata!; }
         set { Initialize(); _metadata!.Assign(value); }
@@ -119,7 +119,7 @@ public partial class PolicyAssignment : ProvisionableResource
     /// The messages that describe why a resource is non-compliant with the
     /// policy.
     /// </summary>
-    public BicepList<NonComplianceMessage> NonComplianceMessages 
+    public BicepList<NonComplianceMessage> NonComplianceMessages
     {
         get { Initialize(); return _nonComplianceMessages!; }
         set { Initialize(); _nonComplianceMessages!.Assign(value); }
@@ -129,7 +129,7 @@ public partial class PolicyAssignment : ProvisionableResource
     /// <summary>
     /// The policy property value override.
     /// </summary>
-    public BicepList<PolicyOverride> Overrides 
+    public BicepList<PolicyOverride> Overrides
     {
         get { Initialize(); return _overrides!; }
         set { Initialize(); _overrides!.Assign(value); }
@@ -140,7 +140,7 @@ public partial class PolicyAssignment : ProvisionableResource
     /// The parameter values for the assigned policy rule. The keys are the
     /// parameter names.
     /// </summary>
-    public BicepDictionary<ArmPolicyParameterValue> Parameters 
+    public BicepDictionary<ArmPolicyParameterValue> Parameters
     {
         get { Initialize(); return _parameters!; }
         set { Initialize(); _parameters!.Assign(value); }
@@ -150,7 +150,7 @@ public partial class PolicyAssignment : ProvisionableResource
     /// <summary>
     /// The ID of the policy definition or policy set definition being assigned.
     /// </summary>
-    public BicepValue<string> PolicyDefinitionId 
+    public BicepValue<string> PolicyDefinitionId
     {
         get { Initialize(); return _policyDefinitionId!; }
         set { Initialize(); _policyDefinitionId!.Assign(value); }
@@ -160,7 +160,7 @@ public partial class PolicyAssignment : ProvisionableResource
     /// <summary>
     /// The resource selector list to filter policies by resource properties.
     /// </summary>
-    public BicepList<ResourceSelector> ResourceSelectors 
+    public BicepList<ResourceSelector> ResourceSelectors
     {
         get { Initialize(); return _resourceSelectors!; }
         set { Initialize(); _resourceSelectors!.Assign(value); }
@@ -171,7 +171,7 @@ public partial class PolicyAssignment : ProvisionableResource
     /// Fully qualified resource ID for the resource. Ex -
     /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}.
     /// </summary>
-    public BicepValue<ResourceIdentifier> Id 
+    public BicepValue<ResourceIdentifier> Id
     {
         get { Initialize(); return _id!; }
     }
@@ -180,7 +180,7 @@ public partial class PolicyAssignment : ProvisionableResource
     /// <summary>
     /// The scope for the policy assignment.
     /// </summary>
-    public BicepValue<string> Scope 
+    public BicepValue<string> Scope
     {
         get { Initialize(); return _scope!; }
     }
@@ -190,7 +190,7 @@ public partial class PolicyAssignment : ProvisionableResource
     /// Azure Resource Manager metadata containing createdBy and modifiedBy
     /// information.
     /// </summary>
-    public SystemData SystemData 
+    public SystemData SystemData
     {
         get { Initialize(); return _systemData!; }
     }
@@ -207,7 +207,7 @@ public partial class PolicyAssignment : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the PolicyAssignment.</param>
     public PolicyAssignment(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Authorization/policyAssignments", resourceVersion ?? "2025-03-01")
+        : base(bicepIdentifier, "Microsoft.Authorization/policyAssignments", resourceVersion ?? "2025-01-01")
     {
     }
 
@@ -240,11 +240,6 @@ public partial class PolicyAssignment : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2025-03-01.
-        /// </summary>
-        public static readonly string V2025_03_01 = "2025-03-01";
-
         /// <summary>
         /// 2025-01-01.
         /// </summary>
