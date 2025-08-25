@@ -261,6 +261,60 @@ namespace System.ClientModel.Primitives
         public override System.ClientModel.Primitives.IJsonModel<object>? Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
         public override void Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.IJsonModel<object> value, System.Text.Json.JsonSerializerOptions options) { }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public partial struct JsonPatch
+    {
+        private object _dummy;
+        private int _dummyPrimitive;
+        public JsonPatch(System.ReadOnlyMemory<byte> rawJson) { throw null; }
+        public void Append(System.ReadOnlySpan<byte> jsonPath, int value) { }
+        public void Append(System.ReadOnlySpan<byte> jsonPath, object value) { }
+        public void Append(System.ReadOnlySpan<byte> jsonPath, System.ReadOnlySpan<byte> utf8Json) { }
+        public void Append(System.ReadOnlySpan<byte> jsonPath, string value) { }
+        public void Append<T>(System.ReadOnlySpan<byte> jsonPath, System.ClientModel.Primitives.IJsonModel<T> value) { }
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]public bool Contains(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        public bool ContainsChildOf(System.ReadOnlySpan<byte> prefix, System.ReadOnlySpan<byte> property) { throw null; }
+        public bool GetBoolean(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        public int GetInt32(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        public System.BinaryData GetJson(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        public int? GetNullableInt32(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        public string? GetString(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        public bool IsRemoved(System.ReadOnlySpan<byte> jsonPath) { throw null; }
+        public void Remove(System.ReadOnlySpan<byte> jsonPath) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, System.BinaryData utf8Json) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, bool value) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, byte[] utf8Json) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public void Set(System.ReadOnlySpan<byte> jsonPath, System.ClientModel.Primitives.JsonPatch.EncodedValue value) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, int value) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, object value) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, System.ReadOnlySpan<byte> utf8Json) { }
+        public void Set(System.ReadOnlySpan<byte> jsonPath, string value) { }
+        public void SetNull(System.ReadOnlySpan<byte> jsonPath) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public void SetPropagators(System.ClientModel.Primitives.JsonPatch.PropagatorSetter setter, System.ClientModel.Primitives.JsonPatch.PropagatorGetter getter, System.ClientModel.Primitives.JsonPatch.PropagatorIsFlattened isFlattened) { }
+        public void Set<T>(System.ReadOnlySpan<byte> jsonPath, System.ClientModel.Primitives.IJsonModel<T> value) { }
+        public override string ToString() { throw null; }
+        public bool TryGetJson(System.ReadOnlySpan<byte> jsonPath, out System.ReadOnlyMemory<byte> value) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public void Write(System.Text.Json.Utf8JsonWriter writer) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public void Write(System.Text.Json.Utf8JsonWriter writer, System.ReadOnlySpan<byte> prefix) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public void WriteArray(System.Text.Json.Utf8JsonWriter writer, System.ReadOnlySpan<byte> array) { }
+        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+        public partial struct EncodedValue
+        {
+            private object _dummy;
+            private int _dummyPrimitive;
+        }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public delegate bool PropagatorGetter(System.ReadOnlySpan<byte> jsonPath, out System.ReadOnlyMemory<byte> value);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public delegate bool PropagatorIsFlattened(System.ReadOnlySpan<byte> jsonPath);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public delegate bool PropagatorSetter(System.ReadOnlySpan<byte> jsonPath, System.ClientModel.Primitives.JsonPatch.EncodedValue value);
+    }
     public partial class MessageLoggingPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
         public MessageLoggingPolicy(System.ClientModel.Primitives.ClientLoggingOptions? options = null) { }
