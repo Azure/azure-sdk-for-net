@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataBox.Models
             string phoneExtension = default;
             string addressType = default;
             string additionalShippingInformation = default;
-            DataCenterAddressType dataCenterAddressType = default;
+            DatacenterAddressType datacenterAddressType = default;
             IReadOnlyList<string> supportedCarriersForReturnShipment = default;
             AzureLocation? dataCenterAzureLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (property.NameEquals("datacenterAddressType"u8))
                 {
-                    dataCenterAddressType = property.Value.GetString().ToDataCenterAddressType();
+                    datacenterAddressType = property.Value.GetString().ToDatacenterAddressType();
                     continue;
                 }
                 if (property.NameEquals("supportedCarriersForReturnShipment"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new DataCenterAddressLocationResult(
-                dataCenterAddressType,
+                datacenterAddressType,
                 supportedCarriersForReturnShipment ?? new ChangeTrackingList<string>(),
                 dataCenterAzureLocation,
                 serializedAdditionalRawData,

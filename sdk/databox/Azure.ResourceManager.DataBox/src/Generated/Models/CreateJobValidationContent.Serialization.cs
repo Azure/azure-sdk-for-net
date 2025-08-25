@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            DataBoxValidationCategory validationCategory = default;
+            string validationCategory = default;
             IList<DataBoxValidationInputContent> individualRequestDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 if (property.NameEquals("validationCategory"u8))
                 {
-                    validationCategory = new DataBoxValidationCategory(property.Value.GetString());
+                    validationCategory = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("individualRequestDetails"u8))
