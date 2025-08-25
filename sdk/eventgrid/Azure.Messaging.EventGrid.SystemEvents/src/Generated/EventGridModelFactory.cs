@@ -9,9 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.Messaging.EventGrid.SystemEvents;
 
-namespace Azure.Messaging.EventGrid
+namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class EventGridModelFactory
