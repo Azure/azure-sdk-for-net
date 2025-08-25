@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutANodeTypeWithAutoScaleParameters()
         {
-            // Generated from example definition: 2025-03-01-preview/NodeTypePutOperationAutoScale_example.json
+            // Generated from example definition: 2025-06-01-preview/NodeTypePutOperationAutoScale_example.json
             // this example is just showing the usage of "NodeType_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutNodeTypeWithCustomVmImage()
         {
-            // Generated from example definition: 2025-03-01-preview/NodeTypePutOperationCustomImage_example.json
+            // Generated from example definition: 2025-06-01-preview/NodeTypePutOperationCustomImage_example.json
             // this example is just showing the usage of "NodeType_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutNodeTypeWithSharedGalleriesCustomVmImage()
         {
-            // Generated from example definition: 2025-03-01-preview/NodeTypePutOperationCustomSharedGalleriesImage_example.json
+            // Generated from example definition: 2025-06-01-preview/NodeTypePutOperationCustomSharedGalleriesImage_example.json
             // this example is just showing the usage of "NodeType_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutNodeTypeWithDedicatedHosts()
         {
-            // Generated from example definition: 2025-03-01-preview/NodeTypePutOperationDedicatedHost_example.json
+            // Generated from example definition: 2025-06-01-preview/NodeTypePutOperationDedicatedHost_example.json
             // this example is just showing the usage of "NodeType_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutAnStatelessNodeTypeWithTemporaryDiskForServiceFabric()
         {
-            // Generated from example definition: 2025-03-01-preview/NodeTypePutOperationStateless_example.json
+            // Generated from example definition: 2025-06-01-preview/NodeTypePutOperationStateless_example.json
             // this example is just showing the usage of "NodeType_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutNodeTypeWithVmImagePlan()
         {
-            // Generated from example definition: 2025-03-01-preview/NodeTypePutOperationVmImagePlan_example.json
+            // Generated from example definition: 2025-06-01-preview/NodeTypePutOperationVmImagePlan_example.json
             // this example is just showing the usage of "NodeType_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutANodeTypeWithMaximumParameters()
         {
-            // Generated from example definition: 2025-03-01-preview/NodeTypePutOperation_example_max.json
+            // Generated from example definition: 2025-06-01-preview/NodeTypePutOperation_example_max.json
             // this example is just showing the usage of "NodeType_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutANodeTypeWithMinimumParameters()
         {
-            // Generated from example definition: 2025-03-01-preview/NodeTypePutOperation_example_min.json
+            // Generated from example definition: 2025-06-01-preview/NodeTypePutOperation_example_min.json
             // this example is just showing the usage of "NodeType_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetANodeType()
         {
-            // Generated from example definition: 2025-03-01-preview/NodeTypeGetOperation_example.json
+            // Generated from example definition: 2025-06-01-preview/NodeTypeGetOperation_example.json
             // this example is just showing the usage of "NodeType_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListNodeTypeOfTheSpecifiedManagedCluster()
         {
-            // Generated from example definition: 2025-03-01-preview/NodeTypeListOperation_example.json
+            // Generated from example definition: 2025-06-01-preview/NodeTypeListOperation_example.json
             // this example is just showing the usage of "NodeType_ListByManagedClusters" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetANodeType()
         {
-            // Generated from example definition: 2025-03-01-preview/NodeTypeGetOperation_example.json
+            // Generated from example definition: 2025-06-01-preview/NodeTypeGetOperation_example.json
             // this example is just showing the usage of "NodeType_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetANodeType()
         {
-            // Generated from example definition: 2025-03-01-preview/NodeTypeGetOperation_example.json
+            // Generated from example definition: 2025-06-01-preview/NodeTypeGetOperation_example.json
             // this example is just showing the usage of "NodeType_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
