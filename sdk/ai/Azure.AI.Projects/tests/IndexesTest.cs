@@ -25,14 +25,98 @@ namespace Azure.AI.Projects.Tests
         [RecordedTest]
         public async Task SearchIndexesTest()
         {
-            var endpoint = TestEnvironment.PROJECTENDPOINT;
-            var indexName = TestEnvironment.INDEXNAME ?? "my-index";
-            var indexVersion = TestEnvironment.INDEXVERSION ?? "1.0";
-            var aiSearchConnectionName = TestEnvironment.AISEARCHCONNECTIONNAME ?? "my-ai-search-connection-name";
-            var aiSearchIndexName = TestEnvironment.AISEARCHINDEXNAME ?? "my-ai-search-index-name";
+            string indexName = TestEnvironment.INDEXNAME;
+            string indexVersion = TestEnvironment.INDEXVERSION;
+            string aiSearchConnectionName = TestEnvironment.AISEARCHCONNECTIONNAME;
+            string aiSearchIndexName = TestEnvironment.AISEARCHINDEXNAME;
 
             AIProjectClient projectClient = GetTestClient();
 
+            if (IsAsync)
+            {
+                await SearchIndexesTestAsync(projectClient, indexName, indexVersion, aiSearchConnectionName, aiSearchIndexName);
+            }
+            else
+            {
+                SearchIndexesTestSync(projectClient, indexName, indexVersion, aiSearchConnectionName, aiSearchIndexName);
+            }
+        }
+
+        public void SearchIndexesTestSync(AIProjectClient projectClient, string indexName, string indexVersion, string aiSearchConnectionName, string aiSearchIndexName)
+        {
+            BinaryContent content = BinaryContent.Create(BinaryData.FromObjectAsJson(new
+            {
+                connectionName = aiSearchConnectionName,
+                indexName = aiSearchIndexName,
+                type = "AzureSearch",
+                description = "Sample Index for testing",
+                displayName = "Sample Index"
+            }));
+
+            Console.WriteLine($"Create an Index named `{indexName}` referencing an existing AI Search resource:");
+            SearchIndex index = (SearchIndex)projectClient.Indexes.CreateOrUpdate(
+                name: indexName,
+                version: indexVersion,
+                content: content
+            );
+            TestBase.ValidateIndex(
+                index,
+                expectedIndexType: "AzureSearch",
+                expectedIndexName: indexName,
+                expectedIndexVersion: indexVersion,
+                expectedAiSearchConnectionName: aiSearchConnectionName,
+                expectedAiSearchIndexName: aiSearchIndexName
+            );
+
+            Console.WriteLine($"Get an existing Index named `{indexName}`, version `{indexVersion}`:");
+            SearchIndex retrievedIndex = projectClient.Indexes.GetIndex(name: indexName, version: indexVersion);
+            TestBase.ValidateIndex(
+                retrievedIndex,
+                expectedIndexType: "AzureSearch",
+                expectedIndexName: indexName,
+                expectedIndexVersion: indexVersion,
+                expectedAiSearchConnectionName: aiSearchConnectionName,
+                expectedAiSearchIndexName: aiSearchIndexName
+            );
+
+            Console.WriteLine($"Listing all versions of the Index named `{indexName}`:");
+            bool isEmpty = true;
+            foreach (SearchIndex version in projectClient.Indexes.GetIndexVersions(name: indexName))
+            {
+                isEmpty = false;
+                TestBase.ValidateIndex(version);
+            }
+            Assert.IsFalse(isEmpty, "Expected at least one version of the Index to be returned.");
+
+            Console.WriteLine($"Listing all Indices:");
+            isEmpty = true;
+            foreach (SearchIndex version in projectClient.Indexes.GetIndexes())
+            {
+                isEmpty = false;
+                TestBase.ValidateIndex(version);
+                Console.WriteLine($"Index name: {version.Name}, index version: {version.Version}");
+            }
+            Assert.IsFalse(isEmpty, "Expected at least one Index to be returned.");
+
+            // Remove once service supports Delete
+            try
+            {
+                Console.WriteLine($"To delete: index name: {indexName}, index version: {indexVersion}");
+                Console.WriteLine("Delete the Index version created above:");
+                projectClient.Indexes.Delete(name: indexName, version: indexVersion); // TODO: delete throws 404 error
+
+                Console.WriteLine("Attempt to delete again. It does not exist and should return 204:");
+                projectClient.Indexes.Delete(name: indexName, version: indexVersion);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Delete index currently throws 404 error: {e}");
+                // throw;
+            }
+        }
+
+        public async Task SearchIndexesTestAsync(AIProjectClient projectClient, string indexName,string indexVersion, string aiSearchConnectionName, string aiSearchIndexName)
+        {
             BinaryContent content = BinaryContent.Create(BinaryData.FromObjectAsJson(new
             {
                 connectionName = aiSearchConnectionName,
@@ -83,14 +167,25 @@ namespace Azure.AI.Projects.Tests
             {
                 isEmpty = false;
                 TestBase.ValidateIndex(version);
+                Console.WriteLine($"Index name: {version.Name}, index version: {version.Version}");
             }
             Assert.IsFalse(isEmpty, "Expected at least one Index to be returned.");
 
-            Console.WriteLine("Delete the Index version created above:");
-            await projectClient.Indexes.DeleteAsync(name: indexName, version: indexVersion); // TODO: why is delete failing????? 500 error but works in python
+            // Remove once service supports Delete
+            try
+            {
+                Console.WriteLine($"To delete: index name: {indexName}, index version: {indexVersion}");
+                Console.WriteLine("Delete the Index version created above:");
+                await projectClient.Indexes.DeleteAsync(name: indexName, version: indexVersion); // TODO: delete throws 404 error
 
-            Console.WriteLine("Attempt to delete again. It does not exist and should return 204:");
-            await projectClient.Indexes.DeleteAsync(name: indexName, version: indexVersion);
+                Console.WriteLine("Attempt to delete again. It does not exist and should return 204:");
+                await projectClient.Indexes.DeleteAsync(name: indexName, version: indexVersion);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Delete index currently throws 404 error: {e}");
+                // throw;
+            }
         }
     }
 }

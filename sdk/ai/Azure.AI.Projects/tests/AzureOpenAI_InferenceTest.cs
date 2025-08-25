@@ -23,6 +23,7 @@ public class AzureOpenAI_ChatTest : ProjectsClientTestBase
 
     [TestCase]
     [RecordedTest]
+    [Ignore("Calls to AzureOpenAIClient are not recorded yet")]
     public async Task AzureOpenAI_ChatTestAsync()
     {
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
@@ -40,7 +41,9 @@ public class AzureOpenAI_ChatTest : ProjectsClientTestBase
         Assert.That(contains.Any(item => result.Content[0].Text.Contains(item)), "The response should contain the number of feet in a mile.");
     }
 
+    [TestCase]
     [RecordedTest]
+    [Ignore("Calls to AzureOpenAIClient are not recorded yet")]
     public async Task AzureOpenAI_ChatTest_NoConnection()
     {
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;

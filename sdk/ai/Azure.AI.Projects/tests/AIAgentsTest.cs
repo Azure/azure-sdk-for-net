@@ -26,6 +26,7 @@ public class AIAgentsTest : ProjectsClientTestBase
 
     [TestCase]
     [RecordedTest]
+    [Ignore("Agents API calls are not recorded")]
     public async Task AgentsTest()
     {
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
@@ -40,9 +41,9 @@ public class AIAgentsTest : ProjectsClientTestBase
             instructions: "You are a personal math tutor. Write and run code to answer math questions."
         );
         Assert.NotNull(agent.Id);
-        Assert.That(agent.Model == modelDeploymentName);
-        Assert.That(agent.Name == "Math Tutor");
-        Assert.That(agent.Instructions == "You are a personal math tutor. Write and run code to answer math questions.");
+        Assert.AreEqual(agent.Model, modelDeploymentName);
+        Assert.AreEqual(agent.Name, "Math Tutor");
+        Assert.AreEqual(agent.Instructions, "You are a personal math tutor. Write and run code to answer math questions.");
 
         await agentsClient.Administration.DeleteAgentAsync(agentId: agent.Id);
     }

@@ -21,6 +21,7 @@ namespace Azure.AI.Projects.Tests
     {
         public ProjectsClientTestBase(bool isAsync) : base(isAsync)
         {
+            TestDiagnostics = false;
             // Apply sanitizers to protect sensitive information in recordings
             ProjectsTestSanitizers.ApplySanitizers(this);
         }
@@ -53,7 +54,7 @@ namespace Azure.AI.Projects.Tests
             var client = new AIProjectClient(new Uri(endpoint), credential, options);
 
             // Instrument the client for sync/async testing
-            return InstrumentClient(client);
+            return client;// InstrumentClient(client);
         }
 
         /// <summary>

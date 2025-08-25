@@ -21,18 +21,26 @@ namespace Azure.AI.Projects.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task TelemetryTestAsync()
+        public async Task TelemetryOperationsTest()
         {
             AIProjectClient projectClient = GetTestClient();
 
             Console.WriteLine("Get the Application Insights connection string.");
-            var connectionString = await projectClient.Telemetry.GetApplicationInsightsConnectionStringAsync();
+            string connectionString = "";
+            if (IsAsync)
+            {
+                connectionString = await projectClient.Telemetry.GetApplicationInsightsConnectionStringAsync();
+            }
+            else
+            {
+                connectionString = projectClient.Telemetry.GetApplicationInsightsConnectionString();
+            }
             Console.WriteLine($"Connection string: {connectionString}");
 
             // Check test mode to determine expected format
             string testMode = Environment.GetEnvironmentVariable("AZURE_TEST_MODE");
 
-            if (testMode.Equals("Playback", StringComparison.OrdinalIgnoreCase))
+            if (!string.IsNullOrEmpty(testMode) && testMode.Equals("Playback", StringComparison.OrdinalIgnoreCase))
             {
                 // In playback mode, the connection string should be sanitized
                 Assert.AreEqual("Sanitized", connectionString, "In playback mode, the connection string should be 'Sanitized'.");

@@ -29,6 +29,36 @@ public class DeploymentTest : ProjectsClientTestBase
 
         AIProjectClient projectClient = GetTestClient();
 
+        if (IsAsync)
+        {
+            await DeploymentTestAsync(projectClient, modelDeploymentName, modelPublisher);
+        }
+        else
+        {
+            DeploymentTestSync(projectClient, modelDeploymentName, modelPublisher);
+        }
+    }
+
+    public void DeploymentTestSync(AIProjectClient projectClient, string modelDeploymentName, string modelPublisher)
+    {
+        Console.WriteLine("List all deployments:");
+        foreach (AssetDeployment deployment in projectClient.Deployments.GetDeployments())
+        {
+            Console.WriteLine(deployment);
+        }
+
+        Console.WriteLine($"List all deployments by the model publisher `{modelPublisher}`:");
+        foreach (AssetDeployment deployment in projectClient.Deployments.GetDeployments(modelPublisher: modelPublisher))
+        {
+            Console.WriteLine(deployment);
+        }
+
+        Console.WriteLine($"Get a single model deployment named `{modelDeploymentName}`:");
+        ModelDeployment deploymentDetails = (ModelDeployment) projectClient.Deployments.GetDeployment(modelDeploymentName);
+        Console.WriteLine(deploymentDetails);
+    }
+    public async Task DeploymentTestAsync(AIProjectClient projectClient, string modelDeploymentName, string modelPublisher)
+    {
         Console.WriteLine("List all deployments:");
         await foreach (AssetDeployment deployment in projectClient.Deployments.GetDeploymentsAsync())
         {
