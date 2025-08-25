@@ -1741,6 +1741,8 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Network.Route FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2015_06_15;
@@ -1837,6 +1839,8 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Network.RouteTable FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2015_06_15;
@@ -2073,6 +2077,8 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Network.ServiceEndpointPolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2018_01_01;
@@ -2245,6 +2251,8 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.SharingScope> SharingScope { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Network.Subnet FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2015_06_15;
@@ -2490,6 +2498,8 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.BicepValue<bool> UseRemoteGateways { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Network.VirtualNetworkPeering FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2015_06_15;

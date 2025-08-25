@@ -9,6 +9,7 @@ using Azure;
 using Azure.Core;
 using Azure.Provisioning.Primitives;
 using System;
+using System.ComponentModel;
 
 namespace Azure.Provisioning.Network;
 
@@ -498,4 +499,12 @@ public partial class Route : ProvisionableResource
     /// <returns>The existing Route resource.</returns>
     public static Route FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
+
+    /// <summary>
+    /// Get the requirements for naming this Route resource.
+    /// </summary>
+    /// <returns>Naming requirements.</returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override ResourceNameRequirements GetResourceNameRequirements() =>
+        new(minLength: 1, maxLength: 80, validCharacters: ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen | ResourceNameCharacters.Underscore | ResourceNameCharacters.Period);
 }
