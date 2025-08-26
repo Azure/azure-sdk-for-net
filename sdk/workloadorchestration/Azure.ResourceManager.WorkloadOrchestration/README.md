@@ -1,4 +1,4 @@
-# Microsoft Azure InformaticaDataManagement management client library for .NET
+# Microsoft Azure Workload Orchestration management client library for .NET
 
 **[Describe the service briefly first.]**
 
@@ -17,7 +17,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Microsoft Azure InformaticaDataManagement management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.WorkloadOrchestration --prerelease
+dotnet add package Azure.ResourceManager.WorkloadOrchestration
 ```
 
 ### Prerequisites
