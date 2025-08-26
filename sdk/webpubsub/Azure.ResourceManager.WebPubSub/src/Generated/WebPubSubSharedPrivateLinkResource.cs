@@ -15,10 +15,10 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.WebPubSub
 {
     /// <summary>
-    /// A Class representing a WebPubSubSharedPrivateLink along with the instance operations that can be performed on it.
+    /// A Class representing a WebPubSubSharedPrivateLinkResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WebPubSubSharedPrivateLinkResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetWebPubSubSharedPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebPubSubResource"/> using the GetWebPubSubSharedPrivateLink method.
+    /// Otherwise you can get one from its parent resource <see cref="WebPubSubResource"/> using the GetWebPubSubSharedPrivateLinkResource method.
     /// </summary>
     public partial class WebPubSubSharedPrivateLinkResource : ArmResource
     {
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.WebPubSub
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesClientDiagnostics;
-        private readonly WebPubSubSharedPrivateLinkResourcesRestOperations _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesRestClient;
+        private readonly ClientDiagnostics _webPubSubSharedPrivateLinkResourceClientDiagnostics;
+        private readonly WebPubSubSharedPrivateLinkResourcesRestOperations _webPubSubSharedPrivateLinkResourceRestClient;
         private readonly WebPubSubSharedPrivateLinkData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -59,9 +59,9 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal WebPubSubSharedPrivateLinkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesApiVersion);
-            _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesRestClient = new WebPubSubSharedPrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesApiVersion);
+            _webPubSubSharedPrivateLinkResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string webPubSubSharedPrivateLinkResourceApiVersion);
+            _webPubSubSharedPrivateLinkResourceRestClient = new WebPubSubSharedPrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, webPubSubSharedPrivateLinkResourceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<WebPubSubSharedPrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesClientDiagnostics.CreateScope("WebPubSubSharedPrivateLinkResource.Get");
+            using var scope = _webPubSubSharedPrivateLinkResourceClientDiagnostics.CreateScope("WebPubSubSharedPrivateLinkResource.Get");
             scope.Start();
             try
             {
-                var response = await _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webPubSubSharedPrivateLinkResourceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new WebPubSubSharedPrivateLinkResource(Client, response.Value), response.GetRawResponse());
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -152,11 +152,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<WebPubSubSharedPrivateLinkResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesClientDiagnostics.CreateScope("WebPubSubSharedPrivateLinkResource.Get");
+            using var scope = _webPubSubSharedPrivateLinkResourceClientDiagnostics.CreateScope("WebPubSubSharedPrivateLinkResource.Get");
             scope.Start();
             try
             {
-                var response = _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _webPubSubSharedPrivateLinkResourceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new WebPubSubSharedPrivateLinkResource(Client, response.Value), response.GetRawResponse());
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -193,12 +193,12 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesClientDiagnostics.CreateScope("WebPubSubSharedPrivateLinkResource.Delete");
+            using var scope = _webPubSubSharedPrivateLinkResourceClientDiagnostics.CreateScope("WebPubSubSharedPrivateLinkResource.Delete");
             scope.Start();
             try
             {
-                var response = await _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new WebPubSubArmOperation(_webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesClientDiagnostics, Pipeline, _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _webPubSubSharedPrivateLinkResourceRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new WebPubSubArmOperation(_webPubSubSharedPrivateLinkResourceClientDiagnostics, Pipeline, _webPubSubSharedPrivateLinkResourceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -235,12 +235,12 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesClientDiagnostics.CreateScope("WebPubSubSharedPrivateLinkResource.Delete");
+            using var scope = _webPubSubSharedPrivateLinkResourceClientDiagnostics.CreateScope("WebPubSubSharedPrivateLinkResource.Delete");
             scope.Start();
             try
             {
-                var response = _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new WebPubSubArmOperation(_webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesClientDiagnostics, Pipeline, _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _webPubSubSharedPrivateLinkResourceRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new WebPubSubArmOperation(_webPubSubSharedPrivateLinkResourceClientDiagnostics, Pipeline, _webPubSubSharedPrivateLinkResourceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -281,12 +281,12 @@ namespace Azure.ResourceManager.WebPubSub
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesClientDiagnostics.CreateScope("WebPubSubSharedPrivateLinkResource.Update");
+            using var scope = _webPubSubSharedPrivateLinkResourceClientDiagnostics.CreateScope("WebPubSubSharedPrivateLinkResource.Update");
             scope.Start();
             try
             {
-                var response = await _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new WebPubSubArmOperation<WebPubSubSharedPrivateLinkResource>(new WebPubSubSharedPrivateLinkOperationSource(Client), _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesClientDiagnostics, Pipeline, _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _webPubSubSharedPrivateLinkResourceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new WebPubSubArmOperation<WebPubSubSharedPrivateLinkResource>(new WebPubSubSharedPrivateLinkResourceOperationSource(Client), _webPubSubSharedPrivateLinkResourceClientDiagnostics, Pipeline, _webPubSubSharedPrivateLinkResourceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -327,12 +327,12 @@ namespace Azure.ResourceManager.WebPubSub
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesClientDiagnostics.CreateScope("WebPubSubSharedPrivateLinkResource.Update");
+            using var scope = _webPubSubSharedPrivateLinkResourceClientDiagnostics.CreateScope("WebPubSubSharedPrivateLinkResource.Update");
             scope.Start();
             try
             {
-                var response = _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new WebPubSubArmOperation<WebPubSubSharedPrivateLinkResource>(new WebPubSubSharedPrivateLinkOperationSource(Client), _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesClientDiagnostics, Pipeline, _webPubSubSharedPrivateLinkWebPubSubSharedPrivateLinkResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = _webPubSubSharedPrivateLinkResourceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new WebPubSubArmOperation<WebPubSubSharedPrivateLinkResource>(new WebPubSubSharedPrivateLinkResourceOperationSource(Client), _webPubSubSharedPrivateLinkResourceClientDiagnostics, Pipeline, _webPubSubSharedPrivateLinkResourceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

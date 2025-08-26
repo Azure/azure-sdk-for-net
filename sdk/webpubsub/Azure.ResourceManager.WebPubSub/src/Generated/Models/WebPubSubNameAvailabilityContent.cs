@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WebPubSubNameAvailabilityContent"/>. </summary>
-        /// <param name="resourceType"> The resource type. Can be "Microsoft.SignalRService/SignalR" or "Microsoft.SignalRService/webPubSub". </param>
+        /// <param name="resourceType"> The resource type. Can be "Microsoft.SignalRService/SignalR", "Microsoft.SignalRService/WebPubSub", "Microsoft.SignalRService/SignalR/replicas" or "Microsoft.SignalRService/WebPubSub/replicas". </param>
         /// <param name="name"> The resource name to validate. e.g."my-resource-name". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> or <paramref name="name"/> is null. </exception>
         public WebPubSubNameAvailabilityContent(string resourceType, string name)
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebPubSubNameAvailabilityContent"/>. </summary>
-        /// <param name="resourceType"> The resource type. Can be "Microsoft.SignalRService/SignalR" or "Microsoft.SignalRService/webPubSub". </param>
+        /// <param name="resourceType"> The resource type. Can be "Microsoft.SignalRService/SignalR", "Microsoft.SignalRService/WebPubSub", "Microsoft.SignalRService/SignalR/replicas" or "Microsoft.SignalRService/WebPubSub/replicas". </param>
         /// <param name="name"> The resource name to validate. e.g."my-resource-name". </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WebPubSubNameAvailabilityContent(string resourceType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         {
         }
 
-        /// <summary> The resource type. Can be "Microsoft.SignalRService/SignalR" or "Microsoft.SignalRService/webPubSub". </summary>
+        /// <summary> The resource type. Can be "Microsoft.SignalRService/SignalR", "Microsoft.SignalRService/WebPubSub", "Microsoft.SignalRService/SignalR/replicas" or "Microsoft.SignalRService/WebPubSub/replicas". </summary>
         [WirePath("type")]
         public string ResourceType { get; }
         /// <summary> The resource name to validate. e.g."my-resource-name". </summary>

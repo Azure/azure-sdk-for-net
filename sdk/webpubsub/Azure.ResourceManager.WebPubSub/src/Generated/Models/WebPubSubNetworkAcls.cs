@@ -49,18 +49,21 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public WebPubSubNetworkAcls()
         {
             PrivateEndpoints = new ChangeTrackingList<PrivateEndpointAcl>();
+            IPRules = new ChangeTrackingList<IPRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WebPubSubNetworkAcls"/>. </summary>
         /// <param name="defaultAction"> Azure Networking ACL Action. </param>
         /// <param name="publicNetwork"> Network ACL. </param>
         /// <param name="privateEndpoints"> ACLs for requests from private endpoints. </param>
+        /// <param name="ipRules"> IP rules for filtering public traffic. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebPubSubNetworkAcls(AclAction? defaultAction, PublicNetworkAcls publicNetwork, IList<PrivateEndpointAcl> privateEndpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WebPubSubNetworkAcls(AclAction? defaultAction, PublicNetworkAcls publicNetwork, IList<PrivateEndpointAcl> privateEndpoints, IList<IPRule> ipRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DefaultAction = defaultAction;
             PublicNetwork = publicNetwork;
             PrivateEndpoints = privateEndpoints;
+            IPRules = ipRules;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -73,5 +76,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <summary> ACLs for requests from private endpoints. </summary>
         [WirePath("privateEndpoints")]
         public IList<PrivateEndpointAcl> PrivateEndpoints { get; }
+        /// <summary> IP rules for filtering public traffic. </summary>
+        [WirePath("ipRules")]
+        public IList<IPRule> IPRules { get; }
     }
 }

@@ -6,8 +6,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: WebPubSub
 namespace: Azure.ResourceManager.WebPubSub
-require: https://github.com/Azure/azure-rest-api-specs/blob/1be09531e4c6edeafde41d6562371566d39669e8/specification/webpubsub/resource-manager/readme.md
-tag: package-2021-10-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/8600539fa5ba6c774b4454a401d9cd3cf01a36a7/specification/webpubsub/resource-manager/readme.md
+# tag: package-2025-01-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -58,6 +58,11 @@ override-operation-name:
 
 rename-mapping:
   RegenerateKeyParameters: WebPubSubRegenerateKeyContent
+  ClientConnectionCountRule.type: ThrottleType
+  ClientTrafficControlRule.type: TrafficThrottleType
+  EventListenerFilter.type: EventListenerFilterType
+  EventListenerEndpoint.type: EventListenerEndpointType
+  SharedPrivateLinkResource: WebPubSubSharedPrivateLink
 
 directive:
   - rename-model:

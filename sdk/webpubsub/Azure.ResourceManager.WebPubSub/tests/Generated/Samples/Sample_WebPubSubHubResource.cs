@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.WebPubSub.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_WebPubSubHubsGet()
         {
-            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/stable/2021-10-01/examples/WebPubSubHubs_Get.json
+            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/preview/2025-01-01-preview/examples/WebPubSubHubs_Get.json
             // this example is just showing the usage of "WebPubSubHubs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.WebPubSub.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_WebPubSubHubsDelete()
         {
-            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/stable/2021-10-01/examples/WebPubSubHubs_Delete.json
+            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/preview/2025-01-01-preview/examples/WebPubSubHubs_Delete.json
             // this example is just showing the usage of "WebPubSubHubs_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.WebPubSub.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_WebPubSubHubsCreateOrUpdate()
         {
-            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/stable/2021-10-01/examples/WebPubSubHubs_CreateOrUpdate.json
+            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/preview/2025-01-01-preview/examples/WebPubSubHubs_CreateOrUpdate.json
             // this example is just showing the usage of "WebPubSubHubs_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -108,6 +108,13 @@ AuthType = UpstreamAuthType.ManagedIdentity,
 ManagedIdentityResource = "abc",
 },
 }},
+                EventListeners = {new EventListener(new EventNameFilter
+{
+SystemEvents = {"connected", "disconnected"},
+UserEventPattern = "*",
+}, new EventHubEndpoint("example.servicebus.windows.net", "eventHubName1"))},
+                AnonymousConnectPolicy = "allow",
+                WebSocketKeepAliveIntervalInSeconds = 50,
             });
             ArmOperation<WebPubSubHubResource> lro = await webPubSubHub.UpdateAsync(WaitUntil.Completed, data);
             WebPubSubHubResource result = lro.Value;

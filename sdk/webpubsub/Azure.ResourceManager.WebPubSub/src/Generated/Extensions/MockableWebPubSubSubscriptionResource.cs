@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> the region. </param>
+        /// <param name="location"> The region. </param>
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> the region. </param>
+        /// <param name="location"> The region. </param>
         /// <param name="content"> Parameters supplied to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-10-01</description>
+        /// <description>2025-01-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>

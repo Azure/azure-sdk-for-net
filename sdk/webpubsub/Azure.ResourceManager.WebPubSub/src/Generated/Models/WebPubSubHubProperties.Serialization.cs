@@ -46,10 +46,25 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(EventListeners))
+            {
+                writer.WritePropertyName("eventListeners"u8);
+                writer.WriteStartArray();
+                foreach (var item in EventListeners)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(AnonymousConnectPolicy))
             {
                 writer.WritePropertyName("anonymousConnectPolicy"u8);
                 writer.WriteStringValue(AnonymousConnectPolicy);
+            }
+            if (Optional.IsDefined(WebSocketKeepAliveIntervalInSeconds))
+            {
+                writer.WritePropertyName("webSocketKeepAliveIntervalInSeconds"u8);
+                writer.WriteNumberValue(WebSocketKeepAliveIntervalInSeconds.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -89,7 +104,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 return null;
             }
             IList<WebPubSubEventHandler> eventHandlers = default;
+            IList<EventListener> eventListeners = default;
             string anonymousConnectPolicy = default;
+            int? webSocketKeepAliveIntervalInSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,9 +125,32 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     eventHandlers = array;
                     continue;
                 }
+                if (property.NameEquals("eventListeners"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<EventListener> array = new List<EventListener>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(EventListener.DeserializeEventListener(item, options));
+                    }
+                    eventListeners = array;
+                    continue;
+                }
                 if (property.NameEquals("anonymousConnectPolicy"u8))
                 {
                     anonymousConnectPolicy = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("webSocketKeepAliveIntervalInSeconds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    webSocketKeepAliveIntervalInSeconds = property.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +159,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new WebPubSubHubProperties(eventHandlers ?? new ChangeTrackingList<WebPubSubEventHandler>(), anonymousConnectPolicy, serializedAdditionalRawData);
+            return new WebPubSubHubProperties(eventHandlers ?? new ChangeTrackingList<WebPubSubEventHandler>(), eventListeners ?? new ChangeTrackingList<EventListener>(), anonymousConnectPolicy, webSocketKeepAliveIntervalInSeconds, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -156,6 +196,29 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EventListeners), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  eventListeners: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(EventListeners))
+                {
+                    if (EventListeners.Any())
+                    {
+                        builder.Append("  eventListeners: ");
+                        builder.AppendLine("[");
+                        foreach (var item in EventListeners)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  eventListeners: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AnonymousConnectPolicy), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -176,6 +239,21 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     {
                         builder.AppendLine($"'{AnonymousConnectPolicy}'");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WebSocketKeepAliveIntervalInSeconds), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  webSocketKeepAliveIntervalInSeconds: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WebSocketKeepAliveIntervalInSeconds))
+                {
+                    builder.Append("  webSocketKeepAliveIntervalInSeconds: ");
+                    builder.AppendLine($"{WebSocketKeepAliveIntervalInSeconds.Value}");
                 }
             }
 

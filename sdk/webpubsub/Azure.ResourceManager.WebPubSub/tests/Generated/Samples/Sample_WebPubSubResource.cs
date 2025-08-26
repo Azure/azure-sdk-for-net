@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.WebPubSub.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_WebPubSubGet()
         {
-            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/stable/2021-10-01/examples/WebPubSub_Get.json
+            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/preview/2025-01-01-preview/examples/WebPubSub_Get.json
             // this example is just showing the usage of "WebPubSub_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.WebPubSub.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_WebPubSubDelete()
         {
-            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/stable/2021-10-01/examples/WebPubSub_Delete.json
+            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/preview/2025-01-01-preview/examples/WebPubSub_Delete.json
             // this example is just showing the usage of "WebPubSub_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.WebPubSub.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_WebPubSubUpdate()
         {
-            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/stable/2021-10-01/examples/WebPubSub_Update.json
+            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/preview/2025-01-01-preview/examples/WebPubSub_Update.json
             // this example is just showing the usage of "WebPubSub_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -96,11 +96,12 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             // invoke the operation
             WebPubSubData data = new WebPubSubData(new AzureLocation("eastus"))
             {
-                Sku = new BillingInfoSku("Standard_S1")
+                Sku = new BillingInfoSku("Premium_P1")
                 {
-                    Tier = WebPubSubSkuTier.Standard,
+                    Tier = WebPubSubSkuTier.Premium,
                     Capacity = 1,
                 },
+                Kind = ServiceKind.WebPubSub,
                 Identity = new ManagedServiceIdentity("SystemAssigned"),
                 IsClientCertEnabled = false,
                 LiveTraceConfiguration = new LiveTraceConfiguration
@@ -125,6 +126,7 @@ Allow = {WebPubSubRequestType.ServerConnection},
                 PublicNetworkAccess = "Enabled",
                 IsLocalAuthDisabled = false,
                 IsAadAuthDisabled = false,
+                SocketIOServiceMode = "Serverless",
                 Tags =
 {
 ["key1"] = "value1"
@@ -144,7 +146,7 @@ Allow = {WebPubSubRequestType.ServerConnection},
         [Ignore("Only validating compilation of examples")]
         public async Task GetKeys_WebPubSubListKeys()
         {
-            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/stable/2021-10-01/examples/WebPubSub_ListKeys.json
+            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/preview/2025-01-01-preview/examples/WebPubSub_ListKeys.json
             // this example is just showing the usage of "WebPubSub_ListKeys" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -170,7 +172,7 @@ Allow = {WebPubSubRequestType.ServerConnection},
         [Ignore("Only validating compilation of examples")]
         public async Task RegenerateKey_WebPubSubRegenerateKey()
         {
-            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/stable/2021-10-01/examples/WebPubSub_RegenerateKey.json
+            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/preview/2025-01-01-preview/examples/WebPubSub_RegenerateKey.json
             // this example is just showing the usage of "WebPubSub_RegenerateKey" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -201,7 +203,7 @@ Allow = {WebPubSubRequestType.ServerConnection},
         [Ignore("Only validating compilation of examples")]
         public async Task Restart_WebPubSubRestart()
         {
-            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/stable/2021-10-01/examples/WebPubSub_Restart.json
+            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/preview/2025-01-01-preview/examples/WebPubSub_Restart.json
             // this example is just showing the usage of "WebPubSub_Restart" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -227,7 +229,7 @@ Allow = {WebPubSubRequestType.ServerConnection},
         [Ignore("Only validating compilation of examples")]
         public async Task GetSkus_WebPubSubListSkus()
         {
-            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/stable/2021-10-01/examples/WebPubSub_ListSkus.json
+            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/preview/2025-01-01-preview/examples/WebPubSub_ListSkus.json
             // this example is just showing the usage of "WebPubSub_ListSkus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -256,7 +258,7 @@ Allow = {WebPubSubRequestType.ServerConnection},
         [Ignore("Only validating compilation of examples")]
         public async Task GetWebPubSubPrivateLinkResources_WebPubSubPrivateLinkResourcesList()
         {
-            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/stable/2021-10-01/examples/WebPubSubPrivateLinkResources_List.json
+            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/preview/2025-01-01-preview/examples/WebPubSubPrivateLinkResources_List.json
             // this example is just showing the usage of "WebPubSubPrivateLinkResources_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -54,6 +54,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> Initializes a new instance of <see cref="WebPubSubSharedPrivateLinkData"/>. </summary>
         public WebPubSubSharedPrivateLinkData()
         {
+            Fqdns = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WebPubSubSharedPrivateLinkData"/>. </summary>
@@ -65,14 +66,16 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="privateLinkResourceId"> The resource id of the resource the shared private link resource is for. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="requestMessage"> The request message for requesting approval of the shared private link resource. </param>
+        /// <param name="fqdns"> A list of FQDNs for third party private link service. </param>
         /// <param name="status"> Status of the shared private link resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebPubSubSharedPrivateLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, ResourceIdentifier privateLinkResourceId, WebPubSubProvisioningState? provisioningState, string requestMessage, WebPubSubSharedPrivateLinkStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WebPubSubSharedPrivateLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, ResourceIdentifier privateLinkResourceId, WebPubSubProvisioningState? provisioningState, string requestMessage, IList<string> fqdns, WebPubSubSharedPrivateLinkStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             GroupId = groupId;
             PrivateLinkResourceId = privateLinkResourceId;
             ProvisioningState = provisioningState;
             RequestMessage = requestMessage;
+            Fqdns = fqdns;
             Status = status;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -89,6 +92,9 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> The request message for requesting approval of the shared private link resource. </summary>
         [WirePath("properties.requestMessage")]
         public string RequestMessage { get; set; }
+        /// <summary> A list of FQDNs for third party private link service. </summary>
+        [WirePath("properties.fqdns")]
+        public IList<string> Fqdns { get; }
         /// <summary> Status of the shared private link resource. </summary>
         [WirePath("properties.status")]
         public WebPubSubSharedPrivateLinkStatus? Status { get; }

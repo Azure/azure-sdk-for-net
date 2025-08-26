@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.WebPubSub
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku, options);
             }
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind.Value.ToString());
+            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -126,6 +131,11 @@ namespace Azure.ResourceManager.WebPubSub
                 writer.WritePropertyName("networkACLs"u8);
                 writer.WriteObjectValue(NetworkAcls, options);
             }
+            if (Optional.IsDefined(ApplicationFirewall))
+            {
+                writer.WritePropertyName("applicationFirewall"u8);
+                writer.WriteObjectValue(ApplicationFirewall, options);
+            }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
@@ -140,6 +150,21 @@ namespace Azure.ResourceManager.WebPubSub
             {
                 writer.WritePropertyName("disableAadAuth"u8);
                 writer.WriteBooleanValue(IsAadAuthDisabled.Value);
+            }
+            if (Optional.IsDefined(RegionEndpointEnabled))
+            {
+                writer.WritePropertyName("regionEndpointEnabled"u8);
+                writer.WriteStringValue(RegionEndpointEnabled);
+            }
+            if (Optional.IsDefined(ResourceStopped))
+            {
+                writer.WritePropertyName("resourceStopped"u8);
+                writer.WriteStringValue(ResourceStopped);
+            }
+            if (Optional.IsDefined(SocketIO))
+            {
+                writer.WritePropertyName("socketIO"u8);
+                writer.WriteObjectValue(SocketIO, options);
             }
             writer.WriteEndObject();
         }
@@ -165,6 +190,7 @@ namespace Azure.ResourceManager.WebPubSub
                 return null;
             }
             BillingInfoSku sku = default;
+            ServiceKind? kind = default;
             ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -185,9 +211,13 @@ namespace Azure.ResourceManager.WebPubSub
             LiveTraceConfiguration liveTraceConfiguration = default;
             ResourceLogConfiguration resourceLogConfiguration = default;
             WebPubSubNetworkAcls networkAcls = default;
+            ApplicationFirewallSettings applicationFirewall = default;
             string publicNetworkAccess = default;
             bool? disableLocalAuth = default;
             bool? disableAadAuth = default;
+            string regionEndpointEnabled = default;
+            string resourceStopped = default;
+            WebPubSubSocketIOSettings socketIO = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,6 +229,15 @@ namespace Azure.ResourceManager.WebPubSub
                         continue;
                     }
                     sku = BillingInfoSku.DeserializeBillingInfoSku(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("kind"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    kind = new ServiceKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -373,6 +412,15 @@ namespace Azure.ResourceManager.WebPubSub
                             networkAcls = WebPubSubNetworkAcls.DeserializeWebPubSubNetworkAcls(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("applicationFirewall"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            applicationFirewall = ApplicationFirewallSettings.DeserializeApplicationFirewallSettings(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("publicNetworkAccess"u8))
                         {
                             publicNetworkAccess = property0.Value.GetString();
@@ -396,6 +444,25 @@ namespace Azure.ResourceManager.WebPubSub
                             disableAadAuth = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("regionEndpointEnabled"u8))
+                        {
+                            regionEndpointEnabled = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("resourceStopped"u8))
+                        {
+                            resourceStopped = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("socketIO"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            socketIO = WebPubSubSocketIOSettings.DeserializeWebPubSubSocketIOSettings(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -413,6 +480,7 @@ namespace Azure.ResourceManager.WebPubSub
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 sku,
+                kind,
                 identity,
                 provisioningState,
                 externalIP,
@@ -427,9 +495,13 @@ namespace Azure.ResourceManager.WebPubSub
                 liveTraceConfiguration,
                 resourceLogConfiguration,
                 networkAcls,
+                applicationFirewall,
                 publicNetworkAccess,
                 disableLocalAuth,
                 disableAadAuth,
+                regionEndpointEnabled,
+                resourceStopped,
+                socketIO,
                 serializedAdditionalRawData);
         }
 
@@ -528,6 +600,21 @@ namespace Azure.ResourceManager.WebPubSub
                 {
                     builder.Append("  sku: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Sku, options, 2, false, "  sku: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kind))
+                {
+                    builder.Append("  kind: ");
+                    builder.AppendLine($"'{Kind.Value.ToString()}'");
                 }
             }
 
@@ -831,6 +918,21 @@ namespace Azure.ResourceManager.WebPubSub
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApplicationFirewall), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    applicationFirewall: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApplicationFirewall))
+                {
+                    builder.Append("    applicationFirewall: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ApplicationFirewall, options, 4, false, "    applicationFirewall: ");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicNetworkAccess), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -883,6 +985,72 @@ namespace Azure.ResourceManager.WebPubSub
                     builder.Append("    disableAadAuth: ");
                     var boolValue = IsAadAuthDisabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RegionEndpointEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    regionEndpointEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RegionEndpointEnabled))
+                {
+                    builder.Append("    regionEndpointEnabled: ");
+                    if (RegionEndpointEnabled.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RegionEndpointEnabled}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RegionEndpointEnabled}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceStopped), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    resourceStopped: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceStopped))
+                {
+                    builder.Append("    resourceStopped: ");
+                    if (ResourceStopped.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ResourceStopped}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ResourceStopped}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("SocketIOServiceMode", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    socketIO: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      socketIO: {");
+                builder.Append("        serviceMode: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(SocketIO))
+                {
+                    builder.Append("    socketIO: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SocketIO, options, 4, false, "    socketIO: ");
                 }
             }
 

@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The billing information of the resource. </param>
+        /// <param name="kind"> The kind of the service. </param>
         /// <param name="identity"> A class represent managed identities used for request and response. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="externalIP"> The publicly accessible IP of the resource. </param>
@@ -81,6 +82,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="liveTraceConfiguration"> Live trace configuration of a Microsoft.SignalRService resource. </param>
         /// <param name="resourceLogConfiguration"> Resource log configuration of a Microsoft.SignalRService resource. </param>
         /// <param name="networkAcls"> Network ACLs for the resource. </param>
+        /// <param name="applicationFirewall"> Application firewall settings for the resource. </param>
         /// <param name="publicNetworkAccess">
         /// Enable or disable public network access. Default to "Enabled".
         /// When it's Enabled, network ACLs still apply.
@@ -96,10 +98,22 @@ namespace Azure.ResourceManager.WebPubSub
         /// Enable or disable aad auth
         /// When set as true, connection with AuthType=aad won't work.
         /// </param>
+        /// <param name="regionEndpointEnabled">
+        /// Enable or disable the regional endpoint. Default to "Enabled".
+        /// When it's Disabled, new connections will not be routed to this endpoint, however existing connections will not be affected.
+        /// This property is replica specific. Disable the regional endpoint without replica is not allowed.
+        /// </param>
+        /// <param name="resourceStopped">
+        /// Stop or start the resource.  Default to "False".
+        /// When it's true, the data plane of the resource is shutdown.
+        /// When it's false, the data plane of the resource is started.
+        /// </param>
+        /// <param name="socketIO"> SocketIO settings for the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebPubSubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BillingInfoSku sku, ManagedServiceIdentity identity, WebPubSubProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<WebPubSubPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<WebPubSubSharedPrivateLinkData> sharedPrivateLinkResources, WebPubSubTlsSettings tls, string hostNamePrefix, LiveTraceConfiguration liveTraceConfiguration, ResourceLogConfiguration resourceLogConfiguration, WebPubSubNetworkAcls networkAcls, string publicNetworkAccess, bool? isLocalAuthDisabled, bool? isAadAuthDisabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal WebPubSubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BillingInfoSku sku, ServiceKind? kind, ManagedServiceIdentity identity, WebPubSubProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<WebPubSubPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<WebPubSubSharedPrivateLinkData> sharedPrivateLinkResources, WebPubSubTlsSettings tls, string hostNamePrefix, LiveTraceConfiguration liveTraceConfiguration, ResourceLogConfiguration resourceLogConfiguration, WebPubSubNetworkAcls networkAcls, ApplicationFirewallSettings applicationFirewall, string publicNetworkAccess, bool? isLocalAuthDisabled, bool? isAadAuthDisabled, string regionEndpointEnabled, string resourceStopped, WebPubSubSocketIOSettings socketIO, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
+            Kind = kind;
             Identity = identity;
             ProvisioningState = provisioningState;
             ExternalIP = externalIP;
@@ -114,9 +128,13 @@ namespace Azure.ResourceManager.WebPubSub
             LiveTraceConfiguration = liveTraceConfiguration;
             ResourceLogConfiguration = resourceLogConfiguration;
             NetworkAcls = networkAcls;
+            ApplicationFirewall = applicationFirewall;
             PublicNetworkAccess = publicNetworkAccess;
             IsLocalAuthDisabled = isLocalAuthDisabled;
             IsAadAuthDisabled = isAadAuthDisabled;
+            RegionEndpointEnabled = regionEndpointEnabled;
+            ResourceStopped = resourceStopped;
+            SocketIO = socketIO;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -128,6 +146,9 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> The billing information of the resource. </summary>
         [WirePath("sku")]
         public BillingInfoSku Sku { get; set; }
+        /// <summary> The kind of the service. </summary>
+        [WirePath("kind")]
+        public ServiceKind? Kind { get; set; }
         /// <summary> A class represent managed identities used for request and response. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
@@ -157,7 +178,7 @@ namespace Azure.ResourceManager.WebPubSub
         public IReadOnlyList<WebPubSubSharedPrivateLinkData> SharedPrivateLinkResources { get; }
         /// <summary> TLS settings for the resource. </summary>
         internal WebPubSubTlsSettings Tls { get; set; }
-        /// <summary> Request client certificate during TLS handshake if enabled. </summary>
+        /// <summary> Request client certificate during TLS handshake if enabled. Not supported for free tier. Any input will be ignored for free tier. </summary>
         [WirePath("properties.tls.clientCertEnabled")]
         public bool? IsClientCertEnabled
         {
@@ -193,6 +214,9 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> Network ACLs for the resource. </summary>
         [WirePath("properties.networkACLs")]
         public WebPubSubNetworkAcls NetworkAcls { get; set; }
+        /// <summary> Application firewall settings for the resource. </summary>
+        [WirePath("properties.applicationFirewall")]
+        public ApplicationFirewallSettings ApplicationFirewall { get; set; }
         /// <summary>
         /// Enable or disable public network access. Default to "Enabled".
         /// When it's Enabled, network ACLs still apply.
@@ -214,5 +238,37 @@ namespace Azure.ResourceManager.WebPubSub
         /// </summary>
         [WirePath("properties.disableAadAuth")]
         public bool? IsAadAuthDisabled { get; set; }
+        /// <summary>
+        /// Enable or disable the regional endpoint. Default to "Enabled".
+        /// When it's Disabled, new connections will not be routed to this endpoint, however existing connections will not be affected.
+        /// This property is replica specific. Disable the regional endpoint without replica is not allowed.
+        /// </summary>
+        [WirePath("properties.regionEndpointEnabled")]
+        public string RegionEndpointEnabled { get; set; }
+        /// <summary>
+        /// Stop or start the resource.  Default to "False".
+        /// When it's true, the data plane of the resource is shutdown.
+        /// When it's false, the data plane of the resource is started.
+        /// </summary>
+        [WirePath("properties.resourceStopped")]
+        public string ResourceStopped { get; set; }
+        /// <summary> SocketIO settings for the resource. </summary>
+        internal WebPubSubSocketIOSettings SocketIO { get; set; }
+        /// <summary>
+        /// The service mode of Web PubSub for Socket.IO. Values allowed:
+        /// "Default": have your own backend Socket.IO server
+        /// "Serverless": your application doesn't have a backend server
+        /// </summary>
+        [WirePath("properties.socketIO.serviceMode")]
+        public string SocketIOServiceMode
+        {
+            get => SocketIO is null ? default : SocketIO.ServiceMode;
+            set
+            {
+                if (SocketIO is null)
+                    SocketIO = new WebPubSubSocketIOSettings();
+                SocketIO.ServiceMode = value;
+            }
+        }
     }
 }

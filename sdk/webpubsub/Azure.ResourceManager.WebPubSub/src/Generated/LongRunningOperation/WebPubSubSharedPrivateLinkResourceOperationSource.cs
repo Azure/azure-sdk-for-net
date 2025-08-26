@@ -12,11 +12,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub
 {
-    internal class WebPubSubSharedPrivateLinkOperationSource : IOperationSource<WebPubSubSharedPrivateLinkResource>
+    internal class WebPubSubSharedPrivateLinkResourceOperationSource : IOperationSource<WebPubSubSharedPrivateLinkResource>
     {
         private readonly ArmClient _client;
 
-        internal WebPubSubSharedPrivateLinkOperationSource(ArmClient client)
+        internal WebPubSubSharedPrivateLinkResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
