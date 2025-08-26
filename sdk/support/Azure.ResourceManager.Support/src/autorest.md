@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: Support
 namespace: Azure.ResourceManager.Support
-require: https://github.com/Azure/azure-rest-api-specs/blob/659b9696510798cee1870d2a5341cdb0c4f7cbb7/specification/support/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/3331035cd1d184d5f66d2c1f3899ac7001c5679a/specification/support/resource-manager/readme.md
 #tag: package-preview-2024-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -111,4 +111,11 @@ override-operation-name:
   LookUpResourceId_Post: LookUpResourceId
   ProblemClassificationsNoSubscription_classifyProblems: ClassifyServiceProblem
   ProblemClassifications_classifyProblems: ClassifyServiceProblem
+
+directive:
+  - from: support.json
+    where: $.definitions
+    transform: >
+      $.ProblemClassificationProperties['properties']['secondaryConsentEnabled']['readOnly'] = true;
+      $.ServiceProperties['properties']['resourceTypes']['readOnly'] = true;
 ```
