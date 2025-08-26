@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "4DEBE8B4-8BA4-42F8-AE50-FBEF318751D1";
+            string subscriptionId = "61641157-140c-4b97-b365-30ff76d9f82e";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
