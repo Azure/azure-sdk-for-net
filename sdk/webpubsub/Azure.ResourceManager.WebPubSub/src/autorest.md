@@ -62,7 +62,9 @@ rename-mapping:
   ClientTrafficControlRule.type: TrafficThrottleType
   EventListenerFilter.type: EventListenerFilterType
   EventListenerEndpoint.type: EventListenerEndpointType
-  SharedPrivateLinkResource: WebPubSubSharedPrivateLink
+
+request-path-to-resource-name:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}: WebPubSubSharedPrivateLink
 
 directive:
   - rename-model:
