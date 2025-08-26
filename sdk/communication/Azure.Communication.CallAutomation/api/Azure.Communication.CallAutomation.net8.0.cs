@@ -982,6 +982,11 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.PlayEventResult WaitForEventProcessor(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public System.Threading.Tasks.Task<Azure.Communication.CallAutomation.PlayEventResult> WaitForEventProcessorAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class MarkAudio : Azure.Communication.CallAutomation.StreamingData
+    {
+        public MarkAudio() { }
+        public string Sequence { get { throw null; } set { } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MediaEventReasonCode : System.IEquatable<Azure.Communication.CallAutomation.MediaEventReasonCode>
     {
@@ -1021,6 +1026,7 @@ namespace Azure.Communication.CallAutomation
     {
         AudioData = 0,
         StopAudio = 1,
+        Mark = 2,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MediaStreamingAudioChannel : System.IEquatable<Azure.Communication.CallAutomation.MediaStreamingAudioChannel>
@@ -1244,8 +1250,10 @@ namespace Azure.Communication.CallAutomation
         internal OutStreamingData() { }
         public Azure.Communication.CallAutomation.AudioData AudioData { get { throw null; } }
         public Azure.Communication.CallAutomation.MediaKind Kind { get { throw null; } }
+        public Azure.Communication.CallAutomation.MarkAudio MarkAudio { get { throw null; } }
         public Azure.Communication.CallAutomation.StopAudio StopAudio { get { throw null; } }
         public static string GetAudioDataForOutbound(byte[] audioData) { throw null; }
+        public static string GetMarkAudioForOutbound(string sequence) { throw null; }
         public static string GetStopAudioForOutbound() { throw null; }
     }
     public partial class ParticipantsUpdated : Azure.Communication.CallAutomation.CallAutomationEventBase
@@ -1723,6 +1731,7 @@ namespace Azure.Communication.CallAutomation
         TranscriptionData = 2,
         TranscriptionMetadata = 3,
         DtmfData = 4,
+        Mark = 5,
     }
     public static partial class StreamingDataParser
     {
