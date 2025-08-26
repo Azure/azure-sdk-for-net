@@ -118,22 +118,18 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task AzureDeveloperCliCredential_EmptyOrWhitespaceClaims_DoesNotIncludeClaimsArgument()
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("   ")]
+        public async Task AzureDeveloperCliCredential_EmptyOrWhitespaceClaims_DoesNotIncludeClaimsArgument(string claims)
         {
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureDeveloperCli();
             var testProcess = new TestProcess { Output = processOutput };
             var credential = InstrumentClient(new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
 
-            // Empty
-            var token = await credential.GetTokenAsync(new TokenRequestContext([Scope], claims: string.Empty));
+            var token = await credential.GetTokenAsync(new TokenRequestContext(new[] { Scope }, claims: claims));
             Assert.AreEqual(expectedToken, token.Token);
-            Assert.That(testProcess.StartInfo.Arguments, Does.Not.Contain("--claims"));
-
-            // Whitespace
-            testProcess = new TestProcess { Output = processOutput };
-            credential = InstrumentClient(new AzureDeveloperCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
-            token = await credential.GetTokenAsync(new TokenRequestContext([Scope], claims: "   "));
-            Assert.AreEqual(expectedToken, token.Token);
+            Assert.AreEqual(expectedExpiresOn, token.ExpiresOn);
             Assert.That(testProcess.StartInfo.Arguments, Does.Not.Contain("--claims"));
         }
 

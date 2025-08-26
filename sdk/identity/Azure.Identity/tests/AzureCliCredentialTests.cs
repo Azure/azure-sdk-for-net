@@ -308,24 +308,18 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task AuthenticateWithCliCredential_EmptyOrWhitespaceClaims_DoesNotTriggerGuidance()
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("   ")]
+        public async Task AuthenticateWithCliCredential_EmptyOrWhitespaceClaims_DoesNotTriggerGuidance(string claims)
         {
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
             var testProcess = new TestProcess { Output = processOutput };
             var credential = InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true)));
 
-            // None (default)
-            var token = await credential.GetTokenAsync(new TokenRequestContext([Scope]));
+            var token = await credential.GetTokenAsync(new TokenRequestContext(new[] { Scope }, claims: claims));
             Assert.AreEqual(expectedToken, token.Token);
             Assert.AreEqual(expectedExpiresOn, token.ExpiresOn);
-
-            // Empty string
-            token = await credential.GetTokenAsync(new TokenRequestContext([Scope], claims: string.Empty));
-            Assert.AreEqual(expectedToken, token.Token);
-
-            // Whitespace-only
-            token = await credential.GetTokenAsync(new TokenRequestContext([Scope], claims: "   "));
-            Assert.AreEqual(expectedToken, token.Token);
         }
     }
 }
