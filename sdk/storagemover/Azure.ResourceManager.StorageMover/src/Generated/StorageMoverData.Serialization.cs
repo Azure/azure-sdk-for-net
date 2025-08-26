@@ -8,10 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageMover.Models;
 
 namespace Azure.ResourceManager.StorageMover
@@ -75,9 +73,9 @@ namespace Azure.ResourceManager.StorageMover
             }
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
-            ResourceIdentifier id = default;
+            string id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType? type = default;
             SystemData systemData = default;
             string description = default;
             StorageMoverProvisioningState? provisioningState = default;
@@ -106,7 +104,7 @@ namespace Azure.ResourceManager.StorageMover
                 }
                 if (property.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -116,6 +114,10 @@ namespace Azure.ResourceManager.StorageMover
                 }
                 if (property.NameEquals("type"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
@@ -125,7 +127,7 @@ namespace Azure.ResourceManager.StorageMover
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageMoverContext.Default);
+                    systemData = SystemData.DeserializeSystemData(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -165,11 +167,11 @@ namespace Azure.ResourceManager.StorageMover
                 name,
                 type,
                 systemData,
+                serializedAdditionalRawData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 description,
-                provisioningState,
-                serializedAdditionalRawData);
+                provisioningState);
         }
 
         BinaryData IPersistableModel<StorageMoverData>.Write(ModelReaderWriterOptions options)
