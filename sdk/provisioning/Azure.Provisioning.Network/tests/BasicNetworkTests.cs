@@ -13,7 +13,7 @@ namespace Azure.Provisioning.Network.Tests;
 public class BasicNetworkTests(bool async) : ProvisioningTestBase(async)
 {
     [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.network/vnet-two-subnets/main.bicep")]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/2db70d7aed6588333dc10f26bf19618995151018/quickstarts/microsoft.network/vnet-two-subnets/main.bicep")]
     public async Task VNetTwoSubnets()
     {
         await using Trycep test = CreateBicepTest();
@@ -140,7 +140,7 @@ public class BasicNetworkTests(bool async) : ProvisioningTestBase(async)
     }
 
     [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.network/nat-gateway-vnet/main.bicep")]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/2db70d7aed6588333dc10f26bf19618995151018/quickstarts/microsoft.network/nat-gateway-vnet/main.bicep")]
     public async Task NatGatewayVNet()
     {
         await using Trycep test = CreateBicepTest();
@@ -339,7 +339,7 @@ public class BasicNetworkTests(bool async) : ProvisioningTestBase(async)
     }
 
     [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.network/networkwatcher-flowLogs-create/main.bicep")]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/2db70d7aed6588333dc10f26bf19618995151018/quickstarts/microsoft.network/networkwatcher-flowLogs-create/main.bicep")]
     public async Task NetworkWatcherFlowLogsCreate()
     {
         await using Trycep test = CreateBicepTest();
@@ -489,6 +489,174 @@ public class BasicNetworkTests(bool async) : ProvisioningTestBase(async)
               }
               location: location
               parent: networkWatcher
+            }
+            """)
+        .Lint()
+        .ValidateAsync();
+    }
+
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/2db70d7aed6588333dc10f26bf19618995151018/quickstarts/microsoft.network/security-group-create/azuredeploy.json#L42")]
+    public async Task SecurityGroupCreate()
+    {
+        await using Trycep test = CreateBicepTest();
+        await test.Define(
+            ctx =>
+            {
+                #region Snippet:SecurityGroupCreate
+                Infrastructure infra = new();
+
+                ProvisioningParameter addressPrefix = new(nameof(addressPrefix), typeof(string))
+                {
+                    Description = "Address prefix",
+                    Value = "10.0.0.0/16"
+                };
+                infra.Add(addressPrefix);
+
+                ProvisioningParameter subnetPrefix = new(nameof(subnetPrefix), typeof(string))
+                {
+                    Description = "Subnet-1 Prefix",
+                    Value = "10.0.0.0/24"
+                };
+                infra.Add(subnetPrefix);
+
+                ProvisioningParameter location = new(nameof(location), typeof(string))
+                {
+                    Description = "Location for all resources.",
+                    Value = BicepFunction.GetResourceGroup().Location
+                };
+                infra.Add(location);
+
+                ProvisioningVariable networkSecurityGroupName = new(nameof(networkSecurityGroupName), typeof(string))
+                {
+                    Value = "networkSecurityGroup1"
+                };
+                infra.Add(networkSecurityGroupName);
+
+                ProvisioningVariable virtualNetworkName = new(nameof(virtualNetworkName), typeof(string))
+                {
+                    Value = "virtualNetwork1"
+                };
+                infra.Add(virtualNetworkName);
+
+                ProvisioningVariable subnetName = new(nameof(subnetName), typeof(string))
+                {
+                    Value = "subnet"
+                };
+                infra.Add(subnetName);
+
+                NetworkSecurityGroup networkSecurityGroup = new(nameof(networkSecurityGroup), NetworkSecurityGroup.ResourceVersions.V2020_05_01)
+                {
+                    Name = networkSecurityGroupName,
+                    Location = location,
+                    SecurityRules =
+                    [
+                        new SecurityRule()
+                        {
+                            Name = "first_rule",
+                            Description = "This is the first rule",
+                            Protocol = SecurityRuleProtocol.Tcp,
+                            SourcePortRange = "23-45",
+                            DestinationPortRange = "46-56",
+                            SourceAddressPrefix = "*",
+                            DestinationAddressPrefix = "*",
+                            Access = SecurityRuleAccess.Allow,
+                            Priority = 123,
+                            Direction = SecurityRuleDirection.Inbound
+                        }
+                    ]
+                };
+                infra.Add(networkSecurityGroup);
+
+                VirtualNetwork virtualNetwork = new(nameof(virtualNetwork), VirtualNetwork.ResourceVersions.V2020_05_01)
+                {
+                    Name = virtualNetworkName,
+                    Location = location,
+                    AddressSpace = new VirtualNetworkAddressSpace()
+                    {
+                        AddressPrefixes =
+                        [
+                            addressPrefix
+                        ]
+                    },
+                    Subnets =
+                    [
+                        new Subnet()
+                        {
+                            Name = subnetName,
+                            AddressPrefix = subnetPrefix,
+                            NetworkSecurityGroup = new()
+                            {
+                                Id = networkSecurityGroup.Id
+                            }
+                        }
+                    ]
+                };
+                infra.Add(virtualNetwork);
+                #endregion
+                return infra;
+            })
+        .Compare(
+            """
+            @description('Address prefix')
+            param addressPrefix string = '10.0.0.0/16'
+
+            @description('Subnet-1 Prefix')
+            param subnetPrefix string = '10.0.0.0/24'
+
+            @description('Location for all resources.')
+            param location string = resourceGroup().location
+
+            var networkSecurityGroupName = 'networkSecurityGroup1'
+
+            var virtualNetworkName = 'virtualNetwork1'
+
+            var subnetName = 'subnet'
+
+            resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2020-05-01' = {
+              name: networkSecurityGroupName
+              location: location
+              properties: {
+                securityRules: [
+                  {
+                    name: 'first_rule'
+                    properties: {
+                      access: 'Allow'
+                      description: 'This is the first rule'
+                      destinationAddressPrefix: '*'
+                      destinationPortRange: '46-56'
+                      direction: 'Inbound'
+                      priority: 123
+                      protocol: 'Tcp'
+                      sourceAddressPrefix: '*'
+                      sourcePortRange: '23-45'
+                    }
+                  }
+                ]
+              }
+            }
+
+            resource virtualNetwork 'Microsoft.Network/virtualNetworks@2020-05-01' = {
+              name: virtualNetworkName
+              properties: {
+                addressSpace: {
+                  addressPrefixes: [
+                    addressPrefix
+                  ]
+                }
+                subnets: [
+                  {
+                    name: subnetName
+                    properties: {
+                      addressPrefix: subnetPrefix
+                      networkSecurityGroup: {
+                        id: networkSecurityGroup.id
+                      }
+                    }
+                  }
+                ]
+              }
+              location: location
             }
             """)
         .Lint()

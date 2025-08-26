@@ -199,6 +199,102 @@ VirtualNetwork vnet = new(nameof(vnet), VirtualNetwork.ResourceVersions.V2020_06
 infra.Add(vnet);
 ```
 
+### Create a Network Security Group
+
+This template creates a subnet, a Network Security Group and attaches it to the subnet in the VNET.
+
+```C# Snippet:SecurityGroupCreate
+Infrastructure infra = new();
+
+ProvisioningParameter addressPrefix = new(nameof(addressPrefix), typeof(string))
+{
+    Description = "Address prefix",
+    Value = "10.0.0.0/16"
+};
+infra.Add(addressPrefix);
+
+ProvisioningParameter subnetPrefix = new(nameof(subnetPrefix), typeof(string))
+{
+    Description = "Subnet-1 Prefix",
+    Value = "10.0.0.0/24"
+};
+infra.Add(subnetPrefix);
+
+ProvisioningParameter location = new(nameof(location), typeof(string))
+{
+    Description = "Location for all resources.",
+    Value = BicepFunction.GetResourceGroup().Location
+};
+infra.Add(location);
+
+ProvisioningVariable networkSecurityGroupName = new(nameof(networkSecurityGroupName), typeof(string))
+{
+    Value = "networkSecurityGroup1"
+};
+infra.Add(networkSecurityGroupName);
+
+ProvisioningVariable virtualNetworkName = new(nameof(virtualNetworkName), typeof(string))
+{
+    Value = "virtualNetwork1"
+};
+infra.Add(virtualNetworkName);
+
+ProvisioningVariable subnetName = new(nameof(subnetName), typeof(string))
+{
+    Value = "subnet"
+};
+infra.Add(subnetName);
+
+NetworkSecurityGroup networkSecurityGroup = new(nameof(networkSecurityGroup), NetworkSecurityGroup.ResourceVersions.V2020_05_01)
+{
+    Name = networkSecurityGroupName,
+    Location = location,
+    SecurityRules =
+    [
+        new SecurityRule()
+        {
+            Name = "first_rule",
+            Description = "This is the first rule",
+            Protocol = SecurityRuleProtocol.Tcp,
+            SourcePortRange = "23-45",
+            DestinationPortRange = "46-56",
+            SourceAddressPrefix = "*",
+            DestinationAddressPrefix = "*",
+            Access = SecurityRuleAccess.Allow,
+            Priority = 123,
+            Direction = SecurityRuleDirection.Inbound
+        }
+    ]
+};
+infra.Add(networkSecurityGroup);
+
+VirtualNetwork virtualNetwork = new(nameof(virtualNetwork), VirtualNetwork.ResourceVersions.V2020_05_01)
+{
+    Name = virtualNetworkName,
+    Location = location,
+    AddressSpace = new VirtualNetworkAddressSpace()
+    {
+        AddressPrefixes =
+        [
+            addressPrefix
+        ]
+    },
+    Subnets =
+    [
+        new Subnet()
+        {
+            Name = subnetName,
+            AddressPrefix = subnetPrefix,
+            NetworkSecurityGroup = new()
+            {
+                Id = networkSecurityGroup.Id
+            }
+        }
+    ]
+};
+infra.Add(virtualNetwork);
+```
+
 ### Enable NSG Flow Logs
 
 This template deploys an NSG flow logs resource inside the Network Watcher resource group.

@@ -131,6 +131,10 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
                 else if (pair.Value is ProvisionableConstruct construct)
                 {
                     IList<BicepStatement> statements = [.. construct.Compile()];
+                    if (statements[0] is ResourceStatement resource)
+                    {
+                        statements[0] = new ExpressionStatement(resource.Body);
+                    }
                     if (statements.Count != 1 || statements[0] is not ExpressionStatement expr)
                     {
                         throw new InvalidOperationException($"Expected a single expression statement for {pair.Key}.");
