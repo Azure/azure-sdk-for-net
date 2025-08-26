@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.WebPubSub.Samples
 {
-    public partial class Sample_CustomCertificateCollection
+    public partial class Sample_WebPubSubCustomCertificateCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -35,21 +35,21 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             ResourceIdentifier webPubSubResourceId = WebPubSubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
             WebPubSubResource webPubSub = client.GetWebPubSubResource(webPubSubResourceId);
 
-            // get the collection of this CustomCertificateResource
-            CustomCertificateCollection collection = webPubSub.GetCustomCertificates();
+            // get the collection of this WebPubSubCustomCertificateResource
+            WebPubSubCustomCertificateCollection collection = webPubSub.GetWebPubSubCustomCertificates();
 
             // invoke the operation
             string certificateName = "myCert";
-            CustomCertificateData data = new CustomCertificateData(new Uri("https://myvault.keyvault.azure.net/"), "mycert")
+            WebPubSubCustomCertificateData data = new WebPubSubCustomCertificateData(new Uri("https://myvault.keyvault.azure.net/"), "mycert")
             {
                 KeyVaultSecretVersion = "bb6a44b2743f47f68dad0d6cc9756432",
             };
-            ArmOperation<CustomCertificateResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, certificateName, data);
-            CustomCertificateResource result = lro.Value;
+            ArmOperation<WebPubSubCustomCertificateResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, certificateName, data);
+            WebPubSubCustomCertificateResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            CustomCertificateData resourceData = result.Data;
+            WebPubSubCustomCertificateData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -74,16 +74,16 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             ResourceIdentifier webPubSubResourceId = WebPubSubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
             WebPubSubResource webPubSub = client.GetWebPubSubResource(webPubSubResourceId);
 
-            // get the collection of this CustomCertificateResource
-            CustomCertificateCollection collection = webPubSub.GetCustomCertificates();
+            // get the collection of this WebPubSubCustomCertificateResource
+            WebPubSubCustomCertificateCollection collection = webPubSub.GetWebPubSubCustomCertificates();
 
             // invoke the operation
             string certificateName = "myCert";
-            CustomCertificateResource result = await collection.GetAsync(certificateName);
+            WebPubSubCustomCertificateResource result = await collection.GetAsync(certificateName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            CustomCertificateData resourceData = result.Data;
+            WebPubSubCustomCertificateData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -108,15 +108,15 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             ResourceIdentifier webPubSubResourceId = WebPubSubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
             WebPubSubResource webPubSub = client.GetWebPubSubResource(webPubSubResourceId);
 
-            // get the collection of this CustomCertificateResource
-            CustomCertificateCollection collection = webPubSub.GetCustomCertificates();
+            // get the collection of this WebPubSubCustomCertificateResource
+            WebPubSubCustomCertificateCollection collection = webPubSub.GetWebPubSubCustomCertificates();
 
             // invoke the operation and iterate over the result
-            await foreach (CustomCertificateResource item in collection.GetAllAsync())
+            await foreach (WebPubSubCustomCertificateResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                CustomCertificateData resourceData = item.Data;
+                WebPubSubCustomCertificateData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -144,8 +144,8 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             ResourceIdentifier webPubSubResourceId = WebPubSubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
             WebPubSubResource webPubSub = client.GetWebPubSubResource(webPubSubResourceId);
 
-            // get the collection of this CustomCertificateResource
-            CustomCertificateCollection collection = webPubSub.GetCustomCertificates();
+            // get the collection of this WebPubSubCustomCertificateResource
+            WebPubSubCustomCertificateCollection collection = webPubSub.GetWebPubSubCustomCertificates();
 
             // invoke the operation
             string certificateName = "myCert";
@@ -174,13 +174,13 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             ResourceIdentifier webPubSubResourceId = WebPubSubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
             WebPubSubResource webPubSub = client.GetWebPubSubResource(webPubSubResourceId);
 
-            // get the collection of this CustomCertificateResource
-            CustomCertificateCollection collection = webPubSub.GetCustomCertificates();
+            // get the collection of this WebPubSubCustomCertificateResource
+            WebPubSubCustomCertificateCollection collection = webPubSub.GetWebPubSubCustomCertificates();
 
             // invoke the operation
             string certificateName = "myCert";
-            NullableResponse<CustomCertificateResource> response = await collection.GetIfExistsAsync(certificateName);
-            CustomCertificateResource result = response.HasValue ? response.Value : null;
+            NullableResponse<WebPubSubCustomCertificateResource> response = await collection.GetIfExistsAsync(certificateName);
+            WebPubSubCustomCertificateResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                CustomCertificateData resourceData = result.Data;
+                WebPubSubCustomCertificateData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

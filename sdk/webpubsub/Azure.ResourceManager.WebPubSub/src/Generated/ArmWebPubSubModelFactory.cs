@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="WebPubSub.CustomCertificateData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSub.WebPubSubCustomCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -245,10 +245,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="keyVaultBaseUri"> Base uri of the KeyVault that stores certificate. </param>
         /// <param name="keyVaultSecretName"> Certificate secret name. </param>
         /// <param name="keyVaultSecretVersion"> Certificate secret version. </param>
-        /// <returns> A new <see cref="WebPubSub.CustomCertificateData"/> instance for mocking. </returns>
-        public static CustomCertificateData CustomCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WebPubSubProvisioningState? provisioningState = null, Uri keyVaultBaseUri = null, string keyVaultSecretName = null, string keyVaultSecretVersion = null)
+        /// <returns> A new <see cref="WebPubSub.WebPubSubCustomCertificateData"/> instance for mocking. </returns>
+        public static WebPubSubCustomCertificateData WebPubSubCustomCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WebPubSubProvisioningState? provisioningState = null, Uri keyVaultBaseUri = null, string keyVaultSecretName = null, string keyVaultSecretVersion = null)
         {
-            return new CustomCertificateData(
+            return new WebPubSubCustomCertificateData(
                 id,
                 name,
                 resourceType,

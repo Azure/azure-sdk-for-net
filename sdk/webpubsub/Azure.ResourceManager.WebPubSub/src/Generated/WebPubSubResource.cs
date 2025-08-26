@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.WebPubSub
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of CustomCertificateResources in the WebPubSub. </summary>
-        /// <returns> An object representing collection of CustomCertificateResources and their operations over a CustomCertificateResource. </returns>
-        public virtual CustomCertificateCollection GetCustomCertificates()
+        /// <summary> Gets a collection of WebPubSubCustomCertificateResources in the WebPubSub. </summary>
+        /// <returns> An object representing collection of WebPubSubCustomCertificateResources and their operations over a WebPubSubCustomCertificateResource. </returns>
+        public virtual WebPubSubCustomCertificateCollection GetWebPubSubCustomCertificates()
         {
-            return GetCachedClient(client => new CustomCertificateCollection(client, Id));
+            return GetCachedClient(client => new WebPubSubCustomCertificateCollection(client, Id));
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CustomCertificateResource"/></description>
+        /// <description><see cref="WebPubSubCustomCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,9 +128,9 @@ namespace Azure.ResourceManager.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CustomCertificateResource>> GetCustomCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebPubSubCustomCertificateResource>> GetWebPubSubCustomCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
         {
-            return await GetCustomCertificates().GetAsync(certificateName, cancellationToken).ConfigureAwait(false);
+            return await GetWebPubSubCustomCertificates().GetAsync(certificateName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CustomCertificateResource"/></description>
+        /// <description><see cref="WebPubSubCustomCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -159,9 +159,9 @@ namespace Azure.ResourceManager.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CustomCertificateResource> GetCustomCertificate(string certificateName, CancellationToken cancellationToken = default)
+        public virtual Response<WebPubSubCustomCertificateResource> GetWebPubSubCustomCertificate(string certificateName, CancellationToken cancellationToken = default)
         {
-            return GetCustomCertificates().Get(certificateName, cancellationToken);
+            return GetWebPubSubCustomCertificates().Get(certificateName, cancellationToken);
         }
 
         /// <summary> Gets a collection of CustomDomainResources in the WebPubSub. </summary>

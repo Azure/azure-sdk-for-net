@@ -14,10 +14,10 @@ using Azure.ResourceManager.WebPubSub.Models;
 namespace Azure.ResourceManager.WebPubSub
 {
     /// <summary>
-    /// A class representing the CustomCertificate data model.
+    /// A class representing the WebPubSubCustomCertificate data model.
     /// A custom certificate.
     /// </summary>
-    public partial class CustomCertificateData : ResourceData
+    public partial class WebPubSubCustomCertificateData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CustomCertificateData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubCustomCertificateData"/>. </summary>
         /// <param name="keyVaultBaseUri"> Base uri of the KeyVault that stores certificate. </param>
         /// <param name="keyVaultSecretName"> Certificate secret name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultBaseUri"/> or <paramref name="keyVaultSecretName"/> is null. </exception>
-        public CustomCertificateData(Uri keyVaultBaseUri, string keyVaultSecretName)
+        public WebPubSubCustomCertificateData(Uri keyVaultBaseUri, string keyVaultSecretName)
         {
             Argument.AssertNotNull(keyVaultBaseUri, nameof(keyVaultBaseUri));
             Argument.AssertNotNull(keyVaultSecretName, nameof(keyVaultSecretName));
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.WebPubSub
             KeyVaultSecretName = keyVaultSecretName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomCertificateData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubCustomCertificateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="keyVaultSecretName"> Certificate secret name. </param>
         /// <param name="keyVaultSecretVersion"> Certificate secret version. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WebPubSubProvisioningState? provisioningState, Uri keyVaultBaseUri, string keyVaultSecretName, string keyVaultSecretVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WebPubSubCustomCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WebPubSubProvisioningState? provisioningState, Uri keyVaultBaseUri, string keyVaultSecretName, string keyVaultSecretVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             KeyVaultBaseUri = keyVaultBaseUri;
@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.WebPubSub
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomCertificateData"/> for deserialization. </summary>
-        internal CustomCertificateData()
+        /// <summary> Initializes a new instance of <see cref="WebPubSubCustomCertificateData"/> for deserialization. </summary>
+        internal WebPubSubCustomCertificateData()
         {
         }
 

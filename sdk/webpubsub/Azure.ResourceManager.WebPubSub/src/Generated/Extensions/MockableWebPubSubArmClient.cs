@@ -47,15 +47,15 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CustomCertificateResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CustomCertificateResource.CreateResourceIdentifier" /> to create a <see cref="CustomCertificateResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="WebPubSubCustomCertificateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebPubSubCustomCertificateResource.CreateResourceIdentifier" /> to create a <see cref="WebPubSubCustomCertificateResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CustomCertificateResource"/> object. </returns>
-        public virtual CustomCertificateResource GetCustomCertificateResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebPubSubCustomCertificateResource"/> object. </returns>
+        public virtual WebPubSubCustomCertificateResource GetWebPubSubCustomCertificateResource(ResourceIdentifier id)
         {
-            CustomCertificateResource.ValidateResourceId(id);
-            return new CustomCertificateResource(Client, id);
+            WebPubSubCustomCertificateResource.ValidateResourceId(id);
+            return new WebPubSubCustomCertificateResource(Client, id);
         }
 
         /// <summary>

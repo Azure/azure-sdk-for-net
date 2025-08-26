@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.WebPubSub
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CustomCertificateResource"/> and their operations.
-    /// Each <see cref="CustomCertificateResource"/> in the collection will belong to the same instance of <see cref="WebPubSubResource"/>.
-    /// To get a <see cref="CustomCertificateCollection"/> instance call the GetCustomCertificates method from an instance of <see cref="WebPubSubResource"/>.
+    /// A class representing a collection of <see cref="WebPubSubCustomCertificateResource"/> and their operations.
+    /// Each <see cref="WebPubSubCustomCertificateResource"/> in the collection will belong to the same instance of <see cref="WebPubSubResource"/>.
+    /// To get a <see cref="WebPubSubCustomCertificateCollection"/> instance call the GetWebPubSubCustomCertificates method from an instance of <see cref="WebPubSubResource"/>.
     /// </summary>
-    public partial class CustomCertificateCollection : ArmCollection, IEnumerable<CustomCertificateResource>, IAsyncEnumerable<CustomCertificateResource>
+    public partial class WebPubSubCustomCertificateCollection : ArmCollection, IEnumerable<WebPubSubCustomCertificateResource>, IAsyncEnumerable<WebPubSubCustomCertificateResource>
     {
-        private readonly ClientDiagnostics _customCertificateWebPubSubCustomCertificatesClientDiagnostics;
-        private readonly WebPubSubCustomCertificatesRestOperations _customCertificateWebPubSubCustomCertificatesRestClient;
+        private readonly ClientDiagnostics _webPubSubCustomCertificateClientDiagnostics;
+        private readonly WebPubSubCustomCertificatesRestOperations _webPubSubCustomCertificateRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="CustomCertificateCollection"/> class for mocking. </summary>
-        protected CustomCertificateCollection()
+        /// <summary> Initializes a new instance of the <see cref="WebPubSubCustomCertificateCollection"/> class for mocking. </summary>
+        protected WebPubSubCustomCertificateCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CustomCertificateCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebPubSubCustomCertificateCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal CustomCertificateCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal WebPubSubCustomCertificateCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _customCertificateWebPubSubCustomCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", CustomCertificateResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(CustomCertificateResource.ResourceType, out string customCertificateWebPubSubCustomCertificatesApiVersion);
-            _customCertificateWebPubSubCustomCertificatesRestClient = new WebPubSubCustomCertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, customCertificateWebPubSubCustomCertificatesApiVersion);
+            _webPubSubCustomCertificateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", WebPubSubCustomCertificateResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(WebPubSubCustomCertificateResource.ResourceType, out string webPubSubCustomCertificateApiVersion);
+            _webPubSubCustomCertificateRestClient = new WebPubSubCustomCertificatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, webPubSubCustomCertificateApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,27 +68,27 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CustomCertificateResource"/></description>
+        /// <description><see cref="WebPubSubCustomCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="certificateName"> Custom certificate name. </param>
-        /// <param name="data"> The <see cref="CustomCertificateData"/> to use. </param>
+        /// <param name="data"> The <see cref="WebPubSubCustomCertificateData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<CustomCertificateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string certificateName, CustomCertificateData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<WebPubSubCustomCertificateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string certificateName, WebPubSubCustomCertificateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _customCertificateWebPubSubCustomCertificatesClientDiagnostics.CreateScope("CustomCertificateCollection.CreateOrUpdate");
+            using var scope = _webPubSubCustomCertificateClientDiagnostics.CreateScope("WebPubSubCustomCertificateCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _customCertificateWebPubSubCustomCertificatesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new WebPubSubArmOperation<CustomCertificateResource>(new CustomCertificateOperationSource(Client), _customCertificateWebPubSubCustomCertificatesClientDiagnostics, Pipeline, _customCertificateWebPubSubCustomCertificatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _webPubSubCustomCertificateRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new WebPubSubArmOperation<WebPubSubCustomCertificateResource>(new WebPubSubCustomCertificateOperationSource(Client), _webPubSubCustomCertificateClientDiagnostics, Pipeline, _webPubSubCustomCertificateRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -117,27 +117,27 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CustomCertificateResource"/></description>
+        /// <description><see cref="WebPubSubCustomCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="certificateName"> Custom certificate name. </param>
-        /// <param name="data"> The <see cref="CustomCertificateData"/> to use. </param>
+        /// <param name="data"> The <see cref="WebPubSubCustomCertificateData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<CustomCertificateResource> CreateOrUpdate(WaitUntil waitUntil, string certificateName, CustomCertificateData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<WebPubSubCustomCertificateResource> CreateOrUpdate(WaitUntil waitUntil, string certificateName, WebPubSubCustomCertificateData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _customCertificateWebPubSubCustomCertificatesClientDiagnostics.CreateScope("CustomCertificateCollection.CreateOrUpdate");
+            using var scope = _webPubSubCustomCertificateClientDiagnostics.CreateScope("WebPubSubCustomCertificateCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _customCertificateWebPubSubCustomCertificatesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, cancellationToken);
-                var operation = new WebPubSubArmOperation<CustomCertificateResource>(new CustomCertificateOperationSource(Client), _customCertificateWebPubSubCustomCertificatesClientDiagnostics, Pipeline, _customCertificateWebPubSubCustomCertificatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _webPubSubCustomCertificateRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, cancellationToken);
+                var operation = new WebPubSubArmOperation<WebPubSubCustomCertificateResource>(new WebPubSubCustomCertificateOperationSource(Client), _webPubSubCustomCertificateClientDiagnostics, Pipeline, _webPubSubCustomCertificateRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CustomCertificateResource"/></description>
+        /// <description><see cref="WebPubSubCustomCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -174,18 +174,18 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
-        public virtual async Task<Response<CustomCertificateResource>> GetAsync(string certificateName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebPubSubCustomCertificateResource>> GetAsync(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using var scope = _customCertificateWebPubSubCustomCertificatesClientDiagnostics.CreateScope("CustomCertificateCollection.Get");
+            using var scope = _webPubSubCustomCertificateClientDiagnostics.CreateScope("WebPubSubCustomCertificateCollection.Get");
             scope.Start();
             try
             {
-                var response = await _customCertificateWebPubSubCustomCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken).ConfigureAwait(false);
+                var response = await _webPubSubCustomCertificateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CustomCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebPubSubCustomCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CustomCertificateResource"/></description>
+        /// <description><see cref="WebPubSubCustomCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,18 +219,18 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
-        public virtual Response<CustomCertificateResource> Get(string certificateName, CancellationToken cancellationToken = default)
+        public virtual Response<WebPubSubCustomCertificateResource> Get(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using var scope = _customCertificateWebPubSubCustomCertificatesClientDiagnostics.CreateScope("CustomCertificateCollection.Get");
+            using var scope = _webPubSubCustomCertificateClientDiagnostics.CreateScope("WebPubSubCustomCertificateCollection.Get");
             scope.Start();
             try
             {
-                var response = _customCertificateWebPubSubCustomCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken);
+                var response = _webPubSubCustomCertificateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CustomCertificateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebPubSubCustomCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -256,17 +256,17 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CustomCertificateResource"/></description>
+        /// <description><see cref="WebPubSubCustomCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CustomCertificateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CustomCertificateResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="WebPubSubCustomCertificateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WebPubSubCustomCertificateResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _customCertificateWebPubSubCustomCertificatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _customCertificateWebPubSubCustomCertificatesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CustomCertificateResource(Client, CustomCertificateData.DeserializeCustomCertificateData(e)), _customCertificateWebPubSubCustomCertificatesClientDiagnostics, Pipeline, "CustomCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webPubSubCustomCertificateRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webPubSubCustomCertificateRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebPubSubCustomCertificateResource(Client, WebPubSubCustomCertificateData.DeserializeWebPubSubCustomCertificateData(e)), _webPubSubCustomCertificateClientDiagnostics, Pipeline, "WebPubSubCustomCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -286,17 +286,17 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CustomCertificateResource"/></description>
+        /// <description><see cref="WebPubSubCustomCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CustomCertificateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CustomCertificateResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WebPubSubCustomCertificateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WebPubSubCustomCertificateResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _customCertificateWebPubSubCustomCertificatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _customCertificateWebPubSubCustomCertificatesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CustomCertificateResource(Client, CustomCertificateData.DeserializeCustomCertificateData(e)), _customCertificateWebPubSubCustomCertificatesClientDiagnostics, Pipeline, "CustomCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webPubSubCustomCertificateRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webPubSubCustomCertificateRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebPubSubCustomCertificateResource(Client, WebPubSubCustomCertificateData.DeserializeWebPubSubCustomCertificateData(e)), _webPubSubCustomCertificateClientDiagnostics, Pipeline, "WebPubSubCustomCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CustomCertificateResource"/></description>
+        /// <description><see cref="WebPubSubCustomCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -328,11 +328,11 @@ namespace Azure.ResourceManager.WebPubSub
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using var scope = _customCertificateWebPubSubCustomCertificatesClientDiagnostics.CreateScope("CustomCertificateCollection.Exists");
+            using var scope = _webPubSubCustomCertificateClientDiagnostics.CreateScope("WebPubSubCustomCertificateCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _customCertificateWebPubSubCustomCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _webPubSubCustomCertificateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CustomCertificateResource"/></description>
+        /// <description><see cref="WebPubSubCustomCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -371,11 +371,11 @@ namespace Azure.ResourceManager.WebPubSub
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using var scope = _customCertificateWebPubSubCustomCertificatesClientDiagnostics.CreateScope("CustomCertificateCollection.Exists");
+            using var scope = _webPubSubCustomCertificateClientDiagnostics.CreateScope("WebPubSubCustomCertificateCollection.Exists");
             scope.Start();
             try
             {
-                var response = _customCertificateWebPubSubCustomCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken: cancellationToken);
+                var response = _webPubSubCustomCertificateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CustomCertificateResource"/></description>
+        /// <description><see cref="WebPubSubCustomCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -410,18 +410,18 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
-        public virtual async Task<NullableResponse<CustomCertificateResource>> GetIfExistsAsync(string certificateName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<WebPubSubCustomCertificateResource>> GetIfExistsAsync(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using var scope = _customCertificateWebPubSubCustomCertificatesClientDiagnostics.CreateScope("CustomCertificateCollection.GetIfExists");
+            using var scope = _webPubSubCustomCertificateClientDiagnostics.CreateScope("WebPubSubCustomCertificateCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _customCertificateWebPubSubCustomCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _webPubSubCustomCertificateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<CustomCertificateResource>(response.GetRawResponse());
-                return Response.FromValue(new CustomCertificateResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<WebPubSubCustomCertificateResource>(response.GetRawResponse());
+                return Response.FromValue(new WebPubSubCustomCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CustomCertificateResource"/></description>
+        /// <description><see cref="WebPubSubCustomCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -455,18 +455,18 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
-        public virtual NullableResponse<CustomCertificateResource> GetIfExists(string certificateName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<WebPubSubCustomCertificateResource> GetIfExists(string certificateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
 
-            using var scope = _customCertificateWebPubSubCustomCertificatesClientDiagnostics.CreateScope("CustomCertificateCollection.GetIfExists");
+            using var scope = _webPubSubCustomCertificateClientDiagnostics.CreateScope("WebPubSubCustomCertificateCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _customCertificateWebPubSubCustomCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken: cancellationToken);
+                var response = _webPubSubCustomCertificateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<CustomCertificateResource>(response.GetRawResponse());
-                return Response.FromValue(new CustomCertificateResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<WebPubSubCustomCertificateResource>(response.GetRawResponse());
+                return Response.FromValue(new WebPubSubCustomCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        IEnumerator<CustomCertificateResource> IEnumerable<CustomCertificateResource>.GetEnumerator()
+        IEnumerator<WebPubSubCustomCertificateResource> IEnumerable<WebPubSubCustomCertificateResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.WebPubSub
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<CustomCertificateResource> IAsyncEnumerable<CustomCertificateResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<WebPubSubCustomCertificateResource> IAsyncEnumerable<WebPubSubCustomCertificateResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

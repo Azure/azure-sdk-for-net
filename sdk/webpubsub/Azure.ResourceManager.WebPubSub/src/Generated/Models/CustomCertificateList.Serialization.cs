@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            IReadOnlyList<CustomCertificateData> value = default;
+            IReadOnlyList<WebPubSubCustomCertificateData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     {
                         continue;
                     }
-                    List<CustomCertificateData> array = new List<CustomCertificateData>();
+                    List<WebPubSubCustomCertificateData> array = new List<WebPubSubCustomCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomCertificateData.DeserializeCustomCertificateData(item, options));
+                        array.Add(WebPubSubCustomCertificateData.DeserializeWebPubSubCustomCertificateData(item, options));
                     }
                     value = array;
                     continue;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CustomCertificateList(value ?? new ChangeTrackingList<CustomCertificateData>(), nextLink, serializedAdditionalRawData);
+            return new CustomCertificateList(value ?? new ChangeTrackingList<WebPubSubCustomCertificateData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

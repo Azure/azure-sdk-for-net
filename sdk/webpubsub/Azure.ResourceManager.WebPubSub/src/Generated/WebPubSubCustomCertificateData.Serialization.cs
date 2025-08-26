@@ -16,11 +16,11 @@ using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub
 {
-    public partial class CustomCertificateData : IUtf8JsonSerializable, IJsonModel<CustomCertificateData>
+    public partial class WebPubSubCustomCertificateData : IUtf8JsonSerializable, IJsonModel<WebPubSubCustomCertificateData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomCertificateData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebPubSubCustomCertificateData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CustomCertificateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<WebPubSubCustomCertificateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomCertificateData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WebPubSubCustomCertificateData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomCertificateData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(WebPubSubCustomCertificateData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -57,19 +57,19 @@ namespace Azure.ResourceManager.WebPubSub
             writer.WriteEndObject();
         }
 
-        CustomCertificateData IJsonModel<CustomCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        WebPubSubCustomCertificateData IJsonModel<WebPubSubCustomCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomCertificateData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WebPubSubCustomCertificateData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomCertificateData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(WebPubSubCustomCertificateData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCustomCertificateData(document.RootElement, options);
+            return DeserializeWebPubSubCustomCertificateData(document.RootElement, options);
         }
 
-        internal static CustomCertificateData DeserializeCustomCertificateData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static WebPubSubCustomCertificateData DeserializeWebPubSubCustomCertificateData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.WebPubSub
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CustomCertificateData(
+            return new WebPubSubCustomCertificateData(
                 id,
                 name,
                 type,
@@ -314,9 +314,9 @@ namespace Azure.ResourceManager.WebPubSub
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<CustomCertificateData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<WebPubSubCustomCertificateData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomCertificateData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WebPubSubCustomCertificateData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -325,26 +325,26 @@ namespace Azure.ResourceManager.WebPubSub
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(CustomCertificateData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebPubSubCustomCertificateData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CustomCertificateData IPersistableModel<CustomCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        WebPubSubCustomCertificateData IPersistableModel<WebPubSubCustomCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomCertificateData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WebPubSubCustomCertificateData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCustomCertificateData(document.RootElement, options);
+                        return DeserializeWebPubSubCustomCertificateData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomCertificateData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebPubSubCustomCertificateData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CustomCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<WebPubSubCustomCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
