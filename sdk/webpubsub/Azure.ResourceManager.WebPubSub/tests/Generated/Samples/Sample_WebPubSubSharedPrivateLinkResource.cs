@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             string resourceName = "myWebPubSubService";
             string sharedPrivateLinkResourceName = "upstream";
             ResourceIdentifier webPubSubSharedPrivateLinkResourceId = WebPubSubSharedPrivateLinkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, sharedPrivateLinkResourceName);
-            WebPubSubSharedPrivateLinkResource webPubSubSharedPrivateLinkResource = client.GetWebPubSubSharedPrivateLinkResource(webPubSubSharedPrivateLinkResourceId);
+            WebPubSubSharedPrivateLinkResource webPubSubSharedPrivateLink = client.GetWebPubSubSharedPrivateLinkResource(webPubSubSharedPrivateLinkResourceId);
 
             // invoke the operation
-            WebPubSubSharedPrivateLinkResource result = await webPubSubSharedPrivateLinkResource.GetAsync();
+            WebPubSubSharedPrivateLinkResource result = await webPubSubSharedPrivateLink.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -65,10 +65,10 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             string resourceName = "myWebPubSubService";
             string sharedPrivateLinkResourceName = "upstream";
             ResourceIdentifier webPubSubSharedPrivateLinkResourceId = WebPubSubSharedPrivateLinkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, sharedPrivateLinkResourceName);
-            WebPubSubSharedPrivateLinkResource webPubSubSharedPrivateLinkResource = client.GetWebPubSubSharedPrivateLinkResource(webPubSubSharedPrivateLinkResourceId);
+            WebPubSubSharedPrivateLinkResource webPubSubSharedPrivateLink = client.GetWebPubSubSharedPrivateLinkResource(webPubSubSharedPrivateLinkResourceId);
 
             // invoke the operation
-            await webPubSubSharedPrivateLinkResource.DeleteAsync(WaitUntil.Completed);
+            await webPubSubSharedPrivateLink.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             string resourceName = "myWebPubSubService";
             string sharedPrivateLinkResourceName = "upstream";
             ResourceIdentifier webPubSubSharedPrivateLinkResourceId = WebPubSubSharedPrivateLinkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, sharedPrivateLinkResourceName);
-            WebPubSubSharedPrivateLinkResource webPubSubSharedPrivateLinkResource = client.GetWebPubSubSharedPrivateLinkResource(webPubSubSharedPrivateLinkResourceId);
+            WebPubSubSharedPrivateLinkResource webPubSubSharedPrivateLink = client.GetWebPubSubSharedPrivateLinkResource(webPubSubSharedPrivateLinkResourceId);
 
             // invoke the operation
             WebPubSubSharedPrivateLinkData data = new WebPubSubSharedPrivateLinkData
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.WebPubSub.Samples
                 PrivateLinkResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.Web/sites/myWebApp"),
                 RequestMessage = "Please approve",
             };
-            ArmOperation<WebPubSubSharedPrivateLinkResource> lro = await webPubSubSharedPrivateLinkResource.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<WebPubSubSharedPrivateLinkResource> lro = await webPubSubSharedPrivateLink.UpdateAsync(WaitUntil.Completed, data);
             WebPubSubSharedPrivateLinkResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
