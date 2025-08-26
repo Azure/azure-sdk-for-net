@@ -136,7 +136,7 @@ namespace Azure.Identity
             // with the provided claims using 'az login --claims-challenge'. This mirrors the cross-language guidance for CLI based auth.
             // We purposefully do NOT translate this into a CredentialUnavailableException (even when part of a chain) so that callers
             // receive the claims challenge context and can act on it rather than silently falling back to another credential.
-            if (!string.IsNullOrEmpty(context.Claims))
+            if (!string.IsNullOrWhiteSpace(context.Claims))
             {
                 string loginCommand = string.IsNullOrEmpty(tenantId)
                     ? $"az login --claims-challenge {context.Claims}"
