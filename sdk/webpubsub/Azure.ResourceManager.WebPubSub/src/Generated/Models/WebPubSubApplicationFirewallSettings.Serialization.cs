@@ -15,11 +15,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    public partial class ApplicationFirewallSettings : IUtf8JsonSerializable, IJsonModel<ApplicationFirewallSettings>
+    public partial class WebPubSubApplicationFirewallSettings : IUtf8JsonSerializable, IJsonModel<WebPubSubApplicationFirewallSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationFirewallSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebPubSubApplicationFirewallSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ApplicationFirewallSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<WebPubSubApplicationFirewallSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationFirewallSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WebPubSubApplicationFirewallSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationFirewallSettings)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(WebPubSubApplicationFirewallSettings)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsCollectionDefined(ClientConnectionCountRules))
@@ -78,19 +78,19 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
         }
 
-        ApplicationFirewallSettings IJsonModel<ApplicationFirewallSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        WebPubSubApplicationFirewallSettings IJsonModel<WebPubSubApplicationFirewallSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationFirewallSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WebPubSubApplicationFirewallSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationFirewallSettings)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(WebPubSubApplicationFirewallSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApplicationFirewallSettings(document.RootElement, options);
+            return DeserializeWebPubSubApplicationFirewallSettings(document.RootElement, options);
         }
 
-        internal static ApplicationFirewallSettings DeserializeApplicationFirewallSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static WebPubSubApplicationFirewallSettings DeserializeWebPubSubApplicationFirewallSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ApplicationFirewallSettings(clientConnectionCountRules ?? new ChangeTrackingList<ClientConnectionCountRule>(), clientTrafficControlRules ?? new ChangeTrackingList<ClientTrafficControlRule>(), maxClientConnectionLifetimeInSeconds, serializedAdditionalRawData);
+            return new WebPubSubApplicationFirewallSettings(clientConnectionCountRules ?? new ChangeTrackingList<ClientConnectionCountRule>(), clientTrafficControlRules ?? new ChangeTrackingList<ClientTrafficControlRule>(), maxClientConnectionLifetimeInSeconds, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -227,9 +227,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<ApplicationFirewallSettings>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<WebPubSubApplicationFirewallSettings>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationFirewallSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WebPubSubApplicationFirewallSettings>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -238,26 +238,26 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationFirewallSettings)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebPubSubApplicationFirewallSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ApplicationFirewallSettings IPersistableModel<ApplicationFirewallSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        WebPubSubApplicationFirewallSettings IPersistableModel<WebPubSubApplicationFirewallSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationFirewallSettings>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WebPubSubApplicationFirewallSettings>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeApplicationFirewallSettings(document.RootElement, options);
+                        return DeserializeWebPubSubApplicationFirewallSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationFirewallSettings)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebPubSubApplicationFirewallSettings)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ApplicationFirewallSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<WebPubSubApplicationFirewallSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

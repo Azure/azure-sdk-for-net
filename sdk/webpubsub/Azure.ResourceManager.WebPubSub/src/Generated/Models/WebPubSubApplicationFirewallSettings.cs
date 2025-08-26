@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> Application firewall settings for the resource. </summary>
-    public partial class ApplicationFirewallSettings
+    public partial class WebPubSubApplicationFirewallSettings
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationFirewallSettings"/>. </summary>
-        public ApplicationFirewallSettings()
+        /// <summary> Initializes a new instance of <see cref="WebPubSubApplicationFirewallSettings"/>. </summary>
+        public WebPubSubApplicationFirewallSettings()
         {
             ClientConnectionCountRules = new ChangeTrackingList<ClientConnectionCountRule>();
             ClientTrafficControlRules = new ChangeTrackingList<ClientTrafficControlRule>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationFirewallSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubApplicationFirewallSettings"/>. </summary>
         /// <param name="clientConnectionCountRules">
         /// Rules to control the client connection count
         /// Please note <see cref="ClientConnectionCountRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// </param>
         /// <param name="maxClientConnectionLifetimeInSeconds"> Config to control the client connection lifetime in seconds, can be set to 0 to disable the config. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationFirewallSettings(IList<ClientConnectionCountRule> clientConnectionCountRules, IList<ClientTrafficControlRule> clientTrafficControlRules, long? maxClientConnectionLifetimeInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WebPubSubApplicationFirewallSettings(IList<ClientConnectionCountRule> clientConnectionCountRules, IList<ClientTrafficControlRule> clientTrafficControlRules, long? maxClientConnectionLifetimeInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClientConnectionCountRules = clientConnectionCountRules;
             ClientTrafficControlRules = clientTrafficControlRules;

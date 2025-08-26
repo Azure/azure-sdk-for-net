@@ -19,6 +19,9 @@ modelerfour:
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
+# mgmt-debug:
+#  show-serialized-names: true
+
 no-property-type-replacement: PrivateEndpoint
 
 format-by-name-rules:
@@ -57,8 +60,32 @@ override-operation-name:
   WebPubSub_CheckNameAvailability: CheckWebPubSubNameAvailability
 
 rename-mapping:
+  WebPubSubResource.properties.disableAadAuth: IsAadAuthDisabled
+  WebPubSubResource.properties.disableLocalAuth: IsLocalAuthDisabled
   WebPubSubResource: WebPubSub
+  SharedPrivateLinkResource.properties.privateLinkResourceId: -|arm-id
   SharedPrivateLinkResource: WebPubSubSharedPrivateLink
+  PrivateLinkResource.properties.shareablePrivateLinkResourceTypes: ShareablePrivateLinkTypes
+  PrivateLinkResource: WebPubSubPrivateLink
+  NameAvailability: WebPubSubNameAvailability
+  NameAvailabilityParameters: WebPubSubNameAvailabilityParameters
+  ShareablePrivateLinkResourceType: ShareablePrivateLinkType
+  ShareablePrivateLinkResourceProperties: ShareablePrivateLinkProperties
+  ShareablePrivateLinkResourceProperties.type: shareablePrivateLinkPropertiesType
+  Sku.resourceType: -|resource-type
+  Sku: WebPubSubSku
+  ResourceSku: BillingInfoSku
+  SkuCapacity: WebPubSubSkuCapacity
+  NetworkACL: PublicNetworkAcls
+  EventHandler: WebPubSubEventHandler
+  ScaleType: WebPubSubScaleType
+  KeyType: WebPubSubKeyType
+  PrivateEndpoint.id: -|arm-id
+  SignalRServiceUsage.id: -|arm-id
+  WebPubSubTlsSettings.clientCertEnabled: IsClientCertEnabled
+  PrivateLinkServiceConnectionStatus: WebPubSubPrivateLinkServiceConnectionStatus
+  ProvisioningState: WebPubSubProvisioningState
+  SharedPrivateLinkResourceStatus: WebPubSubSharedPrivateLinkStatus
   RegenerateKeyParameters: WebPubSubRegenerateKeyContent
   ClientConnectionCountRule.type: ThrottleType
   ClientTrafficControlRule.type: TrafficThrottleType
@@ -71,91 +98,8 @@ rename-mapping:
   EventListener: WebPubSubEventListener
   IPRule: PublicTrafficIPRule
   ServiceKind: WebPubSubServiceKind
+  ApplicationFirewallSettings: WebPubSubApplicationFirewallSettings
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}: WebPubSubSharedPrivateLink
-
-directive:
-  - rename-model:
-      from: PrivateLinkResource
-      to: WebPubSubPrivateLink
-#   - rename-model:
-#       from: SharedPrivateLinkResource
-#       to: WebPubSubSharedPrivateLink
-  - rename-model:
-      from: NameAvailability
-      to: WebPubSubNameAvailability
-  - rename-model:
-      from: NameAvailabilityParameters
-      to: WebPubSubNameAvailabilityParameters
-#   - rename-model:
-#       from: WebPubSubResource
-#       to: WebPubSub
-  - rename-model:
-      from: ShareablePrivateLinkResourceType
-      to: ShareablePrivateLinkType
-  - rename-model:
-      from: ShareablePrivateLinkResourceProperties
-      to: ShareablePrivateLinkProperties
-
-  - from: webpubsub.json
-    where: $.definitions.PrivateLinkResourceProperties.properties.shareablePrivateLinkResourceTypes
-    transform: $["x-ms-client-name"] = "shareablePrivateLinkTypes"
-  - from: webpubsub.json
-    where: $.definitions.PrivateLinkServiceConnectionStatus
-    transform: $["x-ms-enum"].name = "WebPubSubPrivateLinkServiceConnectionStatus"
-  - from: webpubsub.json
-    where: $.definitions.ProvisioningState
-    transform: $["x-ms-enum"].name = "WebPubSubProvisioningState"
-  - from: webpubsub.json
-    where: $.definitions.SharedPrivateLinkResourceStatus
-    transform: $["x-ms-enum"].name = "WebPubSubSharedPrivateLinkStatus"
-  - from: webpubsub.json
-    where: $.definitions.Sku.properties.resourceType
-    transform: $['x-ms-format']= "resource-type"
-
-  # rename classes with common names
-  - rename-model:
-      from: Sku
-      to: WebPubSubSku
-  - rename-model:
-      from: ResourceSku
-      to: BillingInfoSku
-  - rename-model:
-      from: SkuCapacity
-      to: WebPubSubSkuCapacity
-  - rename-model:
-      from: NetworkACL
-      to:  PublicNetworkAcls
-  - rename-model:
-      from: EventHandler
-      to:  WebPubSubEventHandler
-  - from: webpubsub.json
-    where: $.definitions.ScaleType
-    transform: $['x-ms-enum'].name = 'WebPubSubScaleType'
-  - from: webpubsub.json
-    where: $.definitions.KeyType
-    transform: $['x-ms-enum'].name = 'WebPubSubKeyType'
-
-  # Change type to ResourceIdentifier
-  - from: webpubsub.json
-    where: $.definitions.SharedPrivateLinkResourceProperties.properties.privateLinkResourceId
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: webpubsub.json
-    where: $.definitions.PrivateEndpoint.properties.id
-    transform: $['x-ms-format'] = 'arm-id'
-  - from: webpubsub.json
-    where: $.definitions.SignalRServiceUsage.properties.id
-    transform: $['x-ms-format'] = 'arm-id'
-
-  # Rename some class names of boolean types
-  - from: webpubsub.json
-    where: $.definitions.WebPubSubTlsSettings.properties.clientCertEnabled
-    transform: $["x-ms-client-name"] = 'isClientCertEnabled'
-  - from: webpubsub.json
-    where: $.definitions.WebPubSubProperties.properties.disableAadAuth
-    transform: $["x-ms-client-name"] = 'isAadAuthDisabled'
-  - from: webpubsub.json
-    where: $.definitions.WebPubSubProperties.properties.disableLocalAuth
-    transform: $["x-ms-client-name"] = 'isLocalAuthDisabled'
 ```

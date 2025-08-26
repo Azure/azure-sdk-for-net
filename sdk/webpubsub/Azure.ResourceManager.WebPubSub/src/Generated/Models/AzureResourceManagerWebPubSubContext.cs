@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.WebPubSub
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(ApplicationFirewallSettings))]
     [ModelReaderWriterBuildable(typeof(BillingInfoSku))]
     [ModelReaderWriterBuildable(typeof(ClientConnectionCountRule))]
     [ModelReaderWriterBuildable(typeof(ClientTrafficControlRule))]
@@ -59,6 +58,7 @@ namespace Azure.ResourceManager.WebPubSub
     [ModelReaderWriterBuildable(typeof(UnknownEventListenerFilter))]
     [ModelReaderWriterBuildable(typeof(UpstreamAuthSettings))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(WebPubSubApplicationFirewallSettings))]
     [ModelReaderWriterBuildable(typeof(WebPubSubCustomCertificateData))]
     [ModelReaderWriterBuildable(typeof(WebPubSubCustomCertificateResource))]
     [ModelReaderWriterBuildable(typeof(WebPubSubCustomDomainData))]

@@ -1683,8 +1683,7 @@
         "protobuf",
         "Ackable",
         "awps",
-        "Fqdns",
-        "fqdns"
+        "Fqdns"
       ]
     },
     {
