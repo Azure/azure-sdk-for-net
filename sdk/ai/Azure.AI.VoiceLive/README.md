@@ -150,7 +150,7 @@ SessionOptions sessionOptions = new SessionOptions()
 {
     Model = model,
     Instructions = "You are a helpful AI assistant. Respond naturally and conversationally.",
-    Voice = new AzureStandardVoice("en-US-AvaNeural", AzureStandardVoiceType.AzureStandard),
+    Voice = new AzureStandardVoice("en-US-AvaNeural"),
     TurnDetection = new ServerVad()
     {
         Threshold = 0.5f,
@@ -169,7 +169,7 @@ sessionOptions.Modalities.Add(InputModality.Audio);
 await session.ConfigureConversationSessionAsync(sessionOptions).ConfigureAwait(false);
 
 // Process events from the session
-await foreach (ServerEvent serverEvent in session.GetUpdatesAsync().ConfigureAwait(false))
+await foreach (ServerEventBase serverEvent in session.GetUpdatesAsync().ConfigureAwait(false))
 {
     if (serverEvent is ServerEventResponseAudioDelta audioDelta)
     {
@@ -192,7 +192,7 @@ SessionOptions sessionOptions = new SessionOptions()
 {
     Model = model,
     Instructions = "You are a customer service representative. Be helpful and professional.",
-    Voice = new AzureCustomVoice("your-custom-voice-name", "your-custom-voice-endpoint-id", AzureCustomVoiceType.AzureCustom)
+    Voice = new AzureCustomVoice("your-custom-voice-name", "your-custom-voice-endpoint-id")
     {
         Temperature = 0.8f
     },
@@ -218,7 +218,7 @@ await session.ConfigureConversationSessionAsync(sessionOptions).ConfigureAwait(f
 
 ```C# Snippet:FunctionCallingExample
 // Define a function for the assistant to call
-var getCurrentWeatherFunction = new FunctionTool("get_current_weather")
+var getCurrentWeatherFunction = new VoiceLiveFunctionDefinition("get_current_weather")
 {
     Description = "Get the current weather for a given location",
     Parameters = BinaryData.FromString("""
@@ -239,7 +239,7 @@ SessionOptions sessionOptions = new SessionOptions()
 {
     Model = model,
     Instructions = "You are a weather assistant. Use the get_current_weather function to help users with weather information.",
-    Voice = new AzureStandardVoice("en-US-AvaNeural", AzureStandardVoiceType.AzureStandard),
+    Voice = new AzureStandardVoice("en-US-AvaNeural"),
     InputAudioFormat = AudioFormat.Pcm16,
     OutputAudioFormat = AudioFormat.Pcm16
 };
