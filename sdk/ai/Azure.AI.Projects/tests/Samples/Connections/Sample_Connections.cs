@@ -7,9 +7,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using System.ClientModel.Primitives;
-using System.Diagnostics;
-using System.Collections.Generic;
 
 namespace Azure.AI.Projects.Tests
 {
@@ -27,7 +24,7 @@ namespace Azure.AI.Projects.Tests
             var endpoint = TestEnvironment.PROJECTENDPOINT;
             var connectionName = TestEnvironment.CONNECTIONNAME;
 #endif
-            AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+            AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
             Console.WriteLine("List the properties of all connections:");
             foreach (ConnectionProperties connection in projectClient.Connections.GetConnections())
@@ -72,7 +69,7 @@ namespace Azure.AI.Projects.Tests
             var endpoint = TestEnvironment.PROJECTENDPOINT;
             var connectionName = TestEnvironment.CONNECTIONNAME;
 #endif
-            AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+            AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 
             Console.WriteLine("List the properties of all connections:");
             await foreach (ConnectionProperties connection in projectClient.Connections.GetConnectionsAsync())

@@ -62,7 +62,7 @@ namespace Azure.AI.Projects.Tests
             var aiSearchConnectionName = Environment.GetEnvironmentVariable("AI_SEARCH_CONNECTION_NAME") ?? "my-ai-search-connection-name";
             var aiSearchIndexName = Environment.GetEnvironmentVariable("AI_SEARCH_INDEX_NAME") ?? "my-ai-search-index-name";
 
-            AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+            AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
 #else
             var endpoint = TestEnvironment.PROJECTENDPOINT;
             var indexName = TestEnvironment.INDEXNAME ?? "my-index";
@@ -72,23 +72,19 @@ namespace Azure.AI.Projects.Tests
 
             AIProjectClient projectClient = CreateDebugClient(endpoint);
 #endif
-
-            BinaryContent content = BinaryContent.Create(BinaryData.FromObjectAsJson(new
+            Console.WriteLine("Create a local Index with configurable data, referencing an existing AI Search resource");
+            AzureAISearchIndex searchIndex = new AzureAISearchIndex(aiSearchConnectionName, aiSearchIndexName)
             {
-                connectionName = aiSearchConnectionName,
-                indexName = aiSearchIndexName,
-                type = "AzureSearch",
-                description = "Sample Index for testing",
-                displayName = "Sample Index"
-            }));
+                Description = "Sample Index for testing"
+            };
 
-            Console.WriteLine($"Create an Index named `{indexName}` referencing an existing AI Search resource:");
-            SearchIndex index = (SearchIndex)projectClient.Indexes.CreateOrUpdate(
+            Console.WriteLine($"Create the Project Index named `{indexName}` using the previously created local object:");
+            searchIndex = (AzureAISearchIndex)projectClient.Indexes.CreateOrUpdate(
                 name: indexName,
                 version: indexVersion,
-                content: content
+                index: searchIndex
             );
-            Console.WriteLine(index);
+            Console.WriteLine(searchIndex);
 
             Console.WriteLine($"Get an existing Index named `{indexName}`, version `{indexVersion}`:");
             SearchIndex retrievedIndex = projectClient.Indexes.GetIndex(name: indexName, version: indexVersion);
@@ -133,23 +129,19 @@ namespace Azure.AI.Projects.Tests
 
             AIProjectClient projectClient = CreateDebugClient(endpoint);
 #endif
-
-            BinaryContent content = BinaryContent.Create(BinaryData.FromObjectAsJson(new
+            Console.WriteLine("Create a local Index with configurable data, referencing an existing AI Search resource");
+            AzureAISearchIndex searchIndex = new AzureAISearchIndex(aiSearchConnectionName, aiSearchIndexName)
             {
-                connectionName = aiSearchConnectionName,
-                indexName = aiSearchIndexName,
-                type = "AzureSearch",
-                description = "Sample Index for testing",
-                displayName = "Sample Index"
-            }));
+                Description = "Sample Index for testing"
+            };
 
-            Console.WriteLine($"Create an Index named `{indexName}` referencing an existing AI Search resource:");
-            SearchIndex index = (SearchIndex)await projectClient.Indexes.CreateOrUpdateAsync(
+            Console.WriteLine($"Create the Project Index named `{indexName}` using the previously created local object:");
+            searchIndex = (AzureAISearchIndex)await projectClient.Indexes.CreateOrUpdateAsync(
                 name: indexName,
                 version: indexVersion,
-                content: content
+                index: searchIndex
             );
-            Console.WriteLine(index);
+            Console.WriteLine(searchIndex);
 
             Console.WriteLine($"Get an existing Index named `{indexName}`, version `{indexVersion}`:");
             SearchIndex retrievedIndex = await projectClient.Indexes.GetIndexAsync(name: indexName, version: indexVersion);
