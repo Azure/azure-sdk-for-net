@@ -145,41 +145,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.BillingInfoSku"/>. </summary>
-        /// <param name="name">
-        /// The name of the SKU. Required.
-        ///
-        /// Allowed values: Standard_S1, Free_F1, Premium_P1, Premium_P2
-        /// </param>
-        /// <param name="tier">
-        /// Optional tier of this particular SKU. 'Standard' or 'Free'.
-        ///
-        /// `Basic` is deprecated, use `Standard` instead.
-        /// </param>
-        /// <param name="size"> Not used. Retained for future use. </param>
-        /// <param name="family"> Not used. Retained for future use. </param>
-        /// <param name="capacity">
-        /// Optional, integer. The unit count of the resource.
-        /// 1 for Free_F1/Standard_S1/Premium_P1, 100 for Premium_P2 by default.
-        ///
-        /// If present, following values are allowed:
-        ///     Free_F1: 1;
-        ///     Standard_S1: 1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100;
-        ///     Premium_P1:  1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100;
-        ///     Premium_P2:  100,200,300,400,500,600,700,800,900,1000;
-        /// </param>
-        /// <returns> A new <see cref="Models.BillingInfoSku"/> instance for mocking. </returns>
-        public static BillingInfoSku BillingInfoSku(string name = null, WebPubSubSkuTier? tier = null, string size = null, string family = null, int? capacity = null)
-        {
-            return new BillingInfoSku(
-                name,
-                tier,
-                size,
-                family,
-                capacity,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="WebPubSub.WebPubSubPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -233,6 +198,41 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 requestMessage,
                 fqdns?.ToList(),
                 status,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BillingInfoSku"/>. </summary>
+        /// <param name="name">
+        /// The name of the SKU. Required.
+        ///
+        /// Allowed values: Standard_S1, Free_F1, Premium_P1, Premium_P2
+        /// </param>
+        /// <param name="tier">
+        /// Optional tier of this particular SKU. 'Standard' or 'Free'.
+        ///
+        /// `Basic` is deprecated, use `Standard` instead.
+        /// </param>
+        /// <param name="size"> Not used. Retained for future use. </param>
+        /// <param name="family"> Not used. Retained for future use. </param>
+        /// <param name="capacity">
+        /// Optional, integer. The unit count of the resource.
+        /// 1 for Free_F1/Standard_S1/Premium_P1, 100 for Premium_P2 by default.
+        ///
+        /// If present, following values are allowed:
+        /// Free_F1: 1;
+        /// Standard_S1: 1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100;
+        /// Premium_P1:  1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100;
+        /// Premium_P2:  100,200,300,400,500,600,700,800,900,1000;
+        /// </param>
+        /// <returns> A new <see cref="Models.BillingInfoSku"/> instance for mocking. </returns>
+        public static BillingInfoSku BillingInfoSku(string name = null, WebPubSubSkuTier? tier = null, string size = null, string family = null, int? capacity = null)
+        {
+            return new BillingInfoSku(
+                name,
+                tier,
+                size,
+                family,
+                capacity,
                 serializedAdditionalRawData: null);
         }
 

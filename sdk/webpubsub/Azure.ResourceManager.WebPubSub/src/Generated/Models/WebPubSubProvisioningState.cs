@@ -32,21 +32,21 @@ namespace Azure.ResourceManager.WebPubSub.Models
         private const string DeletingValue = "Deleting";
         private const string MovingValue = "Moving";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Unknown provisioning state. </summary>
         public static WebPubSubProvisioningState Unknown { get; } = new WebPubSubProvisioningState(UnknownValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary> Resource successfully provisioned. </summary>
         public static WebPubSubProvisioningState Succeeded { get; } = new WebPubSubProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary> Resource provisioning failed. </summary>
         public static WebPubSubProvisioningState Failed { get; } = new WebPubSubProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+        /// <summary> Resource provisioning was canceled. </summary>
         public static WebPubSubProvisioningState Canceled { get; } = new WebPubSubProvisioningState(CanceledValue);
-        /// <summary> Running. </summary>
+        /// <summary> Resource provisioning is running. </summary>
         public static WebPubSubProvisioningState Running { get; } = new WebPubSubProvisioningState(RunningValue);
-        /// <summary> Creating. </summary>
+        /// <summary> Resource is being created. </summary>
         public static WebPubSubProvisioningState Creating { get; } = new WebPubSubProvisioningState(CreatingValue);
-        /// <summary> Updating. </summary>
+        /// <summary> Resource is being updated. </summary>
         public static WebPubSubProvisioningState Updating { get; } = new WebPubSubProvisioningState(UpdatingValue);
-        /// <summary> Deleting. </summary>
+        /// <summary> Resource is being deleted. </summary>
         public static WebPubSubProvisioningState Deleting { get; } = new WebPubSubProvisioningState(DeletingValue);
         /// <summary> Moving. </summary>
         public static WebPubSubProvisioningState Moving { get; } = new WebPubSubProvisioningState(MovingValue);

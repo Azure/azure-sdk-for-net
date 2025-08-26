@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The region. </param>
-        /// <param name="content"> Parameters supplied to the operation. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<WebPubSubNameAvailability>> CheckWebPubSubNameAvailabilityAsync(AzureLocation location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The region. </param>
-        /// <param name="content"> Parameters supplied to the operation. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<WebPubSubNameAvailability> CheckWebPubSubNameAvailability(AzureLocation location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> the location like "eastus". </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SignalRServiceUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SignalRServiceUsage> GetUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> the location like "eastus". </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SignalRServiceUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SignalRServiceUsage> GetUsages(AzureLocation location, CancellationToken cancellationToken = default)

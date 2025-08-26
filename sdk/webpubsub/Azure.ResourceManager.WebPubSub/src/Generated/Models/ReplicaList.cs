@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    /// <summary> The ReplicaList. </summary>
+    /// <summary> Paged collection of Replica items. </summary>
     internal partial class ReplicaList
     {
         /// <summary>
@@ -46,31 +47,34 @@ namespace Azure.ResourceManager.WebPubSub.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ReplicaList"/>. </summary>
-        internal ReplicaList()
+        /// <param name="value"> The Replica items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ReplicaList(IEnumerable<WebPubSubReplicaData> value)
         {
-            Value = new ChangeTrackingList<WebPubSubReplicaData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ReplicaList"/>. </summary>
-        /// <param name="value"> List of the replica. </param>
-        /// <param name="nextLink">
-        /// The URL the client should use to fetch the next page (per server side paging).
-        /// It's null for now, added for future use.
-        /// </param>
+        /// <param name="value"> The Replica items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReplicaList(IReadOnlyList<WebPubSubReplicaData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReplicaList(IReadOnlyList<WebPubSubReplicaData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of the replica. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicaList"/> for deserialization. </summary>
+        internal ReplicaList()
+        {
+        }
+
+        /// <summary> The Replica items on this page. </summary>
         public IReadOnlyList<WebPubSubReplicaData> Value { get; }
-        /// <summary>
-        /// The URL the client should use to fetch the next page (per server side paging).
-        /// It's null for now, added for future use.
-        /// </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

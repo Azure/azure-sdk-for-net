@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
@@ -46,31 +47,34 @@ namespace Azure.ResourceManager.WebPubSub.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CustomCertificateList"/>. </summary>
-        internal CustomCertificateList()
+        /// <param name="value"> The CustomCertificate items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal CustomCertificateList(IEnumerable<WebPubSubCustomCertificateData> value)
         {
-            Value = new ChangeTrackingList<WebPubSubCustomCertificateData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomCertificateList"/>. </summary>
-        /// <param name="value"> List of custom certificates of this resource. </param>
-        /// <param name="nextLink">
-        /// The URL the client should use to fetch the next page (per server side paging).
-        /// It's null for now, added for future use.
-        /// </param>
+        /// <param name="value"> The CustomCertificate items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomCertificateList(IReadOnlyList<WebPubSubCustomCertificateData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CustomCertificateList(IReadOnlyList<WebPubSubCustomCertificateData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of custom certificates of this resource. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomCertificateList"/> for deserialization. </summary>
+        internal CustomCertificateList()
+        {
+        }
+
+        /// <summary> The CustomCertificate items on this page. </summary>
         public IReadOnlyList<WebPubSubCustomCertificateData> Value { get; }
-        /// <summary>
-        /// The URL the client should use to fetch the next page (per server side paging).
-        /// It's null for now, added for future use.
-        /// </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

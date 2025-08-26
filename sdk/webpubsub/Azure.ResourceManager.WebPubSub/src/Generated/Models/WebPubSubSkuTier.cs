@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
         private const string StandardValue = "Standard";
         private const string PremiumValue = "Premium";
 
-        /// <summary> Free. </summary>
+        /// <summary> Free tier for WebPubSub service. </summary>
         public static WebPubSubSkuTier Free { get; } = new WebPubSubSkuTier(FreeValue);
-        /// <summary> Basic. </summary>
+        /// <summary> Basic tier for WebPubSub service (deprecated, use Standard instead). </summary>
         public static WebPubSubSkuTier Basic { get; } = new WebPubSubSkuTier(BasicValue);
-        /// <summary> Standard. </summary>
+        /// <summary> Standard tier for WebPubSub service. </summary>
         public static WebPubSubSkuTier Standard { get; } = new WebPubSubSkuTier(StandardValue);
-        /// <summary> Premium. </summary>
+        /// <summary> Premium tier for WebPubSub service. </summary>
         public static WebPubSubSkuTier Premium { get; } = new WebPubSubSkuTier(PremiumValue);
         /// <summary> Determines if two <see cref="WebPubSubSkuTier"/> values are the same. </summary>
         public static bool operator ==(WebPubSubSkuTier left, WebPubSubSkuTier right) => left.Equals(right);

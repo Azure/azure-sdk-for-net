@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// 1 for Free_F1/Standard_S1/Premium_P1, 100 for Premium_P2 by default.
         ///
         /// If present, following values are allowed:
-        ///     Free_F1: 1;
-        ///     Standard_S1: 1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100;
-        ///     Premium_P1:  1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100;
-        ///     Premium_P2:  100,200,300,400,500,600,700,800,900,1000;
+        /// Free_F1: 1;
+        /// Standard_S1: 1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100;
+        /// Premium_P1:  1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100;
+        /// Premium_P2:  100,200,300,400,500,600,700,800,900,1000;
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BillingInfoSku(string name, WebPubSubSkuTier? tier, string size, string family, int? capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -123,10 +123,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// 1 for Free_F1/Standard_S1/Premium_P1, 100 for Premium_P2 by default.
         ///
         /// If present, following values are allowed:
-        ///     Free_F1: 1;
-        ///     Standard_S1: 1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100;
-        ///     Premium_P1:  1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100;
-        ///     Premium_P2:  100,200,300,400,500,600,700,800,900,1000;
+        /// Free_F1: 1;
+        /// Standard_S1: 1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100;
+        /// Premium_P1:  1,2,3,4,5,6,7,8,9,10,20,30,40,50,60,70,80,90,100;
+        /// Premium_P2:  100,200,300,400,500,600,700,800,900,1000;
         /// </summary>
         [WirePath("capacity")]
         public int? Capacity { get; set; }

@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="userEventPattern">
         /// Gets or sets a matching pattern for event names.
         /// There are 3 kinds of patterns supported:
-        ///     1. "*", it matches any event name
-        ///     2. Combine multiple events with ",", for example "event1,event2", it matches events "event1" and "event2"
-        ///     3. A single event name, for example, "event1", it matches "event1"
+        /// 1. "*", it matches any event name
+        /// 2. Combine multiple events with ",", for example "event1,event2", it matches events "event1" and "event2"
+        /// 3. A single event name, for example, "event1", it matches "event1"
         /// </param>
         internal EventNameFilter(EventListenerFilterDiscriminator eventListenerFilterType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> systemEvents, string userEventPattern) : base(eventListenerFilterType, serializedAdditionalRawData)
         {
@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <summary>
         /// Gets or sets a matching pattern for event names.
         /// There are 3 kinds of patterns supported:
-        ///     1. "*", it matches any event name
-        ///     2. Combine multiple events with ",", for example "event1,event2", it matches events "event1" and "event2"
-        ///     3. A single event name, for example, "event1", it matches "event1"
+        /// 1. "*", it matches any event name
+        /// 2. Combine multiple events with ",", for example "event1,event2", it matches events "event1" and "event2"
+        /// 3. A single event name, for example, "event1", it matches "event1"
         /// </summary>
         [WirePath("userEventPattern")]
         public string UserEventPattern { get; set; }

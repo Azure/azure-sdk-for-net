@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
@@ -46,31 +47,34 @@ namespace Azure.ResourceManager.WebPubSub.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SignalRServiceUsageList"/>. </summary>
-        internal SignalRServiceUsageList()
+        /// <param name="value"> The SignalRServiceUsage items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal SignalRServiceUsageList(IEnumerable<SignalRServiceUsage> value)
         {
-            Value = new ChangeTrackingList<SignalRServiceUsage>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="SignalRServiceUsageList"/>. </summary>
-        /// <param name="value"> List of the resource usages. </param>
-        /// <param name="nextLink">
-        /// The URL the client should use to fetch the next page (per server side paging).
-        /// It's null for now, added for future use.
-        /// </param>
+        /// <param name="value"> The SignalRServiceUsage items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SignalRServiceUsageList(IReadOnlyList<SignalRServiceUsage> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SignalRServiceUsageList(IReadOnlyList<SignalRServiceUsage> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of the resource usages. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRServiceUsageList"/> for deserialization. </summary>
+        internal SignalRServiceUsageList()
+        {
+        }
+
+        /// <summary> The SignalRServiceUsage items on this page. </summary>
         public IReadOnlyList<SignalRServiceUsage> Value { get; }
-        /// <summary>
-        /// The URL the client should use to fetch the next page (per server side paging).
-        /// It's null for now, added for future use.
-        /// </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

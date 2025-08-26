@@ -71,9 +71,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="userEventPattern">
         /// Gets or sets the matching pattern for event names.
         /// There are 3 kinds of patterns supported:
-        ///     1. "*", it matches any event name
-        ///     2. Combine multiple events with ",", for example "event1,event2", it matches event "event1" and "event2"
-        ///     3. A single event name, for example, "event1", it matches "event1"
+        /// 1. "*", it matches any event name
+        /// 2. Combine multiple events with ",", for example "event1,event2", it matches event "event1" and "event2"
+        /// 3. A single event name, for example, "event1", it matches "event1"
         /// </param>
         /// <param name="systemEvents"> Gets or sets the list of system events. </param>
         /// <param name="auth"> Upstream auth settings. If not set, no auth is used for upstream messages. </param>
@@ -103,9 +103,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <summary>
         /// Gets or sets the matching pattern for event names.
         /// There are 3 kinds of patterns supported:
-        ///     1. "*", it matches any event name
-        ///     2. Combine multiple events with ",", for example "event1,event2", it matches event "event1" and "event2"
-        ///     3. A single event name, for example, "event1", it matches "event1"
+        /// 1. "*", it matches any event name
+        /// 2. Combine multiple events with ",", for example "event1,event2", it matches event "event1" and "event2"
+        /// 3. A single event name, for example, "event1", it matches "event1"
         /// </summary>
         [WirePath("userEventPattern")]
         public string UserEventPattern { get; set; }

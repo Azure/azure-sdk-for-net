@@ -6,7 +6,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: WebPubSub
 namespace: Azure.ResourceManager.WebPubSub
-require: https://github.com/Azure/azure-rest-api-specs/blob/8600539fa5ba6c774b4454a401d9cd3cf01a36a7/specification/webpubsub/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/f5b206304b14b34e13c06f6dbd5c4a10df3c1329/specification/webpubsub/resource-manager/readme.md
 # tag: package-2025-01-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -57,6 +57,8 @@ override-operation-name:
   WebPubSub_CheckNameAvailability: CheckWebPubSubNameAvailability
 
 rename-mapping:
+  WebPubSubResource: WebPubSub
+  SharedPrivateLinkResource: WebPubSubSharedPrivateLink
   RegenerateKeyParameters: WebPubSubRegenerateKeyContent
   ClientConnectionCountRule.type: ThrottleType
   ClientTrafficControlRule.type: TrafficThrottleType
@@ -77,18 +79,18 @@ directive:
   - rename-model:
       from: PrivateLinkResource
       to: WebPubSubPrivateLink
-  - rename-model:
-      from: SharedPrivateLinkResource
-      to: WebPubSubSharedPrivateLink
+#   - rename-model:
+#       from: SharedPrivateLinkResource
+#       to: WebPubSubSharedPrivateLink
   - rename-model:
       from: NameAvailability
       to: WebPubSubNameAvailability
   - rename-model:
       from: NameAvailabilityParameters
       to: WebPubSubNameAvailabilityParameters
-  - rename-model:
-      from: WebPubSubResource
-      to: WebPubSub
+#   - rename-model:
+#       from: WebPubSubResource
+#       to: WebPubSub
   - rename-model:
       from: ShareablePrivateLinkResourceType
       to: ShareablePrivateLinkType

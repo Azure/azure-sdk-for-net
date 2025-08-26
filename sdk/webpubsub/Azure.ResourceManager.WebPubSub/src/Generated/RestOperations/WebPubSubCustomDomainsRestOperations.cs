@@ -297,6 +297,7 @@ namespace Azure.ResourceManager.WebPubSub
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
+                case 200:
                 case 201:
                     return message.Response;
                 default:
@@ -325,6 +326,7 @@ namespace Azure.ResourceManager.WebPubSub
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
+                case 200:
                 case 201:
                     return message.Response;
                 default:
