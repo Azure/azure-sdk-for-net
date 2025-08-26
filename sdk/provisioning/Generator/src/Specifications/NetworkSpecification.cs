@@ -20,6 +20,7 @@ public class NetworkSpecification() :
         // Patch models
         //CustomizeModel("Route", m => m.Name = "RouteResource");
         //CustomizeModel("Subnet", m => m.Name = "SubnetResource");
+        RemoveProperty<VirtualNetworkPeeringResource>("SyncRemoteAddressSpace");
 
         // Naming requirements
         //AddNameRequirements<ApplicationGatewayResource>(min: 1, max: 80, lower: true, upper: true, digits: true, hyphen: true, underscore: true, period: true);

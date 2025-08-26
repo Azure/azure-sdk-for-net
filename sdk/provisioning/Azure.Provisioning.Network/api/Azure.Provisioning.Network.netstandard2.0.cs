@@ -2494,7 +2494,6 @@ namespace Azure.Provisioning.Network
         public Azure.Provisioning.Network.VirtualNetworkEncryption RemoteVirtualNetworkEncryption { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> RemoteVirtualNetworkId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Guid> ResourceGuid { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.SyncRemoteAddressSpace> SyncRemoteAddressSpace { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> UseRemoteGateways { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Network.VirtualNetworkPeering FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }

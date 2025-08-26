@@ -30,16 +30,6 @@ public partial class VirtualNetworkPeering : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// Gets or sets the SyncRemoteAddressSpace.
-    /// </summary>
-    public BicepValue<SyncRemoteAddressSpace> SyncRemoteAddressSpace 
-    {
-        get { Initialize(); return _syncRemoteAddressSpace!; }
-        set { Initialize(); _syncRemoteAddressSpace!.Assign(value); }
-    }
-    private BicepValue<SyncRemoteAddressSpace>? _syncRemoteAddressSpace;
-
-    /// <summary>
     /// Whether the forwarded traffic from the VMs in the local virtual network
     /// will be allowed/disallowed in remote virtual network.
     /// </summary>
@@ -299,7 +289,6 @@ public partial class VirtualNetworkPeering : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _syncRemoteAddressSpace = DefineProperty<SyncRemoteAddressSpace>("SyncRemoteAddressSpace", ["SyncRemoteAddressSpace"], isRequired: true);
         _allowForwardedTraffic = DefineProperty<bool>("AllowForwardedTraffic", ["properties", "allowForwardedTraffic"]);
         _allowGatewayTransit = DefineProperty<bool>("AllowGatewayTransit", ["properties", "allowGatewayTransit"]);
         _allowVirtualNetworkAccess = DefineProperty<bool>("AllowVirtualNetworkAccess", ["properties", "allowVirtualNetworkAccess"]);

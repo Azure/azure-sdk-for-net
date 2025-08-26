@@ -3,8 +3,8 @@
 
 using System.Threading.Tasks;
 using Azure.Provisioning.Expressions;
-using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
+using Azure.Provisioning.Storage;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
@@ -332,6 +332,163 @@ public class BasicNetworkTests(bool async) : ProvisioningTestBase(async)
                 ]
               }
               location: location
+            }
+            """)
+        .Lint()
+        .ValidateAsync();
+    }
+
+    [Test]
+    [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.network/networkwatcher-flowLogs-create/main.bicep")]
+    public async Task NetworkWatcherFlowLogsCreate()
+    {
+        await using Trycep test = CreateBicepTest();
+        await test.Define(
+            ctx =>
+            {
+                #region Snippet:NetworkWatcherFlowLogsCreate
+                Infrastructure infra = new();
+                ProvisioningParameter location = new(nameof(location), typeof(string))
+                {
+                    Description = "The location for the resource(s) to be deployed.",
+                    Value = BicepFunction.GetResourceGroup().Location
+                };
+                ProvisioningParameter networkWatcherName = new(nameof(networkWatcherName), typeof(string))
+                {
+                    Description = "Name of the Network Watcher attached to your subscription. Format: NetworkWatcher_<region_name>",
+                    Value = BicepFunction.Interpolate($"NetworkWatcher_{location}")
+                };
+                infra.Add(networkWatcherName);
+                ProvisioningParameter flowLogName = new(nameof(flowLogName), typeof(string))
+                {
+                    Description = "Name of your Flow log resource",
+                    Value = "FlowLog1"
+                };
+                infra.Add(flowLogName);
+                ProvisioningParameter existingNSG = new(nameof(existingNSG), typeof(string))
+                {
+                    Description = "Resource ID of the target NSG"
+                };
+                infra.Add(existingNSG);
+                ProvisioningParameter retentionDays = new(nameof(retentionDays), typeof(int))
+                {
+                    Description = "Retention period in days. Default is zero which stands for permanent retention. Can be any Integer from 0 to 365",
+                    Value = 0
+                };
+                infra.Add(retentionDays);
+                ProvisioningParameter flowLogsVersion = new(nameof(flowLogsVersion), typeof(int))
+                {
+                    Description = "FlowLogs Version. Correct values are 1 or 2 (default)",
+                    Value = 2
+                };
+                infra.Add(flowLogsVersion);
+                ProvisioningParameter storageAccountType = new(nameof(storageAccountType), typeof(string))
+                {
+                    Description = "Storage Account type",
+                    Value = "Standard_LRS"
+                };
+                infra.Add(storageAccountType);
+                ProvisioningVariable storageAccountName = new(nameof(storageAccountName), typeof(string))
+                {
+                    Value = BicepFunction.Interpolate($"flowlogs{BicepFunction.GetUniqueString(BicepFunction.GetResourceGroup().Id)}")
+                };
+                infra.Add(storageAccountName);
+
+                StorageAccount storageAccount = new(nameof(storageAccount), StorageAccount.ResourceVersions.V2021_09_01)
+                {
+                    Name = storageAccountName,
+                    Sku = new StorageSku()
+                    {
+                        Name = StorageSkuName.StandardLrs
+                    },
+                    Kind = StorageKind.StorageV2
+                };
+                infra.Add(storageAccount);
+
+                NetworkWatcher networkWatcher = new(nameof(networkWatcher), NetworkWatcher.ResourceVersions.V2022_01_01)
+                {
+                    Name = networkWatcherName
+                };
+                infra.Add(networkWatcher);
+
+                FlowLog flowLog = new(nameof(flowLog), FlowLog.ResourceVersions.V2022_01_01)
+                {
+                    Name = BicepFunction.Interpolate($"{networkWatcherName}/{flowLogName}"),
+                    Parent = networkWatcher,
+                    TargetResourceId = existingNSG,
+                    StorageId = storageAccount.Id,
+                    Enabled = true,
+                    RetentionPolicy = new RetentionPolicyParameters()
+                    {
+                        Days = retentionDays,
+                        Enabled = true
+                    },
+                    Format = new FlowLogProperties()
+                    {
+                        FormatType = FlowLogFormatType.Json,
+                        Version = flowLogsVersion
+                    }
+                };
+                infra.Add(flowLog);
+                #endregion
+                return infra;
+            })
+        .Compare(
+            """
+            @description('Name of the Network Watcher attached to your subscription. Format: NetworkWatcher_<region_name>')
+            param networkWatcherName string = 'NetworkWatcher_${location}'
+
+            @description('Name of your Flow log resource')
+            param flowLogName string = 'FlowLog1'
+
+            @description('Resource ID of the target NSG')
+            param existingNSG string
+
+            @description('Retention period in days. Default is zero which stands for permanent retention. Can be any Integer from 0 to 365')
+            param retentionDays int = 0
+
+            @description('FlowLogs Version. Correct values are 1 or 2 (default)')
+            param flowLogsVersion int = 2
+
+            @description('Storage Account type')
+            param storageAccountType string = 'Standard_LRS'
+
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+
+            var storageAccountName = 'flowlogs${uniqueString(resourceGroup().id)}'
+
+            resource storageAccount 'Microsoft.Storage/storageAccounts@2021-09-01' = {
+              name: storageAccountName
+              kind: 'StorageV2'
+              location: location
+              sku: {
+                name: 'Standard_LRS'
+              }
+            }
+
+            resource networkWatcher 'Microsoft.Network/networkWatchers@2022-01-01' = {
+              name: networkWatcherName
+              location: location
+            }
+
+            resource flowLog 'Microsoft.Network/networkWatchers/flowLogs@2022-01-01' = {
+              name: '${networkWatcherName}/${flowLogName}'
+              properties: {
+                enabled: true
+                format: {
+                  type: 'JSON'
+                  version: flowLogsVersion
+                }
+                retentionPolicy: {
+                  days: retentionDays
+                  enabled: true
+                }
+                storageId: storageAccount.id
+                targetResourceId: existingNSG
+              }
+              location: location
+              parent: networkWatcher
             }
             """)
         .Lint()

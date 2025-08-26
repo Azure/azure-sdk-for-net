@@ -199,6 +199,96 @@ VirtualNetwork vnet = new(nameof(vnet), VirtualNetwork.ResourceVersions.V2020_06
 infra.Add(vnet);
 ```
 
+### Enable NSG Flow Logs
+
+This template deploys an NSG flow logs resource inside the Network Watcher resource group.
+
+```C# Snippet:NetworkWatcherFlowLogsCreate
+Infrastructure infra = new();
+ProvisioningParameter location = new(nameof(location), typeof(string))
+{
+    Description = "The location for the resource(s) to be deployed.",
+    Value = BicepFunction.GetResourceGroup().Location
+};
+ProvisioningParameter networkWatcherName = new(nameof(networkWatcherName), typeof(string))
+{
+    Description = "Name of the Network Watcher attached to your subscription. Format: NetworkWatcher_<region_name>",
+    Value = BicepFunction.Interpolate($"NetworkWatcher_{location}")
+};
+infra.Add(networkWatcherName);
+ProvisioningParameter flowLogName = new(nameof(flowLogName), typeof(string))
+{
+    Description = "Name of your Flow log resource",
+    Value = "FlowLog1"
+};
+infra.Add(flowLogName);
+ProvisioningParameter existingNSG = new(nameof(existingNSG), typeof(string))
+{
+    Description = "Resource ID of the target NSG"
+};
+infra.Add(existingNSG);
+ProvisioningParameter retentionDays = new(nameof(retentionDays), typeof(int))
+{
+    Description = "Retention period in days. Default is zero which stands for permanent retention. Can be any Integer from 0 to 365",
+    Value = 0
+};
+infra.Add(retentionDays);
+ProvisioningParameter flowLogsVersion = new(nameof(flowLogsVersion), typeof(int))
+{
+    Description = "FlowLogs Version. Correct values are 1 or 2 (default)",
+    Value = 2
+};
+infra.Add(flowLogsVersion);
+ProvisioningParameter storageAccountType = new(nameof(storageAccountType), typeof(string))
+{
+    Description = "Storage Account type",
+    Value = "Standard_LRS"
+};
+infra.Add(storageAccountType);
+ProvisioningVariable storageAccountName = new(nameof(storageAccountName), typeof(string))
+{
+    Value = BicepFunction.Interpolate($"flowlogs{BicepFunction.GetUniqueString(BicepFunction.GetResourceGroup().Id)}")
+};
+infra.Add(storageAccountName);
+
+StorageAccount storageAccount = new(nameof(storageAccount), StorageAccount.ResourceVersions.V2021_09_01)
+{
+    Name = storageAccountName,
+    Sku = new StorageSku()
+    {
+        Name = StorageSkuName.StandardLrs
+    },
+    Kind = StorageKind.StorageV2
+};
+infra.Add(storageAccount);
+
+NetworkWatcher networkWatcher = new(nameof(networkWatcher), NetworkWatcher.ResourceVersions.V2022_01_01)
+{
+    Name = networkWatcherName
+};
+infra.Add(networkWatcher);
+
+FlowLog flowLog = new(nameof(flowLog), FlowLog.ResourceVersions.V2022_01_01)
+{
+    Name = BicepFunction.Interpolate($"{networkWatcherName}/{flowLogName}"),
+    Parent = networkWatcher,
+    TargetResourceId = existingNSG,
+    StorageId = storageAccount.Id,
+    Enabled = true,
+    RetentionPolicy = new RetentionPolicyParameters()
+    {
+        Days = retentionDays,
+        Enabled = true
+    },
+    Format = new FlowLogProperties()
+    {
+        FormatType = FlowLogFormatType.Json,
+        Version = flowLogsVersion
+    }
+};
+infra.Add(flowLog);
+```
+
 ## Troubleshooting
 
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
