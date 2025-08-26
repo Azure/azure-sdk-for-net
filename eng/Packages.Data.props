@@ -208,7 +208,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.Contains('Azure.AI.Agents.Persistent'))">
-    <PackageReference Update="Microsoft.Extensions.AI.Abstractions" Version="9.7.0"/>
+    <PackageReference Update="Microsoft.Extensions.AI.Abstractions" Version="9.8.0"/>
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.Contains('Azure.Projects'))">
@@ -457,7 +457,7 @@
 
   <PropertyGroup>
     <TestProxyVersion>1.0.0-dev.20250805.1</TestProxyVersion>
-    <UnbrandedGeneratorVersion>1.0.0-alpha.20250820.3</UnbrandedGeneratorVersion>
+    <UnbrandedGeneratorVersion>1.0.0-alpha.20250825.5</UnbrandedGeneratorVersion>
     <AzureGeneratorVersion>1.0.0-alpha.20250818.3</AzureGeneratorVersion>
   </PropertyGroup>
 </Project>

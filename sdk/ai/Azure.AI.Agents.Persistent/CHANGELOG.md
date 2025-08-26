@@ -1,18 +1,25 @@
 # Release History
 
-## 1.2.0-beta.3 (Unreleased)
+## 1.2.0-beta.4 (Unreleased)
 
 ### Features Added
-- Added delete operation for `ThreadMessages`.
-- Add `RunStepDeltaCustomBingGroundingToolCall`, describing `BingCustomSearchTool` updates in streaming scenario.
-- Add `RunStepDeltaMicrosoftFabricToolCall`, describing `FabricTool` updates in streaming scenario.
-- Add `RunStepDeltaSharepointToolCall`, describing `SharepointTool` updates in streaming scenario.
+- Updated `Microsoft.Extensions.AI.Abstractions` dependency to version 9.8.0.`
+- Added support of `FileSearchTool` and `CodeInterpreterTool` for `PersistentAgentsChatClient`
+- Bugfix: Addressed issues related to `ResponseFormat` when using `PersistentAgentsChatClient` with Structured Outputs.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.3 (2025-08-22)
+
+### Features Added
+- Added delete operation for `ThreadMessages`.
+- Add `RunStepDeltaCustomBingGroundingToolCall`, describing `BingCustomSearchTool` updates in streaming scenario.
+- Add `RunStepDeltaMicrosoftFabricToolCall`, describing `FabricTool` updates in streaming scenario.
+- Add `RunStepDeltaSharepointToolCall`, describing `SharepointTool` updates in streaming scenario.
 
 ## 1.2.0-beta.2 (2025-08-13)
 
