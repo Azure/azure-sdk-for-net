@@ -7,12 +7,12 @@ using System.IO;
 
 namespace Azure.AI.VoiceLive
 {
-    public partial class AzureCustomVoice : IVoiceType
+    public partial class AzureCustomVoice
     {
         /// <summary>
         ///
         /// </summary>
         /// <returns></returns>
-        public BinaryData ToBinaryData() => this.PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions.Json);
+        internal override BinaryData ToBinaryData() => this.PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions.Json);
     }
 }

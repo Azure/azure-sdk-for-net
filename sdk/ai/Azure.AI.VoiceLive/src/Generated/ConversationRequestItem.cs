@@ -11,10 +11,10 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary>
-    /// The ConversationRequestItem.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RequestMessageItem"/>, <see cref="RequestFunctionCallItem"/>, and <see cref="RequestFunctionCallOutputItem"/>.
+    /// Base for any response item; discriminated by `type`.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageItem"/>, <see cref="FunctionCallItem"/>, and <see cref="FunctionCallOutputItem"/>.
     /// </summary>
-    internal abstract partial class ConversationRequestItem
+    public abstract partial class ConversationRequestItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

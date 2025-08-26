@@ -55,7 +55,7 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ConversationResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ResponseFunctionCallItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -74,21 +74,16 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            string @object = default;
             ItemType @type = default;
             string id = default;
+            string @object = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
             string callId = default;
             string arguments = default;
-            ItemStatus status = default;
+            ResponseItemStatus status = default;
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("object"u8))
-                {
-                    @object = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new ItemType(prop.Value.GetString());
@@ -97,6 +92,11 @@ namespace Azure.AI.VoiceLive
                 if (prop.NameEquals("id"u8))
                 {
                     id = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("object"u8))
+                {
+                    @object = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -116,7 +116,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = new ItemStatus(prop.Value.GetString());
+                    status = new ResponseItemStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -125,9 +125,9 @@ namespace Azure.AI.VoiceLive
                 }
             }
             return new ResponseFunctionCallItem(
-                @object,
                 @type,
                 id,
+                @object,
                 additionalBinaryDataProperties,
                 name,
                 callId,
@@ -157,7 +157,7 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ConversationResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ResponseFunctionCallItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

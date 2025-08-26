@@ -120,7 +120,7 @@ public class BasicVoiceAssistant : IDisposable
         _logger.LogInformation("Setting up voice conversation session...");
 
         // Azure voice
-        var azureVoice = new AzureStandardVoice(_voice, AzureStandardVoiceType.AzureStandard);
+        var azureVoice = new AzureStandardVoice(_voice);
 
         // Create strongly typed turn detection configuration
         var turnDetectionConfig = new ServerVad
@@ -159,7 +159,7 @@ public class BasicVoiceAssistant : IDisposable
     {
         try
         {
-            await foreach (ServerEvent serverEvent in _session!.GetUpdatesAsync(cancellationToken).ConfigureAwait(false))
+            await foreach (ServerEventBase serverEvent in _session!.GetUpdatesAsync(cancellationToken).ConfigureAwait(false))
             {
                 await HandleServerEventAsync(serverEvent, cancellationToken).ConfigureAwait(false);
             }
@@ -178,7 +178,7 @@ public class BasicVoiceAssistant : IDisposable
     /// <summary>
     /// Handle different types of server events from VoiceLive.
     /// </summary>
-    private async Task HandleServerEventAsync(ServerEvent serverEvent, CancellationToken cancellationToken)
+    private async Task HandleServerEventAsync(ServerEventBase serverEvent, CancellationToken cancellationToken)
     {
         _logger.LogDebug("Received event: {EventType}", serverEvent.GetType().Name);
 

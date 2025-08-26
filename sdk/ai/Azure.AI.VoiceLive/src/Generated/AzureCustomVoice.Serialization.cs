@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> Voice configuration for Azure custom voice. </summary>
+    /// <summary> Azure custom voice configuration (preferred). </summary>
     public partial class AzureCustomVoice : IJsonModel<AzureCustomVoice>
     {
         /// <summary> Initializes a new instance of <see cref="AzureCustomVoice"/> for deserialization. </summary>
@@ -31,19 +31,18 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureCustomVoice>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureCustomVoice)} does not support writing '{format}' format.");
             }
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("endpoint_id"u8);
             writer.WriteStringValue(EndpointId);
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToSerialString());
             if (Optional.IsDefined(Temperature))
             {
                 writer.WritePropertyName("temperature"u8);
@@ -52,7 +51,7 @@ namespace Azure.AI.VoiceLive
             if (Optional.IsDefined(CustomLexiconUri))
             {
                 writer.WritePropertyName("custom_lexicon_url"u8);
-                writer.WriteStringValue(CustomLexiconUri.AbsoluteUri);
+                writer.WriteStringValue(CustomLexiconUri);
             }
             if (Optional.IsCollectionDefined(PreferLocales))
             {
@@ -69,30 +68,40 @@ namespace Azure.AI.VoiceLive
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (Optional.IsDefined(Locale))
             {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
+                writer.WritePropertyName("locale"u8);
+                writer.WriteStringValue(Locale);
+            }
+            if (Optional.IsDefined(Style))
+            {
+                writer.WritePropertyName("style"u8);
+                writer.WriteStringValue(Style);
+            }
+            if (Optional.IsDefined(Pitch))
+            {
+                writer.WritePropertyName("pitch"u8);
+                writer.WriteStringValue(Pitch);
+            }
+            if (Optional.IsDefined(Rate))
+            {
+                writer.WritePropertyName("rate"u8);
+                writer.WriteStringValue(Rate);
+            }
+            if (Optional.IsDefined(Volume))
+            {
+                writer.WritePropertyName("volume"u8);
+                writer.WriteStringValue(Volume);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureCustomVoice IJsonModel<AzureCustomVoice>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AzureCustomVoice IJsonModel<AzureCustomVoice>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureCustomVoice)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AzureCustomVoice JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override AzureVoice JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureCustomVoice>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -111,15 +120,25 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
+            string @type = "azure-custom";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
             string endpointId = default;
-            AzureCustomVoiceType @type = default;
             float? temperature = default;
-            Uri customLexiconUri = default;
+            string customLexiconUri = default;
             IList<string> preferLocales = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string locale = default;
+            string style = default;
+            string pitch = default;
+            string rate = default;
+            string volume = default;
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("name"u8))
                 {
                     name = prop.Value.GetString();
@@ -128,11 +147,6 @@ namespace Azure.AI.VoiceLive
                 if (prop.NameEquals("endpoint_id"u8))
                 {
                     endpointId = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = prop.Value.GetString().ToAzureCustomVoiceType();
                     continue;
                 }
                 if (prop.NameEquals("temperature"u8))
@@ -146,11 +160,7 @@ namespace Azure.AI.VoiceLive
                 }
                 if (prop.NameEquals("custom_lexicon_url"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    customLexiconUri = new Uri(prop.Value.GetString());
+                    customLexiconUri = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("prefer_locales"u8))
@@ -174,26 +184,56 @@ namespace Azure.AI.VoiceLive
                     preferLocales = array;
                     continue;
                 }
+                if (prop.NameEquals("locale"u8))
+                {
+                    locale = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("style"u8))
+                {
+                    style = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("pitch"u8))
+                {
+                    pitch = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("rate"u8))
+                {
+                    rate = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("volume"u8))
+                {
+                    volume = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
             return new AzureCustomVoice(
+                @type,
+                additionalBinaryDataProperties,
                 name,
                 endpointId,
-                @type,
                 temperature,
                 customLexiconUri,
                 preferLocales ?? new ChangeTrackingList<string>(),
-                additionalBinaryDataProperties);
+                locale,
+                style,
+                pitch,
+                rate,
+                volume);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AzureCustomVoice>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureCustomVoice>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -207,11 +247,11 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureCustomVoice IPersistableModel<AzureCustomVoice>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AzureCustomVoice IPersistableModel<AzureCustomVoice>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureCustomVoice)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AzureCustomVoice PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override AzureVoice PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureCustomVoice>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

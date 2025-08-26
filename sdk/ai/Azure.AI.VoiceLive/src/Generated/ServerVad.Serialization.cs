@@ -52,14 +52,12 @@ namespace Azure.AI.VoiceLive
             if (Optional.IsDefined(EndOfUtteranceDetection))
             {
                 writer.WritePropertyName("end_of_utterance_detection"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(EndOfUtteranceDetection);
-#else
-                using (JsonDocument document = JsonDocument.Parse(EndOfUtteranceDetection))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                writer.WriteObjectValue(EndOfUtteranceDetection, options);
+            }
+            if (Optional.IsDefined(AutoTruncate))
+            {
+                writer.WritePropertyName("auto_truncate"u8);
+                writer.WriteBooleanValue(AutoTruncate.Value);
             }
         }
 
@@ -93,7 +91,8 @@ namespace Azure.AI.VoiceLive
             float? threshold = default;
             int? prefixPaddingMs = default;
             int? silenceDurationMs = default;
-            BinaryData endOfUtteranceDetection = default;
+            EOUDetection endOfUtteranceDetection = default;
+            bool? autoTruncate = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -134,7 +133,16 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    endOfUtteranceDetection = BinaryData.FromString(prop.Value.GetRawText());
+                    endOfUtteranceDetection = EOUDetection.DeserializeEOUDetection(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("auto_truncate"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    autoTruncate = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,7 +156,8 @@ namespace Azure.AI.VoiceLive
                 threshold,
                 prefixPaddingMs,
                 silenceDurationMs,
-                endOfUtteranceDetection);
+                endOfUtteranceDetection,
+                autoTruncate);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

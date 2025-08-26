@@ -15,7 +15,7 @@ namespace Azure.AI.VoiceLive
     /// the audio buffer. The server will also send an `conversation.item.created`
     /// event with the user message item that is created from the audio buffer.
     /// </summary>
-    public partial class ServerEventInputAudioBufferSpeechStopped : ServerEvent
+    public partial class ServerEventInputAudioBufferSpeechStopped : ServerEventBase
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventInputAudioBufferSpeechStopped"/>. </summary>
         /// <param name="audioEndMs">

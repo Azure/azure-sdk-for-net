@@ -15,7 +15,7 @@ namespace Azure.AI.VoiceLive
     /// streaming. Also emitted when a Response is interrupted, incomplete, or
     /// cancelled.
     /// </summary>
-    public partial class ServerEventResponseAudioTranscriptDone : ServerEvent
+    public partial class ServerEventResponseAudioTranscriptDone : ServerEventBase
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseAudioTranscriptDone"/>. </summary>
         /// <param name="responseId"> The ID of the response. </param>

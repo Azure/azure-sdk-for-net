@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> Voice configuration for Azure personal voice. </summary>
+    /// <summary> Azure personal voice configuration. </summary>
     public partial class AzurePersonalVoice : IJsonModel<AzurePersonalVoice>
     {
         /// <summary> Initializes a new instance of <see cref="AzurePersonalVoice"/> for deserialization. </summary>
@@ -31,43 +31,32 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzurePersonalVoice>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzurePersonalVoice)} does not support writing '{format}' format.");
             }
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToSerialString());
+            if (Optional.IsDefined(Temperature))
+            {
+                writer.WritePropertyName("temperature"u8);
+                writer.WriteNumberValue(Temperature.Value);
+            }
             writer.WritePropertyName("model"u8);
             writer.WriteStringValue(Model.ToSerialString());
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzurePersonalVoice IJsonModel<AzurePersonalVoice>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AzurePersonalVoice IJsonModel<AzurePersonalVoice>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzurePersonalVoice)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AzurePersonalVoice JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override AzureVoice JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzurePersonalVoice>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -86,20 +75,30 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            string name = default;
-            AzurePersonalVoiceType @type = default;
-            AzurePersonalVoiceModel model = default;
+            string @type = "azure-personal";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string name = default;
+            float? temperature = default;
+            AzurePersonalVoiceModel model = default;
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("name"u8))
                 {
                     name = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("type"u8))
+                if (prop.NameEquals("temperature"u8))
                 {
-                    @type = prop.Value.GetString().ToAzurePersonalVoiceType();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    temperature = prop.Value.GetSingle();
                     continue;
                 }
                 if (prop.NameEquals("model"u8))
@@ -112,14 +111,14 @@ namespace Azure.AI.VoiceLive
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AzurePersonalVoice(name, @type, model, additionalBinaryDataProperties);
+            return new AzurePersonalVoice(@type, additionalBinaryDataProperties, name, temperature, model);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<AzurePersonalVoice>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzurePersonalVoice>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -133,11 +132,11 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzurePersonalVoice IPersistableModel<AzurePersonalVoice>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AzurePersonalVoice IPersistableModel<AzurePersonalVoice>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzurePersonalVoice)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AzurePersonalVoice PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override AzureVoice PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzurePersonalVoice>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

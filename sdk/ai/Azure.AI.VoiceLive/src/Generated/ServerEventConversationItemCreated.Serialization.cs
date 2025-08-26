@@ -25,11 +25,6 @@ namespace Azure.AI.VoiceLive
     /// </summary>
     public partial class ServerEventConversationItemCreated : IJsonModel<ServerEventConversationItemCreated>
     {
-        /// <summary> Initializes a new instance of <see cref="ServerEventConversationItemCreated"/> for deserialization. </summary>
-        internal ServerEventConversationItemCreated()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServerEventConversationItemCreated>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -49,8 +44,11 @@ namespace Azure.AI.VoiceLive
                 throw new FormatException($"The model {nameof(ServerEventConversationItemCreated)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("previous_item_id"u8);
-            writer.WriteStringValue(PreviousItemId);
+            if (Optional.IsDefined(PreviousItemId))
+            {
+                writer.WritePropertyName("previous_item_id"u8);
+                writer.WriteStringValue(PreviousItemId);
+            }
             if (Optional.IsDefined(Item))
             {
                 writer.WritePropertyName("item"u8);
@@ -64,7 +62,7 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ServerEvent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ServerEventBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ServerEventConversationItemCreated>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -87,7 +85,7 @@ namespace Azure.AI.VoiceLive
             string eventId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string previousItemId = default;
-            ConversationItemWithReference item = default;
+            ResponseItem item = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -111,7 +109,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    item = ConversationItemWithReference.DeserializeConversationItemWithReference(prop.Value, options);
+                    item = ResponseItem.DeserializeResponseItem(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -144,7 +142,7 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ServerEvent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ServerEventBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ServerEventConversationItemCreated>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

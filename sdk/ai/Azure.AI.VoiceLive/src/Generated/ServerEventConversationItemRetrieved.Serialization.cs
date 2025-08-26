@@ -34,10 +34,10 @@ namespace Azure.AI.VoiceLive
                 throw new FormatException($"The model {nameof(ServerEventConversationItemRetrieved)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(ItemId))
+            if (Optional.IsDefined(Item))
             {
-                writer.WritePropertyName("item_id"u8);
-                writer.WriteStringValue(ItemId);
+                writer.WritePropertyName("item"u8);
+                writer.WriteObjectValue(Item, options);
             }
             if (Optional.IsDefined(EventId))
             {
@@ -52,7 +52,7 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ServerEvent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ServerEventBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ServerEventConversationItemRetrieved>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -73,7 +73,7 @@ namespace Azure.AI.VoiceLive
             }
             ServerEventType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string itemId = default;
+            ResponseItem item = default;
             string eventId = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -82,9 +82,13 @@ namespace Azure.AI.VoiceLive
                     @type = new ServerEventType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("item_id"u8))
+                if (prop.NameEquals("item"u8))
                 {
-                    itemId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    item = ResponseItem.DeserializeResponseItem(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("event_id"u8))
@@ -97,7 +101,7 @@ namespace Azure.AI.VoiceLive
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ServerEventConversationItemRetrieved(@type, additionalBinaryDataProperties, itemId, eventId);
+            return new ServerEventConversationItemRetrieved(@type, additionalBinaryDataProperties, item, eventId);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -122,7 +126,7 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ServerEvent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ServerEventBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ServerEventConversationItemRetrieved>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

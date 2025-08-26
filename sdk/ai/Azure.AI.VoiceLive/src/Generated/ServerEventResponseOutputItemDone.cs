@@ -14,7 +14,7 @@ namespace Azure.AI.VoiceLive
     /// Returned when an Item is done streaming. Also emitted when a Response is
     /// interrupted, incomplete, or cancelled.
     /// </summary>
-    public partial class ServerEventResponseOutputItemDone : ServerEvent
+    public partial class ServerEventResponseOutputItemDone : ServerEventBase
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseOutputItemDone"/>. </summary>
         /// <param name="responseId"> The ID of the Response to which the item belongs. </param>
@@ -32,7 +32,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="responseId"> The ID of the Response to which the item belongs. </param>
         /// <param name="outputIndex"> The index of the output item in the Response. </param>
         /// <param name="item"></param>
-        internal ServerEventResponseOutputItemDone(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, int outputIndex, ConversationResponseItem item) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ServerEventResponseOutputItemDone(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, int outputIndex, ResponseItem item) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             OutputIndex = outputIndex;
@@ -46,6 +46,6 @@ namespace Azure.AI.VoiceLive
         public int OutputIndex { get; }
 
         /// <summary> Gets the Item. </summary>
-        public ConversationResponseItem Item { get; }
+        public ResponseItem Item { get; }
     }
 }

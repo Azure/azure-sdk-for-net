@@ -21,16 +21,11 @@ namespace Azure.AI.VoiceLive
     ///   - The client has sent a `conversation.item.create` event to add a new Item
     ///     to the Conversation.
     /// </summary>
-    public partial class ServerEventConversationItemCreated : ServerEvent
+    public partial class ServerEventConversationItemCreated : ServerEventBase
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventConversationItemCreated"/>. </summary>
-        /// <param name="previousItemId">
-        /// The ID of the preceding item in the Conversation context, allows the
-        /// client to understand the order of the conversation.
-        /// </param>
-        internal ServerEventConversationItemCreated(string previousItemId) : base(ServerEventType.ConversationItemCreated)
+        internal ServerEventConversationItemCreated() : base(ServerEventType.ConversationItemCreated)
         {
-            PreviousItemId = previousItemId;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServerEventConversationItemCreated"/>. </summary>
@@ -42,7 +37,7 @@ namespace Azure.AI.VoiceLive
         /// client to understand the order of the conversation.
         /// </param>
         /// <param name="item"></param>
-        internal ServerEventConversationItemCreated(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string previousItemId, ConversationItemWithReference item) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ServerEventConversationItemCreated(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string previousItemId, ResponseItem item) : base(@type, eventId, additionalBinaryDataProperties)
         {
             PreviousItemId = previousItemId;
             Item = item;
@@ -55,6 +50,6 @@ namespace Azure.AI.VoiceLive
         public string PreviousItemId { get; }
 
         /// <summary> Gets the Item. </summary>
-        public ConversationItemWithReference Item { get; }
+        public ResponseItem Item { get; }
     }
 }

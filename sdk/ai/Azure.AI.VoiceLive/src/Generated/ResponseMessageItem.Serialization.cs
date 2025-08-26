@@ -43,7 +43,7 @@ namespace Azure.AI.VoiceLive
             writer.WriteStringValue(Role.ToString());
             writer.WritePropertyName("content"u8);
             writer.WriteStartArray();
-            foreach (ContentPart item in Content)
+            foreach (VoiceLiveContentPart item in Content)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -58,7 +58,7 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ConversationResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ResponseMessageItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -77,20 +77,15 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            string @object = default;
             ItemType @type = default;
             string id = default;
+            string @object = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            MessageRole role = default;
-            IList<ContentPart> content = default;
-            ItemStatus status = default;
+            ResponseMessageRole role = default;
+            IList<VoiceLiveContentPart> content = default;
+            ResponseItemStatus status = default;
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("object"u8))
-                {
-                    @object = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new ItemType(prop.Value.GetString());
@@ -101,24 +96,29 @@ namespace Azure.AI.VoiceLive
                     id = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("object"u8))
+                {
+                    @object = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("role"u8))
                 {
-                    role = new MessageRole(prop.Value.GetString());
+                    role = new ResponseMessageRole(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("content"u8))
                 {
-                    List<ContentPart> array = new List<ContentPart>();
+                    List<VoiceLiveContentPart> array = new List<VoiceLiveContentPart>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ContentPart.DeserializeContentPart(item, options));
+                        array.Add(VoiceLiveContentPart.DeserializeVoiceLiveContentPart(item, options));
                     }
                     content = array;
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = new ItemStatus(prop.Value.GetString());
+                    status = new ResponseItemStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -127,9 +127,9 @@ namespace Azure.AI.VoiceLive
                 }
             }
             return new ResponseMessageItem(
-                @object,
                 @type,
                 id,
+                @object,
                 additionalBinaryDataProperties,
                 role,
                 content,
@@ -158,7 +158,7 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ConversationResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ResponseMessageItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

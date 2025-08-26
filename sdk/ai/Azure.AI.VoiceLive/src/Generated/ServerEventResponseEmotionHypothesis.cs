@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Represents an emotion hypothesis detected from response audio with multiple candidates. </summary>
-    public partial class ServerEventResponseEmotionHypothesis : ServerEvent
+    public partial class ServerEventResponseEmotionHypothesis : ServerEventBase
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseEmotionHypothesis"/>. </summary>
         /// <param name="emotion"></param>

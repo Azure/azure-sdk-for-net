@@ -22,7 +22,7 @@ namespace Azure.AI.VoiceLive
     /// `input_audio_buffer.speech_stopped` event (unless the client manually commits
     /// the audio buffer during VAD activation).
     /// </summary>
-    public partial class ServerEventInputAudioBufferSpeechStarted : ServerEvent
+    public partial class ServerEventInputAudioBufferSpeechStarted : ServerEventBase
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventInputAudioBufferSpeechStarted"/>. </summary>
         /// <param name="audioStartMs">

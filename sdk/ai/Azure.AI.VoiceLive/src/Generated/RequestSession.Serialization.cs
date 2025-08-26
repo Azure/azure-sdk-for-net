@@ -117,7 +117,7 @@ namespace Azure.AI.VoiceLive
             {
                 writer.WritePropertyName("tools"u8);
                 writer.WriteStartArray();
-                foreach (ToolCall item in Tools)
+                foreach (VoiceLiveToolDefinition item in Tools)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -220,7 +220,7 @@ namespace Azure.AI.VoiceLive
             AvatarConfig avatar = default;
             AudioInputTranscriptionSettings inputAudioTranscription = default;
             IList<AudioTimestampType> outputAudioTimestampTypes = default;
-            IList<ToolCall> tools = default;
+            IList<VoiceLiveToolDefinition> tools = default;
             float? temperature = default;
             BinaryData serviceVoice = default;
             BinaryData maxResponseOutputTokens = default;
@@ -363,10 +363,10 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    List<ToolCall> array = new List<ToolCall>();
+                    List<VoiceLiveToolDefinition> array = new List<VoiceLiveToolDefinition>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ToolCall.DeserializeToolCall(item, options));
+                        array.Add(VoiceLiveToolDefinition.DeserializeVoiceLiveToolDefinition(item, options));
                     }
                     tools = array;
                     continue;
@@ -427,7 +427,7 @@ namespace Azure.AI.VoiceLive
                 avatar,
                 inputAudioTranscription,
                 outputAudioTimestampTypes ?? new ChangeTrackingList<AudioTimestampType>(),
-                tools ?? new ChangeTrackingList<ToolCall>(),
+                tools ?? new ChangeTrackingList<VoiceLiveToolDefinition>(),
                 temperature,
                 serviceVoice,
                 maxResponseOutputTokens,

@@ -37,15 +37,15 @@ namespace Azure.AI.VoiceLive.Tests
             var options = new SessionOptions
             {
                 Model = TestConstants.ModelName,
-                Voice = new AzureStandardVoice(TestConstants.VoiceName, AzureStandardVoiceType.AzureStandard)
+                Voice = new AzureStandardVoice(TestConstants.VoiceName)
             };
 
             // Five sample tools (names only sufficient for serialization validation)
-            options.Tools.Add(new FunctionTool("get_account_balance") { Description = "Gets the customer's account balance." });
-            options.Tools.Add(new FunctionTool("lookup_order_status") { Description = "Retrieves the status of an order." });
-            options.Tools.Add(new FunctionTool("submit_support_ticket") { Description = "Submits a support ticket." });
-            options.Tools.Add(new FunctionTool("apply_refund") { Description = "Applies a refund to an order." });
-            options.Tools.Add(new FunctionTool("escalate_case") { Description = "Escalates the current case." });
+            options.Tools.Add(new VoiceLiveFunctionDefinition("get_account_balance") { Description = "Gets the customer's account balance." });
+            options.Tools.Add(new VoiceLiveFunctionDefinition("lookup_order_status") { Description = "Retrieves the status of an order." });
+            options.Tools.Add(new VoiceLiveFunctionDefinition("submit_support_ticket") { Description = "Submits a support ticket." });
+            options.Tools.Add(new VoiceLiveFunctionDefinition("apply_refund") { Description = "Applies a refund to an order." });
+            options.Tools.Add(new VoiceLiveFunctionDefinition("escalate_case") { Description = "Escalates the current case." });
 
             await session.ConfigureConversationSessionAsync(options);
 
@@ -87,7 +87,7 @@ namespace Azure.AI.VoiceLive.Tests
             string eventJson = TestUtilities.BuildResponseFunctionCallArgumentsDoneEvent(functionName, callId, argumentsJson);
 
             // Parse to ensure the model factory path works for this event type.
-            var serverEvent = ServerEvent.DeserializeServerEvent(JsonDocument.Parse(eventJson).RootElement, ModelSerializationExtensions.WireOptions);
+            var serverEvent = ServerEventBase.DeserializeServerEventBase(JsonDocument.Parse(eventJson).RootElement, ModelSerializationExtensions.WireOptions);
             Assert.That(serverEvent, Is.TypeOf<ServerEventResponseFunctionCallArgumentsDone>());
             var fDone = (ServerEventResponseFunctionCallArgumentsDone)serverEvent;
             Assert.That(fDone.Name, Is.EqualTo(functionName));
@@ -97,13 +97,8 @@ namespace Azure.AI.VoiceLive.Tests
             var functionResultJson = JsonSerializer.Serialize(new { success = true, value = 42 });
 
             // Send function_call_output conversation item referencing callId
-            var functionOutputItem = new ConversationItemWithReference
-            {
-                Id = "func-output-" + callId,
-                Type = ConversationItemWithReferenceType.FunctionCallOutput,
-                CallId = callId,
-                Output = functionResultJson
-            };
+            var functionOutputItem = new FunctionCallOutputItem(callId, functionResultJson);
+
             await session.AddItemAsync(functionOutputItem);
 
             // Request next model response

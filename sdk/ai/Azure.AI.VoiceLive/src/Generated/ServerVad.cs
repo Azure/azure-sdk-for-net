@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
@@ -26,12 +25,14 @@ namespace Azure.AI.VoiceLive
         /// <param name="prefixPaddingMs"></param>
         /// <param name="silenceDurationMs"></param>
         /// <param name="endOfUtteranceDetection"></param>
-        internal ServerVad(TurnDetectionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, int? prefixPaddingMs, int? silenceDurationMs, BinaryData endOfUtteranceDetection) : base(@type, additionalBinaryDataProperties)
+        /// <param name="autoTruncate"></param>
+        internal ServerVad(TurnDetectionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, int? prefixPaddingMs, int? silenceDurationMs, EOUDetection endOfUtteranceDetection, bool? autoTruncate) : base(@type, additionalBinaryDataProperties)
         {
             Threshold = threshold;
             PrefixPaddingMs = prefixPaddingMs;
             SilenceDurationMs = silenceDurationMs;
             EndOfUtteranceDetection = endOfUtteranceDetection;
+            AutoTruncate = autoTruncate;
         }
 
         /// <summary> Gets or sets the Threshold. </summary>
@@ -43,32 +44,10 @@ namespace Azure.AI.VoiceLive
         /// <summary> Gets or sets the SilenceDurationMs. </summary>
         public int? SilenceDurationMs { get; set; }
 
-        /// <summary>
-        /// Gets or sets the EndOfUtteranceDetection.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData EndOfUtteranceDetection { get; set; }
+        /// <summary> Gets or sets the EndOfUtteranceDetection. </summary>
+        public EOUDetection EndOfUtteranceDetection { get; set; }
+
+        /// <summary> Gets or sets the AutoTruncate. </summary>
+        public bool? AutoTruncate { get; set; }
     }
 }

@@ -10,63 +10,78 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> Voice configuration for Azure custom voice. </summary>
-    public partial class AzureCustomVoice
+    /// <summary> Azure custom voice configuration (preferred). </summary>
+    public partial class AzureCustomVoice : AzureVoice
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="AzureCustomVoice"/>. </summary>
-        /// <param name="name"> Name of the voice. </param>
-        /// <param name="endpointId"> Custom endpoint ID. </param>
-        /// <param name="type"> Voice type identifier. </param>
+        /// <param name="name"> Voice name cannot be empty. </param>
+        /// <param name="endpointId"> Endpoint ID cannot be empty. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="endpointId"/> is null. </exception>
-        public AzureCustomVoice(string name, string endpointId, AzureCustomVoiceType @type)
+        public AzureCustomVoice(string name, string endpointId) : base("azure-custom")
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(endpointId, nameof(endpointId));
 
             Name = name;
             EndpointId = endpointId;
-            Type = @type;
             PreferLocales = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureCustomVoice"/>. </summary>
-        /// <param name="name"> Name of the voice. </param>
-        /// <param name="endpointId"> Custom endpoint ID. </param>
-        /// <param name="type"> Voice type identifier. </param>
-        /// <param name="temperature"> Optional temperature for generation. </param>
-        /// <param name="customLexiconUri"> Optional custom lexicon URL. </param>
-        /// <param name="preferLocales"> Preferred locale list for voice rendering. </param>
+        /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureCustomVoice(string name, string endpointId, AzureCustomVoiceType @type, float? temperature, Uri customLexiconUri, IList<string> preferLocales, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="name"> Voice name cannot be empty. </param>
+        /// <param name="endpointId"> Endpoint ID cannot be empty. </param>
+        /// <param name="temperature"> Temperature must be between 0.0 and 1.0. </param>
+        /// <param name="customLexiconUri"></param>
+        /// <param name="preferLocales"></param>
+        /// <param name="locale"></param>
+        /// <param name="style"></param>
+        /// <param name="pitch"></param>
+        /// <param name="rate"></param>
+        /// <param name="volume"></param>
+        internal AzureCustomVoice(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string endpointId, float? temperature, string customLexiconUri, IList<string> preferLocales, string locale, string style, string pitch, string rate, string volume) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             EndpointId = endpointId;
-            Type = @type;
             Temperature = temperature;
             CustomLexiconUri = customLexiconUri;
             PreferLocales = preferLocales;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Locale = locale;
+            Style = style;
+            Pitch = pitch;
+            Rate = rate;
+            Volume = volume;
         }
 
-        /// <summary> Name of the voice. </summary>
+        /// <summary> Voice name cannot be empty. </summary>
         public string Name { get; set; }
 
-        /// <summary> Custom endpoint ID. </summary>
+        /// <summary> Endpoint ID cannot be empty. </summary>
         public string EndpointId { get; set; }
 
-        /// <summary> Voice type identifier. </summary>
-        public AzureCustomVoiceType Type { get; set; }
-
-        /// <summary> Optional temperature for generation. </summary>
+        /// <summary> Temperature must be between 0.0 and 1.0. </summary>
         public float? Temperature { get; set; }
 
-        /// <summary> Optional custom lexicon URL. </summary>
-        public Uri CustomLexiconUri { get; set; }
+        /// <summary> Gets or sets the CustomLexiconUri. </summary>
+        public string CustomLexiconUri { get; set; }
 
-        /// <summary> Preferred locale list for voice rendering. </summary>
+        /// <summary> Gets the PreferLocales. </summary>
         public IList<string> PreferLocales { get; }
+
+        /// <summary> Gets or sets the Locale. </summary>
+        public string Locale { get; set; }
+
+        /// <summary> Gets or sets the Style. </summary>
+        public string Style { get; set; }
+
+        /// <summary> Gets or sets the Pitch. </summary>
+        public string Pitch { get; set; }
+
+        /// <summary> Gets or sets the Rate. </summary>
+        public string Rate { get; set; }
+
+        /// <summary> Gets or sets the Volume. </summary>
+        public string Volume { get; set; }
     }
 }

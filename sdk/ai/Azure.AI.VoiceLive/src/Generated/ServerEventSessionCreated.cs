@@ -15,7 +15,7 @@ namespace Azure.AI.VoiceLive
     /// connection is established as the first server event. This event will contain
     /// the default Session configuration.
     /// </summary>
-    public partial class ServerEventSessionCreated : ServerEvent
+    public partial class ServerEventSessionCreated : ServerEventBase
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventSessionCreated"/>. </summary>
         /// <param name="session"></param>

@@ -99,7 +99,7 @@ namespace Azure.AI.VoiceLive
             {
                 writer.WritePropertyName("tools"u8);
                 writer.WriteStartArray();
-                foreach (ToolCall item in Tools)
+                foreach (VoiceLiveToolDefinition item in Tools)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -177,7 +177,7 @@ namespace Azure.AI.VoiceLive
             string instructions = default;
             BinaryData voice = default;
             AudioFormat? outputAudioFormat = default;
-            IList<ToolCall> tools = default;
+            IList<VoiceLiveToolDefinition> tools = default;
             string toolChoice = default;
             float? temperature = default;
             BinaryData maxOutputTokens = default;
@@ -273,10 +273,10 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    List<ToolCall> array = new List<ToolCall>();
+                    List<VoiceLiveToolDefinition> array = new List<VoiceLiveToolDefinition>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ToolCall.DeserializeToolCall(item, options));
+                        array.Add(VoiceLiveToolDefinition.DeserializeVoiceLiveToolDefinition(item, options));
                     }
                     tools = array;
                     continue;
@@ -318,7 +318,7 @@ namespace Azure.AI.VoiceLive
                 instructions,
                 voice,
                 outputAudioFormat,
-                tools ?? new ChangeTrackingList<ToolCall>(),
+                tools ?? new ChangeTrackingList<VoiceLiveToolDefinition>(),
                 toolChoice,
                 temperature,
                 maxOutputTokens,

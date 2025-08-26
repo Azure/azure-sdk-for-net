@@ -56,7 +56,7 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ServerEvent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ServerEventBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ServerEventResponseOutputItemAdded>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -80,7 +80,7 @@ namespace Azure.AI.VoiceLive
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string responseId = default;
             int outputIndex = default;
-            ConversationItemWithReference item = default;
+            ResponseItem item = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -109,7 +109,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    item = ConversationItemWithReference.DeserializeConversationItemWithReference(prop.Value, options);
+                    item = ResponseItem.DeserializeResponseItem(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,7 +148,7 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ServerEvent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ServerEventBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ServerEventResponseOutputItemAdded>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

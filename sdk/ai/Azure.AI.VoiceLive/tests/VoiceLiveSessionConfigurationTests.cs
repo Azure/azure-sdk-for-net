@@ -76,7 +76,7 @@ namespace Azure.AI.VoiceLive.Tests
 
             var options = new SessionOptions
             {
-                Voice = new AzureStandardVoice(TestConstants.VoiceName, AzureStandardVoiceType.AzureStandard),
+                Voice = new AzureStandardVoice(TestConstants.VoiceName),
                 Model = TestConstants.ModelName,
                 Instructions = "You are a helpful assistant.",
                 TurnDetection = new ServerVad { Threshold = 0.5f, SilenceDurationMs = 500 },
@@ -121,11 +121,11 @@ namespace Azure.AI.VoiceLive.Tests
             var options = new SessionOptions
             {
                 Model = TestConstants.ModelName,
-                Voice = new AzureStandardVoice(TestConstants.VoiceName, AzureStandardVoiceType.AzureStandard)
+                Voice = new AzureStandardVoice(TestConstants.VoiceName)
             };
 
-            options.Tools.Add(new FunctionTool("get_weather") { Description = "Gets the weather." });
-            options.Tools.Add(new FunctionTool("book_flight") { Description = "Books a flight." });
+            options.Tools.Add(new VoiceLiveFunctionDefinition("get_weather") { Description = "Gets the weather." });
+            options.Tools.Add(new VoiceLiveFunctionDefinition("book_flight") { Description = "Books a flight." });
 
             await session.ConfigureConversationSessionAsync(options);
 

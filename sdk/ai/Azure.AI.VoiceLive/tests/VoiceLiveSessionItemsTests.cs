@@ -50,7 +50,8 @@ namespace Azure.AI.VoiceLive.Tests
             var list = new List<JsonDocument>();
             foreach (var msg in socket.GetSentTextMessages())
             {
-                if (string.IsNullOrWhiteSpace(msg)) continue;
+                if (string.IsNullOrWhiteSpace(msg))
+                    continue;
                 try
                 {
                     var doc = JsonDocument.Parse(msg);
@@ -75,7 +76,8 @@ namespace Azure.AI.VoiceLive.Tests
         {
             foreach (var msg in socket.GetSentTextMessages().Reverse())
             {
-                if (string.IsNullOrWhiteSpace(msg)) continue;
+                if (string.IsNullOrWhiteSpace(msg))
+                    continue;
                 try
                 {
                     var doc = JsonDocument.Parse(msg);
@@ -93,19 +95,13 @@ namespace Azure.AI.VoiceLive.Tests
             return null;
         }
 
-        private static ConversationItemWithReference CreateSimpleUserMessage(string id, string text)
+        private static MessageItem CreateSimpleUserMessage(string id, string text)
         {
-            var item = new ConversationItemWithReference
+            var item = new UserMessageItem(new[] { new InputTextContentPart(text) })
             {
                 Id = id,
-                Type = ConversationItemWithReferenceType.Message,
-                Role = ConversationItemWithReferenceRole.User
             };
-            item.Content.Add(new ConversationItemWithReferenceContent
-            {
-                Type = ConversationItemWithReferenceContentType.InputText,
-                Text = text
-            });
+
             return item;
         }
 

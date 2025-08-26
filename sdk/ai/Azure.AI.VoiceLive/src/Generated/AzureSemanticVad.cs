@@ -10,33 +10,63 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> Semantic VAD settings based on Azure SDK features. </summary>
+    /// <summary> Server Speech Detection (Azure semantic VAD, default variant). </summary>
     public partial class AzureSemanticVad : TurnDetection
     {
         /// <summary> Initializes a new instance of <see cref="AzureSemanticVad"/>. </summary>
         public AzureSemanticVad() : base(TurnDetectionType.AzureSemanticVad)
         {
+            Languages = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureSemanticVad"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="threshold"></param>
+        /// <param name="prefixPaddingMs"></param>
+        /// <param name="silenceDurationMs"></param>
+        /// <param name="endOfUtteranceDetection"></param>
         /// <param name="negThreshold"></param>
+        /// <param name="speechDurationMs"></param>
         /// <param name="windowSize"></param>
         /// <param name="distinctCiPhones"></param>
         /// <param name="requireVowel"></param>
         /// <param name="removeFillerWords"></param>
-        internal AzureSemanticVad(TurnDetectionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? negThreshold, int? windowSize, int? distinctCiPhones, bool? requireVowel, bool? removeFillerWords) : base(@type, additionalBinaryDataProperties)
+        /// <param name="languages"></param>
+        /// <param name="autoTruncate"></param>
+        internal AzureSemanticVad(TurnDetectionType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, float? threshold, int? prefixPaddingMs, int? silenceDurationMs, EOUDetection endOfUtteranceDetection, float? negThreshold, int? speechDurationMs, int? windowSize, int? distinctCiPhones, bool? requireVowel, bool? removeFillerWords, IList<string> languages, bool? autoTruncate) : base(@type, additionalBinaryDataProperties)
         {
+            Threshold = threshold;
+            PrefixPaddingMs = prefixPaddingMs;
+            SilenceDurationMs = silenceDurationMs;
+            EndOfUtteranceDetection = endOfUtteranceDetection;
             NegThreshold = negThreshold;
+            SpeechDurationMs = speechDurationMs;
             WindowSize = windowSize;
             DistinctCiPhones = distinctCiPhones;
             RequireVowel = requireVowel;
             RemoveFillerWords = removeFillerWords;
+            Languages = languages;
+            AutoTruncate = autoTruncate;
         }
+
+        /// <summary> Gets or sets the Threshold. </summary>
+        public float? Threshold { get; set; }
+
+        /// <summary> Gets or sets the PrefixPaddingMs. </summary>
+        public int? PrefixPaddingMs { get; set; }
+
+        /// <summary> Gets or sets the SilenceDurationMs. </summary>
+        public int? SilenceDurationMs { get; set; }
+
+        /// <summary> Gets or sets the EndOfUtteranceDetection. </summary>
+        public EOUDetection EndOfUtteranceDetection { get; set; }
 
         /// <summary> Gets or sets the NegThreshold. </summary>
         public float? NegThreshold { get; set; }
+
+        /// <summary> Gets or sets the SpeechDurationMs. </summary>
+        public int? SpeechDurationMs { get; set; }
 
         /// <summary> Gets or sets the WindowSize. </summary>
         public int? WindowSize { get; set; }
@@ -49,5 +79,11 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets or sets the RemoveFillerWords. </summary>
         public bool? RemoveFillerWords { get; set; }
+
+        /// <summary> Gets the Languages. </summary>
+        public IList<string> Languages { get; }
+
+        /// <summary> Gets or sets the AutoTruncate. </summary>
+        public bool? AutoTruncate { get; set; }
     }
 }

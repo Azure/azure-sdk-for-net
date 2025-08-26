@@ -57,7 +57,7 @@ namespace Azure.AI.VoiceLive
             {
                 writer.WritePropertyName("output"u8);
                 writer.WriteStartArray();
-                foreach (ConversationResponseItem item in Output)
+                foreach (ResponseItem item in Output)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -161,10 +161,10 @@ namespace Azure.AI.VoiceLive
             }
             string id = default;
             string @object = default;
-            ResponseStatus? status = default;
+            VoiceLiveResponseStatus? status = default;
             ResponseStatusDetails statusDetails = default;
-            IList<ConversationResponseItem> output = default;
-            ResponseUsage usage = default;
+            IList<ResponseItem> output = default;
+            ResponseTokenStatistics usage = default;
             string conversationId = default;
             BinaryData voice = default;
             IList<ResponseModality> modalities = default;
@@ -190,7 +190,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    status = prop.Value.GetString().ToResponseStatus();
+                    status = prop.Value.GetString().ToVoiceLiveResponseStatus();
                     continue;
                 }
                 if (prop.NameEquals("status_details"u8))
@@ -208,10 +208,10 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    List<ConversationResponseItem> array = new List<ConversationResponseItem>();
+                    List<ResponseItem> array = new List<ResponseItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ConversationResponseItem.DeserializeConversationResponseItem(item, options));
+                        array.Add(ResponseItem.DeserializeResponseItem(item, options));
                     }
                     output = array;
                     continue;
@@ -222,7 +222,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    usage = ResponseUsage.DeserializeResponseUsage(prop.Value, options);
+                    usage = ResponseTokenStatistics.DeserializeResponseTokenStatistics(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("conversation_id"u8))
@@ -290,7 +290,7 @@ namespace Azure.AI.VoiceLive
                 @object,
                 status,
                 statusDetails,
-                output ?? new ChangeTrackingList<ConversationResponseItem>(),
+                output ?? new ChangeTrackingList<ResponseItem>(),
                 usage,
                 conversationId,
                 voice,

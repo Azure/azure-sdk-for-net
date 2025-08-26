@@ -7,14 +7,22 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The ResponseStatusDetails. </summary>
-    public partial class ResponseStatusDetails : IJsonModel<ResponseStatusDetails>
+    /// <summary>
+    /// Base for all non-success response details.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponseCancelledDetails"/>, <see cref="ResponseIncompleteDetails"/>, and <see cref="ResponseFailedDetails"/>.
+    /// </summary>
+    [PersistableModelProxy(typeof(UnknownResponseStatusDetails))]
+    public abstract partial class ResponseStatusDetails : IJsonModel<ResponseStatusDetails>
     {
+        /// <summary> Initializes a new instance of <see cref="ResponseStatusDetails"/> for deserialization. </summary>
+        internal ResponseStatusDetails()
+        {
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResponseStatusDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -33,21 +41,8 @@ namespace Azure.AI.VoiceLive
             {
                 throw new FormatException($"The model {nameof(ResponseStatusDetails)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToSerialString());
-            }
-            if (Optional.IsDefined(Reason))
-            {
-                writer.WritePropertyName("reason"u8);
-                writer.WriteStringValue(Reason.Value.ToSerialString());
-            }
-            if (Optional.IsDefined(Error))
-            {
-                writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
-            }
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -90,45 +85,19 @@ namespace Azure.AI.VoiceLive
             {
                 return null;
             }
-            ResponseStatusDetailsType? @type = default;
-            ResponseStatusDetailsReason? reason = default;
-            ResponseStatusDetailsError error = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
             {
-                if (prop.NameEquals("type"u8))
+                switch (discriminator.GetString())
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    @type = prop.Value.GetString().ToResponseStatusDetailsType();
-                    continue;
-                }
-                if (prop.NameEquals("reason"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    reason = prop.Value.GetString().ToResponseStatusDetailsReason();
-                    continue;
-                }
-                if (prop.NameEquals("error"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    error = ResponseStatusDetailsError.DeserializeResponseStatusDetailsError(prop.Value, options);
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    case "cancelled":
+                        return ResponseCancelledDetails.DeserializeResponseCancelledDetails(element, options);
+                    case "incomplete":
+                        return ResponseIncompleteDetails.DeserializeResponseIncompleteDetails(element, options);
+                    case "failed":
+                        return ResponseFailedDetails.DeserializeResponseFailedDetails(element, options);
                 }
             }
-            return new ResponseStatusDetails(@type, reason, error, additionalBinaryDataProperties);
+            return UnknownResponseStatusDetails.DeserializeUnknownResponseStatusDetails(element, options);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

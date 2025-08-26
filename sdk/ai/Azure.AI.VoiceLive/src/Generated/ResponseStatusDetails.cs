@@ -10,63 +10,32 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> The ResponseStatusDetails. </summary>
-    public partial class ResponseStatusDetails
+    /// <summary>
+    /// Base for all non-success response details.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ResponseCancelledDetails"/>, <see cref="ResponseIncompleteDetails"/>, and <see cref="ResponseFailedDetails"/>.
+    /// </summary>
+    public abstract partial class ResponseStatusDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResponseStatusDetails"/>. </summary>
-        internal ResponseStatusDetails()
+        /// <param name="type"></param>
+        private protected ResponseStatusDetails(string @type)
         {
+            Type = @type;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponseStatusDetails"/>. </summary>
-        /// <param name="type">
-        /// The type of error that caused the response to fail, corresponding
-        /// with the `status` field (`completed`, `cancelled`, `incomplete`,
-        /// `failed`).
-        /// </param>
-        /// <param name="reason">
-        /// The reason the Response did not complete. For a `cancelled` Response,
-        /// one of `turn_detected` (the server VAD detected a new start of speech)
-        /// or `client_cancelled` (the client sent a cancel event). For an
-        /// `incomplete` Response, one of `max_output_tokens` or `content_filter`
-        /// (the server-side safety filter activated and cut off the response).
-        /// </param>
-        /// <param name="error">
-        /// A description of the error that caused the response to fail,
-        /// populated when the `status` is `failed`.
-        /// </param>
+        /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseStatusDetails(ResponseStatusDetailsType? @type, ResponseStatusDetailsReason? reason, ResponseStatusDetailsError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponseStatusDetails(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
-            Reason = reason;
-            Error = error;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// The type of error that caused the response to fail, corresponding
-        /// with the `status` field (`completed`, `cancelled`, `incomplete`,
-        /// `failed`).
-        /// </summary>
-        public ResponseStatusDetailsType? Type { get; }
-
-        /// <summary>
-        /// The reason the Response did not complete. For a `cancelled` Response,
-        /// one of `turn_detected` (the server VAD detected a new start of speech)
-        /// or `client_cancelled` (the client sent a cancel event). For an
-        /// `incomplete` Response, one of `max_output_tokens` or `content_filter`
-        /// (the server-side safety filter activated and cut off the response).
-        /// </summary>
-        public ResponseStatusDetailsReason? Reason { get; }
-
-        /// <summary>
-        /// A description of the error that caused the response to fail,
-        /// populated when the `status` is `failed`.
-        /// </summary>
-        public ResponseStatusDetailsError Error { get; }
+        /// <summary> Gets or sets the Type. </summary>
+        internal string Type { get; set; }
     }
 }

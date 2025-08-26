@@ -15,6 +15,12 @@ namespace Azure.AI.VoiceLive
         /// <summary> ServerVad. </summary>
         ServerVad,
         /// <summary> AzureSemanticVad. </summary>
-        AzureSemanticVad
+        AzureSemanticVad,
+        /// <summary> AzureSemanticVadEn. </summary>
+        AzureSemanticVadEn,
+        /// <summary> ServerSd. </summary>
+        ServerSd,
+        /// <summary> AzureSemanticVadMultilingual. </summary>
+        AzureSemanticVadMultilingual
     }
 }

@@ -10,44 +10,70 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> Voice configuration for Azure standard or platform voices. </summary>
-    public partial class AzureStandardVoice
+    /// <summary> Azure standard voice configuration. </summary>
+    public partial class AzureStandardVoice : AzureVoice
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="AzureStandardVoice"/>. </summary>
-        /// <param name="name"> Name of the voice. </param>
-        /// <param name="type"> Voice type identifier. </param>
+        /// <param name="name"> Voice name cannot be empty. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public AzureStandardVoice(string name, AzureStandardVoiceType @type)
+        public AzureStandardVoice(string name) : base("azure-standard")
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            Type = @type;
+            PreferLocales = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureStandardVoice"/>. </summary>
-        /// <param name="name"> Name of the voice. </param>
-        /// <param name="type"> Voice type identifier. </param>
-        /// <param name="temperature"> Optional temperature for generation. </param>
+        /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzureStandardVoice(string name, AzureStandardVoiceType @type, float? temperature, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="name"> Voice name cannot be empty. </param>
+        /// <param name="temperature"> Temperature must be between 0.0 and 1.0. </param>
+        /// <param name="customLexiconUrl"></param>
+        /// <param name="preferLocales"></param>
+        /// <param name="locale"></param>
+        /// <param name="style"></param>
+        /// <param name="pitch"></param>
+        /// <param name="rate"></param>
+        /// <param name="volume"></param>
+        internal AzureStandardVoice(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, float? temperature, string customLexiconUrl, IList<string> preferLocales, string locale, string style, string pitch, string rate, string volume) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
-            Type = @type;
             Temperature = temperature;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            CustomLexiconUrl = customLexiconUrl;
+            PreferLocales = preferLocales;
+            Locale = locale;
+            Style = style;
+            Pitch = pitch;
+            Rate = rate;
+            Volume = volume;
         }
 
-        /// <summary> Name of the voice. </summary>
+        /// <summary> Voice name cannot be empty. </summary>
         public string Name { get; set; }
 
-        /// <summary> Voice type identifier. </summary>
-        public AzureStandardVoiceType Type { get; set; }
-
-        /// <summary> Optional temperature for generation. </summary>
+        /// <summary> Temperature must be between 0.0 and 1.0. </summary>
         public float? Temperature { get; set; }
+
+        /// <summary> Gets or sets the CustomLexiconUrl. </summary>
+        public string CustomLexiconUrl { get; set; }
+
+        /// <summary> Gets the PreferLocales. </summary>
+        public IList<string> PreferLocales { get; }
+
+        /// <summary> Gets or sets the Locale. </summary>
+        public string Locale { get; set; }
+
+        /// <summary> Gets or sets the Style. </summary>
+        public string Style { get; set; }
+
+        /// <summary> Gets or sets the Pitch. </summary>
+        public string Pitch { get; set; }
+
+        /// <summary> Gets or sets the Rate. </summary>
+        public string Rate { get; set; }
+
+        /// <summary> Gets or sets the Volume. </summary>
+        public string Volume { get; set; }
     }
 }

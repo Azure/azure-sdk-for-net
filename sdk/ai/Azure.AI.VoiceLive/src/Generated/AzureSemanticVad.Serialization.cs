@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> Semantic VAD settings based on Azure SDK features. </summary>
+    /// <summary> Server Speech Detection (Azure semantic VAD, default variant). </summary>
     public partial class AzureSemanticVad : IJsonModel<AzureSemanticVad>
     {
         /// <param name="writer"> The JSON writer. </param>
@@ -34,10 +34,35 @@ namespace Azure.AI.VoiceLive
                 throw new FormatException($"The model {nameof(AzureSemanticVad)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Threshold))
+            {
+                writer.WritePropertyName("threshold"u8);
+                writer.WriteNumberValue(Threshold.Value);
+            }
+            if (Optional.IsDefined(PrefixPaddingMs))
+            {
+                writer.WritePropertyName("prefix_padding_ms"u8);
+                writer.WriteNumberValue(PrefixPaddingMs.Value);
+            }
+            if (Optional.IsDefined(SilenceDurationMs))
+            {
+                writer.WritePropertyName("silence_duration_ms"u8);
+                writer.WriteNumberValue(SilenceDurationMs.Value);
+            }
+            if (Optional.IsDefined(EndOfUtteranceDetection))
+            {
+                writer.WritePropertyName("end_of_utterance_detection"u8);
+                writer.WriteObjectValue(EndOfUtteranceDetection, options);
+            }
             if (Optional.IsDefined(NegThreshold))
             {
                 writer.WritePropertyName("neg_threshold"u8);
                 writer.WriteNumberValue(NegThreshold.Value);
+            }
+            if (Optional.IsDefined(SpeechDurationMs))
+            {
+                writer.WritePropertyName("speech_duration_ms"u8);
+                writer.WriteNumberValue(SpeechDurationMs.Value);
             }
             if (Optional.IsDefined(WindowSize))
             {
@@ -58,6 +83,26 @@ namespace Azure.AI.VoiceLive
             {
                 writer.WritePropertyName("remove_filler_words"u8);
                 writer.WriteBooleanValue(RemoveFillerWords.Value);
+            }
+            if (Optional.IsCollectionDefined(Languages))
+            {
+                writer.WritePropertyName("languages"u8);
+                writer.WriteStartArray();
+                foreach (string item in Languages)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(AutoTruncate))
+            {
+                writer.WritePropertyName("auto_truncate"u8);
+                writer.WriteBooleanValue(AutoTruncate.Value);
             }
         }
 
@@ -88,16 +133,59 @@ namespace Azure.AI.VoiceLive
             }
             TurnDetectionType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            float? threshold = default;
+            int? prefixPaddingMs = default;
+            int? silenceDurationMs = default;
+            EOUDetection endOfUtteranceDetection = default;
             float? negThreshold = default;
+            int? speechDurationMs = default;
             int? windowSize = default;
             int? distinctCiPhones = default;
             bool? requireVowel = default;
             bool? removeFillerWords = default;
+            IList<string> languages = default;
+            bool? autoTruncate = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
                     @type = prop.Value.GetString().ToTurnDetectionType();
+                    continue;
+                }
+                if (prop.NameEquals("threshold"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    threshold = prop.Value.GetSingle();
+                    continue;
+                }
+                if (prop.NameEquals("prefix_padding_ms"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    prefixPaddingMs = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("silence_duration_ms"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    silenceDurationMs = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("end_of_utterance_detection"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endOfUtteranceDetection = EOUDetection.DeserializeEOUDetection(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("neg_threshold"u8))
@@ -107,6 +195,15 @@ namespace Azure.AI.VoiceLive
                         continue;
                     }
                     negThreshold = prop.Value.GetSingle();
+                    continue;
+                }
+                if (prop.NameEquals("speech_duration_ms"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    speechDurationMs = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("window_size"u8))
@@ -145,6 +242,36 @@ namespace Azure.AI.VoiceLive
                     removeFillerWords = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("languages"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    languages = array;
+                    continue;
+                }
+                if (prop.NameEquals("auto_truncate"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    autoTruncate = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -153,11 +280,18 @@ namespace Azure.AI.VoiceLive
             return new AzureSemanticVad(
                 @type,
                 additionalBinaryDataProperties,
+                threshold,
+                prefixPaddingMs,
+                silenceDurationMs,
+                endOfUtteranceDetection,
                 negThreshold,
+                speechDurationMs,
                 windowSize,
                 distinctCiPhones,
                 requireVowel,
-                removeFillerWords);
+                removeFillerWords,
+                languages ?? new ChangeTrackingList<string>(),
+                autoTruncate);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

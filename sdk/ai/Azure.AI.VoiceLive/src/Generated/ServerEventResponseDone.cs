@@ -15,7 +15,7 @@ namespace Azure.AI.VoiceLive
     /// final state. The Response object included in the `response.done` event will
     /// include all output Items in the Response but will omit the raw audio data.
     /// </summary>
-    public partial class ServerEventResponseDone : ServerEvent
+    public partial class ServerEventResponseDone : ServerEventBase
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseDone"/>. </summary>
         /// <param name="response"></param>

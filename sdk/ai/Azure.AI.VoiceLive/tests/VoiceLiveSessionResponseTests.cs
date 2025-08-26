@@ -48,7 +48,8 @@ namespace Azure.AI.VoiceLive.Tests
         {
             foreach (var msg in socket.GetSentTextMessages().Reverse())
             {
-                if (string.IsNullOrWhiteSpace(msg)) continue;
+                if (string.IsNullOrWhiteSpace(msg))
+                    continue;
                 try
                 {
                     return JsonDocument.Parse(msg);
@@ -66,7 +67,8 @@ namespace Azure.AI.VoiceLive.Tests
             var list = new List<JsonDocument>();
             foreach (var m in socket.GetSentTextMessages())
             {
-                if (string.IsNullOrWhiteSpace(m)) continue;
+                if (string.IsNullOrWhiteSpace(m))
+                    continue;
                 try
                 {
                     var doc = JsonDocument.Parse(m);
@@ -128,7 +130,8 @@ namespace Azure.AI.VoiceLive.Tests
 
             var cancelMessages = GetMessagesOfType(fake, "response.cancel");
             Assert.That(cancelMessages.Count, Is.EqualTo(1), "Expected one response.cancel message.");
-            foreach (var d in cancelMessages) d.Dispose();
+            foreach (var d in cancelMessages)
+                d.Dispose();
         }
 
         [Test]
@@ -137,13 +140,7 @@ namespace Azure.AI.VoiceLive.Tests
             var session = CreateSessionWithFakeSocket(out var fake);
 
             // Construct a function_call_output item.
-            var item = new ConversationItemWithReference
-            {
-                Id = "func-output-1",
-                Type = ConversationItemWithReferenceType.FunctionCallOutput,
-                CallId = "call-1",
-                Output = "{ \"result\": \"ok\" }"
-            };
+            var item = new FunctionCallOutputItem("call-1", "{ \"result\": \"ok\" }");
 
             await session.AddItemAsync(item);
             await session.StartResponseAsync();
@@ -155,11 +152,13 @@ namespace Azure.AI.VoiceLive.Tests
             for (int i = 0; i < sent.Count; i++)
             {
                 var msg = sent[i];
-                if (string.IsNullOrWhiteSpace(msg)) continue;
+                if (string.IsNullOrWhiteSpace(msg))
+                    continue;
                 try
                 {
                     using var doc = JsonDocument.Parse(msg);
-                    if (!doc.RootElement.TryGetProperty("type", out var tProp) || tProp.ValueKind != JsonValueKind.String) continue;
+                    if (!doc.RootElement.TryGetProperty("type", out var tProp) || tProp.ValueKind != JsonValueKind.String)
+                        continue;
                     var typeVal = tProp.GetString();
                     if (typeVal == "conversation.item.create" && createIndex == -1)
                     {
@@ -178,7 +177,7 @@ namespace Azure.AI.VoiceLive.Tests
 
             if (createIndex == -1 || responseIndex == -1)
             {
-                Assert.Inconclusive("Could not locate required message types in sent frames (conversation.item.create and response.create)." );
+                Assert.Inconclusive("Could not locate required message types in sent frames (conversation.item.create and response.create).");
             }
 
             Assert.That(createIndex, Is.LessThan(responseIndex), "conversation.item.create should be sent before response.create");

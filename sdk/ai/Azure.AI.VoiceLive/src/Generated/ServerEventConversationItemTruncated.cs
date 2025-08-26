@@ -18,7 +18,7 @@ namespace Azure.AI.VoiceLive
     /// This action will truncate the audio and remove the server-side text transcript
     /// to ensure there is no text in the context that hasn't been heard by the user.
     /// </summary>
-    public partial class ServerEventConversationItemTruncated : ServerEvent
+    public partial class ServerEventConversationItemTruncated : ServerEventBase
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventConversationItemTruncated"/>. </summary>
         /// <param name="itemId"> The ID of the assistant message item that was truncated. </param>

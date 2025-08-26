@@ -7,7 +7,7 @@
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> Voice identifier for OpenAI-provided voices. </summary>
+    /// <summary> Supported OpenAI voice names (string enum). </summary>
     public enum OAIVoice
     {
         /// <summary> Alloy. </summary>

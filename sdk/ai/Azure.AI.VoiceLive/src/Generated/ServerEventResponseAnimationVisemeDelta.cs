@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Represents a viseme ID delta update for animation based on audio. </summary>
-    public partial class ServerEventResponseAnimationVisemeDelta : ServerEvent
+    public partial class ServerEventResponseAnimationVisemeDelta : ServerEventBase
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseAnimationVisemeDelta"/>. </summary>
         /// <param name="responseId"></param>

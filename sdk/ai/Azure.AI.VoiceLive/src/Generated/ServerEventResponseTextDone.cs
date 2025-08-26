@@ -14,7 +14,7 @@ namespace Azure.AI.VoiceLive
     /// Returned when the text value of a "text" content part is done streaming. Also
     /// emitted when a Response is interrupted, incomplete, or cancelled.
     /// </summary>
-    public partial class ServerEventResponseTextDone : ServerEvent
+    public partial class ServerEventResponseTextDone : ServerEventBase
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseTextDone"/>. </summary>
         /// <param name="responseId"> The ID of the response. </param>

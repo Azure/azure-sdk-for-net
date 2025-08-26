@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Sent when the server is in the process of establishing an avatar media connection and provides its SDP answer. </summary>
-    public partial class ServerEventSessionAvatarConnecting : ServerEvent
+    public partial class ServerEventSessionAvatarConnecting : ServerEventBase
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventSessionAvatarConnecting"/>. </summary>
         /// <param name="serverSdp"> The server's SDP answer for the avatar connection. </param>

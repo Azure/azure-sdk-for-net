@@ -10,46 +10,41 @@ using System.Collections.Generic;
 
 namespace Azure.AI.VoiceLive
 {
-    /// <summary> Voice configuration for Azure personal voice. </summary>
-    public partial class AzurePersonalVoice
+    /// <summary> Azure personal voice configuration. </summary>
+    public partial class AzurePersonalVoice : AzureVoice
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="AzurePersonalVoice"/>. </summary>
-        /// <param name="name"> Name of the voice. </param>
-        /// <param name="type"> Voice type identifier. </param>
-        /// <param name="model"> Personal voice model identifier. </param>
+        /// <param name="name"> Voice name cannot be empty. </param>
+        /// <param name="model"> Underlying neural model to use for personal voice. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public AzurePersonalVoice(string name, AzurePersonalVoiceType @type, AzurePersonalVoiceModel model)
+        public AzurePersonalVoice(string name, AzurePersonalVoiceModel model) : base("azure-personal")
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            Type = @type;
             Model = model;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzurePersonalVoice"/>. </summary>
-        /// <param name="name"> Name of the voice. </param>
-        /// <param name="type"> Voice type identifier. </param>
-        /// <param name="model"> Personal voice model identifier. </param>
+        /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AzurePersonalVoice(string name, AzurePersonalVoiceType @type, AzurePersonalVoiceModel model, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="name"> Voice name cannot be empty. </param>
+        /// <param name="temperature"> Temperature must be between 0.0 and 1.0. </param>
+        /// <param name="model"> Underlying neural model to use for personal voice. </param>
+        internal AzurePersonalVoice(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, float? temperature, AzurePersonalVoiceModel model) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
-            Type = @type;
+            Temperature = temperature;
             Model = model;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Name of the voice. </summary>
+        /// <summary> Voice name cannot be empty. </summary>
         public string Name { get; set; }
 
-        /// <summary> Voice type identifier. </summary>
-        public AzurePersonalVoiceType Type { get; set; }
+        /// <summary> Temperature must be between 0.0 and 1.0. </summary>
+        public float? Temperature { get; set; }
 
-        /// <summary> Personal voice model identifier. </summary>
+        /// <summary> Underlying neural model to use for personal voice. </summary>
         public AzurePersonalVoiceModel Model { get; set; }
     }
 }

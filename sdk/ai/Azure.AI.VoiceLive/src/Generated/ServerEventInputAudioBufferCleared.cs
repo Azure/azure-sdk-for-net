@@ -14,7 +14,7 @@ namespace Azure.AI.VoiceLive
     /// Returned when the input audio buffer is cleared by the client with a
     /// `input_audio_buffer.clear` event.
     /// </summary>
-    public partial class ServerEventInputAudioBufferCleared : ServerEvent
+    public partial class ServerEventInputAudioBufferCleared : ServerEventBase
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventInputAudioBufferCleared"/>. </summary>
         internal ServerEventInputAudioBufferCleared() : base(ServerEventType.InputAudioBufferCleared)

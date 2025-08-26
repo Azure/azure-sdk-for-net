@@ -153,7 +153,7 @@ namespace Azure.AI.VoiceLive
         /// The voice configuration to use for generating spoken responses. If not specified,
         /// the service will use a default voice.
         /// </value>
-        public IVoiceType Voice { get; set; }
+        public VoiceType Voice { get; set; }
 
         /// <summary>
         /// Gets or sets the instructions for the conversation assistant.
@@ -169,7 +169,7 @@ namespace Azure.AI.VoiceLive
         /// <value>
         /// A list of tools that the assistant can use during the conversation.
         /// </value>
-        public IList<ToolCall> Tools { get; set; } = new List<ToolCall>();
+        public IList<VoiceLiveToolDefinition> Tools { get; set; } = new List<VoiceLiveToolDefinition>();
 
         /// <summary>
         /// Gets or sets the tool choice strategy for the conversation.

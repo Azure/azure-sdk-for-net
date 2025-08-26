@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Represents a word-level audio timestamp delta for a response. </summary>
-    public partial class ServerEventResponseAudioTimestampDelta : ServerEvent
+    public partial class ServerEventResponseAudioTimestampDelta : ServerEventBase
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseAudioTimestampDelta"/>. </summary>
         /// <param name="responseId"></param>

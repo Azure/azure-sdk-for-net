@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> The ResponseAudioContentPart. </summary>
-    public partial class ResponseAudioContentPart : ContentPart
+    public partial class ResponseAudioContentPart : VoiceLiveContentPart
     {
         /// <summary> Initializes a new instance of <see cref="ResponseAudioContentPart"/>. </summary>
         internal ResponseAudioContentPart() : base(ContentPartType.Audio)

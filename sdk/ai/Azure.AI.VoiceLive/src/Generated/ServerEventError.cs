@@ -15,7 +15,7 @@ namespace Azure.AI.VoiceLive
     /// problem. Most errors are recoverable and the session will stay open, we
     /// recommend to implementors to monitor and log error messages by default.
     /// </summary>
-    public partial class ServerEventError : ServerEvent
+    public partial class ServerEventError : ServerEventBase
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventError"/>. </summary>
         /// <param name="error"> Details of the error. </param>

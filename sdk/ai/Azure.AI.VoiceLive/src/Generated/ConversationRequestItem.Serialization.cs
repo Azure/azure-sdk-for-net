@@ -12,11 +12,11 @@ using System.Text.Json;
 namespace Azure.AI.VoiceLive
 {
     /// <summary>
-    /// The ConversationRequestItem.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RequestMessageItem"/>, <see cref="RequestFunctionCallItem"/>, and <see cref="RequestFunctionCallOutputItem"/>.
+    /// Base for any response item; discriminated by `type`.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MessageItem"/>, <see cref="FunctionCallItem"/>, and <see cref="FunctionCallOutputItem"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownConversationRequestItem))]
-    internal abstract partial class ConversationRequestItem : IJsonModel<ConversationRequestItem>
+    public abstract partial class ConversationRequestItem : IJsonModel<ConversationRequestItem>
     {
         /// <summary> Initializes a new instance of <see cref="ConversationRequestItem"/> for deserialization. </summary>
         internal ConversationRequestItem()
@@ -95,11 +95,11 @@ namespace Azure.AI.VoiceLive
                 switch (discriminator.GetString())
                 {
                     case "message":
-                        return RequestMessageItem.DeserializeRequestMessageItem(element, options);
+                        return MessageItem.DeserializeMessageItem(element, options);
                     case "function_call":
-                        return RequestFunctionCallItem.DeserializeRequestFunctionCallItem(element, options);
+                        return FunctionCallItem.DeserializeFunctionCallItem(element, options);
                     case "function_call_output":
-                        return RequestFunctionCallOutputItem.DeserializeRequestFunctionCallOutputItem(element, options);
+                        return FunctionCallOutputItem.DeserializeFunctionCallOutputItem(element, options);
                 }
             }
             return UnknownConversationRequestItem.DeserializeUnknownConversationRequestItem(element, options);

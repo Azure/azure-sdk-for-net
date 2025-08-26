@@ -59,7 +59,7 @@ namespace Azure.AI.VoiceLive.Tests
             var session = CreateSessionWithFakeSocket(out var fake);
             fake.EnqueueTextMessage(CreateSessionCreatedJson());
 
-            await foreach (ServerEvent evt in session.GetUpdatesAsync())
+            await foreach (ServerEventBase evt in session.GetUpdatesAsync())
             {
                 Assert.That(evt, Is.TypeOf<ServerEventSessionCreated>());
                 var created = (ServerEventSessionCreated)evt;
@@ -78,7 +78,7 @@ namespace Azure.AI.VoiceLive.Tests
             fake.EnqueueTextMessage(CreateSessionCreatedJson("evt-2"));
 
             int count = 0;
-            await foreach (ServerEvent evt in session.GetUpdatesAsync())
+            await foreach (ServerEventBase evt in session.GetUpdatesAsync())
             {
                 count++;
                 Assert.That(evt, Is.TypeOf<ServerEventSessionCreated>());

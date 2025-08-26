@@ -66,7 +66,7 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ServerEvent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ServerEventBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ServerEventResponseAnimationBlendshapeDelta>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -175,7 +175,7 @@ namespace Azure.AI.VoiceLive
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ServerEvent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ServerEventBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ServerEventResponseAnimationBlendshapeDelta>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

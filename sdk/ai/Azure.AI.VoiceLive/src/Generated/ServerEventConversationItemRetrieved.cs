@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when a conversation item is retrieved with `conversation.item.retrieve`. </summary>
-    public partial class ServerEventConversationItemRetrieved : ServerEvent
+    public partial class ServerEventConversationItemRetrieved : ServerEventBase
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventConversationItemRetrieved"/>. </summary>
         internal ServerEventConversationItemRetrieved() : base(ServerEventType.ConversationItemRetrieved)
@@ -21,15 +21,15 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="ServerEventConversationItemRetrieved"/>. </summary>
         /// <param name="type"> The type of event. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="itemId"></param>
+        /// <param name="item"></param>
         /// <param name="eventId"></param>
-        internal ServerEventConversationItemRetrieved(ServerEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string itemId, string eventId) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ServerEventConversationItemRetrieved(ServerEventType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponseItem item, string eventId) : base(@type, eventId, additionalBinaryDataProperties)
         {
-            ItemId = itemId;
+            Item = item;
         }
 
-        /// <summary> Gets the ItemId. </summary>
-        public string ItemId { get; }
+        /// <summary> Gets the Item. </summary>
+        public ResponseItem Item { get; }
 
         /// <summary> Gets the EventId. </summary>
         public override string EventId { get; }

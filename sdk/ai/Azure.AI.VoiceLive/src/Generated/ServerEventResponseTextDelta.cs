@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when the text value of a "text" content part is updated. </summary>
-    public partial class ServerEventResponseTextDelta : ServerEvent
+    public partial class ServerEventResponseTextDelta : ServerEventBase
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseTextDelta"/>. </summary>
         /// <param name="responseId"> The ID of the response. </param>

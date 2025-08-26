@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when the text value of an input audio transcription content part is updated. </summary>
-    public partial class ServerEventConversationItemInputAudioTranscriptionDelta : ServerEvent
+    public partial class ServerEventConversationItemInputAudioTranscriptionDelta : ServerEventBase
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventConversationItemInputAudioTranscriptionDelta"/>. </summary>
         /// <param name="itemId"> The ID of the item. </param>

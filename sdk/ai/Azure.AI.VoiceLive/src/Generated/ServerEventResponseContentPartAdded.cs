@@ -14,7 +14,7 @@ namespace Azure.AI.VoiceLive
     /// Returned when a new content part is added to an assistant message item during
     /// response generation.
     /// </summary>
-    public partial class ServerEventResponseContentPartAdded : ServerEvent
+    public partial class ServerEventResponseContentPartAdded : ServerEventBase
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseContentPartAdded"/>. </summary>
         /// <param name="responseId"> The ID of the response. </param>
@@ -22,7 +22,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputIndex"> The index of the output item in the response. </param>
         /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
         /// <param name="part"> The content part that was added. </param>
-        internal ServerEventResponseContentPartAdded(string responseId, string itemId, int outputIndex, int contentIndex, ContentPart part) : base(ServerEventType.ResponseContentPartAdded)
+        internal ServerEventResponseContentPartAdded(string responseId, string itemId, int outputIndex, int contentIndex, VoiceLiveContentPart part) : base(ServerEventType.ResponseContentPartAdded)
         {
             ResponseId = responseId;
             ItemId = itemId;
@@ -40,7 +40,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="outputIndex"> The index of the output item in the response. </param>
         /// <param name="contentIndex"> The index of the content part in the item's content array. </param>
         /// <param name="part"> The content part that was added. </param>
-        internal ServerEventResponseContentPartAdded(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, ContentPart part) : base(@type, eventId, additionalBinaryDataProperties)
+        internal ServerEventResponseContentPartAdded(ServerEventType @type, string eventId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string responseId, string itemId, int outputIndex, int contentIndex, VoiceLiveContentPart part) : base(@type, eventId, additionalBinaryDataProperties)
         {
             ResponseId = responseId;
             ItemId = itemId;
@@ -62,6 +62,6 @@ namespace Azure.AI.VoiceLive
         public int ContentIndex { get; }
 
         /// <summary> The content part that was added. </summary>
-        public ContentPart Part { get; }
+        public VoiceLiveContentPart Part { get; }
     }
 }

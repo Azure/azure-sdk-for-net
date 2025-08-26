@@ -22,7 +22,7 @@ namespace Azure.AI.VoiceLive
         {
             Modalities = new ChangeTrackingList<InputModality>();
             OutputAudioTimestampTypes = new ChangeTrackingList<AudioTimestampType>();
-            Tools = new ChangeTrackingList<ToolCall>();
+            Tools = new ChangeTrackingList<VoiceLiveToolDefinition>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponseSession"/>. </summary>
@@ -48,7 +48,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="maxResponseOutputTokens"></param>
         /// <param name="agent"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseSession(string id, string model, IList<InputModality> modalities, string instructions, AnimationOptions animation, BinaryData voice, InputAudio inputAudio, AudioFormat? inputAudioFormat, AudioFormat? outputAudioFormat, int? inputAudioSamplingRate, TurnDetection turnDetection, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfig avatar, AudioInputTranscriptionSettings inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<ToolCall> tools, BinaryData toolChoice, float? temperature, BinaryData maxResponseOutputTokens, RespondingAgentConfig agent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponseSession(string id, string model, IList<InputModality> modalities, string instructions, AnimationOptions animation, BinaryData voice, InputAudio inputAudio, AudioFormat? inputAudioFormat, AudioFormat? outputAudioFormat, int? inputAudioSamplingRate, TurnDetection turnDetection, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfig avatar, AudioInputTranscriptionSettings inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<VoiceLiveToolDefinition> tools, BinaryData toolChoice, float? temperature, BinaryData maxResponseOutputTokens, RespondingAgentConfig agent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Model = model;
@@ -101,13 +101,10 @@ namespace Azure.AI.VoiceLive
         /// <description> <see cref="OAIVoice"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="AzureStandardVoice"/>. </description>
+        /// <description> <see cref="OpenAIVoice"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="AzureCustomVoice"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="AzurePersonalVoice"/>. </description>
+        /// <description> <see cref="AzureVoice"/>. </description>
         /// </item>
         /// <item>
         /// <description> <see cref="Phi4mmVoice"/>. </description>
@@ -170,7 +167,7 @@ namespace Azure.AI.VoiceLive
         public IList<AudioTimestampType> OutputAudioTimestampTypes { get; }
 
         /// <summary> Gets the Tools. </summary>
-        public IList<ToolCall> Tools { get; }
+        public IList<VoiceLiveToolDefinition> Tools { get; }
 
         /// <summary>
         /// Gets the ToolChoice.

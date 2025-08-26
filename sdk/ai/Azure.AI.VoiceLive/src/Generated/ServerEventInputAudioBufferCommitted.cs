@@ -16,7 +16,7 @@ namespace Azure.AI.VoiceLive
     /// message item that will be created, thus a `conversation.item.created` event
     /// will also be sent to the client.
     /// </summary>
-    public partial class ServerEventInputAudioBufferCommitted : ServerEvent
+    public partial class ServerEventInputAudioBufferCommitted : ServerEventBase
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventInputAudioBufferCommitted"/>. </summary>
         /// <param name="itemId"> The ID of the user message item that will be created. </param>

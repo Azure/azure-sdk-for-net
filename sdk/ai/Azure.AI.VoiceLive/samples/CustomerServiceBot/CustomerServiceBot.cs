@@ -123,7 +123,7 @@ public class CustomerServiceBot : IDisposable
         _logger.LogInformation("Setting up customer service session with function calling...");
 
         // Azure voice configuration
-        var azureVoice = new AzureStandardVoice(_voice, AzureStandardVoiceType.AzureStandard);
+        var azureVoice = new AzureStandardVoice(_voice);
 
         // Create strongly typed turn detection configuration
         var turnDetectionConfig = new ServerVad
@@ -156,7 +156,7 @@ public class CustomerServiceBot : IDisposable
         sessionOptions.Tools.Add(CreateInitiateReturnProcessTool());
         sessionOptions.Tools.Add(CreateUpdateShippingAddressTool());
 
-        
+
         await _session!.ConfigureConversationSessionAsync(sessionOptions, cancellationToken).ConfigureAwait(false);
 
         _logger.LogInformation("Session configuration sent with {ToolCount} customer service tools", sessionOptions.Tools.Count);
@@ -165,7 +165,7 @@ public class CustomerServiceBot : IDisposable
     /// <summary>
     /// Create the check order status function tool.
     /// </summary>
-    private FunctionTool CreateCheckOrderStatusTool()
+    private VoiceLiveFunctionDefinition CreateCheckOrderStatusTool()
     {
         var parameters = new
         {
@@ -186,7 +186,7 @@ public class CustomerServiceBot : IDisposable
             required = new[] { "order_number" }
         };
 
-        return new FunctionTool("check_order_status")
+        return new VoiceLiveFunctionDefinition("check_order_status")
         {
             Description = "Check the status of a customer order by order number or email. Use this when customers ask about their order status, shipping, or delivery information.",
             Parameters = BinaryData.FromObjectAsJson(parameters)
@@ -196,7 +196,7 @@ public class CustomerServiceBot : IDisposable
     /// <summary>
     /// Create the get customer info function tool.
     /// </summary>
-    private FunctionTool CreateGetCustomerInfoTool()
+    private VoiceLiveFunctionDefinition CreateGetCustomerInfoTool()
     {
         var parameters = new
         {
@@ -218,7 +218,7 @@ public class CustomerServiceBot : IDisposable
             required = new[] { "customer_id" }
         };
 
-        return new FunctionTool("get_customer_info")
+        return new VoiceLiveFunctionDefinition("get_customer_info")
         {
             Description = "Retrieve customer account information and optionally their purchase history. Use this when customers ask about their account details or past orders.",
             Parameters = BinaryData.FromObjectAsJson(parameters)
@@ -228,7 +228,7 @@ public class CustomerServiceBot : IDisposable
     /// <summary>
     /// Create the schedule support call function tool.
     /// </summary>
-    private FunctionTool CreateScheduleSupportCallTool()
+    private VoiceLiveFunctionDefinition CreateScheduleSupportCallTool()
     {
         var parameters = new
         {
@@ -267,7 +267,7 @@ public class CustomerServiceBot : IDisposable
             required = new[] { "customer_id", "issue_category", "description" }
         };
 
-        return new FunctionTool("schedule_support_call")
+        return new VoiceLiveFunctionDefinition("schedule_support_call")
         {
             Description = "Schedule a technical support call with a specialist. Use this when customers need to speak with a technical expert about complex issues.",
             Parameters = BinaryData.FromObjectAsJson(parameters)
@@ -277,7 +277,7 @@ public class CustomerServiceBot : IDisposable
     /// <summary>
     /// Create the initiate return process function tool.
     /// </summary>
-    private FunctionTool CreateInitiateReturnProcessTool()
+    private VoiceLiveFunctionDefinition CreateInitiateReturnProcessTool()
     {
         var parameters = new
         {
@@ -310,7 +310,7 @@ public class CustomerServiceBot : IDisposable
             required = new[] { "order_number", "product_id", "reason", "return_type" }
         };
 
-        return new FunctionTool("initiate_return_process")
+        return new VoiceLiveFunctionDefinition("initiate_return_process")
         {
             Description = "Start the return/exchange process for a product. Use this when customers want to return or exchange items they've purchased.",
             Parameters = BinaryData.FromObjectAsJson(parameters)
@@ -320,7 +320,7 @@ public class CustomerServiceBot : IDisposable
     /// <summary>
     /// Create the update shipping address function tool.
     /// </summary>
-    private FunctionTool CreateUpdateShippingAddressTool()
+    private VoiceLiveFunctionDefinition CreateUpdateShippingAddressTool()
     {
         var parameters = new
         {
@@ -350,7 +350,7 @@ public class CustomerServiceBot : IDisposable
             required = new[] { "order_number", "new_address" }
         };
 
-        return new FunctionTool("update_shipping_address")
+        return new VoiceLiveFunctionDefinition("update_shipping_address")
         {
             Description = "Update shipping address for pending orders. Use this when customers need to change where their order will be delivered.",
             Parameters = BinaryData.FromObjectAsJson(parameters)
@@ -364,7 +364,7 @@ public class CustomerServiceBot : IDisposable
     {
         try
         {
-            await foreach (ServerEvent serverEvent in _session!.GetUpdatesAsync(cancellationToken).ConfigureAwait(false))
+            await foreach (ServerEventBase serverEvent in _session!.GetUpdatesAsync(cancellationToken).ConfigureAwait(false))
             {
                 await HandleServerEventAsync(serverEvent, cancellationToken).ConfigureAwait(false);
             }
@@ -383,7 +383,7 @@ public class CustomerServiceBot : IDisposable
     /// <summary>
     /// Handle different types of server events from VoiceLive.
     /// </summary>
-    private async Task HandleServerEventAsync(ServerEvent serverEvent, CancellationToken cancellationToken)
+    private async Task HandleServerEventAsync(ServerEventBase serverEvent, CancellationToken cancellationToken)
     {
         _logger.LogDebug("Received event: {EventType}", serverEvent.GetType().Name);
 
@@ -504,8 +504,7 @@ public class CustomerServiceBot : IDisposable
     /// </summary>
     private async Task HandleResponseOutputItemAddedAsync(ServerEventResponseOutputItemAdded outputItemAdded, CancellationToken cancellationToken)
     {
-        if (outputItemAdded.Item is ConversationItemWithReference item &&
-            item.Type == ConversationItemWithReferenceType.FunctionCall)
+        if (outputItemAdded.Item is ResponseFunctionCallItem item)
         {
             // This is a function call item, extract the details
             var functionName = item.Name;
@@ -522,9 +521,8 @@ public class CustomerServiceBot : IDisposable
                     functionName, callId, arguments);
             }
         }
-        else if (outputItemAdded.Item is ConversationItemWithReference messageItem &&
-            messageItem.Type == ConversationItemWithReferenceType.Message &&
-            messageItem.Role == ConversationItemWithReferenceRole.Assistant)
+        else if (outputItemAdded.Item is ResponseMessageItem messageItem &&
+            messageItem.Role == ResponseMessageRole.Assistant)
         {
             // Keep track of the items that are from the assistant, so we know how to display the conversation.
             _assistantMessageItems.Add(messageItem.Id);
@@ -545,12 +543,7 @@ public class CustomerServiceBot : IDisposable
             var result = await _functions.ExecuteFunctionAsync(functionName, arguments, cancellationToken).ConfigureAwait(false);
 
             // Create function call output item using the model factory
-            var outputItem = new ConversationItemWithReference()
-            {
-                Type = ConversationItemWithReferenceType.FunctionCallOutput,
-                CallId = callId,
-                Output = JsonSerializer.Serialize(result)
-            };
+            var outputItem = new FunctionCallOutputItem(callId, JsonSerializer.Serialize(result));
 
             // Add the result to the conversation
             await _session!.AddItemAsync(outputItem, cancellationToken).ConfigureAwait(false);
@@ -564,10 +557,7 @@ public class CustomerServiceBot : IDisposable
 
             // Send error response
             var errorResult = new { success = false, error = "I'm sorry, I'm having trouble accessing that information right now. Please try again in a moment." };
-            var outputItem = new ConversationItemWithReference();
-            outputItem.Type = ConversationItemWithReferenceType.FunctionCallOutput;
-            outputItem.CallId = callId;
-            outputItem.Output = JsonSerializer.Serialize(errorResult);
+            var outputItem = new FunctionCallOutputItem(callId, JsonSerializer.Serialize(errorResult));
 
             await _session!.AddItemAsync(outputItem, cancellationToken).ConfigureAwait(false);
         }

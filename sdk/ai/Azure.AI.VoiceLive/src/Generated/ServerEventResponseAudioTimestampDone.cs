@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Indicates completion of audio timestamp delivery for a response. </summary>
-    public partial class ServerEventResponseAudioTimestampDone : ServerEvent
+    public partial class ServerEventResponseAudioTimestampDone : ServerEventBase
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseAudioTimestampDone"/>. </summary>
         /// <param name="responseId"></param>

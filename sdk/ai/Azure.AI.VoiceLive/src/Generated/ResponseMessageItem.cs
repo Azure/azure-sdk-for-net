@@ -12,13 +12,13 @@ using System.Linq;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> The ResponseMessageItem. </summary>
-    public partial class ResponseMessageItem : ConversationResponseItem
+    public partial class ResponseMessageItem : ResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="ResponseMessageItem"/>. </summary>
         /// <param name="role"></param>
         /// <param name="content"></param>
         /// <param name="status"></param>
-        internal ResponseMessageItem(MessageRole role, IEnumerable<ContentPart> content, ItemStatus status) : base(ItemType.Message)
+        internal ResponseMessageItem(ResponseMessageRole role, IEnumerable<VoiceLiveContentPart> content, ResponseItemStatus status) : base(ItemType.Message)
         {
             Role = role;
             Content = content.ToList();
@@ -26,14 +26,14 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponseMessageItem"/>. </summary>
-        /// <param name="object"></param>
         /// <param name="type"></param>
         /// <param name="id"></param>
+        /// <param name="object"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="role"></param>
         /// <param name="content"></param>
         /// <param name="status"></param>
-        internal ResponseMessageItem(string @object, ItemType @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, MessageRole role, IList<ContentPart> content, ItemStatus status) : base(@object, @type, id, additionalBinaryDataProperties)
+        internal ResponseMessageItem(ItemType @type, string id, string @object, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResponseMessageRole role, IList<VoiceLiveContentPart> content, ResponseItemStatus status) : base(@type, id, @object, additionalBinaryDataProperties)
         {
             Role = role;
             Content = content;
@@ -41,12 +41,12 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> Gets the Role. </summary>
-        public MessageRole Role { get; }
+        public ResponseMessageRole Role { get; }
 
         /// <summary> Gets the Content. </summary>
-        public IList<ContentPart> Content { get; }
+        public IList<VoiceLiveContentPart> Content { get; }
 
         /// <summary> Gets the Status. </summary>
-        public ItemStatus Status { get; }
+        public ResponseItemStatus Status { get; }
     }
 }

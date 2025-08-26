@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Returned when the model-generated audio is updated. </summary>
-    public partial class ServerEventResponseAudioDelta : ServerEvent
+    public partial class ServerEventResponseAudioDelta : ServerEventBase
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseAudioDelta"/>. </summary>
         /// <param name="responseId"> The ID of the response. </param>

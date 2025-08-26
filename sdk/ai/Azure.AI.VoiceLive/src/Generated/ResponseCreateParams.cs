@@ -23,7 +23,7 @@ namespace Azure.AI.VoiceLive
             AppendInputItems = new ChangeTrackingList<ConversationRequestItem>();
             InputItems = new ChangeTrackingList<ConversationRequestItem>();
             Modalities = new ChangeTrackingList<InputModality>();
-            Tools = new ChangeTrackingList<ToolCall>();
+            Tools = new ChangeTrackingList<VoiceLiveToolDefinition>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponseCreateParams"/>. </summary>
@@ -67,7 +67,7 @@ namespace Azure.AI.VoiceLive
         /// given model. Defaults to `inf`.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseCreateParams(bool? commit, bool? cancelPrevious, IList<ConversationRequestItem> appendInputItems, IList<ConversationRequestItem> inputItems, IList<InputModality> modalities, string instructions, BinaryData voice, AudioFormat? outputAudioFormat, IList<ToolCall> tools, string toolChoice, float? temperature, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponseCreateParams(bool? commit, bool? cancelPrevious, IList<ConversationRequestItem> appendInputItems, IList<ConversationRequestItem> inputItems, IList<InputModality> modalities, string instructions, BinaryData voice, AudioFormat? outputAudioFormat, IList<VoiceLiveToolDefinition> tools, string toolChoice, float? temperature, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Commit = commit;
             CancelPrevious = cancelPrevious;
@@ -133,13 +133,10 @@ namespace Azure.AI.VoiceLive
         /// <description> <see cref="OAIVoice"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="AzureStandardVoice"/>. </description>
+        /// <description> <see cref="OpenAIVoice"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="AzureCustomVoice"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="AzurePersonalVoice"/>. </description>
+        /// <description> <see cref="AzureVoice"/>. </description>
         /// </item>
         /// <item>
         /// <description> <see cref="Phi4mmVoice"/>. </description>
@@ -175,7 +172,7 @@ namespace Azure.AI.VoiceLive
         public AudioFormat? OutputAudioFormat { get; set; }
 
         /// <summary> Tools (functions) available to the model. </summary>
-        public IList<ToolCall> Tools { get; }
+        public IList<VoiceLiveToolDefinition> Tools { get; }
 
         /// <summary>
         /// How the model chooses tools. Options are `auto`, `none`, `required`, or

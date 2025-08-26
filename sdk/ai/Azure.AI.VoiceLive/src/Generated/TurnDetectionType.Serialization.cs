@@ -17,6 +17,9 @@ namespace Azure.AI.VoiceLive
             TurnDetectionType.None => "none",
             TurnDetectionType.ServerVad => "server_vad",
             TurnDetectionType.AzureSemanticVad => "azure_semantic_vad",
+            TurnDetectionType.AzureSemanticVadEn => "azure_semantic_vad_en",
+            TurnDetectionType.ServerSd => "server_sd",
+            TurnDetectionType.AzureSemanticVadMultilingual => "azure_semantic_vad_multilingual",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TurnDetectionType value.")
         };
 
@@ -34,6 +37,18 @@ namespace Azure.AI.VoiceLive
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "azure_semantic_vad"))
             {
                 return TurnDetectionType.AzureSemanticVad;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "azure_semantic_vad_en"))
+            {
+                return TurnDetectionType.AzureSemanticVadEn;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "server_sd"))
+            {
+                return TurnDetectionType.ServerSd;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "azure_semantic_vad_multilingual"))
+            {
+                return TurnDetectionType.AzureSemanticVadMultilingual;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TurnDetectionType value.");
         }

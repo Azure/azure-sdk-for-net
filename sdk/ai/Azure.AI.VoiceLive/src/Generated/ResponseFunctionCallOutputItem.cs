@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> The ResponseFunctionCallOutputItem. </summary>
-    public partial class ResponseFunctionCallOutputItem : ConversationResponseItem
+    public partial class ResponseFunctionCallOutputItem : ResponseItem
     {
         /// <summary> Initializes a new instance of <see cref="ResponseFunctionCallOutputItem"/>. </summary>
         /// <param name="callId"></param>
@@ -23,13 +23,13 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponseFunctionCallOutputItem"/>. </summary>
-        /// <param name="object"></param>
         /// <param name="type"></param>
         /// <param name="id"></param>
+        /// <param name="object"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="callId"></param>
         /// <param name="output"></param>
-        internal ResponseFunctionCallOutputItem(string @object, ItemType @type, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, string output) : base(@object, @type, id, additionalBinaryDataProperties)
+        internal ResponseFunctionCallOutputItem(ItemType @type, string id, string @object, IDictionary<string, BinaryData> additionalBinaryDataProperties, string callId, string output) : base(@type, id, @object, additionalBinaryDataProperties)
         {
             CallId = callId;
             Output = output;

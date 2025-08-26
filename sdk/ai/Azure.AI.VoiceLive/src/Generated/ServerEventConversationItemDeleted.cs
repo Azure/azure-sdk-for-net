@@ -15,7 +15,7 @@ namespace Azure.AI.VoiceLive
     /// `conversation.item.delete` event. This event is used to synchronize the
     /// server's understanding of the conversation history with the client's view.
     /// </summary>
-    public partial class ServerEventConversationItemDeleted : ServerEvent
+    public partial class ServerEventConversationItemDeleted : ServerEventBase
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventConversationItemDeleted"/>. </summary>
         /// <param name="itemId"> The ID of the item that was deleted. </param>

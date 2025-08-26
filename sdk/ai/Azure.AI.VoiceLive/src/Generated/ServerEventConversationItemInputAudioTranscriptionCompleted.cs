@@ -22,7 +22,7 @@ namespace Azure.AI.VoiceLive
     /// The transcript may diverge somewhat from the model's interpretation, and
     /// should be treated as a rough guide.
     /// </summary>
-    public partial class ServerEventConversationItemInputAudioTranscriptionCompleted : ServerEvent
+    public partial class ServerEventConversationItemInputAudioTranscriptionCompleted : ServerEventBase
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventConversationItemInputAudioTranscriptionCompleted"/>. </summary>
         /// <param name="itemId"> The ID of the user message item containing the audio. </param>

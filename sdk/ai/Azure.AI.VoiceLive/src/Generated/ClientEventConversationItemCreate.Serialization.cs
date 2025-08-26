@@ -79,7 +79,7 @@ namespace Azure.AI.VoiceLive
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string eventId = default;
             string previousItemId = default;
-            ConversationItemWithReference item = default;
+            ConversationRequestItem item = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -103,7 +103,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    item = ConversationItemWithReference.DeserializeConversationItemWithReference(prop.Value, options);
+                    item = ConversationRequestItem.DeserializeConversationRequestItem(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

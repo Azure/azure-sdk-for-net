@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.VoiceLive
 {
     /// <summary> Indicates the completion of blendshape animation processing for a specific output of a response. </summary>
-    public partial class ServerEventResponseAnimationBlendshapeDone : ServerEvent
+    public partial class ServerEventResponseAnimationBlendshapeDone : ServerEventBase
     {
         /// <summary> Initializes a new instance of <see cref="ServerEventResponseAnimationBlendshapeDone"/>. </summary>
         /// <param name="responseId"></param>
