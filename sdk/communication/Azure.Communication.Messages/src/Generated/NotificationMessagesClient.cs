@@ -281,30 +281,30 @@ namespace Azure.Communication.Messages
         }
 
         /// <summary> Sends a read receipt update from Business to User. </summary>
-        /// <param name="body"> Details of the read receipt update to send. </param>
+        /// <param name="readReceiptContent"> Details of the read receipt update to send. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="readReceiptContent"/> is null. </exception>
         /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='SendReadReceiptAsync(ReadReceiptContent,CancellationToken)']/*" />
-        public virtual async Task<Response> SendReadReceiptAsync(ReadReceiptContent body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SendReadReceiptAsync(ReadReceiptContent readReceiptContent, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(readReceiptContent, nameof(readReceiptContent));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = readReceiptContent.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await SendReadReceiptAsync(content, context).ConfigureAwait(false);
             return response;
         }
 
         /// <summary> Sends a read receipt update from Business to User. </summary>
-        /// <param name="body"> Details of the read receipt update to send. </param>
+        /// <param name="readReceiptContent"> Details of the read receipt update to send. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="readReceiptContent"/> is null. </exception>
         /// <include file="Docs/NotificationMessagesClient.xml" path="doc/members/member[@name='SendReadReceipt(ReadReceiptContent,CancellationToken)']/*" />
-        public virtual Response SendReadReceipt(ReadReceiptContent body, CancellationToken cancellationToken = default)
+        public virtual Response SendReadReceipt(ReadReceiptContent readReceiptContent, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(readReceiptContent, nameof(readReceiptContent));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = readReceiptContent.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = SendReadReceipt(content, context);
             return response;
@@ -431,7 +431,6 @@ namespace Azure.Communication.Messages
             uri.AppendPath("/messages/readreceipts:sendReadReceipt", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
             request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             request.Headers.Add("Content-Type", "application/json");

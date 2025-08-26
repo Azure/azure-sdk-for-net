@@ -284,7 +284,7 @@ namespace Azure.Communication.Messages
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="typingIndicator"> Whether this status update includes a typing indicator. This field defaults to false when not provided. </param>
         /// <returns> A new <see cref="Messages.ReadReceiptContent"/> instance for mocking. </returns>
-        public static ReadReceiptContent ReadReceiptContent(string messageId = null, string channelRegistrationId = null, bool? typingIndicator = null)
+        public static ReadReceiptContent ReadReceiptContent(string messageId = null, Guid channelRegistrationId = default, bool? typingIndicator = null)
         {
             return new ReadReceiptContent(messageId, channelRegistrationId, typingIndicator, serializedAdditionalRawData: null);
         }

@@ -81,7 +81,7 @@ namespace Azure.Communication.Messages
                 return null;
             }
             string messageId = default;
-            string channelRegistrationId = default;
+            Guid channelRegistrationId = default;
             bool? typingIndicator = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.Communication.Messages
                 }
                 if (property.NameEquals("channelRegistrationId"u8))
                 {
-                    channelRegistrationId = property.Value.GetString();
+                    channelRegistrationId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("typingIndicator"u8))

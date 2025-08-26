@@ -48,11 +48,10 @@ namespace Azure.Communication.Messages
         /// <summary> Initializes a new instance of <see cref="ReadReceiptContent"/>. </summary>
         /// <param name="messageId"> The id of the message this read receipt refers to. </param>
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="messageId"/> or <paramref name="channelRegistrationId"/> is null. </exception>
-        public ReadReceiptContent(string messageId, string channelRegistrationId)
+        /// <exception cref="ArgumentNullException"> <paramref name="messageId"/> is null. </exception>
+        public ReadReceiptContent(string messageId, Guid channelRegistrationId)
         {
             Argument.AssertNotNull(messageId, nameof(messageId));
-            Argument.AssertNotNull(channelRegistrationId, nameof(channelRegistrationId));
 
             MessageId = messageId;
             ChannelRegistrationId = channelRegistrationId;
@@ -63,7 +62,7 @@ namespace Azure.Communication.Messages
         /// <param name="channelRegistrationId"> The Channel Registration ID for the Business Identifier. </param>
         /// <param name="typingIndicator"> Whether this status update includes a typing indicator. This field defaults to false when not provided. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReadReceiptContent(string messageId, string channelRegistrationId, bool? typingIndicator, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReadReceiptContent(string messageId, Guid channelRegistrationId, bool? typingIndicator, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MessageId = messageId;
             ChannelRegistrationId = channelRegistrationId;
@@ -79,7 +78,7 @@ namespace Azure.Communication.Messages
         /// <summary> The id of the message this read receipt refers to. </summary>
         public string MessageId { get; }
         /// <summary> The Channel Registration ID for the Business Identifier. </summary>
-        public string ChannelRegistrationId { get; }
+        public Guid ChannelRegistrationId { get; }
         /// <summary> Whether this status update includes a typing indicator. This field defaults to false when not provided. </summary>
         public bool? TypingIndicator { get; set; }
     }

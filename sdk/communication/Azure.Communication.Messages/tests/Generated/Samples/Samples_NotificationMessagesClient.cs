@@ -188,11 +188,11 @@ namespace Azure.Communication.Messages.Samples
         {
             NotificationMessagesClient client = new NotificationMessagesClient(null);
 
-            ReadReceiptContent body = new ReadReceiptContent("320fc2a1-4c4b-4387-9c1a-bd38b57795de", "0f0eb78e-a576-1dfc-b414-0f0756de3338")
+            ReadReceiptContent readReceiptContent = new ReadReceiptContent("320fc2a1-4c4b-4387-9c1a-bd38b57795de", Guid.Parse("0f0eb78e-a576-1dfc-b414-0f0756de3338"))
             {
                 TypingIndicator = true,
             };
-            Response response = client.SendReadReceipt(body);
+            Response response = client.SendReadReceipt(readReceiptContent);
         }
 
         [Test]
@@ -201,11 +201,11 @@ namespace Azure.Communication.Messages.Samples
         {
             NotificationMessagesClient client = new NotificationMessagesClient(null);
 
-            ReadReceiptContent body = new ReadReceiptContent("320fc2a1-4c4b-4387-9c1a-bd38b57795de", "0f0eb78e-a576-1dfc-b414-0f0756de3338")
+            ReadReceiptContent readReceiptContent = new ReadReceiptContent("320fc2a1-4c4b-4387-9c1a-bd38b57795de", Guid.Parse("0f0eb78e-a576-1dfc-b414-0f0756de3338"))
             {
                 TypingIndicator = true,
             };
-            Response response = await client.SendReadReceiptAsync(body);
+            Response response = await client.SendReadReceiptAsync(readReceiptContent);
         }
     }
 }
