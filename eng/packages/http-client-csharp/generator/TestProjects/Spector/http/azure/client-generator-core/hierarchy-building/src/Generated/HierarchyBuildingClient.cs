@@ -6,10 +6,6 @@
 #nullable disable
 
 using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure;
-using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace _Specs_.Azure.ClientGenerator.Core.HierarchyBuilding
@@ -22,20 +18,10 @@ namespace _Specs_.Azure.ClientGenerator.Core.HierarchyBuilding
 
         public virtual HttpPipeline Pipeline => throw null;
 
-        public virtual Response UpdatePet(RequestContent content, RequestContext context = null) => throw null;
+        public virtual AnimalOperations GetAnimalOperationsClient() => throw null;
 
-        public virtual Task<Response> UpdatePetAsync(RequestContent content, RequestContext context = null) => throw null;
+        public virtual PetOperations GetPetOperationsClient() => throw null;
 
-        public virtual Response<Animal> UpdatePet(Animal animal, CancellationToken cancellationToken = default) => throw null;
-
-        public virtual Task<Response<Animal>> UpdatePetAsync(Animal animal, CancellationToken cancellationToken = default) => throw null;
-
-        public virtual Response UpdateDog(RequestContent content, RequestContext context = null) => throw null;
-
-        public virtual Task<Response> UpdateDogAsync(RequestContent content, RequestContext context = null) => throw null;
-
-        public virtual Response<Animal> UpdateDog(Animal animal, CancellationToken cancellationToken = default) => throw null;
-
-        public virtual Task<Response<Animal>> UpdateDogAsync(Animal animal, CancellationToken cancellationToken = default) => throw null;
+        public virtual DogOperations GetDogOperationsClient() => throw null;
     }
 }

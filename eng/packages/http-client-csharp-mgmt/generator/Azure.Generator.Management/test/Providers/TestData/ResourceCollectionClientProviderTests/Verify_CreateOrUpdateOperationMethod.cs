@@ -1,3 +1,6 @@
+global::Samples.Argument.AssertNotNullOrEmpty(testName, nameof(testName));
+global::Samples.Argument.AssertNotNull(data, nameof(data));
+
 using global::Azure.Core.Pipeline.DiagnosticScope scope = _testClientClientDiagnostics.CreateScope("ResponseTypeCollection.CreateOrUpdate");
 scope.Start();
 try
@@ -6,7 +9,7 @@ try
     {
         CancellationToken = cancellationToken
     };
-    global::Azure.Core.HttpMessage message = _testClientRestClient.CreateCreateTestRequest(testName, global::System.Guid.Parse(this.Id.SubscriptionId), global::Samples.Models.ResponseTypeData.ToRequestContent(data), context);
+    global::Azure.Core.HttpMessage message = _testClientRestClient.CreateCreateTestRequest(global::System.Guid.Parse(this.Id.SubscriptionId), this.Id.ResourceGroupName, testName, global::Samples.Models.ResponseTypeData.ToRequestContent(data), context);
     global::Azure.Response result = this.Pipeline.ProcessMessage(message, context);
     global::Azure.Response<global::Samples.Models.ResponseTypeData> response = global::Azure.Response.FromValue(global::Samples.Models.ResponseTypeData.FromResponse(result), result);
     global::Azure.Core.RequestUriBuilder uri = message.Request.Uri;

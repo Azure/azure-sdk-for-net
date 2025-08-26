@@ -43,7 +43,8 @@ namespace Samples
         public override async global::System.Collections.Generic.IAsyncEnumerable<global::Azure.Page<global::Samples.Models.Cat>> AsPages(string continuationToken, int? pageSizeHint)
         {
             global::Azure.Response response = await this.GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
-            yield return global::Azure.Page<global::Samples.Models.Cat>.FromValues(((global::System.Collections.Generic.IReadOnlyList<global::Samples.Models.Cat>)((global::Samples.Models.Page)response).Cats), null, response);
+            global::Samples.Models.Page result = ((global::Samples.Models.Page)response);
+            yield return global::Azure.Page<global::Samples.Models.Cat>.FromValues(((global::System.Collections.Generic.IReadOnlyList<global::Samples.Models.Cat>)result.Cats), null, response);
         }
 
         /// <summary> Get next page. </summary>

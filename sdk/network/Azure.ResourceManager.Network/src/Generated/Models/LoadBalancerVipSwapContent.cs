@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A list of frontend IP configuration resources that should swap VIPs. </summary>
+        [WirePath("frontendIPConfigurations")]
         public IList<LoadBalancerVipSwapRequestFrontendIPConfiguration> FrontendIPConfigurations { get; }
     }
 }

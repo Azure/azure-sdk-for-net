@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Properties of the service tag information. </summary>
+        [WirePath("properties")]
         public ServiceTagInformationPropertiesFormat Properties { get; }
         /// <summary> The name of service tag. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The ID of service tag. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> The iteration number of service tag object for region. </summary>
+        [WirePath("serviceTagChangeNumber")]
         public string ServiceTagChangeNumber { get; }
     }
 }

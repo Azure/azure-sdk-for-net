@@ -167,6 +167,105 @@ namespace Azure.ResourceManager.Network.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("AssociatedRouteTableId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  associatedRouteTable: ");
+                builder.AppendLine("{");
+                builder.Append("    id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(AssociatedRouteTable))
+                {
+                    builder.Append("  associatedRouteTable: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, AssociatedRouteTable, options, 2, false, "  associatedRouteTable: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PropagatedRouteTables), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  propagatedRouteTables: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PropagatedRouteTables))
+                {
+                    builder.Append("  propagatedRouteTables: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, PropagatedRouteTables, options, 2, false, "  propagatedRouteTables: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VnetRoutes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  vnetRoutes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(VnetRoutes))
+                {
+                    builder.Append("  vnetRoutes: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, VnetRoutes, options, 2, false, "  vnetRoutes: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("InboundRouteMapId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  inboundRouteMap: ");
+                builder.AppendLine("{");
+                builder.Append("    id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(InboundRouteMap))
+                {
+                    builder.Append("  inboundRouteMap: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, InboundRouteMap, options, 2, false, "  inboundRouteMap: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("OutboundRouteMapId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  outboundRouteMap: ");
+                builder.AppendLine("{");
+                builder.Append("    id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(OutboundRouteMap))
+                {
+                    builder.Append("  outboundRouteMap: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, OutboundRouteMap, options, 2, false, "  outboundRouteMap: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<RoutingConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RoutingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -175,6 +274,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RoutingConfiguration)} does not support writing '{options.Format}' format.");
             }

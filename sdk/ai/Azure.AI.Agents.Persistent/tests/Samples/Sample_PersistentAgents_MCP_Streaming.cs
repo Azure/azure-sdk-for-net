@@ -97,6 +97,10 @@ public partial class Sample_PersistentAgents_MCP_Streaming : SamplesBase<AIAgent
                 {
                     Console.Write(contentUpdate.Text);
                 }
+                else if (streamingUpdate is RunStepUpdate runStepUpdate)
+                {
+                    PrintActivityStep(runStepUpdate.Value);
+                }
                 else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
                 {
                     Console.WriteLine();
@@ -196,6 +200,10 @@ public partial class Sample_PersistentAgents_MCP_Streaming : SamplesBase<AIAgent
                 {
                     Console.Write(contentUpdate.Text);
                 }
+                else if (streamingUpdate is RunStepUpdate runStepUpdate)
+                {
+                    PrintActivityStep(runStepUpdate.Value);
+                }
                 else if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
                 {
                     Console.WriteLine();
@@ -219,4 +227,35 @@ public partial class Sample_PersistentAgents_MCP_Streaming : SamplesBase<AIAgent
         agentClient.Administration.DeleteAgent(agentId: agent.Id);
         #endregion
     }
+
+    #region Snippet:AgentsMCPStreaming_PrintActivityStep
+    private static void PrintActivityStep(RunStep step)
+    {
+        if (step.StepDetails is RunStepActivityDetails activityDetails)
+        {
+            foreach (RunStepDetailsActivity activity in activityDetails.Activities)
+            {
+                foreach (KeyValuePair<string, ActivityFunctionDefinition> activityFunction in activity.Tools)
+                {
+                    Console.WriteLine($"The function {activityFunction.Key} with description \"{activityFunction.Value.Description}\" will be called.");
+                    if (activityFunction.Value.Parameters.Properties.Count > 0)
+                    {
+                        Console.WriteLine("Function parameters:");
+                        foreach (KeyValuePair<string, FunctionArgument> arg in activityFunction.Value.Parameters.Properties)
+                        {
+                            Console.WriteLine($"\t{arg.Key}");
+                            Console.WriteLine($"\t\tType: {arg.Value.Type}");
+                            if (!string.IsNullOrEmpty(arg.Value.Description))
+                                Console.WriteLine($"\t\tDescription: {arg.Value.Description}");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("This function has no parameters");
+                    }
+                }
+            }
+        }
+    }
+    #endregion
 }

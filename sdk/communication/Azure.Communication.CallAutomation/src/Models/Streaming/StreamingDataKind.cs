@@ -28,8 +28,8 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         TranscriptionMetadata,
         /// <summary>
-        /// Mark audio data type
+        /// Dtmf data type
         /// </summary>
-        Mark
+        DtmfData
     }
 }

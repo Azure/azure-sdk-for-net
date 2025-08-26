@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Keyvault Secret Identifier URL containing Mac security CKN key. </summary>
+        [WirePath("cknSecretIdentifier")]
         public string CknSecretIdentifier { get; set; }
         /// <summary> Keyvault Secret Identifier URL containing Mac security CAK key. </summary>
+        [WirePath("cakSecretIdentifier")]
         public string CakSecretIdentifier { get; set; }
         /// <summary> Mac security cipher. </summary>
+        [WirePath("cipher")]
         public ExpressRouteLinkMacSecCipher? Cipher { get; set; }
         /// <summary> Sci mode enabled/disabled. </summary>
+        [WirePath("sciState")]
         public ExpressRouteLinkMacSecSciState? SciState { get; set; }
     }
 }

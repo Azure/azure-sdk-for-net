@@ -73,38 +73,55 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> A description for this rule. Restricted to 140 chars. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> Network protocol this rule applies to. </summary>
+        [WirePath("properties.protocol")]
         public SecurityRuleProtocol? Protocol { get; set; }
         /// <summary> The source port or range. Integer or range between 0 and 65535. Asterisk '*' can also be used to match all ports. </summary>
+        [WirePath("properties.sourcePortRange")]
         public string SourcePortRange { get; set; }
         /// <summary> The destination port or range. Integer or range between 0 and 65535. Asterisk '*' can also be used to match all ports. </summary>
+        [WirePath("properties.destinationPortRange")]
         public string DestinationPortRange { get; set; }
         /// <summary> The CIDR or source IP range. Asterisk '*' can also be used to match all source IPs. Default tags such as 'VirtualNetwork', 'AzureLoadBalancer' and 'Internet' can also be used. If this is an ingress rule, specifies where network traffic originates from. </summary>
+        [WirePath("properties.sourceAddressPrefix")]
         public string SourceAddressPrefix { get; set; }
         /// <summary> The CIDR or source IP ranges. </summary>
+        [WirePath("properties.sourceAddressPrefixes")]
         public IList<string> SourceAddressPrefixes { get; }
         /// <summary> The application security group specified as source. </summary>
+        [WirePath("properties.sourceApplicationSecurityGroups")]
         public IList<ApplicationSecurityGroupData> SourceApplicationSecurityGroups { get; }
         /// <summary> The destination address prefix. CIDR or destination IP range. Asterisk '*' can also be used to match all source IPs. Default tags such as 'VirtualNetwork', 'AzureLoadBalancer' and 'Internet' can also be used. </summary>
+        [WirePath("properties.destinationAddressPrefix")]
         public string DestinationAddressPrefix { get; set; }
         /// <summary> The destination address prefixes. CIDR or destination IP ranges. </summary>
+        [WirePath("properties.destinationAddressPrefixes")]
         public IList<string> DestinationAddressPrefixes { get; }
         /// <summary> The application security group specified as destination. </summary>
+        [WirePath("properties.destinationApplicationSecurityGroups")]
         public IList<ApplicationSecurityGroupData> DestinationApplicationSecurityGroups { get; }
         /// <summary> The source port ranges. </summary>
+        [WirePath("properties.sourcePortRanges")]
         public IList<string> SourcePortRanges { get; }
         /// <summary> The destination port ranges. </summary>
+        [WirePath("properties.destinationPortRanges")]
         public IList<string> DestinationPortRanges { get; }
         /// <summary> The network traffic is allowed or denied. </summary>
+        [WirePath("properties.access")]
         public SecurityRuleAccess? Access { get; set; }
         /// <summary> The priority of the rule. The value can be between 100 and 4096. The priority number must be unique for each rule in the collection. The lower the priority number, the higher the priority of the rule. </summary>
+        [WirePath("properties.priority")]
         public int? Priority { get; set; }
         /// <summary> The direction of the rule. The direction specifies if rule will be evaluated on incoming or outgoing traffic. </summary>
+        [WirePath("properties.direction")]
         public SecurityRuleDirection? Direction { get; set; }
         /// <summary> The provisioning state of the security rule resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

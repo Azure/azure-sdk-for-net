@@ -20,25 +20,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="resourceDetails"> resourceInfo details for update event. </param>
         /// <param name="operationalDetails"> details about operational info. </param>
         /// <param name="apiVersion"> api version of the resource properties bag. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceDetails"/>, <paramref name="operationalDetails"/> or <paramref name="apiVersion"/> is null. </exception>
         internal ResourceNotificationsResourceManagementCreatedOrUpdatedEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails, ResourceNotificationsOperationalDetails operationalDetails, string apiVersion) : base(resourceDetails, operationalDetails, apiVersion)
         {
-            Argument.AssertNotNull(resourceDetails, nameof(resourceDetails));
-            Argument.AssertNotNull(operationalDetails, nameof(operationalDetails));
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceManagementCreatedOrUpdatedEventData"/>. </summary>
         /// <param name="resourceDetails"> resourceInfo details for update event. </param>
         /// <param name="operationalDetails"> details about operational info. </param>
         /// <param name="apiVersion"> api version of the resource properties bag. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceNotificationsResourceManagementCreatedOrUpdatedEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails, ResourceNotificationsOperationalDetails operationalDetails, string apiVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(resourceDetails, operationalDetails, apiVersion, serializedAdditionalRawData)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceManagementCreatedOrUpdatedEventData"/> for deserialization. </summary>
-        internal ResourceNotificationsResourceManagementCreatedOrUpdatedEventData()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceNotificationsResourceManagementCreatedOrUpdatedEventData(ResourceNotificationsResourceUpdatedDetails resourceDetails, ResourceNotificationsOperationalDetails operationalDetails, string apiVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(resourceDetails, operationalDetails, apiVersion, additionalBinaryDataProperties)
         {
         }
     }

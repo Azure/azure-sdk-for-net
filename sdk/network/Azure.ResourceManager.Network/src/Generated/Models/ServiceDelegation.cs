@@ -38,12 +38,16 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The name of the service to whom the subnet should be delegated (e.g. Microsoft.Sql/servers). </summary>
+        [WirePath("properties.serviceName")]
         public string ServiceName { get; set; }
         /// <summary> The actions permitted to the service upon delegation. </summary>
+        [WirePath("properties.actions")]
         public IReadOnlyList<string> Actions { get; }
         /// <summary> The provisioning state of the service delegation resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

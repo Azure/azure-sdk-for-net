@@ -53,13 +53,14 @@ namespace Azure.Security.KeyVault.Administration
                 {
                     yield break;
                 }
+                RoleAssignmentListResult result = (RoleAssignmentListResult)response;
                 List<BinaryData> items = new List<BinaryData>();
-                foreach (var item in ((RoleAssignmentListResult)response).Value)
+                foreach (var item in result.Value)
                 {
                     items.Add(BinaryData.FromObjectAsJson(item));
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
-                string nextPageString = ((RoleAssignmentListResult)response).NextLink;
+                string nextPageString = result.NextLink;
                 if (nextPageString == null)
                 {
                     yield break;

@@ -27,7 +27,6 @@ public class PlaywrightServiceMSTestSetup
     {
         playwrightClient = new PlaywrightServiceBrowserMSTest(credential: new ManagedIdentityCredential(), options: new Azure.Developer.Playwright.PlaywrightServiceBrowserClientOptions()
         {
-            UseCloudHostedBrowsers = true,
             OS = OSPlatform.Linux,
             ExposeNetwork = "<loopback>",
             RunId = Guid.NewGuid().ToString(),

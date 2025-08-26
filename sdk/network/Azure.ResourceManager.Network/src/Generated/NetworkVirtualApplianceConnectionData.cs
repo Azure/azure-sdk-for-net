@@ -48,18 +48,25 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> The name of the resource. </summary>
+        [WirePath("properties.name")]
         public string NamePropertiesName { get; set; }
         /// <summary> The provisioning state of the NetworkVirtualApplianceConnection resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Network Virtual Appliance ASN. </summary>
+        [WirePath("properties.asn")]
         public long? Asn { get; set; }
         /// <summary> Unique identifier for the connection. </summary>
+        [WirePath("properties.tunnelIdentifier")]
         public long? TunnelIdentifier { get; set; }
         /// <summary> List of bgpPeerAddresses for the NVA instances. </summary>
+        [WirePath("properties.bgpPeerAddress")]
         public IList<string> BgpPeerAddress { get; }
         /// <summary> Enable internet security. </summary>
+        [WirePath("properties.enableInternetSecurity")]
         public bool? EnableInternetSecurity { get; set; }
         /// <summary> The Routing Configuration indicating the associated and propagated route tables on this connection. </summary>
+        [WirePath("properties.routingConfiguration")]
         public RoutingConfiguration ConnectionRoutingConfiguration { get; set; }
     }
 }

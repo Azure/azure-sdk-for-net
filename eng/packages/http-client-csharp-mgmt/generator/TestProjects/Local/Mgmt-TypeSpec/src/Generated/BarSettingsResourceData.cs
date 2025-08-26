@@ -20,9 +20,17 @@ namespace MgmtTypeSpec
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BarSettingsResourceData"/>. </summary>
-        public BarSettingsResourceData()
+        /// <param name="property"></param>
+        /// <param name="anotherProperty"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="property"/> or <paramref name="anotherProperty"/> is null. </exception>
+        public BarSettingsResourceData(BarQuotaProperties @property, BarQuotaProperties anotherProperty)
         {
+            Argument.AssertNotNull(@property, nameof(@property));
+            Argument.AssertNotNull(anotherProperty, nameof(anotherProperty));
+
             StringArray = new ChangeTrackingList<string>();
+            Property = @property;
+            AnotherProperty = anotherProperty;
         }
 
         /// <summary> Initializes a new instance of <see cref="BarSettingsResourceData"/>. </summary>
@@ -33,11 +41,15 @@ namespace MgmtTypeSpec
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="stringArray"></param>
-        internal BarSettingsResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BarSettingsProperties properties, IList<string> stringArray) : base(id, name, resourceType, systemData)
+        /// <param name="property"></param>
+        /// <param name="anotherProperty"></param>
+        internal BarSettingsResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BarSettingsProperties properties, IList<string> stringArray, BarQuotaProperties @property, BarQuotaProperties anotherProperty) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             StringArray = stringArray;
+            Property = @property;
+            AnotherProperty = anotherProperty;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
@@ -46,12 +58,44 @@ namespace MgmtTypeSpec
         /// <summary> Gets the StringArray. </summary>
         public IList<string> StringArray { get; }
 
+        /// <summary> Gets or sets the Property. </summary>
+        internal BarQuotaProperties Property { get; set; }
+
+        /// <summary> Gets or sets the AnotherProperty. </summary>
+        internal BarQuotaProperties AnotherProperty { get; set; }
+
         /// <summary> enabled. </summary>
         public bool? IsEnabled
         {
             get
             {
                 return Properties is null ? default : Properties.IsEnabled;
+            }
+        }
+
+        /// <summary> enabled. </summary>
+        public int? PropertyLeft
+        {
+            get
+            {
+                return Property is null ? default : Property.Left;
+            }
+            set
+            {
+                Property = value.HasValue ? new BarQuotaProperties(value.Value) : default;
+            }
+        }
+
+        /// <summary> enabled. </summary>
+        public int? AnotherPropertyLeft
+        {
+            get
+            {
+                return AnotherProperty is null ? default : AnotherProperty.Left;
+            }
+            set
+            {
+                AnotherProperty = value.HasValue ? new BarQuotaProperties(value.Value) : default;
             }
         }
     }

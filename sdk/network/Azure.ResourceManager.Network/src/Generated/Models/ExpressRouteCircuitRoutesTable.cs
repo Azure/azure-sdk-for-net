@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> IP address of a network entity. </summary>
+        [WirePath("network")]
         public string Network { get; }
         /// <summary> NextHop address. </summary>
+        [WirePath("nextHop")]
         public string NextHop { get; }
         /// <summary> Local preference value as set with the set local-preference route-map configuration command. </summary>
+        [WirePath("locPrf")]
         public string LocPrf { get; }
         /// <summary> Route Weight. </summary>
+        [WirePath("weight")]
         public int? Weight { get; }
         /// <summary> Autonomous system paths to the destination network. </summary>
+        [WirePath("path")]
         public string Path { get; }
     }
 }
