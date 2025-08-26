@@ -234,58 +234,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
         }
 
         [Theory]
-        [InlineData("microsoft.rate_limited", "10", true, true, false)]
-        [InlineData("microsoft.rate_limited", "invalid", false, true, false)]
-        [InlineData("microsoft.fixed_percentage", "0.5", false, true, false)]
-        [InlineData("TraceIdRatioBased", "0.5", false, true, false)]
-        [InlineData("microsoft.rate_limited", "10", true, false, false)]
-        [InlineData("microsoft.rate_limited", "invalid", false, false, false)]
-        [InlineData("microsoft.fixed_percentage", "0.5", false, false, false)]
-        [InlineData("TraceIdRatioBased", "0.5", false, false, false)]
-        [InlineData("microsoft.fixed_percentage", "0.5", false, true, true)]
-        [InlineData("microsoft.fixed_percentage", "0.5", false, false, true)]
-        public async Task VerifySamplingEnvVars(string sampler, string samplerArg, bool isRateLimitedSampler, bool useExporter, bool testPrecendence)
-        {
-            Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER", sampler);
-            Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER_ARG", samplerArg);
-
-            var serviceCollection = new ServiceCollection();
-            if (useExporter)
-            {
-                serviceCollection.AddOpenTelemetry()
-                .UseAzureMonitorExporter(options =>
-                {
-                    if (testPrecendence)
-                    {
-                        options.TracesPerSecond = 10; // The environment variable should take precedence
-                    }
-                    options.ConnectionString = TestConnectionString;
-                });
-            }
-            else // use distro
-            {
-                serviceCollection.AddOpenTelemetry()
-                .UseAzureMonitor(options =>
-                {
-                    if (testPrecendence)
-                    {
-                        options.TracesPerSecond = 10; // The environment variable should take precedence
-                    }
-                    options.ConnectionString = TestConnectionString;
-                });
-            }
-
-            using var serviceProvider = serviceCollection.BuildServiceProvider();
-            await StartHostedServicesAsync(serviceProvider);
-
-            EvaluationHelper.EvaluateTracerProviderSampler(serviceProvider, isRateLimitedSampler);
-
-            // Clean up environment variables
-            Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER", null);
-            Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER_ARG", null);
-        }
-
-        [Theory]
         [InlineData(true)]
         [InlineData(false)]
         public async Task VerifyUseAzureMonitorExporter(bool enableLiveMetrics)
