@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LinkedServer_Get</description>
+        /// <description>RedisLinkedServerWithProperties_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LinkedServer_Get</description>
+        /// <description>RedisLinkedServerWithProperties_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LinkedServer_Delete</description>
+        /// <description>RedisLinkedServerWithProperties_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LinkedServer_Delete</description>
+        /// <description>RedisLinkedServerWithProperties_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

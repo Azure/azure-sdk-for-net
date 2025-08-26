@@ -73,14 +73,14 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 return null;
             }
-            RedisRegenerateKeyType keyType = default;
+            RedisKeyType keyType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyType"u8))
                 {
-                    keyType = property.Value.GetString().ToRedisRegenerateKeyType();
+                    keyType = property.Value.GetString().ToRedisKeyType();
                     continue;
                 }
                 if (options.Format != "W")

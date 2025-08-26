@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    /// <summary> The response of list patch schedules Redis operation. </summary>
+    /// <summary> The response of a RedisPatchSchedule list operation. </summary>
     internal partial class RedisPatchScheduleListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Redis.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RedisPatchScheduleListResult"/>. </summary>
-        internal RedisPatchScheduleListResult()
+        /// <param name="value"> The RedisPatchSchedule items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal RedisPatchScheduleListResult(IEnumerable<RedisPatchScheduleData> value)
         {
-            Value = new ChangeTrackingList<RedisPatchScheduleData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="RedisPatchScheduleListResult"/>. </summary>
-        /// <param name="value"> Results of the list patch schedules operation. </param>
-        /// <param name="nextLink"> Link for next page of results. </param>
+        /// <param name="value"> The RedisPatchSchedule items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisPatchScheduleListResult(IReadOnlyList<RedisPatchScheduleData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RedisPatchScheduleListResult(IReadOnlyList<RedisPatchScheduleData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Results of the list patch schedules operation. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisPatchScheduleListResult"/> for deserialization. </summary>
+        internal RedisPatchScheduleListResult()
+        {
+        }
+
+        /// <summary> The RedisPatchSchedule items on this page. </summary>
         public IReadOnlyList<RedisPatchScheduleData> Value { get; }
-        /// <summary> Link for next page of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

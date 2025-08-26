@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -49,13 +48,13 @@ namespace Azure.ResourceManager.Redis
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RedisFirewallRuleData"/>. </summary>
         /// <param name="startIP"> lowest IP address included in the range. </param>
         /// <param name="endIP"> highest IP address included in the range. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startIP"/> or <paramref name="endIP"/> is null. </exception>
-        public RedisFirewallRuleData(IPAddress startIP, IPAddress endIP)
+        public RedisFirewallRuleData(string startIP, string endIP)
         {
             Argument.AssertNotNull(startIP, nameof(startIP));
             Argument.AssertNotNull(endIP, nameof(endIP));
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="startIP"> lowest IP address included in the range. </param>
         /// <param name="endIP"> highest IP address included in the range. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisFirewallRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IPAddress startIP, IPAddress endIP, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal RedisFirewallRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string startIP, string endIP, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             StartIP = startIP;
             EndIP = endIP;
@@ -85,10 +84,8 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> lowest IP address included in the range. </summary>
-        [WirePath("properties.startIP")]
-        public IPAddress StartIP { get; set; }
+        public string StartIP { get; set; }
         /// <summary> highest IP address included in the range. </summary>
-        [WirePath("properties.endIP")]
-        public IPAddress EndIP { get; set; }
+        public string EndIP { get; set; }
     }
 }

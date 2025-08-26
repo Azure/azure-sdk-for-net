@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    public partial class ExportRdbContent : IUtf8JsonSerializable, IJsonModel<ExportRdbContent>
+    public partial class ExportRDBContent : IUtf8JsonSerializable, IJsonModel<ExportRDBContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportRdbContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportRDBContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ExportRdbContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ExportRDBContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportRdbContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExportRDBContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportRdbContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportRDBContent)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Format))
@@ -70,19 +70,19 @@ namespace Azure.ResourceManager.Redis.Models
             }
         }
 
-        ExportRdbContent IJsonModel<ExportRdbContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ExportRDBContent IJsonModel<ExportRDBContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportRdbContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExportRDBContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportRdbContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportRDBContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExportRdbContent(document.RootElement, options);
+            return DeserializeExportRDBContent(document.RootElement, options);
         }
 
-        internal static ExportRdbContent DeserializeExportRdbContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ExportRDBContent DeserializeExportRDBContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ExportRdbContent(
+            return new ExportRDBContent(
                 format,
                 prefix,
                 container,
@@ -139,35 +139,35 @@ namespace Azure.ResourceManager.Redis.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ExportRdbContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ExportRDBContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportRdbContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExportRDBContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ExportRdbContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportRDBContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ExportRdbContent IPersistableModel<ExportRdbContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ExportRDBContent IPersistableModel<ExportRDBContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExportRdbContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExportRDBContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeExportRdbContent(document.RootElement, options);
+                        return DeserializeExportRDBContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExportRdbContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportRDBContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ExportRdbContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ExportRDBContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

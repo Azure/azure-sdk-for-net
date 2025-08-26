@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="objectIdAlias"> User friendly name for object id. Also represents username for token based authentication. </param>
         /// <param name="accessPolicyName"> The name of the access policy that is being assigned. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisCacheAccessPolicyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AccessPolicyAssignmentProvisioningState? provisioningState, Guid? objectId, string objectIdAlias, string accessPolicyName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal RedisCacheAccessPolicyAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AccessPolicyAssignmentProvisioningState? provisioningState, string objectId, string objectIdAlias, string accessPolicyName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             ObjectId = objectId;
@@ -76,16 +76,12 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> Provisioning state of an access policy assignment set. </summary>
-        [WirePath("properties.provisioningState")]
         public AccessPolicyAssignmentProvisioningState? ProvisioningState { get; }
         /// <summary> Object Id to assign access policy to. </summary>
-        [WirePath("properties.objectId")]
-        public Guid? ObjectId { get; set; }
+        public string ObjectId { get; set; }
         /// <summary> User friendly name for object id. Also represents username for token based authentication. </summary>
-        [WirePath("properties.objectIdAlias")]
         public string ObjectIdAlias { get; set; }
         /// <summary> The name of the access policy that is being assigned. </summary>
-        [WirePath("properties.accessPolicyName")]
         public string AccessPolicyName { get; set; }
     }
 }

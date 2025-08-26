@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Redis.Mocking
 
         /// <summary> Gets a collection of RedisResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of RedisResources and their operations over a RedisResource. </returns>
-        public virtual RedisCollection GetAllRedis()
+        public virtual RedisResourceCollection GetRedisResources()
         {
-            return GetCachedClient(client => new RedisCollection(client, Id));
+            return GetCachedClient(client => new RedisResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Redis_Get</description>
+        /// <description>RedisResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -61,14 +61,14 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the Redis cache. </param>
+        /// <param name="name"> The name of the RedisResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RedisResource>> GetRedisAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RedisResource>> GetRedisResourceAsync(string name, CancellationToken cancellationToken = default)
         {
-            return await GetAllRedis().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetRedisResources().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Redis_Get</description>
+        /// <description>RedisResource_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -92,14 +92,14 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The name of the Redis cache. </param>
+        /// <param name="name"> The name of the RedisResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RedisResource> GetRedis(string name, CancellationToken cancellationToken = default)
+        public virtual Response<RedisResource> GetRedisResource(string name, CancellationToken cancellationToken = default)
         {
-            return GetAllRedis().Get(name, cancellationToken);
+            return GetRedisResources().Get(name, cancellationToken);
         }
     }
 }

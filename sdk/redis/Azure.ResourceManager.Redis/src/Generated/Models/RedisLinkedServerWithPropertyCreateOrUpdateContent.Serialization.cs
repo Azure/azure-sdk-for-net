@@ -90,9 +90,9 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 return null;
             }
-            ResourceIdentifier linkedRedisCacheId = default;
-            AzureLocation linkedRedisCacheLocation = default;
-            RedisLinkedServerRole serverRole = default;
+            string linkedRedisCacheId = default;
+            string linkedRedisCacheLocation = default;
+            ReplicationRole serverRole = default;
             string geoReplicatedPrimaryHostName = default;
             string primaryHostName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -110,17 +110,17 @@ namespace Azure.ResourceManager.Redis.Models
                     {
                         if (property0.NameEquals("linkedRedisCacheId"u8))
                         {
-                            linkedRedisCacheId = new ResourceIdentifier(property0.Value.GetString());
+                            linkedRedisCacheId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("linkedRedisCacheLocation"u8))
                         {
-                            linkedRedisCacheLocation = new AzureLocation(property0.Value.GetString());
+                            linkedRedisCacheLocation = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("serverRole"u8))
                         {
-                            serverRole = property0.Value.GetString().ToRedisLinkedServerRole();
+                            serverRole = property0.Value.GetString().ToReplicationRole();
                             continue;
                         }
                         if (property0.NameEquals("geoReplicatedPrimaryHostName"u8))

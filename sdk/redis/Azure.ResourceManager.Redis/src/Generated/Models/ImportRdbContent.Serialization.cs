@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    public partial class ImportRdbContent : IUtf8JsonSerializable, IJsonModel<ImportRdbContent>
+    public partial class ImportRDBContent : IUtf8JsonSerializable, IJsonModel<ImportRDBContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImportRdbContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImportRDBContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ImportRdbContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ImportRDBContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImportRdbContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ImportRDBContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImportRdbContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ImportRDBContent)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Format))
@@ -73,19 +73,19 @@ namespace Azure.ResourceManager.Redis.Models
             }
         }
 
-        ImportRdbContent IJsonModel<ImportRdbContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ImportRDBContent IJsonModel<ImportRDBContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImportRdbContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ImportRDBContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImportRdbContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ImportRDBContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeImportRdbContent(document.RootElement, options);
+            return DeserializeImportRDBContent(document.RootElement, options);
         }
 
-        internal static ImportRdbContent DeserializeImportRdbContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ImportRDBContent DeserializeImportRDBContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -132,38 +132,38 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ImportRdbContent(format, files, preferredDataArchiveAuthMethod, storageSubscriptionId, serializedAdditionalRawData);
+            return new ImportRDBContent(format, files, preferredDataArchiveAuthMethod, storageSubscriptionId, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ImportRdbContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ImportRDBContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImportRdbContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ImportRDBContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ImportRdbContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImportRDBContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ImportRdbContent IPersistableModel<ImportRdbContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ImportRDBContent IPersistableModel<ImportRDBContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImportRdbContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ImportRDBContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeImportRdbContent(document.RootElement, options);
+                        return DeserializeImportRDBContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImportRdbContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImportRDBContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ImportRdbContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ImportRDBContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

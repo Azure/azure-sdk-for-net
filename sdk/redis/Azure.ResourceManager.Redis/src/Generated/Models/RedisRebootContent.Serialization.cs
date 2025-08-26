@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 return null;
             }
-            RedisRebootType? rebootType = default;
+            RebootType? rebootType = default;
             int? shardId = default;
             IList<int> ports = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Redis.Models
                     {
                         continue;
                     }
-                    rebootType = new RedisRebootType(property.Value.GetString());
+                    rebootType = new RebootType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("shardId"u8))

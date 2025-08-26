@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Redis.Models
 
         /// <summary> Initializes a new instance of <see cref="RedisRegenerateKeyContent"/>. </summary>
         /// <param name="keyType"> The Redis access key to regenerate. </param>
-        public RedisRegenerateKeyContent(RedisRegenerateKeyType keyType)
+        public RedisRegenerateKeyContent(RedisKeyType keyType)
         {
             KeyType = keyType;
         }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <summary> Initializes a new instance of <see cref="RedisRegenerateKeyContent"/>. </summary>
         /// <param name="keyType"> The Redis access key to regenerate. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisRegenerateKeyContent(RedisRegenerateKeyType keyType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RedisRegenerateKeyContent(RedisKeyType keyType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             KeyType = keyType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -67,7 +67,6 @@ namespace Azure.ResourceManager.Redis.Models
         }
 
         /// <summary> The Redis access key to regenerate. </summary>
-        [WirePath("keyType")]
-        public RedisRegenerateKeyType KeyType { get; }
+        public RedisKeyType KeyType { get; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -50,10 +49,11 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="linkedRedisCacheId"> Fully qualified resourceId of the linked redis cache. </param>
         /// <param name="linkedRedisCacheLocation"> Location of the linked redis cache. </param>
         /// <param name="serverRole"> Role of the linked server. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedRedisCacheId"/> is null. </exception>
-        public RedisLinkedServerWithPropertyCreateOrUpdateContent(ResourceIdentifier linkedRedisCacheId, AzureLocation linkedRedisCacheLocation, RedisLinkedServerRole serverRole)
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedRedisCacheId"/> or <paramref name="linkedRedisCacheLocation"/> is null. </exception>
+        public RedisLinkedServerWithPropertyCreateOrUpdateContent(string linkedRedisCacheId, string linkedRedisCacheLocation, ReplicationRole serverRole)
         {
             Argument.AssertNotNull(linkedRedisCacheId, nameof(linkedRedisCacheId));
+            Argument.AssertNotNull(linkedRedisCacheLocation, nameof(linkedRedisCacheLocation));
 
             LinkedRedisCacheId = linkedRedisCacheId;
             LinkedRedisCacheLocation = linkedRedisCacheLocation;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="geoReplicatedPrimaryHostName"> The unchanging DNS name which will always point to current geo-primary cache among the linked redis caches for seamless Geo Failover experience. </param>
         /// <param name="primaryHostName"> The changing DNS name that resolves to the current geo-primary cache among the linked redis caches before or after the Geo Failover. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisLinkedServerWithPropertyCreateOrUpdateContent(ResourceIdentifier linkedRedisCacheId, AzureLocation linkedRedisCacheLocation, RedisLinkedServerRole serverRole, string geoReplicatedPrimaryHostName, string primaryHostName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RedisLinkedServerWithPropertyCreateOrUpdateContent(string linkedRedisCacheId, string linkedRedisCacheLocation, ReplicationRole serverRole, string geoReplicatedPrimaryHostName, string primaryHostName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LinkedRedisCacheId = linkedRedisCacheId;
             LinkedRedisCacheLocation = linkedRedisCacheLocation;
@@ -83,19 +83,14 @@ namespace Azure.ResourceManager.Redis.Models
         }
 
         /// <summary> Fully qualified resourceId of the linked redis cache. </summary>
-        [WirePath("properties.linkedRedisCacheId")]
-        public ResourceIdentifier LinkedRedisCacheId { get; }
+        public string LinkedRedisCacheId { get; }
         /// <summary> Location of the linked redis cache. </summary>
-        [WirePath("properties.linkedRedisCacheLocation")]
-        public AzureLocation LinkedRedisCacheLocation { get; }
+        public string LinkedRedisCacheLocation { get; }
         /// <summary> Role of the linked server. </summary>
-        [WirePath("properties.serverRole")]
-        public RedisLinkedServerRole ServerRole { get; }
+        public ReplicationRole ServerRole { get; }
         /// <summary> The unchanging DNS name which will always point to current geo-primary cache among the linked redis caches for seamless Geo Failover experience. </summary>
-        [WirePath("properties.geoReplicatedPrimaryHostName")]
         public string GeoReplicatedPrimaryHostName { get; }
         /// <summary> The changing DNS name that resolves to the current geo-primary cache among the linked redis caches before or after the Geo Failover. </summary>
-        [WirePath("properties.primaryHostName")]
         public string PrimaryHostName { get; }
     }
 }

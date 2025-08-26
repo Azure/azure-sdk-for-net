@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.Redis.Models
         private const string ApprovedValue = "Approved";
         private const string RejectedValue = "Rejected";
 
-        /// <summary> Pending. </summary>
+        /// <summary> Connection waiting for approval or rejection. </summary>
         public static RedisPrivateEndpointServiceConnectionStatus Pending { get; } = new RedisPrivateEndpointServiceConnectionStatus(PendingValue);
-        /// <summary> Approved. </summary>
+        /// <summary> Connection approved. </summary>
         public static RedisPrivateEndpointServiceConnectionStatus Approved { get; } = new RedisPrivateEndpointServiceConnectionStatus(ApprovedValue);
-        /// <summary> Rejected. </summary>
+        /// <summary> Connection Rejected. </summary>
         public static RedisPrivateEndpointServiceConnectionStatus Rejected { get; } = new RedisPrivateEndpointServiceConnectionStatus(RejectedValue);
         /// <summary> Determines if two <see cref="RedisPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
         public static bool operator ==(RedisPrivateEndpointServiceConnectionStatus left, RedisPrivateEndpointServiceConnectionStatus right) => left.Equals(right);

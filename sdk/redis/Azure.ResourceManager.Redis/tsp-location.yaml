@@ -1,0 +1,3 @@
+directory: specification/redis/Cache.Management
+commit: 89fd8c33eae90dad136c55a67491586db1445f41
+repo: Azure/azure-rest-api-specs

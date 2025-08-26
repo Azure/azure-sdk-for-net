@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Redis.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Redis.Samples
@@ -20,8 +19,8 @@ namespace Azure.ResourceManager.Redis.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_RedisCachePutPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2024-11-01/examples/RedisCachePutPrivateEndpointConnection.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Put" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01/RedisCachePutPrivateEndpointConnection.json
+            // this example is just showing the usage of "PrivateEndpointConnection_Put" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -34,21 +33,14 @@ namespace Azure.ResourceManager.Redis.Samples
             string resourceGroupName = "rgtest01";
             string cacheName = "cachetest01";
             ResourceIdentifier redisResourceId = RedisResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cacheName);
-            RedisResource redis = client.GetRedisResource(redisResourceId);
+            RedisResource redisResource = client.GetRedisResource(redisResourceId);
 
             // get the collection of this RedisPrivateEndpointConnectionResource
-            RedisPrivateEndpointConnectionCollection collection = redis.GetRedisPrivateEndpointConnections();
+            RedisPrivateEndpointConnectionCollection collection = redisResource.GetRedisPrivateEndpointConnections();
 
             // invoke the operation
             string privateEndpointConnectionName = "pectest01";
-            RedisPrivateEndpointConnectionData data = new RedisPrivateEndpointConnectionData
-            {
-                RedisPrivateLinkServiceConnectionState = new RedisPrivateLinkServiceConnectionState
-                {
-                    Status = RedisPrivateEndpointServiceConnectionStatus.Approved,
-                    Description = "Auto-Approved",
-                },
-            };
+            RedisPrivateEndpointConnectionData data = new RedisPrivateEndpointConnectionData();
             ArmOperation<RedisPrivateEndpointConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, data);
             RedisPrivateEndpointConnectionResource result = lro.Value;
 
@@ -63,8 +55,8 @@ namespace Azure.ResourceManager.Redis.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_RedisCacheGetPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2024-11-01/examples/RedisCacheGetPrivateEndpointConnection.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01/RedisCacheGetPrivateEndpointConnection.json
+            // this example is just showing the usage of "PrivateEndpointConnection_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -77,10 +69,10 @@ namespace Azure.ResourceManager.Redis.Samples
             string resourceGroupName = "rgtest01";
             string cacheName = "cachetest01";
             ResourceIdentifier redisResourceId = RedisResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cacheName);
-            RedisResource redis = client.GetRedisResource(redisResourceId);
+            RedisResource redisResource = client.GetRedisResource(redisResourceId);
 
             // get the collection of this RedisPrivateEndpointConnectionResource
-            RedisPrivateEndpointConnectionCollection collection = redis.GetRedisPrivateEndpointConnections();
+            RedisPrivateEndpointConnectionCollection collection = redisResource.GetRedisPrivateEndpointConnections();
 
             // invoke the operation
             string privateEndpointConnectionName = "pectest01";
@@ -97,8 +89,8 @@ namespace Azure.ResourceManager.Redis.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_RedisCacheListPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2024-11-01/examples/RedisCacheListPrivateEndpointConnections.json
-            // this example is just showing the usage of "PrivateEndpointConnections_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01/RedisCacheListPrivateEndpointConnections.json
+            // this example is just showing the usage of "PrivateEndpointConnection_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -111,10 +103,10 @@ namespace Azure.ResourceManager.Redis.Samples
             string resourceGroupName = "rgtest01";
             string cacheName = "cachetest01";
             ResourceIdentifier redisResourceId = RedisResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cacheName);
-            RedisResource redis = client.GetRedisResource(redisResourceId);
+            RedisResource redisResource = client.GetRedisResource(redisResourceId);
 
             // get the collection of this RedisPrivateEndpointConnectionResource
-            RedisPrivateEndpointConnectionCollection collection = redis.GetRedisPrivateEndpointConnections();
+            RedisPrivateEndpointConnectionCollection collection = redisResource.GetRedisPrivateEndpointConnections();
 
             // invoke the operation and iterate over the result
             await foreach (RedisPrivateEndpointConnectionResource item in collection.GetAllAsync())
@@ -133,8 +125,8 @@ namespace Azure.ResourceManager.Redis.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_RedisCacheGetPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2024-11-01/examples/RedisCacheGetPrivateEndpointConnection.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01/RedisCacheGetPrivateEndpointConnection.json
+            // this example is just showing the usage of "PrivateEndpointConnection_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -147,10 +139,10 @@ namespace Azure.ResourceManager.Redis.Samples
             string resourceGroupName = "rgtest01";
             string cacheName = "cachetest01";
             ResourceIdentifier redisResourceId = RedisResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cacheName);
-            RedisResource redis = client.GetRedisResource(redisResourceId);
+            RedisResource redisResource = client.GetRedisResource(redisResourceId);
 
             // get the collection of this RedisPrivateEndpointConnectionResource
-            RedisPrivateEndpointConnectionCollection collection = redis.GetRedisPrivateEndpointConnections();
+            RedisPrivateEndpointConnectionCollection collection = redisResource.GetRedisPrivateEndpointConnections();
 
             // invoke the operation
             string privateEndpointConnectionName = "pectest01";
@@ -163,8 +155,8 @@ namespace Azure.ResourceManager.Redis.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_RedisCacheGetPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2024-11-01/examples/RedisCacheGetPrivateEndpointConnection.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01/RedisCacheGetPrivateEndpointConnection.json
+            // this example is just showing the usage of "PrivateEndpointConnection_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -177,10 +169,10 @@ namespace Azure.ResourceManager.Redis.Samples
             string resourceGroupName = "rgtest01";
             string cacheName = "cachetest01";
             ResourceIdentifier redisResourceId = RedisResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cacheName);
-            RedisResource redis = client.GetRedisResource(redisResourceId);
+            RedisResource redisResource = client.GetRedisResource(redisResourceId);
 
             // get the collection of this RedisPrivateEndpointConnectionResource
-            RedisPrivateEndpointConnectionCollection collection = redis.GetRedisPrivateEndpointConnections();
+            RedisPrivateEndpointConnectionCollection collection = redisResource.GetRedisPrivateEndpointConnections();
 
             // invoke the operation
             string privateEndpointConnectionName = "pectest01";

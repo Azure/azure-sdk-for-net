@@ -62,25 +62,22 @@ namespace Azure.ResourceManager.Redis
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> Provisioning state of access policy. </param>
-        /// <param name="typePropertiesType"> Built-In or Custom access policy. </param>
+        /// <param name="type"> Built-In or Custom access policy. </param>
         /// <param name="permissions"> Permissions for the access policy. Learn how to configure permissions at https://aka.ms/redis/AADPreRequisites. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisCacheAccessPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AccessPolicyProvisioningState? provisioningState, AccessPolicyType? typePropertiesType, string permissions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal RedisCacheAccessPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AccessPolicyProvisioningState? provisioningState, AccessPolicyType? type, string permissions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
-            TypePropertiesType = typePropertiesType;
+            Type = type;
             Permissions = permissions;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Provisioning state of access policy. </summary>
-        [WirePath("properties.provisioningState")]
         public AccessPolicyProvisioningState? ProvisioningState { get; }
         /// <summary> Built-In or Custom access policy. </summary>
-        [WirePath("properties.type")]
-        public AccessPolicyType? TypePropertiesType { get; }
+        public AccessPolicyType? Type { get; }
         /// <summary> Permissions for the access policy. Learn how to configure permissions at https://aka.ms/redis/AADPreRequisites. </summary>
-        [WirePath("properties.permissions")]
         public string Permissions { get; set; }
     }
 }

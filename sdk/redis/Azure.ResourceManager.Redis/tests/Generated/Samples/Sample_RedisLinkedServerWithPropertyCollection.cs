@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Redis.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_LinkedServerCreate()
         {
-            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2024-11-01/examples/RedisCacheLinkedServer_Create.json
+            // Generated from example definition: 2024-11-01/RedisCacheLinkedServer_Create.json
             // this example is just showing the usage of "LinkedServer_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.Redis.Samples
             string resourceGroupName = "rg1";
             string name = "cache1";
             ResourceIdentifier redisResourceId = RedisResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
-            RedisResource redis = client.GetRedisResource(redisResourceId);
+            RedisResource redisResource = client.GetRedisResource(redisResourceId);
 
             // get the collection of this RedisLinkedServerWithPropertyResource
-            RedisLinkedServerWithPropertyCollection collection = redis.GetRedisLinkedServerWithProperties();
+            RedisLinkedServerWithPropertyCollection collection = redisResource.GetRedisLinkedServerWithProperties();
 
             // invoke the operation
             string linkedServerName = "cache2";
-            RedisLinkedServerWithPropertyCreateOrUpdateContent content = new RedisLinkedServerWithPropertyCreateOrUpdateContent(new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Cache/Redis/cache2"), new AzureLocation("West US"), RedisLinkedServerRole.Secondary);
+            RedisLinkedServerWithPropertyCreateOrUpdateContent content = new RedisLinkedServerWithPropertyCreateOrUpdateContent(null, null, default);
             ArmOperation<RedisLinkedServerWithPropertyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, linkedServerName, content);
             RedisLinkedServerWithPropertyResource result = lro.Value;
 
@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Redis.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_LinkedServerGet()
         {
-            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2024-11-01/examples/RedisCacheLinkedServer_Get.json
-            // this example is just showing the usage of "LinkedServer_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01/RedisCacheLinkedServer_Get.json
+            // this example is just showing the usage of "RedisLinkedServerWithProperties_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.Redis.Samples
             string resourceGroupName = "rg1";
             string name = "cache1";
             ResourceIdentifier redisResourceId = RedisResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
-            RedisResource redis = client.GetRedisResource(redisResourceId);
+            RedisResource redisResource = client.GetRedisResource(redisResourceId);
 
             // get the collection of this RedisLinkedServerWithPropertyResource
-            RedisLinkedServerWithPropertyCollection collection = redis.GetRedisLinkedServerWithProperties();
+            RedisLinkedServerWithPropertyCollection collection = redisResource.GetRedisLinkedServerWithProperties();
 
             // invoke the operation
             string linkedServerName = "cache2";
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.Redis.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_LinkedServerList()
         {
-            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2024-11-01/examples/RedisCacheLinkedServer_List.json
-            // this example is just showing the usage of "LinkedServer_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01/RedisCacheLinkedServer_List.json
+            // this example is just showing the usage of "RedisLinkedServerWithProperties_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.Redis.Samples
             string resourceGroupName = "rg1";
             string name = "cache1";
             ResourceIdentifier redisResourceId = RedisResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
-            RedisResource redis = client.GetRedisResource(redisResourceId);
+            RedisResource redisResource = client.GetRedisResource(redisResourceId);
 
             // get the collection of this RedisLinkedServerWithPropertyResource
-            RedisLinkedServerWithPropertyCollection collection = redis.GetRedisLinkedServerWithProperties();
+            RedisLinkedServerWithPropertyCollection collection = redisResource.GetRedisLinkedServerWithProperties();
 
             // invoke the operation and iterate over the result
             await foreach (RedisLinkedServerWithPropertyResource item in collection.GetAllAsync())
@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.Redis.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_LinkedServerGet()
         {
-            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2024-11-01/examples/RedisCacheLinkedServer_Get.json
-            // this example is just showing the usage of "LinkedServer_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01/RedisCacheLinkedServer_Get.json
+            // this example is just showing the usage of "RedisLinkedServerWithProperties_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.Redis.Samples
             string resourceGroupName = "rg1";
             string name = "cache1";
             ResourceIdentifier redisResourceId = RedisResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
-            RedisResource redis = client.GetRedisResource(redisResourceId);
+            RedisResource redisResource = client.GetRedisResource(redisResourceId);
 
             // get the collection of this RedisLinkedServerWithPropertyResource
-            RedisLinkedServerWithPropertyCollection collection = redis.GetRedisLinkedServerWithProperties();
+            RedisLinkedServerWithPropertyCollection collection = redisResource.GetRedisLinkedServerWithProperties();
 
             // invoke the operation
             string linkedServerName = "cache2";
@@ -156,8 +156,8 @@ namespace Azure.ResourceManager.Redis.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_LinkedServerGet()
         {
-            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2024-11-01/examples/RedisCacheLinkedServer_Get.json
-            // this example is just showing the usage of "LinkedServer_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-11-01/RedisCacheLinkedServer_Get.json
+            // this example is just showing the usage of "RedisLinkedServerWithProperties_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -170,10 +170,10 @@ namespace Azure.ResourceManager.Redis.Samples
             string resourceGroupName = "rg1";
             string name = "cache1";
             ResourceIdentifier redisResourceId = RedisResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
-            RedisResource redis = client.GetRedisResource(redisResourceId);
+            RedisResource redisResource = client.GetRedisResource(redisResourceId);
 
             // get the collection of this RedisLinkedServerWithPropertyResource
-            RedisLinkedServerWithPropertyCollection collection = redis.GetRedisLinkedServerWithProperties();
+            RedisLinkedServerWithPropertyCollection collection = redisResource.GetRedisLinkedServerWithProperties();
 
             // invoke the operation
             string linkedServerName = "cache2";

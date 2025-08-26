@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    /// <summary> A list of private link resources. </summary>
+    /// <summary> The response of a PrivateLinkResource list operation. </summary>
     internal partial class RedisPrivateLinkResourceListResult
     {
         /// <summary>
@@ -46,21 +47,34 @@ namespace Azure.ResourceManager.Redis.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RedisPrivateLinkResourceListResult"/>. </summary>
-        internal RedisPrivateLinkResourceListResult()
+        /// <param name="value"> The PrivateLinkResource items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal RedisPrivateLinkResourceListResult(IEnumerable<RedisPrivateLinkResourceData> value)
         {
-            Value = new ChangeTrackingList<RedisPrivateLinkResource>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="RedisPrivateLinkResourceListResult"/>. </summary>
-        /// <param name="value"> Array of private link resources. </param>
+        /// <param name="value"> The PrivateLinkResource items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisPrivateLinkResourceListResult(IReadOnlyList<RedisPrivateLinkResource> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RedisPrivateLinkResourceListResult(IReadOnlyList<RedisPrivateLinkResourceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Array of private link resources. </summary>
-        public IReadOnlyList<RedisPrivateLinkResource> Value { get; }
+        /// <summary> Initializes a new instance of <see cref="RedisPrivateLinkResourceListResult"/> for deserialization. </summary>
+        internal RedisPrivateLinkResourceListResult()
+        {
+        }
+
+        /// <summary> The PrivateLinkResource items on this page. </summary>
+        public IReadOnlyList<RedisPrivateLinkResourceData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }
