@@ -1230,7 +1230,7 @@
     {
       "filename": "**/sdk/provisioning/Azure.Provisioning.PostgreSql/**/*.cs",
       "words": [
-        "AWSEC"
+        "awsec"
       ]
     },
     {
