@@ -898,6 +898,9 @@
 # ServiceLabel: %VideoAnalyzer
 # ServiceOwners:                                                   @giakas
 
+# ServiceLabel: %VirtualEnclaves
+# ServiceOwners:                                                   @jchavaherrera @Azure/azure-virtual-enclaves
+
 # ServiceLabel: %Web Apps
 # ServiceOwners:                                                   @AzureAppServiceCLI @antcp
 
