@@ -637,25 +637,25 @@
 # ServiceOwners:                                                   @omziv @anatse @raronen @ischrei @danhadari @azmonapplicationinsights
 
 # PRLabel: %Monitor - Distro
-/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/               @rajkumar-rangaraj
+/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/               @rajkumar-rangaraj @harsimar @trask @xiang17
 
 # PRLabel: %Monitor - Distro
-/sdk/monitor/Azure.Monitor.OpenTelemetry.sln                       @rajkumar-rangaraj
+/sdk/monitor/Azure.Monitor.OpenTelemetry.sln                       @rajkumar-rangaraj @harsimar @trask @xiang17
 
 # ServiceLabel: %Monitor - Distro
-# ServiceOwners:                                                   @rajkumar-rangaraj
+# ServiceOwners:                                                   @rajkumar-rangaraj @harsimar @trask @xiang17
 
 # PRLabel: %Monitor - Exporter
-/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/                 @rajkumar-rangaraj
+/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/                 @rajkumar-rangaraj @harsimar @trask @xiang17
 
 # ServiceLabel: %Monitor - Exporter
-# ServiceOwners:                                                   @rajkumar-rangaraj
+# ServiceOwners:                                                   @rajkumar-rangaraj @harsimar @trask @xiang17
 
 # PRLabel: %Monitor - LiveMetrics
-/sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics/              @rajkumar-rangaraj @xiang17
+/sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics/              @rajkumar-rangaraj @xiang17 @trask @harsimar
 
 # ServiceLabel: %Monitor - LiveMetrics
-# ServiceOwners:                                                   @rajkumar-rangaraj @xiang17
+# ServiceOwners:                                                   @rajkumar-rangaraj @xiang17 @trask @harsimar
 
 # PRLabel: %Monitor - Query
 /sdk/monitor/Azure.Monitor.Query/                                  @Azure/azure-sdk-write-monitor-data-plane
