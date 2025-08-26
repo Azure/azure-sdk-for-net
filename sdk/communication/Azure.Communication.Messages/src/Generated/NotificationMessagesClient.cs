@@ -428,7 +428,7 @@ namespace Azure.Communication.Messages
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/messages/readreceipts:sendReadReceipt", false);
+            uri.AppendPath("/messages/readreceipts:send", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
