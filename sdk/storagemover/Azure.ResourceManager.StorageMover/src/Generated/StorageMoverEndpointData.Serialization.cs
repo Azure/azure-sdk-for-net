@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.StorageMover
             }
             EndpointBaseProperties properties = default;
             ManagedServiceIdentity identity = default;
-            string id = default;
+            ResourceIdentifier id = default;
             string name = default;
-            ResourceType? type = default;
-            Models.SystemData systemData = default;
+            ResourceType type = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.StorageMover
                 }
                 if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -103,10 +103,6 @@ namespace Azure.ResourceManager.StorageMover
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
@@ -116,7 +112,7 @@ namespace Azure.ResourceManager.StorageMover
                     {
                         continue;
                     }
-                    systemData = Models.SystemData.DeserializeSystemData(property.Value, options);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageMoverContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
@@ -130,9 +126,9 @@ namespace Azure.ResourceManager.StorageMover
                 name,
                 type,
                 systemData,
-                serializedAdditionalRawData,
                 properties,
-                identity);
+                identity,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageMoverEndpointData>.Write(ModelReaderWriterOptions options)

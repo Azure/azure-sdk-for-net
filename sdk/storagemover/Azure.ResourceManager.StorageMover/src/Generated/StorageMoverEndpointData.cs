@@ -17,8 +17,40 @@ namespace Azure.ResourceManager.StorageMover
     /// A class representing the StorageMoverEndpoint data model.
     /// The Endpoint resource, which contains information about file sources and targets.
     /// </summary>
-    public partial class StorageMoverEndpointData : ProxyResource
+    public partial class StorageMoverEndpointData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="StorageMoverEndpointData"/>. </summary>
         /// <param name="properties">
         /// The resource specific properties for the Storage Mover resource.
@@ -34,21 +66,22 @@ namespace Azure.ResourceManager.StorageMover
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageMoverEndpointData"/>. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// The resource specific properties for the Storage Mover resource.
         /// Please note <see cref="EndpointBaseProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureMultiCloudConnectorEndpointProperties"/>, <see cref="AzureStorageBlobContainerEndpointProperties"/>, <see cref="AzureStorageNfsFileShareEndpointProperties"/>, <see cref="AzureStorageSmbFileShareEndpointProperties"/>, <see cref="NfsMountEndpointProperties"/> and <see cref="SmbMountEndpointProperties"/>.
         /// </param>
         /// <param name="identity"> The managed service identity of the resource. This property is only available on the latest version. </param>
-        internal StorageMoverEndpointData(string id, string name, ResourceType? type, Models.SystemData systemData, IDictionary<string, BinaryData> serializedAdditionalRawData, EndpointBaseProperties properties, ManagedServiceIdentity identity) : base(id, name, type, systemData, serializedAdditionalRawData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageMoverEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EndpointBaseProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Identity = identity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageMoverEndpointData"/> for deserialization. </summary>

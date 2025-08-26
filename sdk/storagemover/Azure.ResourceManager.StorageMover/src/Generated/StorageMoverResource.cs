@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <summary> Initializes a new instance of the <see cref="StorageMoverResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal StorageMoverResource(ArmClient client, StorageMoverData data) : this(client, new ResourceIdentifier(data.Id))
+        internal StorageMoverResource(ArmClient client, StorageMoverData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
