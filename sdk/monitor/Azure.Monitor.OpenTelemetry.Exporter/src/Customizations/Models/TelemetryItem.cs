@@ -42,7 +42,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
                 if (activity.Kind == ActivityKind.Server)
                 {
-                    // according to spec, microsoft.client.ip is an override
                     var locationIp = microsoftClientIp ??
                                      AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeClientAddress)?.ToString();
 
