@@ -1138,35 +1138,27 @@ function Get-TriagesForCPEXAttestation()
   $fields = @()
   $fields += "Custom.ProductServiceTreeID"
   $fields += "Custom.ProductType"
+  $fields += "Custom.ProductLifecycle"
   $fields += "Custom.DataScope"
   $fields += "Custom.MgmtScope"
+  $fields += "Custom.DataplaneAttestationStatus"
+  $fields += "Custom.ManagementPlaneAttestationStatus"
 
   $fieldList = ($fields | ForEach-Object { "[$_]"}) -join ", "
   $query = "SELECT ${fieldList} FROM WorkItems WHERE [System.WorkItemType] = 'Triage' AND [System.State] IN ('Completed', 'New', 'Triage updated')"
-  $query += " AND [Custom.DataplaneAttestationStatus] IN ('', 'Pending')"
-  $query += " AND [Custom.ManagementPlaneAttestationStatus] IN ('', 'Pending')"
+  $query += " AND ([Custom.DataplaneAttestationStatus] IN ('', 'Pending') OR [Custom.ManagementPlaneAttestationStatus] IN ('', 'Pending'))"
   $query += " AND [System.Tags] NOT CONTAINS 'Release Planner App Test'"
   $query += " AND [System.Tags] NOT CONTAINS 'Release Planner Test App'"
 
   $workItems = Invoke-Query $fields $query
-  return $workItems  
+  return $workItems 
 }
 
-function Update-AttestationStatusInReleasePlan($id, $status)
+function Update-AttestationStatusInWorkItem($workItemId, $fieldName, $status)
 {
   $fields = @()
-  $fields += "Custom.AttestationStatus=${status}"
+  $fields += "${fieldName}=${status}"
 
-  $workItem = UpdateWorkItem -id $id -fields $fields
-  return $true
-}
-
-function Update-AttestationStatusInTriage($id, $dataStatus, $mgmtStatus)
-{
-  $fields = @()
-  $fields += "Custom.DataplaneAttestationStatus=${dataStatus}"
-  $fields += "Custom.ManagementPlaneAttestationStatus=${mgmtStatus}"
-
-  $workItem = UpdateWorkItem -id $id -fields $fields
+  $workItem = UpdateWorkItem -id $workItemId -fields $fields
   return $true
 }
