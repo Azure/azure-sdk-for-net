@@ -53,7 +53,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
             else // dependency
             {
-                if (microsoftClientIp != null) // not likely a customer would set this, but just in case
+                if (microsoftClientIp != null)
                 {
                     Tags[ContextTagKeys.AiLocationIp.ToString()] = microsoftClientIp;
                 }
