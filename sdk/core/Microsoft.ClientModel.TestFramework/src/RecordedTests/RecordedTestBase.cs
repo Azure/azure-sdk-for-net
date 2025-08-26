@@ -709,24 +709,6 @@ public abstract class RecordedTestBase : ClientTestBase
     }
 
     /// <summary>
-    /// Instruments an operation result instance for test recording and playback.
-    /// This override ensures that operations use the correct recording mode for intercepting long-running operations.
-    /// </summary>
-    /// <param name="operationType">The type of the operation to instrument.</param>
-    /// <param name="operation">The operation instance to instrument.</param>
-    /// <returns>An instrumented operation instance with the appropriate interceptors for the current recording mode.</returns>
-    protected internal override object CreateProxyFromOperationResult(Type operationType, object operation)
-    {
-        var interceptors = AdditionalInterceptors ?? Array.Empty<IInterceptor>();
-        var interceptorArray = interceptors.Concat(new IInterceptor[] { new GetOriginalInterceptor(operation), new OperationResultInterceptor(Mode) }).ToArray();
-        return ProxyGenerator.CreateClassProxyWithTarget(
-            operationType,
-            new[] { typeof(IProxiedOperationResult) },
-            operation,
-            interceptorArray);
-    }
-
-    /// <summary>
     /// Provides convenient access to mode-aware delay functionality for the current test instance.
     /// This method automatically uses the current test's recording mode to determine appropriate delay behavior.
     /// </summary>

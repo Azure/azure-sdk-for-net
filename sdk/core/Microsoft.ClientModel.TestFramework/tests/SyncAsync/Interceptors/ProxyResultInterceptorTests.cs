@@ -110,56 +110,6 @@ public class ProxyResultInterceptorTests
 
     #endregion
 
-    #region Intercept Method - Operation Results
-
-    [Test]
-    public void InterceptHandlesTaskOperationResult()
-    {
-        var testBase = new TestClientTestBase(true);
-        var interceptor = new ProxyResultInterceptor(testBase);
-        var operation = new TestOperationResult(new MockPipelineResponse(200));
-        var task = Task.FromResult(operation);
-        var invocation = CreateMockInvocation("StartOperation", typeof(Task<TestOperationResult>), task);
-        invocation.Arguments = new object[] { true }; // WaitUntil.Completed
-
-        interceptor.Intercept(invocation);
-
-        Assert.That(invocation.ReturnValue, Is.InstanceOf<Task<TestOperationResult>>());
-    }
-
-    [Test]
-    public void InterceptHandlesTaskOperationResultInPlaybackMode()
-    {
-        var recordedTestBase = new TestRecordedTestBase(RecordedTestMode.Playback);
-        var interceptor = new ProxyResultInterceptor(recordedTestBase);
-        var operation = new TestOperationResult(new MockPipelineResponse(200));
-        var task = Task.FromResult(operation);
-        var invocation = CreateMockInvocation("StartOperation", typeof(Task<TestOperationResult>), task);
-        invocation.Arguments = new object[] { true }; // WaitUntil.Completed
-
-        interceptor.Intercept(invocation);
-
-        // In playback mode, WaitUntil.Completed should be swapped to WaitUntil.Started
-        Assert.That(invocation.Arguments[0], Is.EqualTo(false));
-    }
-
-    [Test]
-    public void InterceptHandlesFaultedTask()
-    {
-        var testBase = new TestClientTestBase(true);
-        var interceptor = new ProxyResultInterceptor(testBase);
-        var faultedTask = Task.FromException<TestOperationResult>(new InvalidOperationException("Test exception"));
-        var invocation = CreateMockInvocation("StartOperation", typeof(Task<TestOperationResult>), faultedTask);
-        invocation.Arguments = new object[] { true };
-
-        interceptor.Intercept(invocation);
-
-        // Should not throw, should handle the faulted task gracefully
-        Assert.That(invocation.ReturnValue, Is.Not.Null);
-    }
-
-    #endregion
-
     #region Intercept Method - Other Types
 
     [Test]
@@ -175,28 +125,6 @@ public class ProxyResultInterceptorTests
         {
             Assert.That(invocation.Proceeded, Is.True);
             Assert.That(testBase.CreateProxyFromClientCalled, Is.False);
-        }
-    }
-
-    #endregion
-
-    #region InstrumentOperationInterceptor Method
-
-    [Test]
-    public async Task InstrumentOperationInterceptorCreatesProxy()
-    {
-        var testBase = new TestClientTestBase(true);
-        var interceptor = new ProxyResultInterceptor(testBase);
-        var operation = new TestOperationResult(new MockPipelineResponse(200));
-        var invocation = CreateMockInvocation("TestMethod", typeof(TestOperationResult), operation);
-
-        var result = await interceptor.InstrumentOperationInterceptor<TestOperationResult>(
-            invocation, () => new ValueTask<TestOperationResult>(operation));
-
-        using (Assert.EnterMultipleScope())
-        {
-            Assert.That(testBase.CreateProxyFromOperationResultCalled, Is.True);
-            Assert.That(result, Is.Not.Null);
         }
     }
 
@@ -248,12 +176,6 @@ public class ProxyResultInterceptorTests
         {
             CreateProxyFromClientCalled = true;
             return client;
-        }
-
-        protected internal override object CreateProxyFromOperationResult(Type operationType, object operation)
-        {
-            CreateProxyFromOperationResultCalled = true;
-            return operation;
         }
     }
 

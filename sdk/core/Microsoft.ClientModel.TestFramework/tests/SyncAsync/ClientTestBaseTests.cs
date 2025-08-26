@@ -156,22 +156,6 @@ public class ClientTestBaseTests
 
     #endregion
 
-    #region CreateProxyFromOperationResult
-
-    [Test]
-    public void CreateProxyFromOperationResultReturnsProxy()
-    {
-        var testBase = new TestClientTestBase(true);
-        var operation = new TestOperationResult(new MockPipelineResponse(200));
-
-        var proxy = testBase.CreateProxyFromOperationResult(operation);
-
-        Assert.That(proxy, Is.Not.Null);
-        Assert.That(proxy, Is.InstanceOf<IProxiedOperationResult>());
-    }
-
-    #endregion
-
     #region GetOriginal
 
     [Test]

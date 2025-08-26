@@ -47,18 +47,6 @@ public class GetOriginalInterceptorTests
     }
 
     [Test]
-    public void InterceptReturnsOriginalForIProxiedOperationResultInterface()
-    {
-        var original = new TestObject();
-        var interceptor = new GetOriginalInterceptor(original);
-        var invocation = new MockInvocation(typeof(IProxiedOperationResult).GetProperty("Original").GetGetMethod());
-
-        interceptor.Intercept(invocation);
-
-        Assert.That(invocation.ReturnValue, Is.EqualTo(original));
-    }
-
-    [Test]
     public void InterceptReturnsNullWhenOriginalIsNull()
     {
         var interceptor = new GetOriginalInterceptor(null);

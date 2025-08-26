@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace Microsoft.ClientModel.TestFramework;
+
 /// <summary>
 /// Base class for recorded tests that use a specific test environment type.
 /// </summary>

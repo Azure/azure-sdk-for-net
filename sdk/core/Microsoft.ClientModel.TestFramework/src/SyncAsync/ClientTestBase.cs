@@ -228,15 +228,6 @@ public abstract class ClientTestBase
     }
 
     /// <summary>
-    /// Instruments an <see cref="OperationResult"/> instance to accelerate polling during tests.
-    /// </summary>
-    /// <typeparam name="T">The specific type of <see cref="OperationResult"/> to instrument.</typeparam>
-    /// <param name="operation">The operation result to instrument.</param>
-    /// <returns>An instrumented proxy that intercepts polling calls for faster test execution.</returns>
-    protected internal T CreateProxyFromOperationResult<T>(T operation) where T : OperationResult =>
-        (T)CreateProxyFromOperationResult(typeof(T), operation);
-
-    /// <summary>
     /// Gets the original, non-instrumented instance from an instrumented proxy.
     /// </summary>
     /// <typeparam name="T">The type of the original instance.</typeparam>
@@ -251,24 +242,5 @@ public abstract class ClientTestBase
         if (proxied == null) throw new ArgumentNullException(nameof(proxied));
         var i = proxied as IProxiedClient ?? throw new InvalidOperationException($"{proxied.GetType()} is not an instrumented type");
         return (T)i.Original;
-    }
-
-    /// <summary>
-    /// Core implementation for instrumenting operation results with polling acceleration interceptors.
-    /// </summary>
-    /// <param name="operationType">The type of the operation result being instrumented.</param>
-    /// <param name="operation">The operation result instance to instrument.</param>
-    /// <returns>An instrumented proxy that intercepts polling-related method calls.</returns>
-    protected internal virtual object CreateProxyFromOperationResult(Type operationType, object operation)
-    {
-        var interceptors = AdditionalInterceptors ?? Array.Empty<IInterceptor>();
-
-        // The assumption is that any recorded or live tests deriving from RecordedTestBase, and that any unit tests deriving directly from ClientTestBase are equivalent to playback.
-        var interceptorArray = interceptors.Concat(new IInterceptor[] { new GetOriginalInterceptor(operation), new OperationResultInterceptor(RecordedTestMode.Playback) }).ToArray();
-        return ProxyGenerator.CreateClassProxyWithTarget(
-            operationType,
-            new[] { typeof(IProxiedOperationResult) },
-            operation,
-            interceptorArray);
     }
 }

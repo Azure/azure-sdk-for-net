@@ -20,7 +20,7 @@ internal class GetOriginalInterceptor : IInterceptor
 
     public void Intercept(IInvocation invocation)
     {
-        if (invocation.Method.DeclaringType == typeof(IProxiedClient) || invocation.Method.DeclaringType == typeof(IProxiedOperationResult))
+        if (invocation.Method.DeclaringType == typeof(IProxiedClient))
         {
             invocation.ReturnValue = _original;
         }
