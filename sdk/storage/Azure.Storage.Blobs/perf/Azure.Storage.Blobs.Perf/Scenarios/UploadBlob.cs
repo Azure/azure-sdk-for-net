@@ -32,7 +32,13 @@ namespace Azure.Storage.Blobs.Perf.Scenarios
         public override void Run(CancellationToken cancellationToken)
         {
             _stream.Seek(0, SeekOrigin.Begin);
-            BlobClient.Upload(_stream, transferOptions: Options.StorageTransferOptions, cancellationToken: cancellationToken);
+            BlobClient.Upload(
+                _stream,
+                new BlobUploadOptions
+                {
+                    TransferOptions = Options.StorageTransferOptions,
+                },
+                cancellationToken: cancellationToken);
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)

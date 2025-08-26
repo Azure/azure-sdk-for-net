@@ -24,7 +24,7 @@ This troubleshooting guide covers failure investigation techniques, common error
 - [Troubleshoot AzureCliCredential authentication issues](#troubleshoot-azureclicredential-authentication-issues)
 - [Troubleshoot AzurePowerShellCredential authentication issues](#troubleshoot-azurepowershellcredential-authentication-issues)
 - [Troubleshoot multi-tenant authentication issues](#troubleshoot-multi-tenant-authentication-issues)
-- [Troubleshoot Web Account Manager (WAM) brokered authentication issues](#troubleshoot-web-account-manager-wam-brokered-authentication-issues)
+- [Troubleshoot brokered authentication issues](#troubleshoot-brokered-authentication-issues)
 - [Troubleshoot AzurePipelinesCredential authentication issues](#troubleshoot-azurepipelinescredential-authentication-issues)
 - [Get additional help](#get-additional-help)
 
@@ -125,7 +125,10 @@ DefaultAzureCredentialOptions options = new
 |---|---|---|
 |`CredentialUnavailableException` raised with message. "DefaultAzureCredential failed to retrieve a token from the included credentials."|All credentials in the `DefaultAzureCredential` chain failed to retrieve a token, each throwing a `CredentialUnavailableException`.|<ul><li>[Enable logging](#enable-and-configure-logging) to verify the credentials being tried, and get further diagnostic information.</li><li>Consult the troubleshooting guide for underlying credential types for more information.</li><ul><li>[EnvironmentCredential](#troubleshoot-environmentcredential-authentication-issues)</li><li>[WorkloadIdentityCredential](#troubleshoot-workloadidentitycredential-authentication-issues)</li><li>[ManagedIdentityCredential](#troubleshoot-managedidentitycredential-authentication-issues)</li><li>[VisualStudioCredential](#troubleshoot-visualstudiocredential-authentication-issues)</li><li>[AzureCliCredential](#troubleshoot-azureclicredential-authentication-issues)</li><li>[AzurePowerShellCredential](#troubleshoot-azurepowershellcredential-authentication-issues)</li></ul>|
 |`RequestFailedException` raised from the client with a status code of 401 or 403|Authentication succeeded but the authorizing Azure service responded with a 401 (Authenticate) or 403 (Forbidden) status code. This error can often be caused by the `DefaultAzureCredential` authenticating an account other than the intended or that the intended account doesn't have the correct permissions or roles assigned.|<ul><li>[Enable logging](#enable-and-configure-logging) to determine which credential in the chain returned the authenticating token.</li><li>In the case a credential other than the expected is returning a token, bypass this by either signing out of the corresponding development tool, or excluding the credential with the ExcludeXXXCredential property in the `DefaultAzureCredentialOptions`</li><li>Ensure that the correct role is assigned to the account being used. For example, a service specific role rather than the subscription Owner role.</li></ul>|
-|`InvalidOperationException` raised with message: "Invalid value for environment variable AZURE_TOKEN_CREDENTIALS ..." | An invalid value was set for the AZURE_TOKEN_CREDENTIALS environment variable | Set the environment variable to one of the following values: dev, prod, `VisualStudioCredential`, `VisualStudioCodeCredential`, `AzureCliCredential`, `AzurePowerShellCredential`, `AzureDeveloperCliCredential`, `EnvironmentCredential`, `WorkloadIdentityCredential`, `ManagedIdentityCredential`, `InteractiveBrowserCredential`, or `BrokerAuthenticationCredential`. **Note:** `BrokerAuthenticationCredential` require that the project include a reference to package Azure.Identity.Broker. |
+|`ArgumentException` raised when calling `DefaultAzureCredential(string configurationEnvironmentVariableName, ...)`|The `configurationEnvironmentVariableName` parameter was null or empty.|Provide a valid environment variable name. The parameter cannot be null or empty.|
+|`ArgumentException` raised with message: "Invalid environment variable name: '...' Only letters, digits, and underscores are allowed."|The `configurationEnvironmentVariableName` parameter contains invalid characters.|Ensure the environment variable name contains only letters, digits, and underscores. Special characters, spaces, and other symbols are not allowed.|
+|`InvalidOperationException` raised with message: "Environment variable '...' is not set or is empty."|The specified custom environment variable is not set or contains an empty value.|Set the specified environment variable to a valid credential configuration value before starting the application.|
+|`InvalidOperationException` raised with message: "Invalid value for environment variable AZURE_TOKEN_CREDENTIALS ..." | An invalid value was set for the AZURE_TOKEN_CREDENTIALS environment variable | Set the environment variable to one of the following values: dev, prod, `VisualStudioCredential`, `VisualStudioCodeCredential`, `AzureCliCredential`, `AzurePowerShellCredential`, `AzureDeveloperCliCredential`, `EnvironmentCredential`, `WorkloadIdentityCredential`, `ManagedIdentityCredential`, `InteractiveBrowserCredential`, or `BrokerCredential`. **Note:** `BrokerCredential` require that the project include a reference to package Azure.Identity.Broker. |
 
 ## Troubleshoot `EnvironmentCredential` authentication issues
 
@@ -335,8 +338,9 @@ Get-AzAccessToken -ResourceUrl "https://management.core.windows.net"
 |---|---|---|
 |The current credential is not configured to acquire tokens for tenant <tenant ID>|<p>The application must configure the credential to allow token acquisition from the requested tenant.|Make one of the following changes in your app:<ul><li>Add the requested tenant ID to `AdditionallyAllowedTenants` on the credential options.</li><li>Add `*` to `AdditionallyAllowedTenants` to allow token acquisition for any tenant.</li></ul></p><p>This exception was added as part of a breaking change to multi-tenant authentication in version `1.7.0`. Users experiencing this error after upgrading can find details on the change and migration in [BREAKING_CHANGES.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/BREAKING_CHANGES.md#170).</p> |
 
-## Troubleshoot Web Account Manager (WAM) brokered authentication issues
+## Troubleshoot brokered authentication issues
 
+### Common error messages for Web Account Manager (WAM)
 | Error Message |Description| Mitigation |
 |---|---|---|
 |AADSTS50011|The application is missing the expected redirect URI.|Ensure that one of redirect URIs registered for the Microsoft Entra application matches the following URI pattern: `ms-appx-web://Microsoft.AAD.BrokerPlugin/{client_id}`|
@@ -358,6 +362,12 @@ Since version `1.0.0-beta.4` of [Azure.Identity.Broker](https://www.nuget.org/pa
 You may also log in another MSA account by selecting "Microsoft account":
 
 ![Microsoft account](./images/MSA4.png)
+
+### Common errors for broker on macOS
+
+| Error Message |Description| Mitigation |
+|---|---|---|
+|0xffffffffffff5bf0 - Application's teamId is missing, and redirectUri is not matching unsigned format|For console applications using the broker on macOS, the following `RedirectUri` should be set: `msauth.com.msauth.unsignedapp://auth`|
 
 ## Troubleshoot AzurePipelinesCredential authentication issues
 

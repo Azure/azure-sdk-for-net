@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> List of BGP peers. </summary>
+        [WirePath("value")]
         public IReadOnlyList<BgpPeerStatus> Value { get; }
     }
 }

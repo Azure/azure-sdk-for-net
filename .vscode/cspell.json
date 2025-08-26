@@ -1250,6 +1250,12 @@
       ]
     },
     {
+      "filename": "**/sdk/recoveryservices/**/*.cs",
+      "words": [
+        "bcdr",
+      ]
+    },
+    {
       "filename": "**/sdk/recoveryservices-backup/**/*.cs",
       "words": [
         "xsmb",
@@ -1735,7 +1741,8 @@
       "filename": "**/sdk/openai/**/*.cs",
       "words": [
         "AOAI",
-        "Rerank"
+        "Rerank",
+        "Evals"
       ]
     },
     {

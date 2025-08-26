@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.Orbital.Models
             if (Optional.IsDefined(Spacecraft))
             {
                 writer.WritePropertyName("spacecraft"u8);
-                JsonSerializer.Serialize(writer, Spacecraft);
+                ((IJsonModel<WritableSubResource>)Spacecraft).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(GroundStationName))
             {
@@ -151,7 +152,7 @@ namespace Azure.ResourceManager.Orbital.Models
                     {
                         continue;
                     }
-                    spacecraft = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    spacecraft = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerOrbitalContext.Default);
                     continue;
                 }
                 if (property.NameEquals("groundStationName"u8))

@@ -15,7 +15,7 @@ var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 
 Console.WriteLine("Get the Application Insights connection string.");
-var connectionString = projectClient.Telemetry.GetConnectionString();
+var connectionString = projectClient.Telemetry.GetApplicationInsightsConnectionString();
 Console.WriteLine($"Connection string: {connectionString}");
 ```
 
@@ -25,6 +25,6 @@ var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 
 Console.WriteLine("Get the Application Insights connection string.");
-var connectionString = await projectClient.Telemetry.GetConnectionStringAsync();
+var connectionString = await projectClient.Telemetry.GetApplicationInsightsConnectionStringAsync();
 Console.WriteLine($"Connection string: {connectionString}");
 ```

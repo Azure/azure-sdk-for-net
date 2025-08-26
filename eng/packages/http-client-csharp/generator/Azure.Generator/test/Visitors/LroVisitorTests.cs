@@ -25,12 +25,9 @@ namespace Azure.Generator.Tests.Visitors
         public void UpdatesLroSignatureNoResponseBody()
         {
             var visitor = new TestLroVisitor();
-            List<InputParameter> parameters =
+            List<InputMethodParameter> parameters =
             [
-                InputFactory.Parameter(
-                    "p1",
-                    InputPrimitiveType.String,
-                    kind: InputParameterKind.Method)
+                InputFactory.MethodParameter("p1", InputPrimitiveType.String)
             ];
             var lro = InputFactory.Operation(
                 "foo",
@@ -74,12 +71,9 @@ namespace Azure.Generator.Tests.Visitors
         public void UpdatesLroSignatureWithResponseBody()
         {
             var visitor = new TestLroVisitor();
-            List<InputParameter> parameters =
+            List<InputMethodParameter> parameters =
             [
-                InputFactory.Parameter(
-                    "p1",
-                    InputPrimitiveType.String,
-                    kind: InputParameterKind.Method)
+                InputFactory.MethodParameter("p1", InputPrimitiveType.String)
             ];
             var lro = InputFactory.Operation(
                 "foo",
@@ -129,12 +123,9 @@ namespace Azure.Generator.Tests.Visitors
         public void UpdatesExplicitOperatorToUseResultSegment()
         {
             var visitor = new TestLroVisitor();
-            List<InputParameter> parameters =
+            List<InputMethodParameter> parameters =
             [
-                InputFactory.Parameter(
-                    "p1",
-                    InputPrimitiveType.String,
-                    kind: InputParameterKind.Method)
+                InputFactory.MethodParameter("p1", InputPrimitiveType.String)
             ];
             var responseModel = InputFactory.Model("foo");
             var lro = InputFactory.Operation(
@@ -176,12 +167,9 @@ namespace Azure.Generator.Tests.Visitors
         public void UpdatesConvenienceMethodBody()
         {
             var visitor = new TestLroVisitor();
-            List<InputParameter> parameters =
+            List<InputMethodParameter> parameters =
             [
-                InputFactory.Parameter(
-                    "p1",
-                    InputPrimitiveType.String,
-                    kind: InputParameterKind.Method)
+                InputFactory.MethodParameter("p1", InputPrimitiveType.String)
             ];
             var lro = InputFactory.Operation(
                 "foo",
@@ -212,10 +200,11 @@ namespace Azure.Generator.Tests.Visitors
             var visitor = new TestLroVisitor();
             List<InputParameter> parameters =
             [
-                InputFactory.Parameter(
-                    "p1",
-                    InputPrimitiveType.String,
-                    kind: InputParameterKind.Method)
+                InputFactory.BodyParameter("p1", InputPrimitiveType.String)
+            ];
+            List<InputMethodParameter> methodParameters =
+            [
+                InputFactory.MethodParameter("p1", InputPrimitiveType.String)
             ];
             var lro = InputFactory.Operation(
                 "foo",
@@ -223,7 +212,7 @@ namespace Azure.Generator.Tests.Visitors
             var responseModel = InputFactory.Model("foo");
             var lroServiceMethod = InputFactory.LongRunningServiceMethod(
                 "foo",
-                lro, parameters: parameters,
+                lro, parameters: methodParameters,
                 response: InputFactory.ServiceMethodResponse(responseModel, ["result"]));
             var inputClient = InputFactory.Client("TestClient", methods: [lroServiceMethod]);
             var plugin = MockHelpers.LoadMockGenerator(clients: () => [inputClient]);

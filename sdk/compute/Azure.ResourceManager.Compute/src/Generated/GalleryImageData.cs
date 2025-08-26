@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="purchasePlan"> Describes the gallery image definition purchase plan. This is used by marketplace images. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="features"> A list of gallery image features. </param>
-        /// <param name="architecture"> CPU architecture supported by an OS disk. </param>
+        /// <param name="architecture"> The architecture of the image. Applicable to OS disks only. </param>
         /// <param name="allowUpdateImage"> Optional. Must be set to true if the gallery image features are being updated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal GalleryImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, string eula, Uri privacyStatementUri, Uri releaseNoteUri, SupportedOperatingSystemType? osType, OperatingSystemStateType? osState, HyperVGeneration? hyperVGeneration, DateTimeOffset? endOfLifeOn, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, ImagePurchasePlan purchasePlan, GalleryProvisioningState? provisioningState, IList<GalleryImageFeature> features, ArchitectureType? architecture, bool? allowUpdateImage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Compute
         public GalleryProvisioningState? ProvisioningState { get; }
         /// <summary> A list of gallery image features. </summary>
         public IList<GalleryImageFeature> Features { get; }
-        /// <summary> CPU architecture supported by an OS disk. </summary>
+        /// <summary> The architecture of the image. Applicable to OS disks only. </summary>
         public ArchitectureType? Architecture { get; set; }
         /// <summary> Optional. Must be set to true if the gallery image features are being updated. </summary>
         public bool? AllowUpdateImage { get; set; }

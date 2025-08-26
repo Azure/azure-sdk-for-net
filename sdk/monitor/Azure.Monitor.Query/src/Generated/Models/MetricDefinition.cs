@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Monitor.Query.Models
@@ -12,6 +13,38 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Metric definition class specifies the metadata for a metric. </summary>
     public partial class MetricDefinition
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MetricDefinition"/>. </summary>
         internal MetricDefinition()
         {
@@ -34,7 +67,8 @@ namespace Azure.Monitor.Query.Models
         /// <param name="metricAvailabilities"> The collection of what aggregation intervals are available to be queried. </param>
         /// <param name="id"> The resource identifier of the metric definition. </param>
         /// <param name="localizedDimensions"> The name and the display name of the dimension, i.e. it is a localizable string. </param>
-        internal MetricDefinition(bool? isDimensionRequired, string resourceId, string @namespace, LocalizableString localizedName, string displayDescription, string category, MetricClass? metricClass, MetricUnit? unit, MetricAggregationType? primaryAggregationType, IReadOnlyList<MetricAggregationType> supportedAggregationTypes, IReadOnlyList<MetricAvailability> metricAvailabilities, string id, IReadOnlyList<LocalizableString> localizedDimensions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricDefinition(bool? isDimensionRequired, string resourceId, string @namespace, LocalizableString localizedName, string displayDescription, string category, MetricClass? metricClass, MetricUnit? unit, MetricAggregationType? primaryAggregationType, IReadOnlyList<MetricAggregationType> supportedAggregationTypes, IReadOnlyList<MetricAvailability> metricAvailabilities, string id, IReadOnlyList<LocalizableString> localizedDimensions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsDimensionRequired = isDimensionRequired;
             ResourceId = resourceId;
@@ -49,6 +83,7 @@ namespace Azure.Monitor.Query.Models
             MetricAvailabilities = metricAvailabilities;
             Id = id;
             LocalizedDimensions = localizedDimensions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Flag to indicate whether the dimension is required. </summary>

@@ -21,6 +21,7 @@ public class BasicCognitiveServicesTests(bool async)
         await test.Define(
             ctx =>
             {
+                #region Snippet:CognitiveServicesBasic
                 Infrastructure infra = new();
 
                 CognitiveServicesAccount account =
@@ -40,6 +41,7 @@ public class BasicCognitiveServicesTests(bool async)
                         }
                     };
                 infra.Add(account);
+                #endregion
 
                 return infra;
             })

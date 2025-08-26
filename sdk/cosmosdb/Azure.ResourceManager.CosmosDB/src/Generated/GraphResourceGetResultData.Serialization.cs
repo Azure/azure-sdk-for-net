@@ -43,15 +43,14 @@ namespace Azure.ResourceManager.CosmosDB
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-                JsonSerializer.Serialize(writer, Resource);
+                ((IJsonModel<WritableSubResource>)Resource).Write(writer, options);
             }
             if (Optional.IsDefined(Options))
             {
@@ -100,8 +99,7 @@ namespace Azure.ResourceManager.CosmosDB
                     {
                         continue;
                     }
-                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerCosmosDBContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -144,7 +142,7 @@ namespace Azure.ResourceManager.CosmosDB
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCosmosDBContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -162,7 +160,7 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 continue;
                             }
-                            resource = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            resource = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerCosmosDBContext.Default);
                             continue;
                         }
                         if (property0.NameEquals("options"u8))

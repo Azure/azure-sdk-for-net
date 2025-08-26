@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources
 
         ResourceGroupData IJsonModel<ResourceGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ResourceGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ResourceGroupData>(Data, options, AzureResourceManagerContext.Default);
+        BinaryData IPersistableModel<ResourceGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options, AzureResourceManagerContext.Default);
 
         ResourceGroupData IPersistableModel<ResourceGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceGroupData>(data, options, AzureResourceManagerContext.Default);
 

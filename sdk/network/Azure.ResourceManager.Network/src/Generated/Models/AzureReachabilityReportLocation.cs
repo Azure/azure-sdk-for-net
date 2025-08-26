@@ -74,10 +74,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The name of the country. </summary>
+        [WirePath("country")]
         public string Country { get; set; }
         /// <summary> The name of the state. </summary>
+        [WirePath("state")]
         public string State { get; set; }
         /// <summary> The name of the city or town. </summary>
+        [WirePath("city")]
         public string City { get; set; }
     }
 }

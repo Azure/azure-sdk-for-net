@@ -43,14 +43,19 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The authorization key. </summary>
+        [WirePath("properties.authorizationKey")]
         public string AuthorizationKey { get; }
         /// <summary> The authorization use status. </summary>
+        [WirePath("properties.authorizationUseStatus")]
         public ExpressRoutePortAuthorizationUseStatus? AuthorizationUseStatus { get; }
         /// <summary> The reference to the ExpressRoute circuit resource using the authorization. </summary>
+        [WirePath("properties.circuitResourceUri")]
         public Uri CircuitResourceUri { get; }
         /// <summary> The provisioning state of the authorization resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

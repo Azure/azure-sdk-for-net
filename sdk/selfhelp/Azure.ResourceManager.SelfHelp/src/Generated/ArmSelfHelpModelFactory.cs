@@ -16,16 +16,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmSelfHelpModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.SelfHelpNameAvailabilityResult"/>. </summary>
-        /// <param name="isNameAvailable"> Returns true or false depending on the availability of the name. </param>
-        /// <param name="reason"> Reason for why value is not available. This field is returned if nameAvailable is false. </param>
-        /// <param name="message"> Gets an error message explaining the 'reason' value with more details. This field is returned iif nameAvailable is false. </param>
-        /// <returns> A new <see cref="Models.SelfHelpNameAvailabilityResult"/> instance for mocking. </returns>
-        public static SelfHelpNameAvailabilityResult SelfHelpNameAvailabilityResult(bool? isNameAvailable = null, string reason = null, string message = null)
-        {
-            return new SelfHelpNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="SelfHelp.SelfHelpDiagnosticData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -91,39 +81,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
             details ??= new List<SelfHelpError>();
 
             return new SelfHelpError(code, errorType, message, details?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SelfHelpSolutionMetadata"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="solutions"> List of metadata. </param>
-        /// <returns> A new <see cref="Models.SelfHelpSolutionMetadata"/> instance for mocking. </returns>
-        public static SelfHelpSolutionMetadata SelfHelpSolutionMetadata(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<SolutionMetadataProperties> solutions = null)
-        {
-            solutions ??= new List<SolutionMetadataProperties>();
-
-            return new SelfHelpSolutionMetadata(
-                id,
-                name,
-                resourceType,
-                systemData,
-                solutions?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SolutionMetadataProperties"/>. </summary>
-        /// <param name="solutionId"> Solution Id. </param>
-        /// <param name="solutionType"> Solution Type. </param>
-        /// <param name="description"> A detailed description of solution. </param>
-        /// <param name="requiredInputs"> Required parameters for invoking this particular solution. </param>
-        /// <returns> A new <see cref="Models.SolutionMetadataProperties"/> instance for mocking. </returns>
-        public static SolutionMetadataProperties SolutionMetadataProperties(string solutionId = null, SelfHelpSolutionType? solutionType = null, string description = null, IEnumerable<string> requiredInputs = null)
-        {
-            requiredInputs ??= new List<string>();
-
-            return new SolutionMetadataProperties(solutionId, solutionType, description, requiredInputs?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SelfHelp.SelfHelpSolutionData"/>. </summary>
@@ -528,6 +485,73 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new RestartTroubleshooterResult(troubleshooterResourceName, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.DiscoveryNlpContent"/>. </summary>
+        /// <param name="issueSummary"> Natural language description of the issue. </param>
+        /// <param name="resourceId"> ARM resource Id of the resource that is having the issue. Only applicable for Discovery Solution NLP Subscription Scope. </param>
+        /// <param name="serviceId"> ARM service Id of the service that is having the issue. For more information on service Id see https://learn.microsoft.com/rest/api/support/services/list?tabs=HTTP. </param>
+        /// <param name="additionalContext"> Additional information in the form of a string. </param>
+        /// <returns> A new <see cref="Models.DiscoveryNlpContent"/> instance for mocking. </returns>
+        public static DiscoveryNlpContent DiscoveryNlpContent(string issueSummary = null, string resourceId = null, string serviceId = null, string additionalContext = null)
+        {
+            return new DiscoveryNlpContent(issueSummary, resourceId, serviceId, additionalContext, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SolutionNlpMetadata"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="problemTitle"> Title of the problem classification. </param>
+        /// <param name="problemDescription"> Description of the problem classification. </param>
+        /// <param name="serviceId"> Id of the service (https://learn.microsoft.com/en-us/rest/api/support/services?view=rest-support-2020-04-01) that may be used to create a support ticket. </param>
+        /// <param name="problemClassificationId"> Id of the ProblemClassification (https://learn.microsoft.com/en-us/rest/api/support/problem-classifications?view=rest-support-2020-04-01) that may be used to create a support ticket. </param>
+        /// <param name="solutions"> The list of solution metadata. </param>
+        /// <param name="relatedServices"> The set of services that are most likely related to the request. If relatedServices is included in the response then solutions may not be discovered until the client calls a second time specifying one of the service Ids in the relatedServices object. </param>
+        /// <returns> A new <see cref="Models.SolutionNlpMetadata"/> instance for mocking. </returns>
+        public static SolutionNlpMetadata SolutionNlpMetadata(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string problemTitle = null, string problemDescription = null, string serviceId = null, string problemClassificationId = null, IEnumerable<SolutionMetadataProperties> solutions = null, IEnumerable<ClassificationService> relatedServices = null)
+        {
+            solutions ??= new List<SolutionMetadataProperties>();
+            relatedServices ??= new List<ClassificationService>();
+
+            return new SolutionNlpMetadata(
+                id,
+                name,
+                resourceType,
+                systemData,
+                problemTitle,
+                problemDescription,
+                serviceId,
+                problemClassificationId,
+                solutions?.ToList(),
+                relatedServices?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SolutionMetadataProperties"/>. </summary>
+        /// <param name="solutionId"> Solution Id. </param>
+        /// <param name="solutionType"> Solution Type. </param>
+        /// <param name="description"> A detailed description of solution. </param>
+        /// <param name="requiredInputs"> Required parameters for invoking this particular solution. </param>
+        /// <returns> A new <see cref="Models.SolutionMetadataProperties"/> instance for mocking. </returns>
+        public static SolutionMetadataProperties SolutionMetadataProperties(string solutionId = null, SelfHelpSolutionType? solutionType = null, string description = null, IEnumerable<string> requiredInputs = null)
+        {
+            requiredInputs ??= new List<string>();
+
+            return new SolutionMetadataProperties(solutionId, solutionType, description, requiredInputs?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ClassificationService"/>. </summary>
+        /// <param name="serviceId"> Azure resource Id of the service. </param>
+        /// <param name="displayName"> Localized name of the azure service. </param>
+        /// <param name="resourceTypes"> List of applicable ARM resource types for this service. </param>
+        /// <returns> A new <see cref="Models.ClassificationService"/> instance for mocking. </returns>
+        public static ClassificationService ClassificationService(ResourceIdentifier serviceId = null, string displayName = null, IEnumerable<string> resourceTypes = null)
+        {
+            resourceTypes ??= new List<string>();
+
+            return new ClassificationService(serviceId, displayName, resourceTypes?.ToList(), serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.SelfHelpSolutionResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -580,58 +604,34 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new SolutionSection(title, content, replacementMaps, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DiscoveryNlpContent"/>. </summary>
-        /// <param name="issueSummary"> Natural language description of the issue. </param>
-        /// <param name="resourceId"> ARM resource Id of the resource that is having the issue. Only applicable for Discovery Solution NLP Subscription Scope. </param>
-        /// <param name="serviceId"> ARM service Id of the service that is having the issue. For more information on service Id see https://learn.microsoft.com/rest/api/support/services/list?tabs=HTTP. </param>
-        /// <param name="additionalContext"> Additional information in the form of a string. </param>
-        /// <returns> A new <see cref="Models.DiscoveryNlpContent"/> instance for mocking. </returns>
-        public static DiscoveryNlpContent DiscoveryNlpContent(string issueSummary = null, string resourceId = null, string serviceId = null, string additionalContext = null)
+        /// <summary> Initializes a new instance of <see cref="Models.SelfHelpNameAvailabilityResult"/>. </summary>
+        /// <param name="isNameAvailable"> Returns true or false depending on the availability of the name. </param>
+        /// <param name="reason"> Reason for why value is not available. This field is returned if nameAvailable is false. </param>
+        /// <param name="message"> Gets an error message explaining the 'reason' value with more details. This field is returned iif nameAvailable is false. </param>
+        /// <returns> A new <see cref="Models.SelfHelpNameAvailabilityResult"/> instance for mocking. </returns>
+        public static SelfHelpNameAvailabilityResult SelfHelpNameAvailabilityResult(bool? isNameAvailable = null, string reason = null, string message = null)
         {
-            return new DiscoveryNlpContent(issueSummary, resourceId, serviceId, additionalContext, serializedAdditionalRawData: null);
+            return new SelfHelpNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SolutionNlpMetadata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SelfHelpSolutionMetadata"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="problemTitle"> Title of the problem classification. </param>
-        /// <param name="problemDescription"> Description of the problem classification. </param>
-        /// <param name="serviceId"> Id of the service (https://learn.microsoft.com/en-us/rest/api/support/services?view=rest-support-2020-04-01) that may be used to create a support ticket. </param>
-        /// <param name="problemClassificationId"> Id of the ProblemClassification (https://learn.microsoft.com/en-us/rest/api/support/problem-classifications?view=rest-support-2020-04-01) that may be used to create a support ticket. </param>
-        /// <param name="solutions"> The list of solution metadata. </param>
-        /// <param name="relatedServices"> The set of services that are most likely related to the request. If relatedServices is included in the response then solutions may not be discovered until the client calls a second time specifying one of the service Ids in the relatedServices object. </param>
-        /// <returns> A new <see cref="Models.SolutionNlpMetadata"/> instance for mocking. </returns>
-        public static SolutionNlpMetadata SolutionNlpMetadata(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string problemTitle = null, string problemDescription = null, string serviceId = null, string problemClassificationId = null, IEnumerable<SolutionMetadataProperties> solutions = null, IEnumerable<ClassificationService> relatedServices = null)
+        /// <param name="solutions"> List of metadata. </param>
+        /// <returns> A new <see cref="Models.SelfHelpSolutionMetadata"/> instance for mocking. </returns>
+        public static SelfHelpSolutionMetadata SelfHelpSolutionMetadata(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<SolutionMetadataProperties> solutions = null)
         {
             solutions ??= new List<SolutionMetadataProperties>();
-            relatedServices ??= new List<ClassificationService>();
 
-            return new SolutionNlpMetadata(
+            return new SelfHelpSolutionMetadata(
                 id,
                 name,
                 resourceType,
                 systemData,
-                problemTitle,
-                problemDescription,
-                serviceId,
-                problemClassificationId,
                 solutions?.ToList(),
-                relatedServices?.ToList(),
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ClassificationService"/>. </summary>
-        /// <param name="serviceId"> Azure resource Id of the service. </param>
-        /// <param name="displayName"> Localized name of the azure service. </param>
-        /// <param name="resourceTypes"> List of applicable ARM resource types for this service. </param>
-        /// <returns> A new <see cref="Models.ClassificationService"/> instance for mocking. </returns>
-        public static ClassificationService ClassificationService(ResourceIdentifier serviceId = null, string displayName = null, IEnumerable<string> resourceTypes = null)
-        {
-            resourceTypes ??= new List<string>();
-
-            return new ClassificationService(serviceId, displayName, resourceTypes?.ToList(), serializedAdditionalRawData: null);
         }
     }
 }
