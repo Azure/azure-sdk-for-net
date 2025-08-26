@@ -15,10 +15,10 @@ using Azure.ResourceManager.WebPubSub.Models;
 namespace Azure.ResourceManager.WebPubSub
 {
     /// <summary>
-    /// A class representing the CustomDomain data model.
+    /// A class representing the WebPubSubCustomDomain data model.
     /// A custom domain
     /// </summary>
-    public partial class CustomDomainData : ResourceData
+    public partial class WebPubSubCustomDomainData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.WebPubSub
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CustomDomainData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubCustomDomainData"/>. </summary>
         /// <param name="domainName"> The custom domain name. </param>
         /// <param name="customCertificate"> Reference to a resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="customCertificate"/> is null. </exception>
-        public CustomDomainData(string domainName, WritableSubResource customCertificate)
+        public WebPubSubCustomDomainData(string domainName, WritableSubResource customCertificate)
         {
             Argument.AssertNotNull(domainName, nameof(domainName));
             Argument.AssertNotNull(customCertificate, nameof(customCertificate));
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.WebPubSub
             CustomCertificate = customCertificate;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomDomainData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubCustomDomainData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="domainName"> The custom domain name. </param>
         /// <param name="customCertificate"> Reference to a resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WebPubSubProvisioningState? provisioningState, string domainName, WritableSubResource customCertificate, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WebPubSubCustomDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WebPubSubProvisioningState? provisioningState, string domainName, WritableSubResource customCertificate, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             DomainName = domainName;
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.WebPubSub
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomDomainData"/> for deserialization. </summary>
-        internal CustomDomainData()
+        /// <summary> Initializes a new instance of <see cref="WebPubSubCustomDomainData"/> for deserialization. </summary>
+        internal WebPubSubCustomDomainData()
         {
         }
 

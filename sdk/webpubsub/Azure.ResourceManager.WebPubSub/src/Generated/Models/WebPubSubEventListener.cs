@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> A setting defines which kinds of events should be sent to which endpoint. </summary>
-    public partial class EventListener
+    public partial class WebPubSubEventListener
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="EventListener"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubEventListener"/>. </summary>
         /// <param name="filter">
         /// A base class for event filter which determines whether an event should be sent to an event listener.
         /// Please note <see cref="EventListenerFilter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="endpoint">
         /// An endpoint specifying where Web PubSub should send events to.
         /// Please note <see cref="EventListenerEndpoint"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="EventHubEndpoint"/>.
+        /// The available derived classes include <see cref="WebPubSubEventHubEndpoint"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> or <paramref name="endpoint"/> is null. </exception>
-        public EventListener(EventListenerFilter filter, EventListenerEndpoint endpoint)
+        public WebPubSubEventListener(EventListenerFilter filter, EventListenerEndpoint endpoint)
         {
             Argument.AssertNotNull(filter, nameof(filter));
             Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             Endpoint = endpoint;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EventListener"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubEventListener"/>. </summary>
         /// <param name="filter">
         /// A base class for event filter which determines whether an event should be sent to an event listener.
         /// Please note <see cref="EventListenerFilter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -75,18 +75,18 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="endpoint">
         /// An endpoint specifying where Web PubSub should send events to.
         /// Please note <see cref="EventListenerEndpoint"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="EventHubEndpoint"/>.
+        /// The available derived classes include <see cref="WebPubSubEventHubEndpoint"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventListener(EventListenerFilter filter, EventListenerEndpoint endpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WebPubSubEventListener(EventListenerFilter filter, EventListenerEndpoint endpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Filter = filter;
             Endpoint = endpoint;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EventListener"/> for deserialization. </summary>
-        internal EventListener()
+        /// <summary> Initializes a new instance of <see cref="WebPubSubEventListener"/> for deserialization. </summary>
+        internal WebPubSubEventListener()
         {
         }
 
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <summary>
         /// An endpoint specifying where Web PubSub should send events to.
         /// Please note <see cref="EventListenerEndpoint"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="EventHubEndpoint"/>.
+        /// The available derived classes include <see cref="WebPubSubEventHubEndpoint"/>.
         /// </summary>
         [WirePath("endpoint")]
         public EventListenerEndpoint Endpoint { get; set; }

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// An Event Hub endpoint.
     /// The managed identity of Web PubSub service must be enabled, and the identity should have the "Azure Event Hubs Data sender" role to access Event Hub.
     /// </summary>
-    public partial class EventHubEndpoint : EventListenerEndpoint
+    public partial class WebPubSubEventHubEndpoint : EventListenerEndpoint
     {
-        /// <summary> Initializes a new instance of <see cref="EventHubEndpoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubEventHubEndpoint"/>. </summary>
         /// <param name="fullyQualifiedNamespace"> The fully qualified namespace name of the Event Hub resource. </param>
         /// <param name="eventHubName"> The name of the Event Hub. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fullyQualifiedNamespace"/> or <paramref name="eventHubName"/> is null. </exception>
-        public EventHubEndpoint(string fullyQualifiedNamespace, string eventHubName)
+        public WebPubSubEventHubEndpoint(string fullyQualifiedNamespace, string eventHubName)
         {
             Argument.AssertNotNull(fullyQualifiedNamespace, nameof(fullyQualifiedNamespace));
             Argument.AssertNotNull(eventHubName, nameof(eventHubName));
@@ -30,20 +30,20 @@ namespace Azure.ResourceManager.WebPubSub.Models
             EventListenerEndpointType = EventListenerEndpointDiscriminator.EventHub;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EventHubEndpoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubEventHubEndpoint"/>. </summary>
         /// <param name="eventListenerEndpointType"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="fullyQualifiedNamespace"> The fully qualified namespace name of the Event Hub resource. </param>
         /// <param name="eventHubName"> The name of the Event Hub. </param>
-        internal EventHubEndpoint(EventListenerEndpointDiscriminator eventListenerEndpointType, IDictionary<string, BinaryData> serializedAdditionalRawData, string fullyQualifiedNamespace, string eventHubName) : base(eventListenerEndpointType, serializedAdditionalRawData)
+        internal WebPubSubEventHubEndpoint(EventListenerEndpointDiscriminator eventListenerEndpointType, IDictionary<string, BinaryData> serializedAdditionalRawData, string fullyQualifiedNamespace, string eventHubName) : base(eventListenerEndpointType, serializedAdditionalRawData)
         {
             FullyQualifiedNamespace = fullyQualifiedNamespace;
             EventHubName = eventHubName;
             EventListenerEndpointType = eventListenerEndpointType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EventHubEndpoint"/> for deserialization. </summary>
-        internal EventHubEndpoint()
+        /// <summary> Initializes a new instance of <see cref="WebPubSubEventHubEndpoint"/> for deserialization. </summary>
+        internal WebPubSubEventHubEndpoint()
         {
         }
 

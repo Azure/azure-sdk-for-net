@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "EventHub": return EventHubEndpoint.DeserializeEventHubEndpoint(element, options);
+                    case "EventHub": return WebPubSubEventHubEndpoint.DeserializeWebPubSubEventHubEndpoint(element, options);
                 }
             }
             return UnknownEventListenerEndpoint.DeserializeUnknownEventListenerEndpoint(element, options);

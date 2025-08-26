@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <summary> Initializes a new instance of <see cref="ReplicaList"/>. </summary>
         internal ReplicaList()
         {
-            Value = new ChangeTrackingList<ReplicaData>();
+            Value = new ChangeTrackingList<WebPubSubReplicaData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ReplicaList"/>. </summary>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// It's null for now, added for future use.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReplicaList(IReadOnlyList<ReplicaData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReplicaList(IReadOnlyList<WebPubSubReplicaData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         }
 
         /// <summary> List of the replica. </summary>
-        public IReadOnlyList<ReplicaData> Value { get; }
+        public IReadOnlyList<WebPubSubReplicaData> Value { get; }
         /// <summary>
         /// The URL the client should use to fetch the next page (per server side paging).
         /// It's null for now, added for future use.

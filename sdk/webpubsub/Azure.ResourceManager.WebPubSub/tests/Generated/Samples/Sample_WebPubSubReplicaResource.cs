@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.WebPubSub.Samples
 {
-    public partial class Sample_ReplicaResource
+    public partial class Sample_WebPubSubReplicaResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -28,21 +28,21 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ReplicaResource created on azure
-            // for more information of creating ReplicaResource, please refer to the document of ReplicaResource
+            // this example assumes you already have this WebPubSubReplicaResource created on azure
+            // for more information of creating WebPubSubReplicaResource, please refer to the document of WebPubSubReplicaResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string resourceName = "myWebPubSubService";
             string replicaName = "myWebPubSubService-eastus";
-            ResourceIdentifier replicaResourceId = ReplicaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, replicaName);
-            ReplicaResource replica = client.GetReplicaResource(replicaResourceId);
+            ResourceIdentifier webPubSubReplicaResourceId = WebPubSubReplicaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, replicaName);
+            WebPubSubReplicaResource webPubSubReplica = client.GetWebPubSubReplicaResource(webPubSubReplicaResourceId);
 
             // invoke the operation
-            ReplicaResource result = await replica.GetAsync();
+            WebPubSubReplicaResource result = await webPubSubReplica.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ReplicaData resourceData = result.Data;
+            WebPubSubReplicaData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -59,17 +59,17 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ReplicaResource created on azure
-            // for more information of creating ReplicaResource, please refer to the document of ReplicaResource
+            // this example assumes you already have this WebPubSubReplicaResource created on azure
+            // for more information of creating WebPubSubReplicaResource, please refer to the document of WebPubSubReplicaResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string resourceName = "myWebPubSubService";
             string replicaName = "myWebPubSubService-eastus";
-            ResourceIdentifier replicaResourceId = ReplicaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, replicaName);
-            ReplicaResource replica = client.GetReplicaResource(replicaResourceId);
+            ResourceIdentifier webPubSubReplicaResourceId = WebPubSubReplicaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, replicaName);
+            WebPubSubReplicaResource webPubSubReplica = client.GetWebPubSubReplicaResource(webPubSubReplicaResourceId);
 
             // invoke the operation
-            await replica.DeleteAsync(WaitUntil.Completed);
+            await webPubSubReplica.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -86,17 +86,17 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ReplicaResource created on azure
-            // for more information of creating ReplicaResource, please refer to the document of ReplicaResource
+            // this example assumes you already have this WebPubSubReplicaResource created on azure
+            // for more information of creating WebPubSubReplicaResource, please refer to the document of WebPubSubReplicaResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string resourceName = "myWebPubSubService";
             string replicaName = "myWebPubSubService-eastus";
-            ResourceIdentifier replicaResourceId = ReplicaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, replicaName);
-            ReplicaResource replica = client.GetReplicaResource(replicaResourceId);
+            ResourceIdentifier webPubSubReplicaResourceId = WebPubSubReplicaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, replicaName);
+            WebPubSubReplicaResource webPubSubReplica = client.GetWebPubSubReplicaResource(webPubSubReplicaResourceId);
 
             // invoke the operation
-            ReplicaData data = new ReplicaData(new AzureLocation("eastus"))
+            WebPubSubReplicaData data = new WebPubSubReplicaData(new AzureLocation("eastus"))
             {
                 Sku = new BillingInfoSku("Premium_P1")
                 {
@@ -109,12 +109,12 @@ namespace Azure.ResourceManager.WebPubSub.Samples
 ["key1"] = "value1"
 },
             };
-            ArmOperation<ReplicaResource> lro = await replica.UpdateAsync(WaitUntil.Completed, data);
-            ReplicaResource result = lro.Value;
+            ArmOperation<WebPubSubReplicaResource> lro = await webPubSubReplica.UpdateAsync(WaitUntil.Completed, data);
+            WebPubSubReplicaResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ReplicaData resourceData = result.Data;
+            WebPubSubReplicaData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -131,17 +131,17 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ReplicaResource created on azure
-            // for more information of creating ReplicaResource, please refer to the document of ReplicaResource
+            // this example assumes you already have this WebPubSubReplicaResource created on azure
+            // for more information of creating WebPubSubReplicaResource, please refer to the document of WebPubSubReplicaResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string resourceName = "myWebPubSubService";
             string replicaName = "myWebPubSubService-eastus";
-            ResourceIdentifier replicaResourceId = ReplicaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, replicaName);
-            ReplicaResource replica = client.GetReplicaResource(replicaResourceId);
+            ResourceIdentifier webPubSubReplicaResourceId = WebPubSubReplicaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, replicaName);
+            WebPubSubReplicaResource webPubSubReplica = client.GetWebPubSubReplicaResource(webPubSubReplicaResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (WebPubSubSku item in replica.GetReplicaSkusWebPubSubsAsync())
+            await foreach (WebPubSubSku item in webPubSubReplica.GetReplicaSkusWebPubSubsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -161,17 +161,17 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ReplicaResource created on azure
-            // for more information of creating ReplicaResource, please refer to the document of ReplicaResource
+            // this example assumes you already have this WebPubSubReplicaResource created on azure
+            // for more information of creating WebPubSubReplicaResource, please refer to the document of WebPubSubReplicaResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string resourceName = "myWebPubSubService";
             string replicaName = "myWebPubSubService-eastus";
-            ResourceIdentifier replicaResourceId = ReplicaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, replicaName);
-            ReplicaResource replica = client.GetReplicaResource(replicaResourceId);
+            ResourceIdentifier webPubSubReplicaResourceId = WebPubSubReplicaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, replicaName);
+            WebPubSubReplicaResource webPubSubReplica = client.GetWebPubSubReplicaResource(webPubSubReplicaResourceId);
 
             // invoke the operation
-            await replica.RestartAsync(WaitUntil.Completed);
+            await webPubSubReplica.RestartAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.WebPubSub.Samples
                     Tier = WebPubSubSkuTier.Premium,
                     Capacity = 1,
                 },
-                Kind = ServiceKind.WebPubSub,
+                Kind = WebPubSubServiceKind.WebPubSub,
                 Identity = new ManagedServiceIdentity("SystemAssigned"),
                 IsClientCertEnabled = false,
                 LiveTraceConfiguration = new LiveTraceConfiguration

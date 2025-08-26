@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             AclAction? defaultAction = default;
             PublicNetworkAcls publicNetwork = default;
             IList<PrivateEndpointAcl> privateEndpoints = default;
-            IList<IPRule> ipRules = default;
+            IList<PublicTrafficIPRule> ipRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,10 +149,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     {
                         continue;
                     }
-                    List<IPRule> array = new List<IPRule>();
+                    List<PublicTrafficIPRule> array = new List<PublicTrafficIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPRule.DeserializeIPRule(item, options));
+                        array.Add(PublicTrafficIPRule.DeserializePublicTrafficIPRule(item, options));
                     }
                     ipRules = array;
                     continue;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new WebPubSubNetworkAcls(defaultAction, publicNetwork, privateEndpoints ?? new ChangeTrackingList<PrivateEndpointAcl>(), ipRules ?? new ChangeTrackingList<IPRule>(), serializedAdditionalRawData);
+            return new WebPubSubNetworkAcls(defaultAction, publicNetwork, privateEndpoints ?? new ChangeTrackingList<PrivateEndpointAcl>(), ipRules ?? new ChangeTrackingList<PublicTrafficIPRule>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

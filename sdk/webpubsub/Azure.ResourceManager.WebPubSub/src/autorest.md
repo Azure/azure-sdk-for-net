@@ -62,6 +62,13 @@ rename-mapping:
   ClientTrafficControlRule.type: TrafficThrottleType
   EventListenerFilter.type: EventListenerFilterType
   EventListenerEndpoint.type: EventListenerEndpointType
+  CustomCertificate: WebPubSubCustomCertificate
+  CustomDomain: WebPubSubCustomDomain
+  Replica: WebPubSubReplica
+  EventHubEndpoint: WebPubSubEventHubEndpoint
+  EventListener: WebPubSubEventListener
+  IPRule: PublicTrafficIPRule
+  ServiceKind: WebPubSubServiceKind
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SignalRService/webPubSub/{resourceName}/sharedPrivateLinkResources/{sharedPrivateLinkResourceName}: WebPubSubSharedPrivateLink

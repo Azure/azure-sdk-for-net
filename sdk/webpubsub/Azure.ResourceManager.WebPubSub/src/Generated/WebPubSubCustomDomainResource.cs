@@ -15,14 +15,14 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.WebPubSub
 {
     /// <summary>
-    /// A Class representing a CustomDomain along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CustomDomainResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetCustomDomainResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebPubSubResource"/> using the GetCustomDomain method.
+    /// A Class representing a WebPubSubCustomDomain along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WebPubSubCustomDomainResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWebPubSubCustomDomainResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebPubSubResource"/> using the GetWebPubSubCustomDomain method.
     /// </summary>
-    public partial class CustomDomainResource : ArmResource
+    public partial class WebPubSubCustomDomainResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="CustomDomainResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="WebPubSubCustomDomainResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="resourceName"> The resourceName. </param>
@@ -33,35 +33,35 @@ namespace Azure.ResourceManager.WebPubSub
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _customDomainWebPubSubCustomDomainsClientDiagnostics;
-        private readonly WebPubSubCustomDomainsRestOperations _customDomainWebPubSubCustomDomainsRestClient;
-        private readonly CustomDomainData _data;
+        private readonly ClientDiagnostics _webPubSubCustomDomainClientDiagnostics;
+        private readonly WebPubSubCustomDomainsRestOperations _webPubSubCustomDomainRestClient;
+        private readonly WebPubSubCustomDomainData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.SignalRService/webPubSub/customDomains";
 
-        /// <summary> Initializes a new instance of the <see cref="CustomDomainResource"/> class for mocking. </summary>
-        protected CustomDomainResource()
+        /// <summary> Initializes a new instance of the <see cref="WebPubSubCustomDomainResource"/> class for mocking. </summary>
+        protected WebPubSubCustomDomainResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CustomDomainResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebPubSubCustomDomainResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal CustomDomainResource(ArmClient client, CustomDomainData data) : this(client, data.Id)
+        internal WebPubSubCustomDomainResource(ArmClient client, WebPubSubCustomDomainData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CustomDomainResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebPubSubCustomDomainResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal CustomDomainResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal WebPubSubCustomDomainResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _customDomainWebPubSubCustomDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string customDomainWebPubSubCustomDomainsApiVersion);
-            _customDomainWebPubSubCustomDomainsRestClient = new WebPubSubCustomDomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, customDomainWebPubSubCustomDomainsApiVersion);
+            _webPubSubCustomDomainClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string webPubSubCustomDomainApiVersion);
+            _webPubSubCustomDomainRestClient = new WebPubSubCustomDomainsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, webPubSubCustomDomainApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.WebPubSub
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual CustomDomainData Data
+        public virtual WebPubSubCustomDomainData Data
         {
             get
             {
@@ -105,21 +105,21 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CustomDomainResource"/></description>
+        /// <description><see cref="WebPubSubCustomDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CustomDomainResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebPubSubCustomDomainResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _customDomainWebPubSubCustomDomainsClientDiagnostics.CreateScope("CustomDomainResource.Get");
+            using var scope = _webPubSubCustomDomainClientDiagnostics.CreateScope("WebPubSubCustomDomainResource.Get");
             scope.Start();
             try
             {
-                var response = await _customDomainWebPubSubCustomDomainsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webPubSubCustomDomainRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CustomDomainResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebPubSubCustomDomainResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,21 +145,21 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CustomDomainResource"/></description>
+        /// <description><see cref="WebPubSubCustomDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CustomDomainResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<WebPubSubCustomDomainResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _customDomainWebPubSubCustomDomainsClientDiagnostics.CreateScope("CustomDomainResource.Get");
+            using var scope = _webPubSubCustomDomainClientDiagnostics.CreateScope("WebPubSubCustomDomainResource.Get");
             scope.Start();
             try
             {
-                var response = _customDomainWebPubSubCustomDomainsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _webPubSubCustomDomainRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CustomDomainResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebPubSubCustomDomainResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CustomDomainResource"/></description>
+        /// <description><see cref="WebPubSubCustomDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,12 +193,12 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _customDomainWebPubSubCustomDomainsClientDiagnostics.CreateScope("CustomDomainResource.Delete");
+            using var scope = _webPubSubCustomDomainClientDiagnostics.CreateScope("WebPubSubCustomDomainResource.Delete");
             scope.Start();
             try
             {
-                var response = await _customDomainWebPubSubCustomDomainsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new WebPubSubArmOperation(_customDomainWebPubSubCustomDomainsClientDiagnostics, Pipeline, _customDomainWebPubSubCustomDomainsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _webPubSubCustomDomainRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new WebPubSubArmOperation(_webPubSubCustomDomainClientDiagnostics, Pipeline, _webPubSubCustomDomainRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CustomDomainResource"/></description>
+        /// <description><see cref="WebPubSubCustomDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,12 +235,12 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _customDomainWebPubSubCustomDomainsClientDiagnostics.CreateScope("CustomDomainResource.Delete");
+            using var scope = _webPubSubCustomDomainClientDiagnostics.CreateScope("WebPubSubCustomDomainResource.Delete");
             scope.Start();
             try
             {
-                var response = _customDomainWebPubSubCustomDomainsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new WebPubSubArmOperation(_customDomainWebPubSubCustomDomainsClientDiagnostics, Pipeline, _customDomainWebPubSubCustomDomainsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _webPubSubCustomDomainRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new WebPubSubArmOperation(_webPubSubCustomDomainClientDiagnostics, Pipeline, _webPubSubCustomDomainRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -269,24 +269,24 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CustomDomainResource"/></description>
+        /// <description><see cref="WebPubSubCustomDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The <see cref="CustomDomainData"/> to use. </param>
+        /// <param name="data"> The <see cref="WebPubSubCustomDomainData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<CustomDomainResource>> UpdateAsync(WaitUntil waitUntil, CustomDomainData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<WebPubSubCustomDomainResource>> UpdateAsync(WaitUntil waitUntil, WebPubSubCustomDomainData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _customDomainWebPubSubCustomDomainsClientDiagnostics.CreateScope("CustomDomainResource.Update");
+            using var scope = _webPubSubCustomDomainClientDiagnostics.CreateScope("WebPubSubCustomDomainResource.Update");
             scope.Start();
             try
             {
-                var response = await _customDomainWebPubSubCustomDomainsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new WebPubSubArmOperation<CustomDomainResource>(new CustomDomainOperationSource(Client), _customDomainWebPubSubCustomDomainsClientDiagnostics, Pipeline, _customDomainWebPubSubCustomDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _webPubSubCustomDomainRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new WebPubSubArmOperation<WebPubSubCustomDomainResource>(new WebPubSubCustomDomainOperationSource(Client), _webPubSubCustomDomainClientDiagnostics, Pipeline, _webPubSubCustomDomainRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -315,24 +315,24 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CustomDomainResource"/></description>
+        /// <description><see cref="WebPubSubCustomDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The <see cref="CustomDomainData"/> to use. </param>
+        /// <param name="data"> The <see cref="WebPubSubCustomDomainData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<CustomDomainResource> Update(WaitUntil waitUntil, CustomDomainData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<WebPubSubCustomDomainResource> Update(WaitUntil waitUntil, WebPubSubCustomDomainData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _customDomainWebPubSubCustomDomainsClientDiagnostics.CreateScope("CustomDomainResource.Update");
+            using var scope = _webPubSubCustomDomainClientDiagnostics.CreateScope("WebPubSubCustomDomainResource.Update");
             scope.Start();
             try
             {
-                var response = _customDomainWebPubSubCustomDomainsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new WebPubSubArmOperation<CustomDomainResource>(new CustomDomainOperationSource(Client), _customDomainWebPubSubCustomDomainsClientDiagnostics, Pipeline, _customDomainWebPubSubCustomDomainsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _webPubSubCustomDomainRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new WebPubSubArmOperation<WebPubSubCustomDomainResource>(new WebPubSubCustomDomainOperationSource(Client), _webPubSubCustomDomainClientDiagnostics, Pipeline, _webPubSubCustomDomainRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

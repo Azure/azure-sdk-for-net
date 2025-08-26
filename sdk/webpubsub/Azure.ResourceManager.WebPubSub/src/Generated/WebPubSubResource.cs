@@ -164,11 +164,11 @@ namespace Azure.ResourceManager.WebPubSub
             return GetWebPubSubCustomCertificates().Get(certificateName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CustomDomainResources in the WebPubSub. </summary>
-        /// <returns> An object representing collection of CustomDomainResources and their operations over a CustomDomainResource. </returns>
-        public virtual CustomDomainCollection GetCustomDomains()
+        /// <summary> Gets a collection of WebPubSubCustomDomainResources in the WebPubSub. </summary>
+        /// <returns> An object representing collection of WebPubSubCustomDomainResources and their operations over a WebPubSubCustomDomainResource. </returns>
+        public virtual WebPubSubCustomDomainCollection GetWebPubSubCustomDomains()
         {
-            return GetCachedClient(client => new CustomDomainCollection(client, Id));
+            return GetCachedClient(client => new WebPubSubCustomDomainCollection(client, Id));
         }
 
         /// <summary>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CustomDomainResource"/></description>
+        /// <description><see cref="WebPubSubCustomDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -197,9 +197,9 @@ namespace Azure.ResourceManager.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CustomDomainResource>> GetCustomDomainAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebPubSubCustomDomainResource>> GetWebPubSubCustomDomainAsync(string name, CancellationToken cancellationToken = default)
         {
-            return await GetCustomDomains().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetWebPubSubCustomDomains().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CustomDomainResource"/></description>
+        /// <description><see cref="WebPubSubCustomDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -228,9 +228,9 @@ namespace Azure.ResourceManager.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CustomDomainResource> GetCustomDomain(string name, CancellationToken cancellationToken = default)
+        public virtual Response<WebPubSubCustomDomainResource> GetWebPubSubCustomDomain(string name, CancellationToken cancellationToken = default)
         {
-            return GetCustomDomains().Get(name, cancellationToken);
+            return GetWebPubSubCustomDomains().Get(name, cancellationToken);
         }
 
         /// <summary> Gets a collection of WebPubSubHubResources in the WebPubSub. </summary>
@@ -371,11 +371,11 @@ namespace Azure.ResourceManager.WebPubSub
             return GetWebPubSubPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ReplicaResources in the WebPubSub. </summary>
-        /// <returns> An object representing collection of ReplicaResources and their operations over a ReplicaResource. </returns>
-        public virtual ReplicaCollection GetReplicas()
+        /// <summary> Gets a collection of WebPubSubReplicaResources in the WebPubSub. </summary>
+        /// <returns> An object representing collection of WebPubSubReplicaResources and their operations over a WebPubSubReplicaResource. </returns>
+        public virtual WebPubSubReplicaCollection GetWebPubSubReplicas()
         {
-            return GetCachedClient(client => new ReplicaCollection(client, Id));
+            return GetCachedClient(client => new WebPubSubReplicaCollection(client, Id));
         }
 
         /// <summary>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="WebPubSubReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -404,9 +404,9 @@ namespace Azure.ResourceManager.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ReplicaResource>> GetReplicaAsync(string replicaName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebPubSubReplicaResource>> GetWebPubSubReplicaAsync(string replicaName, CancellationToken cancellationToken = default)
         {
-            return await GetReplicas().GetAsync(replicaName, cancellationToken).ConfigureAwait(false);
+            return await GetWebPubSubReplicas().GetAsync(replicaName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="WebPubSubReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -435,9 +435,9 @@ namespace Azure.ResourceManager.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ReplicaResource> GetReplica(string replicaName, CancellationToken cancellationToken = default)
+        public virtual Response<WebPubSubReplicaResource> GetWebPubSubReplica(string replicaName, CancellationToken cancellationToken = default)
         {
-            return GetReplicas().Get(replicaName, cancellationToken);
+            return GetWebPubSubReplicas().Get(replicaName, cancellationToken);
         }
 
         /// <summary> Gets a collection of WebPubSubSharedPrivateLinkResources in the WebPubSub. </summary>

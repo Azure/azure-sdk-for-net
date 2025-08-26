@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         public WebPubSubHubProperties()
         {
             EventHandlers = new ChangeTrackingList<WebPubSubEventHandler>();
-            EventListeners = new ChangeTrackingList<EventListener>();
+            EventListeners = new ChangeTrackingList<WebPubSubEventListener>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WebPubSubHubProperties"/>. </summary>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="anonymousConnectPolicy"> The settings for configuring if anonymous connections are allowed for this hub: "allow" or "deny". Default to "deny". </param>
         /// <param name="webSocketKeepAliveIntervalInSeconds"> The settings for configuring the WebSocket ping-pong interval in seconds for all clients in the hub. Valid range: 1 to 120. Default to 20 seconds. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebPubSubHubProperties(IList<WebPubSubEventHandler> eventHandlers, IList<EventListener> eventListeners, string anonymousConnectPolicy, int? webSocketKeepAliveIntervalInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WebPubSubHubProperties(IList<WebPubSubEventHandler> eventHandlers, IList<WebPubSubEventListener> eventListeners, string anonymousConnectPolicy, int? webSocketKeepAliveIntervalInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EventHandlers = eventHandlers;
             EventListeners = eventListeners;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// Maximum count of event listeners among all hubs is 10.
         /// </summary>
         [WirePath("eventListeners")]
-        public IList<EventListener> EventListeners { get; }
+        public IList<WebPubSubEventListener> EventListeners { get; }
         /// <summary> The settings for configuring if anonymous connections are allowed for this hub: "allow" or "deny". Default to "deny". </summary>
         [WirePath("anonymousConnectPolicy")]
         public string AnonymousConnectPolicy { get; set; }

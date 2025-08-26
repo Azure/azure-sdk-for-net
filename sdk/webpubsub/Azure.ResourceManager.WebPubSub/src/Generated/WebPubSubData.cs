@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </param>
         /// <param name="socketIO"> SocketIO settings for the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebPubSubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BillingInfoSku sku, ServiceKind? kind, ManagedServiceIdentity identity, WebPubSubProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<WebPubSubPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<WebPubSubSharedPrivateLinkData> sharedPrivateLinkResources, WebPubSubTlsSettings tls, string hostNamePrefix, LiveTraceConfiguration liveTraceConfiguration, ResourceLogConfiguration resourceLogConfiguration, WebPubSubNetworkAcls networkAcls, ApplicationFirewallSettings applicationFirewall, string publicNetworkAccess, bool? isLocalAuthDisabled, bool? isAadAuthDisabled, string regionEndpointEnabled, string resourceStopped, WebPubSubSocketIOSettings socketIO, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal WebPubSubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BillingInfoSku sku, WebPubSubServiceKind? kind, ManagedServiceIdentity identity, WebPubSubProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<WebPubSubPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<WebPubSubSharedPrivateLinkData> sharedPrivateLinkResources, WebPubSubTlsSettings tls, string hostNamePrefix, LiveTraceConfiguration liveTraceConfiguration, ResourceLogConfiguration resourceLogConfiguration, WebPubSubNetworkAcls networkAcls, ApplicationFirewallSettings applicationFirewall, string publicNetworkAccess, bool? isLocalAuthDisabled, bool? isAadAuthDisabled, string regionEndpointEnabled, string resourceStopped, WebPubSubSocketIOSettings socketIO, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Kind = kind;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.WebPubSub
         public BillingInfoSku Sku { get; set; }
         /// <summary> The kind of the service. </summary>
         [WirePath("kind")]
-        public ServiceKind? Kind { get; set; }
+        public WebPubSubServiceKind? Kind { get; set; }
         /// <summary> A class represent managed identities used for request and response. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }

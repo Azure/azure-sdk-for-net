@@ -9,19 +9,19 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.WebPubSub.Models;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.WebPubSub.Samples
 {
-    public partial class Sample_ReplicaCollection
+    public partial class Sample_WebPubSubCustomDomainCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_WebPubSubReplicasCreateOrUpdate()
+        public async Task CreateOrUpdate_WebPubSubCustomDomainsCreateOrUpdate()
         {
-            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/preview/2025-01-01-preview/examples/WebPubSubReplicas_CreateOrUpdate.json
-            // this example is just showing the usage of "WebPubSubReplicas_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/preview/2025-01-01-preview/examples/WebPubSubCustomDomains_CreateOrUpdate.json
+            // this example is just showing the usage of "WebPubSubCustomDomains_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -36,40 +36,31 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             ResourceIdentifier webPubSubResourceId = WebPubSubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
             WebPubSubResource webPubSub = client.GetWebPubSubResource(webPubSubResourceId);
 
-            // get the collection of this ReplicaResource
-            ReplicaCollection collection = webPubSub.GetReplicas();
+            // get the collection of this WebPubSubCustomDomainResource
+            WebPubSubCustomDomainCollection collection = webPubSub.GetWebPubSubCustomDomains();
 
             // invoke the operation
-            string replicaName = "myWebPubSubService-eastus";
-            ReplicaData data = new ReplicaData(new AzureLocation("eastus"))
+            string name = "myDomain";
+            WebPubSubCustomDomainData data = new WebPubSubCustomDomainData("example.com", new WritableSubResource
             {
-                Sku = new BillingInfoSku("Premium_P1")
-                {
-                    Tier = WebPubSubSkuTier.Premium,
-                    Capacity = 1,
-                },
-                ResourceStopped = "false",
-                Tags =
-{
-["key1"] = "value1"
-},
-            };
-            ArmOperation<ReplicaResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, replicaName, data);
-            ReplicaResource result = lro.Value;
+                Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/WebPubSub/myWebPubSubService/customCertificates/myCert"),
+            });
+            ArmOperation<WebPubSubCustomDomainResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
+            WebPubSubCustomDomainResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ReplicaData resourceData = result.Data;
+            WebPubSubCustomDomainData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_WebPubSubReplicasGet()
+        public async Task Get_WebPubSubCustomDomainsGet()
         {
-            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/preview/2025-01-01-preview/examples/WebPubSubReplicas_Get.json
-            // this example is just showing the usage of "WebPubSubReplicas_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/preview/2025-01-01-preview/examples/WebPubSubCustomDomains_Get.json
+            // this example is just showing the usage of "WebPubSubCustomDomains_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -84,26 +75,26 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             ResourceIdentifier webPubSubResourceId = WebPubSubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
             WebPubSubResource webPubSub = client.GetWebPubSubResource(webPubSubResourceId);
 
-            // get the collection of this ReplicaResource
-            ReplicaCollection collection = webPubSub.GetReplicas();
+            // get the collection of this WebPubSubCustomDomainResource
+            WebPubSubCustomDomainCollection collection = webPubSub.GetWebPubSubCustomDomains();
 
             // invoke the operation
-            string replicaName = "myWebPubSubService-eastus";
-            ReplicaResource result = await collection.GetAsync(replicaName);
+            string name = "example";
+            WebPubSubCustomDomainResource result = await collection.GetAsync(name);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ReplicaData resourceData = result.Data;
+            WebPubSubCustomDomainData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_WebPubSubReplicasList()
+        public async Task GetAll_WebPubSubCustomDomainsList()
         {
-            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/preview/2025-01-01-preview/examples/WebPubSubReplicas_List.json
-            // this example is just showing the usage of "WebPubSubReplicas_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/preview/2025-01-01-preview/examples/WebPubSubCustomDomains_List.json
+            // this example is just showing the usage of "WebPubSubCustomDomains_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -118,15 +109,15 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             ResourceIdentifier webPubSubResourceId = WebPubSubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
             WebPubSubResource webPubSub = client.GetWebPubSubResource(webPubSubResourceId);
 
-            // get the collection of this ReplicaResource
-            ReplicaCollection collection = webPubSub.GetReplicas();
+            // get the collection of this WebPubSubCustomDomainResource
+            WebPubSubCustomDomainCollection collection = webPubSub.GetWebPubSubCustomDomains();
 
             // invoke the operation and iterate over the result
-            await foreach (ReplicaResource item in collection.GetAllAsync())
+            await foreach (WebPubSubCustomDomainResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ReplicaData resourceData = item.Data;
+                WebPubSubCustomDomainData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -136,10 +127,10 @@ namespace Azure.ResourceManager.WebPubSub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_WebPubSubReplicasGet()
+        public async Task Exists_WebPubSubCustomDomainsGet()
         {
-            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/preview/2025-01-01-preview/examples/WebPubSubReplicas_Get.json
-            // this example is just showing the usage of "WebPubSubReplicas_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/preview/2025-01-01-preview/examples/WebPubSubCustomDomains_Get.json
+            // this example is just showing the usage of "WebPubSubCustomDomains_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -154,22 +145,22 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             ResourceIdentifier webPubSubResourceId = WebPubSubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
             WebPubSubResource webPubSub = client.GetWebPubSubResource(webPubSubResourceId);
 
-            // get the collection of this ReplicaResource
-            ReplicaCollection collection = webPubSub.GetReplicas();
+            // get the collection of this WebPubSubCustomDomainResource
+            WebPubSubCustomDomainCollection collection = webPubSub.GetWebPubSubCustomDomains();
 
             // invoke the operation
-            string replicaName = "myWebPubSubService-eastus";
-            bool result = await collection.ExistsAsync(replicaName);
+            string name = "example";
+            bool result = await collection.ExistsAsync(name);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_WebPubSubReplicasGet()
+        public async Task GetIfExists_WebPubSubCustomDomainsGet()
         {
-            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/preview/2025-01-01-preview/examples/WebPubSubReplicas_Get.json
-            // this example is just showing the usage of "WebPubSubReplicas_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/webpubsub/resource-manager/Microsoft.SignalRService/preview/2025-01-01-preview/examples/WebPubSubCustomDomains_Get.json
+            // this example is just showing the usage of "WebPubSubCustomDomains_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -184,13 +175,13 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             ResourceIdentifier webPubSubResourceId = WebPubSubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
             WebPubSubResource webPubSub = client.GetWebPubSubResource(webPubSubResourceId);
 
-            // get the collection of this ReplicaResource
-            ReplicaCollection collection = webPubSub.GetReplicas();
+            // get the collection of this WebPubSubCustomDomainResource
+            WebPubSubCustomDomainCollection collection = webPubSub.GetWebPubSubCustomDomains();
 
             // invoke the operation
-            string replicaName = "myWebPubSubService-eastus";
-            NullableResponse<ReplicaResource> response = await collection.GetIfExistsAsync(replicaName);
-            ReplicaResource result = response.HasValue ? response.Value : null;
+            string name = "example";
+            NullableResponse<WebPubSubCustomDomainResource> response = await collection.GetIfExistsAsync(name);
+            WebPubSubCustomDomainResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -200,7 +191,7 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ReplicaData resourceData = result.Data;
+                WebPubSubCustomDomainData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

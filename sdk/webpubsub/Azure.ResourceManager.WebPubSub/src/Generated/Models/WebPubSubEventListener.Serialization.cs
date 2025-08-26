@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    public partial class IPRule : IUtf8JsonSerializable, IJsonModel<IPRule>
+    public partial class WebPubSubEventListener : IUtf8JsonSerializable, IJsonModel<WebPubSubEventListener>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IPRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebPubSubEventListener>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<IPRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<WebPubSubEventListener>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,22 +29,16 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WebPubSubEventListener>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPRule)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(WebPubSubEventListener)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Value))
-            {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStringValue(Value);
-            }
-            if (Optional.IsDefined(Action))
-            {
-                writer.WritePropertyName("action"u8);
-                writer.WriteStringValue(Action.Value.ToString());
-            }
+            writer.WritePropertyName("filter"u8);
+            writer.WriteObjectValue(Filter, options);
+            writer.WritePropertyName("endpoint"u8);
+            writer.WriteObjectValue(Endpoint, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -62,19 +56,19 @@ namespace Azure.ResourceManager.WebPubSub.Models
             }
         }
 
-        IPRule IJsonModel<IPRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        WebPubSubEventListener IJsonModel<WebPubSubEventListener>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WebPubSubEventListener>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPRule)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(WebPubSubEventListener)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIPRule(document.RootElement, options);
+            return DeserializeWebPubSubEventListener(document.RootElement, options);
         }
 
-        internal static IPRule DeserializeIPRule(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static WebPubSubEventListener DeserializeWebPubSubEventListener(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -82,24 +76,20 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            string value = default;
-            AclAction? action = default;
+            EventListenerFilter filter = default;
+            EventListenerEndpoint endpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"u8))
+                if (property.NameEquals("filter"u8))
                 {
-                    value = property.Value.GetString();
+                    filter = EventListenerFilter.DeserializeEventListenerFilter(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("action"u8))
+                if (property.NameEquals("endpoint"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    action = new AclAction(property.Value.GetString());
+                    endpoint = EventListenerEndpoint.DeserializeEventListenerEndpoint(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -108,7 +98,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new IPRule(value, action, serializedAdditionalRawData);
+            return new WebPubSubEventListener(filter, endpoint, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -122,41 +112,33 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Filter), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("  value: ");
+                builder.Append("  filter: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(Value))
+                if (Optional.IsDefined(Filter))
                 {
-                    builder.Append("  value: ");
-                    if (Value.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Value}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Value}'");
-                    }
+                    builder.Append("  filter: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Filter, options, 2, false, "  filter: ");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Action), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Endpoint), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("  action: ");
+                builder.Append("  endpoint: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(Action))
+                if (Optional.IsDefined(Endpoint))
                 {
-                    builder.Append("  action: ");
-                    builder.AppendLine($"'{Action.Value.ToString()}'");
+                    builder.Append("  endpoint: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Endpoint, options, 2, false, "  endpoint: ");
                 }
             }
 
@@ -164,9 +146,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<IPRule>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<WebPubSubEventListener>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WebPubSubEventListener>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -175,26 +157,26 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(IPRule)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebPubSubEventListener)} does not support writing '{options.Format}' format.");
             }
         }
 
-        IPRule IPersistableModel<IPRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        WebPubSubEventListener IPersistableModel<WebPubSubEventListener>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WebPubSubEventListener>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeIPRule(document.RootElement, options);
+                        return DeserializeWebPubSubEventListener(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IPRule)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebPubSubEventListener)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<IPRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<WebPubSubEventListener>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

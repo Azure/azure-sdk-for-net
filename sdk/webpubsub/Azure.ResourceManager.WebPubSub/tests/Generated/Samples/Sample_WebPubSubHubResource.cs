@@ -108,11 +108,11 @@ AuthType = UpstreamAuthType.ManagedIdentity,
 ManagedIdentityResource = "abc",
 },
 }},
-                EventListeners = {new EventListener(new EventNameFilter
+                EventListeners = {new WebPubSubEventListener(new EventNameFilter
 {
 SystemEvents = {"connected", "disconnected"},
 UserEventPattern = "*",
-}, new EventHubEndpoint("example.servicebus.windows.net", "eventHubName1"))},
+}, new WebPubSubEventHubEndpoint("example.servicebus.windows.net", "eventHubName1"))},
                 AnonymousConnectPolicy = "allow",
                 WebSocketKeepAliveIntervalInSeconds = 50,
             });

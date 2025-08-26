@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ReplicaResource created on azure
-            // for more information of creating ReplicaResource, please refer to the document of ReplicaResource
+            // this example assumes you already have this WebPubSubReplicaResource created on azure
+            // for more information of creating WebPubSubReplicaResource, please refer to the document of WebPubSubReplicaResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string resourceName = "myWebPubSubService";
             string replicaName = "myWebPubSubService-eastus";
-            ResourceIdentifier replicaResourceId = ReplicaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, replicaName);
-            ReplicaResource replica = client.GetReplicaResource(replicaResourceId);
+            ResourceIdentifier webPubSubReplicaResourceId = WebPubSubReplicaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, replicaName);
+            WebPubSubReplicaResource webPubSubReplica = client.GetWebPubSubReplicaResource(webPubSubReplicaResourceId);
 
             // get the collection of this WebPubSubReplicaSharedPrivateLinkResource
-            WebPubSubReplicaSharedPrivateLinkResourceCollection collection = replica.GetWebPubSubReplicaSharedPrivateLinkResources();
+            WebPubSubReplicaSharedPrivateLinkResourceCollection collection = webPubSubReplica.GetWebPubSubReplicaSharedPrivateLinkResources();
 
             // invoke the operation
             string sharedPrivateLinkResourceName = "upstream";
@@ -69,17 +69,17 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ReplicaResource created on azure
-            // for more information of creating ReplicaResource, please refer to the document of ReplicaResource
+            // this example assumes you already have this WebPubSubReplicaResource created on azure
+            // for more information of creating WebPubSubReplicaResource, please refer to the document of WebPubSubReplicaResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string resourceName = "myWebPubSubService";
             string replicaName = "myWebPubSubService-eastus";
-            ResourceIdentifier replicaResourceId = ReplicaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, replicaName);
-            ReplicaResource replica = client.GetReplicaResource(replicaResourceId);
+            ResourceIdentifier webPubSubReplicaResourceId = WebPubSubReplicaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, replicaName);
+            WebPubSubReplicaResource webPubSubReplica = client.GetWebPubSubReplicaResource(webPubSubReplicaResourceId);
 
             // get the collection of this WebPubSubReplicaSharedPrivateLinkResource
-            WebPubSubReplicaSharedPrivateLinkResourceCollection collection = replica.GetWebPubSubReplicaSharedPrivateLinkResources();
+            WebPubSubReplicaSharedPrivateLinkResourceCollection collection = webPubSubReplica.GetWebPubSubReplicaSharedPrivateLinkResources();
 
             // invoke the operation
             string sharedPrivateLinkResourceName = "upstream";
@@ -104,17 +104,17 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ReplicaResource created on azure
-            // for more information of creating ReplicaResource, please refer to the document of ReplicaResource
+            // this example assumes you already have this WebPubSubReplicaResource created on azure
+            // for more information of creating WebPubSubReplicaResource, please refer to the document of WebPubSubReplicaResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string resourceName = "myWebPubSubService";
             string replicaName = "myWebPubSubService-eastus";
-            ResourceIdentifier replicaResourceId = ReplicaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, replicaName);
-            ReplicaResource replica = client.GetReplicaResource(replicaResourceId);
+            ResourceIdentifier webPubSubReplicaResourceId = WebPubSubReplicaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, replicaName);
+            WebPubSubReplicaResource webPubSubReplica = client.GetWebPubSubReplicaResource(webPubSubReplicaResourceId);
 
             // get the collection of this WebPubSubReplicaSharedPrivateLinkResource
-            WebPubSubReplicaSharedPrivateLinkResourceCollection collection = replica.GetWebPubSubReplicaSharedPrivateLinkResources();
+            WebPubSubReplicaSharedPrivateLinkResourceCollection collection = webPubSubReplica.GetWebPubSubReplicaSharedPrivateLinkResources();
 
             // invoke the operation and iterate over the result
             await foreach (WebPubSubReplicaSharedPrivateLinkResource item in collection.GetAllAsync())
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ReplicaResource created on azure
-            // for more information of creating ReplicaResource, please refer to the document of ReplicaResource
+            // this example assumes you already have this WebPubSubReplicaResource created on azure
+            // for more information of creating WebPubSubReplicaResource, please refer to the document of WebPubSubReplicaResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string resourceName = "myWebPubSubService";
             string replicaName = "myWebPubSubService-eastus";
-            ResourceIdentifier replicaResourceId = ReplicaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, replicaName);
-            ReplicaResource replica = client.GetReplicaResource(replicaResourceId);
+            ResourceIdentifier webPubSubReplicaResourceId = WebPubSubReplicaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, replicaName);
+            WebPubSubReplicaResource webPubSubReplica = client.GetWebPubSubReplicaResource(webPubSubReplicaResourceId);
 
             // get the collection of this WebPubSubReplicaSharedPrivateLinkResource
-            WebPubSubReplicaSharedPrivateLinkResourceCollection collection = replica.GetWebPubSubReplicaSharedPrivateLinkResources();
+            WebPubSubReplicaSharedPrivateLinkResourceCollection collection = webPubSubReplica.GetWebPubSubReplicaSharedPrivateLinkResources();
 
             // invoke the operation
             string sharedPrivateLinkResourceName = "upstream";
@@ -172,17 +172,17 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ReplicaResource created on azure
-            // for more information of creating ReplicaResource, please refer to the document of ReplicaResource
+            // this example assumes you already have this WebPubSubReplicaResource created on azure
+            // for more information of creating WebPubSubReplicaResource, please refer to the document of WebPubSubReplicaResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string resourceName = "myWebPubSubService";
             string replicaName = "myWebPubSubService-eastus";
-            ResourceIdentifier replicaResourceId = ReplicaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, replicaName);
-            ReplicaResource replica = client.GetReplicaResource(replicaResourceId);
+            ResourceIdentifier webPubSubReplicaResourceId = WebPubSubReplicaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, replicaName);
+            WebPubSubReplicaResource webPubSubReplica = client.GetWebPubSubReplicaResource(webPubSubReplicaResourceId);
 
             // get the collection of this WebPubSubReplicaSharedPrivateLinkResource
-            WebPubSubReplicaSharedPrivateLinkResourceCollection collection = replica.GetWebPubSubReplicaSharedPrivateLinkResources();
+            WebPubSubReplicaSharedPrivateLinkResourceCollection collection = webPubSubReplica.GetWebPubSubReplicaSharedPrivateLinkResources();
 
             // invoke the operation
             string sharedPrivateLinkResourceName = "upstream";

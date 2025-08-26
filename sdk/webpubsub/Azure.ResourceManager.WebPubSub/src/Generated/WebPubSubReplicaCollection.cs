@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.WebPubSub
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ReplicaResource"/> and their operations.
-    /// Each <see cref="ReplicaResource"/> in the collection will belong to the same instance of <see cref="WebPubSubResource"/>.
-    /// To get a <see cref="ReplicaCollection"/> instance call the GetReplicas method from an instance of <see cref="WebPubSubResource"/>.
+    /// A class representing a collection of <see cref="WebPubSubReplicaResource"/> and their operations.
+    /// Each <see cref="WebPubSubReplicaResource"/> in the collection will belong to the same instance of <see cref="WebPubSubResource"/>.
+    /// To get a <see cref="WebPubSubReplicaCollection"/> instance call the GetWebPubSubReplicas method from an instance of <see cref="WebPubSubResource"/>.
     /// </summary>
-    public partial class ReplicaCollection : ArmCollection, IEnumerable<ReplicaResource>, IAsyncEnumerable<ReplicaResource>
+    public partial class WebPubSubReplicaCollection : ArmCollection, IEnumerable<WebPubSubReplicaResource>, IAsyncEnumerable<WebPubSubReplicaResource>
     {
-        private readonly ClientDiagnostics _replicaWebPubSubReplicasClientDiagnostics;
-        private readonly WebPubSubReplicasRestOperations _replicaWebPubSubReplicasRestClient;
+        private readonly ClientDiagnostics _webPubSubReplicaClientDiagnostics;
+        private readonly WebPubSubReplicasRestOperations _webPubSubReplicaRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ReplicaCollection"/> class for mocking. </summary>
-        protected ReplicaCollection()
+        /// <summary> Initializes a new instance of the <see cref="WebPubSubReplicaCollection"/> class for mocking. </summary>
+        protected WebPubSubReplicaCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ReplicaCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebPubSubReplicaCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal ReplicaCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal WebPubSubReplicaCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _replicaWebPubSubReplicasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", ReplicaResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ReplicaResource.ResourceType, out string replicaWebPubSubReplicasApiVersion);
-            _replicaWebPubSubReplicasRestClient = new WebPubSubReplicasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, replicaWebPubSubReplicasApiVersion);
+            _webPubSubReplicaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", WebPubSubReplicaResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(WebPubSubReplicaResource.ResourceType, out string webPubSubReplicaApiVersion);
+            _webPubSubReplicaRestClient = new WebPubSubReplicasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, webPubSubReplicaApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="WebPubSubReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ReplicaResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string replicaName, ReplicaData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<WebPubSubReplicaResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string replicaName, WebPubSubReplicaData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _replicaWebPubSubReplicasClientDiagnostics.CreateScope("ReplicaCollection.CreateOrUpdate");
+            using var scope = _webPubSubReplicaClientDiagnostics.CreateScope("WebPubSubReplicaCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _replicaWebPubSubReplicasRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new WebPubSubArmOperation<ReplicaResource>(new ReplicaOperationSource(Client), _replicaWebPubSubReplicasClientDiagnostics, Pipeline, _replicaWebPubSubReplicasRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _webPubSubReplicaRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new WebPubSubArmOperation<WebPubSubReplicaResource>(new WebPubSubReplicaOperationSource(Client), _webPubSubReplicaClientDiagnostics, Pipeline, _webPubSubReplicaRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="WebPubSubReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,17 +127,17 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ReplicaResource> CreateOrUpdate(WaitUntil waitUntil, string replicaName, ReplicaData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<WebPubSubReplicaResource> CreateOrUpdate(WaitUntil waitUntil, string replicaName, WebPubSubReplicaData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _replicaWebPubSubReplicasClientDiagnostics.CreateScope("ReplicaCollection.CreateOrUpdate");
+            using var scope = _webPubSubReplicaClientDiagnostics.CreateScope("WebPubSubReplicaCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _replicaWebPubSubReplicasRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, data, cancellationToken);
-                var operation = new WebPubSubArmOperation<ReplicaResource>(new ReplicaOperationSource(Client), _replicaWebPubSubReplicasClientDiagnostics, Pipeline, _replicaWebPubSubReplicasRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _webPubSubReplicaRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, data, cancellationToken);
+                var operation = new WebPubSubArmOperation<WebPubSubReplicaResource>(new WebPubSubReplicaOperationSource(Client), _webPubSubReplicaClientDiagnostics, Pipeline, _webPubSubReplicaRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="WebPubSubReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -174,18 +174,18 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
-        public virtual async Task<Response<ReplicaResource>> GetAsync(string replicaName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebPubSubReplicaResource>> GetAsync(string replicaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
-            using var scope = _replicaWebPubSubReplicasClientDiagnostics.CreateScope("ReplicaCollection.Get");
+            using var scope = _webPubSubReplicaClientDiagnostics.CreateScope("WebPubSubReplicaCollection.Get");
             scope.Start();
             try
             {
-                var response = await _replicaWebPubSubReplicasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, cancellationToken).ConfigureAwait(false);
+                var response = await _webPubSubReplicaRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ReplicaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebPubSubReplicaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="WebPubSubReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,18 +219,18 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
-        public virtual Response<ReplicaResource> Get(string replicaName, CancellationToken cancellationToken = default)
+        public virtual Response<WebPubSubReplicaResource> Get(string replicaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
-            using var scope = _replicaWebPubSubReplicasClientDiagnostics.CreateScope("ReplicaCollection.Get");
+            using var scope = _webPubSubReplicaClientDiagnostics.CreateScope("WebPubSubReplicaCollection.Get");
             scope.Start();
             try
             {
-                var response = _replicaWebPubSubReplicasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, cancellationToken);
+                var response = _webPubSubReplicaRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ReplicaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebPubSubReplicaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -256,17 +256,17 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="WebPubSubReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ReplicaResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReplicaResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="WebPubSubReplicaResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<WebPubSubReplicaResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _replicaWebPubSubReplicasRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _replicaWebPubSubReplicasRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReplicaResource(Client, ReplicaData.DeserializeReplicaData(e)), _replicaWebPubSubReplicasClientDiagnostics, Pipeline, "ReplicaCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webPubSubReplicaRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webPubSubReplicaRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WebPubSubReplicaResource(Client, WebPubSubReplicaData.DeserializeWebPubSubReplicaData(e)), _webPubSubReplicaClientDiagnostics, Pipeline, "WebPubSubReplicaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -286,17 +286,17 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="WebPubSubReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ReplicaResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReplicaResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="WebPubSubReplicaResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WebPubSubReplicaResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _replicaWebPubSubReplicasRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _replicaWebPubSubReplicasRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReplicaResource(Client, ReplicaData.DeserializeReplicaData(e)), _replicaWebPubSubReplicasClientDiagnostics, Pipeline, "ReplicaCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _webPubSubReplicaRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webPubSubReplicaRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WebPubSubReplicaResource(Client, WebPubSubReplicaData.DeserializeWebPubSubReplicaData(e)), _webPubSubReplicaClientDiagnostics, Pipeline, "WebPubSubReplicaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="WebPubSubReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -328,11 +328,11 @@ namespace Azure.ResourceManager.WebPubSub
         {
             Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
-            using var scope = _replicaWebPubSubReplicasClientDiagnostics.CreateScope("ReplicaCollection.Exists");
+            using var scope = _webPubSubReplicaClientDiagnostics.CreateScope("WebPubSubReplicaCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _replicaWebPubSubReplicasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _webPubSubReplicaRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="WebPubSubReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -371,11 +371,11 @@ namespace Azure.ResourceManager.WebPubSub
         {
             Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
-            using var scope = _replicaWebPubSubReplicasClientDiagnostics.CreateScope("ReplicaCollection.Exists");
+            using var scope = _webPubSubReplicaClientDiagnostics.CreateScope("WebPubSubReplicaCollection.Exists");
             scope.Start();
             try
             {
-                var response = _replicaWebPubSubReplicasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, cancellationToken: cancellationToken);
+                var response = _webPubSubReplicaRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="WebPubSubReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -410,18 +410,18 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
-        public virtual async Task<NullableResponse<ReplicaResource>> GetIfExistsAsync(string replicaName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<WebPubSubReplicaResource>> GetIfExistsAsync(string replicaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
-            using var scope = _replicaWebPubSubReplicasClientDiagnostics.CreateScope("ReplicaCollection.GetIfExists");
+            using var scope = _webPubSubReplicaClientDiagnostics.CreateScope("WebPubSubReplicaCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _replicaWebPubSubReplicasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _webPubSubReplicaRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<ReplicaResource>(response.GetRawResponse());
-                return Response.FromValue(new ReplicaResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<WebPubSubReplicaResource>(response.GetRawResponse());
+                return Response.FromValue(new WebPubSubReplicaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="WebPubSubReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -455,18 +455,18 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
-        public virtual NullableResponse<ReplicaResource> GetIfExists(string replicaName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<WebPubSubReplicaResource> GetIfExists(string replicaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
-            using var scope = _replicaWebPubSubReplicasClientDiagnostics.CreateScope("ReplicaCollection.GetIfExists");
+            using var scope = _webPubSubReplicaClientDiagnostics.CreateScope("WebPubSubReplicaCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _replicaWebPubSubReplicasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, cancellationToken: cancellationToken);
+                var response = _webPubSubReplicaRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<ReplicaResource>(response.GetRawResponse());
-                return Response.FromValue(new ReplicaResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<WebPubSubReplicaResource>(response.GetRawResponse());
+                return Response.FromValue(new WebPubSubReplicaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        IEnumerator<ReplicaResource> IEnumerable<ReplicaResource>.GetEnumerator()
+        IEnumerator<WebPubSubReplicaResource> IEnumerable<WebPubSubReplicaResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.WebPubSub
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ReplicaResource> IAsyncEnumerable<ReplicaResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<WebPubSubReplicaResource> IAsyncEnumerable<WebPubSubReplicaResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

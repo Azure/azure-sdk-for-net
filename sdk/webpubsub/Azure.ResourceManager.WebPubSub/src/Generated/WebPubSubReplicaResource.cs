@@ -18,14 +18,14 @@ using Azure.ResourceManager.WebPubSub.Models;
 namespace Azure.ResourceManager.WebPubSub
 {
     /// <summary>
-    /// A Class representing a Replica along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ReplicaResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetReplicaResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebPubSubResource"/> using the GetReplica method.
+    /// A Class representing a WebPubSubReplica along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WebPubSubReplicaResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWebPubSubReplicaResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebPubSubResource"/> using the GetWebPubSubReplica method.
     /// </summary>
-    public partial class ReplicaResource : ArmResource
+    public partial class WebPubSubReplicaResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ReplicaResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="WebPubSubReplicaResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="resourceName"> The resourceName. </param>
@@ -36,37 +36,37 @@ namespace Azure.ResourceManager.WebPubSub
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _replicaWebPubSubReplicasClientDiagnostics;
-        private readonly WebPubSubReplicasRestOperations _replicaWebPubSubReplicasRestClient;
+        private readonly ClientDiagnostics _webPubSubReplicaClientDiagnostics;
+        private readonly WebPubSubReplicasRestOperations _webPubSubReplicaRestClient;
         private readonly ClientDiagnostics _webPubSubClientDiagnostics;
         private readonly WebPubSubRestOperations _webPubSubRestClient;
-        private readonly ReplicaData _data;
+        private readonly WebPubSubReplicaData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.SignalRService/webPubSub/replicas";
 
-        /// <summary> Initializes a new instance of the <see cref="ReplicaResource"/> class for mocking. </summary>
-        protected ReplicaResource()
+        /// <summary> Initializes a new instance of the <see cref="WebPubSubReplicaResource"/> class for mocking. </summary>
+        protected WebPubSubReplicaResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ReplicaResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebPubSubReplicaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ReplicaResource(ArmClient client, ReplicaData data) : this(client, data.Id)
+        internal WebPubSubReplicaResource(ArmClient client, WebPubSubReplicaData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ReplicaResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebPubSubReplicaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ReplicaResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal WebPubSubReplicaResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _replicaWebPubSubReplicasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string replicaWebPubSubReplicasApiVersion);
-            _replicaWebPubSubReplicasRestClient = new WebPubSubReplicasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, replicaWebPubSubReplicasApiVersion);
+            _webPubSubReplicaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string webPubSubReplicaApiVersion);
+            _webPubSubReplicaRestClient = new WebPubSubReplicasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, webPubSubReplicaApiVersion);
             _webPubSubClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", WebPubSubResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(WebPubSubResource.ResourceType, out string webPubSubApiVersion);
             _webPubSubRestClient = new WebPubSubRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, webPubSubApiVersion);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.WebPubSub
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ReplicaData Data
+        public virtual WebPubSubReplicaData Data
         {
             get
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.WebPubSub
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of WebPubSubReplicaSharedPrivateLinkResources in the Replica. </summary>
+        /// <summary> Gets a collection of WebPubSubReplicaSharedPrivateLinkResources in the WebPubSubReplica. </summary>
         /// <returns> An object representing collection of WebPubSubReplicaSharedPrivateLinkResources and their operations over a WebPubSubReplicaSharedPrivateLinkResource. </returns>
         public virtual WebPubSubReplicaSharedPrivateLinkResourceCollection GetWebPubSubReplicaSharedPrivateLinkResources()
         {
@@ -182,21 +182,21 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="WebPubSubReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ReplicaResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebPubSubReplicaResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _replicaWebPubSubReplicasClientDiagnostics.CreateScope("ReplicaResource.Get");
+            using var scope = _webPubSubReplicaClientDiagnostics.CreateScope("WebPubSubReplicaResource.Get");
             scope.Start();
             try
             {
-                var response = await _replicaWebPubSubReplicasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _webPubSubReplicaRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ReplicaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebPubSubReplicaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -222,21 +222,21 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="WebPubSubReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ReplicaResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<WebPubSubReplicaResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _replicaWebPubSubReplicasClientDiagnostics.CreateScope("ReplicaResource.Get");
+            using var scope = _webPubSubReplicaClientDiagnostics.CreateScope("WebPubSubReplicaResource.Get");
             scope.Start();
             try
             {
-                var response = _replicaWebPubSubReplicasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _webPubSubReplicaRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ReplicaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new WebPubSubReplicaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="WebPubSubReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -270,12 +270,12 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _replicaWebPubSubReplicasClientDiagnostics.CreateScope("ReplicaResource.Delete");
+            using var scope = _webPubSubReplicaClientDiagnostics.CreateScope("WebPubSubReplicaResource.Delete");
             scope.Start();
             try
             {
-                var response = await _replicaWebPubSubReplicasRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _replicaWebPubSubReplicasRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = await _webPubSubReplicaRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var uri = _webPubSubReplicaRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new WebPubSubArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="WebPubSubReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -314,12 +314,12 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _replicaWebPubSubReplicasClientDiagnostics.CreateScope("ReplicaResource.Delete");
+            using var scope = _webPubSubReplicaClientDiagnostics.CreateScope("WebPubSubReplicaResource.Delete");
             scope.Start();
             try
             {
-                var response = _replicaWebPubSubReplicasRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _replicaWebPubSubReplicasRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+                var response = _webPubSubReplicaRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var uri = _webPubSubReplicaRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new WebPubSubArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="WebPubSubReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -358,16 +358,16 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="data"> Parameters for the update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ReplicaResource>> UpdateAsync(WaitUntil waitUntil, ReplicaData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<WebPubSubReplicaResource>> UpdateAsync(WaitUntil waitUntil, WebPubSubReplicaData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _replicaWebPubSubReplicasClientDiagnostics.CreateScope("ReplicaResource.Update");
+            using var scope = _webPubSubReplicaClientDiagnostics.CreateScope("WebPubSubReplicaResource.Update");
             scope.Start();
             try
             {
-                var response = await _replicaWebPubSubReplicasRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new WebPubSubArmOperation<ReplicaResource>(new ReplicaOperationSource(Client), _replicaWebPubSubReplicasClientDiagnostics, Pipeline, _replicaWebPubSubReplicasRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _webPubSubReplicaRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new WebPubSubArmOperation<WebPubSubReplicaResource>(new WebPubSubReplicaOperationSource(Client), _webPubSubReplicaClientDiagnostics, Pipeline, _webPubSubReplicaRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="WebPubSubReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -404,16 +404,16 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="data"> Parameters for the update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ReplicaResource> Update(WaitUntil waitUntil, ReplicaData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<WebPubSubReplicaResource> Update(WaitUntil waitUntil, WebPubSubReplicaData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _replicaWebPubSubReplicasClientDiagnostics.CreateScope("ReplicaResource.Update");
+            using var scope = _webPubSubReplicaClientDiagnostics.CreateScope("WebPubSubReplicaResource.Update");
             scope.Start();
             try
             {
-                var response = _replicaWebPubSubReplicasRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new WebPubSubArmOperation<ReplicaResource>(new ReplicaOperationSource(Client), _replicaWebPubSubReplicasClientDiagnostics, Pipeline, _replicaWebPubSubReplicasRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = _webPubSubReplicaRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new WebPubSubArmOperation<WebPubSubReplicaResource>(new WebPubSubReplicaOperationSource(Client), _webPubSubReplicaClientDiagnostics, Pipeline, _webPubSubReplicaRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.WebPubSub
         public virtual AsyncPageable<WebPubSubSku> GetReplicaSkusWebPubSubsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webPubSubRestClient.CreateListReplicaSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => WebPubSubSku.DeserializeWebPubSubSku(e), _webPubSubClientDiagnostics, Pipeline, "ReplicaResource.GetReplicaSkusWebPubSubs", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => WebPubSubSku.DeserializeWebPubSubSku(e), _webPubSubClientDiagnostics, Pipeline, "WebPubSubReplicaResource.GetReplicaSkusWebPubSubs", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.WebPubSub
         public virtual Pageable<WebPubSubSku> GetReplicaSkusWebPubSubs(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webPubSubRestClient.CreateListReplicaSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => WebPubSubSku.DeserializeWebPubSubSku(e), _webPubSubClientDiagnostics, Pipeline, "ReplicaResource.GetReplicaSkusWebPubSubs", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => WebPubSubSku.DeserializeWebPubSubSku(e), _webPubSubClientDiagnostics, Pipeline, "WebPubSubReplicaResource.GetReplicaSkusWebPubSubs", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="WebPubSubReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -508,12 +508,12 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> RestartAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _replicaWebPubSubReplicasClientDiagnostics.CreateScope("ReplicaResource.Restart");
+            using var scope = _webPubSubReplicaClientDiagnostics.CreateScope("WebPubSubReplicaResource.Restart");
             scope.Start();
             try
             {
-                var response = await _replicaWebPubSubReplicasRestClient.RestartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new WebPubSubArmOperation(_replicaWebPubSubReplicasClientDiagnostics, Pipeline, _replicaWebPubSubReplicasRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _webPubSubReplicaRestClient.RestartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new WebPubSubArmOperation(_webPubSubReplicaClientDiagnostics, Pipeline, _webPubSubReplicaRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="WebPubSubReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -550,12 +550,12 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Restart(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _replicaWebPubSubReplicasClientDiagnostics.CreateScope("ReplicaResource.Restart");
+            using var scope = _webPubSubReplicaClientDiagnostics.CreateScope("WebPubSubReplicaResource.Restart");
             scope.Start();
             try
             {
-                var response = _replicaWebPubSubReplicasRestClient.Restart(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new WebPubSubArmOperation(_replicaWebPubSubReplicasClientDiagnostics, Pipeline, _replicaWebPubSubReplicasRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _webPubSubReplicaRestClient.Restart(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new WebPubSubArmOperation(_webPubSubReplicaClientDiagnostics, Pipeline, _webPubSubReplicaRestClient.CreateRestartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="WebPubSubReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -592,12 +592,12 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<ReplicaResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebPubSubReplicaResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _replicaWebPubSubReplicasClientDiagnostics.CreateScope("ReplicaResource.AddTag");
+            using var scope = _webPubSubReplicaClientDiagnostics.CreateScope("WebPubSubReplicaResource.AddTag");
             scope.Start();
             try
             {
@@ -606,13 +606,13 @@ namespace Azure.ResourceManager.WebPubSub
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _replicaWebPubSubReplicasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ReplicaResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _webPubSubReplicaRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new WebPubSubReplicaResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ReplicaData(current.Location);
+                    var patch = new WebPubSubReplicaData(current.Location);
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="WebPubSubReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -654,12 +654,12 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<ReplicaResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<WebPubSubReplicaResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _replicaWebPubSubReplicasClientDiagnostics.CreateScope("ReplicaResource.AddTag");
+            using var scope = _webPubSubReplicaClientDiagnostics.CreateScope("WebPubSubReplicaResource.AddTag");
             scope.Start();
             try
             {
@@ -668,13 +668,13 @@ namespace Azure.ResourceManager.WebPubSub
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _replicaWebPubSubReplicasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new ReplicaResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _webPubSubReplicaRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new WebPubSubReplicaResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ReplicaData(current.Location);
+                    var patch = new WebPubSubReplicaData(current.Location);
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -708,18 +708,18 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="WebPubSubReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<ReplicaResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebPubSubReplicaResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _replicaWebPubSubReplicasClientDiagnostics.CreateScope("ReplicaResource.SetTags");
+            using var scope = _webPubSubReplicaClientDiagnostics.CreateScope("WebPubSubReplicaResource.SetTags");
             scope.Start();
             try
             {
@@ -729,13 +729,13 @@ namespace Azure.ResourceManager.WebPubSub
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _replicaWebPubSubReplicasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ReplicaResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _webPubSubReplicaRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new WebPubSubReplicaResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ReplicaData(current.Location);
+                    var patch = new WebPubSubReplicaData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -765,18 +765,18 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="WebPubSubReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<ReplicaResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<WebPubSubReplicaResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _replicaWebPubSubReplicasClientDiagnostics.CreateScope("ReplicaResource.SetTags");
+            using var scope = _webPubSubReplicaClientDiagnostics.CreateScope("WebPubSubReplicaResource.SetTags");
             scope.Start();
             try
             {
@@ -786,13 +786,13 @@ namespace Azure.ResourceManager.WebPubSub
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _replicaWebPubSubReplicasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new ReplicaResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _webPubSubReplicaRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new WebPubSubReplicaResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ReplicaData(current.Location);
+                    var patch = new WebPubSubReplicaData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -822,18 +822,18 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="WebPubSubReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<ReplicaResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WebPubSubReplicaResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _replicaWebPubSubReplicasClientDiagnostics.CreateScope("ReplicaResource.RemoveTag");
+            using var scope = _webPubSubReplicaClientDiagnostics.CreateScope("WebPubSubReplicaResource.RemoveTag");
             scope.Start();
             try
             {
@@ -842,13 +842,13 @@ namespace Azure.ResourceManager.WebPubSub
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _replicaWebPubSubReplicasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ReplicaResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _webPubSubReplicaRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new WebPubSubReplicaResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ReplicaData(current.Location);
+                    var patch = new WebPubSubReplicaData(current.Location);
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -882,18 +882,18 @@ namespace Azure.ResourceManager.WebPubSub
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="WebPubSubReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<ReplicaResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<WebPubSubReplicaResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _replicaWebPubSubReplicasClientDiagnostics.CreateScope("ReplicaResource.RemoveTag");
+            using var scope = _webPubSubReplicaClientDiagnostics.CreateScope("WebPubSubReplicaResource.RemoveTag");
             scope.Start();
             try
             {
@@ -902,13 +902,13 @@ namespace Azure.ResourceManager.WebPubSub
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _replicaWebPubSubReplicasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new ReplicaResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _webPubSubReplicaRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new WebPubSubReplicaResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ReplicaData(current.Location);
+                    var patch = new WebPubSubReplicaData(current.Location);
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.WebPubSub
 {
     /// <summary>
     /// A class representing a collection of <see cref="WebPubSubReplicaSharedPrivateLinkResource"/> and their operations.
-    /// Each <see cref="WebPubSubReplicaSharedPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="ReplicaResource"/>.
-    /// To get a <see cref="WebPubSubReplicaSharedPrivateLinkResourceCollection"/> instance call the GetWebPubSubReplicaSharedPrivateLinkResources method from an instance of <see cref="ReplicaResource"/>.
+    /// Each <see cref="WebPubSubReplicaSharedPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="WebPubSubReplicaResource"/>.
+    /// To get a <see cref="WebPubSubReplicaSharedPrivateLinkResourceCollection"/> instance call the GetWebPubSubReplicaSharedPrivateLinkResources method from an instance of <see cref="WebPubSubReplicaResource"/>.
     /// </summary>
     public partial class WebPubSubReplicaSharedPrivateLinkResourceCollection : ArmCollection, IEnumerable<WebPubSubReplicaSharedPrivateLinkResource>, IAsyncEnumerable<WebPubSubReplicaSharedPrivateLinkResource>
     {
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.WebPubSub
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ReplicaResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ReplicaResource.ResourceType), nameof(id));
+            if (id.ResourceType != WebPubSubReplicaResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, WebPubSubReplicaResource.ResourceType), nameof(id));
         }
 
         /// <summary>

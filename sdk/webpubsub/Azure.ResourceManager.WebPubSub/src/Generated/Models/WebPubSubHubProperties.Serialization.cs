@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 return null;
             }
             IList<WebPubSubEventHandler> eventHandlers = default;
-            IList<EventListener> eventListeners = default;
+            IList<WebPubSubEventListener> eventListeners = default;
             string anonymousConnectPolicy = default;
             int? webSocketKeepAliveIntervalInSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -131,10 +131,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     {
                         continue;
                     }
-                    List<EventListener> array = new List<EventListener>();
+                    List<WebPubSubEventListener> array = new List<WebPubSubEventListener>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventListener.DeserializeEventListener(item, options));
+                        array.Add(WebPubSubEventListener.DeserializeWebPubSubEventListener(item, options));
                     }
                     eventListeners = array;
                     continue;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new WebPubSubHubProperties(eventHandlers ?? new ChangeTrackingList<WebPubSubEventHandler>(), eventListeners ?? new ChangeTrackingList<EventListener>(), anonymousConnectPolicy, webSocketKeepAliveIntervalInSeconds, serializedAdditionalRawData);
+            return new WebPubSubHubProperties(eventHandlers ?? new ChangeTrackingList<WebPubSubEventHandler>(), eventListeners ?? new ChangeTrackingList<WebPubSubEventListener>(), anonymousConnectPolicy, webSocketKeepAliveIntervalInSeconds, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary>
     /// An endpoint specifying where Web PubSub should send events to.
     /// Please note <see cref="EventListenerEndpoint"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="EventHubEndpoint"/>.
+    /// The available derived classes include <see cref="WebPubSubEventHubEndpoint"/>.
     /// </summary>
     public abstract partial class EventListenerEndpoint
     {

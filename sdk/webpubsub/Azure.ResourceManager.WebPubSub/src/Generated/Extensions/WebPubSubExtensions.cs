@@ -72,22 +72,22 @@ namespace Azure.ResourceManager.WebPubSub
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CustomDomainResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CustomDomainResource.CreateResourceIdentifier" /> to create a <see cref="CustomDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebPubSubCustomDomainResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebPubSubCustomDomainResource.CreateResourceIdentifier" /> to create a <see cref="WebPubSubCustomDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWebPubSubArmClient.GetCustomDomainResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWebPubSubArmClient.GetWebPubSubCustomDomainResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="CustomDomainResource"/> object. </returns>
-        public static CustomDomainResource GetCustomDomainResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebPubSubCustomDomainResource"/> object. </returns>
+        public static WebPubSubCustomDomainResource GetWebPubSubCustomDomainResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableWebPubSubArmClient(client).GetCustomDomainResource(id);
+            return GetMockableWebPubSubArmClient(client).GetWebPubSubCustomDomainResource(id);
         }
 
         /// <summary>
@@ -129,22 +129,22 @@ namespace Azure.ResourceManager.WebPubSub
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ReplicaResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ReplicaResource.CreateResourceIdentifier" /> to create a <see cref="ReplicaResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WebPubSubReplicaResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WebPubSubReplicaResource.CreateResourceIdentifier" /> to create a <see cref="WebPubSubReplicaResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableWebPubSubArmClient.GetReplicaResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWebPubSubArmClient.GetWebPubSubReplicaResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ReplicaResource"/> object. </returns>
-        public static ReplicaResource GetReplicaResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="WebPubSubReplicaResource"/> object. </returns>
+        public static WebPubSubReplicaResource GetWebPubSubReplicaResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableWebPubSubArmClient(client).GetReplicaResource(id);
+            return GetMockableWebPubSubArmClient(client).GetWebPubSubReplicaResource(id);
         }
 
         /// <summary>

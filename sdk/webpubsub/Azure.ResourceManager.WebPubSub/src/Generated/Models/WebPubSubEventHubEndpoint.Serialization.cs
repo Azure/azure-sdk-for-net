@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    public partial class EventHubEndpoint : IUtf8JsonSerializable, IJsonModel<EventHubEndpoint>
+    public partial class WebPubSubEventHubEndpoint : IUtf8JsonSerializable, IJsonModel<WebPubSubEventHubEndpoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubEndpoint>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebPubSubEventHubEndpoint>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<EventHubEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<WebPubSubEventHubEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EventHubEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WebPubSubEventHubEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventHubEndpoint)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(WebPubSubEventHubEndpoint)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.WebPubSub.Models
             writer.WriteStringValue(EventHubName);
         }
 
-        EventHubEndpoint IJsonModel<EventHubEndpoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        WebPubSubEventHubEndpoint IJsonModel<WebPubSubEventHubEndpoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EventHubEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WebPubSubEventHubEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventHubEndpoint)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(WebPubSubEventHubEndpoint)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEventHubEndpoint(document.RootElement, options);
+            return DeserializeWebPubSubEventHubEndpoint(document.RootElement, options);
         }
 
-        internal static EventHubEndpoint DeserializeEventHubEndpoint(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static WebPubSubEventHubEndpoint DeserializeWebPubSubEventHubEndpoint(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EventHubEndpoint(type, serializedAdditionalRawData, fullyQualifiedNamespace, eventHubName);
+            return new WebPubSubEventHubEndpoint(type, serializedAdditionalRawData, fullyQualifiedNamespace, eventHubName);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -166,9 +166,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<EventHubEndpoint>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<WebPubSubEventHubEndpoint>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EventHubEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WebPubSubEventHubEndpoint>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -177,26 +177,26 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(EventHubEndpoint)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebPubSubEventHubEndpoint)} does not support writing '{options.Format}' format.");
             }
         }
 
-        EventHubEndpoint IPersistableModel<EventHubEndpoint>.Create(BinaryData data, ModelReaderWriterOptions options)
+        WebPubSubEventHubEndpoint IPersistableModel<WebPubSubEventHubEndpoint>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EventHubEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<WebPubSubEventHubEndpoint>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeEventHubEndpoint(document.RootElement, options);
+                        return DeserializeWebPubSubEventHubEndpoint(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventHubEndpoint)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebPubSubEventHubEndpoint)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<EventHubEndpoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<WebPubSubEventHubEndpoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

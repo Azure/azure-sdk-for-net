@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <summary> Initializes a new instance of <see cref="CustomDomainList"/>. </summary>
         internal CustomDomainList()
         {
-            Value = new ChangeTrackingList<CustomDomainData>();
+            Value = new ChangeTrackingList<WebPubSubCustomDomainData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomDomainList"/>. </summary>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// It's null for now, added for future use.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomDomainList(IReadOnlyList<CustomDomainData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CustomDomainList(IReadOnlyList<WebPubSubCustomDomainData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         }
 
         /// <summary> List of custom domains that bind to this resource. </summary>
-        public IReadOnlyList<CustomDomainData> Value { get; }
+        public IReadOnlyList<WebPubSubCustomDomainData> Value { get; }
         /// <summary>
         /// The URL the client should use to fetch the next page (per server side paging).
         /// It's null for now, added for future use.

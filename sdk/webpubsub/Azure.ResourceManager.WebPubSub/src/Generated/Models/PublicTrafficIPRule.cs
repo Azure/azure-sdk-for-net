@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.WebPubSub.Models
 {
     /// <summary> An IP rule. </summary>
-    public partial class IPRule
+    public partial class PublicTrafficIPRule
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="IPRule"/>. </summary>
-        public IPRule()
+        /// <summary> Initializes a new instance of <see cref="PublicTrafficIPRule"/>. </summary>
+        public PublicTrafficIPRule()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="IPRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublicTrafficIPRule"/>. </summary>
         /// <param name="value"> An IP or CIDR or ServiceTag. </param>
         /// <param name="action"> Azure Networking ACL Action. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IPRule(string value, AclAction? action, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PublicTrafficIPRule(string value, AclAction? action, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             Action = action;

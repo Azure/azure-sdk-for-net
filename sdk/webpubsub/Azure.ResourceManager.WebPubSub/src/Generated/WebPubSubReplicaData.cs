@@ -14,10 +14,10 @@ using Azure.ResourceManager.WebPubSub.Models;
 namespace Azure.ResourceManager.WebPubSub
 {
     /// <summary>
-    /// A class representing the Replica data model.
+    /// A class representing the WebPubSubReplica data model.
     /// A class represent a replica resource.
     /// </summary>
-    public partial class ReplicaData : TrackedResourceData
+    public partial class WebPubSubReplicaData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.WebPubSub
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ReplicaData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubReplicaData"/>. </summary>
         /// <param name="location"> The location. </param>
-        public ReplicaData(AzureLocation location) : base(location)
+        public WebPubSubReplicaData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReplicaData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubReplicaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// When it's false, the data plane of the resource is started.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReplicaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BillingInfoSku sku, WebPubSubProvisioningState? provisioningState, string regionEndpointEnabled, string resourceStopped, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal WebPubSubReplicaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BillingInfoSku sku, WebPubSubProvisioningState? provisioningState, string regionEndpointEnabled, string resourceStopped, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             ProvisioningState = provisioningState;
@@ -85,8 +85,8 @@ namespace Azure.ResourceManager.WebPubSub
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReplicaData"/> for deserialization. </summary>
-        internal ReplicaData()
+        /// <summary> Initializes a new instance of <see cref="WebPubSubReplicaData"/> for deserialization. </summary>
+        internal WebPubSubReplicaData()
         {
         }
 

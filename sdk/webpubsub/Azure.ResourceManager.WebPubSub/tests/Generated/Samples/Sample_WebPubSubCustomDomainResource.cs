@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.WebPubSub.Samples
 {
-    public partial class Sample_CustomDomainResource
+    public partial class Sample_WebPubSubCustomDomainResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -28,21 +28,21 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CustomDomainResource created on azure
-            // for more information of creating CustomDomainResource, please refer to the document of CustomDomainResource
+            // this example assumes you already have this WebPubSubCustomDomainResource created on azure
+            // for more information of creating WebPubSubCustomDomainResource, please refer to the document of WebPubSubCustomDomainResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string resourceName = "myWebPubSubService";
             string name = "example";
-            ResourceIdentifier customDomainResourceId = CustomDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, name);
-            CustomDomainResource customDomain = client.GetCustomDomainResource(customDomainResourceId);
+            ResourceIdentifier webPubSubCustomDomainResourceId = WebPubSubCustomDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, name);
+            WebPubSubCustomDomainResource webPubSubCustomDomain = client.GetWebPubSubCustomDomainResource(webPubSubCustomDomainResourceId);
 
             // invoke the operation
-            CustomDomainResource result = await customDomain.GetAsync();
+            WebPubSubCustomDomainResource result = await webPubSubCustomDomain.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            CustomDomainData resourceData = result.Data;
+            WebPubSubCustomDomainData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -59,17 +59,17 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CustomDomainResource created on azure
-            // for more information of creating CustomDomainResource, please refer to the document of CustomDomainResource
+            // this example assumes you already have this WebPubSubCustomDomainResource created on azure
+            // for more information of creating WebPubSubCustomDomainResource, please refer to the document of WebPubSubCustomDomainResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string resourceName = "myWebPubSubService";
             string name = "example";
-            ResourceIdentifier customDomainResourceId = CustomDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, name);
-            CustomDomainResource customDomain = client.GetCustomDomainResource(customDomainResourceId);
+            ResourceIdentifier webPubSubCustomDomainResourceId = WebPubSubCustomDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, name);
+            WebPubSubCustomDomainResource webPubSubCustomDomain = client.GetWebPubSubCustomDomainResource(webPubSubCustomDomainResourceId);
 
             // invoke the operation
-            await customDomain.DeleteAsync(WaitUntil.Completed);
+            await webPubSubCustomDomain.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -86,26 +86,26 @@ namespace Azure.ResourceManager.WebPubSub.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CustomDomainResource created on azure
-            // for more information of creating CustomDomainResource, please refer to the document of CustomDomainResource
+            // this example assumes you already have this WebPubSubCustomDomainResource created on azure
+            // for more information of creating WebPubSubCustomDomainResource, please refer to the document of WebPubSubCustomDomainResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "myResourceGroup";
             string resourceName = "myWebPubSubService";
             string name = "myDomain";
-            ResourceIdentifier customDomainResourceId = CustomDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, name);
-            CustomDomainResource customDomain = client.GetCustomDomainResource(customDomainResourceId);
+            ResourceIdentifier webPubSubCustomDomainResourceId = WebPubSubCustomDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName, name);
+            WebPubSubCustomDomainResource webPubSubCustomDomain = client.GetWebPubSubCustomDomainResource(webPubSubCustomDomainResourceId);
 
             // invoke the operation
-            CustomDomainData data = new CustomDomainData("example.com", new WritableSubResource
+            WebPubSubCustomDomainData data = new WebPubSubCustomDomainData("example.com", new WritableSubResource
             {
                 Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/myResourceGroup/providers/Microsoft.SignalRService/WebPubSub/myWebPubSubService/customCertificates/myCert"),
             });
-            ArmOperation<CustomDomainResource> lro = await customDomain.UpdateAsync(WaitUntil.Completed, data);
-            CustomDomainResource result = lro.Value;
+            ArmOperation<WebPubSubCustomDomainResource> lro = await webPubSubCustomDomain.UpdateAsync(WaitUntil.Completed, data);
+            WebPubSubCustomDomainResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            CustomDomainData resourceData = result.Data;
+            WebPubSubCustomDomainData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

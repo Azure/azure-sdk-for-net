@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            IReadOnlyList<ReplicaData> value = default;
+            IReadOnlyList<WebPubSubReplicaData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     {
                         continue;
                     }
-                    List<ReplicaData> array = new List<ReplicaData>();
+                    List<WebPubSubReplicaData> array = new List<WebPubSubReplicaData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReplicaData.DeserializeReplicaData(item, options));
+                        array.Add(WebPubSubReplicaData.DeserializeWebPubSubReplicaData(item, options));
                     }
                     value = array;
                     continue;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ReplicaList(value ?? new ChangeTrackingList<ReplicaData>(), nextLink, serializedAdditionalRawData);
+            return new ReplicaList(value ?? new ChangeTrackingList<WebPubSubReplicaData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

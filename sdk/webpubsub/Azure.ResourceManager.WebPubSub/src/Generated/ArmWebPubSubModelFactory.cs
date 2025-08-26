@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// </param>
         /// <param name="socketIOServiceMode"> SocketIO settings for the resource. </param>
         /// <returns> A new <see cref="WebPubSub.WebPubSubData"/> instance for mocking. </returns>
-        public static WebPubSubData WebPubSubData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BillingInfoSku sku = null, ServiceKind? kind = null, ManagedServiceIdentity identity = null, WebPubSubProvisioningState? provisioningState = null, string externalIP = null, string hostName = null, int? publicPort = null, int? serverPort = null, string version = null, IEnumerable<WebPubSubPrivateEndpointConnectionData> privateEndpointConnections = null, IEnumerable<WebPubSubSharedPrivateLinkData> sharedPrivateLinkResources = null, bool? isClientCertEnabled = null, string hostNamePrefix = null, LiveTraceConfiguration liveTraceConfiguration = null, IEnumerable<ResourceLogCategory> resourceLogCategories = null, WebPubSubNetworkAcls networkAcls = null, ApplicationFirewallSettings applicationFirewall = null, string publicNetworkAccess = null, bool? isLocalAuthDisabled = null, bool? isAadAuthDisabled = null, string regionEndpointEnabled = null, string resourceStopped = null, string socketIOServiceMode = null)
+        public static WebPubSubData WebPubSubData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BillingInfoSku sku = null, WebPubSubServiceKind? kind = null, ManagedServiceIdentity identity = null, WebPubSubProvisioningState? provisioningState = null, string externalIP = null, string hostName = null, int? publicPort = null, int? serverPort = null, string version = null, IEnumerable<WebPubSubPrivateEndpointConnectionData> privateEndpointConnections = null, IEnumerable<WebPubSubSharedPrivateLinkData> sharedPrivateLinkResources = null, bool? isClientCertEnabled = null, string hostNamePrefix = null, LiveTraceConfiguration liveTraceConfiguration = null, IEnumerable<ResourceLogCategory> resourceLogCategories = null, WebPubSubNetworkAcls networkAcls = null, ApplicationFirewallSettings applicationFirewall = null, string publicNetworkAccess = null, bool? isLocalAuthDisabled = null, bool? isAadAuthDisabled = null, string regionEndpointEnabled = null, string resourceStopped = null, string socketIOServiceMode = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<WebPubSubPrivateEndpointConnectionData>();
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="WebPubSub.CustomDomainData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSub.WebPubSubCustomDomainData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -268,10 +268,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="domainName"> The custom domain name. </param>
         /// <param name="customCertificateId"> Reference to a resource. </param>
-        /// <returns> A new <see cref="WebPubSub.CustomDomainData"/> instance for mocking. </returns>
-        public static CustomDomainData CustomDomainData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WebPubSubProvisioningState? provisioningState = null, string domainName = null, ResourceIdentifier customCertificateId = null)
+        /// <returns> A new <see cref="WebPubSub.WebPubSubCustomDomainData"/> instance for mocking. </returns>
+        public static WebPubSubCustomDomainData WebPubSubCustomDomainData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WebPubSubProvisioningState? provisioningState = null, string domainName = null, ResourceIdentifier customCertificateId = null)
         {
-            return new CustomDomainData(
+            return new WebPubSubCustomDomainData(
                 id,
                 name,
                 resourceType,
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="WebPubSub.ReplicaData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSub.WebPubSubReplicaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -357,12 +357,12 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// When it's true, the data plane of the resource is shutdown.
         /// When it's false, the data plane of the resource is started.
         /// </param>
-        /// <returns> A new <see cref="WebPubSub.ReplicaData"/> instance for mocking. </returns>
-        public static ReplicaData ReplicaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BillingInfoSku sku = null, WebPubSubProvisioningState? provisioningState = null, string regionEndpointEnabled = null, string resourceStopped = null)
+        /// <returns> A new <see cref="WebPubSub.WebPubSubReplicaData"/> instance for mocking. </returns>
+        public static WebPubSubReplicaData WebPubSubReplicaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, BillingInfoSku sku = null, WebPubSubProvisioningState? provisioningState = null, string regionEndpointEnabled = null, string resourceStopped = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ReplicaData(
+            return new WebPubSubReplicaData(
                 id,
                 name,
                 resourceType,

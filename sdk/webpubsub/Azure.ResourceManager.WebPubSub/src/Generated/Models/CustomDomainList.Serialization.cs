@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             {
                 return null;
             }
-            IReadOnlyList<CustomDomainData> value = default;
+            IReadOnlyList<WebPubSubCustomDomainData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     {
                         continue;
                     }
-                    List<CustomDomainData> array = new List<CustomDomainData>();
+                    List<WebPubSubCustomDomainData> array = new List<WebPubSubCustomDomainData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomDomainData.DeserializeCustomDomainData(item, options));
+                        array.Add(WebPubSubCustomDomainData.DeserializeWebPubSubCustomDomainData(item, options));
                     }
                     value = array;
                     continue;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CustomDomainList(value ?? new ChangeTrackingList<CustomDomainData>(), nextLink, serializedAdditionalRawData);
+            return new CustomDomainList(value ?? new ChangeTrackingList<WebPubSubCustomDomainData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

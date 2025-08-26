@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.WebPubSub
     /// A Class representing a WebPubSubReplicaSharedPrivateLinkResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WebPubSubReplicaSharedPrivateLinkResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetWebPubSubReplicaSharedPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ReplicaResource"/> using the GetWebPubSubReplicaSharedPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebPubSubReplicaResource"/> using the GetWebPubSubReplicaSharedPrivateLinkResource method.
     /// </summary>
     public partial class WebPubSubReplicaSharedPrivateLinkResource : ArmResource
     {
