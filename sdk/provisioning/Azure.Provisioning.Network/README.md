@@ -1,4 +1,4 @@
-# Azure.Provisioning.Network client library for .NET
+# Azure Provisioning Network client library for .NET
 
 Azure.Provisioning.Network simplifies declarative resource provisioning in .NET.
 
