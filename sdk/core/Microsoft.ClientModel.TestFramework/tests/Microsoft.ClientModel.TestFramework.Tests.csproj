@@ -16,4 +16,20 @@
     <PackageReference Include="NUnit" VersionOverride="4.4.0" />
     <PackageReference Include="Moq" />
   </ItemGroup>
+
+  <ItemGroup>
+    <!--
+      Explicit references to pull in patched versions of ASP.NET Core packages
+    -->
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Core" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+      <_Parameter1>SourcePath</_Parameter1>
+      <_Parameter2>$(MSBuildProjectDirectory)</_Parameter2>
+    </AssemblyAttribute>
+  </ItemGroup>
 </Project>
