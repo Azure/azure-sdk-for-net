@@ -794,11 +794,11 @@
 # ServiceOwners:                                                   @hmlam
 
 # PRLabel: %Search
-/sdk/search/                                                       @ShivangiReja @Azure/azsdk-search
+/sdk/search/                                                       @Azure/azure-sdk-write-search @Azure/azsdk-search
 
 # ServiceLabel: %Search
 # AzureSdkOwners:                                                  @ShivangiReja
-# ServiceOwners:                                                   @arv100kri @bleroy @tjacobhi
+# ServiceOwners:                                                   @kuanlu95 @mattgotteiner
 
 # ServiceLabel: %Security
 # ServiceOwners:                                                   @chlahav
