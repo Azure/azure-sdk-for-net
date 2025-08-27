@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Redis.Models
         private const string StableValue = "Stable";
         private const string PreviewValue = "Preview";
 
-        /// <summary> Stable. </summary>
+        /// <summary> Stable channel receives updates, which may include important security and stability updates, later than Preview channel. *. </summary>
         public static UpdateChannel Stable { get; } = new UpdateChannel(StableValue);
-        /// <summary> Preview. </summary>
+        /// <summary> Preview channel normally receives updates before Stable channel, and is the recommended channel for non-production workloads. *. </summary>
         public static UpdateChannel Preview { get; } = new UpdateChannel(PreviewValue);
         /// <summary> Determines if two <see cref="UpdateChannel"/> values are the same. </summary>
         public static bool operator ==(UpdateChannel left, UpdateChannel right) => left.Equals(right);

@@ -47,54 +47,6 @@ namespace Azure.ResourceManager.Redis.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RedisFirewallRuleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RedisFirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="RedisFirewallRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RedisFirewallRuleResource"/> object. </returns>
-        public virtual RedisFirewallRuleResource GetRedisFirewallRuleResource(ResourceIdentifier id)
-        {
-            RedisFirewallRuleResource.ValidateResourceId(id);
-            return new RedisFirewallRuleResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="RedisPatchScheduleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RedisPatchScheduleResource.CreateResourceIdentifier" /> to create a <see cref="RedisPatchScheduleResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RedisPatchScheduleResource"/> object. </returns>
-        public virtual RedisPatchScheduleResource GetRedisPatchScheduleResource(ResourceIdentifier id)
-        {
-            RedisPatchScheduleResource.ValidateResourceId(id);
-            return new RedisPatchScheduleResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="RedisLinkedServerWithPropertyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RedisLinkedServerWithPropertyResource.CreateResourceIdentifier" /> to create a <see cref="RedisLinkedServerWithPropertyResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RedisLinkedServerWithPropertyResource"/> object. </returns>
-        public virtual RedisLinkedServerWithPropertyResource GetRedisLinkedServerWithPropertyResource(ResourceIdentifier id)
-        {
-            RedisLinkedServerWithPropertyResource.ValidateResourceId(id);
-            return new RedisLinkedServerWithPropertyResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="RedisPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RedisPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="RedisPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RedisPrivateEndpointConnectionResource"/> object. </returns>
-        public virtual RedisPrivateEndpointConnectionResource GetRedisPrivateEndpointConnectionResource(ResourceIdentifier id)
-        {
-            RedisPrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new RedisPrivateEndpointConnectionResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="RedisCacheAccessPolicyResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="RedisCacheAccessPolicyResource.CreateResourceIdentifier" /> to create a <see cref="RedisCacheAccessPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -116,6 +68,54 @@ namespace Azure.ResourceManager.Redis.Mocking
         {
             RedisCacheAccessPolicyAssignmentResource.ValidateResourceId(id);
             return new RedisCacheAccessPolicyAssignmentResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RedisFirewallRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RedisFirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="RedisFirewallRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RedisFirewallRuleResource"/> object. </returns>
+        public virtual RedisFirewallRuleResource GetRedisFirewallRuleResource(ResourceIdentifier id)
+        {
+            RedisFirewallRuleResource.ValidateResourceId(id);
+            return new RedisFirewallRuleResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RedisLinkedServerWithPropertyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RedisLinkedServerWithPropertyResource.CreateResourceIdentifier" /> to create a <see cref="RedisLinkedServerWithPropertyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RedisLinkedServerWithPropertyResource"/> object. </returns>
+        public virtual RedisLinkedServerWithPropertyResource GetRedisLinkedServerWithPropertyResource(ResourceIdentifier id)
+        {
+            RedisLinkedServerWithPropertyResource.ValidateResourceId(id);
+            return new RedisLinkedServerWithPropertyResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RedisPatchScheduleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RedisPatchScheduleResource.CreateResourceIdentifier" /> to create a <see cref="RedisPatchScheduleResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RedisPatchScheduleResource"/> object. </returns>
+        public virtual RedisPatchScheduleResource GetRedisPatchScheduleResource(ResourceIdentifier id)
+        {
+            RedisPatchScheduleResource.ValidateResourceId(id);
+            return new RedisPatchScheduleResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RedisPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RedisPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="RedisPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RedisPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual RedisPrivateEndpointConnectionResource GetRedisPrivateEndpointConnectionResource(ResourceIdentifier id)
+        {
+            RedisPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new RedisPrivateEndpointConnectionResource(Client, id);
         }
     }
 }

@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Redis.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary> Public internet access to the cache, via its public IP address, is enabled. Connections may use any network path. *. </summary>
         public static RedisPublicNetworkAccess Enabled { get; } = new RedisPublicNetworkAccess(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary> Public internet access to the cahce, via its public IP address, is disabled. Connections must use be made via private endpoints. *. </summary>
         public static RedisPublicNetworkAccess Disabled { get; } = new RedisPublicNetworkAccess(DisabledValue);
         /// <summary> Determines if two <see cref="RedisPublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(RedisPublicNetworkAccess left, RedisPublicNetworkAccess right) => left.Equals(right);

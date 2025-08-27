@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.Redis.Models
         private const string StandardValue = "Standard";
         private const string PremiumValue = "Premium";
 
-        /// <summary> Basic. </summary>
+        /// <summary> The well known 'Basic' SKU for Azure Cache for Redis. Basic SKU does not have an availability SLA. *. </summary>
         public static RedisSkuName Basic { get; } = new RedisSkuName(BasicValue);
-        /// <summary> Standard. </summary>
+        /// <summary> The well known 'Standard' SKU for Azure Cache for Redis. Standard SKU has an availability SLA. *. </summary>
         public static RedisSkuName Standard { get; } = new RedisSkuName(StandardValue);
-        /// <summary> Premium. </summary>
+        /// <summary> The well known 'Premium' SKU for Azure Cache for Redis. Premium SKU has an availability SLA, and higher performance tiers and more features compared with Standard SKU. *. </summary>
         public static RedisSkuName Premium { get; } = new RedisSkuName(PremiumValue);
         /// <summary> Determines if two <see cref="RedisSkuName"/> values are the same. </summary>
         public static bool operator ==(RedisSkuName left, RedisSkuName right) => left.Equals(right);

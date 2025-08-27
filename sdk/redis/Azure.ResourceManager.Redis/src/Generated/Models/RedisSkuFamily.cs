@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Redis.Models
         private const string BasicOrStandardValue = "C";
         private const string PremiumValue = "P";
 
-        /// <summary> C. </summary>
+        /// <summary> The SKU family to use - must be 'C' for Basic/Standard SKU redis caches. *. </summary>
         public static RedisSkuFamily BasicOrStandard { get; } = new RedisSkuFamily(BasicOrStandardValue);
-        /// <summary> P. </summary>
+        /// <summary> The SKU family to use - must be 'P' for Premium SKU redis caches. *. </summary>
         public static RedisSkuFamily Premium { get; } = new RedisSkuFamily(PremiumValue);
         /// <summary> Determines if two <see cref="RedisSkuFamily"/> values are the same. </summary>
         public static bool operator ==(RedisSkuFamily left, RedisSkuFamily right) => left.Equals(right);

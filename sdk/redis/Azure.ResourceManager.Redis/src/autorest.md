@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Redis
 namespace: Azure.ResourceManager.Redis
-require: https://github.com/Azure/azure-rest-api-specs/blob/9069559e0fe5ed52b884ddc658fa539ec67c7ef8/specification/redis/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/e6963521220d37d8bcd53d974bb52bce0b673af6/specification/redis/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -110,7 +110,7 @@ directive:
     transform: >
       $.OperationStatus.allOf = [
         {
-          "$ref": "../../../../../common-types/resource-management/v2/types.json#/definitions/OperationStatusResult"
+          "$ref": "../../../../../common-types/resource-management/v3/types.json#/definitions/OperationStatusResult"
         }
       ];
       $.RedisResource['x-ms-client-name'] = 'Redis';

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Redis.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RedisCommonConfiguration"/>. </summary>
-        /// <param name="isRdbBackupEnabled"> Specifies whether the rdb backup is enabled. </param>
+        /// <param name="isRdbBackupEnabled"> Specifies whether the RDB backup is enabled. </param>
         /// <param name="rdbBackupFrequency"> Specifies the frequency for creating rdb backup in minutes. Valid values: (15, 30, 60, 360, 720, 1440). </param>
         /// <param name="rdbBackupMaxSnapshotCount"> Specifies the maximum number of snapshots for rdb backup. </param>
         /// <param name="rdbStorageConnectionString"> The storage account connection string for storing rdb file. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="preferredDataArchiveAuthMethod"> Preferred auth method to communicate to storage account used for data archive, specify SAS or ManagedIdentity, default value is SAS. </param>
         /// <param name="preferredDataPersistenceAuthMethod"> Preferred auth method to communicate to storage account used for data persistence, specify SAS or ManagedIdentity, default value is SAS. </param>
         /// <param name="zonalConfiguration"> Zonal Configuration. </param>
-        /// <param name="authNotRequired"> Specifies whether the authentication is disabled. Setting this property is highly discouraged from security point of view. </param>
+        /// <param name="authNotRequired"> Specifies whether the authentication is disabled. Setting this property is highly discouraged from security point of view; you should never disable authentication using this property!. </param>
         /// <param name="storageSubscriptionId"> SubscriptionId of the storage account for persistence (aof/rdb) using ManagedIdentity. </param>
         /// <param name="isAadEnabled"> Specifies whether AAD based authentication has been enabled or disabled for the cache. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Redis.Models
             AdditionalProperties = additionalProperties;
         }
 
-        /// <summary> Specifies whether the rdb backup is enabled. </summary>
+        /// <summary> Specifies whether the RDB backup is enabled. </summary>
         [WirePath("rdb-backup-enabled")]
         public bool? IsRdbBackupEnabled { get; set; }
         /// <summary> Specifies the frequency for creating rdb backup in minutes. Valid values: (15, 30, 60, 360, 720, 1440). </summary>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <summary> Zonal Configuration. </summary>
         [WirePath("zonal-configuration")]
         public string ZonalConfiguration { get; }
-        /// <summary> Specifies whether the authentication is disabled. Setting this property is highly discouraged from security point of view. </summary>
+        /// <summary> Specifies whether the authentication is disabled. Setting this property is highly discouraged from security point of view; you should never disable authentication using this property!. </summary>
         [WirePath("authnotrequired")]
         public string AuthNotRequired { get; set; }
         /// <summary> SubscriptionId of the storage account for persistence (aof/rdb) using ManagedIdentity. </summary>

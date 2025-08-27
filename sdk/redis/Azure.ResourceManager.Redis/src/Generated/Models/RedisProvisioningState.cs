@@ -36,31 +36,31 @@ namespace Azure.ResourceManager.Redis.Models
         private const string UpdatingValue = "Updating";
         private const string ConfiguringAADValue = "ConfiguringAAD";
 
-        /// <summary> Creating. </summary>
+        /// <summary> A create operation is in progress. *. </summary>
         public static RedisProvisioningState Creating { get; } = new RedisProvisioningState(CreatingValue);
-        /// <summary> Deleting. </summary>
+        /// <summary> A delete operation is in progress. *. </summary>
         public static RedisProvisioningState Deleting { get; } = new RedisProvisioningState(DeletingValue);
-        /// <summary> Disabled. </summary>
+        /// <summary> The cache is disabled and cannot be used. *. </summary>
         public static RedisProvisioningState Disabled { get; } = new RedisProvisioningState(DisabledValue);
-        /// <summary> Failed. </summary>
+        /// <summary> An operation such as create or update failed. If you failed to create the cache it will not be in a usable state, so you should delete and recreate it. *. </summary>
         public static RedisProvisioningState Failed { get; } = new RedisProvisioningState(FailedValue);
-        /// <summary> Linking. </summary>
+        /// <summary> Georeplication link is in progress *. </summary>
         public static RedisProvisioningState Linking { get; } = new RedisProvisioningState(LinkingValue);
-        /// <summary> Provisioning. </summary>
+        /// <summary> An operation is in progress *. </summary>
         public static RedisProvisioningState Provisioning { get; } = new RedisProvisioningState(ProvisioningValue);
-        /// <summary> RecoveringScaleFailure. </summary>
+        /// <summary> A scaling operation encountered an error and recovery is in progress. *. </summary>
         public static RedisProvisioningState RecoveringScaleFailure { get; } = new RedisProvisioningState(RecoveringScaleFailureValue);
-        /// <summary> Scaling. </summary>
+        /// <summary> A scaling operation is in progress *. </summary>
         public static RedisProvisioningState Scaling { get; } = new RedisProvisioningState(ScalingValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary> The most recent operation successfully completed *. </summary>
         public static RedisProvisioningState Succeeded { get; } = new RedisProvisioningState(SucceededValue);
-        /// <summary> Unlinking. </summary>
+        /// <summary> Georeplication unlink is in progress *. </summary>
         public static RedisProvisioningState Unlinking { get; } = new RedisProvisioningState(UnlinkingValue);
-        /// <summary> Unprovisioning. </summary>
+        /// <summary> The cache may be being disabled *. </summary>
         public static RedisProvisioningState Unprovisioning { get; } = new RedisProvisioningState(UnprovisioningValue);
-        /// <summary> Updating. </summary>
+        /// <summary> An update operation is in progress. *. </summary>
         public static RedisProvisioningState Updating { get; } = new RedisProvisioningState(UpdatingValue);
-        /// <summary> ConfiguringAAD. </summary>
+        /// <summary> An AAD configuration update operation is in progress. *. </summary>
         public static RedisProvisioningState ConfiguringAAD { get; } = new RedisProvisioningState(ConfiguringAADValue);
         /// <summary> Determines if two <see cref="RedisProvisioningState"/> values are the same. </summary>
         public static bool operator ==(RedisProvisioningState left, RedisProvisioningState right) => left.Equals(right);

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Redis
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="defaultName"> The name of the RedisPatchSchedule. </param>
         /// <param name="data"> Parameters to set the patching schedule for Redis cache. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Redis
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="defaultName"> The name of the RedisPatchSchedule. </param>
         /// <param name="data"> Parameters to set the patching schedule for Redis cache. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="defaultName"> The name of the RedisPatchSchedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RedisPatchScheduleResource>> GetAsync(RedisPatchScheduleDefaultName defaultName, CancellationToken cancellationToken = default)
         {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="defaultName"> The name of the RedisPatchSchedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RedisPatchScheduleResource> Get(RedisPatchScheduleDefaultName defaultName, CancellationToken cancellationToken = default)
         {
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="defaultName"> The name of the RedisPatchSchedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(RedisPatchScheduleDefaultName defaultName, CancellationToken cancellationToken = default)
         {
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="defaultName"> The name of the RedisPatchSchedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(RedisPatchScheduleDefaultName defaultName, CancellationToken cancellationToken = default)
         {
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="defaultName"> The name of the RedisPatchSchedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<NullableResponse<RedisPatchScheduleResource>> GetIfExistsAsync(RedisPatchScheduleDefaultName defaultName, CancellationToken cancellationToken = default)
         {
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
+        /// <param name="defaultName"> The name of the RedisPatchSchedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual NullableResponse<RedisPatchScheduleResource> GetIfExists(RedisPatchScheduleDefaultName defaultName, CancellationToken cancellationToken = default)
         {

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cache/CheckNameAvailability</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cache/checkNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Parameters supplied to the CheckNameAvailability Redis operation. The only supported resource type is 'Microsoft.Cache/redis'. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response> CheckRedisNameAvailabilityAsync(RedisNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cache/CheckNameAvailability</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cache/checkNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Parameters supplied to the CheckNameAvailability Redis operation. The only supported resource type is 'Microsoft.Cache/redis'. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response CheckRedisNameAvailability(RedisNameAvailabilityContent content, CancellationToken cancellationToken = default)
