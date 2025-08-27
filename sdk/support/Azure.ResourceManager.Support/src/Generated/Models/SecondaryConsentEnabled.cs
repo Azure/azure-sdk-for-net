@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Support.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SecondaryConsentEnabled"/>. </summary>
-        public SecondaryConsentEnabled()
+        internal SecondaryConsentEnabled()
         {
         }
 
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.Support.Models
         }
 
         /// <summary> User consent description. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
         /// <summary> The Azure service for which secondary consent is needed for case creation. </summary>
-        public string SecondaryConsentEnabledType { get; set; }
+        public string SecondaryConsentEnabledType { get; }
     }
 }

@@ -118,4 +118,8 @@ directive:
     transform: >
       $.ProblemClassificationProperties['properties']['secondaryConsentEnabled']['readOnly'] = true;
       $.ServiceProperties['properties']['resourceTypes']['readOnly'] = true;
+      $.MessageProperties['properties']['contentType']['x-ms-enum'] = {
+          name: 'TranscriptContentType',
+          modelAsString: true
+      };
 ```

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <param name="body"> Body of the communication. </param>
         /// <param name="createdOn"> Time in UTC (ISO 8601 format) when the communication was created. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChatTranscriptMessageProperties(string contentType, SupportTicketCommunicationDirection? communicationDirection, string sender, string body, DateTimeOffset? createdOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ChatTranscriptMessageProperties(TranscriptContentType? contentType, SupportTicketCommunicationDirection? communicationDirection, string sender, string body, DateTimeOffset? createdOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContentType = contentType;
             CommunicationDirection = communicationDirection;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Support.Models
         }
 
         /// <summary> Content type. </summary>
-        public string ContentType { get; }
+        public TranscriptContentType? ContentType { get; }
         /// <summary> Direction of communication. </summary>
         public SupportTicketCommunicationDirection? CommunicationDirection { get; }
         /// <summary> Name of the sender. </summary>

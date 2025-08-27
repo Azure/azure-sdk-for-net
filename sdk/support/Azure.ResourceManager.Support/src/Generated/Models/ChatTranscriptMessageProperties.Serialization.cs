@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Support.Models
             if (options.Format != "W" && Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("contentType"u8);
-                writer.WriteStringValue(ContentType);
+                writer.WriteStringValue(ContentType.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(CommunicationDirection))
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            string contentType = default;
+            TranscriptContentType? contentType = default;
             SupportTicketCommunicationDirection? communicationDirection = default;
             string sender = default;
             string body = default;
@@ -107,7 +107,11 @@ namespace Azure.ResourceManager.Support.Models
             {
                 if (property.NameEquals("contentType"u8))
                 {
-                    contentType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    contentType = new TranscriptContentType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("communicationDirection"u8))

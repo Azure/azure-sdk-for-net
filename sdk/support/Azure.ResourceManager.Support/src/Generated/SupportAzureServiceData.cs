@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="displayName"> Localized name of the Azure service. </param>
         /// <param name="resourceTypes"> ARM Resource types. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SupportAzureServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IList<string> resourceTypes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SupportAzureServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IReadOnlyList<string> resourceTypes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             ResourceTypes = resourceTypes;
@@ -74,6 +74,6 @@ namespace Azure.ResourceManager.Support
         /// <summary> Localized name of the Azure service. </summary>
         public string DisplayName { get; set; }
         /// <summary> ARM Resource types. </summary>
-        public IList<string> ResourceTypes { get; }
+        public IReadOnlyList<string> ResourceTypes { get; }
     }
 }
