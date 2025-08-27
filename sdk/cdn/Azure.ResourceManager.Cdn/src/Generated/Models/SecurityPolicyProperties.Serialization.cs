@@ -77,6 +77,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy": return SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy.DeserializeSecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy(element, options);
                     case "WebApplicationFirewall": return SecurityPolicyWebApplicationFirewall.DeserializeSecurityPolicyWebApplicationFirewall(element, options);
                 }
             }

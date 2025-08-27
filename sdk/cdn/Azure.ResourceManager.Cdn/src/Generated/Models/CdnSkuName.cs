@@ -25,20 +25,36 @@ namespace Azure.ResourceManager.Cdn.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string ClassicAzureFrontDoorValue = "Classic_AzureFrontDoor";
+        private const string StandardAzureFrontDoorValue = "Standard_AzureFrontDoor";
+        private const string PremiumAzureFrontDoorValue = "Premium_AzureFrontDoor";
         private const string StandardVerizonValue = "Standard_Verizon";
         private const string PremiumVerizonValue = "Premium_Verizon";
         private const string CustomVerizonValue = "Custom_Verizon";
         private const string StandardAkamaiValue = "Standard_Akamai";
         private const string StandardChinaCdnValue = "Standard_ChinaCdn";
         private const string StandardMicrosoftValue = "Standard_Microsoft";
-        private const string StandardAzureFrontDoorValue = "Standard_AzureFrontDoor";
-        private const string PremiumAzureFrontDoorValue = "Premium_AzureFrontDoor";
         private const string Standard955BandWidthChinaCdnValue = "Standard_955BandWidth_ChinaCdn";
         private const string StandardAvgBandWidthChinaCdnValue = "Standard_AvgBandWidth_ChinaCdn";
         private const string StandardPlusChinaCdnValue = "StandardPlus_ChinaCdn";
         private const string StandardPlus955BandWidthChinaCdnValue = "StandardPlus_955BandWidth_ChinaCdn";
         private const string StandardPlusAvgBandWidthChinaCdnValue = "StandardPlus_AvgBandWidth_ChinaCdn";
 
+        /// <summary>
+        /// Classic_AzureFrontDoor
+        /// Serialized Name: SkuName.Classic_AzureFrontDoor
+        /// </summary>
+        public static CdnSkuName ClassicAzureFrontDoor { get; } = new CdnSkuName(ClassicAzureFrontDoorValue);
+        /// <summary>
+        /// Standard_AzureFrontDoor
+        /// Serialized Name: SkuName.Standard_AzureFrontDoor
+        /// </summary>
+        public static CdnSkuName StandardAzureFrontDoor { get; } = new CdnSkuName(StandardAzureFrontDoorValue);
+        /// <summary>
+        /// Premium_AzureFrontDoor
+        /// Serialized Name: SkuName.Premium_AzureFrontDoor
+        /// </summary>
+        public static CdnSkuName PremiumAzureFrontDoor { get; } = new CdnSkuName(PremiumAzureFrontDoorValue);
         /// <summary>
         /// Standard_Verizon
         /// Serialized Name: SkuName.Standard_Verizon
@@ -69,16 +85,6 @@ namespace Azure.ResourceManager.Cdn.Models
         /// Serialized Name: SkuName.Standard_Microsoft
         /// </summary>
         public static CdnSkuName StandardMicrosoft { get; } = new CdnSkuName(StandardMicrosoftValue);
-        /// <summary>
-        /// Standard_AzureFrontDoor
-        /// Serialized Name: SkuName.Standard_AzureFrontDoor
-        /// </summary>
-        public static CdnSkuName StandardAzureFrontDoor { get; } = new CdnSkuName(StandardAzureFrontDoorValue);
-        /// <summary>
-        /// Premium_AzureFrontDoor
-        /// Serialized Name: SkuName.Premium_AzureFrontDoor
-        /// </summary>
-        public static CdnSkuName PremiumAzureFrontDoor { get; } = new CdnSkuName(PremiumAzureFrontDoorValue);
         /// <summary>
         /// Standard_955BandWidth_ChinaCdn
         /// Serialized Name: SkuName.Standard_955BandWidth_ChinaCdn

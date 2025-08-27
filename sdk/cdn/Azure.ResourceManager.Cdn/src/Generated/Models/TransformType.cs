@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
-    /// Describes what transforms were applied before matching.
+    /// Describes what transforms applied before matching.
     /// Serialized Name: TransformType
     /// </summary>
     public readonly partial struct TransformType : IEquatable<TransformType>

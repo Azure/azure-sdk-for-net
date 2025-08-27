@@ -309,6 +309,18 @@ namespace Azure.ResourceManager.Cdn.Models
             return new DomainValidationProperties(validationToken, expiresOn, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.FrontDoorStateProperties"/>. </summary>
+        /// <param name="provisioningState">
+        /// Provisioning status
+        /// Serialized Name: AFDStateProperties.provisioningState
+        /// </param>
+        /// <param name="deploymentStatus"> Serialized Name: AFDStateProperties.deploymentStatus. </param>
+        /// <returns> A new <see cref="Models.FrontDoorStateProperties"/> instance for mocking. </returns>
+        public static FrontDoorStateProperties FrontDoorStateProperties(FrontDoorProvisioningState? provisioningState = null, FrontDoorDeploymentStatus? deploymentStatus = null)
+        {
+            return new FrontDoorStateProperties(provisioningState, deploymentStatus, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.FrontDoorCustomDomainPatch"/>. </summary>
         /// <param name="profileName">
         /// The name of the profile which holds the domain.
@@ -446,17 +458,13 @@ namespace Azure.ResourceManager.Cdn.Models
         /// Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'
         /// Serialized Name: AFDOriginGroup.properties.sessionAffinityState
         /// </param>
-        /// <param name="authentication">
-        /// Authentication settings for origin in origin group.
-        /// Serialized Name: AFDOriginGroup.properties.authentication
-        /// </param>
         /// <param name="provisioningState">
         /// Provisioning status
         /// Serialized Name: AFDOriginGroup.properties.provisioningState
         /// </param>
         /// <param name="deploymentStatus"> Serialized Name: AFDOriginGroup.properties.deploymentStatus. </param>
         /// <returns> A new <see cref="Cdn.FrontDoorOriginGroupData"/> instance for mocking. </returns>
-        public static FrontDoorOriginGroupData FrontDoorOriginGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string profileName = null, LoadBalancingSettings loadBalancingSettings = null, HealthProbeSettings healthProbeSettings = null, int? trafficRestorationTimeInMinutes = null, EnabledState? sessionAffinityState = null, OriginAuthenticationProperties authentication = null, FrontDoorProvisioningState? provisioningState = null, FrontDoorDeploymentStatus? deploymentStatus = null)
+        public static FrontDoorOriginGroupData FrontDoorOriginGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string profileName = null, LoadBalancingSettings loadBalancingSettings = null, HealthProbeSettings healthProbeSettings = null, int? trafficRestorationTimeInMinutes = null, EnabledState? sessionAffinityState = null, FrontDoorProvisioningState? provisioningState = null, FrontDoorDeploymentStatus? deploymentStatus = null)
         {
             return new FrontDoorOriginGroupData(
                 id,
@@ -468,9 +476,81 @@ namespace Azure.ResourceManager.Cdn.Models
                 healthProbeSettings,
                 trafficRestorationTimeInMinutes,
                 sessionAffinityState,
-                authentication,
                 provisioningState,
                 deploymentStatus,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FrontDoorOriginGroupProperties"/>. </summary>
+        /// <param name="profileName">
+        /// The name of the profile which holds the origin group.
+        /// Serialized Name: AFDOriginGroupUpdatePropertiesParameters.profileName
+        /// </param>
+        /// <param name="loadBalancingSettings">
+        /// Load balancing settings for a backend pool
+        /// Serialized Name: AFDOriginGroupUpdatePropertiesParameters.loadBalancingSettings
+        /// </param>
+        /// <param name="healthProbeSettings">
+        /// Health probe settings to the origin that is used to determine the health of the origin.
+        /// Serialized Name: AFDOriginGroupUpdatePropertiesParameters.healthProbeSettings
+        /// </param>
+        /// <param name="trafficRestorationTimeToHealedOrNewEndpointsInMinutes">
+        /// Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported.
+        /// Serialized Name: AFDOriginGroupUpdatePropertiesParameters.trafficRestorationTimeToHealedOrNewEndpointsInMinutes
+        /// </param>
+        /// <param name="sessionAffinityState">
+        /// Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'
+        /// Serialized Name: AFDOriginGroupUpdatePropertiesParameters.sessionAffinityState
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning status
+        /// Serialized Name: AFDStateProperties.provisioningState
+        /// </param>
+        /// <param name="deploymentStatus"> Serialized Name: AFDStateProperties.deploymentStatus. </param>
+        /// <returns> A new <see cref="Models.FrontDoorOriginGroupProperties"/> instance for mocking. </returns>
+        public static FrontDoorOriginGroupProperties FrontDoorOriginGroupProperties(string profileName = null, LoadBalancingSettings loadBalancingSettings = null, HealthProbeSettings healthProbeSettings = null, int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes = null, EnabledState? sessionAffinityState = null, FrontDoorProvisioningState? provisioningState = null, FrontDoorDeploymentStatus? deploymentStatus = null)
+        {
+            return new FrontDoorOriginGroupProperties(
+                profileName,
+                loadBalancingSettings,
+                healthProbeSettings,
+                trafficRestorationTimeToHealedOrNewEndpointsInMinutes,
+                sessionAffinityState,
+                serializedAdditionalRawData: null,
+                provisioningState,
+                deploymentStatus);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FrontDoorOriginGroupUpdatePropertiesParameters"/>. </summary>
+        /// <param name="profileName">
+        /// The name of the profile which holds the origin group.
+        /// Serialized Name: AFDOriginGroupUpdatePropertiesParameters.profileName
+        /// </param>
+        /// <param name="loadBalancingSettings">
+        /// Load balancing settings for a backend pool
+        /// Serialized Name: AFDOriginGroupUpdatePropertiesParameters.loadBalancingSettings
+        /// </param>
+        /// <param name="healthProbeSettings">
+        /// Health probe settings to the origin that is used to determine the health of the origin.
+        /// Serialized Name: AFDOriginGroupUpdatePropertiesParameters.healthProbeSettings
+        /// </param>
+        /// <param name="trafficRestorationTimeToHealedOrNewEndpointsInMinutes">
+        /// Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported.
+        /// Serialized Name: AFDOriginGroupUpdatePropertiesParameters.trafficRestorationTimeToHealedOrNewEndpointsInMinutes
+        /// </param>
+        /// <param name="sessionAffinityState">
+        /// Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'
+        /// Serialized Name: AFDOriginGroupUpdatePropertiesParameters.sessionAffinityState
+        /// </param>
+        /// <returns> A new <see cref="Models.FrontDoorOriginGroupUpdatePropertiesParameters"/> instance for mocking. </returns>
+        public static FrontDoorOriginGroupUpdatePropertiesParameters FrontDoorOriginGroupUpdatePropertiesParameters(string profileName = null, LoadBalancingSettings loadBalancingSettings = null, HealthProbeSettings healthProbeSettings = null, int? trafficRestorationTimeToHealedOrNewEndpointsInMinutes = null, EnabledState? sessionAffinityState = null)
+        {
+            return new FrontDoorOriginGroupUpdatePropertiesParameters(
+                profileName,
+                loadBalancingSettings,
+                healthProbeSettings,
+                trafficRestorationTimeToHealedOrNewEndpointsInMinutes,
+                sessionAffinityState,
                 serializedAdditionalRawData: null);
         }
 
@@ -495,12 +575,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'
         /// Serialized Name: AFDOriginGroupUpdateParameters.properties.sessionAffinityState
         /// </param>
-        /// <param name="authentication">
-        /// Authentication settings for origin in origin group.
-        /// Serialized Name: AFDOriginGroupUpdateParameters.properties.authentication
-        /// </param>
         /// <returns> A new <see cref="Models.FrontDoorOriginGroupPatch"/> instance for mocking. </returns>
-        public static FrontDoorOriginGroupPatch FrontDoorOriginGroupPatch(string profileName = null, LoadBalancingSettings loadBalancingSettings = null, HealthProbeSettings healthProbeSettings = null, int? trafficRestorationTimeInMinutes = null, EnabledState? sessionAffinityState = null, OriginAuthenticationProperties authentication = null)
+        public static FrontDoorOriginGroupPatch FrontDoorOriginGroupPatch(string profileName = null, LoadBalancingSettings loadBalancingSettings = null, HealthProbeSettings healthProbeSettings = null, int? trafficRestorationTimeInMinutes = null, EnabledState? sessionAffinityState = null)
         {
             return new FrontDoorOriginGroupPatch(
                 profileName,
@@ -508,7 +584,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 healthProbeSettings,
                 trafficRestorationTimeInMinutes,
                 sessionAffinityState,
-                authentication,
                 serializedAdditionalRawData: null);
         }
 
@@ -587,6 +662,139 @@ namespace Azure.ResourceManager.Cdn.Models
                 enforceCertificateNameCheck,
                 provisioningState,
                 deploymentStatus,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FrontDoorOriginProperties"/>. </summary>
+        /// <param name="originGroupName">
+        /// The name of the origin group which contains this origin.
+        /// Serialized Name: AFDOriginUpdatePropertiesParameters.originGroupName
+        /// </param>
+        /// <param name="azureOriginId">
+        /// Resource reference to the Azure origin resource.
+        /// Serialized Name: AFDOriginUpdatePropertiesParameters.azureOrigin
+        /// </param>
+        /// <param name="hostName">
+        /// The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint.
+        /// Serialized Name: AFDOriginUpdatePropertiesParameters.hostName
+        /// </param>
+        /// <param name="httpPort">
+        /// The value of the HTTP port. Must be between 1 and 65535.
+        /// Serialized Name: AFDOriginUpdatePropertiesParameters.httpPort
+        /// </param>
+        /// <param name="httpsPort">
+        /// The value of the HTTPS port. Must be between 1 and 65535.
+        /// Serialized Name: AFDOriginUpdatePropertiesParameters.httpsPort
+        /// </param>
+        /// <param name="originHostHeader">
+        /// The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure Front Door origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. This overrides the host header defined at Endpoint
+        /// Serialized Name: AFDOriginUpdatePropertiesParameters.originHostHeader
+        /// </param>
+        /// <param name="priority">
+        /// Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5
+        /// Serialized Name: AFDOriginUpdatePropertiesParameters.priority
+        /// </param>
+        /// <param name="weight">
+        /// Weight of the origin in given origin group for load balancing. Must be between 1 and 1000
+        /// Serialized Name: AFDOriginUpdatePropertiesParameters.weight
+        /// </param>
+        /// <param name="sharedPrivateLinkResource">
+        /// The properties of the private link resource for private origin.
+        /// Serialized Name: AFDOriginUpdatePropertiesParameters.sharedPrivateLinkResource
+        /// </param>
+        /// <param name="enabledState">
+        /// Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool.
+        /// Serialized Name: AFDOriginUpdatePropertiesParameters.enabledState
+        /// </param>
+        /// <param name="enforceCertificateNameCheck">
+        /// Whether to enable certificate name check at origin level
+        /// Serialized Name: AFDOriginUpdatePropertiesParameters.enforceCertificateNameCheck
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning status
+        /// Serialized Name: AFDStateProperties.provisioningState
+        /// </param>
+        /// <param name="deploymentStatus"> Serialized Name: AFDStateProperties.deploymentStatus. </param>
+        /// <returns> A new <see cref="Models.FrontDoorOriginProperties"/> instance for mocking. </returns>
+        public static FrontDoorOriginProperties FrontDoorOriginProperties(string originGroupName = null, ResourceIdentifier azureOriginId = null, string hostName = null, int? httpPort = null, int? httpsPort = null, string originHostHeader = null, int? priority = null, int? weight = null, SharedPrivateLinkResourceProperties sharedPrivateLinkResource = null, EnabledState? enabledState = null, bool? enforceCertificateNameCheck = null, FrontDoorProvisioningState? provisioningState = null, FrontDoorDeploymentStatus? deploymentStatus = null)
+        {
+            return new FrontDoorOriginProperties(
+                originGroupName,
+                azureOriginId != null ? ResourceManagerModelFactory.WritableSubResource(azureOriginId) : null,
+                hostName,
+                httpPort,
+                httpsPort,
+                originHostHeader,
+                priority,
+                weight,
+                sharedPrivateLinkResource,
+                enabledState,
+                enforceCertificateNameCheck,
+                serializedAdditionalRawData: null,
+                provisioningState,
+                deploymentStatus);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FrontDoorOriginUpdatePropertiesParameters"/>. </summary>
+        /// <param name="originGroupName">
+        /// The name of the origin group which contains this origin.
+        /// Serialized Name: AFDOriginUpdatePropertiesParameters.originGroupName
+        /// </param>
+        /// <param name="azureOriginId">
+        /// Resource reference to the Azure origin resource.
+        /// Serialized Name: AFDOriginUpdatePropertiesParameters.azureOrigin
+        /// </param>
+        /// <param name="hostName">
+        /// The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint.
+        /// Serialized Name: AFDOriginUpdatePropertiesParameters.hostName
+        /// </param>
+        /// <param name="httpPort">
+        /// The value of the HTTP port. Must be between 1 and 65535.
+        /// Serialized Name: AFDOriginUpdatePropertiesParameters.httpPort
+        /// </param>
+        /// <param name="httpsPort">
+        /// The value of the HTTPS port. Must be between 1 and 65535.
+        /// Serialized Name: AFDOriginUpdatePropertiesParameters.httpsPort
+        /// </param>
+        /// <param name="originHostHeader">
+        /// The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure Front Door origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. This overrides the host header defined at Endpoint
+        /// Serialized Name: AFDOriginUpdatePropertiesParameters.originHostHeader
+        /// </param>
+        /// <param name="priority">
+        /// Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5
+        /// Serialized Name: AFDOriginUpdatePropertiesParameters.priority
+        /// </param>
+        /// <param name="weight">
+        /// Weight of the origin in given origin group for load balancing. Must be between 1 and 1000
+        /// Serialized Name: AFDOriginUpdatePropertiesParameters.weight
+        /// </param>
+        /// <param name="sharedPrivateLinkResource">
+        /// The properties of the private link resource for private origin.
+        /// Serialized Name: AFDOriginUpdatePropertiesParameters.sharedPrivateLinkResource
+        /// </param>
+        /// <param name="enabledState">
+        /// Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool.
+        /// Serialized Name: AFDOriginUpdatePropertiesParameters.enabledState
+        /// </param>
+        /// <param name="enforceCertificateNameCheck">
+        /// Whether to enable certificate name check at origin level
+        /// Serialized Name: AFDOriginUpdatePropertiesParameters.enforceCertificateNameCheck
+        /// </param>
+        /// <returns> A new <see cref="Models.FrontDoorOriginUpdatePropertiesParameters"/> instance for mocking. </returns>
+        public static FrontDoorOriginUpdatePropertiesParameters FrontDoorOriginUpdatePropertiesParameters(string originGroupName = null, ResourceIdentifier azureOriginId = null, string hostName = null, int? httpPort = null, int? httpsPort = null, string originHostHeader = null, int? priority = null, int? weight = null, SharedPrivateLinkResourceProperties sharedPrivateLinkResource = null, EnabledState? enabledState = null, bool? enforceCertificateNameCheck = null)
+        {
+            return new FrontDoorOriginUpdatePropertiesParameters(
+                originGroupName,
+                azureOriginId != null ? ResourceManagerModelFactory.WritableSubResource(azureOriginId) : null,
+                hostName,
+                httpPort,
+                httpsPort,
+                originHostHeader,
+                priority,
+                weight,
+                sharedPrivateLinkResource,
+                enabledState,
+                enforceCertificateNameCheck,
                 serializedAdditionalRawData: null);
         }
 
@@ -741,6 +949,159 @@ namespace Azure.ResourceManager.Cdn.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.RouteProperties"/>. </summary>
+        /// <param name="endpointName">
+        /// The name of the endpoint which holds the route.
+        /// Serialized Name: RouteUpdatePropertiesParameters.endpointName
+        /// </param>
+        /// <param name="customDomains">
+        /// Domains referenced by this endpoint.
+        /// Serialized Name: RouteUpdatePropertiesParameters.customDomains
+        /// </param>
+        /// <param name="originGroupId">
+        /// A reference to the origin group.
+        /// Serialized Name: RouteUpdatePropertiesParameters.originGroup
+        /// </param>
+        /// <param name="originPath">
+        /// A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath.
+        /// Serialized Name: RouteUpdatePropertiesParameters.originPath
+        /// </param>
+        /// <param name="ruleSets">
+        /// rule sets referenced by this endpoint.
+        /// Serialized Name: RouteUpdatePropertiesParameters.ruleSets
+        /// </param>
+        /// <param name="supportedProtocols">
+        /// List of supported protocols for this route.
+        /// Serialized Name: RouteUpdatePropertiesParameters.supportedProtocols
+        /// </param>
+        /// <param name="patternsToMatch">
+        /// The route patterns of the rule.
+        /// Serialized Name: RouteUpdatePropertiesParameters.patternsToMatch
+        /// </param>
+        /// <param name="cacheConfiguration">
+        /// The caching configuration for this route. To disable caching, do not provide a cacheConfiguration object.
+        /// Serialized Name: RouteUpdatePropertiesParameters.cacheConfiguration
+        /// </param>
+        /// <param name="forwardingProtocol">
+        /// Protocol this rule will use when forwarding traffic to backends.
+        /// Serialized Name: RouteUpdatePropertiesParameters.forwardingProtocol
+        /// </param>
+        /// <param name="linkToDefaultDomain">
+        /// whether this route will be linked to the default endpoint domain.
+        /// Serialized Name: RouteUpdatePropertiesParameters.linkToDefaultDomain
+        /// </param>
+        /// <param name="httpsRedirect">
+        /// Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed.
+        /// Serialized Name: RouteUpdatePropertiesParameters.httpsRedirect
+        /// </param>
+        /// <param name="enabledState">
+        /// Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'
+        /// Serialized Name: RouteUpdatePropertiesParameters.enabledState
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning status
+        /// Serialized Name: AFDStateProperties.provisioningState
+        /// </param>
+        /// <param name="deploymentStatus"> Serialized Name: AFDStateProperties.deploymentStatus. </param>
+        /// <returns> A new <see cref="Models.RouteProperties"/> instance for mocking. </returns>
+        public static RouteProperties RouteProperties(string endpointName = null, IEnumerable<FrontDoorActivatedResourceInfo> customDomains = null, ResourceIdentifier originGroupId = null, string originPath = null, IEnumerable<WritableSubResource> ruleSets = null, IEnumerable<FrontDoorEndpointProtocol> supportedProtocols = null, IEnumerable<string> patternsToMatch = null, FrontDoorRouteCacheConfiguration cacheConfiguration = null, ForwardingProtocol? forwardingProtocol = null, LinkToDefaultDomain? linkToDefaultDomain = null, HttpsRedirect? httpsRedirect = null, EnabledState? enabledState = null, FrontDoorProvisioningState? provisioningState = null, FrontDoorDeploymentStatus? deploymentStatus = null)
+        {
+            customDomains ??= new List<FrontDoorActivatedResourceInfo>();
+            ruleSets ??= new List<WritableSubResource>();
+            supportedProtocols ??= new List<FrontDoorEndpointProtocol>();
+            patternsToMatch ??= new List<string>();
+
+            return new RouteProperties(
+                endpointName,
+                customDomains?.ToList(),
+                originGroupId != null ? ResourceManagerModelFactory.WritableSubResource(originGroupId) : null,
+                originPath,
+                ruleSets?.ToList(),
+                supportedProtocols?.ToList(),
+                patternsToMatch?.ToList(),
+                cacheConfiguration,
+                forwardingProtocol,
+                linkToDefaultDomain,
+                httpsRedirect,
+                enabledState,
+                serializedAdditionalRawData: null,
+                provisioningState,
+                deploymentStatus);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RouteUpdatePropertiesParameters"/>. </summary>
+        /// <param name="endpointName">
+        /// The name of the endpoint which holds the route.
+        /// Serialized Name: RouteUpdatePropertiesParameters.endpointName
+        /// </param>
+        /// <param name="customDomains">
+        /// Domains referenced by this endpoint.
+        /// Serialized Name: RouteUpdatePropertiesParameters.customDomains
+        /// </param>
+        /// <param name="originGroupId">
+        /// A reference to the origin group.
+        /// Serialized Name: RouteUpdatePropertiesParameters.originGroup
+        /// </param>
+        /// <param name="originPath">
+        /// A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath.
+        /// Serialized Name: RouteUpdatePropertiesParameters.originPath
+        /// </param>
+        /// <param name="ruleSets">
+        /// rule sets referenced by this endpoint.
+        /// Serialized Name: RouteUpdatePropertiesParameters.ruleSets
+        /// </param>
+        /// <param name="supportedProtocols">
+        /// List of supported protocols for this route.
+        /// Serialized Name: RouteUpdatePropertiesParameters.supportedProtocols
+        /// </param>
+        /// <param name="patternsToMatch">
+        /// The route patterns of the rule.
+        /// Serialized Name: RouteUpdatePropertiesParameters.patternsToMatch
+        /// </param>
+        /// <param name="cacheConfiguration">
+        /// The caching configuration for this route. To disable caching, do not provide a cacheConfiguration object.
+        /// Serialized Name: RouteUpdatePropertiesParameters.cacheConfiguration
+        /// </param>
+        /// <param name="forwardingProtocol">
+        /// Protocol this rule will use when forwarding traffic to backends.
+        /// Serialized Name: RouteUpdatePropertiesParameters.forwardingProtocol
+        /// </param>
+        /// <param name="linkToDefaultDomain">
+        /// whether this route will be linked to the default endpoint domain.
+        /// Serialized Name: RouteUpdatePropertiesParameters.linkToDefaultDomain
+        /// </param>
+        /// <param name="httpsRedirect">
+        /// Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed.
+        /// Serialized Name: RouteUpdatePropertiesParameters.httpsRedirect
+        /// </param>
+        /// <param name="enabledState">
+        /// Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'
+        /// Serialized Name: RouteUpdatePropertiesParameters.enabledState
+        /// </param>
+        /// <returns> A new <see cref="Models.RouteUpdatePropertiesParameters"/> instance for mocking. </returns>
+        public static RouteUpdatePropertiesParameters RouteUpdatePropertiesParameters(string endpointName = null, IEnumerable<FrontDoorActivatedResourceInfo> customDomains = null, ResourceIdentifier originGroupId = null, string originPath = null, IEnumerable<WritableSubResource> ruleSets = null, IEnumerable<FrontDoorEndpointProtocol> supportedProtocols = null, IEnumerable<string> patternsToMatch = null, FrontDoorRouteCacheConfiguration cacheConfiguration = null, ForwardingProtocol? forwardingProtocol = null, LinkToDefaultDomain? linkToDefaultDomain = null, HttpsRedirect? httpsRedirect = null, EnabledState? enabledState = null)
+        {
+            customDomains ??= new List<FrontDoorActivatedResourceInfo>();
+            ruleSets ??= new List<WritableSubResource>();
+            supportedProtocols ??= new List<FrontDoorEndpointProtocol>();
+            patternsToMatch ??= new List<string>();
+
+            return new RouteUpdatePropertiesParameters(
+                endpointName,
+                customDomains?.ToList(),
+                originGroupId != null ? ResourceManagerModelFactory.WritableSubResource(originGroupId) : null,
+                originPath,
+                ruleSets?.ToList(),
+                supportedProtocols?.ToList(),
+                patternsToMatch?.ToList(),
+                cacheConfiguration,
+                forwardingProtocol,
+                linkToDefaultDomain,
+                httpsRedirect,
+                enabledState,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.FrontDoorActivatedResourceInfo"/>. </summary>
         /// <param name="id">
         /// Resource ID.
@@ -857,6 +1218,22 @@ namespace Azure.ResourceManager.Cdn.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.RuleSetProperties"/>. </summary>
+        /// <param name="provisioningState">
+        /// Provisioning status
+        /// Serialized Name: AFDStateProperties.provisioningState
+        /// </param>
+        /// <param name="deploymentStatus"> Serialized Name: AFDStateProperties.deploymentStatus. </param>
+        /// <param name="profileName">
+        /// The name of the profile which holds the rule set.
+        /// Serialized Name: RuleSetProperties.profileName
+        /// </param>
+        /// <returns> A new <see cref="Models.RuleSetProperties"/> instance for mocking. </returns>
+        public static RuleSetProperties RuleSetProperties(FrontDoorProvisioningState? provisioningState = null, FrontDoorDeploymentStatus? deploymentStatus = null, string profileName = null)
+        {
+            return new RuleSetProperties(provisioningState, deploymentStatus, serializedAdditionalRawData: null, profileName);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Cdn.FrontDoorRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -909,6 +1286,93 @@ namespace Azure.ResourceManager.Cdn.Models
                 matchProcessingBehavior,
                 provisioningState,
                 deploymentStatus,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RuleProperties"/>. </summary>
+        /// <param name="ruleSetName">
+        /// The name of the rule set containing the rule.
+        /// Serialized Name: RuleUpdatePropertiesParameters.ruleSetName
+        /// </param>
+        /// <param name="order">
+        /// The order in which the rules are applied for the endpoint. Possible values {0,1,2,3,………}. A rule with a lesser order will be applied before a rule with a greater order. Rule with order 0 is a special rule. It does not require any condition and actions listed in it will always be applied.
+        /// Serialized Name: RuleUpdatePropertiesParameters.order
+        /// </param>
+        /// <param name="conditions">
+        /// A list of conditions that must be matched for the actions to be executed
+        /// Serialized Name: RuleUpdatePropertiesParameters.conditions
+        /// Please note <see cref="DeliveryRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DeliveryRuleClientPortCondition"/>, <see cref="DeliveryRuleCookiesCondition"/>, <see cref="DeliveryRuleHostNameCondition"/>, <see cref="DeliveryRuleHttpVersionCondition"/>, <see cref="DeliveryRuleIsDeviceCondition"/>, <see cref="DeliveryRulePostArgsCondition"/>, <see cref="DeliveryRuleQueryStringCondition"/>, <see cref="DeliveryRuleRemoteAddressCondition"/>, <see cref="DeliveryRuleRequestBodyCondition"/>, <see cref="DeliveryRuleRequestHeaderCondition"/>, <see cref="DeliveryRuleRequestMethodCondition"/>, <see cref="DeliveryRuleRequestSchemeCondition"/>, <see cref="DeliveryRuleRequestUriCondition"/>, <see cref="DeliveryRuleServerPortCondition"/>, <see cref="DeliveryRuleSocketAddressCondition"/>, <see cref="DeliveryRuleSslProtocolCondition"/>, <see cref="DeliveryRuleUriFileExtensionCondition"/>, <see cref="DeliveryRuleUriFileNameCondition"/> and <see cref="DeliveryRuleUriPathCondition"/>.
+        /// </param>
+        /// <param name="actions">
+        /// A list of actions that are executed when all the conditions of a rule are satisfied.
+        /// Serialized Name: RuleUpdatePropertiesParameters.actions
+        /// Please note <see cref="DeliveryRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DeliveryRuleCacheExpirationAction"/>, <see cref="DeliveryRuleCacheKeyQueryStringAction"/>, <see cref="DeliveryRuleRequestHeaderAction"/>, <see cref="DeliveryRuleResponseHeaderAction"/>, <see cref="OriginGroupOverrideAction"/>, <see cref="DeliveryRuleRouteConfigurationOverrideAction"/>, <see cref="UriRedirectAction"/>, <see cref="UriRewriteAction"/> and <see cref="UriSigningAction"/>.
+        /// </param>
+        /// <param name="matchProcessingBehavior">
+        /// If this rule is a match should the rules engine continue running the remaining rules or stop. If not present, defaults to Continue.
+        /// Serialized Name: RuleUpdatePropertiesParameters.matchProcessingBehavior
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning status
+        /// Serialized Name: AFDStateProperties.provisioningState
+        /// </param>
+        /// <param name="deploymentStatus"> Serialized Name: AFDStateProperties.deploymentStatus. </param>
+        /// <returns> A new <see cref="Models.RuleProperties"/> instance for mocking. </returns>
+        public static RuleProperties RuleProperties(string ruleSetName = null, int? order = null, IEnumerable<DeliveryRuleCondition> conditions = null, IEnumerable<DeliveryRuleAction> actions = null, MatchProcessingBehavior? matchProcessingBehavior = null, FrontDoorProvisioningState? provisioningState = null, FrontDoorDeploymentStatus? deploymentStatus = null)
+        {
+            conditions ??= new List<DeliveryRuleCondition>();
+            actions ??= new List<DeliveryRuleAction>();
+
+            return new RuleProperties(
+                ruleSetName,
+                order,
+                conditions?.ToList(),
+                actions?.ToList(),
+                matchProcessingBehavior,
+                serializedAdditionalRawData: null,
+                provisioningState,
+                deploymentStatus);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RuleUpdatePropertiesParameters"/>. </summary>
+        /// <param name="ruleSetName">
+        /// The name of the rule set containing the rule.
+        /// Serialized Name: RuleUpdatePropertiesParameters.ruleSetName
+        /// </param>
+        /// <param name="order">
+        /// The order in which the rules are applied for the endpoint. Possible values {0,1,2,3,………}. A rule with a lesser order will be applied before a rule with a greater order. Rule with order 0 is a special rule. It does not require any condition and actions listed in it will always be applied.
+        /// Serialized Name: RuleUpdatePropertiesParameters.order
+        /// </param>
+        /// <param name="conditions">
+        /// A list of conditions that must be matched for the actions to be executed
+        /// Serialized Name: RuleUpdatePropertiesParameters.conditions
+        /// Please note <see cref="DeliveryRuleCondition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DeliveryRuleClientPortCondition"/>, <see cref="DeliveryRuleCookiesCondition"/>, <see cref="DeliveryRuleHostNameCondition"/>, <see cref="DeliveryRuleHttpVersionCondition"/>, <see cref="DeliveryRuleIsDeviceCondition"/>, <see cref="DeliveryRulePostArgsCondition"/>, <see cref="DeliveryRuleQueryStringCondition"/>, <see cref="DeliveryRuleRemoteAddressCondition"/>, <see cref="DeliveryRuleRequestBodyCondition"/>, <see cref="DeliveryRuleRequestHeaderCondition"/>, <see cref="DeliveryRuleRequestMethodCondition"/>, <see cref="DeliveryRuleRequestSchemeCondition"/>, <see cref="DeliveryRuleRequestUriCondition"/>, <see cref="DeliveryRuleServerPortCondition"/>, <see cref="DeliveryRuleSocketAddressCondition"/>, <see cref="DeliveryRuleSslProtocolCondition"/>, <see cref="DeliveryRuleUriFileExtensionCondition"/>, <see cref="DeliveryRuleUriFileNameCondition"/> and <see cref="DeliveryRuleUriPathCondition"/>.
+        /// </param>
+        /// <param name="actions">
+        /// A list of actions that are executed when all the conditions of a rule are satisfied.
+        /// Serialized Name: RuleUpdatePropertiesParameters.actions
+        /// Please note <see cref="DeliveryRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DeliveryRuleCacheExpirationAction"/>, <see cref="DeliveryRuleCacheKeyQueryStringAction"/>, <see cref="DeliveryRuleRequestHeaderAction"/>, <see cref="DeliveryRuleResponseHeaderAction"/>, <see cref="OriginGroupOverrideAction"/>, <see cref="DeliveryRuleRouteConfigurationOverrideAction"/>, <see cref="UriRedirectAction"/>, <see cref="UriRewriteAction"/> and <see cref="UriSigningAction"/>.
+        /// </param>
+        /// <param name="matchProcessingBehavior">
+        /// If this rule is a match should the rules engine continue running the remaining rules or stop. If not present, defaults to Continue.
+        /// Serialized Name: RuleUpdatePropertiesParameters.matchProcessingBehavior
+        /// </param>
+        /// <returns> A new <see cref="Models.RuleUpdatePropertiesParameters"/> instance for mocking. </returns>
+        public static RuleUpdatePropertiesParameters RuleUpdatePropertiesParameters(string ruleSetName = null, int? order = null, IEnumerable<DeliveryRuleCondition> conditions = null, IEnumerable<DeliveryRuleAction> actions = null, MatchProcessingBehavior? matchProcessingBehavior = null)
+        {
+            conditions ??= new List<DeliveryRuleCondition>();
+            actions ??= new List<DeliveryRuleAction>();
+
+            return new RuleUpdatePropertiesParameters(
+                ruleSetName,
+                order,
+                conditions?.ToList(),
+                actions?.ToList(),
+                matchProcessingBehavior,
                 serializedAdditionalRawData: null);
         }
 
@@ -970,7 +1434,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// object which contains security policy parameters
         /// Serialized Name: SecurityPolicy.properties.parameters
         /// Please note <see cref="SecurityPolicyProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityPolicyWebApplicationFirewall"/>.
+        /// The available derived classes include <see cref="SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy"/> and <see cref="SecurityPolicyWebApplicationFirewall"/>.
         /// </param>
         /// <returns> A new <see cref="Cdn.FrontDoorSecurityPolicyData"/> instance for mocking. </returns>
         public static FrontDoorSecurityPolicyData FrontDoorSecurityPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, FrontDoorProvisioningState? provisioningState = null, FrontDoorDeploymentStatus? deploymentStatus = null, string profileName = null, SecurityPolicyProperties properties = null)
@@ -1020,6 +1484,76 @@ namespace Azure.ResourceManager.Cdn.Models
                 profileName,
                 properties,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Cdn.DeploymentVersionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="description"> Serialized Name: DeploymentVersion.properties.description. </param>
+        /// <param name="provisioningState">
+        /// Provisioning status
+        /// Serialized Name: DeploymentVersion.properties.provisioningState
+        /// </param>
+        /// <param name="deploymentStatus"> Serialized Name: DeploymentVersion.properties.deploymentStatus. </param>
+        /// <param name="createdOn">
+        /// The timestamp of deployment version creation (UTC)
+        /// Serialized Name: DeploymentVersion.properties.createdAt
+        /// </param>
+        /// <param name="approvedOn">
+        /// The timestamp of deployment version approval (UTC)
+        /// Serialized Name: DeploymentVersion.properties.approvedAt
+        /// </param>
+        /// <param name="approvalStatus"> Serialized Name: DeploymentVersion.properties.approvalStatus. </param>
+        /// <param name="stages">
+        /// The preview and production deployment status of the deployment version under the profile
+        /// Serialized Name: DeploymentVersion.properties.stages
+        /// </param>
+        /// <returns> A new <see cref="Cdn.DeploymentVersionData"/> instance for mocking. </returns>
+        public static DeploymentVersionData DeploymentVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, FrontDoorProvisioningState? provisioningState = null, FrontDoorDeploymentStatus? deploymentStatus = null, DateTimeOffset? createdOn = null, DateTimeOffset? approvedOn = null, ApprovalStatus? approvalStatus = null, DeploymentStages stages = null)
+        {
+            return new DeploymentVersionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description,
+                provisioningState,
+                deploymentStatus,
+                createdOn,
+                approvedOn,
+                approvalStatus,
+                stages,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeploymentStages"/>. </summary>
+        /// <param name="preview">
+        /// Deployment status of preview stage.
+        /// Serialized Name: DeploymentStages.preview
+        /// </param>
+        /// <param name="production">
+        /// Deployment status of production stage.
+        /// Serialized Name: DeploymentStages.production
+        /// </param>
+        /// <returns> A new <see cref="Models.DeploymentStages"/> instance for mocking. </returns>
+        public static DeploymentStages DeploymentStages(DeploymentRolloutStatus? preview = null, DeploymentRolloutStatus? production = null)
+        {
+            return new DeploymentStages(preview, production, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeploymentVersionChange"/>. </summary>
+        /// <param name="resourceType">
+        /// Resource type supported by preview.
+        /// Serialized Name: DeploymentVersionChange.resourceType
+        /// </param>
+        /// <param name="resourceId"> Serialized Name: DeploymentVersionChange.resourceId. </param>
+        /// <param name="resourceName"> Serialized Name: DeploymentVersionChange.resourceName. </param>
+        /// <returns> A new <see cref="Models.DeploymentVersionChange"/> instance for mocking. </returns>
+        public static DeploymentVersionChange DeploymentVersionChange(string resourceType = null, ResourceIdentifier resourceId = null, string resourceName = null)
+        {
+            return new UnknownDeploymentVersionChange(resourceType == null ? default : new PreviewSupportedResourceType(resourceType), resourceId, resourceName, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MetricsResponse"/>. </summary>
@@ -1923,10 +2457,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// Provisioning state of the WebApplicationFirewallPolicy.
         /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.provisioningState
         /// </param>
-        /// <param name="resourceState">
-        /// Resource status of the policy.
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.resourceState
-        /// </param>
+        /// <param name="resourceState"> Serialized Name: CdnWebApplicationFirewallPolicy.properties.resourceState. </param>
         /// <returns> A new <see cref="Cdn.CdnWebApplicationFirewallPolicyData"/> instance for mocking. </returns>
         public static CdnWebApplicationFirewallPolicyData CdnWebApplicationFirewallPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, CdnSkuName? skuName = null, WafPolicySettings policySettings = null, IEnumerable<RateLimitRule> rateLimitRules = null, IEnumerable<CustomRule> customRules = null, IEnumerable<WafPolicyManagedRuleSet> managedRuleSets = null, IEnumerable<SubResource> endpointLinks = null, IDictionary<string, string> extendedProperties = null, WebApplicationFirewallPolicyProvisioningState? provisioningState = null, PolicyResourceState? resourceState = null)
         {
@@ -2036,6 +2567,95 @@ namespace Azure.ResourceManager.Cdn.Models
             return new ManagedRuleDefinition(ruleId, description, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.WebApplicationFirewallPolicy"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag">
+        /// Gets a unique read-only string that changes whenever the resource is updated.
+        /// Serialized Name: WebApplicationFirewallPolicy.etag
+        /// </param>
+        /// <param name="skuName">
+        /// The pricing tier of web application firewall policy. Defaults to Classic_AzureFrontDoor if not specified.
+        /// Serialized Name: WebApplicationFirewallPolicy.sku
+        /// </param>
+        /// <param name="policySettings">
+        /// Describes settings for the policy.
+        /// Serialized Name: WebApplicationFirewallPolicy.properties.policySettings
+        /// </param>
+        /// <param name="customRules">
+        /// Describes custom rules inside the policy.
+        /// Serialized Name: WebApplicationFirewallPolicy.properties.customRules
+        /// </param>
+        /// <param name="managedRuleSets">
+        /// Describes managed rules inside the policy.
+        /// Serialized Name: WebApplicationFirewallPolicy.properties.managedRules
+        /// </param>
+        /// <param name="frontendEndpointLinks">
+        /// Describes Frontend Endpoints associated with this Web Application Firewall policy.
+        /// Serialized Name: WebApplicationFirewallPolicy.properties.frontendEndpointLinks
+        /// </param>
+        /// <param name="routingRuleLinks">
+        /// Describes Routing Rules associated with this Web Application Firewall policy.
+        /// Serialized Name: WebApplicationFirewallPolicy.properties.routingRuleLinks
+        /// </param>
+        /// <param name="securityPolicyLinks">
+        /// Describes Security Policy associated with this Web Application Firewall policy.
+        /// Serialized Name: WebApplicationFirewallPolicy.properties.securityPolicyLinks
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning state of the policy.
+        /// Serialized Name: WebApplicationFirewallPolicy.properties.provisioningState
+        /// </param>
+        /// <param name="resourceState"> Serialized Name: WebApplicationFirewallPolicy.properties.resourceState. </param>
+        /// <returns> A new <see cref="Models.WebApplicationFirewallPolicy"/> instance for mocking. </returns>
+        public static WebApplicationFirewallPolicy WebApplicationFirewallPolicy(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, CdnSkuName? skuName = null, PolicySettingsAutoGenerated policySettings = null, IEnumerable<CustomRuleAutoGenerated> customRules = null, IEnumerable<ManagedRuleSetAutoGenerated> managedRuleSets = null, IEnumerable<SubResource> frontendEndpointLinks = null, IEnumerable<SubResource> routingRuleLinks = null, IEnumerable<SubResource> securityPolicyLinks = null, string provisioningState = null, PolicyResourceState? resourceState = null)
+        {
+            customRules ??= new List<CustomRuleAutoGenerated>();
+            managedRuleSets ??= new List<ManagedRuleSetAutoGenerated>();
+            frontendEndpointLinks ??= new List<SubResource>();
+            routingRuleLinks ??= new List<SubResource>();
+            securityPolicyLinks ??= new List<SubResource>();
+
+            return new WebApplicationFirewallPolicy(
+                id,
+                name,
+                resourceType,
+                systemData,
+                etag,
+                skuName != null ? new CdnSku(skuName, serializedAdditionalRawData: null) : null,
+                policySettings,
+                customRules != null ? new CustomRuleListAutoGenerated(customRules?.ToList(), serializedAdditionalRawData: null) : null,
+                managedRuleSets != null ? new ManagedRuleSetListAutoGenerated(managedRuleSets?.ToList(), serializedAdditionalRawData: null) : null,
+                frontendEndpointLinks?.ToList(),
+                routingRuleLinks?.ToList(),
+                securityPolicyLinks?.ToList(),
+                provisioningState,
+                resourceState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SecurityPolicyPropertiesWithEmbeddedWafPolicy"/>. </summary>
+        /// <param name="provisioningState">
+        /// Provisioning status
+        /// Serialized Name: AFDStateProperties.provisioningState
+        /// </param>
+        /// <param name="deploymentStatus"> Serialized Name: AFDStateProperties.deploymentStatus. </param>
+        /// <param name="profileName">
+        /// The name of the profile which holds the security policy.
+        /// Serialized Name: SecurityPolicyPropertiesWithEmbeddedWafPolicy.profileName
+        /// </param>
+        /// <param name="properties">
+        /// object which contains security policy parameters
+        /// Serialized Name: SecurityPolicyPropertiesWithEmbeddedWafPolicy.parameters
+        /// </param>
+        /// <returns> A new <see cref="Models.SecurityPolicyPropertiesWithEmbeddedWafPolicy"/> instance for mocking. </returns>
+        public static SecurityPolicyPropertiesWithEmbeddedWafPolicy SecurityPolicyPropertiesWithEmbeddedWafPolicy(FrontDoorProvisioningState? provisioningState = null, FrontDoorDeploymentStatus? deploymentStatus = null, string profileName = null, SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy properties = null)
+        {
+            return new SecurityPolicyPropertiesWithEmbeddedWafPolicy(provisioningState, deploymentStatus, serializedAdditionalRawData: null, profileName, properties);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.ManagedCertificateProperties"/>. </summary>
         /// <param name="subject">
         /// Subject name in the certificate.
@@ -2143,69 +2763,142 @@ namespace Azure.ResourceManager.Cdn.Models
                 thumbprint);
         }
 
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Cdn.FrontDoorOriginGroupData" />. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="profileName">
-        /// The name of the profile which holds the origin group.
-        /// Serialized Name: AFDOriginGroup.properties.profileName
+        /// <summary> Initializes a new instance of <see cref="Models.DeploymentVersionRouteChange"/>. </summary>
+        /// <param name="resourceId"> Serialized Name: DeploymentVersionChange.resourceId. </param>
+        /// <param name="resourceName"> Serialized Name: DeploymentVersionChange.resourceName. </param>
+        /// <param name="previousProperties">
+        /// The JSON object that contains the properties of the Routes to create.
+        /// Serialized Name: DeploymentVersionRouteChange.previousProperties
         /// </param>
-        /// <param name="loadBalancingSettings">
-        /// Load balancing settings for a backend pool
-        /// Serialized Name: AFDOriginGroup.properties.loadBalancingSettings
+        /// <param name="currentProperties">
+        /// The JSON object that contains the properties of the Routes to create.
+        /// Serialized Name: DeploymentVersionRouteChange.currentProperties
         /// </param>
-        /// <param name="healthProbeSettings">
-        /// Health probe settings to the origin that is used to determine the health of the origin.
-        /// Serialized Name: AFDOriginGroup.properties.healthProbeSettings
-        /// </param>
-        /// <param name="trafficRestorationTimeInMinutes">
-        /// Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported.
-        /// Serialized Name: AFDOriginGroup.properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes
-        /// </param>
-        /// <param name="sessionAffinityState">
-        /// Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'
-        /// Serialized Name: AFDOriginGroup.properties.sessionAffinityState
-        /// </param>
-        /// <param name="provisioningState">
-        /// Provisioning status
-        /// Serialized Name: AFDOriginGroup.properties.provisioningState
-        /// </param>
-        /// <param name="deploymentStatus"> Serialized Name: AFDOriginGroup.properties.deploymentStatus. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Cdn.FrontDoorOriginGroupData" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FrontDoorOriginGroupData FrontDoorOriginGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string profileName, LoadBalancingSettings loadBalancingSettings, HealthProbeSettings healthProbeSettings, int? trafficRestorationTimeInMinutes, EnabledState? sessionAffinityState, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus)
+        /// <returns> A new <see cref="Models.DeploymentVersionRouteChange"/> instance for mocking. </returns>
+        public static DeploymentVersionRouteChange DeploymentVersionRouteChange(ResourceIdentifier resourceId = null, string resourceName = null, RouteProperties previousProperties = null, RouteProperties currentProperties = null)
         {
-            return FrontDoorOriginGroupData(id: id, name: name, resourceType: resourceType, systemData: systemData, profileName: profileName, loadBalancingSettings: loadBalancingSettings, healthProbeSettings: healthProbeSettings, trafficRestorationTimeInMinutes: trafficRestorationTimeInMinutes, sessionAffinityState: sessionAffinityState, authentication: default, provisioningState: provisioningState, deploymentStatus: deploymentStatus);
+            return new DeploymentVersionRouteChange(
+                PreviewSupportedResourceType.MicrosoftCdnProfilesAfdEndpointsRoutes,
+                resourceId,
+                resourceName,
+                serializedAdditionalRawData: null,
+                previousProperties,
+                currentProperties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Cdn.Models.FrontDoorOriginGroupPatch" />. </summary>
-        /// <param name="profileName">
-        /// The name of the profile which holds the origin group.
-        /// Serialized Name: AFDOriginGroupUpdateParameters.properties.profileName
+        /// <summary> Initializes a new instance of <see cref="Models.DeploymentVersionFrontDoorOriginGroupChange"/>. </summary>
+        /// <param name="resourceId"> Serialized Name: DeploymentVersionChange.resourceId. </param>
+        /// <param name="resourceName"> Serialized Name: DeploymentVersionChange.resourceName. </param>
+        /// <param name="previousProperties">
+        /// The JSON object that contains the properties of the origin group.
+        /// Serialized Name: DeploymentVersionAFDOriginGroupChange.previousProperties
         /// </param>
-        /// <param name="loadBalancingSettings">
-        /// Load balancing settings for a backend pool
-        /// Serialized Name: AFDOriginGroupUpdateParameters.properties.loadBalancingSettings
+        /// <param name="currentProperties">
+        /// The JSON object that contains the properties of the origin group.
+        /// Serialized Name: DeploymentVersionAFDOriginGroupChange.currentProperties
         /// </param>
-        /// <param name="healthProbeSettings">
-        /// Health probe settings to the origin that is used to determine the health of the origin.
-        /// Serialized Name: AFDOriginGroupUpdateParameters.properties.healthProbeSettings
-        /// </param>
-        /// <param name="trafficRestorationTimeInMinutes">
-        /// Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported.
-        /// Serialized Name: AFDOriginGroupUpdateParameters.properties.trafficRestorationTimeToHealedOrNewEndpointsInMinutes
-        /// </param>
-        /// <param name="sessionAffinityState">
-        /// Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'
-        /// Serialized Name: AFDOriginGroupUpdateParameters.properties.sessionAffinityState
-        /// </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Cdn.Models.FrontDoorOriginGroupPatch" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FrontDoorOriginGroupPatch FrontDoorOriginGroupPatch(string profileName, LoadBalancingSettings loadBalancingSettings, HealthProbeSettings healthProbeSettings, int? trafficRestorationTimeInMinutes, EnabledState? sessionAffinityState)
+        /// <returns> A new <see cref="Models.DeploymentVersionFrontDoorOriginGroupChange"/> instance for mocking. </returns>
+        public static DeploymentVersionFrontDoorOriginGroupChange DeploymentVersionFrontDoorOriginGroupChange(ResourceIdentifier resourceId = null, string resourceName = null, FrontDoorOriginGroupProperties previousProperties = null, FrontDoorOriginGroupProperties currentProperties = null)
         {
-            return FrontDoorOriginGroupPatch(profileName: profileName, loadBalancingSettings: loadBalancingSettings, healthProbeSettings: healthProbeSettings, trafficRestorationTimeInMinutes: trafficRestorationTimeInMinutes, sessionAffinityState: sessionAffinityState, authentication: default);
+            return new DeploymentVersionFrontDoorOriginGroupChange(
+                PreviewSupportedResourceType.MicrosoftCdnProfilesOriginGroups,
+                resourceId,
+                resourceName,
+                serializedAdditionalRawData: null,
+                previousProperties,
+                currentProperties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeploymentVersionFrontDoorOriginChange"/>. </summary>
+        /// <param name="resourceId"> Serialized Name: DeploymentVersionChange.resourceId. </param>
+        /// <param name="resourceName"> Serialized Name: DeploymentVersionChange.resourceName. </param>
+        /// <param name="previousProperties">
+        /// The JSON object that contains the properties of the origin.
+        /// Serialized Name: DeploymentVersionAFDOriginChange.previousProperties
+        /// </param>
+        /// <param name="currentProperties">
+        /// The JSON object that contains the properties of the origin.
+        /// Serialized Name: DeploymentVersionAFDOriginChange.currentProperties
+        /// </param>
+        /// <returns> A new <see cref="Models.DeploymentVersionFrontDoorOriginChange"/> instance for mocking. </returns>
+        public static DeploymentVersionFrontDoorOriginChange DeploymentVersionFrontDoorOriginChange(ResourceIdentifier resourceId = null, string resourceName = null, FrontDoorOriginProperties previousProperties = null, FrontDoorOriginProperties currentProperties = null)
+        {
+            return new DeploymentVersionFrontDoorOriginChange(
+                PreviewSupportedResourceType.MicrosoftCdnProfilesOriginGroupsOrigins,
+                resourceId,
+                resourceName,
+                serializedAdditionalRawData: null,
+                previousProperties,
+                currentProperties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeploymentVersionRuleSetChange"/>. </summary>
+        /// <param name="resourceId"> Serialized Name: DeploymentVersionChange.resourceId. </param>
+        /// <param name="resourceName"> Serialized Name: DeploymentVersionChange.resourceName. </param>
+        /// <param name="previousProperties">
+        /// The JSON object that contains the properties of the Rule Set to create.
+        /// Serialized Name: DeploymentVersionRuleSetChange.previousProperties
+        /// </param>
+        /// <param name="currentProperties">
+        /// The JSON object that contains the properties of the Rule Set to create.
+        /// Serialized Name: DeploymentVersionRuleSetChange.currentProperties
+        /// </param>
+        /// <returns> A new <see cref="Models.DeploymentVersionRuleSetChange"/> instance for mocking. </returns>
+        public static DeploymentVersionRuleSetChange DeploymentVersionRuleSetChange(ResourceIdentifier resourceId = null, string resourceName = null, RuleSetProperties previousProperties = null, RuleSetProperties currentProperties = null)
+        {
+            return new DeploymentVersionRuleSetChange(
+                PreviewSupportedResourceType.MicrosoftCdnProfilesRuleSets,
+                resourceId,
+                resourceName,
+                serializedAdditionalRawData: null,
+                previousProperties,
+                currentProperties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeploymentVersionRuleChange"/>. </summary>
+        /// <param name="resourceId"> Serialized Name: DeploymentVersionChange.resourceId. </param>
+        /// <param name="resourceName"> Serialized Name: DeploymentVersionChange.resourceName. </param>
+        /// <param name="previousProperties">
+        /// The JSON object that contains the properties of the Rules to create.
+        /// Serialized Name: DeploymentVersionRuleChange.previousProperties
+        /// </param>
+        /// <param name="currentProperties">
+        /// The JSON object that contains the properties of the Rules to create.
+        /// Serialized Name: DeploymentVersionRuleChange.currentProperties
+        /// </param>
+        /// <returns> A new <see cref="Models.DeploymentVersionRuleChange"/> instance for mocking. </returns>
+        public static DeploymentVersionRuleChange DeploymentVersionRuleChange(ResourceIdentifier resourceId = null, string resourceName = null, RuleProperties previousProperties = null, RuleProperties currentProperties = null)
+        {
+            return new DeploymentVersionRuleChange(
+                PreviewSupportedResourceType.MicrosoftCdnProfilesRuleSetsRules,
+                resourceId,
+                resourceName,
+                serializedAdditionalRawData: null,
+                previousProperties,
+                currentProperties);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeploymentVersionSecurityPolicyChange"/>. </summary>
+        /// <param name="resourceId"> Serialized Name: DeploymentVersionChange.resourceId. </param>
+        /// <param name="resourceName"> Serialized Name: DeploymentVersionChange.resourceName. </param>
+        /// <param name="previousProperties">
+        /// Contains properties required to create a security policy
+        /// Serialized Name: DeploymentVersionSecurityPolicyChange.previousProperties
+        /// </param>
+        /// <param name="currentProperties">
+        /// Contains properties required to create a security policy
+        /// Serialized Name: DeploymentVersionSecurityPolicyChange.currentProperties
+        /// </param>
+        /// <returns> A new <see cref="Models.DeploymentVersionSecurityPolicyChange"/> instance for mocking. </returns>
+        public static DeploymentVersionSecurityPolicyChange DeploymentVersionSecurityPolicyChange(ResourceIdentifier resourceId = null, string resourceName = null, SecurityPolicyPropertiesWithEmbeddedWafPolicy previousProperties = null, SecurityPolicyPropertiesWithEmbeddedWafPolicy currentProperties = null)
+        {
+            return new DeploymentVersionSecurityPolicyChange(
+                PreviewSupportedResourceType.MicrosoftCdnProfilesSecurityPolicies,
+                resourceId,
+                resourceName,
+                serializedAdditionalRawData: null,
+                previousProperties,
+                currentProperties);
         }
 
         /// <summary> Initializes a new instance of FrontDoorCustomDomainData. </summary>

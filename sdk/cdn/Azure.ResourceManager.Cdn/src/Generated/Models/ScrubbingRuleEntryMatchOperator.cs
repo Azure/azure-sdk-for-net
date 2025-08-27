@@ -26,12 +26,18 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         private const string EqualsAnyValue = "EqualsAny";
+        private const string EqualsValueValue = "Equals";
 
         /// <summary>
         /// EqualsAny
         /// Serialized Name: ScrubbingRuleEntryMatchOperator.EqualsAny
         /// </summary>
         public static ScrubbingRuleEntryMatchOperator EqualsAny { get; } = new ScrubbingRuleEntryMatchOperator(EqualsAnyValue);
+        /// <summary>
+        /// Equals
+        /// Serialized Name: ScrubbingRuleEntryMatchOperator.Equals
+        /// </summary>
+        public static ScrubbingRuleEntryMatchOperator EqualsValue { get; } = new ScrubbingRuleEntryMatchOperator(EqualsValueValue);
         /// <summary> Determines if two <see cref="ScrubbingRuleEntryMatchOperator"/> values are the same. </summary>
         public static bool operator ==(ScrubbingRuleEntryMatchOperator left, ScrubbingRuleEntryMatchOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScrubbingRuleEntryMatchOperator"/> values are not the same. </summary>

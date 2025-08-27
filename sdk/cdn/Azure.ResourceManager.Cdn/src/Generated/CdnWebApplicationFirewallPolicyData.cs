@@ -112,10 +112,7 @@ namespace Azure.ResourceManager.Cdn
         /// Provisioning state of the WebApplicationFirewallPolicy.
         /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.provisioningState
         /// </param>
-        /// <param name="resourceState">
-        /// Resource status of the policy.
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.resourceState
-        /// </param>
+        /// <param name="resourceState"> Serialized Name: CdnWebApplicationFirewallPolicy.properties.resourceState. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CdnWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, CdnSku sku, WafPolicySettings policySettings, RateLimitRuleList rateLimitSettings, CustomRuleList customSettings, ManagedRuleSetList managedRules, IReadOnlyList<SubResource> endpointLinks, IDictionary<string, string> extendedProperties, WebApplicationFirewallPolicyProvisioningState? provisioningState, PolicyResourceState? resourceState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -239,10 +236,7 @@ namespace Azure.ResourceManager.Cdn
         /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.provisioningState
         /// </summary>
         public WebApplicationFirewallPolicyProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// Resource status of the policy.
-        /// Serialized Name: CdnWebApplicationFirewallPolicy.properties.resourceState
-        /// </summary>
+        /// <summary> Serialized Name: CdnWebApplicationFirewallPolicy.properties.resourceState. </summary>
         public PolicyResourceState? ResourceState { get; }
     }
 }

@@ -11,10 +11,10 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
-    /// The name of the condition for the delivery rule.
+    /// Request variable to compare with.
     /// Serialized Name: MatchVariable
     /// </summary>
-    internal readonly partial struct MatchVariable : IEquatable<MatchVariable>
+    public readonly partial struct MatchVariable : IEquatable<MatchVariable>
     {
         private readonly string _value;
 
@@ -25,31 +25,32 @@ namespace Azure.ResourceManager.Cdn.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string RemoteAddressValue = "RemoteAddress";
+        private const string RemoteAddrValue = "RemoteAddr";
         private const string RequestMethodValue = "RequestMethod";
         private const string QueryStringValue = "QueryString";
         private const string PostArgsValue = "PostArgs";
         private const string RequestUriValue = "RequestUri";
         private const string RequestHeaderValue = "RequestHeader";
         private const string RequestBodyValue = "RequestBody";
+        private const string CookiesValue = "Cookies";
+        private const string SocketAddrValue = "SocketAddr";
+        private const string RemoteAddressValue = "RemoteAddress";
         private const string RequestSchemeValue = "RequestScheme";
         private const string UriPathValue = "UrlPath";
         private const string UriFileExtensionValue = "UrlFileExtension";
         private const string UriFileNameValue = "UrlFileName";
         private const string HttpVersionValue = "HttpVersion";
-        private const string CookiesValue = "Cookies";
         private const string IsDeviceValue = "IsDevice";
-        private const string SocketAddrValue = "SocketAddr";
         private const string ClientPortValue = "ClientPort";
         private const string ServerPortValue = "ServerPort";
         private const string HostNameValue = "HostName";
         private const string SslProtocolValue = "SslProtocol";
 
         /// <summary>
-        /// RemoteAddress
-        /// Serialized Name: MatchVariable.RemoteAddress
+        /// RemoteAddr
+        /// Serialized Name: MatchVariable.RemoteAddr
         /// </summary>
-        public static MatchVariable RemoteAddress { get; } = new MatchVariable(RemoteAddressValue);
+        public static MatchVariable RemoteAddr { get; } = new MatchVariable(RemoteAddrValue);
         /// <summary>
         /// RequestMethod
         /// Serialized Name: MatchVariable.RequestMethod
@@ -81,6 +82,21 @@ namespace Azure.ResourceManager.Cdn.Models
         /// </summary>
         public static MatchVariable RequestBody { get; } = new MatchVariable(RequestBodyValue);
         /// <summary>
+        /// Cookies
+        /// Serialized Name: MatchVariable.Cookies
+        /// </summary>
+        public static MatchVariable Cookies { get; } = new MatchVariable(CookiesValue);
+        /// <summary>
+        /// SocketAddr
+        /// Serialized Name: MatchVariable.SocketAddr
+        /// </summary>
+        public static MatchVariable SocketAddr { get; } = new MatchVariable(SocketAddrValue);
+        /// <summary>
+        /// RemoteAddress
+        /// Serialized Name: MatchVariable.RemoteAddress
+        /// </summary>
+        public static MatchVariable RemoteAddress { get; } = new MatchVariable(RemoteAddressValue);
+        /// <summary>
         /// RequestScheme
         /// Serialized Name: MatchVariable.RequestScheme
         /// </summary>
@@ -106,20 +122,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// </summary>
         public static MatchVariable HttpVersion { get; } = new MatchVariable(HttpVersionValue);
         /// <summary>
-        /// Cookies
-        /// Serialized Name: MatchVariable.Cookies
-        /// </summary>
-        public static MatchVariable Cookies { get; } = new MatchVariable(CookiesValue);
-        /// <summary>
         /// IsDevice
         /// Serialized Name: MatchVariable.IsDevice
         /// </summary>
         public static MatchVariable IsDevice { get; } = new MatchVariable(IsDeviceValue);
-        /// <summary>
-        /// SocketAddr
-        /// Serialized Name: MatchVariable.SocketAddr
-        /// </summary>
-        public static MatchVariable SocketAddr { get; } = new MatchVariable(SocketAddrValue);
         /// <summary>
         /// ClientPort
         /// Serialized Name: MatchVariable.ClientPort

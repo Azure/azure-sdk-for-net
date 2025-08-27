@@ -8,6 +8,7 @@ library-name: Cdn
 namespace: Azure.ResourceManager.Cdn
 title: CdnManagementClient
 require: https://github.com/Azure/azure-rest-api-specs/blob/9dcf0e13ae13d5b5abbdcd7429272412975300a3/specification/cdn/resource-manager/readme.md
+tag: package-preview-2025-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -171,6 +172,7 @@ rename-mapping:
   CdnWebApplicationFirewallPolicy.properties.rateLimitRules: RateLimitSettings
   ManagedRuleOverride: ManagedRuleOverrideSetting
   MatchCondition.operator: matchOperator
+  WebApplicationFirewallPolicy.properties.customRules: CustomSettings
   CdnWebApplicationFirewallPolicy.properties.customRules: CustomSettings
   Endpoint: CdnEndpoint
   SocketAddrOperator: SocketAddressOperator

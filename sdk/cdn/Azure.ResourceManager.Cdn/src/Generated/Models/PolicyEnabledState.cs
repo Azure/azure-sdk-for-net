@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary>
-    /// describes if the policy is in enabled state or disabled state
+    /// Describes if the policy is in enabled or disabled state. Defaults to Enabled if not specified.
     /// Serialized Name: PolicyEnabledState
     /// </summary>
     public readonly partial struct PolicyEnabledState : IEquatable<PolicyEnabledState>

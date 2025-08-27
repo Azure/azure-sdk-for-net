@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// object which contains security policy parameters
         /// Serialized Name: SecurityPolicyUpdateParameters.properties.parameters
         /// Please note <see cref="SecurityPolicyProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityPolicyWebApplicationFirewall"/>.
+        /// The available derived classes include <see cref="SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy"/> and <see cref="SecurityPolicyWebApplicationFirewall"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FrontDoorSecurityPolicyPatch(SecurityPolicyProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// object which contains security policy parameters
         /// Serialized Name: SecurityPolicyUpdateParameters.properties.parameters
         /// Please note <see cref="SecurityPolicyProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SecurityPolicyWebApplicationFirewall"/>.
+        /// The available derived classes include <see cref="SecurityPolicyWebApplicationFirewallParametersWithEmbeddedWafPolicy"/> and <see cref="SecurityPolicyWebApplicationFirewall"/>.
         /// </summary>
         public SecurityPolicyProperties Properties { get; set; }
     }
