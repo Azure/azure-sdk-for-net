@@ -24,7 +24,7 @@ public class BasicContainerRegistryTests(bool async)
                 Infrastructure infra = new();
 
                 ContainerRegistryService registry =
-                    new(nameof(registry))
+                    new(nameof(registry), ContainerRegistryService.ResourceVersions.V2023_07_01)
                     {
                         Sku = new ContainerRegistrySku { Name = ContainerRegistrySkuName.Standard },
                         IsAdminUserEnabled = false,
@@ -61,6 +61,6 @@ public class BasicContainerRegistryTests(bool async)
             output registryLoginServer string = registry.properties.loginServer
             """)
         .Lint()
-        .ValidateAndDeployAsync();
+        .ValidateAsync();
     }
 }

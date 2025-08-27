@@ -124,14 +124,14 @@ internal class SampleTests(bool async)
                 infra.Add(tags);
 
                 UserAssignedIdentity mi =
-                    new(nameof(mi))
+                    new(nameof(mi), UserAssignedIdentity.ResourceVersions.V2023_01_31)
                     {
                         Tags = tags,
                     };
                 infra.Add(mi);
 
                 ContainerRegistryService acr =
-                    new(nameof(acr))
+                    new(nameof(acr), ContainerRegistryService.ResourceVersions.V2023_07_01)
                     {
                         Sku = new ContainerRegistrySku() { Name = ContainerRegistrySkuName.Basic },
                         Tags = tags,
@@ -152,7 +152,7 @@ internal class SampleTests(bool async)
                 infra.Add(pullAssignment);
 
                 OperationalInsightsWorkspace law =
-                    new(nameof(law))
+                    new(nameof(law), OperationalInsightsWorkspace.ResourceVersions.V2023_09_01)
                     {
                         Sku = new OperationalInsightsWorkspaceSku() { Name = OperationalInsightsWorkspaceSkuName.PerGB2018 },
                         Tags = tags,
@@ -160,7 +160,7 @@ internal class SampleTests(bool async)
                 infra.Add(law);
 
                 ContainerAppManagedEnvironment cae =
-                    new(nameof(cae))
+                    new(nameof(cae), ContainerAppManagedEnvironment.ResourceVersions.V2024_03_01)
                     {
                         WorkloadProfiles =
                         {

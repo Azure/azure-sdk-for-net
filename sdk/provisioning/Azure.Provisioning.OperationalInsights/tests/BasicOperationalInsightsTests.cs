@@ -24,7 +24,7 @@ public class BasicOperationalInsightsTests(bool async)
                 Infrastructure infra = new();
 
                 OperationalInsightsWorkspace workspace =
-                    new(nameof(workspace))
+                    new(nameof(workspace), OperationalInsightsWorkspace.ResourceVersions.V2023_09_01)
                     {
                         Sku = new OperationalInsightsWorkspaceSku
                         {

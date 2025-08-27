@@ -31,7 +31,7 @@ public class BasicCosmosDBTests(bool async)
                 infra.Add(containerName);
 
                 CosmosDBAccount cosmos =
-                    new(nameof(cosmos))
+                    new(nameof(cosmos), CosmosDBAccount.ResourceVersions.V2024_08_15)
                     {
                         DatabaseAccountOfferType = CosmosDBAccountOfferType.Standard,
                         ConsistencyPolicy = new ConsistencyPolicy

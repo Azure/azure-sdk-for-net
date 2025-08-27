@@ -35,7 +35,7 @@ public class BasicContainerServiceTests(bool async)
                 infra.Add(sshRsaPublicKey);
 
                 ContainerServiceManagedCluster aks =
-                    new(nameof(aks))
+                    new(nameof(aks), ContainerServiceManagedCluster.ResourceVersions.V2024_08_01)
                     {
                         ClusterIdentity = new ManagedClusterIdentity { ResourceIdentityType = ManagedServiceIdentityType.SystemAssigned },
                         DnsPrefix = dnsPrefix,

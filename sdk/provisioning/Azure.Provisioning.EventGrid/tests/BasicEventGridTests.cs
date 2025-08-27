@@ -30,7 +30,7 @@ public class BasicEventGridTests(bool async)
                 infra.Add(webhookUri);
 
                 StorageAccount storage =
-                    new(nameof(storage))
+                    new(nameof(storage), StorageAccount.ResourceVersions.V2024_01_01)
                     {
                         Sku = new StorageSku { Name = StorageSkuName.StandardLrs },
                         Kind = StorageKind.StorageV2,
@@ -41,7 +41,7 @@ public class BasicEventGridTests(bool async)
                 infra.Add(storage);
 
                 SystemTopic topic =
-                    new(nameof(topic))
+                    new(nameof(topic), SystemTopic.ResourceVersions.V2022_06_15)
                     {
                         Identity = new ManagedServiceIdentity { ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned },
                         Source = storage.Id,
@@ -50,7 +50,7 @@ public class BasicEventGridTests(bool async)
                 infra.Add(topic);
 
                 SystemTopicEventSubscription subscription =
-                    new(nameof(subscription))
+                    new(nameof(subscription), SystemTopicEventSubscription.ResourceVersions.V2022_06_15)
                     {
                         Parent = topic,
                         Destination = new WebHookEventSubscriptionDestination { Endpoint = webhookUri },

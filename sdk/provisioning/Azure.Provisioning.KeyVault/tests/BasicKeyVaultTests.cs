@@ -54,7 +54,7 @@ public class BasicKeyVaultTests(bool async)
                 infra.Add(tenantId);
 
                 KeyVaultService kv =
-                    new(nameof(kv))
+                    new(nameof(kv), KeyVaultService.ResourceVersions.V2023_07_01)
                     {
                         Properties =
                             new KeyVaultProperties
@@ -88,7 +88,7 @@ public class BasicKeyVaultTests(bool async)
                 infra.Add(kv);
 
                 KeyVaultSecret secret =
-                    new(nameof(secret))
+                    new(nameof(secret), KeyVaultSecret.ResourceVersions.V2023_07_01)
                     {
                         Parent = kv,
                         Name = "myDarkNecessities",
@@ -167,6 +167,6 @@ public class BasicKeyVaultTests(bool async)
             output vaultUri string = kv.properties.vaultUri
             """)
         .Lint()
-        .ValidateAndDeployAsync();
+        .ValidateAsync();
     }
 }

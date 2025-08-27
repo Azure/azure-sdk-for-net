@@ -3,7 +3,6 @@
 
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.TestFramework;
 using Azure.Provisioning.Authorization;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Roles;
@@ -56,7 +55,7 @@ public class BasicStorageTests(bool async)
             }
             """)
         .Lint()
-        .ValidateAndDeployAsync();
+        .ValidateAsync();
     }
 
     [Test]
@@ -132,7 +131,7 @@ public class BasicStorageTests(bool async)
                     };
                 infra.Add(storage);
 
-                UserAssignedIdentity id = new(nameof(id));
+                UserAssignedIdentity id = new(nameof(id), UserAssignedIdentity.ResourceVersions.V2023_01_31);
                 infra.Add(id);
 
                 RoleAssignment role = storage.CreateRoleAssignment(StorageBuiltInRole.StorageBlobDataReader, id);
@@ -196,7 +195,7 @@ public class BasicStorageTests(bool async)
                     };
                 infra.Add(storage);
 
-                UserAssignedIdentity id = new(nameof(id));
+                UserAssignedIdentity id = new(nameof(id), UserAssignedIdentity.ResourceVersions.V2023_01_31);
                 infra.Add(id);
 
                 RoleAssignment role = storage.CreateRoleAssignment(StorageBuiltInRole.StorageBlobDataReader, RoleManagementPrincipalType.ServicePrincipal, id.PrincipalId, "custom");
@@ -252,7 +251,7 @@ public class BasicStorageTests(bool async)
             }
             """)
         .Lint()
-        .ValidateAndDeployAsync();
+        .ValidateAsync();
     }
 
     [Test]

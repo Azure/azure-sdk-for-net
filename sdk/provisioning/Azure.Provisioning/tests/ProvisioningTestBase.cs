@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -20,7 +19,6 @@ using NUnit.Framework;
 namespace Azure.Provisioning.Tests;
 
 [AsyncOnly]
-[LiveOnly] // Ignore tests in the CI for now
 public class ProvisioningTestBase : ManagementRecordedTestBase<ProvisioningTestEnvironment>
 {
     public bool SkipTools { get; set; }
@@ -115,13 +113,13 @@ public class Trycep(ProvisioningTestBase test) : IAsyncDisposable
     {
         BicepModules = GetPlan().Compile();
         Assert.AreEqual(1, BicepModules.Count, $"Expected exactly one bicep module, not <{string.Join(", ", BicepModules.Keys)}>");
-        if (Bicep != expectedBicep)
+
+        Assert.IsNotNull(Bicep, "The produced Bicep module was null!");
+        if (!CompareBicepContent(expectedBicep, Bicep!, "main.bicep"))
         {
-            // printing for easier comparison/getting started
-            Console.WriteLine("Actual:");
-            Console.WriteLine(Bicep);
+            Assert.Fail("Bicep content comparison failed. See output above for details.");
         }
-        Assert.AreEqual(expectedBicep, Bicep);
+
         return this;
     }
 
@@ -134,20 +132,88 @@ public class Trycep(ProvisioningTestBase test) : IAsyncDisposable
             $"Expected {expectedBicepModules.Count} modules but found {BicepModules.Count}.  " +
                 $"Expected: <{string.Join(", ", expectedBicepModules.Keys)}>  " +
                 $"Actual: <{string.Join(", ", BicepModules.Keys)}>");
+
+        bool allMatched = true;
         foreach (string name in expectedBicepModules.Keys)
         {
             string expected = expectedBicepModules[name];
             string? actual = BicepModules.TryGetValue(name, out string? b) ? b : null;
             Assert.IsNotNull(actual, $"Did not find expected module {name} in the actual modules!");
-            if (actual != expected)
+
+            if (!CompareBicepContent(expected, actual!, name))
             {
-                // printing for easier comparison/getting started
-                Console.WriteLine($"Actual {name}:");
-                Console.WriteLine(actual);
+                allMatched = false;
             }
-            Assert.AreEqual(expected, actual, $"Expected Bicep for module {name} did not match actual Bicep.");
         }
+
+        if (!allMatched)
+        {
+            Assert.Fail("One or more Bicep module comparisons failed. See output above for details.");
+        }
+
         return this;
+    }
+
+    private bool CompareBicepContent(string expected, string actual, string moduleName)
+    {
+        // Normalize line endings for consistent comparison
+        string normalizedExpected = NormalizeLineEndings(expected);
+        string normalizedActual = NormalizeLineEndings(actual);
+
+        if (normalizedExpected == normalizedActual)
+        {
+            return true;
+        }
+
+        // Enhanced debugging output with line-by-line comparison
+        Console.WriteLine($"=== Bicep comparison failed for module: {moduleName} ===");
+        Console.WriteLine();
+
+        // Show side-by-side comparison for better debugging
+        var expectedLines = normalizedExpected.Split('\n');
+        var actualLines = normalizedActual.Split('\n');
+
+        Console.WriteLine("Expected vs Actual (line by line):");
+        Console.WriteLine("=====================================");
+
+        int maxLines = Math.Max(expectedLines.Length, actualLines.Length);
+        bool foundDifference = false;
+
+        for (int i = 0; i < maxLines; i++)
+        {
+            string expectedLine = i < expectedLines.Length ? expectedLines[i] : "<EOF>";
+            string actualLine = i < actualLines.Length ? actualLines[i] : "<EOF>";
+
+            if (expectedLine != actualLine && !foundDifference)
+            {
+                foundDifference = true;
+                Console.WriteLine($"First difference at line {i + 1}:");
+                Console.WriteLine($"  Expected: {expectedLine}");
+                Console.WriteLine($"  Actual:   {actualLine}");
+                Console.WriteLine();
+            }
+        }
+
+        // Always show the full actual output for easy copy-paste
+        Console.WriteLine($"=== Full Actual {moduleName} Output ===");
+        Console.WriteLine(actual);
+        Console.WriteLine($"=== End of {moduleName} Output ===");
+        Console.WriteLine();
+
+        // Provide helpful statistics
+        Console.WriteLine($"Expected length: {normalizedExpected.Length} characters, {expectedLines.Length} lines");
+        Console.WriteLine($"Actual length:   {normalizedActual.Length} characters, {actualLines.Length} lines");
+
+        return false;
+    }
+
+    private static string NormalizeLineEndings(string input)
+    {
+        if (string.IsNullOrEmpty(input))
+            return input ?? string.Empty;
+
+        // Convert all line endings to LF for consistent comparison
+        return input.Replace("\r\n", "\n").Replace("\r", "\n");
     }
 
     private void SaveBicep()
@@ -155,7 +221,8 @@ public class Trycep(ProvisioningTestBase test) : IAsyncDisposable
         if (TempDir is null)
         {
             string? path;
-            do { path = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()); }
+            do
+            { path = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName()); }
             while (Directory.Exists(path) || File.Exists(path));
             Directory.CreateDirectory(path);
             TempDir = path;
@@ -165,7 +232,8 @@ public class Trycep(ProvisioningTestBase test) : IAsyncDisposable
 
     private string GetArmTemplate()
     {
-        if (Test.SkipTools) { return ""; }
+        if (Test.SkipTools)
+        { return ""; }
         if (ArmTemplate is null)
         {
             SaveBicep();
@@ -176,7 +244,8 @@ public class Trycep(ProvisioningTestBase test) : IAsyncDisposable
 
     public Trycep CompareArm(string expectedArm)
     {
-        if (Test.SkipTools) { return this; }
+        if (Test.SkipTools)
+        { return this; }
         string arm = GetArmTemplate();
         if (arm != expectedArm)
         {
@@ -190,7 +259,8 @@ public class Trycep(ProvisioningTestBase test) : IAsyncDisposable
 
     public Trycep Lint(Action<IReadOnlyList<BicepErrorMessage>>? check = default, IList<string>? ignore = default)
     {
-        if (Test.SkipTools) { return this; }
+        if (Test.SkipTools)
+        { return this; }
         SaveBicep();
         string mainPath = SavedBicepModules![0];
         IReadOnlyList<BicepErrorMessage> messages = GetPlan().Lint(mainPath);
@@ -214,8 +284,10 @@ public class Trycep(ProvisioningTestBase test) : IAsyncDisposable
 
     private async Task CreateResourceGroupAsync(string? name = default)
     {
-        if (Test.SkipLiveCalls) { return; }
-        if (ArmResourceGroup is not null) { return; }
+        if (Test.SkipLiveCalls)
+        { return; }
+        if (ArmResourceGroup is not null)
+        { return; }
 
         string? subId = DeploymentOptions.DefaultSubscriptionId;
         ArmClient client = DeploymentOptions.ArmClient;
@@ -242,7 +314,8 @@ public class Trycep(ProvisioningTestBase test) : IAsyncDisposable
 
     public async Task ValidateAsync(Action<ArmDeploymentValidateResult>? validate = default)
     {
-        if (Test.SkipLiveCalls) { return; }
+        if (Test.SkipLiveCalls)
+        { return; }
         ProvisioningPlan plan = GetPlan();
         await CreateResourceGroupAsync().ConfigureAwait(false);
         ArmDeploymentValidateResult result =
@@ -263,7 +336,8 @@ public class Trycep(ProvisioningTestBase test) : IAsyncDisposable
 
     public async Task DeployAsync(Action<ProvisioningDeployment>? validate = default)
     {
-        if (Test.SkipLiveCalls) { return; }
+        if (Test.SkipLiveCalls)
+        { return; }
         ProvisioningPlan plan = GetPlan();
         await CreateResourceGroupAsync().ConfigureAwait(false);
         Deployment =
@@ -284,7 +358,8 @@ public class Trycep(ProvisioningTestBase test) : IAsyncDisposable
 
     public async Task VerifyLiveResource(Func<ProvisioningDeployment, Task> validate)
     {
-        if (Test.SkipLiveCalls) { return; }
+        if (Test.SkipLiveCalls)
+        { return; }
         if (Deployment is null)
         {
             await DeployAsync().ConfigureAwait(false);
