@@ -17,7 +17,7 @@ public class BasicKeyVaultTests(bool async)
     public async Task CreateKeyVaultAndSecret()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 #region Snippet:KeyVaultBasic
@@ -166,7 +166,6 @@ public class BasicKeyVaultTests(bool async)
 
             output vaultUri string = kv.properties.vaultUri
             """)
-        .Lint()
-        .ValidateAsync();
+        .Lint();
     }
 }

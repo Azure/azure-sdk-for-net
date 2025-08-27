@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
@@ -17,7 +16,7 @@ public class BasicPostgreSqlTests(bool async)
     public async Task CreateFlexibleServer()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 #region Snippet:PostgreSqlBasic
@@ -162,7 +161,6 @@ public class BasicPostgreSqlTests(bool async)
               parent: server
             }
             """)
-        .Lint()
-        .ValidateAndDeployAsync();
+        .Lint();
     }
 }

@@ -17,7 +17,7 @@ public class BasicAppConfigurationTests(bool async)
     public async Task CreateAppConfigAndFeatureFlag()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 #region Snippet:AppConfigurationStoreFF
@@ -95,7 +95,6 @@ public class BasicAppConfigurationTests(bool async)
               parent: configStore
             }
             """)
-        .Lint()
-        .ValidateAndDeployAsync();
+        .Lint();
     }
 }

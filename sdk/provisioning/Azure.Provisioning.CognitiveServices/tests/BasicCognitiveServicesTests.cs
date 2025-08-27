@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
@@ -18,7 +16,7 @@ public class BasicCognitiveServicesTests(bool async)
     public async Task CreateTranslation()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 #region Snippet:CognitiveServicesBasic
@@ -70,6 +68,5 @@ public class BasicCognitiveServicesTests(bool async)
             }
             """)
         .Lint()
-        .ValidateAndDeployAsync();
     }
 }

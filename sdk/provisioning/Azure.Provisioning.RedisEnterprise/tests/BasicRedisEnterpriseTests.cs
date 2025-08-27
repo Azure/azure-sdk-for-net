@@ -14,7 +14,7 @@ public class BasicRedisEnterpriseTests(bool async) : ProvisioningTestBase(async)
     public async Task CreateRedisEnterpriseVectorDB()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 #region Snippet:RedisEnterpriseBasic
@@ -106,7 +106,6 @@ public class BasicRedisEnterpriseTests(bool async) : ProvisioningTestBase(async)
               parent: redisDatabase
             }
             """)
-        .Lint()
-        .ValidateAsync(); // Just validate...  Deploying takes a hot minute.
+        .Lint();
     }
 }

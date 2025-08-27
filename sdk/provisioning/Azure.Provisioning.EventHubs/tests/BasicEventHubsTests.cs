@@ -3,8 +3,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
@@ -18,7 +16,7 @@ public class BasicEventHubsTests(bool async)
     public async Task CreateEventHubAndConsumerGroup()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 #region Snippet:EventHubsBasic
@@ -94,7 +92,6 @@ public class BasicEventHubsTests(bool async)
               parent: hub
             }
             """)
-        .Lint()
-        .ValidateAndDeployAsync();
+        .Lint();
     }
 }

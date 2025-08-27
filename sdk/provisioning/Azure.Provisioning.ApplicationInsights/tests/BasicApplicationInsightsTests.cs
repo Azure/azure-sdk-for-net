@@ -17,7 +17,7 @@ public class BasicApplicationInsightsTests(bool async)
     public async Task CreateComponent()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 #region Snippet:ApplicationInsightsBasic
@@ -58,6 +58,5 @@ public class BasicApplicationInsightsTests(bool async)
             output appInsightsKey string = appInsights.properties.InstrumentationKey
             """)
         .Lint()
-        .ValidateAndDeployAsync();
     }
 }

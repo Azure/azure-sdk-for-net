@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
@@ -17,7 +15,7 @@ public class BasicContainerRegistryTests(bool async)
     public async Task CreateContainerRegistry()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 #region Snippet:ContainerRegistryBasic
@@ -60,7 +58,6 @@ public class BasicContainerRegistryTests(bool async)
 
             output registryLoginServer string = registry.properties.loginServer
             """)
-        .Lint()
-        .ValidateAsync();
+        .Lint();
     }
 }

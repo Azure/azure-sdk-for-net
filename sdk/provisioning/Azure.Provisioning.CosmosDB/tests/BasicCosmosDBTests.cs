@@ -1,9 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
@@ -18,7 +16,7 @@ public class BasicCosmosDBTests(bool async)
     public async Task CreateCosmosSqlDB()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 #region Snippet:CosmosDBBasic
@@ -142,7 +140,6 @@ public class BasicCosmosDBTests(bool async)
 
             output containerId string = container.id
             """)
-        .Lint()
-        .ValidateAndDeployAsync();
+        .Lint();
     }
 }

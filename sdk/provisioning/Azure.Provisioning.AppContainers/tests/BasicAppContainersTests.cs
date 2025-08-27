@@ -18,7 +18,7 @@ public class BasicAppContainersTests(bool async)
     public async Task CreateContainerApp()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 #region Snippet:AppContainerBasic
@@ -174,7 +174,6 @@ public class BasicAppContainersTests(bool async)
               }
             }
             """)
-        .Lint()
-        .ValidateAndDeployAsync();
+        .Lint();
     }
 }

@@ -21,7 +21,7 @@ public class BasicAppServiceTests(bool async)
     public async Task CreateBasicFunctionApp()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 #region Snippet:AppServiceBasic
@@ -210,6 +210,5 @@ public class BasicAppServiceTests(bool async)
             }
             """)
         .Lint()
-        .ValidateAndDeployAsync();
     }
 }

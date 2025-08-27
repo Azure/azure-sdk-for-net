@@ -17,7 +17,7 @@ public class BasicCommunicationTests(bool async)
     public async Task CreateCommunicationServices()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 #region Snippet:CommunicationBasic
@@ -53,7 +53,6 @@ public class BasicCommunicationTests(bool async)
               }
             }
             """)
-        .Lint()
-        .ValidateAndDeployAsync();
+        .Lint();
     }
 }

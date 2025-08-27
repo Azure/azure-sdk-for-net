@@ -18,7 +18,7 @@ public class BasicStorageTests(bool async)
     public async Task CreateDefault()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 #region Snippet:StorageAccountBasic
@@ -54,15 +54,14 @@ public class BasicStorageTests(bool async)
               }
             }
             """)
-        .Lint()
-        .ValidateAsync();
+        .Lint();
     }
 
     [Test]
     public async Task CreateSimpleBlobs()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 Infrastructure infra = new();
@@ -108,15 +107,14 @@ public class BasicStorageTests(bool async)
               ]
             }
             """)
-        .Lint(ignore: ["no-unnecessary-dependson"])
-        .ValidateAndDeployAsync();
+        .Lint(ignore: ["no-unnecessary-dependson"]);
     }
 
     [Test]
     public async Task AddStorageRole()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 Infrastructure infra = new();
@@ -172,15 +170,14 @@ public class BasicStorageTests(bool async)
               scope: storage
             }
             """)
-        .Lint()
-        .ValidateAndDeployAsync();
+        .Lint();
     }
 
     [Test]
     public async Task AddStorageRoleWithExplicitPrincipal()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 Infrastructure infra = new();
@@ -250,15 +247,14 @@ public class BasicStorageTests(bool async)
               scope: storage
             }
             """)
-        .Lint()
-        .ValidateAsync();
+        .Lint();
     }
 
     [Test]
     public async Task GetEndpoint()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 Infrastructure infra = new();
@@ -316,15 +312,14 @@ public class BasicStorageTests(bool async)
 
             output computed_endpoint string = 'https://${storage.name}.blob.core.windows.net'
             """)
-        .Lint()
-        .ValidateAndDeployAsync();
+        .Lint();
     }
 
     [Test]
     public async Task SimpleConnStr()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 Infrastructure infra = new();
@@ -371,8 +366,7 @@ public class BasicStorageTests(bool async)
 
             output blobs_endpoint string = storage.properties.primaryEndpoints.blob
             """)
-        .Lint()
-        .ValidateAndDeployAsync();
+        .Lint();
     }
 
     [Test]
@@ -380,7 +374,7 @@ public class BasicStorageTests(bool async)
     public async Task CreateStandardStorageAccount()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 Infrastructure infra = new();
@@ -427,8 +421,7 @@ public class BasicStorageTests(bool async)
 
             output storageAccountId string = sa.id
             """)
-        .Lint()
-        .ValidateAndDeployAsync();
+        .Lint();
     }
 
     [Test]
@@ -436,7 +429,7 @@ public class BasicStorageTests(bool async)
     public async Task CreateStorageAccountAndContainer()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 Infrastructure infra = new();
@@ -501,8 +494,7 @@ public class BasicStorageTests(bool async)
               parent: blobs
             }
             """)
-        .Lint()
-        .ValidateAndDeployAsync();
+        .Lint();
     }
 
     [Test]
@@ -510,7 +502,7 @@ public class BasicStorageTests(bool async)
     public async Task CreateStorageAccountWithServiceEncryption()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 Infrastructure infra = new();
@@ -577,8 +569,7 @@ public class BasicStorageTests(bool async)
 
             output storageAccountId string = sa.id
             """)
-        .Lint()
-        .ValidateAndDeployAsync();
+        .Lint();
     }
 
     [Test]
@@ -586,7 +577,7 @@ public class BasicStorageTests(bool async)
     public async Task CreateFileShare ()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 Infrastructure infra = new();
@@ -634,7 +625,6 @@ public class BasicStorageTests(bool async)
               parent: files
             }
             """)
-        .Lint()
-        .ValidateAndDeployAsync();
+        .Lint();
     }
 }

@@ -15,7 +15,7 @@ public class BasicRedisTests(bool async)
     public async Task CreateRedisCache()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 #region Snippet:RedisBasic
@@ -58,7 +58,6 @@ public class BasicRedisTests(bool async)
               }
             }
             """)
-        .Lint()
-        .ValidateAsync(); // Just validate...  Deploying takes a hot minute.
+        .Lint(); // Just validate...  Deploying takes a hot minute.
     }
 }

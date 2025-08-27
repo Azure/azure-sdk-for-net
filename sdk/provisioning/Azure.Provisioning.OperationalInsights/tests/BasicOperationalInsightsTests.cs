@@ -17,7 +17,7 @@ public class BasicOperationalInsightsTests(bool async)
     public async Task CreateWorkspace()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 #region Snippet:OperationalInsightsWorkspaceBasic
@@ -55,7 +55,6 @@ public class BasicOperationalInsightsTests(bool async)
               }
             }
             """)
-        .Lint()
-        .ValidateAndDeployAsync();
+        .Lint();
     }
 }

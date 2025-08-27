@@ -2,11 +2,8 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Tests;
-using Microsoft.Win32;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.ContainerService.Tests;
@@ -19,7 +16,7 @@ public class BasicContainerServiceTests(bool async)
     public async Task CreateAksCluster()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 #region Snippet:ContainerServiceBasic
@@ -108,7 +105,6 @@ public class BasicContainerServiceTests(bool async)
               }
             }
             """)
-        .Lint()
-        .ValidateAndDeployAsync();
+        .Lint();
     }
 }

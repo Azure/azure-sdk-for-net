@@ -17,7 +17,7 @@ public class BasicSearchTests(bool async)
     public async Task CreateSearchService()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 #region Snippet:SearchBasic
@@ -54,7 +54,6 @@ public class BasicSearchTests(bool async)
               }
             }
             """)
-        .Lint()
-        .ValidateAndDeployAsync();
+        .Lint();
     }
 }

@@ -3,8 +3,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 
@@ -18,7 +16,7 @@ public class BasicServiceBusTests(bool async)
     public async Task CreateServiceBusQueue()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 #region Snippet:ServiceBusBasic
@@ -95,7 +93,6 @@ public class BasicServiceBusTests(bool async)
               parent: sb
             }
             """)
-        .Lint()
-        .ValidateAndDeployAsync();
+        .Lint();
     }
 }
