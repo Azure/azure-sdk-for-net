@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    /// <summary> Scheduled action properties. </summary>
-    public partial class ScheduledActionProperties
+    /// <summary> The updatable properties of the ScheduledAction. </summary>
+    public partial class ScheduledActionUpdateProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,26 +45,13 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledActionProperties"/>. </summary>
-        /// <param name="resourceType"> The type of resource the scheduled action is targeting. </param>
-        /// <param name="actionType"> The action the scheduled action should perform in the resources. </param>
-        /// <param name="startOn"> The time which the scheduled action is supposed to start running. </param>
-        /// <param name="schedule"> The schedule the scheduled action is supposed to follow. </param>
-        /// <param name="notificationSettings"> The notification settings for the scheduled action. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> or <paramref name="notificationSettings"/> is null. </exception>
-        public ScheduledActionProperties(ResourceType resourceType, ScheduledActionType actionType, DateTimeOffset startOn, ScheduledActionsSchedule schedule, IEnumerable<NotificationProperties> notificationSettings)
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionUpdateProperties"/>. </summary>
+        public ScheduledActionUpdateProperties()
         {
-            Argument.AssertNotNull(schedule, nameof(schedule));
-            Argument.AssertNotNull(notificationSettings, nameof(notificationSettings));
-
-            ResourceType = resourceType;
-            ActionType = actionType;
-            StartOn = startOn;
-            Schedule = schedule;
-            NotificationSettings = notificationSettings.ToList();
+            NotificationSettings = new ChangeTrackingList<NotificationProperties>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledActionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionUpdateProperties"/>. </summary>
         /// <param name="resourceType"> The type of resource the scheduled action is targeting. </param>
         /// <param name="actionType"> The action the scheduled action should perform in the resources. </param>
         /// <param name="startOn"> The time which the scheduled action is supposed to start running. </param>
@@ -73,9 +59,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="schedule"> The schedule the scheduled action is supposed to follow. </param>
         /// <param name="notificationSettings"> The notification settings for the scheduled action. </param>
         /// <param name="disabled"> Tell if the scheduled action is disabled or not. </param>
-        /// <param name="provisioningState"> The status of the last provisioning operation performed on the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledActionProperties(ResourceType resourceType, ScheduledActionType actionType, DateTimeOffset startOn, DateTimeOffset? endOn, ScheduledActionsSchedule schedule, IList<NotificationProperties> notificationSettings, bool? disabled, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScheduledActionUpdateProperties(ResourceType? resourceType, ScheduledActionType? actionType, DateTimeOffset? startOn, DateTimeOffset? endOn, ScheduledActionsSchedule schedule, IList<NotificationProperties> notificationSettings, bool? disabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceType = resourceType;
             ActionType = actionType;
@@ -84,21 +69,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             Schedule = schedule;
             NotificationSettings = notificationSettings;
             Disabled = disabled;
-            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledActionProperties"/> for deserialization. </summary>
-        internal ScheduledActionProperties()
-        {
-        }
-
         /// <summary> The type of resource the scheduled action is targeting. </summary>
-        public ResourceType ResourceType { get; set; }
+        public ResourceType? ResourceType { get; set; }
         /// <summary> The action the scheduled action should perform in the resources. </summary>
-        public ScheduledActionType ActionType { get; set; }
+        public ScheduledActionType? ActionType { get; set; }
         /// <summary> The time which the scheduled action is supposed to start running. </summary>
-        public DateTimeOffset StartOn { get; set; }
+        public DateTimeOffset? StartOn { get; set; }
         /// <summary> The time when the scheduled action is supposed to stop scheduling. </summary>
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> The schedule the scheduled action is supposed to follow. </summary>
@@ -107,7 +86,5 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public IList<NotificationProperties> NotificationSettings { get; }
         /// <summary> Tell if the scheduled action is disabled or not. </summary>
         public bool? Disabled { get; set; }
-        /// <summary> The status of the last provisioning operation performed on the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
     }
 }

@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduledActionName"/> or <paramref name="properties"/> is null. </exception>
-        public virtual async Task<Response<ScheduledAction>> UpdateScheduledActionAsync(string scheduledActionName, ScheduledAction properties, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ScheduledAction>> UpdateScheduledActionAsync(string scheduledActionName, ScheduledActionUpdate properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
             Argument.AssertNotNull(properties, nameof(properties));
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduledActionName"/> or <paramref name="properties"/> is null. </exception>
-        public virtual Response<ScheduledAction> UpdateScheduledAction(string scheduledActionName, ScheduledAction properties, CancellationToken cancellationToken = default)
+        public virtual Response<ScheduledAction> UpdateScheduledAction(string scheduledActionName, ScheduledActionUpdate properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
             Argument.AssertNotNull(properties, nameof(properties));

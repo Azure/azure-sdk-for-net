@@ -11,8 +11,8 @@ using System.Linq;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    /// <summary> Scheduled action properties. </summary>
-    public partial class ScheduledActionProperties
+    /// <summary> Scheduled action extension properties. </summary>
+    public partial class ScheduledActionsExtensionProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,14 +46,14 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledActionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionsExtensionProperties"/>. </summary>
         /// <param name="resourceType"> The type of resource the scheduled action is targeting. </param>
         /// <param name="actionType"> The action the scheduled action should perform in the resources. </param>
         /// <param name="startOn"> The time which the scheduled action is supposed to start running. </param>
         /// <param name="schedule"> The schedule the scheduled action is supposed to follow. </param>
         /// <param name="notificationSettings"> The notification settings for the scheduled action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> or <paramref name="notificationSettings"/> is null. </exception>
-        public ScheduledActionProperties(ResourceType resourceType, ScheduledActionType actionType, DateTimeOffset startOn, ScheduledActionsSchedule schedule, IEnumerable<NotificationProperties> notificationSettings)
+        internal ScheduledActionsExtensionProperties(ResourceType resourceType, ScheduledActionType actionType, DateTimeOffset startOn, ScheduledActionsSchedule schedule, IEnumerable<NotificationProperties> notificationSettings)
         {
             Argument.AssertNotNull(schedule, nameof(schedule));
             Argument.AssertNotNull(notificationSettings, nameof(notificationSettings));
@@ -63,9 +63,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             StartOn = startOn;
             Schedule = schedule;
             NotificationSettings = notificationSettings.ToList();
+            ResourceNotificationSettings = new ChangeTrackingList<NotificationProperties>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledActionProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionsExtensionProperties"/>. </summary>
         /// <param name="resourceType"> The type of resource the scheduled action is targeting. </param>
         /// <param name="actionType"> The action the scheduled action should perform in the resources. </param>
         /// <param name="startOn"> The time which the scheduled action is supposed to start running. </param>
@@ -74,8 +75,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="notificationSettings"> The notification settings for the scheduled action. </param>
         /// <param name="disabled"> Tell if the scheduled action is disabled or not. </param>
         /// <param name="provisioningState"> The status of the last provisioning operation performed on the resource. </param>
+        /// <param name="resourceNotificationSettings"> The notification settings for the scheduled action at a resource level. Resource level notification settings are scope to specific resources only and submitted through attach requests. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledActionProperties(ResourceType resourceType, ScheduledActionType actionType, DateTimeOffset startOn, DateTimeOffset? endOn, ScheduledActionsSchedule schedule, IList<NotificationProperties> notificationSettings, bool? disabled, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ScheduledActionsExtensionProperties(ResourceType resourceType, ScheduledActionType actionType, DateTimeOffset startOn, DateTimeOffset? endOn, ScheduledActionsSchedule schedule, IReadOnlyList<NotificationProperties> notificationSettings, bool? disabled, ProvisioningState? provisioningState, IReadOnlyList<NotificationProperties> resourceNotificationSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceType = resourceType;
             ActionType = actionType;
@@ -85,29 +87,32 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             NotificationSettings = notificationSettings;
             Disabled = disabled;
             ProvisioningState = provisioningState;
+            ResourceNotificationSettings = resourceNotificationSettings;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledActionProperties"/> for deserialization. </summary>
-        internal ScheduledActionProperties()
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionsExtensionProperties"/> for deserialization. </summary>
+        internal ScheduledActionsExtensionProperties()
         {
         }
 
         /// <summary> The type of resource the scheduled action is targeting. </summary>
-        public ResourceType ResourceType { get; set; }
+        public ResourceType ResourceType { get; }
         /// <summary> The action the scheduled action should perform in the resources. </summary>
-        public ScheduledActionType ActionType { get; set; }
+        public ScheduledActionType ActionType { get; }
         /// <summary> The time which the scheduled action is supposed to start running. </summary>
-        public DateTimeOffset StartOn { get; set; }
+        public DateTimeOffset StartOn { get; }
         /// <summary> The time when the scheduled action is supposed to stop scheduling. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndOn { get; }
         /// <summary> The schedule the scheduled action is supposed to follow. </summary>
-        public ScheduledActionsSchedule Schedule { get; set; }
+        public ScheduledActionsSchedule Schedule { get; }
         /// <summary> The notification settings for the scheduled action. </summary>
-        public IList<NotificationProperties> NotificationSettings { get; }
+        public IReadOnlyList<NotificationProperties> NotificationSettings { get; }
         /// <summary> Tell if the scheduled action is disabled or not. </summary>
-        public bool? Disabled { get; set; }
+        public bool? Disabled { get; }
         /// <summary> The status of the last provisioning operation performed on the resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
+        /// <summary> The notification settings for the scheduled action at a resource level. Resource level notification settings are scope to specific resources only and submitted through attach requests. </summary>
+        public IReadOnlyList<NotificationProperties> ResourceNotificationSettings { get; }
     }
 }

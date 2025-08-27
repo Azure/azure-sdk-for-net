@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Helpers
             ScheduledActionDeadlineType deadlineType,
             DateTimeOffset startsOn,
             DateTimeOffset endsOn,
-            ActionType actionType,
+            ScheduledActionType actionType,
             TimeSpan scheduleTime,
             string timezone,
             bool isDisabled)
@@ -65,14 +65,14 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Helpers
             return sa;
         }
 
-        public static ScheduledAction GenerateScheduledActionResource(
+        public static ScheduledAction GenerateScheduledActionResourceOther(
             string scheduledActionName,
             string location,
             UserRequestRetryPolicy retryPolicy,
             ScheduledActionDeadlineType deadlineType,
             DateTimeOffset startsOn,
             DateTimeOffset endsOn,
-            ActionType actionType,
+            ScheduledActionType actionType,
             TimeSpan scheduleTime,
             string timezone,
             bool isDisabled,

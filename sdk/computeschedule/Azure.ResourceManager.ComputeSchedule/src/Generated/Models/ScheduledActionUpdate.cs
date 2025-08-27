@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    /// <summary> The scheduled action extension. </summary>
-    public partial class ScheduledActionResources : ResourceData
+    /// <summary> The type used for update operations of the ScheduledAction. </summary>
+    public partial class ScheduledActionUpdate
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,25 +45,26 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledActionResources"/>. </summary>
-        internal ScheduledActionResources()
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionUpdate"/>. </summary>
+        public ScheduledActionUpdate()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledActionResources"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionUpdate"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledActionResources(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, ScheduledActionsExtensionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ScheduledActionUpdate(IDictionary<string, string> tags, ScheduledActionUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Tags = tags;
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
         /// <summary> The resource-specific properties for this resource. </summary>
-        public ScheduledActionsExtensionProperties Properties { get; }
+        public ScheduledActionUpdateProperties Properties { get; set; }
     }
 }

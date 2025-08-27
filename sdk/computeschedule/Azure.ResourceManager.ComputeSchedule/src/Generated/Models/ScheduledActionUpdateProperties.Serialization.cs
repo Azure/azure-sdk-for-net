@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    public partial class ScheduledActionProperties : IUtf8JsonSerializable, IJsonModel<ScheduledActionProperties>
+    public partial class ScheduledActionUpdateProperties : IUtf8JsonSerializable, IJsonModel<ScheduledActionUpdateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduledActionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduledActionUpdateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ScheduledActionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ScheduledActionUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,41 +28,51 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduledActionProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledActionUpdateProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("resourceType"u8);
-            writer.WriteStringValue(ResourceType.ToString());
-            writer.WritePropertyName("actionType"u8);
-            writer.WriteStringValue(ActionType.ToString());
-            writer.WritePropertyName("startTime"u8);
-            writer.WriteStringValue(StartOn, "O");
+            if (Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("resourceType"u8);
+                writer.WriteStringValue(ResourceType.Value.ToString());
+            }
+            if (Optional.IsDefined(ActionType))
+            {
+                writer.WritePropertyName("actionType"u8);
+                writer.WriteStringValue(ActionType.Value.ToString());
+            }
+            if (Optional.IsDefined(StartOn))
+            {
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
+            }
             if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            writer.WritePropertyName("schedule"u8);
-            writer.WriteObjectValue(Schedule, options);
-            writer.WritePropertyName("notificationSettings"u8);
-            writer.WriteStartArray();
-            foreach (var item in NotificationSettings)
+            if (Optional.IsDefined(Schedule))
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("schedule"u8);
+                writer.WriteObjectValue(Schedule, options);
             }
-            writer.WriteEndArray();
+            if (Optional.IsCollectionDefined(NotificationSettings))
+            {
+                writer.WritePropertyName("notificationSettings"u8);
+                writer.WriteStartArray();
+                foreach (var item in NotificationSettings)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(Disabled))
             {
                 writer.WritePropertyName("disabled"u8);
                 writer.WriteBooleanValue(Disabled.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -81,19 +91,19 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
         }
 
-        ScheduledActionProperties IJsonModel<ScheduledActionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ScheduledActionUpdateProperties IJsonModel<ScheduledActionUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduledActionProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledActionUpdateProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeScheduledActionProperties(document.RootElement, options);
+            return DeserializeScheduledActionUpdateProperties(document.RootElement, options);
         }
 
-        internal static ScheduledActionProperties DeserializeScheduledActionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ScheduledActionUpdateProperties DeserializeScheduledActionUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -101,30 +111,41 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            ResourceType resourceType = default;
-            ScheduledActionType actionType = default;
-            DateTimeOffset startTime = default;
+            ResourceType? resourceType = default;
+            ScheduledActionType? actionType = default;
+            DateTimeOffset? startTime = default;
             DateTimeOffset? endTime = default;
             ScheduledActionsSchedule schedule = default;
             IList<NotificationProperties> notificationSettings = default;
             bool? disabled = default;
-            ProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     resourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("actionType"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     actionType = new ScheduledActionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("startTime"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -139,11 +160,19 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
                 if (property.NameEquals("schedule"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     schedule = ScheduledActionsSchedule.DeserializeScheduledActionsSchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("notificationSettings"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<NotificationProperties> array = new List<NotificationProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -161,62 +190,52 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     disabled = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ScheduledActionProperties(
+            return new ScheduledActionUpdateProperties(
                 resourceType,
                 actionType,
                 startTime,
                 endTime,
                 schedule,
-                notificationSettings,
+                notificationSettings ?? new ChangeTrackingList<NotificationProperties>(),
                 disabled,
-                provisioningState,
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ScheduledActionProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ScheduledActionUpdateProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeScheduleContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ScheduledActionProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledActionUpdateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ScheduledActionProperties IPersistableModel<ScheduledActionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ScheduledActionUpdateProperties IPersistableModel<ScheduledActionUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeScheduledActionProperties(document.RootElement, options);
+                        return DeserializeScheduledActionUpdateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScheduledActionProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledActionUpdateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ScheduledActionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ScheduledActionUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

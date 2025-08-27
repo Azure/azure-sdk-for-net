@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableComputeScheduleResourceGroupResource.UpdateScheduledAction(string,ScheduledAction,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeScheduleResourceGroupResource.UpdateScheduledAction(string,ScheduledActionUpdate,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="scheduledActionName"/> or <paramref name="properties"/> is null. </exception>
-        public static async Task<Response<ScheduledAction>> UpdateScheduledActionAsync(this ResourceGroupResource resourceGroupResource, string scheduledActionName, ScheduledAction properties, CancellationToken cancellationToken = default)
+        public static async Task<Response<ScheduledAction>> UpdateScheduledActionAsync(this ResourceGroupResource resourceGroupResource, string scheduledActionName, ScheduledActionUpdate properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableComputeScheduleResourceGroupResource.UpdateScheduledAction(string,ScheduledAction,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeScheduleResourceGroupResource.UpdateScheduledAction(string,ScheduledActionUpdate,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="scheduledActionName"/> or <paramref name="properties"/> is null. </exception>
-        public static Response<ScheduledAction> UpdateScheduledAction(this ResourceGroupResource resourceGroupResource, string scheduledActionName, ScheduledAction properties, CancellationToken cancellationToken = default)
+        public static Response<ScheduledAction> UpdateScheduledAction(this ResourceGroupResource resourceGroupResource, string scheduledActionName, ScheduledActionUpdate properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 

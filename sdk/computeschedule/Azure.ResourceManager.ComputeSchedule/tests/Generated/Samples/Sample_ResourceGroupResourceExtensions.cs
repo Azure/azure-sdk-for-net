@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
             string scheduledActionName = "myScheduledAction";
             ScheduledAction resource = new ScheduledAction(new AzureLocation("vmuhgdgipeypkcv"))
             {
-                Properties = new ScheduledActionProperties(Models.ResourceType.VirtualMachine, new ActionType("Start"), DateTimeOffset.Parse("2025-04-17T00:23:55.281Z"), new ScheduledActionsSchedule(XmlConvert.ToTimeSpan("19:00:00"), "g", new WeekDay[] { WeekDay.Monday }, new Month[] { Month.January }, new int[] { 15 })
+                Properties = new ScheduledActionProperties(Models.ResourceType.VirtualMachine, ScheduledActionType.Start, DateTimeOffset.Parse("2025-04-17T00:23:55.281Z"), new ScheduledActionsSchedule(XmlConvert.ToTimeSpan("19:00:00"), "g", new WeekDay[] { WeekDay.Monday }, new Month[] { Month.January }, new int[] { 15 })
                 {
                     ExecutionParameters = new ScheduledActionExecutionParameterDetail
                     {
@@ -122,35 +122,37 @@ Disabled = true,
 
             // invoke the operation
             string scheduledActionName = "myScheduledAction";
-            ScheduledAction properties = new ScheduledAction(default)
+            ScheduledActionUpdate properties = new ScheduledActionUpdate
             {
-                Properties = new ScheduledActionProperties(Models.ResourceType.VirtualMachine, new ActionType("Start"), DateTimeOffset.Parse("2025-04-17T00:23:58.149Z"), new ScheduledActionsSchedule(XmlConvert.ToTimeSpan("19:00:00"), "bni", new WeekDay[] { WeekDay.Monday }, new Month[] { Month.January }, new int[] { 15 })
-                {
-                    ExecutionParameters = new ScheduledActionExecutionParameterDetail
-                    {
-                        OptimizationPreference = ScheduledActionOptimizationPreference.Cost,
-                        RetryPolicy = new UserRequestRetryPolicy
-                        {
-                            RetryCount = 17,
-                            RetryWindowInMinutes = 29,
-                        },
-                    },
-                    DeadlineType = ScheduledActionDeadlineType.Unknown,
-                }, new NotificationProperties[]
-            {
-new NotificationProperties("wbhryycyolvnypjxzlawwvb", NotificationType.Email, Language.EnUs)
-{
-Disabled = true,
-}
-            })
-                {
-                    EndOn = DateTimeOffset.Parse("2025-04-17T00:23:58.149Z"),
-                    Disabled = true,
-                },
                 Tags =
 {
 ["key9989"] = "tryjidk"
 },
+                Properties = new ScheduledActionUpdateProperties
+                {
+                    ResourceType = Models.ResourceType.VirtualMachine,
+                    ActionType = ScheduledActionType.Start,
+                    StartOn = DateTimeOffset.Parse("2025-04-17T00:23:58.149Z"),
+                    EndOn = DateTimeOffset.Parse("2025-04-17T00:23:58.149Z"),
+                    Schedule = new ScheduledActionsSchedule(XmlConvert.ToTimeSpan("19:00:00"), "bni", new WeekDay[] { WeekDay.Monday }, new Month[] { Month.January }, new int[] { 15 })
+                    {
+                        ExecutionParameters = new ScheduledActionExecutionParameterDetail
+                        {
+                            OptimizationPreference = ScheduledActionOptimizationPreference.Cost,
+                            RetryPolicy = new UserRequestRetryPolicy
+                            {
+                                RetryCount = 17,
+                                RetryWindowInMinutes = 29,
+                            },
+                        },
+                        DeadlineType = ScheduledActionDeadlineType.Unknown,
+                    },
+                    NotificationSettings = {new NotificationProperties("wbhryycyolvnypjxzlawwvb", NotificationType.Email, Language.EnUs)
+{
+Disabled = true,
+}},
+                    Disabled = true,
+                },
             };
             ScheduledAction result = await resourceGroupResource.UpdateScheduledActionAsync(scheduledActionName, properties);
 
@@ -289,17 +291,16 @@ Disabled = true,
 
             // invoke the operation
             string scheduledActionName = "myScheduledAction";
-            ResourceAttachContent content = new ResourceAttachContent(
-                new ScheduledActionResource[]
-                {
-                    new ScheduledActionResource(new ResourceIdentifier("/subscriptions/1d04e8f1-ee04-4056-b0b2-718f5bb45b04/resourceGroups/myRg/providers/Microsoft.Compute/virtualMachines/myVm"))
-                    {
-                        NotificationSettings = {new NotificationProperties("wbhryycyolvnypjxzlawwvb", NotificationType.Email, Language.EnUs)
-                        {
-                            Disabled = true,
-                        }},
-                    }
-                });
+            ResourceAttachContent content = new ResourceAttachContent(new ScheduledActionResource[]
+            {
+new ScheduledActionResource(new ResourceIdentifier("/subscriptions/1d04e8f1-ee04-4056-b0b2-718f5bb45b04/resourceGroups/myRg/providers/Microsoft.Compute/virtualMachines/myVm"))
+{
+NotificationSettings = {new NotificationProperties("wbhryycyolvnypjxzlawwvb", NotificationType.Email, Language.EnUs)
+{
+Disabled = true,
+}},
+}
+            });
             RecurringActionsResourceOperationResult result = await resourceGroupResource.AttachResourcesScheduledActionAsync(scheduledActionName, content);
 
             Console.WriteLine($"Succeeded: {result}");

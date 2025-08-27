@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
             {
                 writer.WritePropertyName("errorDetails"u8);
-                JsonSerializer.Serialize(writer, ErrorDetails);
+                ((IJsonModel<ResponseError>)ErrorDetails).Write(writer, options);
             }
             writer.WritePropertyName("scheduledActionId"u8);
             writer.WriteStringValue(ScheduledActionId);
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    errorDetails = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    errorDetails = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerComputeScheduleContext.Default);
                     continue;
                 }
                 if (property.NameEquals("scheduledActionId"u8))

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         public ScheduledActionExtensionRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = new Uri("https://centraluseuap.management.azure.com");
+            _endpoint = endpoint ?? new Uri("https://management.azure.com");
             _apiVersion = apiVersion ?? "2025-04-15-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }

@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="disabled"> Tell if the scheduled action is disabled or not. </param>
         /// <param name="provisioningState"> The status of the last provisioning operation performed on the resource. </param>
         /// <returns> A new <see cref="Models.ScheduledActionProperties"/> instance for mocking. </returns>
-        public static ScheduledActionProperties ScheduledActionProperties(ResourceType resourceType = default, ActionType actionType = default, DateTimeOffset startOn = default, DateTimeOffset? endOn = null, ScheduledActionsSchedule schedule = null, IEnumerable<NotificationProperties> notificationSettings = null, bool? disabled = null, ProvisioningState? provisioningState = null)
+        public static ScheduledActionProperties ScheduledActionProperties(ResourceType resourceType = default, ScheduledActionType actionType = default, DateTimeOffset startOn = default, DateTimeOffset? endOn = null, ScheduledActionsSchedule schedule = null, IEnumerable<NotificationProperties> notificationSettings = null, bool? disabled = null, ProvisioningState? provisioningState = null)
         {
             notificationSettings ??= new List<NotificationProperties>();
 
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.ScheduledActionResources"/> instance for mocking. </returns>
-        public static ScheduledActionResources ScheduledActionResources(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, ScheduledActionProperties properties = null)
+        public static ScheduledActionResources ScheduledActionResources(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, ScheduledActionsExtensionProperties properties = null)
         {
             return new ScheduledActionResources(
                 id,
@@ -422,6 +422,35 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 resourceType,
                 systemData,
                 properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ScheduledActionsExtensionProperties"/>. </summary>
+        /// <param name="resourceType"> The type of resource the scheduled action is targeting. </param>
+        /// <param name="actionType"> The action the scheduled action should perform in the resources. </param>
+        /// <param name="startOn"> The time which the scheduled action is supposed to start running. </param>
+        /// <param name="endOn"> The time when the scheduled action is supposed to stop scheduling. </param>
+        /// <param name="schedule"> The schedule the scheduled action is supposed to follow. </param>
+        /// <param name="notificationSettings"> The notification settings for the scheduled action. </param>
+        /// <param name="disabled"> Tell if the scheduled action is disabled or not. </param>
+        /// <param name="provisioningState"> The status of the last provisioning operation performed on the resource. </param>
+        /// <param name="resourceNotificationSettings"> The notification settings for the scheduled action at a resource level. Resource level notification settings are scope to specific resources only and submitted through attach requests. </param>
+        /// <returns> A new <see cref="Models.ScheduledActionsExtensionProperties"/> instance for mocking. </returns>
+        public static ScheduledActionsExtensionProperties ScheduledActionsExtensionProperties(ResourceType resourceType = default, ScheduledActionType actionType = default, DateTimeOffset startOn = default, DateTimeOffset? endOn = null, ScheduledActionsSchedule schedule = null, IEnumerable<NotificationProperties> notificationSettings = null, bool? disabled = null, ProvisioningState? provisioningState = null, IEnumerable<NotificationProperties> resourceNotificationSettings = null)
+        {
+            notificationSettings ??= new List<NotificationProperties>();
+            resourceNotificationSettings ??= new List<NotificationProperties>();
+
+            return new ScheduledActionsExtensionProperties(
+                resourceType,
+                actionType,
+                startOn,
+                endOn,
+                schedule,
+                notificationSettings?.ToList(),
+                disabled,
+                provisioningState,
+                resourceNotificationSettings?.ToList(),
                 serializedAdditionalRawData: null);
         }
 
