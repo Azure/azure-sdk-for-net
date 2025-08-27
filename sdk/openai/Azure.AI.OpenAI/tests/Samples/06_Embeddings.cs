@@ -26,8 +26,9 @@ public partial class AzureOpenAISamples
         
         OpenAIEmbedding embedding = embeddingClient.GenerateEmbedding(text);
         
-        Console.WriteLine($"Generated embedding with {embedding.ToFloats().Length} dimensions");
-        Console.WriteLine($"First few values: [{string.Join(", ", embedding.ToFloats().Span.Slice(0, Math.Min(5, embedding.ToFloats().Length)).ToArray().Select(v => v.ToString("F4")))}...]");
+        var floats = embedding.ToFloats();
+        Console.WriteLine($"Generated embedding with {floats.Length} dimensions");
+        Console.WriteLine($"First few values: [{string.Join(", ", floats.Span.Slice(0, Math.Min(5, floats.Length)).ToArray().Select(v => v.ToString("F4")))}...]");
         #endregion
     }
 
@@ -52,9 +53,10 @@ public partial class AzureOpenAISamples
         Console.WriteLine($"Generated {embeddings.Count} embeddings:");
         for (int i = 0; i < embeddings.Count; i++)
         {
+            var floats = embeddings[i].ToFloats();
             Console.WriteLine($"Text {i + 1}: \"{texts[i]}\"");
-            Console.WriteLine($"  Embedding dimensions: {embeddings[i].ToFloats().Length}");
-            Console.WriteLine($"  First few values: [{string.Join(", ", embeddings[i].ToFloats().Span.Slice(0, Math.Min(3, embeddings[i].ToFloats().Length)).ToArray().Select(v => v.ToString("F4")))}...]");
+            Console.WriteLine($"  Embedding dimensions: {floats.Length}");
+            Console.WriteLine($"  First few values: [{string.Join(", ", floats.Span.Slice(0, Math.Min(3, floats.Length)).ToArray().Select(v => v.ToString("F4")))}...]");
         }
         #endregion
     }
