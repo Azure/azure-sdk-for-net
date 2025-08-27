@@ -81,5 +81,243 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code></example>
     </member>
+    <member name="TranslateAsync(IEnumerable{TranslateBody},string,CancellationToken)">
+      <example>
+This sample shows how to call TranslateAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TextTranslationClient client = new TextTranslationClient(endpoint);
+
+Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(new TranslateBody[]
+{
+    new TranslateBody("This is a test.", new TranslateTarget[]
+    {
+        new TranslateTarget("cs")
+        {
+            Script = "Latn",
+            ProfanityAction = ProfanityAction.NoAction,
+            ProfanityMarker = ProfanityMarker.Asterisk,
+            DeploymentName = "gpt-4o-mini",
+            AllowFallback = true,
+            Grade = "basic",
+            Tone = "formal",
+            Gender = "neutral",
+            AdaptiveDatasetId = "21000",
+            ReferenceTextPairs = {new ReferenceSentencePair("Please test this out.", "Vyzkoušejte si to.")},
+        }
+    })
+    {
+        Script = "Latn",
+        Language = "en",
+        TextType = TextType.Plain,
+    }
+});
+]]></code>
+This sample shows how to call TranslateAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TextTranslationClient client = new TextTranslationClient(endpoint);
+
+Response<IReadOnlyList<TranslatedTextItem>> response = await client.TranslateAsync(new TranslateBody[]
+{
+    new TranslateBody("This is a test.", new TranslateTarget[]
+    {
+        new TranslateTarget("cs")
+    })
+});
+]]></code></example>
+    </member>
+    <member name="Translate(IEnumerable{TranslateBody},string,CancellationToken)">
+      <example>
+This sample shows how to call Translate.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TextTranslationClient client = new TextTranslationClient(endpoint);
+
+Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(new TranslateBody[]
+{
+    new TranslateBody("This is a test.", new TranslateTarget[]
+    {
+        new TranslateTarget("cs")
+        {
+            Script = "Latn",
+            ProfanityAction = ProfanityAction.NoAction,
+            ProfanityMarker = ProfanityMarker.Asterisk,
+            DeploymentName = "gpt-4o-mini",
+            AllowFallback = true,
+            Grade = "basic",
+            Tone = "formal",
+            Gender = "neutral",
+            AdaptiveDatasetId = "21000",
+            ReferenceTextPairs = {new ReferenceSentencePair("Please test this out.", "Vyzkoušejte si to.")},
+        }
+    })
+    {
+        Script = "Latn",
+        Language = "en",
+        TextType = TextType.Plain,
+    }
+});
+]]></code>
+This sample shows how to call Translate.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TextTranslationClient client = new TextTranslationClient(endpoint);
+
+Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(new TranslateBody[]
+{
+    new TranslateBody("This is a test.", new TranslateTarget[]
+    {
+        new TranslateTarget("cs")
+    })
+});
+]]></code></example>
+    </member>
+    <member name="TranslateAsync(RequestContent,string,RequestContext)">
+      <example>
+This sample shows how to call TranslateAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TextTranslationClient client = new TextTranslationClient(endpoint);
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    new
+    {
+        text = "This is a test.",
+        script = "Latn",
+        language = "en",
+        textType = "Plain",
+        targets = new object[]
+        {
+            new
+            {
+                language = "cs",
+                script = "Latn",
+                profanityAction = "NoAction",
+                profanityMarker = "Asterisk",
+                deploymentName = "gpt-4o-mini",
+                allowFallback = true,
+                grade = "basic",
+                tone = "formal",
+                gender = "neutral",
+                adaptiveDatasetId = "21000",
+                referenceTextPairs = new object[]
+                {
+                    new
+                    {
+                        source = "Please test this out.",
+                        target = "Vyzkoušejte si to.",
+                    }
+                },
+            }
+        },
+    }
+});
+Response response = await client.TranslateAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("language").ToString());
+Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("text").ToString());
+]]></code>
+This sample shows how to call TranslateAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TextTranslationClient client = new TextTranslationClient(endpoint);
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    new
+    {
+        text = "This is a test.",
+        targets = new object[]
+        {
+            new
+            {
+                language = "cs",
+            }
+        },
+    }
+});
+Response response = await client.TranslateAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("language").ToString());
+Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("text").ToString());
+]]></code></example>
+    </member>
+    <member name="Translate(RequestContent,string,RequestContext)">
+      <example>
+This sample shows how to call Translate and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TextTranslationClient client = new TextTranslationClient(endpoint);
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    new
+    {
+        text = "This is a test.",
+        script = "Latn",
+        language = "en",
+        textType = "Plain",
+        targets = new object[]
+        {
+            new
+            {
+                language = "cs",
+                script = "Latn",
+                profanityAction = "NoAction",
+                profanityMarker = "Asterisk",
+                deploymentName = "gpt-4o-mini",
+                allowFallback = true,
+                grade = "basic",
+                tone = "formal",
+                gender = "neutral",
+                adaptiveDatasetId = "21000",
+                referenceTextPairs = new object[]
+                {
+                    new
+                    {
+                        source = "Please test this out.",
+                        target = "Vyzkoušejte si to.",
+                    }
+                },
+            }
+        },
+    }
+});
+Response response = client.Translate(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("language").ToString());
+Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("text").ToString());
+]]></code>
+This sample shows how to call Translate and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TextTranslationClient client = new TextTranslationClient(endpoint);
+
+using RequestContent content = RequestContent.Create(new object[]
+{
+    new
+    {
+        text = "This is a test.",
+        targets = new object[]
+        {
+            new
+            {
+                language = "cs",
+            }
+        },
+    }
+});
+Response response = client.Translate(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("language").ToString());
+Console.WriteLine(result[0].GetProperty("translations")[0].GetProperty("text").ToString());
+]]></code></example>
+    </member>
   </members>
 </doc>

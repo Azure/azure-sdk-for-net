@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
-    public partial class SourceText : IUtf8JsonSerializable, IJsonModel<SourceText>
+    public partial class ReferenceSentencePair : IUtf8JsonSerializable, IJsonModel<ReferenceSentencePair>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SourceText>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReferenceSentencePair>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SourceText>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ReferenceSentencePair>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,14 +28,16 @@ namespace Azure.AI.Translation.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SourceText>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReferenceSentencePair>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SourceText)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ReferenceSentencePair)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("text"u8);
-            writer.WriteStringValue(Text);
+            writer.WritePropertyName("source"u8);
+            writer.WriteStringValue(Source);
+            writer.WritePropertyName("target"u8);
+            writer.WriteStringValue(Target);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -53,19 +55,19 @@ namespace Azure.AI.Translation.Text
             }
         }
 
-        SourceText IJsonModel<SourceText>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ReferenceSentencePair IJsonModel<ReferenceSentencePair>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SourceText>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReferenceSentencePair>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SourceText)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ReferenceSentencePair)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSourceText(document.RootElement, options);
+            return DeserializeReferenceSentencePair(document.RootElement, options);
         }
 
-        internal static SourceText DeserializeSourceText(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ReferenceSentencePair DeserializeReferenceSentencePair(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -73,14 +75,20 @@ namespace Azure.AI.Translation.Text
             {
                 return null;
             }
-            string text = default;
+            string source = default;
+            string target = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("text"u8))
+                if (property.NameEquals("source"u8))
                 {
-                    text = property.Value.GetString();
+                    source = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("target"u8))
+                {
+                    target = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,46 +97,46 @@ namespace Azure.AI.Translation.Text
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SourceText(text, serializedAdditionalRawData);
+            return new ReferenceSentencePair(source, target, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SourceText>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ReferenceSentencePair>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SourceText>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReferenceSentencePair>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAITranslationTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SourceText)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReferenceSentencePair)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SourceText IPersistableModel<SourceText>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ReferenceSentencePair IPersistableModel<ReferenceSentencePair>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SourceText>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReferenceSentencePair>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSourceText(document.RootElement, options);
+                        return DeserializeReferenceSentencePair(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SourceText)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReferenceSentencePair)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SourceText>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ReferenceSentencePair>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static SourceText FromResponse(Response response)
+        internal static ReferenceSentencePair FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSourceText(document.RootElement);
+            return DeserializeReferenceSentencePair(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
