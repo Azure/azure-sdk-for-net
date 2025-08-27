@@ -3,12 +3,7 @@
 ## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Add support for deployment version campare, this function will be prevew only.
 
 ## 1.5.0 (2025-08-08)
 
