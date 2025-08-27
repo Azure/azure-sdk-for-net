@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Advisor.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResourceMetadata"/>. </summary>
-        internal ResourceMetadata()
+        public ResourceMetadata()
         {
             Action = new ChangeTrackingDictionary<string, BinaryData>();
         }
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <param name="singular"> The singular user friendly name of resource type. eg: virtual machine. </param>
         /// <param name="plural"> The plural user friendly name of resource type. eg: virtual machines. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceMetadata(string resourceId, string source, IReadOnlyDictionary<string, BinaryData> action, string singular, string plural, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceMetadata(string resourceId, string source, IDictionary<string, BinaryData> action, string singular, string plural, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             Source = source;
@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.Advisor.Models
         }
 
         /// <summary> Azure resource Id of the assessed resource. </summary>
-        public string ResourceId { get; }
+        public string ResourceId { get; set; }
         /// <summary> Source from which recommendation is generated. </summary>
-        public string Source { get; }
+        public string Source { get; set; }
         /// <summary>
         /// The action to view resource.
         /// <para>
@@ -102,10 +102,10 @@ namespace Azure.ResourceManager.Advisor.Models
         /// </list>
         /// </para>
         /// </summary>
-        public IReadOnlyDictionary<string, BinaryData> Action { get; }
+        public IDictionary<string, BinaryData> Action { get; }
         /// <summary> The singular user friendly name of resource type. eg: virtual machine. </summary>
-        public string Singular { get; }
+        public string Singular { get; set; }
         /// <summary> The plural user friendly name of resource type. eg: virtual machines. </summary>
-        public string Plural { get; }
+        public string Plural { get; set; }
     }
 }

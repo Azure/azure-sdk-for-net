@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Advisor
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResourceRecommendationBaseData"/>. </summary>
-        internal ResourceRecommendationBaseData()
+        public ResourceRecommendationBaseData()
         {
             Metadata = new ChangeTrackingDictionary<string, BinaryData>();
             SuppressionIds = new ChangeTrackingList<Guid>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="sourceSystem"> The Source System that this Recommendation originated from. </param>
         /// <param name="notes"> Additional notes for the Recommendation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceRecommendationBaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Category? category, Control? control, Impact? impact, string impactedField, string impactedValue, DateTimeOffset? lastUpdated, IReadOnlyDictionary<string, BinaryData> metadata, string recommendationTypeId, Risk? risk, ShortDescription shortDescription, IReadOnlyList<Guid> suppressionIds, IReadOnlyDictionary<string, string> extendedProperties, ResourceMetadata resourceMetadata, string description, string label, string learnMoreLink, string potentialBenefits, IReadOnlyList<IDictionary<string, BinaryData>> actions, IReadOnlyDictionary<string, BinaryData> remediation, IReadOnlyDictionary<string, BinaryData> exposedMetadataProperties, bool? tracked, TrackedRecommendationProperties trackedProperties, RecommendationPropertiesReview review, RecommendationPropertiesResourceWorkload resourceWorkload, string sourceSystem, string notes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ResourceRecommendationBaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Category? category, Control? control, Impact? impact, string impactedField, string impactedValue, DateTimeOffset? lastUpdated, IDictionary<string, BinaryData> metadata, string recommendationTypeId, Risk? risk, ShortDescription shortDescription, IList<Guid> suppressionIds, IDictionary<string, string> extendedProperties, ResourceMetadata resourceMetadata, string description, string label, string learnMoreLink, string potentialBenefits, IList<IDictionary<string, BinaryData>> actions, IDictionary<string, BinaryData> remediation, IDictionary<string, BinaryData> exposedMetadataProperties, bool? tracked, TrackedRecommendationProperties trackedProperties, RecommendationPropertiesReview review, RecommendationPropertiesResourceWorkload resourceWorkload, string sourceSystem, string notes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Category = category;
             Control = control;
@@ -126,17 +126,17 @@ namespace Azure.ResourceManager.Advisor
         }
 
         /// <summary> The category of the recommendation. </summary>
-        public Category? Category { get; }
+        public Category? Category { get; set; }
         /// <summary> The control type for the recommendation. </summary>
-        public Control? Control { get; }
+        public Control? Control { get; set; }
         /// <summary> The business impact of the recommendation. </summary>
-        public Impact? Impact { get; }
+        public Impact? Impact { get; set; }
         /// <summary> The resource type identified by Advisor. </summary>
-        public string ImpactedField { get; }
+        public string ImpactedField { get; set; }
         /// <summary> The resource identified by Advisor. </summary>
-        public string ImpactedValue { get; }
+        public string ImpactedValue { get; set; }
         /// <summary> The most recent time that Advisor checked the validity of the recommendation. </summary>
-        public DateTimeOffset? LastUpdated { get; }
+        public DateTimeOffset? LastUpdated { get; set; }
         /// <summary>
         /// The recommendation metadata.
         /// <para>
@@ -167,27 +167,27 @@ namespace Azure.ResourceManager.Advisor
         /// </list>
         /// </para>
         /// </summary>
-        public IReadOnlyDictionary<string, BinaryData> Metadata { get; }
+        public IDictionary<string, BinaryData> Metadata { get; }
         /// <summary> The recommendation-type GUID. </summary>
-        public string RecommendationTypeId { get; }
+        public string RecommendationTypeId { get; set; }
         /// <summary> The potential risk of not implementing the recommendation. </summary>
-        public Risk? Risk { get; }
+        public Risk? Risk { get; set; }
         /// <summary> A summary of the recommendation. </summary>
-        public ShortDescription ShortDescription { get; }
+        public ShortDescription ShortDescription { get; set; }
         /// <summary> The list of snoozed and dismissed rules for the recommendation. </summary>
-        public IReadOnlyList<Guid> SuppressionIds { get; }
+        public IList<Guid> SuppressionIds { get; }
         /// <summary> Extended properties. </summary>
-        public IReadOnlyDictionary<string, string> ExtendedProperties { get; }
+        public IDictionary<string, string> ExtendedProperties { get; }
         /// <summary> Metadata of resource that was assessed. </summary>
-        public ResourceMetadata ResourceMetadata { get; }
+        public ResourceMetadata ResourceMetadata { get; set; }
         /// <summary> The detailed description of recommendation. </summary>
-        public string Description { get; }
+        public string Description { get; set; }
         /// <summary> The label of recommendation. </summary>
-        public string Label { get; }
+        public string Label { get; set; }
         /// <summary> The link to learn more about recommendation and generation logic. </summary>
-        public string LearnMoreLink { get; }
+        public string LearnMoreLink { get; set; }
         /// <summary> The potential benefit of implementing recommendation. </summary>
-        public string PotentialBenefits { get; }
+        public string PotentialBenefits { get; set; }
         /// <summary>
         /// The list of recommended actions to implement recommendation.
         /// <para>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Advisor
         /// </list>
         /// </para>
         /// </summary>
-        public IReadOnlyList<IDictionary<string, BinaryData>> Actions { get; }
+        public IList<IDictionary<string, BinaryData>> Actions { get; }
         /// <summary>
         /// The automated way to apply recommendation.
         /// <para>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Advisor
         /// </list>
         /// </para>
         /// </summary>
-        public IReadOnlyDictionary<string, BinaryData> Remediation { get; }
+        public IDictionary<string, BinaryData> Remediation { get; }
         /// <summary>
         /// The recommendation metadata properties exposed to customer to provide additional information.
         /// <para>
@@ -280,18 +280,18 @@ namespace Azure.ResourceManager.Advisor
         /// </list>
         /// </para>
         /// </summary>
-        public IReadOnlyDictionary<string, BinaryData> ExposedMetadataProperties { get; }
+        public IDictionary<string, BinaryData> ExposedMetadataProperties { get; }
         /// <summary> If the Recommendation has Tracking enabled. </summary>
-        public bool? Tracked { get; }
+        public bool? Tracked { get; set; }
         /// <summary> The properties of a tracked recommendation. </summary>
-        public TrackedRecommendationProperties TrackedProperties { get; }
+        public TrackedRecommendationProperties TrackedProperties { get; set; }
         /// <summary> The Review that this Recommendation belongs to. </summary>
-        public RecommendationPropertiesReview Review { get; }
+        public RecommendationPropertiesReview Review { get; set; }
         /// <summary> The Workload that this Resource belongs to. </summary>
-        public RecommendationPropertiesResourceWorkload ResourceWorkload { get; }
+        public RecommendationPropertiesResourceWorkload ResourceWorkload { get; set; }
         /// <summary> The Source System that this Recommendation originated from. </summary>
-        public string SourceSystem { get; }
+        public string SourceSystem { get; set; }
         /// <summary> Additional notes for the Recommendation. </summary>
-        public string Notes { get; }
+        public string Notes { get; set; }
     }
 }

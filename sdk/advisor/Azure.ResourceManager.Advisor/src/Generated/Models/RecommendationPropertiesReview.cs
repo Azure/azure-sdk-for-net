@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Advisor.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RecommendationPropertiesReview"/>. </summary>
-        internal RecommendationPropertiesReview()
+        public RecommendationPropertiesReview()
         {
         }
 
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.Advisor.Models
         }
 
         /// <summary> The ARM Resource Id of the Review. </summary>
-        public string Id { get; }
+        public string Id { get; set; }
         /// <summary> The Name of the Review. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
     }
 }

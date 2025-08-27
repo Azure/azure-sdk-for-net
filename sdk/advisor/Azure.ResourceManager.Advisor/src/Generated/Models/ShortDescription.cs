@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Advisor.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ShortDescription"/>. </summary>
-        internal ShortDescription()
+        public ShortDescription()
         {
         }
 
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.Advisor.Models
         }
 
         /// <summary> The issue or opportunity identified by the recommendation and proposed solution. </summary>
-        public string Problem { get; }
+        public string Problem { get; set; }
         /// <summary> The issue or opportunity identified by the recommendation and proposed solution. </summary>
-        public string Solution { get; }
+        public string Solution { get; set; }
     }
 }

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Advisor
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateGenerateRequestUri(string subscriptionId)
+        internal RequestUriBuilder CreateGenerateRecommendationRequestUri(string subscriptionId)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Advisor
             return uri;
         }
 
-        internal HttpMessage CreateGenerateRequest(string subscriptionId)
+        internal HttpMessage CreateGenerateRecommendationRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -66,11 +66,11 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> GenerateAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response> GenerateRecommendationAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateGenerateRequest(subscriptionId);
+            using var message = CreateGenerateRecommendationRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Generate(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response GenerateRecommendation(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var message = CreateGenerateRequest(subscriptionId);
+            using var message = CreateGenerateRecommendationRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Advisor
             }
         }
 
-        internal RequestUriBuilder CreateGetGenerateStatusRequestUri(string subscriptionId, string operationId)
+        internal RequestUriBuilder CreateGetGenerateStatusRecommendationRequestUri(string subscriptionId, Guid operationId)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Advisor
             return uri;
         }
 
-        internal HttpMessage CreateGetGenerateStatusRequest(string subscriptionId, string operationId)
+        internal HttpMessage CreateGetGenerateStatusRecommendationRequest(string subscriptionId, Guid operationId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -134,14 +134,13 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="operationId"> The operation ID, which can be found from the Location field in the generate recommendation response header. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> GetGenerateStatusAsync(string subscriptionId, string operationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> GetGenerateStatusRecommendationAsync(string subscriptionId, Guid operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using var message = CreateGetGenerateStatusRequest(subscriptionId, operationId);
+            using var message = CreateGetGenerateStatusRecommendationRequest(subscriptionId, operationId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -157,14 +156,13 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="operationId"> The operation ID, which can be found from the Location field in the generate recommendation response header. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response GetGenerateStatus(string subscriptionId, string operationId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response GetGenerateStatusRecommendation(string subscriptionId, Guid operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            using var message = CreateGetGenerateStatusRequest(subscriptionId, operationId);
+            using var message = CreateGetGenerateStatusRecommendationRequest(subscriptionId, operationId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

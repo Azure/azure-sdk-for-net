@@ -40,15 +40,6 @@ namespace Azure.ResourceManager.Advisor.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ShortDescription"/>. </summary>
-        /// <param name="problem"> The issue or opportunity identified by the recommendation and proposed solution. </param>
-        /// <param name="solution"> The issue or opportunity identified by the recommendation and proposed solution. </param>
-        /// <returns> A new <see cref="Models.ShortDescription"/> instance for mocking. </returns>
-        public static ShortDescription ShortDescription(string problem = null, string solution = null)
-        {
-            return new ShortDescription(problem, solution, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.OperationEntity"/>. </summary>
         /// <param name="name"> Operation name: {provider}/{resource}/{operation}. </param>
         /// <param name="display"> The operation supported by Advisor. </param>
@@ -138,7 +129,7 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <param name="sourceSystem"> The Source System that this Recommendation originated from. </param>
         /// <param name="notes"> Additional notes for the Recommendation. </param>
         /// <returns> A new <see cref="Advisor.ResourceRecommendationBaseData"/> instance for mocking. </returns>
-        public static ResourceRecommendationBaseData ResourceRecommendationBaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Category? category = null, Control? control = null, Impact? impact = null, string impactedField = null, string impactedValue = null, DateTimeOffset? lastUpdated = null, IReadOnlyDictionary<string, BinaryData> metadata = null, string recommendationTypeId = null, Risk? risk = null, ShortDescription shortDescription = null, IEnumerable<Guid> suppressionIds = null, IReadOnlyDictionary<string, string> extendedProperties = null, ResourceMetadata resourceMetadata = null, string description = null, string label = null, string learnMoreLink = null, string potentialBenefits = null, IEnumerable<IDictionary<string, BinaryData>> actions = null, IReadOnlyDictionary<string, BinaryData> remediation = null, IReadOnlyDictionary<string, BinaryData> exposedMetadataProperties = null, bool? tracked = null, TrackedRecommendationProperties trackedProperties = null, RecommendationPropertiesReview review = null, RecommendationPropertiesResourceWorkload resourceWorkload = null, string sourceSystem = null, string notes = null)
+        public static ResourceRecommendationBaseData ResourceRecommendationBaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Category? category = null, Control? control = null, Impact? impact = null, string impactedField = null, string impactedValue = null, DateTimeOffset? lastUpdated = null, IDictionary<string, BinaryData> metadata = null, string recommendationTypeId = null, Risk? risk = null, ShortDescription shortDescription = null, IEnumerable<Guid> suppressionIds = null, IDictionary<string, string> extendedProperties = null, ResourceMetadata resourceMetadata = null, string description = null, string label = null, string learnMoreLink = null, string potentialBenefits = null, IEnumerable<IDictionary<string, BinaryData>> actions = null, IDictionary<string, BinaryData> remediation = null, IDictionary<string, BinaryData> exposedMetadataProperties = null, bool? tracked = null, TrackedRecommendationProperties trackedProperties = null, RecommendationPropertiesReview review = null, RecommendationPropertiesResourceWorkload resourceWorkload = null, string sourceSystem = null, string notes = null)
         {
             metadata ??= new Dictionary<string, BinaryData>();
             suppressionIds ??= new List<Guid>();
@@ -179,44 +170,6 @@ namespace Azure.ResourceManager.Advisor.Models
                 sourceSystem,
                 notes,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceMetadata"/>. </summary>
-        /// <param name="resourceId"> Azure resource Id of the assessed resource. </param>
-        /// <param name="source"> Source from which recommendation is generated. </param>
-        /// <param name="action"> The action to view resource. </param>
-        /// <param name="singular"> The singular user friendly name of resource type. eg: virtual machine. </param>
-        /// <param name="plural"> The plural user friendly name of resource type. eg: virtual machines. </param>
-        /// <returns> A new <see cref="Models.ResourceMetadata"/> instance for mocking. </returns>
-        public static ResourceMetadata ResourceMetadata(string resourceId = null, string source = null, IReadOnlyDictionary<string, BinaryData> action = null, string singular = null, string plural = null)
-        {
-            action ??= new Dictionary<string, BinaryData>();
-
-            return new ResourceMetadata(
-                resourceId,
-                source,
-                action,
-                singular,
-                plural,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RecommendationPropertiesReview"/>. </summary>
-        /// <param name="id"> The ARM Resource Id of the Review. </param>
-        /// <param name="name"> The Name of the Review. </param>
-        /// <returns> A new <see cref="Models.RecommendationPropertiesReview"/> instance for mocking. </returns>
-        public static RecommendationPropertiesReview RecommendationPropertiesReview(string id = null, string name = null)
-        {
-            return new RecommendationPropertiesReview(id, name, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RecommendationPropertiesResourceWorkload"/>. </summary>
-        /// <param name="id"> The Id of the Workload. </param>
-        /// <param name="name"> The Name of the Workload. </param>
-        /// <returns> A new <see cref="Models.RecommendationPropertiesResourceWorkload"/> instance for mocking. </returns>
-        public static RecommendationPropertiesResourceWorkload RecommendationPropertiesResourceWorkload(string id = null, string name = null)
-        {
-            return new RecommendationPropertiesResourceWorkload(id, name, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Advisor.SuppressionContractData"/>. </summary>
