@@ -158,27 +158,27 @@ namespace Azure.ResourceManager.Advisor.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AssessmentResultResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AssessmentResultResource.CreateResourceIdentifier" /> to create an <see cref="AssessmentResultResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="AdvisorAssessmentResultResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AdvisorAssessmentResultResource.CreateResourceIdentifier" /> to create an <see cref="AdvisorAssessmentResultResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AssessmentResultResource"/> object. </returns>
-        public virtual AssessmentResultResource GetAssessmentResultResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AdvisorAssessmentResultResource"/> object. </returns>
+        public virtual AdvisorAssessmentResultResource GetAdvisorAssessmentResultResource(ResourceIdentifier id)
         {
-            AssessmentResultResource.ValidateResourceId(id);
-            return new AssessmentResultResource(Client, id);
+            AdvisorAssessmentResultResource.ValidateResourceId(id);
+            return new AdvisorAssessmentResultResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ResiliencyReviewResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ResiliencyReviewResource.CreateResourceIdentifier" /> to create a <see cref="ResiliencyReviewResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="AdvisorResiliencyReviewResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AdvisorResiliencyReviewResource.CreateResourceIdentifier" /> to create an <see cref="AdvisorResiliencyReviewResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ResiliencyReviewResource"/> object. </returns>
-        public virtual ResiliencyReviewResource GetResiliencyReviewResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AdvisorResiliencyReviewResource"/> object. </returns>
+        public virtual AdvisorResiliencyReviewResource GetAdvisorResiliencyReviewResource(ResourceIdentifier id)
         {
-            ResiliencyReviewResource.ValidateResourceId(id);
-            return new ResiliencyReviewResource(Client, id);
+            AdvisorResiliencyReviewResource.ValidateResourceId(id);
+            return new AdvisorResiliencyReviewResource(Client, id);
         }
     }
 }

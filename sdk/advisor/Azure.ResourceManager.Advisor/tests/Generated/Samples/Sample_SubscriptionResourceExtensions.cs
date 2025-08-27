@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Advisor.Samples
 
             // invoke the operation
             PredictionContent content = new PredictionContent();
-            PredictionResult result = await subscriptionResource.PredictAdvisorClientAsync(content);
+            AdvisorPredictionResult result = await subscriptionResource.PredictAdvisorClientAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

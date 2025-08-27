@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <summary> Initializes a new instance of <see cref="WorkloadListResult"/>. </summary>
         /// <param name="value"> [Placeholder] Discription for value property. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal WorkloadListResult(IEnumerable<WorkloadResult> value)
+        internal WorkloadListResult(IEnumerable<AdvisorWorkloadResult> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <param name="value"> [Placeholder] Discription for value property. </param>
         /// <param name="nextLink"> [Placeholder] Discription for nextLink property. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadListResult(IReadOnlyList<WorkloadResult> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkloadListResult(IReadOnlyList<AdvisorWorkloadResult> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Advisor.Models
         }
 
         /// <summary> [Placeholder] Discription for value property. </summary>
-        public IReadOnlyList<WorkloadResult> Value { get; }
+        public IReadOnlyList<AdvisorWorkloadResult> Value { get; }
         /// <summary> [Placeholder] Discription for nextLink property. </summary>
         public Uri NextLink { get; }
     }

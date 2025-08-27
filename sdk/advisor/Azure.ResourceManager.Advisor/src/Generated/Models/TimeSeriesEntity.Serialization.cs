@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.Advisor.Models
             {
                 return null;
             }
-            Aggregated? aggregationLevel = default;
-            IReadOnlyList<ScoreEntity> scoreHistory = default;
+            ScoreAggregationLevel? aggregationLevel = default;
+            IReadOnlyList<AdvisorScoreEntityContent> scoreHistory = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Advisor.Models
                     {
                         continue;
                     }
-                    aggregationLevel = new Aggregated(property.Value.GetString());
+                    aggregationLevel = new ScoreAggregationLevel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("scoreHistory"u8))
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.Advisor.Models
                     {
                         continue;
                     }
-                    List<ScoreEntity> array = new List<ScoreEntity>();
+                    List<AdvisorScoreEntityContent> array = new List<AdvisorScoreEntityContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScoreEntity.DeserializeScoreEntity(item, options));
+                        array.Add(AdvisorScoreEntityContent.DeserializeAdvisorScoreEntityContent(item, options));
                     }
                     scoreHistory = array;
                     continue;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TimeSeriesEntity(aggregationLevel, scoreHistory ?? new ChangeTrackingList<ScoreEntity>(), serializedAdditionalRawData);
+            return new TimeSeriesEntity(aggregationLevel, scoreHistory ?? new ChangeTrackingList<AdvisorScoreEntityContent>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TimeSeriesEntity>.Write(ModelReaderWriterOptions options)

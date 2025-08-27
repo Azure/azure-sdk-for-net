@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PredictionResult>> PredictAsync(string subscriptionId, PredictionContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<AdvisorPredictionResult>> PredictAsync(string subscriptionId, PredictionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.Advisor
             {
                 case 200:
                     {
-                        PredictionResult value = default;
+                        AdvisorPredictionResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PredictionResult.DeserializePredictionResult(document.RootElement);
+                        value = AdvisorPredictionResult.DeserializeAdvisorPredictionResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PredictionResult> Predict(string subscriptionId, PredictionContent content, CancellationToken cancellationToken = default)
+        public Response<AdvisorPredictionResult> Predict(string subscriptionId, PredictionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.Advisor
             {
                 case 200:
                     {
-                        PredictionResult value = default;
+                        AdvisorPredictionResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PredictionResult.DeserializePredictionResult(document.RootElement);
+                        value = AdvisorPredictionResult.DeserializeAdvisorPredictionResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

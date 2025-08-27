@@ -129,12 +129,12 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationEntity"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OperationEntity> GetOperationsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AdvisorOperationEntity"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AdvisorOperationEntity> GetOperationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => OperationsRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OperationsRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => OperationEntity.DeserializeOperationEntity(e), OperationsClientDiagnostics, Pipeline, "MockableAdvisorTenantResource.GetOperations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AdvisorOperationEntity.DeserializeAdvisorOperationEntity(e), OperationsClientDiagnostics, Pipeline, "MockableAdvisorTenantResource.GetOperations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -155,12 +155,12 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationEntity"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OperationEntity> GetOperations(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AdvisorOperationEntity"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AdvisorOperationEntity> GetOperations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => OperationsRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OperationsRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => OperationEntity.DeserializeOperationEntity(e), OperationsClientDiagnostics, Pipeline, "MockableAdvisorTenantResource.GetOperations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AdvisorOperationEntity.DeserializeAdvisorOperationEntity(e), OperationsClientDiagnostics, Pipeline, "MockableAdvisorTenantResource.GetOperations", "value", "nextLink", cancellationToken);
         }
     }
 }

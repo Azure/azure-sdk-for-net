@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <param name="description"> Recommendation description. </param>
         /// <param name="notes"> Recommendation notes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TriageRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string reviewId, string title, PriorityName? priority, IReadOnlyList<string> appliesToSubscriptions, RecommendationStatusName? recommendationStatus, string updatedAt, string rejectReason, string potentialBenefits, string description, string notes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal TriageRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string reviewId, string title, RecommendationPriorityName? priority, IReadOnlyList<string> appliesToSubscriptions, RecommendationStatusName? recommendationStatus, string updatedAt, string rejectReason, string potentialBenefits, string description, string notes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ReviewId = reviewId;
             Title = title;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <summary> Recommendation label. </summary>
         public string Title { get; }
         /// <summary> Recommendation priority. </summary>
-        public PriorityName? Priority { get; }
+        public RecommendationPriorityName? Priority { get; }
         /// <summary> List of subscription ids. </summary>
         public IReadOnlyList<string> AppliesToSubscriptions { get; }
         /// <summary> Recommendation status. </summary>

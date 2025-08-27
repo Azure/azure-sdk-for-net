@@ -233,10 +233,10 @@ namespace Azure.ResourceManager.Advisor
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Tracked))
+            if (Optional.IsDefined(IsTracked))
             {
                 writer.WritePropertyName("tracked"u8);
-                writer.WriteBooleanValue(Tracked.Value);
+                writer.WriteBooleanValue(IsTracked.Value);
             }
             if (Optional.IsDefined(TrackedProperties))
             {
@@ -290,9 +290,9 @@ namespace Azure.ResourceManager.Advisor
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            Category? category = default;
-            Control? control = default;
-            Impact? impact = default;
+            RecommendationCategory? category = default;
+            RecommendationControlType? control = default;
+            RecommendationBusinessImpact? impact = default;
             string impactedField = default;
             string impactedValue = default;
             DateTimeOffset? lastUpdated = default;
@@ -312,8 +312,8 @@ namespace Azure.ResourceManager.Advisor
             IDictionary<string, BinaryData> exposedMetadataProperties = default;
             bool? tracked = default;
             TrackedRecommendationProperties trackedProperties = default;
-            RecommendationPropertiesReview review = default;
-            RecommendationPropertiesResourceWorkload resourceWorkload = default;
+            RecommendationReview review = default;
+            RecommendationResourceWorkload resourceWorkload = default;
             string sourceSystem = default;
             string notes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Advisor
                             {
                                 continue;
                             }
-                            category = new Category(property0.Value.GetString());
+                            category = new RecommendationCategory(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("control"u8))
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Advisor
                             {
                                 continue;
                             }
-                            control = new Control(property0.Value.GetString());
+                            control = new RecommendationControlType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("impact"u8))
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Advisor
                             {
                                 continue;
                             }
-                            impact = new Impact(property0.Value.GetString());
+                            impact = new RecommendationBusinessImpact(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("impactedField"u8))
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.Advisor
                             {
                                 continue;
                             }
-                            review = RecommendationPropertiesReview.DeserializeRecommendationPropertiesReview(property0.Value, options);
+                            review = RecommendationReview.DeserializeRecommendationReview(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("resourceWorkload"u8))
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.Advisor
                             {
                                 continue;
                             }
-                            resourceWorkload = RecommendationPropertiesResourceWorkload.DeserializeRecommendationPropertiesResourceWorkload(property0.Value, options);
+                            resourceWorkload = RecommendationResourceWorkload.DeserializeRecommendationResourceWorkload(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("sourceSystem"u8))

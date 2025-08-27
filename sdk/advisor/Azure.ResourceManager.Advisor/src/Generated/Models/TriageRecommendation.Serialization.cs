@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Advisor.Models
             SystemData systemData = default;
             string reviewId = default;
             string title = default;
-            PriorityName? priority = default;
+            RecommendationPriorityName? priority = default;
             IReadOnlyList<string> appliesToSubscriptions = default;
             RecommendationStatusName? recommendationStatus = default;
             string updatedAt = default;
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Advisor.Models
                             {
                                 continue;
                             }
-                            priority = new PriorityName(property0.Value.GetString());
+                            priority = new RecommendationPriorityName(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("appliesToSubscriptions"u8))

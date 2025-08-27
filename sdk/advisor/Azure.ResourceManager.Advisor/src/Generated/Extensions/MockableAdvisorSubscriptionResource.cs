@@ -131,11 +131,11 @@ namespace Azure.ResourceManager.Advisor.Mocking
             return GetAdvisorScoreEntities().Get(name, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AssessmentResultResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of AssessmentResultResources and their operations over a AssessmentResultResource. </returns>
-        public virtual AssessmentResultCollection GetAssessmentResults()
+        /// <summary> Gets a collection of AdvisorAssessmentResultResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of AdvisorAssessmentResultResources and their operations over a AdvisorAssessmentResultResource. </returns>
+        public virtual AdvisorAssessmentResultCollection GetAdvisorAssessmentResults()
         {
-            return GetCachedClient(client => new AssessmentResultCollection(client, Id));
+            return GetCachedClient(client => new AdvisorAssessmentResultCollection(client, Id));
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AssessmentResultResource"/></description>
+        /// <description><see cref="AdvisorAssessmentResultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -164,9 +164,9 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AssessmentResultResource>> GetAssessmentResultAsync(string assessmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AdvisorAssessmentResultResource>> GetAdvisorAssessmentResultAsync(string assessmentName, CancellationToken cancellationToken = default)
         {
-            return await GetAssessmentResults().GetAsync(assessmentName, cancellationToken).ConfigureAwait(false);
+            return await GetAdvisorAssessmentResults().GetAsync(assessmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AssessmentResultResource"/></description>
+        /// <description><see cref="AdvisorAssessmentResultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,47 +195,16 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="assessmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AssessmentResultResource> GetAssessmentResult(string assessmentName, CancellationToken cancellationToken = default)
+        public virtual Response<AdvisorAssessmentResultResource> GetAdvisorAssessmentResult(string assessmentName, CancellationToken cancellationToken = default)
         {
-            return GetAssessmentResults().Get(assessmentName, cancellationToken);
+            return GetAdvisorAssessmentResults().Get(assessmentName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ResiliencyReviewResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of ResiliencyReviewResources and their operations over a ResiliencyReviewResource. </returns>
-        public virtual ResiliencyReviewCollection GetResiliencyReviews()
+        /// <summary> Gets a collection of AdvisorResiliencyReviewResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of AdvisorResiliencyReviewResources and their operations over a AdvisorResiliencyReviewResource. </returns>
+        public virtual AdvisorResiliencyReviewCollection GetAdvisorResiliencyReviews()
         {
-            return GetCachedClient(client => new ResiliencyReviewCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get existing Azure Advisor resiliency review by id.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/resiliencyReviews/{reviewId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ResiliencyReview_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-05-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ResiliencyReviewResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="reviewId"> Existing review id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reviewId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="reviewId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ResiliencyReviewResource>> GetResiliencyReviewAsync(string reviewId, CancellationToken cancellationToken = default)
-        {
-            return await GetResiliencyReviews().GetAsync(reviewId, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new AdvisorResiliencyReviewCollection(client, Id));
         }
 
         /// <summary>
@@ -255,7 +224,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ResiliencyReviewResource"/></description>
+        /// <description><see cref="AdvisorResiliencyReviewResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -264,9 +233,40 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="reviewId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reviewId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ResiliencyReviewResource> GetResiliencyReview(string reviewId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AdvisorResiliencyReviewResource>> GetAdvisorResiliencyReviewAsync(string reviewId, CancellationToken cancellationToken = default)
         {
-            return GetResiliencyReviews().Get(reviewId, cancellationToken);
+            return await GetAdvisorResiliencyReviews().GetAsync(reviewId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get existing Azure Advisor resiliency review by id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/resiliencyReviews/{reviewId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResiliencyReview_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AdvisorResiliencyReviewResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reviewId"> Existing review id. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="reviewId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reviewId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AdvisorResiliencyReviewResource> GetAdvisorResiliencyReview(string reviewId, CancellationToken cancellationToken = default)
+        {
+            return GetAdvisorResiliencyReviews().Get(reviewId, cancellationToken);
         }
 
         /// <summary>
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<PredictionResult>> PredictAdvisorClientAsync(PredictionContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AdvisorPredictionResult>> PredictAdvisorClientAsync(PredictionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<PredictionResult> PredictAdvisorClient(PredictionContent content, CancellationToken cancellationToken = default)
+        public virtual Response<AdvisorPredictionResult> PredictAdvisorClient(PredictionContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -739,12 +739,12 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkloadResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WorkloadResult> GetWorkloadsOperationGroupsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AdvisorWorkloadResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AdvisorWorkloadResult> GetWorkloadsOperationGroupsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => WorkloadsOperationGroupRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => WorkloadsOperationGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => WorkloadResult.DeserializeWorkloadResult(e), WorkloadsOperationGroupClientDiagnostics, Pipeline, "MockableAdvisorSubscriptionResource.GetWorkloadsOperationGroups", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AdvisorWorkloadResult.DeserializeAdvisorWorkloadResult(e), WorkloadsOperationGroupClientDiagnostics, Pipeline, "MockableAdvisorSubscriptionResource.GetWorkloadsOperationGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -765,12 +765,12 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkloadResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WorkloadResult> GetWorkloadsOperationGroups(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AdvisorWorkloadResult"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AdvisorWorkloadResult> GetWorkloadsOperationGroups(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => WorkloadsOperationGroupRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => WorkloadsOperationGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => WorkloadResult.DeserializeWorkloadResult(e), WorkloadsOperationGroupClientDiagnostics, Pipeline, "MockableAdvisorSubscriptionResource.GetWorkloadsOperationGroups", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AdvisorWorkloadResult.DeserializeAdvisorWorkloadResult(e), WorkloadsOperationGroupClientDiagnostics, Pipeline, "MockableAdvisorSubscriptionResource.GetWorkloadsOperationGroups", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <param name="reason"> The reason the state of the Recommendation was changed. </param>
         /// <param name="priority"> The Priority of the Recommendation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrackedRecommendationProperties(State? state, DateTimeOffset? postponedOn, Reason? reason, Priority? priority, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TrackedRecommendationProperties(RecommendationState? state, DateTimeOffset? postponedOn, RecommendationStateChangeReason? reason, RecommendationPriority? priority, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             PostponedOn = postponedOn;
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.Advisor.Models
         }
 
         /// <summary> The state of the Recommendation. </summary>
-        public State? State { get; set; }
+        public RecommendationState? State { get; set; }
         /// <summary> The time the Recommendation was postponed until. </summary>
         public DateTimeOffset? PostponedOn { get; set; }
         /// <summary> The reason the state of the Recommendation was changed. </summary>
-        public Reason? Reason { get; set; }
+        public RecommendationStateChangeReason? Reason { get; set; }
         /// <summary> The Priority of the Recommendation. </summary>
-        public Priority? Priority { get; set; }
+        public RecommendationPriority? Priority { get; set; }
     }
 }

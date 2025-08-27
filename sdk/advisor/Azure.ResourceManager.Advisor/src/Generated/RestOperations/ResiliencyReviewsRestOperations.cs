@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="reviewId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="reviewId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ResiliencyReviewData>> GetAsync(string subscriptionId, string reviewId, CancellationToken cancellationToken = default)
+        public async Task<Response<AdvisorResiliencyReviewData>> GetAsync(string subscriptionId, string reviewId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(reviewId, nameof(reviewId));
@@ -83,13 +83,13 @@ namespace Azure.ResourceManager.Advisor
             {
                 case 200:
                     {
-                        ResiliencyReviewData value = default;
+                        AdvisorResiliencyReviewData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ResiliencyReviewData.DeserializeResiliencyReviewData(document.RootElement);
+                        value = AdvisorResiliencyReviewData.DeserializeAdvisorResiliencyReviewData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ResiliencyReviewData)null, message.Response);
+                    return Response.FromValue((AdvisorResiliencyReviewData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="reviewId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="reviewId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ResiliencyReviewData> Get(string subscriptionId, string reviewId, CancellationToken cancellationToken = default)
+        public Response<AdvisorResiliencyReviewData> Get(string subscriptionId, string reviewId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(reviewId, nameof(reviewId));
@@ -112,13 +112,13 @@ namespace Azure.ResourceManager.Advisor
             {
                 case 200:
                     {
-                        ResiliencyReviewData value = default;
+                        AdvisorResiliencyReviewData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ResiliencyReviewData.DeserializeResiliencyReviewData(document.RootElement);
+                        value = AdvisorResiliencyReviewData.DeserializeAdvisorResiliencyReviewData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ResiliencyReviewData)null, message.Response);
+                    return Response.FromValue((AdvisorResiliencyReviewData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.ResiliencyReviewCollection>> ListAsync(string subscriptionId, int? top = null, int? skip = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AdvisorResiliencyReviewList>> ListAsync(string subscriptionId, int? top = null, int? skip = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -194,9 +194,9 @@ namespace Azure.ResourceManager.Advisor
             {
                 case 200:
                     {
-                        Models.ResiliencyReviewCollection value = default;
+                        AdvisorResiliencyReviewList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = Models.ResiliencyReviewCollection.DeserializeResiliencyReviewCollection(document.RootElement);
+                        value = AdvisorResiliencyReviewList.DeserializeAdvisorResiliencyReviewList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.ResiliencyReviewCollection> List(string subscriptionId, int? top = null, int? skip = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<AdvisorResiliencyReviewList> List(string subscriptionId, int? top = null, int? skip = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -222,9 +222,9 @@ namespace Azure.ResourceManager.Advisor
             {
                 case 200:
                     {
-                        Models.ResiliencyReviewCollection value = default;
+                        AdvisorResiliencyReviewList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = Models.ResiliencyReviewCollection.DeserializeResiliencyReviewCollection(document.RootElement);
+                        value = AdvisorResiliencyReviewList.DeserializeAdvisorResiliencyReviewList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<Models.ResiliencyReviewCollection>> ListNextPageAsync(string nextLink, string subscriptionId, int? top = null, int? skip = null, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AdvisorResiliencyReviewList>> ListNextPageAsync(string nextLink, string subscriptionId, int? top = null, int? skip = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -274,9 +274,9 @@ namespace Azure.ResourceManager.Advisor
             {
                 case 200:
                     {
-                        Models.ResiliencyReviewCollection value = default;
+                        AdvisorResiliencyReviewList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = Models.ResiliencyReviewCollection.DeserializeResiliencyReviewCollection(document.RootElement);
+                        value = AdvisorResiliencyReviewList.DeserializeAdvisorResiliencyReviewList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<Models.ResiliencyReviewCollection> ListNextPage(string nextLink, string subscriptionId, int? top = null, int? skip = null, string filter = null, CancellationToken cancellationToken = default)
+        public Response<AdvisorResiliencyReviewList> ListNextPage(string nextLink, string subscriptionId, int? top = null, int? skip = null, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -304,9 +304,9 @@ namespace Azure.ResourceManager.Advisor
             {
                 case 200:
                     {
-                        Models.ResiliencyReviewCollection value = default;
+                        AdvisorResiliencyReviewList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = Models.ResiliencyReviewCollection.DeserializeResiliencyReviewCollection(document.RootElement);
+                        value = AdvisorResiliencyReviewList.DeserializeAdvisorResiliencyReviewList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

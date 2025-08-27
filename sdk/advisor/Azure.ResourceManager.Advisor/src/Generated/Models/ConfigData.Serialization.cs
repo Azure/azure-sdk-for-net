@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Advisor.Models
             SystemData systemData = default;
             bool? exclude = default;
             CpuThreshold? lowCpuThreshold = default;
-            Duration? duration = default;
+            MinimumDuration? duration = default;
             IList<DigestConfig> digests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Advisor.Models
                             {
                                 continue;
                             }
-                            duration = new Duration(property0.Value.GetString());
+                            duration = new MinimumDuration(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("digests"u8))

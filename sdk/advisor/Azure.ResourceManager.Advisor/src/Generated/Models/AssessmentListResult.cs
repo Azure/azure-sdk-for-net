@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <summary> Initializes a new instance of <see cref="AssessmentListResult"/>. </summary>
         /// <param name="value"> The AssessmentResult items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal AssessmentListResult(IEnumerable<AssessmentResultData> value)
+        internal AssessmentListResult(IEnumerable<AdvisorAssessmentResultData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <param name="value"> The AssessmentResult items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssessmentListResult(IReadOnlyList<AssessmentResultData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AssessmentListResult(IReadOnlyList<AdvisorAssessmentResultData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Advisor.Models
         }
 
         /// <summary> The AssessmentResult items on this page. </summary>
-        public IReadOnlyList<AssessmentResultData> Value { get; }
+        public IReadOnlyList<AdvisorAssessmentResultData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

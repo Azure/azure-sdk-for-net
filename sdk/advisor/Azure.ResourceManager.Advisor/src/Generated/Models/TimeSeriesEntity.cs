@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <summary> Initializes a new instance of <see cref="TimeSeriesEntity"/>. </summary>
         internal TimeSeriesEntity()
         {
-            ScoreHistory = new ChangeTrackingList<ScoreEntity>();
+            ScoreHistory = new ChangeTrackingList<AdvisorScoreEntityContent>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TimeSeriesEntity"/>. </summary>
         /// <param name="aggregationLevel"> The aggregation level of the score. </param>
         /// <param name="scoreHistory"> The past score data. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TimeSeriesEntity(Aggregated? aggregationLevel, IReadOnlyList<ScoreEntity> scoreHistory, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TimeSeriesEntity(ScoreAggregationLevel? aggregationLevel, IReadOnlyList<AdvisorScoreEntityContent> scoreHistory, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AggregationLevel = aggregationLevel;
             ScoreHistory = scoreHistory;
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.Advisor.Models
         }
 
         /// <summary> The aggregation level of the score. </summary>
-        public Aggregated? AggregationLevel { get; }
+        public ScoreAggregationLevel? AggregationLevel { get; }
         /// <summary> The past score data. </summary>
-        public IReadOnlyList<ScoreEntity> ScoreHistory { get; }
+        public IReadOnlyList<AdvisorScoreEntityContent> ScoreHistory { get; }
     }
 }

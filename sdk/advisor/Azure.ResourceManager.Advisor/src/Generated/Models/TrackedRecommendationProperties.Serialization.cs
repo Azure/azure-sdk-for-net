@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Advisor.Models
             {
                 return null;
             }
-            State? state = default;
+            RecommendationState? state = default;
             DateTimeOffset? postponedTime = default;
-            Reason? reason = default;
-            Priority? priority = default;
+            RecommendationStateChangeReason? reason = default;
+            RecommendationPriority? priority = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Advisor.Models
                     {
                         continue;
                     }
-                    state = new State(property.Value.GetString());
+                    state = new RecommendationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("postponedTime"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Advisor.Models
                     {
                         continue;
                     }
-                    reason = new Reason(property.Value.GetString());
+                    reason = new RecommendationStateChangeReason(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("priority"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Advisor.Models
                     {
                         continue;
                     }
-                    priority = new Priority(property.Value.GetString());
+                    priority = new RecommendationPriority(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

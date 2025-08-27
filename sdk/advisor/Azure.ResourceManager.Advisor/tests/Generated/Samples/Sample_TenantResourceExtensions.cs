@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Advisor.Samples
             TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation and iterate over the result
-            await foreach (OperationEntity item in tenantResource.GetOperationsAsync())
+            await foreach (AdvisorOperationEntity item in tenantResource.GetOperationsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

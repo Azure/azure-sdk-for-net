@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Advisor
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            ScoreEntity lastRefreshedScore = default;
+            AdvisorScoreEntityContent lastRefreshedScore = default;
             IReadOnlyList<TimeSeriesEntity> timeSeries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Advisor
                             {
                                 continue;
                             }
-                            lastRefreshedScore = ScoreEntity.DeserializeScoreEntity(property0.Value, options);
+                            lastRefreshedScore = AdvisorScoreEntityContent.DeserializeAdvisorScoreEntityContent(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("timeSeries"u8))

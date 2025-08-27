@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="reviewId"/>, <paramref name="recommendationId"/> or <paramref name="recommendationResourceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="reviewId"/>, <paramref name="recommendationId"/> or <paramref name="recommendationResourceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TriageResourceData>> GetAsync(string subscriptionId, string reviewId, string recommendationId, string recommendationResourceId, CancellationToken cancellationToken = default)
+        public async Task<Response<AdvisorTriageResourceData>> GetAsync(string subscriptionId, string reviewId, string recommendationId, string recommendationResourceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(reviewId, nameof(reviewId));
@@ -95,9 +95,9 @@ namespace Azure.ResourceManager.Advisor
             {
                 case 200:
                     {
-                        TriageResourceData value = default;
+                        AdvisorTriageResourceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = TriageResourceData.DeserializeTriageResourceData(document.RootElement);
+                        value = AdvisorTriageResourceData.DeserializeAdvisorTriageResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="reviewId"/>, <paramref name="recommendationId"/> or <paramref name="recommendationResourceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="reviewId"/>, <paramref name="recommendationId"/> or <paramref name="recommendationResourceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TriageResourceData> Get(string subscriptionId, string reviewId, string recommendationId, string recommendationResourceId, CancellationToken cancellationToken = default)
+        public Response<AdvisorTriageResourceData> Get(string subscriptionId, string reviewId, string recommendationId, string recommendationResourceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(reviewId, nameof(reviewId));
@@ -126,9 +126,9 @@ namespace Azure.ResourceManager.Advisor
             {
                 case 200:
                     {
-                        TriageResourceData value = default;
+                        AdvisorTriageResourceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = TriageResourceData.DeserializeTriageResourceData(document.RootElement);
+                        value = AdvisorTriageResourceData.DeserializeAdvisorTriageResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="reviewId"/> or <paramref name="recommendationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="reviewId"/> or <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TriageResourceList>> ListAsync(string subscriptionId, string reviewId, string recommendationId, CancellationToken cancellationToken = default)
+        public async Task<Response<AdvisorTriageResourceDataList>> ListAsync(string subscriptionId, string reviewId, string recommendationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(reviewId, nameof(reviewId));
@@ -191,9 +191,9 @@ namespace Azure.ResourceManager.Advisor
             {
                 case 200:
                     {
-                        TriageResourceList value = default;
+                        AdvisorTriageResourceDataList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = TriageResourceList.DeserializeTriageResourceList(document.RootElement);
+                        value = AdvisorTriageResourceDataList.DeserializeAdvisorTriageResourceDataList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="reviewId"/> or <paramref name="recommendationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="reviewId"/> or <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TriageResourceList> List(string subscriptionId, string reviewId, string recommendationId, CancellationToken cancellationToken = default)
+        public Response<AdvisorTriageResourceDataList> List(string subscriptionId, string reviewId, string recommendationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(reviewId, nameof(reviewId));
@@ -220,9 +220,9 @@ namespace Azure.ResourceManager.Advisor
             {
                 case 200:
                     {
-                        TriageResourceList value = default;
+                        AdvisorTriageResourceDataList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = TriageResourceList.DeserializeTriageResourceList(document.RootElement);
+                        value = AdvisorTriageResourceDataList.DeserializeAdvisorTriageResourceDataList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="reviewId"/> or <paramref name="recommendationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="reviewId"/> or <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TriageResourceList>> ListNextPageAsync(string nextLink, string subscriptionId, string reviewId, string recommendationId, CancellationToken cancellationToken = default)
+        public async Task<Response<AdvisorTriageResourceDataList>> ListNextPageAsync(string nextLink, string subscriptionId, string reviewId, string recommendationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -273,9 +273,9 @@ namespace Azure.ResourceManager.Advisor
             {
                 case 200:
                     {
-                        TriageResourceList value = default;
+                        AdvisorTriageResourceDataList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = TriageResourceList.DeserializeTriageResourceList(document.RootElement);
+                        value = AdvisorTriageResourceDataList.DeserializeAdvisorTriageResourceDataList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="reviewId"/> or <paramref name="recommendationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="reviewId"/> or <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TriageResourceList> ListNextPage(string nextLink, string subscriptionId, string reviewId, string recommendationId, CancellationToken cancellationToken = default)
+        public Response<AdvisorTriageResourceDataList> ListNextPage(string nextLink, string subscriptionId, string reviewId, string recommendationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -304,9 +304,9 @@ namespace Azure.ResourceManager.Advisor
             {
                 case 200:
                     {
-                        TriageResourceList value = default;
+                        AdvisorTriageResourceDataList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = TriageResourceList.DeserializeTriageResourceList(document.RootElement);
+                        value = AdvisorTriageResourceDataList.DeserializeAdvisorTriageResourceDataList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
