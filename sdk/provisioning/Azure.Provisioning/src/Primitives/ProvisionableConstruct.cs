@@ -90,7 +90,8 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
 
     private protected BicepExpression CompileProperties()
     {
-        if (_kind == BicepValueKind.Expression) { return _expression ?? BicepSyntax.Null(); }
+        if (_kind == BicepValueKind.Expression)
+        { return _expression ?? BicepSyntax.Null(); }
 
         // Aggregate all the properties into a single nested dictionary
         Dictionary<string, object> body = [];
@@ -225,7 +226,8 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
     {
         // TODO: Do we want to add a more explicit notion of readonly
         // (especially for expr ref resources)?
-        if (_isOutput) { throw new InvalidOperationException($"Cannot assign to output value {_self?.PropertyName}"); }
+        if (_isOutput)
+        { throw new InvalidOperationException($"Cannot assign to output value {_self?.PropertyName}"); }
 
         // Track the source so we can correctly link references across modules
         _source = source?.Self;
@@ -343,21 +345,29 @@ public abstract class ProvisionableConstruct : Provisionable, IBicepValue
     protected T DefineModelProperty<T>(
         string propertyName,
         string[]? bicepPath,
+        T value,
+        bool isOutput = false,
+        bool isRequired = false,
+        bool isSecure = false,
+        string? format = null)
+        where T : ProvisionableConstruct
+    {
+        value._self = new BicepValueReference(this, propertyName, bicepPath);
+        value._isOutput = isOutput;
+        value._isRequired = isRequired;
+        value._isSecure = isSecure;
+        value.Format = format;
+        ProvisionableProperties[propertyName] = value;
+        return value;
+    }
+
+    protected T DefineModelProperty<T>(
+        string propertyName,
+        string[]? bicepPath,
         bool isOutput = false,
         bool isRequired = false,
         bool isSecure = false,
         string? format = null)
         where T : ProvisionableConstruct, new()
-    {
-        T value = new()
-        {
-            _self = new BicepValueReference(this, propertyName, bicepPath),
-            _isOutput = isOutput,
-            _isRequired = isRequired,
-            _isSecure = isSecure,
-            Format = format
-        };
-        ProvisionableProperties[propertyName] = value;
-        return value;
-    }
+        => DefineModelProperty(propertyName, bicepPath, new T(), isOutput, isRequired, isSecure, format);
 }

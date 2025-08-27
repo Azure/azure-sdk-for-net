@@ -105,7 +105,10 @@ public class BicepList<T> :
     }
 
     public void Insert(int index, BicepValue<T> item) => _values.Insert(index, item);
-    public void Add(BicepValue<T> item) => _values.Add(item);
+    public void Add(BicepValue<T> item)
+    {
+        _values.Add(item);
+    }
 
     // TODO: Decide whether it's important to "unlink" resources on removal
     public void RemoveAt(int index) => _values.RemoveAt(index);
