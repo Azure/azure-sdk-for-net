@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of <see cref="RecordingResult"/>. </summary>
         internal RecordingResult()
         {
-            Errors = new ChangeTrackingList<ErrorDetails>();
+            Errors = new ChangeTrackingList<ErrorDetailInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RecordingResult"/>. </summary>
@@ -27,7 +27,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="recordingDurationMs"></param>
         /// <param name="sessionEndReason"></param>
         /// <param name="recordingExpirationTime"></param>
-        internal RecordingResult(string recordingId, RecordingStorageInfo recordingStorageInfo, IReadOnlyList<ErrorDetails> errors, DateTimeOffset? recordingStartTime, long? recordingDurationMs, CallSessionEndReason? sessionEndReason, DateTimeOffset? recordingExpirationTime)
+        internal RecordingResult(string recordingId, RecordingStorageInfo recordingStorageInfo, IReadOnlyList<ErrorDetailInfo> errors, DateTimeOffset? recordingStartTime, long? recordingDurationMs, CallSessionEndReason? sessionEndReason, DateTimeOffset? recordingExpirationTime)
         {
             RecordingId = recordingId;
             RecordingStorageInfo = recordingStorageInfo;
@@ -43,7 +43,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Container for chunks. </summary>
         public RecordingStorageInfo RecordingStorageInfo { get; }
         /// <summary> Gets the errors. </summary>
-        public IReadOnlyList<ErrorDetails> Errors { get; }
+        public IReadOnlyList<ErrorDetailInfo> Errors { get; }
         /// <summary> Gets the recording start time. </summary>
         public DateTimeOffset? RecordingStartTime { get; }
         /// <summary> Gets the recording duration ms. </summary>

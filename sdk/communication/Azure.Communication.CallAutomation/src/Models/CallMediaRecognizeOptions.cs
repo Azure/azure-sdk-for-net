@@ -76,5 +76,11 @@ namespace Azure.Communication.CallAutomation
         /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </summary>
         public Uri OperationCallbackUri { get; set; }
+
+        /// <summary>  List of locales for Language Identification. Supports upto 4 locales in the format: ["en-us", "fr-fr", "hi-in"] etc. </summary>
+        public IList<string> SpeechLanguages { get; set; }
+
+        /// <summary> Gets or sets a value indicating if sentiment analysis should be used. </summary>
+        public bool? IsSentimentAnalysisEnabled { get; set; }
     }
 }

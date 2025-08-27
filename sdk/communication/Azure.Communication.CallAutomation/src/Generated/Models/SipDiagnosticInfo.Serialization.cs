@@ -9,22 +9,25 @@ using System.Text.Json;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class ErrorDetails
+    public partial class SipDiagnosticInfo
     {
-        internal static ErrorDetails DeserializeErrorDetails(JsonElement element)
+        internal static SipDiagnosticInfo DeserializeSipDiagnosticInfo(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string code = default;
+            int? code = default;
             string message = default;
-            ErrorDetails innerError = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
                 {
-                    code = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    code = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("message"u8))
@@ -32,25 +35,16 @@ namespace Azure.Communication.CallAutomation
                     message = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("innerError"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    innerError = DeserializeErrorDetails(property.Value);
-                    continue;
-                }
             }
-            return new ErrorDetails(code, message, innerError);
+            return new SipDiagnosticInfo(code, message);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ErrorDetails FromResponse(Response response)
+        internal static SipDiagnosticInfo FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeErrorDetails(document.RootElement);
+            return DeserializeSipDiagnosticInfo(document.RootElement);
         }
     }
 }

@@ -55,9 +55,9 @@ namespace Azure.Communication.CallAutomation
         /// <param name="sessionEndReason"></param>
         /// <param name="recordingExpirationTime"></param>
         /// <returns> A new <see cref="CallAutomation.RecordingResult"/> instance for mocking. </returns>
-        public static RecordingResult RecordingResult(string recordingId = null, RecordingStorageInfo recordingStorageInfo = null, IEnumerable<ErrorDetails> errors = null, DateTimeOffset? recordingStartTime = null, long? recordingDurationMs = null, CallSessionEndReason? sessionEndReason = null, DateTimeOffset? recordingExpirationTime = null)
+        public static RecordingResult RecordingResult(string recordingId = null, RecordingStorageInfo recordingStorageInfo = null, IEnumerable<ErrorDetailInfo> errors = null, DateTimeOffset? recordingStartTime = null, long? recordingDurationMs = null, CallSessionEndReason? sessionEndReason = null, DateTimeOffset? recordingExpirationTime = null)
         {
-            errors ??= new List<ErrorDetails>();
+            errors ??= new List<ErrorDetailInfo>();
 
             return new RecordingResult(
                 recordingId,
@@ -98,24 +98,43 @@ namespace Azure.Communication.CallAutomation
                 deleteLocation);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CallAutomation.ErrorDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.ErrorDetailInfo"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="innerError"> Inner error details. </param>
-        /// <returns> A new <see cref="CallAutomation.ErrorDetails"/> instance for mocking. </returns>
-        public static ErrorDetails ErrorDetails(string code = null, string message = null, ErrorDetails innerError = null)
+        /// <returns> A new <see cref="CallAutomation.ErrorDetailInfo"/> instance for mocking. </returns>
+        public static ErrorDetailInfo ErrorDetailInfo(string code = null, string message = null, ErrorDetailInfo innerError = null)
         {
-            return new ErrorDetails(code, message, innerError);
+            return new ErrorDetailInfo(code, message, innerError);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.ResultInformation"/>. </summary>
         /// <param name="code"> Code of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </param>
         /// <param name="subCode"> Subcode of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </param>
         /// <param name="message"> Detail message that describes the current result. </param>
+        /// <param name="sipDetails">
+        /// Sip response from SBC. This can be helpful to troubleshoot PSTN call if this result was unexpected.
+        /// This is only applicable for PSTN calls and will be null if SBC/Carrier does not provide this information.
+        /// Do not solely rely on this information for troubleshooting, as it may not always be available.
+        /// </param>
+        /// <param name="q850Details">
+        /// Q850 cause from SBC. This can be helpful to troubleshoot call issues if this result was unexpected.
+        /// This is only applicable for PSTN calls and will be null if SBC/Carrier does not provide this information.
+        /// Do not solely rely on this information for troubleshooting, as it may not always be available.
+        /// </param>
         /// <returns> A new <see cref="CallAutomation.ResultInformation"/> instance for mocking. </returns>
-        public static ResultInformation ResultInformation(int? code = null, int? subCode = null, string message = null)
+        public static ResultInformation ResultInformation(int? code = null, int? subCode = null, string message = null, SipDiagnosticInfo sipDetails = null, SipDiagnosticInfo q850Details = null)
         {
-            return new ResultInformation(code, subCode, message);
+            return new ResultInformation(code, subCode, message, sipDetails, q850Details);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.SipDiagnosticInfo"/>. </summary>
+        /// <param name="code"> Represents the diagnostic code returned by the SIP service, used for identifying specific issues or statuses. </param>
+        /// <param name="message"> Message associated with the code for diagnosing. </param>
+        /// <returns> A new <see cref="CallAutomation.SipDiagnosticInfo"/> instance for mocking. </returns>
+        public static SipDiagnosticInfo SipDiagnosticInfo(int? code = null, string message = null)
+        {
+            return new SipDiagnosticInfo(code, message);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.DtmfResult"/>. </summary>
@@ -134,19 +153,32 @@ namespace Azure.Communication.CallAutomation
         /// Phrases are set to the value if choice is selected via phrase detection.
         /// If Dtmf input is recognized, then Label will be the identifier for the choice detected and phrases will be set to null
         /// </param>
+        /// <param name="languageIdentified"> The identified language for a spoken phrase. </param>
+        /// <param name="sentimentAnalysisResult"> Gets or sets the sentiment analysis result. </param>
+        /// <param name="confidence"> The confidence level of the recognized speech, if available, ranges from 0.0 to 1.0. </param>
         /// <returns> A new <see cref="CallAutomation.ChoiceResult"/> instance for mocking. </returns>
-        public static ChoiceResult ChoiceResult(string label = null, string recognizedPhrase = null)
+        public static ChoiceResult ChoiceResult(string label = null, string recognizedPhrase = null, string languageIdentified = null, SentimentAnalysisResult sentimentAnalysisResult = null, double? confidence = null)
         {
-            return new ChoiceResult(label, recognizedPhrase);
+            return new ChoiceResult(label, recognizedPhrase, languageIdentified, sentimentAnalysisResult, confidence);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.SentimentAnalysisResult"/>. </summary>
+        /// <param name="sentiment"> Gets or sets the value of the sentiment detected (positive, negative, neutral, mixed). </param>
+        /// <returns> A new <see cref="CallAutomation.SentimentAnalysisResult"/> instance for mocking. </returns>
+        public static SentimentAnalysisResult SentimentAnalysisResult(string sentiment = null)
+        {
+            return new SentimentAnalysisResult(sentiment);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.SpeechResult"/>. </summary>
         /// <param name="speech"> The recognized speech in string. </param>
-        /// <param name="confidence"> The confidence of the recognized speech. </param>
+        /// <param name="confidence"> The confidence level of the recognized speech, if available, ranges from 0.0 to 1.0. </param>
+        /// <param name="languageIdentified"> The identified language. </param>
+        /// <param name="sentimentAnalysisResult"> Gets or sets the sentiment analysis result. </param>
         /// <returns> A new <see cref="CallAutomation.SpeechResult"/> instance for mocking. </returns>
-        public static SpeechResult SpeechResult(string speech = null, double? confidence = null)
+        public static SpeechResult SpeechResult(string speech = null, double? confidence = null, string languageIdentified = null, SentimentAnalysisResult sentimentAnalysisResult = null)
         {
-            return new SpeechResult(speech, confidence);
+            return new SpeechResult(speech, confidence, languageIdentified, sentimentAnalysisResult);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.UserConsent"/>. </summary>
@@ -189,10 +221,11 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionUpdate"/>. </summary>
         /// <param name="transcriptionStatus"></param>
         /// <param name="transcriptionStatusDetails"></param>
+        /// <param name="transcriptionMessage"> Optional message providing additional context about the transcription update. </param>
         /// <returns> A new <see cref="CallAutomation.TranscriptionUpdate"/> instance for mocking. </returns>
-        public static TranscriptionUpdate TranscriptionUpdate(TranscriptionStatus? transcriptionStatus = null, TranscriptionStatusDetails? transcriptionStatusDetails = null)
+        public static TranscriptionUpdate TranscriptionUpdate(TranscriptionStatus? transcriptionStatus = null, TranscriptionStatusDetails? transcriptionStatusDetails = null, string transcriptionMessage = null)
         {
-            return new TranscriptionUpdate(transcriptionStatus, transcriptionStatusDetails);
+            return new TranscriptionUpdate(transcriptionStatus, transcriptionStatusDetails, transcriptionMessage);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionStopped"/>. </summary>
@@ -244,6 +277,25 @@ namespace Azure.Communication.CallAutomation
         public static TranscriptionUpdated TranscriptionUpdated(TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
             return new TranscriptionUpdated(
+                transcriptionUpdate,
+                callConnectionId,
+                serverCallId,
+                correlationId,
+                operationContext,
+                resultInformation);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionCallSummaryUpdated"/>. </summary>
+        /// <param name="transcriptionUpdate"> Defines the result for TranscriptionUpdate with the current status and the details about the status. </param>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <returns> A new <see cref="CallAutomation.TranscriptionCallSummaryUpdated"/> instance for mocking. </returns>
+        public static TranscriptionCallSummaryUpdated TranscriptionCallSummaryUpdated(TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
+        {
+            return new TranscriptionCallSummaryUpdated(
                 transcriptionUpdate,
                 callConnectionId,
                 serverCallId,

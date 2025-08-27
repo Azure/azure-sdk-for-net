@@ -261,6 +261,7 @@ namespace Azure.Communication.CallAutomation
                 options.CustomCallingContext?.VoipHeaders ?? new ChangeTrackingDictionary<string, string>(),
                 options.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>(),
                 CustomCallContextHelpers.CreateTeamsPhoneCallDetailsInternal(options.CustomCallingContext?.TeamsPhoneCallDetails));
+            request.EnableLoopbackAudio = options.IsLoopbackAudioEnabled;
 
             return request;
         }
@@ -751,6 +752,7 @@ namespace Azure.Communication.CallAutomation
             request.OperationContext = options.OperationContext;
             request.MediaStreamingOptions = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
             request.TranscriptionOptions = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
+            request.EnableLoopbackAudio = options.IsLoopbackAudioEnabled;
 
             return request;
         }
@@ -811,6 +813,7 @@ namespace Azure.Communication.CallAutomation
                     BackupCognitiveServicesEndpoint = backupCognitiveServicesEndpoint
                 };
             }
+            connectRequest.EnableLoopbackAudio = options.IsLoopbackAudioEnabled;
 
             return connectRequest;
         }
@@ -833,19 +836,38 @@ namespace Azure.Communication.CallAutomation
             return configuration == default
                 ? default
                 : new MediaStreamingOptionsInternal(configuration.TransportUri.AbsoluteUri, configuration.MediaStreamingTransport,
-                configuration.MediaStreamingContent, configuration.MediaStreamingAudioChannel, configuration.StartMediaStreaming,
-                configuration.EnableBidirectional, configuration.AudioFormat);
+                configuration.MediaStreamingContent, configuration.MediaStreamingAudioChannel)
+                {
+                    AudioFormat = configuration.AudioFormat,
+                    EnableDtmfTones = configuration.EnableDtmfTones,
+                    EnableBidirectional = configuration.EnableBidirectional,
+                    StartMediaStreaming = configuration.StartMediaStreaming
+                };
         }
         private static TranscriptionOptionsInternal CreateTranscriptionOptionsInternal(TranscriptionOptions configuration)
         {
-            return configuration == default
-                ? default
-                : new TranscriptionOptionsInternal(configuration.TransportUrl.AbsoluteUri, configuration.TranscriptionTransport, configuration.Locale,
+            if (configuration == default)
+            {
+                return default;
+            }
+            TranscriptionOptionsInternal transcriptionOptionsInternal = new TranscriptionOptionsInternal(configuration.TransportUri.AbsoluteUri, configuration.TranscriptionTransport,
                 configuration.StartTranscription.GetValueOrDefault())
                 {
+                    Locale = configuration.Locale,
+                    SpeechModelEndpointId = configuration.SpeechRecognitionModelEndpointId,
                     EnableIntermediateResults = configuration.EnableIntermediateResults,
-                    SpeechRecognitionModelEndpointId = configuration.SpeechRecognitionModelEndpointId
+                    PiiRedactionOptions = configuration.PiiRedactionOptions == null ? null : new PiiRedactionOptionsInternal(configuration.PiiRedactionOptions.IsEnabled, configuration.PiiRedactionOptions.RedactionType),
+                    EnableSentimentAnalysis = configuration.IsSentimentAnalysisEnabled,
+                    SummarizationOptions = configuration.SummarizationOptions == null ? null : new SummarizationOptionsInternal(configuration.SummarizationOptions.IsEndCallSummaryEnabled, configuration.SummarizationOptions.Locale)
                 };
+            if (configuration.Locales != null && configuration.Locales.Any())
+            {
+                foreach (string locale in configuration.Locales)
+                {
+                    transcriptionOptionsInternal.Locales.Add(locale);
+                }
+            }
+            return transcriptionOptionsInternal;
         }
 
         /// <summary> Initializes a new instance of CallConnection. <see cref="CallConnection"/>.</summary>
