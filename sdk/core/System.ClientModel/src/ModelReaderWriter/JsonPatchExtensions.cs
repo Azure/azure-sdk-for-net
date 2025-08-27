@@ -18,10 +18,25 @@ public static class JsonPatchExtensions
     /// <param name="jsonPatch"></param>
     /// <param name="jsonPath"></param>
     /// <param name="value"></param>
-    public static void Set<T>(ref this JsonPatch jsonPatch, ReadOnlySpan<byte> jsonPath, IJsonModel<T> value)
+    public static void Set<T>(ref this JsonPatch jsonPatch, ReadOnlySpan<byte> jsonPath, T value)
+        where T : IJsonModel<T>
     {
         var writer = new ModelWriter<T>(value, ModelReaderWriterOptions.Json);
         using var reader = writer.ExtractReader();
         jsonPatch.Set(jsonPath, reader.ToBinaryData());
+    }
+
+    /// <summary>
+    /// .
+    /// </summary>
+    /// <param name="jsonPatch"></param>
+    /// <param name="jsonPath"></param>
+    /// <param name="value"></param>
+    public static void Append<T>(ref this JsonPatch jsonPatch, ReadOnlySpan<byte> jsonPath, T value)
+        where T : IJsonModel<T>
+    {
+        var writer = new ModelWriter<T>(value, ModelReaderWriterOptions.Json);
+        using var reader = writer.ExtractReader();
+        jsonPatch.Append(jsonPath, reader.ToBinaryData());
     }
 }

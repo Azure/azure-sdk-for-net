@@ -3,7 +3,6 @@
 
 using System.Buffers;
 using System.Buffers.Text;
-using System.ClientModel.Internal;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -14,49 +13,49 @@ using System.Text.Json;
 namespace System.ClientModel.Primitives;
 
 /// <summary>
-/// .
+/// A struct representing a JSON patch for partial updates to a JSON structure.
 /// </summary>
 [Experimental("SCME0001")]
 public partial struct JsonPatch
 {
     /// <summary>
-    /// .
+    /// Delegate for propagating set operations to child properties of the containing model.
     /// </summary>
-    /// <param name="jsonPath"></param>
-    /// <param name="value"></param>
+    /// <param name="jsonPath">The JSON path of the value to be set.</param>
+    /// <param name="value">The value to set.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public delegate bool PropagatorSetter(ReadOnlySpan<byte> jsonPath, EncodedValue value);
 
     /// <summary>
-    /// .
+    /// Delegate for propagating get operations from child properties of the containing model.
     /// </summary>
-    /// <param name="jsonPath"></param>
-    /// <param name="value"></param>
+    /// <param name="jsonPath">The JSON path of the value to be set.</param>
+    /// <param name="value">The value to set.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public delegate bool PropagatorGetter(ReadOnlySpan<byte> jsonPath, out EncodedValue value);
 
     /// <summary>
-    /// .
+    /// Delegate for determining if a property is flattened in the containing model.
     /// </summary>
-    /// <param name="jsonPath"></param>
+    /// <param name="jsonPath">The JSON path of the value to be set.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public delegate bool PropagatorIsFlattened(ReadOnlySpan<byte> jsonPath);
 
     /// <summary>
-    /// .
+    /// Initializes a new instance of <see cref="JsonPatch"/> with utf8 JSON representing the entire object.
     /// </summary>
-    /// <param name="rawJson"></param>
-    public JsonPatch(ReadOnlyMemory<byte> rawJson)
+    /// <param name="utf8Json">The utf8 JSON.</param>
+    public JsonPatch(ReadOnlyMemory<byte> utf8Json)
     {
-        _rawJson = new(ValueKind.Json, rawJson);
+        _rawJson = new(ValueKind.Json, utf8Json);
     }
 
     /// <summary>
-    /// .
+    /// Sets the callbacks for propagating values to/from another JsonPatch on child properties.
     /// </summary>
-    /// <param name="setter"></param>
-    /// <param name="getter"></param>
-    /// <param name="isFlattened"></param>
+    /// <param name="setter">The <see cref="PropagatorSetter"/> callback to use.</param>
+    /// <param name="getter">The <see cref="PropagatorSetter"/> callback to use.</param>
+    /// <param name="isFlattened">The <see cref="PropagatorIsFlattened"/> callback to use.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public void SetPropagators(PropagatorSetter setter, PropagatorGetter getter, PropagatorIsFlattened isFlattened)
     {
@@ -66,10 +65,9 @@ public partial struct JsonPatch
     }
 
     /// <summary>
-    /// .
+    /// Determines whether the specified JSON path exists in the patch.
     /// </summary>
-    /// <param name="jsonPath"></param>
-    /// <returns></returns>
+    /// <param name="jsonPath">The JSON path to check.</param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool Contains(ReadOnlySpan<byte> jsonPath)
     {
@@ -250,7 +248,7 @@ public partial struct JsonPatch
     /// Sets a value at the specified JSON path.
     /// </summary>
     /// <param name="jsonPath">The JSON path of the value to be set.</param>
-    /// <param name="utf8Json"></param>
+    /// <param name="utf8Json">The utf8 json to set.</param>
     public void Set(ReadOnlySpan<byte> jsonPath, byte[] utf8Json)
     {
         SetInternal(jsonPath, EncodeValue(utf8Json));
@@ -260,7 +258,7 @@ public partial struct JsonPatch
     /// Sets a value at the specified JSON path.
     /// </summary>
     /// <param name="jsonPath">The JSON path of the value to be set.</param>
-    /// <param name="utf8Json"></param>
+    /// <param name="utf8Json">The utf8 json to set.</param>
     public void Set(ReadOnlySpan<byte> jsonPath, BinaryData utf8Json)
     {
         SetInternal(jsonPath, EncodeValue(utf8Json));
@@ -270,7 +268,7 @@ public partial struct JsonPatch
     /// Sets a value at the specified JSON path.
     /// </summary>
     /// <param name="jsonPath">The JSON path of the value to be set.</param>
-    /// <param name="utf8Json"></param>
+    /// <param name="utf8Json">The utf8 json to set.</param>
     public void Set(ReadOnlySpan<byte> jsonPath, ReadOnlySpan<byte> utf8Json)
     {
         SetInternal(jsonPath, EncodeValue(utf8Json));
@@ -280,34 +278,11 @@ public partial struct JsonPatch
     /// Sets a value at the specified JSON path.
     /// </summary>
     /// <param name="jsonPath">The JSON path of the value to be set.</param>
-    /// <param name="value"></param>
+    /// <param name="value">The value to set.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public void Set(ReadOnlySpan<byte> jsonPath, EncodedValue value)
     {
         SetInternal(jsonPath, value);
-    }
-
-    /// <summary>
-    /// Sets a value at the specified JSON path.
-    /// </summary>
-    /// <param name="jsonPath">The JSON path of the value to be set.</param>
-    /// <param name="value"></param>
-    [RequiresUnreferencedCode("RequiresUnreferencedCode")]
-    [RequiresDynamicCode("RequiresDynamicCode")]
-    public void Set(ReadOnlySpan<byte> jsonPath, object value)
-    {
-        if (IsAnonymousType(value))
-        {
-            var options = new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            };
-            SetInternal(jsonPath, EncodeValue(JsonSerializer.SerializeToUtf8Bytes(value, options)));
-        }
-        else
-        {
-            SetInternal(jsonPath, EncodeValue(value));
-        }
     }
 
     /// <summary>
@@ -328,16 +303,15 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public bool GetBoolean(ReadOnlySpan<byte> jsonPath)
     {
-        var bytes = GetEncodedValue(jsonPath);
+        if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+            throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
 
-        if (Utf8Parser.TryParse(bytes.Span, out bool value, out _))
+        if (TryDecodeValue(encodedValue, out bool boolValue))
         {
-            return value;
+            return boolValue;
         }
-        else
-        {
-            throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a boolean.");
-        }
+
+        throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a boolean.");
     }
 
     /// <summary>
@@ -347,16 +321,15 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public byte GetByte(ReadOnlySpan<byte> jsonPath)
     {
-        var bytes = GetEncodedValue(jsonPath);
+        if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+            throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
 
-        if (Utf8Parser.TryParse(bytes.Span, out byte value, out _))
+        if (TryDecodeValue(encodedValue, out byte byteValue))
         {
-            return value;
+            return byteValue;
         }
-        else
-        {
-            throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a byte.");
-        }
+
+        throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a byte.");
     }
 
     /// <summary>
@@ -367,16 +340,15 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public DateTime GetDateTime(ReadOnlySpan<byte> jsonPath, StandardFormat format = default)
     {
-        var bytes = GetEncodedValue(jsonPath);
+        if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+            throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
 
-        if (Utf8Parser.TryParse(bytes.Span, out DateTime value, out _, format.Symbol))
+        if (TryDecodeValue(encodedValue, out DateTime dateTimeValue, format))
         {
-            return value;
+            return dateTimeValue;
         }
-        else
-        {
-            throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a DateTime.");
-        }
+
+        throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a DateTime.");
     }
 
     /// <summary>
@@ -387,16 +359,15 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public DateTimeOffset GetDateTimeOffset(ReadOnlySpan<byte> jsonPath, StandardFormat format = default)
     {
-        var bytes = GetEncodedValue(jsonPath);
+        if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+            throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
 
-        if (Utf8Parser.TryParse(bytes.Span, out DateTimeOffset value, out _, format.Symbol))
+        if (TryDecodeValue(encodedValue, out DateTimeOffset dateTimeOffsetValue, format))
         {
-            return value;
+            return dateTimeOffsetValue;
         }
-        else
-        {
-            throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a DateTimeOffset.");
-        }
+
+        throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a DateTimeOffset.");
     }
 
     /// <summary>
@@ -406,16 +377,15 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public decimal GetDecimal(ReadOnlySpan<byte> jsonPath)
     {
-        var bytes = GetEncodedValue(jsonPath);
+        if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+            throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
 
-        if (Utf8Parser.TryParse(bytes.Span, out decimal value, out _))
+        if (TryDecodeValue(encodedValue, out decimal decimalValue))
         {
-            return value;
+            return decimalValue;
         }
-        else
-        {
-            throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a decimal.");
-        }
+
+        throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a decimal.");
     }
 
     /// <summary>
@@ -425,16 +395,15 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public double GetDouble(ReadOnlySpan<byte> jsonPath)
     {
-        var bytes = GetEncodedValue(jsonPath);
+        if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+            throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
 
-        if (Utf8Parser.TryParse(bytes.Span, out double value, out _))
+        if (TryDecodeValue(encodedValue, out double doubleValue))
         {
-            return value;
+            return doubleValue;
         }
-        else
-        {
-            throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a double.");
-        }
+
+        throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a double.");
     }
 
     /// <summary>
@@ -444,16 +413,15 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public float GetFloat(ReadOnlySpan<byte> jsonPath)
     {
-        var bytes = GetEncodedValue(jsonPath);
+        if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+            throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
 
-        if (Utf8Parser.TryParse(bytes.Span, out float value, out _))
+        if (TryDecodeValue(encodedValue, out float floatValue))
         {
-            return value;
+            return floatValue;
         }
-        else
-        {
-            throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a float.");
-        }
+
+        throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a float.");
     }
 
     /// <summary>
@@ -463,16 +431,15 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public Guid GetGuid(ReadOnlySpan<byte> jsonPath)
     {
-        var bytes = GetEncodedValue(jsonPath);
+        if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+            throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
 
-        if (Utf8Parser.TryParse(bytes.Span, out Guid value, out _))
+        if (TryDecodeValue(encodedValue, out Guid guidValue))
         {
-            return value;
+            return guidValue;
         }
-        else
-        {
-            throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a Guid.");
-        }
+
+        throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a Guid.");
     }
 
     /// <summary>
@@ -482,16 +449,15 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public int GetInt32(ReadOnlySpan<byte> jsonPath)
     {
-        var bytes = GetEncodedValue(jsonPath);
+        if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+            throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
 
-        if (Utf8Parser.TryParse(bytes.Span, out int value, out _))
+        if (TryDecodeValue(encodedValue, out int intValue))
         {
-            return value;
+            return intValue;
         }
-        else
-        {
-            throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a Int32.");
-        }
+
+        throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a Int32.");
     }
 
     /// <summary>
@@ -501,16 +467,15 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public long GetInt64(ReadOnlySpan<byte> jsonPath)
     {
-        var bytes = GetEncodedValue(jsonPath);
+        if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+            throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
 
-        if (Utf8Parser.TryParse(bytes.Span, out long value, out _))
+        if (TryDecodeValue(encodedValue, out long int64Value))
         {
-            return value;
+            return int64Value;
         }
-        else
-        {
-            throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a Int64.");
-        }
+
+        throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a Int64.");
     }
 
     /// <summary>
@@ -520,16 +485,15 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public sbyte GetInt8(ReadOnlySpan<byte> jsonPath)
     {
-        var bytes = GetEncodedValue(jsonPath);
+        if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+            throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
 
-        if (Utf8Parser.TryParse(bytes.Span, out sbyte value, out _))
+        if (TryDecodeValue(encodedValue, out sbyte int8Value))
         {
-            return value;
+            return int8Value;
         }
-        else
-        {
-            throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a Int8.");
-        }
+
+        throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a Int8.");
     }
 
     /// <summary>
@@ -539,16 +503,15 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public short GetInt16(ReadOnlySpan<byte> jsonPath)
     {
-        var bytes = GetEncodedValue(jsonPath);
+        if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+            throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
 
-        if (Utf8Parser.TryParse(bytes.Span, out short value, out _))
+        if (TryDecodeValue(encodedValue, out short int16Value))
         {
-            return value;
+            return int16Value;
         }
-        else
-        {
-            throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a Int16.");
-        }
+
+        throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a Int16.");
     }
 
     /// <summary>
@@ -559,16 +522,15 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public TimeSpan GetTimeSpan(ReadOnlySpan<byte> jsonPath, StandardFormat format = default)
     {
-        var bytes = GetEncodedValue(jsonPath);
+        if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+            throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
 
-        if (Utf8Parser.TryParse(bytes.Span, out TimeSpan value, out _, format.Symbol))
+        if (TryDecodeValue(encodedValue, out TimeSpan timeSpanValue, format))
         {
-            return value;
+            return timeSpanValue;
         }
-        else
-        {
-            throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a TimeSpan.");
-        }
+
+        throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a TimeSpan.");
     }
 
     /// <summary>
@@ -578,16 +540,15 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public uint GetUInt32(ReadOnlySpan<byte> jsonPath)
     {
-        var bytes = GetEncodedValue(jsonPath);
+        if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+            throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
 
-        if (Utf8Parser.TryParse(bytes.Span, out uint value, out _))
+        if (TryDecodeValue(encodedValue, out uint uintValue))
         {
-            return value;
+            return uintValue;
         }
-        else
-        {
-            throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a UInt32.");
-        }
+
+        throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a UInt32.");
     }
 
     /// <summary>
@@ -597,16 +558,15 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public ulong GetUInt64(ReadOnlySpan<byte> jsonPath)
     {
-        var bytes = GetEncodedValue(jsonPath);
+        if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+            throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
 
-        if (Utf8Parser.TryParse(bytes.Span, out ulong value, out _))
+        if (TryDecodeValue(encodedValue, out ulong uint64Value))
         {
-            return value;
+            return uint64Value;
         }
-        else
-        {
-            throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a UInt64.");
-        }
+
+        throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a UInt64.");
     }
 
     /// <summary>
@@ -616,16 +576,15 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public ushort GetUInt16(ReadOnlySpan<byte> jsonPath)
     {
-        var bytes = GetEncodedValue(jsonPath);
+        if (!TryGetEncodedValue(jsonPath, out var encodedValue))
+            throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
 
-        if (Utf8Parser.TryParse(bytes.Span, out ushort value, out _))
+        if (TryDecodeValue(encodedValue, out ushort uint16Value))
         {
-            return value;
+            return uint16Value;
         }
-        else
-        {
-            throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a UInt16.");
-        }
+
+        throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a UInt16.");
     }
 
     /// <summary>
@@ -635,23 +594,9 @@ public partial struct JsonPatch
     /// <exception cref="KeyNotFoundException">If the <paramref name="jsonPath"/> was not found.</exception>
     public string? GetString(ReadOnlySpan<byte> jsonPath)
     {
-        if (TryGetEncodedValue(jsonPath, out var encodedValue))
+        if (TryGetValue(jsonPath, out string? stringValue))
         {
-            if (encodedValue.Kind == ValueKind.Null)
-                return null;
-
-            var span = encodedValue.Value.Span;
-            if (span.Length >= 2 && span[0] == (byte)'"' && span[span.Length - 1] == (byte)'"')
-            {
-                // Trim the quotes
-                span = span.Slice(1, span.Length - 2);
-            }
-
-#if NET6_0_OR_GREATER
-            return Encoding.UTF8.GetString(span);
-#else
-            return Encoding.UTF8.GetString(span.ToArray());
-#endif
+            return stringValue;
         }
 
         throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
@@ -677,50 +622,22 @@ public partial struct JsonPatch
     public T? GetNullableValue<T>(ReadOnlySpan<byte> jsonPath)
         where T : struct
     {
-        if (!TryGetEncodedValue(jsonPath, out var encodedValue))
-        {
+        if (!TryGetEncodedValue(jsonPath, out EncodedValue encodedValue))
             throw new KeyNotFoundException($"No value found at JSON path '{Encoding.UTF8.GetString(jsonPath.ToArray())}'.");
+
+        if (TryDecodeNullableValue(encodedValue, out T? value, out bool supportedType))
+        {
+            return value;
         }
 
-        if (encodedValue.Kind == ValueKind.Null)
-            return default;
-
-        Type target = typeof(T);
-
-        if (target == typeof(bool))
-            return (T?)(object)GetBoolean(jsonPath);
-        if (target == typeof(byte))
-            return (T?)(object)GetByte(jsonPath);
-        if (target == typeof(sbyte))
-            return (T?)(object)GetInt8(jsonPath);
-        if (target == typeof(short))
-            return (T?)(object)GetInt16(jsonPath);
-        if (target == typeof(ushort))
-            return (T?)(object)GetUInt16(jsonPath);
-        if (target == typeof(int))
-            return (T?)(object)GetInt32(jsonPath);
-        if (target == typeof(uint))
-            return (T?)(object)GetUInt32(jsonPath);
-        if (target == typeof(long))
-            return (T?)(object)GetInt64(jsonPath);
-        if (target == typeof(ulong))
-            return (T?)(object)GetUInt64(jsonPath);
-        if (target == typeof(float))
-            return (T?)(object)GetFloat(jsonPath);
-        if (target == typeof(double))
-            return (T?)(object)GetDouble(jsonPath);
-        if (target == typeof(decimal))
-            return (T?)(object)GetDecimal(jsonPath);
-        if (target == typeof(DateTime))
-            return (T?)(object)GetDateTime(jsonPath);
-        if (target == typeof(DateTimeOffset))
-            return (T?)(object)GetDateTimeOffset(jsonPath);
-        if (target == typeof(Guid))
-            return (T?)(object)GetGuid(jsonPath);
-        if (target == typeof(TimeSpan))
-            return (T?)(object)GetTimeSpan(jsonPath);
-
-        throw new NotSupportedException($"Type '{target.FullName}' is not supported by GetNullableValue.");
+        if (supportedType)
+        {
+            throw new FormatException($"Value at '{Encoding.UTF8.GetString(jsonPath.ToArray())}' is not a Nullable<{typeof(T).Name}>.");
+        }
+        else
+        {
+            throw new NotSupportedException($"Type '{typeof(T).FullName}' is not supported by GetNullableValue.");
+        }
     }
     #endregion
 
@@ -734,7 +651,7 @@ public partial struct JsonPatch
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out bool value)
     {
         if (TryGetEncodedValue(jsonPath, out var encodedValue)
-            && Utf8Parser.TryParse(encodedValue.Value.Span, out bool result, out _))
+            && TryDecodeValue(encodedValue, out bool result))
         {
             value = result;
             return true;
@@ -753,7 +670,7 @@ public partial struct JsonPatch
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out byte value)
     {
         if (TryGetEncodedValue(jsonPath, out var encodedValue)
-            && Utf8Parser.TryParse(encodedValue.Value.Span, out byte result, out _))
+            && TryDecodeValue(encodedValue, out byte result))
         {
             value = result;
             return true;
@@ -773,7 +690,7 @@ public partial struct JsonPatch
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out DateTime value, StandardFormat format = default)
     {
         if (TryGetEncodedValue(jsonPath, out var encodedValue)
-            && Utf8Parser.TryParse(encodedValue.Value.Span, out DateTime result, out _, format.Symbol))
+            && TryDecodeValue(encodedValue, out DateTime result, format.Symbol))
         {
             value = result;
             return true;
@@ -793,7 +710,7 @@ public partial struct JsonPatch
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out DateTimeOffset value, StandardFormat format = default)
     {
         if (TryGetEncodedValue(jsonPath, out var encodedValue)
-            && Utf8Parser.TryParse(encodedValue.Value.Span, out DateTimeOffset result, out _, format.Symbol))
+            && TryDecodeValue(encodedValue, out DateTimeOffset result, format.Symbol))
         {
             value = result;
             return true;
@@ -812,7 +729,7 @@ public partial struct JsonPatch
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out decimal value)
     {
         if (TryGetEncodedValue(jsonPath, out var encodedValue)
-            && Utf8Parser.TryParse(encodedValue.Value.Span, out decimal result, out _))
+            && TryDecodeValue(encodedValue, out decimal result))
         {
             value = result;
             return true;
@@ -831,7 +748,7 @@ public partial struct JsonPatch
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out double value)
     {
         if (TryGetEncodedValue(jsonPath, out var encodedValue)
-            && Utf8Parser.TryParse(encodedValue.Value.Span, out double result, out _))
+            && TryDecodeValue(encodedValue, out double result))
         {
             value = result;
             return true;
@@ -850,7 +767,7 @@ public partial struct JsonPatch
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out float value)
     {
         if (TryGetEncodedValue(jsonPath, out var encodedValue)
-            && Utf8Parser.TryParse(encodedValue.Value.Span, out float result, out _))
+            && TryDecodeValue(encodedValue, out float result))
         {
             value = result;
             return true;
@@ -869,7 +786,7 @@ public partial struct JsonPatch
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out Guid value)
     {
         if (TryGetEncodedValue(jsonPath, out var encodedValue)
-            && Utf8Parser.TryParse(encodedValue.Value.Span, out Guid result, out _))
+            &&TryDecodeValue(encodedValue, out Guid result))
         {
             value = result;
             return true;
@@ -888,7 +805,7 @@ public partial struct JsonPatch
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out int value)
     {
         if (TryGetEncodedValue(jsonPath, out var encodedValue)
-            && Utf8Parser.TryParse(encodedValue.Value.Span, out int result, out _))
+            && TryDecodeValue(encodedValue, out int result))
         {
             value = result;
             return true;
@@ -907,7 +824,7 @@ public partial struct JsonPatch
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out long value)
     {
         if (TryGetEncodedValue(jsonPath, out var encodedValue)
-            && Utf8Parser.TryParse(encodedValue.Value.Span, out long result, out _))
+            && TryDecodeValue(encodedValue, out long result))
         {
             value = result;
             return true;
@@ -926,7 +843,7 @@ public partial struct JsonPatch
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out sbyte value)
     {
         if (TryGetEncodedValue(jsonPath, out var encodedValue)
-            && Utf8Parser.TryParse(encodedValue.Value.Span, out sbyte result, out _))
+            && TryDecodeValue(encodedValue, out sbyte result))
         {
             value = result;
             return true;
@@ -945,7 +862,7 @@ public partial struct JsonPatch
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out short value)
     {
         if (TryGetEncodedValue(jsonPath, out var encodedValue)
-            && Utf8Parser.TryParse(encodedValue.Value.Span, out short result, out _))
+            && TryDecodeValue(encodedValue, out short result))
         {
             value = result;
             return true;
@@ -965,7 +882,7 @@ public partial struct JsonPatch
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out TimeSpan value, StandardFormat format = default)
     {
         if (TryGetEncodedValue(jsonPath, out var encodedValue)
-            && Utf8Parser.TryParse(encodedValue.Value.Span, out TimeSpan result, out _, format.Symbol))
+            && TryDecodeValue(encodedValue, out TimeSpan result, format.Symbol))
         {
             value = result;
             return true;
@@ -984,7 +901,7 @@ public partial struct JsonPatch
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out uint value)
     {
         if (TryGetEncodedValue(jsonPath, out var encodedValue)
-            && Utf8Parser.TryParse(encodedValue.Value.Span, out uint result, out _))
+            && TryDecodeValue(encodedValue, out uint result))
         {
             value = result;
             return true;
@@ -1003,7 +920,7 @@ public partial struct JsonPatch
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out ulong value)
     {
         if (TryGetEncodedValue(jsonPath, out var encodedValue)
-            && Utf8Parser.TryParse(encodedValue.Value.Span, out ulong result, out _))
+            && TryDecodeValue(encodedValue, out ulong result))
         {
             value = result;
             return true;
@@ -1022,7 +939,7 @@ public partial struct JsonPatch
     public bool TryGetValue(ReadOnlySpan<byte> jsonPath, out ushort value)
     {
         if (TryGetEncodedValue(jsonPath, out var encodedValue)
-            && Utf8Parser.TryParse(encodedValue.Value.Span, out ushort result, out _))
+            && TryDecodeValue(encodedValue, out ushort result))
         {
             value = result;
             return true;
@@ -1042,7 +959,7 @@ public partial struct JsonPatch
     {
         if (TryGetEncodedValue(jsonPath, out var encodedValue))
         {
-            if (encodedValue.Kind == ValueKind.Null)
+            if (s_nullValueArray.Value.Span.SequenceEqual(encodedValue.Value.Span))
             {
                 value = null;
                 return true;
@@ -1064,6 +981,36 @@ public partial struct JsonPatch
         }
 
         value = default;
+        return false;
+    }
+
+    /// <summary>
+    /// Tries to get a UInt16 value at the specified JSON path.
+    /// </summary>
+    /// <param name="jsonPath">The JSON path of the value to get.</param>
+    /// <param name="value">The value if found.</param>
+    /// <returns>True if the value was found and parsed; otherwise, false.</returns>
+    public bool TryGetNullableValue<T>(ReadOnlySpan<byte> jsonPath, out T? value)
+        where T : struct
+    {
+        value = default;
+
+        if (!TryGetEncodedValue(jsonPath, out EncodedValue encodedValue))
+        {
+            return false;
+        }
+
+        if (encodedValue.Kind.HasFlag(ValueKind.Null))
+        {
+            return true;
+        }
+
+        if (TryDecodeNullableValue(encodedValue, out T? result, out _))
+        {
+            value = result;
+            return true;
+        }
+
         return false;
     }
 
@@ -1091,15 +1038,248 @@ public partial struct JsonPatch
         value = encodedValue.Value;
         return found;
     }
-#endregion
+    #endregion
+
+    #region Append Methods
+    /// <summary>
+    /// Appends a value to an array at the specified JSON path.
+    /// </summary>
+    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="value">The value to append.</param>
+    public void Append(ReadOnlySpan<byte> jsonPath, bool value)
+    {
+        var encodedValue = EncodeValue(value);
+        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+    }
 
     /// <summary>
-    /// .
+    /// Appends a value to an array at the specified JSON path.
     /// </summary>
-    /// <param name="jsonPath"></param>
+    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="value">The value to append.</param>
+    public void Append(ReadOnlySpan<byte> jsonPath, byte value)
+    {
+        var encodedValue = EncodeValue(value);
+        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+    }
+
+    /// <summary>
+    /// Appends a value to an array at the specified JSON path.
+    /// </summary>
+    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="value">The value to append.</param>
+    /// <param name="format">The format to encode the value into.</param>
+    public void Append(ReadOnlySpan<byte> jsonPath, DateTime value, StandardFormat format = default)
+    {
+        var encodedValue = EncodeValue(value, format);
+        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+    }
+
+    /// <summary>
+    /// Appends a value to an array at the specified JSON path.
+    /// </summary>
+    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="value">The value to append.</param>
+    /// <param name="format">The format to encode the value into.</param>
+    public void Append(ReadOnlySpan<byte> jsonPath, DateTimeOffset value, StandardFormat format = default)
+    {
+        var encodedValue = EncodeValue(value, format);
+        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+    }
+
+    /// <summary>
+    /// Appends a value to an array at the specified JSON path.
+    /// </summary>
+    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="value">The value to append.</param>
+    public void Append(ReadOnlySpan<byte> jsonPath, decimal value)
+    {
+        var encodedValue = EncodeValue(value);
+        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+    }
+
+    /// <summary>
+    /// Appends a value to an array at the specified JSON path.
+    /// </summary>
+    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="value">The value to append.</param>
+    public void Append(ReadOnlySpan<byte> jsonPath, double value)
+    {
+        var encodedValue = EncodeValue(value);
+        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+    }
+
+    /// <summary>
+    /// Appends a value to an array at the specified JSON path.
+    /// </summary>
+    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="value">The value to append.</param>
+    public void Append(ReadOnlySpan<byte> jsonPath, float value)
+    {
+        var encodedValue = EncodeValue(value);
+        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+    }
+
+    /// <summary>
+    /// Appends a value to an array at the specified JSON path.
+    /// </summary>
+    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="value">The value to append.</param>
+    public void Append(ReadOnlySpan<byte> jsonPath, Guid value)
+    {
+        var encodedValue = EncodeValue(value);
+        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+    }
+
+    /// <summary>
+    /// Appends a value to an array at the specified JSON path.
+    /// </summary>
+    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="value">The value to append.</param>
+    public void Append(ReadOnlySpan<byte> jsonPath, int value)
+    {
+        var encodedValue = EncodeValue(value);
+        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+    }
+
+    /// <summary>
+    /// Appends a value to an array at the specified JSON path.
+    /// </summary>
+    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="value">The value to append.</param>
+    public void Append(ReadOnlySpan<byte> jsonPath, long value)
+    {
+        var encodedValue = EncodeValue(value);
+        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+    }
+
+    /// <summary>
+    /// Appends a value to an array at the specified JSON path.
+    /// </summary>
+    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="value">The value to append.</param>
+    public void Append(ReadOnlySpan<byte> jsonPath, sbyte value)
+    {
+        var encodedValue = EncodeValue(value);
+        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+    }
+
+    /// <summary>
+    /// Appends a value to an array at the specified JSON path.
+    /// </summary>
+    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="value">The value to append.</param>
+    public void Append(ReadOnlySpan<byte> jsonPath, short value)
+    {
+        var encodedValue = EncodeValue(value);
+        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+    }
+
+    /// <summary>
+    /// Appends a value to an array at the specified JSON path.
+    /// </summary>
+    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="value">The value to append.</param>
+    /// <param name="format">The format to encode the value into.</param>
+    public void Append(ReadOnlySpan<byte> jsonPath, TimeSpan value, StandardFormat format = default)
+    {
+        var encodedValue = EncodeValue(value);
+        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+    }
+
+    /// <summary>
+    /// Appends a value to an array at the specified JSON path.
+    /// </summary>
+    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="value">The value to append.</param>
+    public void Append(ReadOnlySpan<byte> jsonPath, uint value)
+    {
+        var encodedValue = EncodeValue(value);
+        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+    }
+
+    /// <summary>
+    /// Appends a value to an array at the specified JSON path.
+    /// </summary>
+    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="value">The value to append.</param>
+    public void Append(ReadOnlySpan<byte> jsonPath, ulong value)
+    {
+        var encodedValue = EncodeValue(value);
+        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+    }
+
+    /// <summary>
+    /// Appends a value to an array at the specified JSON path.
+    /// </summary>
+    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="value">The value to append.</param>
+    public void Append(ReadOnlySpan<byte> jsonPath, ushort value)
+    {
+        var encodedValue = EncodeValue(value);
+        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+    }
+
+    /// <summary>
+    /// Appends a value to an array at the specified JSON path.
+    /// </summary>
+    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="value">The value to append.</param>
+    public void Append(ReadOnlySpan<byte> jsonPath, string value)
+    {
+        EncodedValue encodedValue = EncodeValue(value);
+        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+    }
+
+    /// <summary>
+    /// Appends a value to an array at the specified JSON path.
+    /// </summary>
+    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="utf8Json">The utf8 json to insert.</param>
+    public void Append(ReadOnlySpan<byte> jsonPath, byte[] utf8Json)
+    {
+        var encodedValue = EncodeValue(utf8Json);
+        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+    }
+
+    /// <summary>
+    /// Appends a value to an array at the specified JSON path.
+    /// </summary>
+    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="utf8Json">The utf8 json to insert.</param>
+    public void Append(ReadOnlySpan<byte> jsonPath, BinaryData utf8Json)
+    {
+        var encodedValue = EncodeValue(utf8Json);
+        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+    }
+
+    /// <summary>
+    /// Appends a value to an array at the specified JSON path.
+    /// </summary>
+    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    /// <param name="utf8Json">The utf8 json to insert.</param>
+    public void Append(ReadOnlySpan<byte> jsonPath, ReadOnlySpan<byte> utf8Json)
+    {
+        var encodedValue = EncodeValue(utf8Json);
+        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
+    }
+
+    /// <summary>
+    /// Appends NULL to an array at the specified JSON path.
+    /// </summary>
+    /// <param name="jsonPath">The JSON path pointing at the array.</param>
+    public void AppendNull(ReadOnlySpan<byte> jsonPath)
+    {
+        SetInternal(jsonPath, new(ValueKind.Null | ValueKind.ArrayItemAppend, s_nullValueArray.Value));
+    }
+    #endregion
+
+    /// <summary>
+    /// Removes the value at the specified JSON path.
+    /// </summary>
+    /// <param name="jsonPath">The JSON path of the value to remove.</param>
     public void Remove(ReadOnlySpan<byte> jsonPath)
     {
-        // Special (remove, set null, etc)
         SetInternal(jsonPath, s_removedValueArray);
     }
 
@@ -1281,10 +1461,9 @@ public partial struct JsonPatch
     }
 
     /// <summary>
-    /// .
+    /// Checks if the value at the specified JSON path has been removed.
     /// </summary>
-    /// <param name="jsonPath"></param>
-    /// <returns></returns>
+    /// <param name="jsonPath">The JSON path of the value to check.</param>
     public bool IsRemoved(ReadOnlySpan<byte> jsonPath)
     {
         if (_properties is null)
@@ -1294,11 +1473,11 @@ public partial struct JsonPatch
     }
 
     /// <summary>
-    /// .
+    /// Checks if there is a child property of the given prefix that matches the given property name.
     /// </summary>
-    /// <param name="prefix"></param>
-    /// <param name="property"></param>
-    /// <returns></returns>
+    /// <param name="prefix">The prefix JSON path.</param>
+    /// <param name="property">The property name.</param>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public bool ContainsChildOf(ReadOnlySpan<byte> prefix, ReadOnlySpan<byte> property)
     {
         if (_properties == null)
@@ -1320,77 +1499,5 @@ public partial struct JsonPatch
         }
 
         return false;
-    }
-
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="jsonPath"></param>
-    /// <param name="utf8Json"></param>
-    public void Append(ReadOnlySpan<byte> jsonPath, ReadOnlySpan<byte> utf8Json)
-    {
-        var encodedValue = EncodeValue(utf8Json);
-        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
-    }
-
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="jsonPath"></param>
-    /// <param name="value"></param>
-    public void Append(ReadOnlySpan<byte> jsonPath, string value)
-    {
-        EncodedValue encodedValue = new(ValueKind.Utf8String | ValueKind.ArrayItemAppend, new([(byte)'"', .. Encoding.UTF8.GetBytes(value), (byte)'"']));
-        SetInternal(jsonPath, encodedValue);
-    }
-
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="jsonPath"></param>
-    /// <param name="value"></param>
-    public void Append(ReadOnlySpan<byte> jsonPath, int value)
-    {
-        var encodedValue = EncodeValue(value);
-        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
-    }
-
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="jsonPath"></param>
-    /// <param name="value"></param>
-    [RequiresUnreferencedCode("RequiresUnreferencedCode")]
-    [RequiresDynamicCode("RequiresDynamicCode")]
-    public void Append(ReadOnlySpan<byte> jsonPath, object value)
-    {
-        EncodedValue encodedValue;
-        if (IsAnonymousType(value))
-        {
-            var options = new JsonSerializerOptions
-            {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            };
-            encodedValue = EncodeValue(JsonSerializer.SerializeToUtf8Bytes(value, options));
-        }
-        else
-        {
-            encodedValue = EncodeValue(value);
-        }
-
-        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
-    }
-
-    /// <summary>
-    /// .
-    /// </summary>
-    /// <param name="jsonPath"></param>
-    /// <param name="value"></param>
-    public void Append<T>(ReadOnlySpan<byte> jsonPath, IJsonModel<T> value)
-    {
-        var writer = new ModelWriter<T>(value, ModelReaderWriterOptions.Json);
-        using var reader = writer.ExtractReader();
-        var encodedValue = EncodeValue(reader.ToBinaryData());
-        SetInternal(jsonPath, new(encodedValue.Kind | ValueKind.ArrayItemAppend, encodedValue.Value));
     }
 }

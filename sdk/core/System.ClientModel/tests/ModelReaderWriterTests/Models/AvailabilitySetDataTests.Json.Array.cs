@@ -7,6 +7,8 @@ using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 using System.ClientModel.Tests.Client.Models.ResourceManager.Resources;
 using System.IO;
+using System.Text;
+using System.Text.Json;
 using Azure.Core;
 using NUnit.Framework;
 
@@ -14,6 +16,11 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
     internal partial class AvailabilitySetDataTests
     {
+        private static readonly JsonSerializerOptions s_camelCaseOptions = new()
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        };
+
         [Test]
         public void AddItemToExistingArrayThatIsEmpty()
         {
@@ -138,7 +145,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             model.VirtualMachines.Add(new WritableSubResource() { Id = "myExistingVmId" });
 
-            model.Patch.Append("$.properties.virtualMachines"u8, new { id = "myNewVmId" });
+            model.Patch.Append("$.properties.virtualMachines"u8, Encoding.UTF8.GetBytes(JsonSerializer.Serialize(new { id = "myNewVmId" }, s_camelCaseOptions)));
 
             Assert.AreEqual("[{\"id\":\"myNewVmId\"}]", model.Patch.GetJson("$.properties.virtualMachines"u8).ToString());
             Assert.AreEqual("{\"id\":\"myNewVmId\"}", model.Patch.GetJson("$.properties.virtualMachines[0]"u8).ToString());
@@ -170,8 +177,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             model.Patch.Append("$.properties.virtualMachines"u8, "{\"id\":\"myNewVmId1\"}"u8);
             model.Patch.Append("$.properties.virtualMachines"u8, new WritableSubResource() { Id = "myNewVmId2" });
-            model.Patch.Append("$.properties.virtualMachines"u8, new { id = "myNewVmId3" });
-            model.Patch.Append("$.properties.virtualMachines"u8, new { Id = "myNewVmId4" });
+            model.Patch.Append("$.properties.virtualMachines"u8, Encoding.UTF8.GetBytes(JsonSerializer.Serialize(new { id = "myNewVmId3" }, s_camelCaseOptions)));
+            model.Patch.Append("$.properties.virtualMachines"u8, Encoding.UTF8.GetBytes(JsonSerializer.Serialize(new { Id = "myNewVmId4" }, s_camelCaseOptions)));
 
             Assert.AreEqual("[{\"id\":\"myNewVmId1\"},{\"id\":\"myNewVmId2\"},{\"id\":\"myNewVmId3\"},{\"id\":\"myNewVmId4\"}]", model.Patch.GetJson("$.properties.virtualMachines"u8).ToString());
             Assert.AreEqual("{\"id\":\"myNewVmId1\"}", model.Patch.GetJson("$.properties.virtualMachines[0]"u8).ToString());
@@ -364,8 +371,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             model.VirtualMachines.Add(new WritableSubResource() { Id = "myExistingVmId1" });
             model.VirtualMachines.Add(new WritableSubResource() { Id = "myExistingVmId2" });
 
-            var ex = Assert.Throws<ArgumentException>(() => model.Patch.Remove("$.properties.virtualMachines[4]"u8));
-            Assert.AreEqual("The input does not contain any JSON tokens. Expected the input to start with a valid JSON token, when isFinalBlock is true.", ex!.Message);
+            var ex = Assert.Throws<IndexOutOfRangeException>(() => model.Patch.Remove("$.properties.virtualMachines[4]"u8));
+            Assert.AreEqual($"Cannot remove non-existing array item at path '$.properties.virtualMachines[4]'.", ex!.Message);
 
             var data = ModelReaderWriter.Write(model);
             Assert.AreEqual(
