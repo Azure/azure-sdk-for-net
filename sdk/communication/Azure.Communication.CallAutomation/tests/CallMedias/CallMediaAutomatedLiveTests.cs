@@ -2286,11 +2286,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
 
                     // create call and assert response
                     MediaStreamingOptions mediaStreamingOptions = new MediaStreamingOptions(
-                        new Uri(TestEnvironment.TransportUrl),
-                        MediaStreamingContent.Audio,
                         MediaStreamingAudioChannel.Mixed,
-                        MediaStreamingTransport.Websocket,
-                        false);
+                        MediaStreamingTransport.Websocket)
+                    {
+                        StartMediaStreaming = false,
+                        TransportUri = new Uri(TestEnvironment.TransportUrl),
+                        MediaStreamingContent = MediaStreamingContent.Audio,
+                    };
 
                     var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, true,
                           mediaStreamingOptions, transcriptionOptions: null);
@@ -2351,11 +2353,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
 
                     // create call and assert response
                     MediaStreamingOptions mediaStreamingOptions = new MediaStreamingOptions(
-                        new Uri(TestEnvironment.TransportUrl),
-                        MediaStreamingContent.Audio,
-                        MediaStreamingAudioChannel.Mixed,
-                        MediaStreamingTransport.Websocket,
-                        false);
+                       MediaStreamingAudioChannel.Mixed,
+                       MediaStreamingTransport.Websocket)
+                    {
+                        StartMediaStreaming = false,
+                        TransportUri = new Uri(TestEnvironment.TransportUrl),
+                        MediaStreamingContent = MediaStreamingContent.Audio,
+                    };
 
                     var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, false,
                           mediaStreamingOptions, transcriptionOptions: null);
@@ -2416,11 +2420,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
 
                     // create call and assert response
                     MediaStreamingOptions mediaStreamingOptions = new MediaStreamingOptions(
-                        new Uri(TestEnvironment.TransportUrl),
-                        MediaStreamingContent.Audio,
-                        MediaStreamingAudioChannel.Unmixed,
-                        MediaStreamingTransport.Websocket,
-                        false);
+                       MediaStreamingAudioChannel.Mixed,
+                       MediaStreamingTransport.Websocket)
+                    {
+                        StartMediaStreaming = false,
+                        TransportUri = new Uri(TestEnvironment.TransportUrl),
+                        MediaStreamingContent = MediaStreamingContent.Audio,
+                    };
 
                     var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, false,
                           mediaStreamingOptions, transcriptionOptions: null);
@@ -2481,10 +2487,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     uniqueId = await ServiceBusWithNewCall(user, target);
 
                     // create call and assert response
-                    TranscriptionOptions transcriptionOptions = new TranscriptionOptions(
-                        new Uri(TestEnvironment.TransportUrl),
-                        "en-CA",
-                        false);
+                    TranscriptionOptions transcriptionOptions = new TranscriptionOptions("en-CA")
+                    {
+                        TransportUri = new Uri(TestEnvironment.TransportUrl),
+                        StartTranscription = false
+                    };
                     var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, true,
                           null, transcriptionOptions);
                     callConnectionId = result.CallerCallConnectionId;
@@ -2544,10 +2551,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     uniqueId = await ServiceBusWithNewCall(user, target);
 
                     // create call and assert response
-                    TranscriptionOptions transcriptionOptions = new TranscriptionOptions(
-                        new Uri(TestEnvironment.TransportUrl),
-                        "en-CA",
-                        false);
+                    TranscriptionOptions transcriptionOptions = new TranscriptionOptions("en-CA")
+                    {
+                        TransportUri = new Uri(TestEnvironment.TransportUrl),
+                        StartTranscription = false
+                    };
                     var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, false,
                           null, transcriptionOptions);
                     callConnectionId = result.TargetCallConnectionId;
@@ -2812,6 +2820,159 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             }
         }
 
+        [RecordedTest]
+        public async Task CreateTranscriptionCallWithSentimentAnalysisAndRedaction()
+        {
+            /* Tests: CreateCall, Transcription
+             * Test case: ACS to ACS call
+             * 1. create a call with transcription with sentiment analysis and redaction options
+             * 2. Answer a call
+             * 3. Start Transcription and Stop Transcription
+             * 3. See Transcription started and stopped event triggerred
+            */
+
+            // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null, uniqueId = null;
+
+            try
+            {
+                try
+                {
+                    // setup service bus
+                    uniqueId = await ServiceBusWithNewCall(user, target);
+
+                    // create call and assert response
+                    TranscriptionOptions transcriptionOptions = new TranscriptionOptions()
+                    {
+                        TransportUri = new Uri(TestEnvironment.TransportUrl),
+                        StartTranscription = false,
+                        IsSentimentAnalysisEnabled = true,
+                        PiiRedactionOptions = new PiiRedactionOptions()
+                        {
+                            IsEnabled = true,
+                            RedactionType = RedactionType.MaskWithCharacter
+                        },
+                        SummarizationOptions = new SummarizationOptions()
+                        {
+                            Locale = "en-CA",
+                            IsEndCallSummaryEnabled = true,
+                        },
+                        Locales = new List<string>() { "en-CA" }
+                    };
+                    var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, true,
+                          null, transcriptionOptions);
+                    callConnectionId = result.CallerCallConnectionId;
+                    await VerifyTranscription(targetClient, result.CallerCallConnectionId);
+                    try
+                    {
+                        // test get properties
+                        Response<CallConnectionProperties> properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    {
+                        if (ex.Status == 404)
+                        {
+                            callConnectionId = null;
+                            return;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId, uniqueId);
+            }
+        }
+
+        [RecordedTest]
+        public async Task CreateTranscriptionCallWithSummarizeCall()
+        {
+            /* Tests: CreateCall, Transcription
+             * Test case: ACS to ACS call
+             * 1. create a call with transcription and summarize call.
+             * 2. Answer a call
+             * 3. Start Transcription and Stop Transcription
+             * 3. See Transcription started and stopped event triggerred
+            */
+
+            // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null, uniqueId = null;
+
+            try
+            {
+                try
+                {
+                    // setup service bus
+                    uniqueId = await ServiceBusWithNewCall(user, target);
+
+                    // create call and assert response
+                    TranscriptionOptions transcriptionOptions = new TranscriptionOptions()
+                    {
+                        TransportUri = new Uri(TestEnvironment.TransportUrl),
+                        StartTranscription = false,
+                        IsSentimentAnalysisEnabled = true,
+                        PiiRedactionOptions = new PiiRedactionOptions()
+                        {
+                            IsEnabled = true,
+                            RedactionType = RedactionType.MaskWithCharacter
+                        },
+                        SummarizationOptions = new SummarizationOptions()
+                        {
+                            Locale = "en-CA",
+                            IsEndCallSummaryEnabled = false,
+                        },
+                        Locales = new List<string>() { "en-CA" }
+                    };
+                    var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, true,
+                          null, transcriptionOptions);
+                    callConnectionId = result.CallerCallConnectionId;
+                    await VerifyTranscription(targetClient, result.CallerCallConnectionId, true);
+
+                    try
+                    {
+                        // test get properties
+                        Response<CallConnectionProperties> properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    {
+                        if (ex.Status == 404)
+                        {
+                            callConnectionId = null;
+                            return;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId, uniqueId);
+            }
+        }
+
         public async Task<(string CallerCallConnectionId, string TargetCallConnectionId)> CreateAndAnswerCall(CallAutomationClient client,
                     CallAutomationClient targetClient,
                     CommunicationUserIdentifier target,
@@ -2970,7 +3131,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
         }
 
-        private async Task VerifyTranscription(CallAutomationClient client, string callConnectionId)
+        private async Task VerifyTranscription(CallAutomationClient client, string callConnectionId, bool isSummarizeCall = false)
         {
             //Start Transcription
             StartTranscriptionOptions startTranscriptionOptions = new StartTranscriptionOptions()
@@ -2994,7 +3155,22 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             Assert.IsNotNull(connectionProperties);
             Assert.IsNotNull(connectionProperties.Value.TranscriptionSubscription);
             Assert.AreEqual(connectionProperties.Value.TranscriptionSubscription.State, TranscriptionSubscriptionState.Active);
+            if (isSummarizeCall)
+            {
+                SummarizeCallOptions summarizeCallOptions = new SummarizeCallOptions()
+                {
+                    OperationContext = "SummarizeCallContext",
+                    SummarizationOptions = new SummarizationOptions
+                    {
+                        Locale = "en-US",
+                    }
+                };
 
+                await client.GetCallConnection(callConnectionId).GetCallMedia().SummarizeCallAsync(summarizeCallOptions);
+
+                var summarizeCallEvent = await WaitForEvent<TranscriptionCallSummaryUpdated>(callConnectionId, TimeSpan.FromSeconds(20));
+                Assert.IsNotNull(summarizeCallEvent);
+            }
             // Update Transcription
             UpdateTranscriptionOptions updateTranscriptionOptions = new UpdateTranscriptionOptions("en-US") { OperationContext = "UpdateTranscription" };
             var updateTranscriptionResponse = await callerMedia.UpdateTranscriptionAsync(updateTranscriptionOptions);

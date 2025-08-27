@@ -69,6 +69,11 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("transcriptionOptions"u8);
                 writer.WriteObjectValue(TranscriptionOptions);
             }
+            if (Optional.IsDefined(EnableLoopbackAudio))
+            {
+                writer.WritePropertyName("enableLoopbackAudio"u8);
+                writer.WriteBooleanValue(EnableLoopbackAudio.Value);
+            }
             writer.WriteEndObject();
         }
 
