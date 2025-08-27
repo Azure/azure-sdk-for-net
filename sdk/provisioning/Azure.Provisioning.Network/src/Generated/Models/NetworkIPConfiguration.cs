@@ -123,8 +123,8 @@ public partial class NetworkIPConfiguration : ProvisionableConstruct
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
         _privateIPAddress = DefineProperty<string>("PrivateIPAddress", ["properties", "privateIPAddress"]);
         _privateIPAllocationMethod = DefineProperty<NetworkIPAllocationMethod>("PrivateIPAllocationMethod", ["properties", "privateIPAllocationMethod"]);
-        _subnet = DefineModelProperty<Subnet>("Subnet", ["properties", "subnet"]);
-        _publicIPAddress = DefineModelProperty<PublicIPAddress>("PublicIPAddress", ["properties", "publicIPAddress"]);
+        _subnet = DefineModelProperty<Subnet>("Subnet", ["properties", "subnet"], new Subnet("subnet"));
+        _publicIPAddress = DefineModelProperty<PublicIPAddress>("PublicIPAddress", ["properties", "publicIPAddress"], new PublicIPAddress("publicIPAddress"));
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
         _name = DefineProperty<string>("Name", ["name"]);

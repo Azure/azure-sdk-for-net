@@ -334,9 +334,9 @@ public partial class NetworkInterface : ProvisionableResource
         _iPConfigurations = DefineListProperty<NetworkInterfaceIPConfiguration>("IPConfigurations", ["properties", "ipConfigurations"]);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _migrationPhase = DefineProperty<NetworkInterfaceMigrationPhase>("MigrationPhase", ["properties", "migrationPhase"]);
-        _networkSecurityGroup = DefineModelProperty<NetworkSecurityGroup>("NetworkSecurityGroup", ["properties", "networkSecurityGroup"]);
+        _networkSecurityGroup = DefineModelProperty<NetworkSecurityGroup>("NetworkSecurityGroup", ["properties", "networkSecurityGroup"], new NetworkSecurityGroup("networkSecurityGroup"));
         _nicType = DefineProperty<NetworkInterfaceNicType>("NicType", ["properties", "nicType"]);
-        _privateLinkService = DefineModelProperty<PrivateLinkService>("PrivateLinkService", ["properties", "privateLinkService"]);
+        _privateLinkService = DefineModelProperty<PrivateLinkService>("PrivateLinkService", ["properties", "privateLinkService"], new PrivateLinkService("privateLinkService"));
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _workloadType = DefineProperty<string>("WorkloadType", ["properties", "workloadType"]);
         _defaultOutboundConnectivityEnabled = DefineProperty<bool>("DefaultOutboundConnectivityEnabled", ["properties", "defaultOutboundConnectivityEnabled"], isOutput: true);
@@ -345,7 +345,7 @@ public partial class NetworkInterface : ProvisionableResource
         _hostedWorkloads = DefineListProperty<string>("HostedWorkloads", ["properties", "hostedWorkloads"], isOutput: true);
         _macAddress = DefineProperty<string>("MacAddress", ["properties", "macAddress"], isOutput: true);
         _primary = DefineProperty<bool>("Primary", ["properties", "primary"], isOutput: true);
-        _privateEndpoint = DefineModelProperty<PrivateEndpoint>("PrivateEndpoint", ["properties", "privateEndpoint"], isOutput: true);
+        _privateEndpoint = DefineModelProperty<PrivateEndpoint>("PrivateEndpoint", ["properties", "privateEndpoint"], new PrivateEndpoint("privateEndpoint"), isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _resourceGuid = DefineProperty<Guid>("ResourceGuid", ["properties", "resourceGuid"], isOutput: true);
         _tapConfigurations = DefineListProperty<NetworkInterfaceTapConfiguration>("TapConfigurations", ["properties", "tapConfigurations"], isOutput: true);

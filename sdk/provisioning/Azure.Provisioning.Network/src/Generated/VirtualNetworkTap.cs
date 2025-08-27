@@ -151,8 +151,8 @@ public partial class VirtualNetworkTap : ProvisionableResource
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _destinationLoadBalancerFrontEndIPConfiguration = DefineModelProperty<FrontendIPConfiguration>("DestinationLoadBalancerFrontEndIPConfiguration", ["properties", "destinationLoadBalancerFrontEndIPConfiguration"]);
-        _destinationNetworkInterfaceIPConfiguration = DefineModelProperty<NetworkInterfaceIPConfiguration>("DestinationNetworkInterfaceIPConfiguration", ["properties", "destinationNetworkInterfaceIPConfiguration"]);
+        _destinationLoadBalancerFrontEndIPConfiguration = DefineModelProperty<FrontendIPConfiguration>("DestinationLoadBalancerFrontEndIPConfiguration", ["properties", "destinationLoadBalancerFrontEndIPConfiguration"], new FrontendIPConfiguration("frontendIPConfiguration"));
+        _destinationNetworkInterfaceIPConfiguration = DefineModelProperty<NetworkInterfaceIPConfiguration>("DestinationNetworkInterfaceIPConfiguration", ["properties", "destinationNetworkInterfaceIPConfiguration"], new NetworkInterfaceIPConfiguration("networkInterfaceIPConfiguration"));
         _destinationPort = DefineProperty<int>("DestinationPort", ["properties", "destinationPort"]);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);

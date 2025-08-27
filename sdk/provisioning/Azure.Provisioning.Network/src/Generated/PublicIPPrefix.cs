@@ -222,7 +222,7 @@ public partial class PublicIPPrefix : ProvisionableResource
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
         _iPTags = DefineListProperty<IPTag>("IPTags", ["properties", "ipTags"]);
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
-        _natGateway = DefineModelProperty<NatGateway>("NatGateway", ["properties", "natGateway"]);
+        _natGateway = DefineModelProperty<NatGateway>("NatGateway", ["properties", "natGateway"], new NatGateway("natGateway"));
         _prefixLength = DefineProperty<int>("PrefixLength", ["properties", "prefixLength"]);
         _publicIPAddressVersion = DefineProperty<NetworkIPVersion>("PublicIPAddressVersion", ["properties", "publicIPAddressVersion"]);
         _sku = DefineModelProperty<PublicIPPrefixSku>("Sku", ["sku"]);

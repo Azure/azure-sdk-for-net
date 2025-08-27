@@ -459,7 +459,6 @@ namespace Azure.Provisioning.Network
     }
     public partial class FrontendIPConfiguration : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public FrontendIPConfiguration() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public FrontendIPConfiguration(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> GatewayLoadBalancerId { get { throw null; } }
@@ -573,7 +572,6 @@ namespace Azure.Provisioning.Network
     }
     public partial class NatGateway : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public NatGateway() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public NatGateway(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } set { } }
@@ -788,7 +786,6 @@ namespace Azure.Provisioning.Network
     }
     public partial class NetworkInterfaceIPConfiguration : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public NetworkInterfaceIPConfiguration() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public NetworkInterfaceIPConfiguration(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.ApplicationGatewayBackendAddressPool> ApplicationGatewayBackendAddressPools { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.ApplicationSecurityGroup> ApplicationSecurityGroups { get { throw null; } }
@@ -1120,7 +1117,6 @@ namespace Azure.Provisioning.Network
     }
     public partial class NetworkSecurityGroup : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public NetworkSecurityGroup() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public NetworkSecurityGroup(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.SecurityRule> DefaultSecurityRules { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
@@ -1298,7 +1294,6 @@ namespace Azure.Provisioning.Network
     }
     public partial class PrivateEndpoint : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public PrivateEndpoint() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public PrivateEndpoint(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.ApplicationSecurityGroup> ApplicationSecurityGroups { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Network.CustomDnsConfigProperties> CustomDnsConfigs { get { throw null; } set { } }
@@ -1382,7 +1377,6 @@ namespace Azure.Provisioning.Network
     }
     public partial class PrivateLinkService : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public PrivateLinkService() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public PrivateLinkService(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Alias { get { throw null; } }
         public Azure.Provisioning.BicepList<string> AutoApprovalSubscriptions { get { throw null; } set { } }
@@ -1471,7 +1465,6 @@ namespace Azure.Provisioning.Network
     }
     public partial class PublicIPAddress : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public PublicIPAddress() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public PublicIPAddress(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.Network.DdosSettings DdosSettings { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.IPAddressDeleteOption> DeleteOption { get { throw null; } set { } }
@@ -1728,7 +1721,6 @@ namespace Azure.Provisioning.Network
     }
     public partial class Route : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public Route() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Route(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> AddressPrefix { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
@@ -1825,7 +1817,6 @@ namespace Azure.Provisioning.Network
     }
     public partial class RouteTable : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public RouteTable() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public RouteTable(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<bool> DisableBgpRoutePropagation { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
@@ -1915,7 +1906,6 @@ namespace Azure.Provisioning.Network
     }
     public partial class SecurityRule : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public SecurityRule() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public SecurityRule(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.SecurityRuleAccess> Access { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
@@ -2061,7 +2051,6 @@ namespace Azure.Provisioning.Network
     }
     public partial class ServiceEndpointPolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceEndpointPolicy() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public ServiceEndpointPolicy(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<string> ContextualServiceEndpointPolicies { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
@@ -2137,7 +2126,6 @@ namespace Azure.Provisioning.Network
     }
     public partial class ServiceEndpointPolicyDefinition : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceEndpointPolicyDefinition() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public ServiceEndpointPolicyDefinition(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
@@ -2221,7 +2209,6 @@ namespace Azure.Provisioning.Network
     }
     public partial class Subnet : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public Subnet() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Subnet(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> AddressPrefix { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> AddressPrefixes { get { throw null; } set { } }
@@ -2469,7 +2456,6 @@ namespace Azure.Provisioning.Network
     }
     public partial class VirtualNetworkPeering : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public VirtualNetworkPeering() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public VirtualNetworkPeering(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<bool> AllowForwardedTraffic { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> AllowGatewayTransit { get { throw null; } set { } }
@@ -2598,7 +2584,6 @@ namespace Azure.Provisioning.Network
     }
     public partial class VirtualNetworkTap : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public VirtualNetworkTap() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public VirtualNetworkTap(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.Network.FrontendIPConfiguration DestinationLoadBalancerFrontEndIPConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.Network.NetworkInterfaceIPConfiguration DestinationNetworkInterfaceIPConfiguration { get { throw null; } set { } }

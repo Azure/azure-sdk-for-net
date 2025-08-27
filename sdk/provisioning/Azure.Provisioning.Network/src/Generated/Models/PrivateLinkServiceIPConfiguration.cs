@@ -135,7 +135,7 @@ public partial class PrivateLinkServiceIPConfiguration : ProvisionableConstruct
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
         _privateIPAddress = DefineProperty<string>("PrivateIPAddress", ["properties", "privateIPAddress"]);
         _privateIPAllocationMethod = DefineProperty<NetworkIPAllocationMethod>("PrivateIPAllocationMethod", ["properties", "privateIPAllocationMethod"]);
-        _subnet = DefineModelProperty<Subnet>("Subnet", ["properties", "subnet"]);
+        _subnet = DefineModelProperty<Subnet>("Subnet", ["properties", "subnet"], new Subnet("subnet"));
         _primary = DefineProperty<bool>("Primary", ["properties", "primary"]);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _privateIPAddressVersion = DefineProperty<NetworkIPVersion>("PrivateIPAddressVersion", ["properties", "privateIPAddressVersion"]);

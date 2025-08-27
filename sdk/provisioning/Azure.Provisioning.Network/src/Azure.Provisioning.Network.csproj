@@ -11,7 +11,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Provisioning" />
+    <!--<PackageReference Include="Azure.Provisioning" />-->
+    <ProjectReference Include="../../Azure.Provisioning/src/Azure.Provisioning.csproj" />
   </ItemGroup>
 
 </Project>

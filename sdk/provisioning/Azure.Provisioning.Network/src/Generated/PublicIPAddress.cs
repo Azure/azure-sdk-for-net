@@ -289,14 +289,14 @@ public partial class PublicIPAddress : ProvisionableResource
         _idleTimeoutInMinutes = DefineProperty<int>("IdleTimeoutInMinutes", ["properties", "idleTimeoutInMinutes"]);
         _iPAddress = DefineProperty<string>("IPAddress", ["properties", "ipAddress"]);
         _iPTags = DefineListProperty<IPTag>("IPTags", ["properties", "ipTags"]);
-        _linkedPublicIPAddress = DefineModelProperty<PublicIPAddress>("LinkedPublicIPAddress", ["properties", "linkedPublicIPAddress"]);
+        _linkedPublicIPAddress = DefineModelProperty<PublicIPAddress>("LinkedPublicIPAddress", ["properties", "linkedPublicIPAddress"], new PublicIPAddress("publicIPAddress"));
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _migrationPhase = DefineProperty<PublicIPAddressMigrationPhase>("MigrationPhase", ["properties", "migrationPhase"]);
-        _natGateway = DefineModelProperty<NatGateway>("NatGateway", ["properties", "natGateway"]);
+        _natGateway = DefineModelProperty<NatGateway>("NatGateway", ["properties", "natGateway"], new NatGateway("natGateway"));
         _publicIPAddressVersion = DefineProperty<NetworkIPVersion>("PublicIPAddressVersion", ["properties", "publicIPAddressVersion"]);
         _publicIPAllocationMethod = DefineProperty<NetworkIPAllocationMethod>("PublicIPAllocationMethod", ["properties", "publicIPAllocationMethod"]);
         _publicIPPrefixId = DefineProperty<ResourceIdentifier>("PublicIPPrefixId", ["properties", "publicIPPrefix", "id"]);
-        _servicePublicIPAddress = DefineModelProperty<PublicIPAddress>("ServicePublicIPAddress", ["properties", "servicePublicIPAddress"]);
+        _servicePublicIPAddress = DefineModelProperty<PublicIPAddress>("ServicePublicIPAddress", ["properties", "servicePublicIPAddress"], new PublicIPAddress("publicIPAddress"));
         _sku = DefineModelProperty<PublicIPAddressSku>("Sku", ["sku"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _zones = DefineListProperty<string>("Zones", ["zones"]);

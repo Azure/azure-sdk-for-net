@@ -233,8 +233,8 @@ public partial class NetworkInterfaceIPConfiguration : ProvisionableResource
         _privateIPAllocationMethod = DefineProperty<NetworkIPAllocationMethod>("PrivateIPAllocationMethod", ["properties", "privateIPAllocationMethod"], isOutput: true);
         _privateLinkConnectionProperties = DefineModelProperty<NetworkInterfaceIPConfigurationPrivateLinkConnectionProperties>("PrivateLinkConnectionProperties", ["properties", "privateLinkConnectionProperties"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _publicIPAddress = DefineModelProperty<PublicIPAddress>("PublicIPAddress", ["properties", "publicIPAddress"], isOutput: true);
-        _subnet = DefineModelProperty<Subnet>("Subnet", ["properties", "subnet"], isOutput: true);
+        _publicIPAddress = DefineModelProperty<PublicIPAddress>("PublicIPAddress", ["properties", "publicIPAddress"], new PublicIPAddress("publicIPAddress"), isOutput: true);
+        _subnet = DefineModelProperty<Subnet>("Subnet", ["properties", "subnet"], new Subnet("subnet"), isOutput: true);
         _virtualNetworkTaps = DefineListProperty<VirtualNetworkTap>("VirtualNetworkTaps", ["properties", "virtualNetworkTaps"], isOutput: true);
         _parent = DefineResource<NetworkInterface>("Parent", ["parent"], isRequired: true);
     }

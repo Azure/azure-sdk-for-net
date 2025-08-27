@@ -103,7 +103,7 @@ public partial class NetworkInterfaceTapConfiguration : ProvisionableResource
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
-        _virtualNetworkTap = DefineModelProperty<VirtualNetworkTap>("VirtualNetworkTap", ["properties", "virtualNetworkTap"]);
+        _virtualNetworkTap = DefineModelProperty<VirtualNetworkTap>("VirtualNetworkTap", ["properties", "virtualNetworkTap"], new VirtualNetworkTap("virtualNetworkTap"));
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _parent = DefineResource<NetworkInterface>("Parent", ["parent"], isRequired: true);

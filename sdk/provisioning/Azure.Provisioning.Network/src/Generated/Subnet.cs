@@ -313,10 +313,10 @@ public partial class Subnet : ProvisionableResource
         _iPAllocations = DefineListProperty<WritableSubResource>("IPAllocations", ["properties", "ipAllocations"]);
         _ipamPoolPrefixAllocations = DefineListProperty<IpamPoolPrefixAllocation>("IpamPoolPrefixAllocations", ["properties", "ipamPoolPrefixAllocations"]);
         _natGatewayId = DefineProperty<ResourceIdentifier>("NatGatewayId", ["properties", "natGateway", "id"]);
-        _networkSecurityGroup = DefineModelProperty<NetworkSecurityGroup>("NetworkSecurityGroup", ["properties", "networkSecurityGroup"]);
+        _networkSecurityGroup = DefineModelProperty<NetworkSecurityGroup>("NetworkSecurityGroup", ["properties", "networkSecurityGroup"], new NetworkSecurityGroup("networkSecurityGroup"));
         _privateEndpointNetworkPolicy = DefineProperty<VirtualNetworkPrivateEndpointNetworkPolicy>("PrivateEndpointNetworkPolicy", ["properties", "privateEndpointNetworkPolicies"]);
         _privateLinkServiceNetworkPolicy = DefineProperty<VirtualNetworkPrivateLinkServiceNetworkPolicy>("PrivateLinkServiceNetworkPolicy", ["properties", "privateLinkServiceNetworkPolicies"]);
-        _routeTable = DefineModelProperty<RouteTable>("RouteTable", ["properties", "routeTable"]);
+        _routeTable = DefineModelProperty<RouteTable>("RouteTable", ["properties", "routeTable"], new RouteTable("routeTable"));
         _serviceEndpointPolicies = DefineListProperty<ServiceEndpointPolicy>("ServiceEndpointPolicies", ["properties", "serviceEndpointPolicies"]);
         _serviceEndpoints = DefineListProperty<ServiceEndpointProperties>("ServiceEndpoints", ["properties", "serviceEndpoints"]);
         _sharingScope = DefineProperty<SharingScope>("SharingScope", ["properties", "sharingScope"]);

@@ -134,7 +134,7 @@ public partial class NetworkPrivateEndpointConnection : ProvisionableResource
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
         _linkIdentifier = DefineProperty<string>("LinkIdentifier", ["properties", "linkIdentifier"], isOutput: true);
-        _privateEndpoint = DefineModelProperty<PrivateEndpoint>("PrivateEndpoint", ["properties", "privateEndpoint"], isOutput: true);
+        _privateEndpoint = DefineModelProperty<PrivateEndpoint>("PrivateEndpoint", ["properties", "privateEndpoint"], new PrivateEndpoint("privateEndpoint"), isOutput: true);
         _privateEndpointLocation = DefineProperty<string>("PrivateEndpointLocation", ["properties", "privateEndpointLocation"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
         _parent = DefineResource<PrivateLinkService>("Parent", ["parent"], isRequired: true);

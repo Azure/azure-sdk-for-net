@@ -200,9 +200,9 @@ public partial class FrontendIPConfiguration : ProvisionableResource
         _privateIPAddressVersion = DefineProperty<NetworkIPVersion>("PrivateIPAddressVersion", ["properties", "privateIPAddressVersion"], isOutput: true);
         _privateIPAllocationMethod = DefineProperty<NetworkIPAllocationMethod>("PrivateIPAllocationMethod", ["properties", "privateIPAllocationMethod"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
-        _publicIPAddress = DefineModelProperty<PublicIPAddress>("PublicIPAddress", ["properties", "publicIPAddress"], isOutput: true);
+        _publicIPAddress = DefineModelProperty<PublicIPAddress>("PublicIPAddress", ["properties", "publicIPAddress"], new PublicIPAddress("publicIPAddress"), isOutput: true);
         _publicIPPrefixId = DefineProperty<ResourceIdentifier>("PublicIPPrefixId", ["properties", "publicIPPrefix", "id"], isOutput: true);
-        _subnet = DefineModelProperty<Subnet>("Subnet", ["properties", "subnet"], isOutput: true);
+        _subnet = DefineModelProperty<Subnet>("Subnet", ["properties", "subnet"], new Subnet("subnet"), isOutput: true);
         _zones = DefineListProperty<string>("Zones", ["zones"], isOutput: true);
     }
 

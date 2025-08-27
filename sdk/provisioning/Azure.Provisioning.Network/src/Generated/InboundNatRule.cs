@@ -222,7 +222,7 @@ public partial class InboundNatRule : ProvisionableResource
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"]);
         _idleTimeoutInMinutes = DefineProperty<int>("IdleTimeoutInMinutes", ["properties", "idleTimeoutInMinutes"]);
         _protocol = DefineProperty<LoadBalancingTransportProtocol>("Protocol", ["properties", "protocol"]);
-        _backendIPConfiguration = DefineModelProperty<NetworkInterfaceIPConfiguration>("BackendIPConfiguration", ["properties", "backendIPConfiguration"], isOutput: true);
+        _backendIPConfiguration = DefineModelProperty<NetworkInterfaceIPConfiguration>("BackendIPConfiguration", ["properties", "backendIPConfiguration"], new NetworkInterfaceIPConfiguration("networkInterfaceIPConfiguration"), isOutput: true);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
         _provisioningState = DefineProperty<NetworkProvisioningState>("ProvisioningState", ["properties", "provisioningState"], isOutput: true);
     }

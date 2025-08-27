@@ -205,7 +205,7 @@ public partial class PrivateEndpoint : ProvisionableResource
         _location = DefineProperty<AzureLocation>("Location", ["location"]);
         _manualPrivateLinkServiceConnections = DefineListProperty<NetworkPrivateLinkServiceConnection>("ManualPrivateLinkServiceConnections", ["properties", "manualPrivateLinkServiceConnections"]);
         _privateLinkServiceConnections = DefineListProperty<NetworkPrivateLinkServiceConnection>("PrivateLinkServiceConnections", ["properties", "privateLinkServiceConnections"]);
-        _subnet = DefineModelProperty<Subnet>("Subnet", ["properties", "subnet"]);
+        _subnet = DefineModelProperty<Subnet>("Subnet", ["properties", "subnet"], new Subnet("subnet"));
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
         _networkInterfaces = DefineListProperty<NetworkInterface>("NetworkInterfaces", ["properties", "networkInterfaces"], isOutput: true);

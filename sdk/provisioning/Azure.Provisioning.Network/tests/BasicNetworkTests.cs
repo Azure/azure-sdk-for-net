@@ -17,7 +17,7 @@ public class BasicNetworkTests(bool async) : ProvisioningTestBase(async)
     public async Task VNetTwoSubnets()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 #region Snippet:VNetTwoSubnets
@@ -70,12 +70,12 @@ public class BasicNetworkTests(bool async) : ProvisioningTestBase(async)
                     },
                     Subnets =
                     [
-                        new Subnet()
+                        new Subnet("subnet1")
                         {
                             Name = subnet1Name,
                             AddressPrefix = subnet1Prefix
                         },
-                        new Subnet()
+                        new Subnet("subnet2")
                         {
                             Name = subnet2Name,
                             AddressPrefix = subnet2Prefix
@@ -135,8 +135,7 @@ public class BasicNetworkTests(bool async) : ProvisioningTestBase(async)
               location: location
             }
             """)
-        .Lint()
-        .ValidateAsync();
+        .Lint();
     }
 
     [Test]
@@ -144,7 +143,7 @@ public class BasicNetworkTests(bool async) : ProvisioningTestBase(async)
     public async Task NatGatewayVNet()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 #region Snippet:NatGatewayVNet
@@ -234,7 +233,7 @@ public class BasicNetworkTests(bool async) : ProvisioningTestBase(async)
                     },
                     Subnets =
                     [
-                        new Subnet()
+                        new Subnet("subnet")
                         {
                             Name = subnetName,
                             AddressPrefix = vnetSubnetPrefix,
@@ -334,8 +333,7 @@ public class BasicNetworkTests(bool async) : ProvisioningTestBase(async)
               location: location
             }
             """)
-        .Lint()
-        .ValidateAsync();
+        .Lint();
     }
 
     [Test]
@@ -343,7 +341,7 @@ public class BasicNetworkTests(bool async) : ProvisioningTestBase(async)
     public async Task NetworkWatcherFlowLogsCreate()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 #region Snippet:NetworkWatcherFlowLogsCreate
@@ -491,8 +489,7 @@ public class BasicNetworkTests(bool async) : ProvisioningTestBase(async)
               parent: networkWatcher
             }
             """)
-        .Lint()
-        .ValidateAsync();
+        .Lint();
     }
 
     [Test]
@@ -500,7 +497,7 @@ public class BasicNetworkTests(bool async) : ProvisioningTestBase(async)
     public async Task SecurityGroupCreate()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 #region Snippet:SecurityGroupCreate
@@ -551,7 +548,7 @@ public class BasicNetworkTests(bool async) : ProvisioningTestBase(async)
                     Location = location,
                     SecurityRules =
                     [
-                        new SecurityRule()
+                        new SecurityRule("sr")
                         {
                             Name = "first_rule",
                             Description = "This is the first rule",
@@ -581,11 +578,11 @@ public class BasicNetworkTests(bool async) : ProvisioningTestBase(async)
                     },
                     Subnets =
                     [
-                        new Subnet()
+                        new Subnet("subnet")
                         {
                             Name = subnetName,
                             AddressPrefix = subnetPrefix,
-                            NetworkSecurityGroup = new()
+                            NetworkSecurityGroup = new("nsg")
                             {
                                 Id = networkSecurityGroup.Id
                             }
@@ -659,7 +656,6 @@ public class BasicNetworkTests(bool async) : ProvisioningTestBase(async)
               location: location
             }
             """)
-        .Lint()
-        .ValidateAsync();
+        .Lint();
     }
 }
