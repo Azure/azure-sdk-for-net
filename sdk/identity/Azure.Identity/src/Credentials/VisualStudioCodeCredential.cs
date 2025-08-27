@@ -58,7 +58,7 @@ namespace Azure.Identity
         {
             if (!_isBrokerOptionsEnabled)
             {
-                throw new CredentialUnavailableException($"{nameof(VisualStudioCodeCredential)} requires the Azure.Identity.Broker package to be installed. {CredentialsSection} {Troubleshooting}");
+                throw new CredentialUnavailableException($"{nameof(VisualStudioCodeCredential)} requires the Azure.Identity.Broker package to be referenced from the project. {CredentialsSection} {Troubleshooting}");
             }
 
             using CredentialDiagnosticScope scope = Pipeline.StartGetTokenScope($"{nameof(VisualStudioCodeCredential)}.{nameof(GetToken)}", requestContext);
