@@ -59,6 +59,7 @@ namespace Azure.AI.VoiceLive
     [ModelReaderWriterBuildable(typeof(InputAudioContentPart))]
     [ModelReaderWriterBuildable(typeof(InputTextContentPart))]
     [ModelReaderWriterBuildable(typeof(InputTokenDetails))]
+    [ModelReaderWriterBuildable(typeof(LLMVoice))]
     [ModelReaderWriterBuildable(typeof(LogProbProperties))]
     [ModelReaderWriterBuildable(typeof(MessageItem))]
     [ModelReaderWriterBuildable(typeof(NoTurnDetection))]

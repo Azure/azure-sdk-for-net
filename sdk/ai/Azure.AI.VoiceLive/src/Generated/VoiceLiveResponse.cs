@@ -48,7 +48,14 @@ namespace Azure.AI.VoiceLive
         /// by server VAD, the response will be added to the default conversation, thus
         /// the `conversation_id` will be an id like `conv_1234`.
         /// </param>
-        /// <param name="voice"> supported voice identifiers and configurations. </param>
+        /// <param name="voiceInternal">
+        /// supported voice identifiers and configurations.
+        ///      To assign an object to this property use .  To assign an already formatted json string to this property use . 
+        ///     Supported types:
+        ///     . . . . . 
+        ///     Examples:
+        ///      BinaryData.FromObjectAsJson("foo").  Creates a payload of "foo".  BinaryData.FromString("\"foo\"").  Creates a payload of "foo".  BinaryData.FromObjectAsJson(new { key = "value" }).  Creates a payload of { "key": "value" }.  BinaryData.FromString("{\"key\": \"value\"}").  Creates a payload of { "key": "value" }.
+        /// </param>
         /// <param name="modalities">
         /// The set of modalities the model used to respond. If there are multiple modalities,
         /// the model will pick one, for example if `modalities` is `["text", "audio"]`, the model
@@ -61,7 +68,7 @@ namespace Azure.AI.VoiceLive
         /// inclusive of tool calls, that was used in this response.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VoiceLiveResponse(string id, string @object, VoiceLiveResponseStatus? status, ResponseStatusDetails statusDetails, IList<ResponseItem> output, ResponseTokenStatistics usage, string conversationId, BinaryData voice, IList<ResponseModality> modalities, ResponseOutputAudioFormat? outputAudioFormat, float? temperature, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceLiveResponse(string id, string @object, VoiceLiveResponseStatus? status, ResponseStatusDetails statusDetails, IList<ResponseItem> output, ResponseTokenStatistics usage, string conversationId, BinaryData voiceInternal, IList<ResponseModality> modalities, ResponseOutputAudioFormat? outputAudioFormat, float? temperature, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Object = @object;
@@ -70,7 +77,7 @@ namespace Azure.AI.VoiceLive
             Output = output;
             Usage = usage;
             ConversationId = conversationId;
-            Voice = voice;
+            VoiceInternal = voiceInternal;
             Modalities = modalities;
             OutputAudioFormat = outputAudioFormat;
             Temperature = temperature;
@@ -114,53 +121,6 @@ namespace Azure.AI.VoiceLive
         /// the `conversation_id` will be an id like `conv_1234`.
         /// </summary>
         public string ConversationId { get; }
-
-        /// <summary>
-        /// supported voice identifiers and configurations.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description> <see cref="OAIVoice"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="OpenAIVoice"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="AzureVoice"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="Phi4mmVoice"/>. </description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Voice { get; }
 
         /// <summary>
         /// The set of modalities the model used to respond. If there are multiple modalities,

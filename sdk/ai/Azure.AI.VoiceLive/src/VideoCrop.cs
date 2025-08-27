@@ -53,6 +53,19 @@ namespace Azure.AI.VoiceLive
             }
         }
 
+        /// <summary> Bottom-right corner of the crop region. </summary>
+        internal IList<int> BottomRightInternal
+        {
+            get
+            {
+                return new List<int>(new int[] { BottomRight.X, BottomRight.Y });
+            }
+            set
+            {
+                BottomRight = ToPoint(value);
+            }
+        }
+
         private static Point ToPoint(IList<int> list)
         {
             if (null == list)
@@ -68,19 +81,6 @@ namespace Azure.AI.VoiceLive
             }
 
             return new Point(listAsArray[0], listAsArray[1]);
-        }
-
-        /// <summary> Bottom-right corner of the crop region. </summary>
-        internal IList<int> BottomRightInternal
-        {
-            get
-            {
-                return new List<int>(new int[] { BottomRight.X, BottomRight.Y });
-            }
-            set
-            {
-                BottomRight = ToPoint(value);
-            }
         }
 
         /// <summary> Top-left corner of the crop region. </summary>

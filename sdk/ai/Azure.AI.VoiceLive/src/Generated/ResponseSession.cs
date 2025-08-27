@@ -31,7 +31,14 @@ namespace Azure.AI.VoiceLive
         /// <param name="modalities"></param>
         /// <param name="instructions"></param>
         /// <param name="animation"></param>
-        /// <param name="voice"></param>
+        /// <param name="voiceInternal">
+        /// Gets the Voice.
+        ///      To assign an object to this property use .  To assign an already formatted json string to this property use . 
+        ///     Supported types:
+        ///     . . . . . 
+        ///     Examples:
+        ///      BinaryData.FromObjectAsJson("foo").  Creates a payload of "foo".  BinaryData.FromString("\"foo\"").  Creates a payload of "foo".  BinaryData.FromObjectAsJson(new { key = "value" }).  Creates a payload of { "key": "value" }.  BinaryData.FromString("{\"key\": \"value\"}").  Creates a payload of { "key": "value" }.
+        /// </param>
         /// <param name="inputAudio"></param>
         /// <param name="inputAudioFormat"></param>
         /// <param name="outputAudioFormat"></param>
@@ -48,14 +55,14 @@ namespace Azure.AI.VoiceLive
         /// <param name="maxResponseOutputTokens"></param>
         /// <param name="agent"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseSession(string id, string model, IList<InputModality> modalities, string instructions, AnimationOptions animation, BinaryData voice, InputAudio inputAudio, AudioFormat? inputAudioFormat, AudioFormat? outputAudioFormat, int? inputAudioSamplingRate, TurnDetection turnDetection, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfig avatar, AudioInputTranscriptionSettings inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<VoiceLiveToolDefinition> tools, BinaryData toolChoice, float? temperature, BinaryData maxResponseOutputTokens, RespondingAgentConfig agent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResponseSession(string id, string model, IList<InputModality> modalities, string instructions, AnimationOptions animation, BinaryData voiceInternal, InputAudio inputAudio, AudioFormat? inputAudioFormat, AudioFormat? outputAudioFormat, int? inputAudioSamplingRate, TurnDetection turnDetection, AudioNoiseReduction inputAudioNoiseReduction, AudioEchoCancellation inputAudioEchoCancellation, AvatarConfig avatar, AudioInputTranscriptionSettings inputAudioTranscription, IList<AudioTimestampType> outputAudioTimestampTypes, IList<VoiceLiveToolDefinition> tools, BinaryData toolChoice, float? temperature, BinaryData maxResponseOutputTokens, RespondingAgentConfig agent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Model = model;
             Modalities = modalities;
             Instructions = instructions;
             Animation = animation;
-            Voice = voice;
+            VoiceInternal = voiceInternal;
             InputAudio = inputAudio;
             InputAudioFormat = inputAudioFormat;
             OutputAudioFormat = outputAudioFormat;
@@ -88,53 +95,6 @@ namespace Azure.AI.VoiceLive
 
         /// <summary> Gets the Animation. </summary>
         public AnimationOptions Animation { get; }
-
-        /// <summary>
-        /// Gets the Voice.
-        /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
-        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
-        /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description> <see cref="OAIVoice"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="OpenAIVoice"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="AzureVoice"/>. </description>
-        /// </item>
-        /// <item>
-        /// <description> <see cref="Phi4mmVoice"/>. </description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("\"foo\""). </term>
-        /// <description> Creates a payload of "foo". </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// <item>
-        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
-        /// <description> Creates a payload of { "key": "value" }. </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Voice { get; }
 
         /// <summary> Gets the InputAudio. </summary>
         public InputAudio InputAudio { get; }

@@ -63,13 +63,13 @@ namespace Azure.AI.VoiceLive
                 writer.WritePropertyName("animation"u8);
                 writer.WriteObjectValue(Animation, options);
             }
-            if (Optional.IsDefined(Voice))
+            if (Optional.IsDefined(VoiceInternal))
             {
                 writer.WritePropertyName("voice"u8);
 #if NET6_0_OR_GREATER
-                writer.WriteRawValue(Voice);
+                writer.WriteRawValue(VoiceInternal);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Voice))
+                using (JsonDocument document = JsonDocument.Parse(VoiceInternal))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -221,7 +221,7 @@ namespace Azure.AI.VoiceLive
             IList<InputModality> modalities = default;
             string instructions = default;
             AnimationOptions animation = default;
-            BinaryData voice = default;
+            BinaryData voiceInternal = default;
             InputAudio inputAudio = default;
             AudioFormat? inputAudioFormat = default;
             AudioFormat? outputAudioFormat = default;
@@ -284,7 +284,7 @@ namespace Azure.AI.VoiceLive
                     {
                         continue;
                     }
-                    voice = BinaryData.FromString(prop.Value.GetRawText());
+                    voiceInternal = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (prop.NameEquals("input_audio"u8))
@@ -445,7 +445,7 @@ namespace Azure.AI.VoiceLive
                 modalities ?? new ChangeTrackingList<InputModality>(),
                 instructions,
                 animation,
-                voice,
+                voiceInternal,
                 inputAudio,
                 inputAudioFormat,
                 outputAudioFormat,
