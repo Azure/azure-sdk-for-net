@@ -16,6 +16,59 @@ namespace Azure.ResourceManager.Advisor.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmAdvisorModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.PredictionResult"/>. </summary>
+        /// <param name="extendedProperties"> Extended properties. </param>
+        /// <param name="predictionType"> Type of the prediction. </param>
+        /// <param name="category"> The category of the recommendation. </param>
+        /// <param name="impact"> The business impact of the recommendation. </param>
+        /// <param name="impactedField"> The resource type identified by Advisor. </param>
+        /// <param name="lastUpdated"> The most recent time that Advisor checked the validity of the recommendation. </param>
+        /// <param name="shortDescription"> A summary of the recommendation. </param>
+        /// <returns> A new <see cref="Models.PredictionResult"/> instance for mocking. </returns>
+        public static PredictionResult PredictionResult(IReadOnlyDictionary<string, BinaryData> extendedProperties = null, PredictionType? predictionType = null, Category? category = null, Impact? impact = null, string impactedField = null, DateTimeOffset? lastUpdated = null, ShortDescription shortDescription = null)
+        {
+            extendedProperties ??= new Dictionary<string, BinaryData>();
+
+            return new PredictionResult(
+                extendedProperties,
+                predictionType,
+                category,
+                impact,
+                impactedField,
+                lastUpdated,
+                shortDescription,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ShortDescription"/>. </summary>
+        /// <param name="problem"> The issue or opportunity identified by the recommendation and proposed solution. </param>
+        /// <param name="solution"> The issue or opportunity identified by the recommendation and proposed solution. </param>
+        /// <returns> A new <see cref="Models.ShortDescription"/> instance for mocking. </returns>
+        public static ShortDescription ShortDescription(string problem = null, string solution = null)
+        {
+            return new ShortDescription(problem, solution, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.OperationEntity"/>. </summary>
+        /// <param name="name"> Operation name: {provider}/{resource}/{operation}. </param>
+        /// <param name="display"> The operation supported by Advisor. </param>
+        /// <returns> A new <see cref="Models.OperationEntity"/> instance for mocking. </returns>
+        public static OperationEntity OperationEntity(string name = null, OperationDisplayInfo display = null)
+        {
+            return new OperationEntity(name, display, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.OperationDisplayInfo"/>. </summary>
+        /// <param name="description"> The description of the operation. </param>
+        /// <param name="operation"> The action that users can perform, based on their permission level. </param>
+        /// <param name="provider"> Service provider: Microsoft Advisor. </param>
+        /// <param name="resource"> Resource on which the operation is performed. </param>
+        /// <returns> A new <see cref="Models.OperationDisplayInfo"/> instance for mocking. </returns>
+        public static OperationDisplayInfo OperationDisplayInfo(string description = null, string operation = null, string provider = null, string resource = null)
+        {
+            return new OperationDisplayInfo(description, operation, provider, resource, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Advisor.MetadataEntityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -53,36 +106,13 @@ namespace Azure.ResourceManager.Advisor.Models
             return new MetadataSupportedValueDetail(id, displayName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConfigData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="exclude"> Exclude the resource from Advisor evaluations. Valid values: False (default) or True. </param>
-        /// <param name="lowCpuThreshold"> Minimum percentage threshold for Advisor low CPU utilization evaluation. Valid only for subscriptions. Valid values: 5 (default), 10, 15 or 20. </param>
-        /// <param name="digests"> Advisor digest configuration. Valid only for subscriptions. </param>
-        /// <returns> A new <see cref="Models.ConfigData"/> instance for mocking. </returns>
-        public static ConfigData ConfigData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? exclude = null, CpuThreshold? lowCpuThreshold = null, IEnumerable<DigestConfig> digests = null)
-        {
-            digests ??= new List<DigestConfig>();
-
-            return new ConfigData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                exclude,
-                lowCpuThreshold,
-                digests?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Advisor.ResourceRecommendationBaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="category"> The category of the recommendation. </param>
+        /// <param name="control"> The control type for the recommendation. </param>
         /// <param name="impact"> The business impact of the recommendation. </param>
         /// <param name="impactedField"> The resource type identified by Advisor. </param>
         /// <param name="impactedValue"> The resource identified by Advisor. </param>
@@ -101,8 +131,14 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <param name="actions"> The list of recommended actions to implement recommendation. </param>
         /// <param name="remediation"> The automated way to apply recommendation. </param>
         /// <param name="exposedMetadataProperties"> The recommendation metadata properties exposed to customer to provide additional information. </param>
+        /// <param name="tracked"> If the Recommendation has Tracking enabled. </param>
+        /// <param name="trackedProperties"> The properties of a tracked recommendation. </param>
+        /// <param name="review"> The Review that this Recommendation belongs to. </param>
+        /// <param name="resourceWorkload"> The Workload that this Resource belongs to. </param>
+        /// <param name="sourceSystem"> The Source System that this Recommendation originated from. </param>
+        /// <param name="notes"> Additional notes for the Recommendation. </param>
         /// <returns> A new <see cref="Advisor.ResourceRecommendationBaseData"/> instance for mocking. </returns>
-        public static ResourceRecommendationBaseData ResourceRecommendationBaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Category? category = null, Impact? impact = null, string impactedField = null, string impactedValue = null, DateTimeOffset? lastUpdated = null, IDictionary<string, BinaryData> metadata = null, string recommendationTypeId = null, Risk? risk = null, ShortDescription shortDescription = null, IEnumerable<Guid> suppressionIds = null, IDictionary<string, string> extendedProperties = null, ResourceMetadata resourceMetadata = null, string description = null, string label = null, string learnMoreLink = null, string potentialBenefits = null, IEnumerable<IDictionary<string, BinaryData>> actions = null, IDictionary<string, BinaryData> remediation = null, IDictionary<string, BinaryData> exposedMetadataProperties = null)
+        public static ResourceRecommendationBaseData ResourceRecommendationBaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Category? category = null, Control? control = null, Impact? impact = null, string impactedField = null, string impactedValue = null, DateTimeOffset? lastUpdated = null, IReadOnlyDictionary<string, BinaryData> metadata = null, string recommendationTypeId = null, Risk? risk = null, ShortDescription shortDescription = null, IEnumerable<Guid> suppressionIds = null, IReadOnlyDictionary<string, string> extendedProperties = null, ResourceMetadata resourceMetadata = null, string description = null, string label = null, string learnMoreLink = null, string potentialBenefits = null, IEnumerable<IDictionary<string, BinaryData>> actions = null, IReadOnlyDictionary<string, BinaryData> remediation = null, IReadOnlyDictionary<string, BinaryData> exposedMetadataProperties = null, bool? tracked = null, TrackedRecommendationProperties trackedProperties = null, RecommendationPropertiesReview review = null, RecommendationPropertiesResourceWorkload resourceWorkload = null, string sourceSystem = null, string notes = null)
         {
             metadata ??= new Dictionary<string, BinaryData>();
             suppressionIds ??= new List<Guid>();
@@ -117,6 +153,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 resourceType,
                 systemData,
                 category,
+                control,
                 impact,
                 impactedField,
                 impactedValue,
@@ -135,7 +172,51 @@ namespace Azure.ResourceManager.Advisor.Models
                 actions?.ToList(),
                 remediation,
                 exposedMetadataProperties,
+                tracked,
+                trackedProperties,
+                review,
+                resourceWorkload,
+                sourceSystem,
+                notes,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceMetadata"/>. </summary>
+        /// <param name="resourceId"> Azure resource Id of the assessed resource. </param>
+        /// <param name="source"> Source from which recommendation is generated. </param>
+        /// <param name="action"> The action to view resource. </param>
+        /// <param name="singular"> The singular user friendly name of resource type. eg: virtual machine. </param>
+        /// <param name="plural"> The plural user friendly name of resource type. eg: virtual machines. </param>
+        /// <returns> A new <see cref="Models.ResourceMetadata"/> instance for mocking. </returns>
+        public static ResourceMetadata ResourceMetadata(string resourceId = null, string source = null, IReadOnlyDictionary<string, BinaryData> action = null, string singular = null, string plural = null)
+        {
+            action ??= new Dictionary<string, BinaryData>();
+
+            return new ResourceMetadata(
+                resourceId,
+                source,
+                action,
+                singular,
+                plural,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RecommendationPropertiesReview"/>. </summary>
+        /// <param name="id"> The ARM Resource Id of the Review. </param>
+        /// <param name="name"> The Name of the Review. </param>
+        /// <returns> A new <see cref="Models.RecommendationPropertiesReview"/> instance for mocking. </returns>
+        public static RecommendationPropertiesReview RecommendationPropertiesReview(string id = null, string name = null)
+        {
+            return new RecommendationPropertiesReview(id, name, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RecommendationPropertiesResourceWorkload"/>. </summary>
+        /// <param name="id"> The Id of the Workload. </param>
+        /// <param name="name"> The Name of the Workload. </param>
+        /// <returns> A new <see cref="Models.RecommendationPropertiesResourceWorkload"/> instance for mocking. </returns>
+        public static RecommendationPropertiesResourceWorkload RecommendationPropertiesResourceWorkload(string id = null, string name = null)
+        {
+            return new RecommendationPropertiesResourceWorkload(id, name, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Advisor.SuppressionContractData"/>. </summary>
@@ -158,6 +239,242 @@ namespace Azure.ResourceManager.Advisor.Models
                 ttl,
                 expirationTimeStamp,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Advisor.AdvisorScoreEntityData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="lastRefreshedScore"> The details of latest available score. </param>
+        /// <param name="timeSeries"> The historic Advisor score data. </param>
+        /// <returns> A new <see cref="Advisor.AdvisorScoreEntityData"/> instance for mocking. </returns>
+        public static AdvisorScoreEntityData AdvisorScoreEntityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ScoreEntity lastRefreshedScore = null, IEnumerable<TimeSeriesEntity> timeSeries = null)
+        {
+            timeSeries ??= new List<TimeSeriesEntity>();
+
+            return new AdvisorScoreEntityData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                lastRefreshedScore,
+                timeSeries?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ScoreEntity"/>. </summary>
+        /// <param name="date"> The date score was calculated. </param>
+        /// <param name="score"> The percentage score. </param>
+        /// <param name="consumptionUnits"> The consumption units for the score. </param>
+        /// <param name="impactedResourceCount"> The number of impacted resources. </param>
+        /// <param name="potentialScoreIncrease"> The potential percentage increase in overall score at subscription level once all recommendations in this scope are implemented. </param>
+        /// <param name="categoryCount"> The count of impacted categories. </param>
+        /// <returns> A new <see cref="Models.ScoreEntity"/> instance for mocking. </returns>
+        public static ScoreEntity ScoreEntity(string date = null, float? score = null, float? consumptionUnits = null, float? impactedResourceCount = null, float? potentialScoreIncrease = null, float? categoryCount = null)
+        {
+            return new ScoreEntity(
+                date,
+                score,
+                consumptionUnits,
+                impactedResourceCount,
+                potentialScoreIncrease,
+                categoryCount,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TimeSeriesEntity"/>. </summary>
+        /// <param name="aggregationLevel"> The aggregation level of the score. </param>
+        /// <param name="scoreHistory"> The past score data. </param>
+        /// <returns> A new <see cref="Models.TimeSeriesEntity"/> instance for mocking. </returns>
+        public static TimeSeriesEntity TimeSeriesEntity(Aggregated? aggregationLevel = null, IEnumerable<ScoreEntity> scoreHistory = null)
+        {
+            scoreHistory ??= new List<ScoreEntity>();
+
+            return new TimeSeriesEntity(aggregationLevel, scoreHistory?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Advisor.AssessmentResultData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="workloadId"> Workload Id. </param>
+        /// <param name="workloadName"> Workload Name. </param>
+        /// <param name="assessmentId"> Assessment Id. </param>
+        /// <param name="description"> Assessment Type Description. </param>
+        /// <param name="typeId"> Assessment Type Id. </param>
+        /// <param name="score"> Assessment Score. </param>
+        /// <param name="state"> Assessment State. </param>
+        /// <param name="typeVersion"> Assessment Type Version. </param>
+        /// <param name="locale"> Assessment Type Locale. </param>
+        /// <returns> A new <see cref="Advisor.AssessmentResultData"/> instance for mocking. </returns>
+        public static AssessmentResultData AssessmentResultData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string workloadId = null, string workloadName = null, string assessmentId = null, string description = null, string typeId = null, int? score = null, string state = null, string typeVersion = null, string locale = null)
+        {
+            return new AssessmentResultData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                workloadId,
+                workloadName,
+                assessmentId,
+                description,
+                typeId,
+                score,
+                state,
+                typeVersion,
+                locale,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Advisor.ResiliencyReviewData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="reviewName"> Review name. </param>
+        /// <param name="workloadName"> Workload Name. </param>
+        /// <param name="reviewStatus"> Review status. </param>
+        /// <param name="recommendationsCount"> Review recommendations count. </param>
+        /// <param name="publishedAt"> Review last updated timestamp. </param>
+        /// <param name="updatedAt"> Review last updated timestamp. </param>
+        /// <returns> A new <see cref="Advisor.ResiliencyReviewData"/> instance for mocking. </returns>
+        public static ResiliencyReviewData ResiliencyReviewData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string reviewName = null, string workloadName = null, ReviewStatus? reviewStatus = null, int? recommendationsCount = null, string publishedAt = null, string updatedAt = null)
+        {
+            return new ResiliencyReviewData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                reviewName,
+                workloadName,
+                reviewStatus,
+                recommendationsCount,
+                publishedAt,
+                updatedAt,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TriageRecommendation"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="reviewId"> Review id. </param>
+        /// <param name="title"> Recommendation label. </param>
+        /// <param name="priority"> Recommendation priority. </param>
+        /// <param name="appliesToSubscriptions"> List of subscription ids. </param>
+        /// <param name="recommendationStatus"> Recommendation status. </param>
+        /// <param name="updatedAt"> Recommendation potential benefit. </param>
+        /// <param name="rejectReason"> Recommendation rejection reason. </param>
+        /// <param name="potentialBenefits"> Recommendation potential benefit. </param>
+        /// <param name="description"> Recommendation description. </param>
+        /// <param name="notes"> Recommendation notes. </param>
+        /// <returns> A new <see cref="Models.TriageRecommendation"/> instance for mocking. </returns>
+        public static TriageRecommendation TriageRecommendation(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string reviewId = null, string title = null, PriorityName? priority = null, IEnumerable<string> appliesToSubscriptions = null, RecommendationStatusName? recommendationStatus = null, string updatedAt = null, string rejectReason = null, string potentialBenefits = null, string description = null, string notes = null)
+        {
+            appliesToSubscriptions ??= new List<string>();
+
+            return new TriageRecommendation(
+                id,
+                name,
+                resourceType,
+                systemData,
+                reviewId,
+                title,
+                priority,
+                appliesToSubscriptions?.ToList(),
+                recommendationStatus,
+                updatedAt,
+                rejectReason,
+                potentialBenefits,
+                description,
+                notes,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TriageResource"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="reviewId"> Unique identifier for the review resource this triageResource belongs to. </param>
+        /// <param name="recommendationId"> Unique identifier for the recommendation resource this triageResource belongs to. </param>
+        /// <param name="subscriptionId"> Unique identifier for the subscription resource this triageResource belongs to. </param>
+        /// <param name="resourceGroup"> Name of the resource group this triageResource belongs to. </param>
+        /// <param name="resourceId"> Full Azure resource id path of the resource this triageResource corresponds to. </param>
+        /// <param name="resourceName"> Name of the resource this triageResource corresponds to. </param>
+        /// <returns> A new <see cref="Models.TriageResource"/> instance for mocking. </returns>
+        public static TriageResource TriageResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string reviewId = null, string recommendationId = null, string subscriptionId = null, string resourceGroup = null, ResourceIdentifier resourceId = null, string resourceName = null)
+        {
+            return new TriageResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                reviewId,
+                recommendationId,
+                subscriptionId,
+                resourceGroup,
+                resourceId,
+                resourceName,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConfigData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="exclude"> Exclude the resource from Advisor evaluations. Valid values: False (default) or True. </param>
+        /// <param name="lowCpuThreshold"> Minimum percentage threshold for Advisor low CPU utilization evaluation. Valid only for subscriptions. Valid values: 5 (default), 10, 15 or 20. </param>
+        /// <param name="duration"> Minimum duration for Advisor low CPU utilization evaluation. Valid only for subscriptions. Valid values: 7 (default), 14, 21, 30, 60 or 90. </param>
+        /// <param name="digests"> Advisor digest configuration. Valid only for subscriptions. </param>
+        /// <returns> A new <see cref="Models.ConfigData"/> instance for mocking. </returns>
+        public static ConfigData ConfigData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? exclude = null, CpuThreshold? lowCpuThreshold = null, Duration? duration = null, IEnumerable<DigestConfig> digests = null)
+        {
+            digests ??= new List<DigestConfig>();
+
+            return new ConfigData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                exclude,
+                lowCpuThreshold,
+                duration,
+                digests?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AssessmentTypeResult"/>. </summary>
+        /// <param name="id"> Assessment Type Id. </param>
+        /// <param name="title"> Assessment Type Title. </param>
+        /// <param name="description"> Assessment Type Description. </param>
+        /// <param name="locale"> Assessment Type Locale. </param>
+        /// <param name="version"> Assessment Type Version. </param>
+        /// <returns> A new <see cref="Models.AssessmentTypeResult"/> instance for mocking. </returns>
+        public static AssessmentTypeResult AssessmentTypeResult(string id = null, string title = null, string description = null, string locale = null, string version = null)
+        {
+            return new AssessmentTypeResult(
+                id,
+                title,
+                description,
+                locale,
+                version,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.WorkloadResult"/>. </summary>
+        /// <param name="id"> Workload Id. </param>
+        /// <param name="name"> Workload Name. </param>
+        /// <param name="subscriptionId"> Subscription Id. </param>
+        /// <param name="subscriptionName"> Subscription Name. </param>
+        /// <returns> A new <see cref="Models.WorkloadResult"/> instance for mocking. </returns>
+        public static WorkloadResult WorkloadResult(string id = null, string name = null, string subscriptionId = null, string subscriptionName = null)
+        {
+            return new WorkloadResult(id, name, subscriptionId, subscriptionName, serializedAdditionalRawData: null);
         }
     }
 }

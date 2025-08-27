@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Advisor.Mocking
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     public partial class MockableAdvisorResourceGroupResource : ArmResource
     {
-        private ClientDiagnostics _configurationsClientDiagnostics;
-        private ConfigurationsRestOperations _configurationsRestClient;
+        private ClientDiagnostics _configurationsOperationGroupClientDiagnostics;
+        private ConfigurationsOperationGroupRestOperations _configurationsOperationGroupRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableAdvisorResourceGroupResource"/> class for mocking. </summary>
         protected MockableAdvisorResourceGroupResource()
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.Advisor.Mocking
         {
         }
 
-        private ClientDiagnostics ConfigurationsClientDiagnostics => _configurationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private ConfigurationsRestOperations ConfigurationsRestClient => _configurationsRestClient ??= new ConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ConfigurationsOperationGroupClientDiagnostics => _configurationsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Advisor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ConfigurationsOperationGroupRestOperations ConfigurationsOperationGroupRestClient => _configurationsOperationGroupRestClient ??= new ConfigurationsOperationGroupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -51,20 +51,21 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Configurations_ListByResourceGroup</description>
+        /// <description>ConfigurationsOperationGroup_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ConfigData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConfigData> GetConfigurationsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ConfigData> GetConfigurationsOperationGroupsByResourceGroupAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ConfigData.DeserializeConfigData(e), ConfigurationsClientDiagnostics, Pipeline, "MockableAdvisorResourceGroupResource.GetConfigurations", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationsOperationGroupRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfigurationsOperationGroupRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConfigData.DeserializeConfigData(e), ConfigurationsOperationGroupClientDiagnostics, Pipeline, "MockableAdvisorResourceGroupResource.GetConfigurationsOperationGroupsByResourceGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -76,20 +77,21 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Configurations_ListByResourceGroup</description>
+        /// <description>ConfigurationsOperationGroup_ListByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ConfigData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConfigData> GetConfigurations(CancellationToken cancellationToken = default)
+        public virtual Pageable<ConfigData> GetConfigurationsOperationGroupsByResourceGroup(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ConfigData.DeserializeConfigData(e), ConfigurationsClientDiagnostics, Pipeline, "MockableAdvisorResourceGroupResource.GetConfigurations", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationsOperationGroupRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfigurationsOperationGroupRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConfigData.DeserializeConfigData(e), ConfigurationsOperationGroupClientDiagnostics, Pipeline, "MockableAdvisorResourceGroupResource.GetConfigurationsOperationGroupsByResourceGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -101,11 +103,11 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Configurations_CreateInResourceGroup</description>
+        /// <description>ConfigurationsOperationGroup_CreateInResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -113,15 +115,15 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<ConfigData>> CreateConfigurationAsync(ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfigData>> CreateInResourceGroupConfigurationsOperationGroupAsync(ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = ConfigurationsClientDiagnostics.CreateScope("MockableAdvisorResourceGroupResource.CreateConfiguration");
+            using var scope = ConfigurationsOperationGroupClientDiagnostics.CreateScope("MockableAdvisorResourceGroupResource.CreateInResourceGroupConfigurationsOperationGroup");
             scope.Start();
             try
             {
-                var response = await ConfigurationsRestClient.CreateInResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, configurationName, data, cancellationToken).ConfigureAwait(false);
+                var response = await ConfigurationsOperationGroupRestClient.CreateInResourceGroupAsync(Id.SubscriptionId, configurationName, Id.ResourceGroupName, data, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -140,11 +142,11 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Configurations_CreateInResourceGroup</description>
+        /// <description>ConfigurationsOperationGroup_CreateInResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -152,15 +154,15 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<ConfigData> CreateConfiguration(ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
+        public virtual Response<ConfigData> CreateInResourceGroupConfigurationsOperationGroup(ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = ConfigurationsClientDiagnostics.CreateScope("MockableAdvisorResourceGroupResource.CreateConfiguration");
+            using var scope = ConfigurationsOperationGroupClientDiagnostics.CreateScope("MockableAdvisorResourceGroupResource.CreateInResourceGroupConfigurationsOperationGroup");
             scope.Start();
             try
             {
-                var response = ConfigurationsRestClient.CreateInResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, configurationName, data, cancellationToken);
+                var response = ConfigurationsOperationGroupRestClient.CreateInResourceGroup(Id.SubscriptionId, configurationName, Id.ResourceGroupName, data, cancellationToken);
                 return response;
             }
             catch (Exception e)

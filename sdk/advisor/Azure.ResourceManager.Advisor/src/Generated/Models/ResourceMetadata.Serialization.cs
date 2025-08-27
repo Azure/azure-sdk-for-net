@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Advisor.Models
             }
             string resourceId = default;
             string source = default;
-            IDictionary<string, BinaryData> action = default;
+            IReadOnlyDictionary<string, BinaryData> action = default;
             string singular = default;
             string plural = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;

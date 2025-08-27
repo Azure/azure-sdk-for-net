@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Advisor
     /// </summary>
     public partial class SuppressionContractCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _suppressionContractSuppressionsClientDiagnostics;
-        private readonly SuppressionsRestOperations _suppressionContractSuppressionsRestClient;
+        private readonly ClientDiagnostics _suppressionContractClientDiagnostics;
+        private readonly SuppressionContractsRestOperations _suppressionContractRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SuppressionContractCollection"/> class for mocking. </summary>
         protected SuppressionContractCollection()
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SuppressionContractCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _suppressionContractSuppressionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", SuppressionContractResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SuppressionContractResource.ResourceType, out string suppressionContractSuppressionsApiVersion);
-            _suppressionContractSuppressionsRestClient = new SuppressionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, suppressionContractSuppressionsApiVersion);
+            _suppressionContractClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", SuppressionContractResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(SuppressionContractResource.ResourceType, out string suppressionContractApiVersion);
+            _suppressionContractRestClient = new SuppressionContractsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, suppressionContractApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -57,11 +57,11 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Suppressions_Create</description>
+        /// <description>SuppressionContract_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -80,12 +80,12 @@ namespace Azure.ResourceManager.Advisor
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _suppressionContractSuppressionsClientDiagnostics.CreateScope("SuppressionContractCollection.CreateOrUpdate");
+            using var scope = _suppressionContractClientDiagnostics.CreateScope("SuppressionContractCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _suppressionContractSuppressionsRestClient.CreateAsync(Id.Parent, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _suppressionContractSuppressionsRestClient.CreateCreateRequestUri(Id.Parent, Id.Name, name, data);
+                var response = await _suppressionContractRestClient.CreateAsync(Id.Parent, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
+                var uri = _suppressionContractRestClient.CreateCreateRequestUri(Id.Parent, Id.Name, name, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new AdvisorArmOperation<SuppressionContractResource>(Response.FromValue(new SuppressionContractResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -108,11 +108,11 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Suppressions_Create</description>
+        /// <description>SuppressionContract_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -131,12 +131,12 @@ namespace Azure.ResourceManager.Advisor
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _suppressionContractSuppressionsClientDiagnostics.CreateScope("SuppressionContractCollection.CreateOrUpdate");
+            using var scope = _suppressionContractClientDiagnostics.CreateScope("SuppressionContractCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _suppressionContractSuppressionsRestClient.Create(Id.Parent, Id.Name, name, data, cancellationToken);
-                var uri = _suppressionContractSuppressionsRestClient.CreateCreateRequestUri(Id.Parent, Id.Name, name, data);
+                var response = _suppressionContractRestClient.Create(Id.Parent, Id.Name, name, data, cancellationToken);
+                var uri = _suppressionContractRestClient.CreateCreateRequestUri(Id.Parent, Id.Name, name, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new AdvisorArmOperation<SuppressionContractResource>(Response.FromValue(new SuppressionContractResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -159,11 +159,11 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Suppressions_Get</description>
+        /// <description>SuppressionContract_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -179,11 +179,11 @@ namespace Azure.ResourceManager.Advisor
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _suppressionContractSuppressionsClientDiagnostics.CreateScope("SuppressionContractCollection.Get");
+            using var scope = _suppressionContractClientDiagnostics.CreateScope("SuppressionContractCollection.Get");
             scope.Start();
             try
             {
-                var response = await _suppressionContractSuppressionsRestClient.GetAsync(Id.Parent, Id.Name, name, cancellationToken).ConfigureAwait(false);
+                var response = await _suppressionContractRestClient.GetAsync(Id.Parent, Id.Name, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SuppressionContractResource(Client, response.Value), response.GetRawResponse());
@@ -204,11 +204,11 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Suppressions_Get</description>
+        /// <description>SuppressionContract_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -224,11 +224,11 @@ namespace Azure.ResourceManager.Advisor
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _suppressionContractSuppressionsClientDiagnostics.CreateScope("SuppressionContractCollection.Get");
+            using var scope = _suppressionContractClientDiagnostics.CreateScope("SuppressionContractCollection.Get");
             scope.Start();
             try
             {
-                var response = _suppressionContractSuppressionsRestClient.Get(Id.Parent, Id.Name, name, cancellationToken);
+                var response = _suppressionContractRestClient.Get(Id.Parent, Id.Name, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SuppressionContractResource(Client, response.Value), response.GetRawResponse());
@@ -249,11 +249,11 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Suppressions_Get</description>
+        /// <description>SuppressionContract_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -269,11 +269,11 @@ namespace Azure.ResourceManager.Advisor
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _suppressionContractSuppressionsClientDiagnostics.CreateScope("SuppressionContractCollection.Exists");
+            using var scope = _suppressionContractClientDiagnostics.CreateScope("SuppressionContractCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _suppressionContractSuppressionsRestClient.GetAsync(Id.Parent, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _suppressionContractRestClient.GetAsync(Id.Parent, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -292,11 +292,11 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Suppressions_Get</description>
+        /// <description>SuppressionContract_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -312,11 +312,11 @@ namespace Azure.ResourceManager.Advisor
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _suppressionContractSuppressionsClientDiagnostics.CreateScope("SuppressionContractCollection.Exists");
+            using var scope = _suppressionContractClientDiagnostics.CreateScope("SuppressionContractCollection.Exists");
             scope.Start();
             try
             {
-                var response = _suppressionContractSuppressionsRestClient.Get(Id.Parent, Id.Name, name, cancellationToken: cancellationToken);
+                var response = _suppressionContractRestClient.Get(Id.Parent, Id.Name, name, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -335,11 +335,11 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Suppressions_Get</description>
+        /// <description>SuppressionContract_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -355,11 +355,11 @@ namespace Azure.ResourceManager.Advisor
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _suppressionContractSuppressionsClientDiagnostics.CreateScope("SuppressionContractCollection.GetIfExists");
+            using var scope = _suppressionContractClientDiagnostics.CreateScope("SuppressionContractCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _suppressionContractSuppressionsRestClient.GetAsync(Id.Parent, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _suppressionContractRestClient.GetAsync(Id.Parent, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<SuppressionContractResource>(response.GetRawResponse());
                 return Response.FromValue(new SuppressionContractResource(Client, response.Value), response.GetRawResponse());
@@ -380,11 +380,11 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Suppressions_Get</description>
+        /// <description>SuppressionContract_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -400,11 +400,11 @@ namespace Azure.ResourceManager.Advisor
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _suppressionContractSuppressionsClientDiagnostics.CreateScope("SuppressionContractCollection.GetIfExists");
+            using var scope = _suppressionContractClientDiagnostics.CreateScope("SuppressionContractCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _suppressionContractSuppressionsRestClient.Get(Id.Parent, Id.Name, name, cancellationToken: cancellationToken);
+                var response = _suppressionContractRestClient.Get(Id.Parent, Id.Name, name, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<SuppressionContractResource>(response.GetRawResponse());
                 return Response.FromValue(new SuppressionContractResource(Client, response.Value), response.GetRawResponse());

@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Advisor.Models
 {
-    /// <summary> The list of Advisor configurations. </summary>
+    /// <summary> Paged collection of ConfigData items. </summary>
     internal partial class ConfigurationListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Advisor.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ConfigurationListResult"/>. </summary>
-        internal ConfigurationListResult()
+        /// <param name="value"> The ConfigData items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ConfigurationListResult(IEnumerable<ConfigData> value)
         {
-            Value = new ChangeTrackingList<ConfigData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ConfigurationListResult"/>. </summary>
-        /// <param name="value"> The list of configurations. </param>
-        /// <param name="nextLink"> The link used to get the next page of configurations. </param>
+        /// <param name="value"> The ConfigData items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigurationListResult(IReadOnlyList<ConfigData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConfigurationListResult(IReadOnlyList<ConfigData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of configurations. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationListResult"/> for deserialization. </summary>
+        internal ConfigurationListResult()
+        {
+        }
+
+        /// <summary> The ConfigData items on this page. </summary>
         public IReadOnlyList<ConfigData> Value { get; }
-        /// <summary> The link used to get the next page of configurations. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

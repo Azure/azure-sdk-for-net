@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.Advisor.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ShortDescription"/>. </summary>
-        public ShortDescription()
+        internal ShortDescription()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ShortDescription"/>. </summary>
-        /// <param name="problem"> The issue or opportunity identified by the recommendation. </param>
-        /// <param name="solution"> The remediation action suggested by the recommendation. </param>
+        /// <param name="problem"> The issue or opportunity identified by the recommendation and proposed solution. </param>
+        /// <param name="solution"> The issue or opportunity identified by the recommendation and proposed solution. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ShortDescription(string problem, string solution, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.Advisor.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The issue or opportunity identified by the recommendation. </summary>
-        public string Problem { get; set; }
-        /// <summary> The remediation action suggested by the recommendation. </summary>
-        public string Solution { get; set; }
+        /// <summary> The issue or opportunity identified by the recommendation and proposed solution. </summary>
+        public string Problem { get; }
+        /// <summary> The issue or opportunity identified by the recommendation and proposed solution. </summary>
+        public string Solution { get; }
     }
 }

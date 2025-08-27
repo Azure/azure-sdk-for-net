@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Advisor
     /// </summary>
     public partial class ResourceRecommendationBaseCollection : ArmCollection, IEnumerable<ResourceRecommendationBaseResource>, IAsyncEnumerable<ResourceRecommendationBaseResource>
     {
-        private readonly ClientDiagnostics _resourceRecommendationBaseRecommendationsClientDiagnostics;
-        private readonly RecommendationsRestOperations _resourceRecommendationBaseRecommendationsRestClient;
+        private readonly ClientDiagnostics _resourceRecommendationBaseResourceRecommendationBasesClientDiagnostics;
+        private readonly ResourceRecommendationBasesRestOperations _resourceRecommendationBaseResourceRecommendationBasesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ResourceRecommendationBaseCollection"/> class for mocking. </summary>
         protected ResourceRecommendationBaseCollection()
@@ -36,9 +36,9 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ResourceRecommendationBaseCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _resourceRecommendationBaseRecommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", ResourceRecommendationBaseResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceRecommendationBaseResource.ResourceType, out string resourceRecommendationBaseRecommendationsApiVersion);
-            _resourceRecommendationBaseRecommendationsRestClient = new RecommendationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, resourceRecommendationBaseRecommendationsApiVersion);
+            _resourceRecommendationBaseResourceRecommendationBasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", ResourceRecommendationBaseResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceRecommendationBaseResource.ResourceType, out string resourceRecommendationBaseResourceRecommendationBasesApiVersion);
+            _resourceRecommendationBaseResourceRecommendationBasesRestClient = new ResourceRecommendationBasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, resourceRecommendationBaseResourceRecommendationBasesApiVersion);
         }
 
         /// <summary>
@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Recommendations_Get</description>
+        /// <description>ResourceRecommendationBase_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.Advisor
         {
             Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
 
-            using var scope = _resourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.Get");
+            using var scope = _resourceRecommendationBaseResourceRecommendationBasesClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.Get");
             scope.Start();
             try
             {
-                var response = await _resourceRecommendationBaseRecommendationsRestClient.GetAsync(Id, recommendationId, cancellationToken).ConfigureAwait(false);
+                var response = await _resourceRecommendationBaseResourceRecommendationBasesRestClient.GetAsync(Id, recommendationId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ResourceRecommendationBaseResource(Client, response.Value), response.GetRawResponse());
@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Recommendations_Get</description>
+        /// <description>ResourceRecommendationBase_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -115,11 +115,11 @@ namespace Azure.ResourceManager.Advisor
         {
             Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
 
-            using var scope = _resourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.Get");
+            using var scope = _resourceRecommendationBaseResourceRecommendationBasesClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.Get");
             scope.Start();
             try
             {
-                var response = _resourceRecommendationBaseRecommendationsRestClient.Get(Id, recommendationId, cancellationToken);
+                var response = _resourceRecommendationBaseResourceRecommendationBasesRestClient.Get(Id, recommendationId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ResourceRecommendationBaseResource(Client, response.Value), response.GetRawResponse());
@@ -136,15 +136,15 @@ namespace Azure.ResourceManager.Advisor
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/recommendations</description>
+        /// <description>/{resourceUri}/providers/Microsoft.Advisor/recommendations</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Recommendations_List</description>
+        /// <description>ResourceRecommendationBase_ListByTenant</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -159,9 +159,9 @@ namespace Azure.ResourceManager.Advisor
         /// <returns> An async collection of <see cref="ResourceRecommendationBaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceRecommendationBaseResource> GetAllAsync(string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceRecommendationBaseRecommendationsRestClient.CreateListRequest(Id.SubscriptionId, filter, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceRecommendationBaseRecommendationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, top, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceRecommendationBaseResource(Client, ResourceRecommendationBaseData.DeserializeResourceRecommendationBaseData(e)), _resourceRecommendationBaseRecommendationsClientDiagnostics, Pipeline, "ResourceRecommendationBaseCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceRecommendationBaseResourceRecommendationBasesRestClient.CreateListByTenantRequest(Id, filter, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceRecommendationBaseResourceRecommendationBasesRestClient.CreateListByTenantNextPageRequest(nextLink, Id, filter, top, skipToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ResourceRecommendationBaseResource(Client, ResourceRecommendationBaseData.DeserializeResourceRecommendationBaseData(e)), _resourceRecommendationBaseResourceRecommendationBasesClientDiagnostics, Pipeline, "ResourceRecommendationBaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,15 +169,15 @@ namespace Azure.ResourceManager.Advisor
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Advisor/recommendations</description>
+        /// <description>/{resourceUri}/providers/Microsoft.Advisor/recommendations</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Recommendations_List</description>
+        /// <description>ResourceRecommendationBase_ListByTenant</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -192,9 +192,9 @@ namespace Azure.ResourceManager.Advisor
         /// <returns> A collection of <see cref="ResourceRecommendationBaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceRecommendationBaseResource> GetAll(string filter = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceRecommendationBaseRecommendationsRestClient.CreateListRequest(Id.SubscriptionId, filter, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceRecommendationBaseRecommendationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, top, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceRecommendationBaseResource(Client, ResourceRecommendationBaseData.DeserializeResourceRecommendationBaseData(e)), _resourceRecommendationBaseRecommendationsClientDiagnostics, Pipeline, "ResourceRecommendationBaseCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceRecommendationBaseResourceRecommendationBasesRestClient.CreateListByTenantRequest(Id, filter, top, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceRecommendationBaseResourceRecommendationBasesRestClient.CreateListByTenantNextPageRequest(nextLink, Id, filter, top, skipToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ResourceRecommendationBaseResource(Client, ResourceRecommendationBaseData.DeserializeResourceRecommendationBaseData(e)), _resourceRecommendationBaseResourceRecommendationBasesClientDiagnostics, Pipeline, "ResourceRecommendationBaseCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -206,11 +206,11 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Recommendations_Get</description>
+        /// <description>ResourceRecommendationBase_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -226,11 +226,11 @@ namespace Azure.ResourceManager.Advisor
         {
             Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
 
-            using var scope = _resourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.Exists");
+            using var scope = _resourceRecommendationBaseResourceRecommendationBasesClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _resourceRecommendationBaseRecommendationsRestClient.GetAsync(Id, recommendationId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _resourceRecommendationBaseResourceRecommendationBasesRestClient.GetAsync(Id, recommendationId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -249,11 +249,11 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Recommendations_Get</description>
+        /// <description>ResourceRecommendationBase_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -269,11 +269,11 @@ namespace Azure.ResourceManager.Advisor
         {
             Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
 
-            using var scope = _resourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.Exists");
+            using var scope = _resourceRecommendationBaseResourceRecommendationBasesClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.Exists");
             scope.Start();
             try
             {
-                var response = _resourceRecommendationBaseRecommendationsRestClient.Get(Id, recommendationId, cancellationToken: cancellationToken);
+                var response = _resourceRecommendationBaseResourceRecommendationBasesRestClient.Get(Id, recommendationId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -292,11 +292,11 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Recommendations_Get</description>
+        /// <description>ResourceRecommendationBase_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -312,11 +312,11 @@ namespace Azure.ResourceManager.Advisor
         {
             Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
 
-            using var scope = _resourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.GetIfExists");
+            using var scope = _resourceRecommendationBaseResourceRecommendationBasesClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _resourceRecommendationBaseRecommendationsRestClient.GetAsync(Id, recommendationId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _resourceRecommendationBaseResourceRecommendationBasesRestClient.GetAsync(Id, recommendationId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<ResourceRecommendationBaseResource>(response.GetRawResponse());
                 return Response.FromValue(new ResourceRecommendationBaseResource(Client, response.Value), response.GetRawResponse());
@@ -337,11 +337,11 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Recommendations_Get</description>
+        /// <description>ResourceRecommendationBase_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-01-01</description>
+        /// <description>2025-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -357,11 +357,11 @@ namespace Azure.ResourceManager.Advisor
         {
             Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
 
-            using var scope = _resourceRecommendationBaseRecommendationsClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.GetIfExists");
+            using var scope = _resourceRecommendationBaseResourceRecommendationBasesClientDiagnostics.CreateScope("ResourceRecommendationBaseCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _resourceRecommendationBaseRecommendationsRestClient.Get(Id, recommendationId, cancellationToken: cancellationToken);
+                var response = _resourceRecommendationBaseResourceRecommendationBasesRestClient.Get(Id, recommendationId, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<ResourceRecommendationBaseResource>(response.GetRawResponse());
                 return Response.FromValue(new ResourceRecommendationBaseResource(Client, response.Value), response.GetRawResponse());

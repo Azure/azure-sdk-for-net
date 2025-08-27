@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.Advisor
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
+            if (Optional.IsDefined(Control))
+            {
+                writer.WritePropertyName("control"u8);
+                writer.WriteStringValue(Control.Value.ToString());
+            }
             if (Optional.IsDefined(Impact))
             {
                 writer.WritePropertyName("impact"u8);
@@ -228,6 +233,36 @@ namespace Azure.ResourceManager.Advisor
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(Tracked))
+            {
+                writer.WritePropertyName("tracked"u8);
+                writer.WriteBooleanValue(Tracked.Value);
+            }
+            if (Optional.IsDefined(TrackedProperties))
+            {
+                writer.WritePropertyName("trackedProperties"u8);
+                writer.WriteObjectValue(TrackedProperties, options);
+            }
+            if (Optional.IsDefined(Review))
+            {
+                writer.WritePropertyName("review"u8);
+                writer.WriteObjectValue(Review, options);
+            }
+            if (Optional.IsDefined(ResourceWorkload))
+            {
+                writer.WritePropertyName("resourceWorkload"u8);
+                writer.WriteObjectValue(ResourceWorkload, options);
+            }
+            if (Optional.IsDefined(SourceSystem))
+            {
+                writer.WritePropertyName("sourceSystem"u8);
+                writer.WriteStringValue(SourceSystem);
+            }
+            if (Optional.IsDefined(Notes))
+            {
+                writer.WritePropertyName("notes"u8);
+                writer.WriteStringValue(Notes);
+            }
             writer.WriteEndObject();
         }
 
@@ -256,24 +291,31 @@ namespace Azure.ResourceManager.Advisor
             ResourceType type = default;
             SystemData systemData = default;
             Category? category = default;
+            Control? control = default;
             Impact? impact = default;
             string impactedField = default;
             string impactedValue = default;
             DateTimeOffset? lastUpdated = default;
-            IDictionary<string, BinaryData> metadata = default;
+            IReadOnlyDictionary<string, BinaryData> metadata = default;
             string recommendationTypeId = default;
             Risk? risk = default;
             ShortDescription shortDescription = default;
-            IList<Guid> suppressionIds = default;
-            IDictionary<string, string> extendedProperties = default;
+            IReadOnlyList<Guid> suppressionIds = default;
+            IReadOnlyDictionary<string, string> extendedProperties = default;
             ResourceMetadata resourceMetadata = default;
             string description = default;
             string label = default;
             string learnMoreLink = default;
             string potentialBenefits = default;
-            IList<IDictionary<string, BinaryData>> actions = default;
-            IDictionary<string, BinaryData> remediation = default;
-            IDictionary<string, BinaryData> exposedMetadataProperties = default;
+            IReadOnlyList<IDictionary<string, BinaryData>> actions = default;
+            IReadOnlyDictionary<string, BinaryData> remediation = default;
+            IReadOnlyDictionary<string, BinaryData> exposedMetadataProperties = default;
+            bool? tracked = default;
+            TrackedRecommendationProperties trackedProperties = default;
+            RecommendationPropertiesReview review = default;
+            RecommendationPropertiesResourceWorkload resourceWorkload = default;
+            string sourceSystem = default;
+            string notes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -318,6 +360,15 @@ namespace Azure.ResourceManager.Advisor
                                 continue;
                             }
                             category = new Category(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("control"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            control = new Control(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("impact"u8))
@@ -524,6 +575,52 @@ namespace Azure.ResourceManager.Advisor
                             exposedMetadataProperties = dictionary;
                             continue;
                         }
+                        if (property0.NameEquals("tracked"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            tracked = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("trackedProperties"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            trackedProperties = TrackedRecommendationProperties.DeserializeTrackedRecommendationProperties(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("review"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            review = RecommendationPropertiesReview.DeserializeRecommendationPropertiesReview(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("resourceWorkload"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            resourceWorkload = RecommendationPropertiesResourceWorkload.DeserializeRecommendationPropertiesResourceWorkload(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("sourceSystem"u8))
+                        {
+                            sourceSystem = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("notes"u8))
+                        {
+                            notes = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -539,6 +636,7 @@ namespace Azure.ResourceManager.Advisor
                 type,
                 systemData,
                 category,
+                control,
                 impact,
                 impactedField,
                 impactedValue,
@@ -557,6 +655,12 @@ namespace Azure.ResourceManager.Advisor
                 actions ?? new ChangeTrackingList<IDictionary<string, BinaryData>>(),
                 remediation ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 exposedMetadataProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                tracked,
+                trackedProperties,
+                review,
+                resourceWorkload,
+                sourceSystem,
+                notes,
                 serializedAdditionalRawData);
         }
 

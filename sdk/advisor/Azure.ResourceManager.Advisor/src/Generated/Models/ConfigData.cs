@@ -60,12 +60,14 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="exclude"> Exclude the resource from Advisor evaluations. Valid values: False (default) or True. </param>
         /// <param name="lowCpuThreshold"> Minimum percentage threshold for Advisor low CPU utilization evaluation. Valid only for subscriptions. Valid values: 5 (default), 10, 15 or 20. </param>
+        /// <param name="duration"> Minimum duration for Advisor low CPU utilization evaluation. Valid only for subscriptions. Valid values: 7 (default), 14, 21, 30, 60 or 90. </param>
         /// <param name="digests"> Advisor digest configuration. Valid only for subscriptions. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? exclude, CpuThreshold? lowCpuThreshold, IList<DigestConfig> digests, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? exclude, CpuThreshold? lowCpuThreshold, Duration? duration, IList<DigestConfig> digests, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Exclude = exclude;
             LowCpuThreshold = lowCpuThreshold;
+            Duration = duration;
             Digests = digests;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -74,6 +76,8 @@ namespace Azure.ResourceManager.Advisor.Models
         public bool? Exclude { get; set; }
         /// <summary> Minimum percentage threshold for Advisor low CPU utilization evaluation. Valid only for subscriptions. Valid values: 5 (default), 10, 15 or 20. </summary>
         public CpuThreshold? LowCpuThreshold { get; set; }
+        /// <summary> Minimum duration for Advisor low CPU utilization evaluation. Valid only for subscriptions. Valid values: 7 (default), 14, 21, 30, 60 or 90. </summary>
+        public Duration? Duration { get; set; }
         /// <summary> Advisor digest configuration. Valid only for subscriptions. </summary>
         public IList<DigestConfig> Digests { get; }
     }

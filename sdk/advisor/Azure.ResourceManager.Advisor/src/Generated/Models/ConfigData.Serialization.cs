@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.Advisor.Models
                 writer.WritePropertyName("lowCpuThreshold"u8);
                 writer.WriteStringValue(LowCpuThreshold.Value.ToString());
             }
+            if (Optional.IsDefined(Duration))
+            {
+                writer.WritePropertyName("duration"u8);
+                writer.WriteStringValue(Duration.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(Digests))
             {
                 writer.WritePropertyName("digests"u8);
@@ -88,6 +93,7 @@ namespace Azure.ResourceManager.Advisor.Models
             SystemData systemData = default;
             bool? exclude = default;
             CpuThreshold? lowCpuThreshold = default;
+            Duration? duration = default;
             IList<DigestConfig> digests = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -144,6 +150,15 @@ namespace Azure.ResourceManager.Advisor.Models
                             lowCpuThreshold = new CpuThreshold(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("duration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            duration = new Duration(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("digests"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -174,6 +189,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 systemData,
                 exclude,
                 lowCpuThreshold,
+                duration,
                 digests ?? new ChangeTrackingList<DigestConfig>(),
                 serializedAdditionalRawData);
         }
