@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -47,19 +46,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrderAddressContactDetails"/>. </summary>
-        /// <param name="contactName"> Contact name of the person. </param>
-        /// <param name="phone"> Phone number of the contact person. </param>
-        /// <param name="emailList"> List of Email-ids to be notified about job progress. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="contactName"/>, <paramref name="phone"/> or <paramref name="emailList"/> is null. </exception>
-        public EdgeOrderAddressContactDetails(string contactName, string phone, IEnumerable<string> emailList)
+        public EdgeOrderAddressContactDetails()
         {
-            Argument.AssertNotNull(contactName, nameof(contactName));
-            Argument.AssertNotNull(phone, nameof(phone));
-            Argument.AssertNotNull(emailList, nameof(emailList));
-
-            ContactName = contactName;
-            Phone = phone;
-            EmailList = emailList.ToList();
+            EmailList = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrderAddressContactDetails"/>. </summary>
@@ -77,11 +66,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Mobile = mobile;
             EmailList = emailList;
             _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="EdgeOrderAddressContactDetails"/> for deserialization. </summary>
-        internal EdgeOrderAddressContactDetails()
-        {
         }
 
         /// <summary> Contact name of the person. </summary>

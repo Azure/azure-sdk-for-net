@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.EdgeOrder.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetEdgeOrderAddresses_ListAddressesAtSubscriptionLevel()
+        public async Task GetConfigurationsProductsAndConfigurations_ListConfigurations()
         {
-            // Generated from example definition: specification/edgeorder/resource-manager/Microsoft.EdgeOrder/stable/2021-12-01/examples/ListAddressesAtSubscriptionLevel.json
-            // this example is just showing the usage of "ListAddressesAtSubscriptionLevel" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-02-01/ListConfigurations.json
+            // this example is just showing the usage of "ProductsAndConfigurationsOperationGroup_ListConfigurations" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -32,18 +32,26 @@ namespace Azure.ResourceManager.EdgeOrder.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
+            string subscriptionId = "eb5dc900-6186-49d8-b7d7-febd866fdc1d";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (EdgeOrderAddressResource item in subscriptionResource.GetEdgeOrderAddressesAsync())
+            ConfigurationsContent content = new ConfigurationsContent
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                EdgeOrderAddressData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+                ConfigurationFilter = new ConfigurationFilter(new HierarchyInformation
+                {
+                    ProductFamilyName = "azurestackedge",
+                    ProductLineName = "azurestackedge",
+                    ProductName = "azurestackedgegpu",
+                })
+                {
+                    FilterableProperty = { new FilterableProperty(SupportedFilterType.ShipToCountries, new string[] { "US" }) },
+                },
+            };
+            await foreach (EdgeOrderConfiguration item in subscriptionResource.GetConfigurationsProductsAndConfigurationsAsync(content))
+            {
+                Console.WriteLine($"Succeeded: {item}");
             }
 
             Console.WriteLine("Succeeded");
@@ -51,10 +59,10 @@ namespace Azure.ResourceManager.EdgeOrder.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetProductFamilies_ListProductFamilies()
+        public async Task GetProductFamiliesProductsAndConfigurations_ListProductFamilies()
         {
-            // Generated from example definition: specification/edgeorder/resource-manager/Microsoft.EdgeOrder/stable/2021-12-01/examples/ListProductFamilies.json
-            // this example is just showing the usage of "ListProductFamilies" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-02-01/ListProductFamilies.json
+            // this example is just showing the usage of "ProductsAndConfigurationsOperationGroup_ListProductFamilies" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -63,7 +71,7 @@ namespace Azure.ResourceManager.EdgeOrder.Samples
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
+            string subscriptionId = "eb5dc900-6186-49d8-b7d7-febd866fdc1d";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -75,7 +83,7 @@ namespace Azure.ResourceManager.EdgeOrder.Samples
 new FilterableProperty(SupportedFilterType.ShipToCountries, new string[]{"US"})
             }
             });
-            await foreach (ProductFamily item in subscriptionResource.GetProductFamiliesAsync(content))
+            await foreach (EdgeOrderProductFamily item in subscriptionResource.GetProductFamiliesProductsAndConfigurationsAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -85,10 +93,10 @@ new FilterableProperty(SupportedFilterType.ShipToCountries, new string[]{"US"})
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetConfigurations_ListConfigurations()
+        public async Task GetProductFamiliesMetadataProductsAndConfigurations_ListProductFamiliesMetadata()
         {
-            // Generated from example definition: specification/edgeorder/resource-manager/Microsoft.EdgeOrder/stable/2021-12-01/examples/ListConfigurations.json
-            // this example is just showing the usage of "ListConfigurations" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-02-01/ListProductFamiliesMetadata.json
+            // this example is just showing the usage of "ProductsAndConfigurationsOperationGroup_ListProductFamiliesMetadata" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -97,51 +105,12 @@ new FilterableProperty(SupportedFilterType.ShipToCountries, new string[]{"US"})
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
+            string subscriptionId = "eb5dc900-6186-49d8-b7d7-febd866fdc1d";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            ConfigurationsContent content = new ConfigurationsContent(new ConfigurationFilters[]
-            {
-new ConfigurationFilters(new HierarchyInformation
-{
-ProductFamilyName = "AzureStackEdge",
-ProductLineName = "AzureStackEdge",
-ProductName = "AzureStackEdgeGPU",
-})
-{
-FilterableProperty = {new FilterableProperty(SupportedFilterType.ShipToCountries, new string[]{"US"})},
-}
-            });
-            await foreach (ProductConfiguration item in subscriptionResource.GetConfigurationsAsync(content))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetProductFamiliesMetadata_ListProductFamiliesMetadata()
-        {
-            // Generated from example definition: specification/edgeorder/resource-manager/Microsoft.EdgeOrder/stable/2021-12-01/examples/ListProductFamiliesMetadata.json
-            // this example is just showing the usage of "ListProductFamiliesMetadata" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (ProductFamiliesMetadata item in subscriptionResource.GetProductFamiliesMetadataAsync())
+            await foreach (ProductFamiliesMetadataDetails item in subscriptionResource.GetProductFamiliesMetadataProductsAndConfigurationsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -153,8 +122,8 @@ FilterableProperty = {new FilterableProperty(SupportedFilterType.ShipToCountries
         [Ignore("Only validating compilation of examples")]
         public async Task GetEdgeOrders_ListOrderAtSubscriptionLevel()
         {
-            // Generated from example definition: specification/edgeorder/resource-manager/Microsoft.EdgeOrder/stable/2021-12-01/examples/ListOrderAtSubscriptionLevel.json
-            // this example is just showing the usage of "ListOrderAtSubscriptionLevel" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-02-01/ListOrderAtSubscriptionLevel.json
+            // this example is just showing the usage of "OrdersOperationGroup_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -163,7 +132,7 @@ FilterableProperty = {new FilterableProperty(SupportedFilterType.ShipToCountries
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
+            string subscriptionId = "eb5dc900-6186-49d8-b7d7-febd866fdc1d";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
@@ -173,37 +142,6 @@ FilterableProperty = {new FilterableProperty(SupportedFilterType.ShipToCountries
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
                 EdgeOrderData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetEdgeOrderItems_ListOrderItemsAtSubscriptionLevel()
-        {
-            // Generated from example definition: specification/edgeorder/resource-manager/Microsoft.EdgeOrder/stable/2021-12-01/examples/ListOrderItemsAtSubscriptionLevel.json
-            // this example is just showing the usage of "ListOrderItemsAtSubscriptionLevel" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "fa68082f-8ff7-4a25-95c7-ce9da541242f";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (EdgeOrderItemResource item in subscriptionResource.GetEdgeOrderItemsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                EdgeOrderItemData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

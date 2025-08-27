@@ -34,13 +34,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 throw new FormatException($"The model {nameof(ConfigurationsContent)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("configurationFilters"u8);
-            writer.WriteStartArray();
-            foreach (var item in ConfigurationFilters)
+            if (Optional.IsDefined(ConfigurationFilter))
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("configurationFilter"u8);
+                writer.WriteObjectValue(ConfigurationFilter, options);
             }
-            writer.WriteEndArray();
             if (Optional.IsDefined(CustomerSubscriptionDetails))
             {
                 writer.WritePropertyName("customerSubscriptionDetails"u8);
@@ -83,20 +81,19 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 return null;
             }
-            IList<ConfigurationFilters> configurationFilters = default;
+            ConfigurationFilter configurationFilter = default;
             CustomerSubscriptionDetails customerSubscriptionDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("configurationFilters"u8))
+                if (property.NameEquals("configurationFilter"u8))
                 {
-                    List<ConfigurationFilters> array = new List<ConfigurationFilters>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        array.Add(Models.ConfigurationFilters.DeserializeConfigurationFilters(item, options));
+                        continue;
                     }
-                    configurationFilters = array;
+                    configurationFilter = ConfigurationFilter.DeserializeConfigurationFilter(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("customerSubscriptionDetails"u8))
@@ -114,7 +111,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConfigurationsContent(configurationFilters, customerSubscriptionDetails, serializedAdditionalRawData);
+            return new ConfigurationsContent(configurationFilter, customerSubscriptionDetails, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigurationsContent>.Write(ModelReaderWriterOptions options)
