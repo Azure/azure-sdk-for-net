@@ -6437,7 +6437,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeGetPathsOptions options = new DataLakeGetPathsOptions
             {
                 Recursive = true,
-                BeginFrom = "foo"
+                StartFrom = "foo"
             };
 
             // Act
