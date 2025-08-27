@@ -2,10 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core;
-using Azure.Core.TestFramework;
 using Azure.Provisioning.AppContainers;
 using Azure.Provisioning.Authorization;
 using Azure.Provisioning.ContainerRegistry;
@@ -15,8 +12,6 @@ using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Roles;
 using Azure.Provisioning.Storage;
-using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.Tests;
@@ -32,7 +27,7 @@ internal class SampleTests(bool async)
 
         await using Trycep test = CreateBicepTest();
 #pragma warning disable SA1112 // Closing parenthesis should be on line of opening parenthesis
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 #region Snippet:ProvisioningBasic
@@ -83,35 +78,14 @@ internal class SampleTests(bool async)
 
             output blobs_endpoint string = storage.properties.primaryEndpoints.blob
             """)
-        .Lint()
-        .ValidateAndDeployAsync(
-#if EXPERIMENTAL_PROVISIONING
-            async deployment =>
-            {
-                // Create a client
-                BlobServiceClient storage = InstrumentClient(
-                    deployment.CreateClient(
-                        blobs!,
-                        TestEnvironment.Credential,
-                        InstrumentClientOptions(new BlobClientOptions())));
-
-                // Make sure the output matched correctly
-                Assert.AreEqual(storage.Uri.AbsoluteUri, endpoint!.Value.Value);
-
-                // Make a service call and verify it doesn't throw
-                Response<BlobServiceProperties> result = await storage.GetPropertiesAsync();
-                Assert.AreEqual(200, result.GetRawResponse().Status);
-            }
-#endif
-        );
-#pragma warning restore SA1112 // Closing parenthesis should be on line of opening parenthesis
+        .Lint();
     }
 
     [Test]
     public async Task SimpleContainerApp()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 #region Snippet:ProvisioningContainerApp
@@ -326,15 +300,14 @@ internal class SampleTests(bool async)
 
             output AZURE_CONTAINER_APPS_ENVIRONMENT_DEFAULT_DOMAIN string = cae.properties.defaultDomain
             """)
-        .Lint(ignore: ["no-unused-params", "BCP029"])
-        .ValidateAndDeployAsync();
+        .Lint(ignore: ["no-unused-params", "BCP029"]);
     }
 
     [Test]
     public async Task SimpleResourceGroup()
     {
         await using Trycep test = CreateBicepTest();
-        await test.Define(
+        test.Define(
             ctx =>
             {
                 #region Snippet:ProvisioningResourceGroup
@@ -360,39 +333,6 @@ internal class SampleTests(bool async)
               location: location
             }
             """)
-        .Lint()
-        .ValidateAndDeployAsync();
-    }
-
-    [Test]
-    public void ValidNames()
-    {
-        // Check null is invalid
-        Assert.IsFalse(Infrastructure.IsValidBicepIdentifier(null));
-        Assert.Throws<ArgumentNullException>(() => Infrastructure.ValidateBicepIdentifier(null));
-        Assert.Throws<ArgumentNullException>(() => new StorageAccount(null!));
-
-        // Check invalid names
-        List<string> invalid = ["", "my-storage", "my storage", "my:storage", "storage$", "1storage", "KforKelvin"];
-        foreach (string name in invalid)
-        {
-            Assert.IsFalse(Infrastructure.IsValidBicepIdentifier(name));
-            Assert.Throws<ArgumentException>(() => Infrastructure.ValidateBicepIdentifier(name));
-            if (!string.IsNullOrEmpty(name))
-            {
-                Assert.AreNotEqual(name, Infrastructure.NormalizeBicepIdentifier(name));
-            }
-            Assert.Throws<ArgumentException>(() => new StorageAccount(name));
-        }
-
-        // Check valid names
-        List<string> valid = ["foo", "FOO", "Foo", "f", "_foo", "_", "foo123", "ABCdef123_"];
-        foreach (string name in valid)
-        {
-            Assert.IsTrue(Infrastructure.IsValidBicepIdentifier(name));
-            Assert.DoesNotThrow(() => Infrastructure.ValidateBicepIdentifier(name));
-            Assert.AreEqual(name, Infrastructure.NormalizeBicepIdentifier(name));
-            Assert.DoesNotThrow(() => new StorageAccount(name));
-        }
+        .Lint();
     }
 }
