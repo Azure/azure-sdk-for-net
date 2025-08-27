@@ -16,8 +16,6 @@ using Azure.AI.Projects.Tests.Utils;
 
 namespace Azure.AI.Projects.Tests;
 
-// TODO: may not be able to record because Agents uses Azure.Core and not System.ClientModel
-
 public class AIAgentsTest : ProjectsClientTestBase
 {
     public AIAgentsTest(bool isAsync) : base(isAsync) //, RecordedTestMode.Record)

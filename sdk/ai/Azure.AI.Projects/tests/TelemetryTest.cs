@@ -38,9 +38,7 @@ namespace Azure.AI.Projects.Tests
             Console.WriteLine($"Connection string: {connectionString}");
 
             // Check test mode to determine expected format
-            string testMode = Environment.GetEnvironmentVariable("AZURE_TEST_MODE");
-
-            if (!string.IsNullOrEmpty(testMode) && testMode.Equals("Playback", StringComparison.OrdinalIgnoreCase))
+            if (Mode == RecordedTestMode.Playback)
             {
                 // In playback mode, the connection string should be sanitized
                 Assert.AreEqual("Sanitized", connectionString, "In playback mode, the connection string should be 'Sanitized'.");
@@ -48,7 +46,7 @@ namespace Azure.AI.Projects.Tests
             else
             {
                 // In record or live mode, the connection string should match the expected format
-                Assert.True(TestBase.RegexAppInsightsConnectionString.IsMatch(connectionString), "The connection string should match the expected format.");
+                ValidateAppInsightsConnectionString(connectionString);
             }
 
             Assert.AreEqual(connectionString, projectClient.Telemetry.GetApplicationInsightsConnectionString(),

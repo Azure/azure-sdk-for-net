@@ -42,7 +42,7 @@ namespace Azure.AI.Projects.Tests
             }
         }
 
-        public void SearchIndexesTestSync(AIProjectClient projectClient, string indexName, string indexVersion, string aiSearchConnectionName, string aiSearchIndexName)
+        private void SearchIndexesTestSync(AIProjectClient projectClient, string indexName, string indexVersion, string aiSearchConnectionName, string aiSearchIndexName)
         {
             BinaryContent content = BinaryContent.Create(BinaryData.FromObjectAsJson(new
             {
@@ -59,7 +59,7 @@ namespace Azure.AI.Projects.Tests
                 version: indexVersion,
                 content: content
             );
-            TestBase.ValidateIndex(
+            ValidateIndex(
                 index,
                 expectedIndexType: "AzureSearch",
                 expectedIndexName: indexName,
@@ -70,7 +70,7 @@ namespace Azure.AI.Projects.Tests
 
             Console.WriteLine($"Get an existing Index named `{indexName}`, version `{indexVersion}`:");
             SearchIndex retrievedIndex = projectClient.Indexes.GetIndex(name: indexName, version: indexVersion);
-            TestBase.ValidateIndex(
+            ValidateIndex(
                 retrievedIndex,
                 expectedIndexType: "AzureSearch",
                 expectedIndexName: indexName,
@@ -84,7 +84,7 @@ namespace Azure.AI.Projects.Tests
             foreach (SearchIndex version in projectClient.Indexes.GetIndexVersions(name: indexName))
             {
                 isEmpty = false;
-                TestBase.ValidateIndex(version);
+                ValidateIndex(version);
             }
             Assert.IsFalse(isEmpty, "Expected at least one version of the Index to be returned.");
 
@@ -93,7 +93,7 @@ namespace Azure.AI.Projects.Tests
             foreach (SearchIndex version in projectClient.Indexes.GetIndexes())
             {
                 isEmpty = false;
-                TestBase.ValidateIndex(version);
+                ValidateIndex(version);
                 Console.WriteLine($"Index name: {version.Name}, index version: {version.Version}");
             }
             Assert.IsFalse(isEmpty, "Expected at least one Index to be returned.");
@@ -115,7 +115,7 @@ namespace Azure.AI.Projects.Tests
             }
         }
 
-        public async Task SearchIndexesTestAsync(AIProjectClient projectClient, string indexName,string indexVersion, string aiSearchConnectionName, string aiSearchIndexName)
+        private async Task SearchIndexesTestAsync(AIProjectClient projectClient, string indexName,string indexVersion, string aiSearchConnectionName, string aiSearchIndexName)
         {
             BinaryContent content = BinaryContent.Create(BinaryData.FromObjectAsJson(new
             {
@@ -132,7 +132,7 @@ namespace Azure.AI.Projects.Tests
                 version: indexVersion,
                 content: content
             );
-            TestBase.ValidateIndex(
+            ValidateIndex(
                 index,
                 expectedIndexType: "AzureSearch",
                 expectedIndexName: indexName,
@@ -143,7 +143,7 @@ namespace Azure.AI.Projects.Tests
 
             Console.WriteLine($"Get an existing Index named `{indexName}`, version `{indexVersion}`:");
             SearchIndex retrievedIndex = await projectClient.Indexes.GetIndexAsync(name: indexName, version: indexVersion);
-            TestBase.ValidateIndex(
+            ValidateIndex(
                 retrievedIndex,
                 expectedIndexType: "AzureSearch",
                 expectedIndexName: indexName,
@@ -157,7 +157,7 @@ namespace Azure.AI.Projects.Tests
             await foreach (SearchIndex version in projectClient.Indexes.GetIndexVersionsAsync(name: indexName))
             {
                 isEmpty = false;
-                TestBase.ValidateIndex(version);
+                ValidateIndex(version);
             }
             Assert.IsFalse(isEmpty, "Expected at least one version of the Index to be returned.");
 
@@ -166,7 +166,7 @@ namespace Azure.AI.Projects.Tests
             await foreach (SearchIndex version in projectClient.Indexes.GetIndexesAsync())
             {
                 isEmpty = false;
-                TestBase.ValidateIndex(version);
+                ValidateIndex(version);
                 Console.WriteLine($"Index name: {version.Name}, index version: {version.Version}");
             }
             Assert.IsFalse(isEmpty, "Expected at least one Index to be returned.");

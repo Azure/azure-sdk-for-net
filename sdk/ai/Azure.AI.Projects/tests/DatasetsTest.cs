@@ -18,7 +18,6 @@ using Azure.AI.Projects.Tests.Utils;
 
 namespace Azure.AI.Projects.Tests
 {
-    // TODO: all tests as async by default
     public class DatasetsTest : ProjectsClientTestBase
     {
         public DatasetsTest(bool isAsync) : base(isAsync)
@@ -47,7 +46,7 @@ namespace Azure.AI.Projects.Tests
             }
         }
 
-        public void DatasetsFileTestSync(AIProjectClient projectClient, string datasetName, string connectionName, string filePath, string datasetVersion)
+        private void DatasetsFileTestSync(AIProjectClient projectClient, string datasetName, string connectionName, string filePath, string datasetVersion)
         {
             Console.WriteLine($"Uploading a single file to create Dataset with name {datasetName} and version {datasetVersion}:");
             FileDatasetVersion fileDataset = projectClient.Datasets.UploadFile(
@@ -56,7 +55,7 @@ namespace Azure.AI.Projects.Tests
                 filePath: filePath,
                 connectionName: connectionName
                 );
-            TestBase.ValidateDataset(
+            ValidateDataset(
                 fileDataset,
                 expectedDatasetType: "FileDatasetVersion",
                 expectedDatasetName: datasetName,
@@ -66,7 +65,7 @@ namespace Azure.AI.Projects.Tests
 
             Console.WriteLine($"Retrieving Dataset version {datasetVersion}:");
             DatasetVersion dataset = projectClient.Datasets.GetDataset(datasetName, datasetVersion);
-            TestBase.ValidateDataset(
+            ValidateDataset(
                 dataset,
                 expectedDatasetType: "FileDatasetVersion",
                 expectedDatasetName: datasetName,
@@ -81,7 +80,7 @@ namespace Azure.AI.Projects.Tests
                 filePath: filePath,
                 connectionName: connectionName
                 );
-            TestBase.ValidateDataset(
+            ValidateDataset(
                 fileDataset,
                 expectedDatasetType: "FileDatasetVersion",
                 expectedDatasetName: datasetName,
@@ -91,18 +90,18 @@ namespace Azure.AI.Projects.Tests
 
             Console.WriteLine($"Retrieving credentials of Dataset {datasetName} version {datasetVersion}:");
             DatasetCredential credentials = projectClient.Datasets.GetCredentials(datasetName, datasetVersion);
-            TestBase.ValidateAssetCredential(credentials);
+            ValidateAssetCredential(credentials);
 
             Console.WriteLine($"Listing all versions for Dataset '{datasetName}':");
             foreach (DatasetVersion ds in projectClient.Datasets.GetDatasetVersions(datasetName))
             {
-                TestBase.ValidateDataset(ds, expectedDatasetName: datasetName);
+                ValidateDataset(ds, expectedDatasetName: datasetName);
             }
 
             Console.WriteLine($"Listing latest versions for all datasets:");
             foreach (DatasetVersion ds in projectClient.Datasets.GetDatasets())
             {
-                TestBase.ValidateDataset(ds);
+                ValidateDataset(ds);
             }
 
             Console.WriteLine($"Deleting Dataset versions {datasetVersion} and {datasetVersion + 1}:");
@@ -126,7 +125,7 @@ namespace Azure.AI.Projects.Tests
             Assert.IsTrue(exceptionThrown, "Expected an exception when retrieving a deleted dataset version.");
         }
 
-        public async Task DatasetsFileTestAsync(AIProjectClient projectClient, string datasetName, string connectionName, string filePath, string datasetVersion)
+        private async Task DatasetsFileTestAsync(AIProjectClient projectClient, string datasetName, string connectionName, string filePath, string datasetVersion)
         {
             Console.WriteLine($"Uploading a single file to create Dataset with name {datasetName} and version {datasetVersion}:");
             FileDatasetVersion fileDataset = await projectClient.Datasets.UploadFileAsync(
@@ -135,7 +134,7 @@ namespace Azure.AI.Projects.Tests
                 filePath: filePath,
                 connectionName: connectionName
                 );
-            TestBase.ValidateDataset(
+            ValidateDataset(
                 fileDataset,
                 expectedDatasetType: "FileDatasetVersion",
                 expectedDatasetName: datasetName,
@@ -145,7 +144,7 @@ namespace Azure.AI.Projects.Tests
 
             Console.WriteLine($"Retrieving Dataset version {datasetVersion}:");
             DatasetVersion dataset = await projectClient.Datasets.GetDatasetAsync(datasetName, datasetVersion);
-            TestBase.ValidateDataset(
+            ValidateDataset(
                 dataset,
                 expectedDatasetType: "FileDatasetVersion",
                 expectedDatasetName: datasetName,
@@ -160,7 +159,7 @@ namespace Azure.AI.Projects.Tests
                 filePath: filePath,
                 connectionName: connectionName
                 );
-            TestBase.ValidateDataset(
+            ValidateDataset(
                 fileDataset,
                 expectedDatasetType: "FileDatasetVersion",
                 expectedDatasetName: datasetName,
@@ -170,18 +169,18 @@ namespace Azure.AI.Projects.Tests
 
             Console.WriteLine($"Retrieving credentials of Dataset {datasetName} version {datasetVersion}:");
             DatasetCredential credentials = await projectClient.Datasets.GetCredentialsAsync(datasetName, datasetVersion);
-            TestBase.ValidateAssetCredential(credentials);
+            ValidateAssetCredential(credentials);
 
             Console.WriteLine($"Listing all versions for Dataset '{datasetName}':");
             await foreach (DatasetVersion ds in projectClient.Datasets.GetDatasetVersionsAsync(datasetName))
             {
-                TestBase.ValidateDataset(ds, expectedDatasetName: datasetName);
+                ValidateDataset(ds, expectedDatasetName: datasetName);
             }
 
             Console.WriteLine($"Listing latest versions for all datasets:");
             await foreach (DatasetVersion ds in projectClient.Datasets.GetDatasetsAsync())
             {
-                TestBase.ValidateDataset(ds);
+                ValidateDataset(ds);
             }
 
             Console.WriteLine($"Deleting Dataset versions {datasetVersion} and {datasetVersion + 1}:");

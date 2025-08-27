@@ -39,40 +39,40 @@ public class DeploymentTest : ProjectsClientTestBase
         }
     }
 
-    public void DeploymentTestSync(AIProjectClient projectClient, string modelDeploymentName, string modelPublisher)
+    private void DeploymentTestSync(AIProjectClient projectClient, string modelDeploymentName, string modelPublisher)
     {
         Console.WriteLine("List all deployments:");
         foreach (AssetDeployment deployment in projectClient.Deployments.GetDeployments())
         {
-            Console.WriteLine(deployment);
+            ValidateDeployment(deployment);
         }
 
         Console.WriteLine($"List all deployments by the model publisher `{modelPublisher}`:");
         foreach (AssetDeployment deployment in projectClient.Deployments.GetDeployments(modelPublisher: modelPublisher))
         {
-            Console.WriteLine(deployment);
+            ValidateDeployment(deployment);
         }
 
         Console.WriteLine($"Get a single model deployment named `{modelDeploymentName}`:");
         ModelDeployment deploymentDetails = (ModelDeployment) projectClient.Deployments.GetDeployment(modelDeploymentName);
-        Console.WriteLine(deploymentDetails);
+        ValidateDeployment(deploymentDetails);
     }
-    public async Task DeploymentTestAsync(AIProjectClient projectClient, string modelDeploymentName, string modelPublisher)
+    private async Task DeploymentTestAsync(AIProjectClient projectClient, string modelDeploymentName, string modelPublisher)
     {
         Console.WriteLine("List all deployments:");
         await foreach (AssetDeployment deployment in projectClient.Deployments.GetDeploymentsAsync())
         {
-            Console.WriteLine(deployment);
+            ValidateDeployment(deployment);
         }
 
         Console.WriteLine($"List all deployments by the model publisher `{modelPublisher}`:");
         await foreach (AssetDeployment deployment in projectClient.Deployments.GetDeploymentsAsync(modelPublisher: modelPublisher))
         {
-            Console.WriteLine(deployment);
+            ValidateDeployment(deployment);
         }
 
         Console.WriteLine($"Get a single model deployment named `{modelDeploymentName}`:");
         ModelDeployment deploymentDetails = (ModelDeployment) await projectClient.Deployments.GetDeploymentAsync(modelDeploymentName);
-        Console.WriteLine(deploymentDetails);
+        ValidateDeployment(deploymentDetails);
     }
 }

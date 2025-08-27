@@ -10,6 +10,8 @@ using Azure.Core.TestFramework;
 
 namespace Azure.AI.Projects.Tests.Utils
 {
+    /// Note: This class is for testing purposes only and should not be used in production code.
+    /// It will be replaced when the SCM testing framework is released.
     /// <summary>
     /// A proxy transport that bridges System.ClientModel's PipelineTransport with Azure.Core's test proxy infrastructure.
     /// This allows Azure.AI.Projects (which uses System.ClientModel) to work with the existing Azure SDK test proxy.
