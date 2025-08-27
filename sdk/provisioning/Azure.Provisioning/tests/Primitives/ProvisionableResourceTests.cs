@@ -20,16 +20,16 @@ namespace Azure.Provisioning.Tests.Primitives
                     Infrastructure infra = new();
 
                     // Create our comprehensive test resource with various property types
-                    var testResource = new TestResource("testResource")
+                    var storageAccount = new StorageAccount("storageAccount")
                     {
                         // Test basic string property
-                        Name = "test-name",
+                        Name = "test-storage",
 
                         // Test location property
                         Location = AzureLocation.WestUS2,
 
                         // Test enum property
-                        TestKind = TestResourceKind.Standard,
+                        StorageTier = StorageTier.Standard,
 
                         // Test boolean properties
                         IsEnabled = true,
@@ -39,11 +39,11 @@ namespace Azure.Provisioning.Tests.Primitives
                         MaxConnections = 100,
 
                         // Test complex object property
-                        Configuration = new TestConfiguration
+                        StorageConfiguration = new StorageConfiguration
                         {
-                            Timeout = 30,
-                            RetryCount = 3,
-                            IsSecure = true
+                            BackupRetentionDays = 30,
+                            MaxRetryAttempts = 3,
+                            EnableEncryption = true
                         },
 
                         // Test dictionary property
@@ -54,21 +54,21 @@ namespace Azure.Provisioning.Tests.Primitives
                         },
 
                         // Test list property
-                        AllowedIPs = ["192.168.1.0/24", "10.0.0.0/8"],
+                        AllowedSubnets = ["192.168.1.0/24", "10.0.0.0/8"],
 
                         // Test list of models property
-                        NetworkRules =
+                        AccessRules =
                         [
-                            new NetworkRule
+                            new AccessRule
                             {
-                                Name = "allow-web",
+                                RuleName = "allow-web",
                                 Protocol = NetworkProtocol.Https,
                                 Port = 443,
                                 IsEnabled = true
                             },
-                            new NetworkRule
+                            new AccessRule
                             {
-                                Name = "allow-ssh",
+                                RuleName = "allow-ssh",
                                 Protocol = NetworkProtocol.Tcp,
                                 Port = 22,
                                 IsEnabled = false
@@ -76,37 +76,37 @@ namespace Azure.Provisioning.Tests.Primitives
                         ]
                     };
 
-                    infra.Add(testResource);
+                    infra.Add(storageAccount);
                     return infra;
                 })
                 .Compare(
                     """
-                    resource testResource 'Test.Provider/testResources@2024-01-01' = {
-                      name: 'test-name'
+                    resource storageAccount 'Test.Provider/storageAccounts@2024-01-01' = {
+                      name: 'test-storage'
                       location: 'westus2'
                       properties: {
-                        kind: 'Standard'
+                        tier: 'Standard'
                         isEnabled: true
                         allowPublicAccess: false
                         maxConnections: 100
-                        configuration: {
-                          timeout: 30
-                          retryCount: 3
-                          isSecure: true
+                        storageConfiguration: {
+                          backupRetentionDays: 30
+                          maxRetryAttempts: 3
+                          enableEncryption: true
                         }
-                        allowedIPs: [
+                        allowedSubnets: [
                           '192.168.1.0/24'
                           '10.0.0.0/8'
                         ]
-                        networkRules: [
+                        accessRules: [
                           {
-                            name: 'allow-web'
+                            ruleName: 'allow-web'
                             protocol: 'Https'
                             port: 443
                             isEnabled: true
                           }
                           {
-                            name: 'allow-ssh'
+                            ruleName: 'allow-ssh'
                             protocol: 'Tcp'
                             port: 22
                             isEnabled: false
@@ -131,7 +131,7 @@ namespace Azure.Provisioning.Tests.Primitives
                 {
                     Infrastructure infra = new();
 
-                    // Create a ComputeResource that references different TestResource instances
+                    // Create a ComputeResource that references different StorageAccount instances
                     var computeResource = new ComputeResource("computeResource")
                     {
                         Name = "test-compute",
@@ -141,24 +141,24 @@ namespace Azure.Provisioning.Tests.Primitives
                         MemoryGB = 16,
 
                         // Reference to another resource - inline definition
-                        StorageAccount = new TestResource("storageResource1")
+                        PrimaryStorage = new StorageAccount("primaryStorage")
                         {
-                            Name = "test-storage-1",
+                            Name = "primary-storage",
                             Location = AzureLocation.EastUS,
-                            TestKind = TestResourceKind.Premium,
+                            StorageTier = StorageTier.Premium,
                             IsEnabled = true,
                             AllowPublicAccess = false,
                             MaxConnections = 200
                         },
 
                         // List of resource references - inline definitions
-                        DependentResources =
+                        AdditionalStorages =
                         [
-                            new TestResource("storageResource2")
+                            new StorageAccount("additionalStorage")
                             {
-                                Name = "test-storage-2",
+                                Name = "additional-storage",
                                 Location = AzureLocation.EastUS,
-                                TestKind = TestResourceKind.Standard,
+                                StorageTier = StorageTier.Standard,
                                 IsEnabled = true,
                                 AllowPublicAccess = true,
                                 MaxConnections = 150
@@ -166,15 +166,15 @@ namespace Azure.Provisioning.Tests.Primitives
                         ],
 
                         // Complex configuration with nested resource reference - inline definition
-                        Settings = new ComputeSettings
+                        ComputeSettings = new ComputeSettings
                         {
                             EnableAutoShutdown = true,
                             MaxIdleMinutes = 30,
-                            BackupStorage = new TestResource("storageResource3")
+                            BackupStorage = new StorageAccount("backupStorage")
                             {
-                                Name = "test-storage-3",
+                                Name = "backup-storage",
                                 Location = AzureLocation.EastUS,
-                                TestKind = TestResourceKind.Basic,
+                                StorageTier = StorageTier.Basic,
                                 IsEnabled = false,
                                 AllowPublicAccess = false,
                                 MaxConnections = 100
@@ -194,36 +194,36 @@ namespace Azure.Provisioning.Tests.Primitives
                         computeType: 'Virtual'
                         cpuCores: 4
                         memoryGB: 16
-                        storageAccountId: {
-                          name: 'test-storage-1'
+                        primaryStorageId: {
+                          name: 'primary-storage'
                           location: 'eastus'
                           properties: {
-                            kind: 'Premium'
+                            tier: 'Premium'
                             isEnabled: true
                             allowPublicAccess: false
                             maxConnections: 200
                           }
                         }
-                        dependentResourceIds: [
+                        additionalStorageIds: [
                           {
-                            name: 'test-storage-2'
+                            name: 'additional-storage'
                             location: 'eastus'
                             properties: {
-                              kind: 'Standard'
+                              tier: 'Standard'
                               isEnabled: true
                               allowPublicAccess: true
                               maxConnections: 150
                             }
                           }
                         ]
-                        settings: {
+                        computeSettings: {
                           enableAutoShutdown: true
                           maxIdleMinutes: 30
                           backupStorageId: {
-                            name: 'test-storage-3'
+                            name: 'backup-storage'
                             location: 'eastus'
                             properties: {
-                              kind: 'Basic'
+                              tier: 'Basic'
                               isEnabled: false
                               allowPublicAccess: false
                               maxConnections: 100
@@ -236,10 +236,10 @@ namespace Azure.Provisioning.Tests.Primitives
         }
 
         /// <summary>
-        /// Private nested class that implements a comprehensive test resource
+        /// Private nested class that implements a storage account resource
         /// to validate various property types supported by the library
         /// </summary>
-        private class TestResource : ProvisionableResource
+        private class StorageAccount : ProvisionableResource
         {
             // Basic string property (required)
             public BicepValue<string> Name
@@ -258,12 +258,12 @@ namespace Azure.Provisioning.Tests.Primitives
             private BicepValue<AzureLocation>? _location;
 
             // Enum property
-            public BicepValue<TestResourceKind> TestKind
+            public BicepValue<StorageTier> StorageTier
             {
-                get { Initialize(); return _testKind!; }
-                set { Initialize(); _testKind!.Assign(value); }
+                get { Initialize(); return _storageTier!; }
+                set { Initialize(); _storageTier!.Assign(value); }
             }
-            private BicepValue<TestResourceKind>? _testKind;
+            private BicepValue<StorageTier>? _storageTier;
 
             // Boolean properties
             public BicepValue<bool> IsEnabled
@@ -289,12 +289,12 @@ namespace Azure.Provisioning.Tests.Primitives
             private BicepValue<int>? _maxConnections;
 
             // Complex object property
-            public TestConfiguration Configuration
+            public StorageConfiguration StorageConfiguration
             {
-                get { Initialize(); return _configuration!; }
-                set { Initialize(); AssignOrReplace(ref _configuration, value); }
+                get { Initialize(); return _storageConfiguration!; }
+                set { Initialize(); AssignOrReplace(ref _storageConfiguration, value); }
             }
-            private TestConfiguration? _configuration;
+            private StorageConfiguration? _storageConfiguration;
 
             // Dictionary property
             public BicepDictionary<string> Tags
@@ -305,20 +305,20 @@ namespace Azure.Provisioning.Tests.Primitives
             private BicepDictionary<string>? _tags;
 
             // List property
-            public BicepList<string> AllowedIPs
+            public BicepList<string> AllowedSubnets
             {
-                get { Initialize(); return _allowedIPs!; }
-                set { Initialize(); _allowedIPs!.Assign(value); }
+                get { Initialize(); return _allowedSubnets!; }
+                set { Initialize(); _allowedSubnets!.Assign(value); }
             }
-            private BicepList<string>? _allowedIPs;
+            private BicepList<string>? _allowedSubnets;
 
             // List of models property
-            public BicepList<NetworkRule> NetworkRules
+            public BicepList<AccessRule> AccessRules
             {
-                get { Initialize(); return _networkRules!; }
-                set { Initialize(); _networkRules!.Assign(value); }
+                get { Initialize(); return _accessRules!; }
+                set { Initialize(); _accessRules!.Assign(value); }
             }
-            private BicepList<NetworkRule>? _networkRules;
+            private BicepList<AccessRule>? _accessRules;
 
             // Read-only output properties
             public BicepValue<ResourceIdentifier> Id
@@ -333,8 +333,8 @@ namespace Azure.Provisioning.Tests.Primitives
             }
             private BicepValue<string>? _provisioningState;
 
-            public TestResource(string bicepIdentifier, string? resourceVersion = default)
-                : base(bicepIdentifier, "Test.Provider/testResources", resourceVersion ?? "2024-01-01")
+            public StorageAccount(string bicepIdentifier, string? resourceVersion = default)
+                : base(bicepIdentifier, "Test.Provider/storageAccounts", resourceVersion ?? "2024-01-01")
             {
             }
 
@@ -345,14 +345,14 @@ namespace Azure.Provisioning.Tests.Primitives
                 // Define all properties with their Bicep paths
                 _name = DefineProperty<string>("Name", ["name"], isRequired: true);
                 _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
-                _testKind = DefineProperty<TestResourceKind>("TestKind", ["properties", "kind"]);
+                _storageTier = DefineProperty<StorageTier>("StorageTier", ["properties", "tier"]);
                 _isEnabled = DefineProperty<bool>("IsEnabled", ["properties", "isEnabled"]);
                 _allowPublicAccess = DefineProperty<bool>("AllowPublicAccess", ["properties", "allowPublicAccess"]);
                 _maxConnections = DefineProperty<int>("MaxConnections", ["properties", "maxConnections"]);
-                _configuration = DefineModelProperty<TestConfiguration>("Configuration", ["properties", "configuration"]);
+                _storageConfiguration = DefineModelProperty<StorageConfiguration>("StorageConfiguration", ["properties", "storageConfiguration"]);
                 _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
-                _allowedIPs = DefineListProperty<string>("AllowedIPs", ["properties", "allowedIPs"]);
-                _networkRules = DefineListProperty<NetworkRule>("NetworkRules", ["properties", "networkRules"]);
+                _allowedSubnets = DefineListProperty<string>("AllowedSubnets", ["properties", "allowedSubnets"]);
+                _accessRules = DefineListProperty<AccessRule>("AccessRules", ["properties", "accessRules"]);
 
                 // Output-only properties
                 _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
@@ -405,28 +405,28 @@ namespace Azure.Provisioning.Tests.Primitives
             private BicepValue<int>? _memoryGB;
 
             // Resource reference property - use the resource type directly
-            public TestResource StorageAccount
+            public StorageAccount PrimaryStorage
             {
-                get { Initialize(); return _storageAccount!; }
-                set { Initialize(); AssignOrReplace(ref _storageAccount, value); }
+                get { Initialize(); return _primaryStorage!; }
+                set { Initialize(); AssignOrReplace(ref _primaryStorage, value); }
             }
-            private TestResource? _storageAccount;
+            private StorageAccount? _primaryStorage;
 
             // List of resource references - use the resource type directly
-            public BicepList<TestResource> DependentResources
+            public BicepList<StorageAccount> AdditionalStorages
             {
-                get { Initialize(); return _dependentResources!; }
-                set { Initialize(); _dependentResources!.Assign(value); }
+                get { Initialize(); return _additionalStorages!; }
+                set { Initialize(); _additionalStorages!.Assign(value); }
             }
-            private BicepList<TestResource>? _dependentResources;
+            private BicepList<StorageAccount>? _additionalStorages;
 
             // Complex object with resource reference
-            public ComputeSettings Settings
+            public ComputeSettings ComputeSettings
             {
-                get { Initialize(); return _settings!; }
-                set { Initialize(); AssignOrReplace(ref _settings, value); }
+                get { Initialize(); return _computeSettings!; }
+                set { Initialize(); AssignOrReplace(ref _computeSettings, value); }
             }
-            private ComputeSettings? _settings;
+            private ComputeSettings? _computeSettings;
 
             // Read-only output properties
             public BicepValue<ResourceIdentifier> Id
@@ -450,9 +450,9 @@ namespace Azure.Provisioning.Tests.Primitives
                 _computeType = DefineProperty<ComputeType>("ComputeType", ["properties", "computeType"]);
                 _cpuCores = DefineProperty<int>("CpuCores", ["properties", "cpuCores"]);
                 _memoryGB = DefineProperty<int>("MemoryGB", ["properties", "memoryGB"]);
-                _storageAccount = DefineResource<TestResource>("StorageAccount", ["properties", "storageAccountId"]);
-                _dependentResources = DefineListProperty<TestResource>("DependentResources", ["properties", "dependentResourceIds"]);
-                _settings = DefineModelProperty<ComputeSettings>("Settings", ["properties", "settings"]);
+                _primaryStorage = DefineModelProperty<StorageAccount>("PrimaryStorage", ["properties", "primaryStorageId"], new StorageAccount("storageAccount"));
+                _additionalStorages = DefineListProperty<StorageAccount>("AdditionalStorages", ["properties", "additionalStorageIds"]);
+                _computeSettings = DefineModelProperty<ComputeSettings>("ComputeSettings", ["properties", "computeSettings"]);
 
                 // Output-only properties
                 _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
@@ -460,9 +460,9 @@ namespace Azure.Provisioning.Tests.Primitives
         }
 
         /// <summary>
-        /// Test enum for resource kind
+        /// Test enum for storage tier
         /// </summary>
-        private enum TestResourceKind
+        private enum StorageTier
         {
             Basic,
             Standard,
@@ -480,32 +480,32 @@ namespace Azure.Provisioning.Tests.Primitives
         }
 
         /// <summary>
-        /// Test configuration object for complex property testing
+        /// Storage configuration object for complex property testing
         /// </summary>
-        private class TestConfiguration : ProvisionableConstruct
+        private class StorageConfiguration : ProvisionableConstruct
         {
-            public BicepValue<int> Timeout
+            public BicepValue<int> BackupRetentionDays
             {
-                get { Initialize(); return _timeout!; }
-                set { Initialize(); _timeout!.Assign(value); }
+                get { Initialize(); return _backupRetentionDays!; }
+                set { Initialize(); _backupRetentionDays!.Assign(value); }
             }
-            private BicepValue<int>? _timeout;
+            private BicepValue<int>? _backupRetentionDays;
 
-            public BicepValue<int> RetryCount
+            public BicepValue<int> MaxRetryAttempts
             {
-                get { Initialize(); return _retryCount!; }
-                set { Initialize(); _retryCount!.Assign(value); }
+                get { Initialize(); return _maxRetryAttempts!; }
+                set { Initialize(); _maxRetryAttempts!.Assign(value); }
             }
-            private BicepValue<int>? _retryCount;
+            private BicepValue<int>? _maxRetryAttempts;
 
-            public BicepValue<bool> IsSecure
+            public BicepValue<bool> EnableEncryption
             {
-                get { Initialize(); return _isSecure!; }
-                set { Initialize(); _isSecure!.Assign(value); }
+                get { Initialize(); return _enableEncryption!; }
+                set { Initialize(); _enableEncryption!.Assign(value); }
             }
-            private BicepValue<bool>? _isSecure;
+            private BicepValue<bool>? _enableEncryption;
 
-            public TestConfiguration()
+            public StorageConfiguration()
             {
             }
 
@@ -513,14 +513,14 @@ namespace Azure.Provisioning.Tests.Primitives
             {
                 base.DefineProvisionableProperties();
 
-                _timeout = DefineProperty<int>("Timeout", ["timeout"]);
-                _retryCount = DefineProperty<int>("RetryCount", ["retryCount"]);
-                _isSecure = DefineProperty<bool>("IsSecure", ["isSecure"]);
+                _backupRetentionDays = DefineProperty<int>("BackupRetentionDays", ["backupRetentionDays"]);
+                _maxRetryAttempts = DefineProperty<int>("MaxRetryAttempts", ["maxRetryAttempts"]);
+                _enableEncryption = DefineProperty<bool>("EnableEncryption", ["enableEncryption"]);
             }
         }
 
         /// <summary>
-        /// Test compute settings with resource reference
+        /// Compute settings with resource reference
         /// </summary>
         private class ComputeSettings : ProvisionableConstruct
         {
@@ -539,12 +539,12 @@ namespace Azure.Provisioning.Tests.Primitives
             private BicepValue<int>? _maxIdleMinutes;
 
             // Resource reference within a nested object - use the resource type directly
-            public TestResource BackupStorage
+            public StorageAccount BackupStorage
             {
                 get { Initialize(); return _backupStorage!; }
                 set { Initialize(); AssignOrReplace(ref _backupStorage, value); }
             }
-            private TestResource? _backupStorage;
+            private StorageAccount? _backupStorage;
 
             public ComputeSettings()
             {
@@ -556,7 +556,7 @@ namespace Azure.Provisioning.Tests.Primitives
 
                 _enableAutoShutdown = DefineProperty<bool>("EnableAutoShutdown", ["enableAutoShutdown"]);
                 _maxIdleMinutes = DefineProperty<int>("MaxIdleMinutes", ["maxIdleMinutes"]);
-                _backupStorage = DefineResource<TestResource>("BackupStorage", ["backupStorageId"]);
+                _backupStorage = DefineModelProperty<StorageAccount>("BackupStorage", ["backupStorageId"], new StorageAccount("storageAccount"));
             }
         }
 
@@ -572,16 +572,16 @@ namespace Azure.Provisioning.Tests.Primitives
         }
 
         /// <summary>
-        /// Test network rule model for list of models property testing
+        /// Access rule model for list of models property testing
         /// </summary>
-        private class NetworkRule : ProvisionableConstruct
+        private class AccessRule : ProvisionableConstruct
         {
-            public BicepValue<string> Name
+            public BicepValue<string> RuleName
             {
-                get { Initialize(); return _name!; }
-                set { Initialize(); _name!.Assign(value); }
+                get { Initialize(); return _ruleName!; }
+                set { Initialize(); _ruleName!.Assign(value); }
             }
-            private BicepValue<string>? _name;
+            private BicepValue<string>? _ruleName;
 
             public BicepValue<NetworkProtocol> Protocol
             {
@@ -604,7 +604,7 @@ namespace Azure.Provisioning.Tests.Primitives
             }
             private BicepValue<bool>? _isEnabled;
 
-            public NetworkRule()
+            public AccessRule()
             {
             }
 
@@ -612,7 +612,7 @@ namespace Azure.Provisioning.Tests.Primitives
             {
                 base.DefineProvisionableProperties();
 
-                _name = DefineProperty<string>("Name", ["name"]);
+                _ruleName = DefineProperty<string>("RuleName", ["ruleName"]);
                 _protocol = DefineProperty<NetworkProtocol>("Protocol", ["protocol"]);
                 _port = DefineProperty<int>("Port", ["port"]);
                 _isEnabled = DefineProperty<bool>("IsEnabled", ["isEnabled"]);
