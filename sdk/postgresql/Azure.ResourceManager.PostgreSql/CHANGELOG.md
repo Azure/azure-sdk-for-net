@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,22 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.1 (2025-08-06)
+
+### Features Added
+
+- Make `Azure.ResourceManager.PostgreSql` AOT-compatible
+
+## 1.3.0 (2025-06-25)
+
+### Features Added
+
+- Introduced `AzureResourceManagerPostgreSqlContext` to make this library AOT compatible.
+
+### Bugs Fixed
+
+- Fixed some deprecated properties that are incorrectly implemented in the previous version.
 
 ## 1.2.0 (2024-11-05)
 

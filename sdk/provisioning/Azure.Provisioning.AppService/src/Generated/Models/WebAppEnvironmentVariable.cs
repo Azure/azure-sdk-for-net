@@ -26,7 +26,11 @@ public partial class WebAppEnvironmentVariable : ProvisionableConstruct
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// Environment variable value.
+    /// The value of this environment variable must be the name of an
+    /// AppSetting. The actual value of the environment variable in container
+    /// will be retrieved from the specified AppSetting at runtime. If the
+    /// AppSetting is not found, the value will be set to an empty string in
+    /// the container at runtime.
     /// </summary>
     public BicepValue<string> Value 
     {

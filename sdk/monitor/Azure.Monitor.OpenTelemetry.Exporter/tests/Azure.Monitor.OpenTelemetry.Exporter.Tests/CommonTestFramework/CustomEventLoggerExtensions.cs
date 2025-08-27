@@ -21,6 +21,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 
         [LoggerMessage(level: LogLevel.Information, Message = "{microsoft.custom_event.name} {key1} {key2}")]
         public static partial void WriteCustomEventWithAdditionalProperties(this ILogger logger, [TagName("microsoft.custom_event.name")] string customEventName, string key1, string key2);
+
+        [LoggerMessage(level: LogLevel.Information, Message = "{microsoft.custom_event.name} {microsoft.client.ip}")]
+        public static partial void WriteCustomEventWithClientAddress(this ILogger logger, [TagName("microsoft.custom_event.name")] string customEventName, [TagName("microsoft.client.ip")] string clientAddress);
     }
 #pragma warning restore EXTEXP0003
 }

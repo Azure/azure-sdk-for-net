@@ -13,6 +13,38 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Represents a field in an index definition, which describes the name, data type, and search behavior of a field. </summary>
     public partial class SearchField
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SearchField"/>. </summary>
         /// <param name="name"> The name of the field, which must be unique within the fields collection of the index or parent field. </param>
         /// <param name="type"> The data type of the field. </param>
@@ -33,7 +65,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="vectorEncodingFormat"> The encoding format to interpret the field contents. </param>
         /// <param name="synonymMapNames"> A list of the names of synonym maps to associate with this field. This option can be used only with searchable fields. Currently only one synonym map per field is supported. Assigning a synonym map to a field ensures that query terms targeting that field are expanded at query-time using the rules in the synonym map. This attribute can be changed on existing fields. Must be null or an empty collection for complex fields. </param>
         /// <param name="fields"> A list of sub-fields if this is a field of type Edm.ComplexType or Collection(Edm.ComplexType). Must be null or empty for simple fields. </param>
-        internal SearchField(string name, SearchFieldDataType type, bool? isKey, bool? isRetrievable, bool? isStored, bool? isSearchable, bool? isFilterable, bool? isSortable, bool? isFacetable, PermissionFilter? permissionFilter, LexicalAnalyzerName? analyzerName, LexicalAnalyzerName? searchAnalyzerName, LexicalAnalyzerName? indexAnalyzerName, LexicalNormalizerName? normalizerName, int? vectorSearchDimensions, string vectorSearchProfileName, VectorEncodingFormat? vectorEncodingFormat, IList<string> synonymMapNames, IList<SearchField> fields)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SearchField(string name, SearchFieldDataType type, bool? isKey, bool? isRetrievable, bool? isStored, bool? isSearchable, bool? isFilterable, bool? isSortable, bool? isFacetable, PermissionFilter? permissionFilter, LexicalAnalyzerName? analyzerName, LexicalAnalyzerName? searchAnalyzerName, LexicalAnalyzerName? indexAnalyzerName, LexicalNormalizerName? normalizerName, int? vectorSearchDimensions, string vectorSearchProfileName, VectorEncodingFormat? vectorEncodingFormat, IList<string> synonymMapNames, IList<SearchField> fields, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Type = type;
@@ -54,6 +87,12 @@ namespace Azure.Search.Documents.Indexes.Models
             VectorEncodingFormat = vectorEncodingFormat;
             SynonymMapNames = synonymMapNames;
             Fields = fields;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SearchField"/> for deserialization. </summary>
+        internal SearchField()
+        {
         }
         /// <summary> A value indicating whether the field should be used as a permission filter. </summary>
         public PermissionFilter? PermissionFilter { get; set; }

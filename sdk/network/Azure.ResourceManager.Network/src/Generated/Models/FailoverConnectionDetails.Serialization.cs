@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -121,6 +122,83 @@ namespace Azure.ResourceManager.Network.Models
             return new FailoverConnectionDetails(failoverConnectionName, failoverLocation, isVerified, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FailoverConnectionName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  failoverConnectionName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FailoverConnectionName))
+                {
+                    builder.Append("  failoverConnectionName: ");
+                    if (FailoverConnectionName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{FailoverConnectionName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{FailoverConnectionName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FailoverLocation), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  failoverLocation: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FailoverLocation))
+                {
+                    builder.Append("  failoverLocation: ");
+                    if (FailoverLocation.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{FailoverLocation}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{FailoverLocation}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsVerified), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  isVerified: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsVerified))
+                {
+                    builder.Append("  isVerified: ");
+                    var boolValue = IsVerified.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<FailoverConnectionDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FailoverConnectionDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -129,6 +207,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FailoverConnectionDetails)} does not support writing '{options.Format}' format.");
             }

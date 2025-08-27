@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_VolumeGroupsCreateOracle()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-01-01/examples/VolumeGroups_Create_Oracle.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-06-01/examples/VolumeGroups_Create_Oracle.json
             // this example is just showing the usage of "VolumeGroups_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -378,7 +378,7 @@ VolumeSpecName = "ora-backup",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_VolumeGroupsCreateSapHana()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-01-01/examples/VolumeGroups_Create_SapHana.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-06-01/examples/VolumeGroups_Create_SapHana.json
             // this example is just showing the usage of "VolumeGroups_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -554,7 +554,7 @@ VolumeSpecName = "log-backup",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_VolumeGroupsGetOracle()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-01-01/examples/VolumeGroups_Get_Oracle.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-06-01/examples/VolumeGroups_Get_Oracle.json
             // this example is just showing the usage of "VolumeGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -588,7 +588,7 @@ VolumeSpecName = "log-backup",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_VolumeGroupsGetSapHana()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-01-01/examples/VolumeGroups_Get_SapHana.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-06-01/examples/VolumeGroups_Get_SapHana.json
             // this example is just showing the usage of "VolumeGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -622,7 +622,7 @@ VolumeSpecName = "log-backup",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_VolumeGroupsGetOracle()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-01-01/examples/VolumeGroups_Get_Oracle.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-06-01/examples/VolumeGroups_Get_Oracle.json
             // this example is just showing the usage of "VolumeGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -652,7 +652,7 @@ VolumeSpecName = "log-backup",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_VolumeGroupsGetSapHana()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-01-01/examples/VolumeGroups_Get_SapHana.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-06-01/examples/VolumeGroups_Get_SapHana.json
             // this example is just showing the usage of "VolumeGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -682,7 +682,7 @@ VolumeSpecName = "log-backup",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_VolumeGroupsGetOracle()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-01-01/examples/VolumeGroups_Get_Oracle.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-06-01/examples/VolumeGroups_Get_Oracle.json
             // this example is just showing the usage of "VolumeGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -724,7 +724,7 @@ VolumeSpecName = "log-backup",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_VolumeGroupsGetSapHana()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-01-01/examples/VolumeGroups_Get_SapHana.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2025-06-01/examples/VolumeGroups_Get_SapHana.json
             // this example is just showing the usage of "VolumeGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

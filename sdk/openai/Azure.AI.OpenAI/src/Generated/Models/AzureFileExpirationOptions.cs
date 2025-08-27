@@ -22,6 +22,10 @@ namespace Azure.AI.OpenAI.Files
             Anchor = anchor;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureFileExpirationOptions"/>. </summary>
+        /// <param name="seconds"></param>
+        /// <param name="anchor"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal AzureFileExpirationOptions(int seconds, AzureFileExpirationAnchor anchor, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Seconds = seconds;

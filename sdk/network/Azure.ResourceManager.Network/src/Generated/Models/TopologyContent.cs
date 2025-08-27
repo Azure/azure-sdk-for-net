@@ -66,10 +66,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> The name of the target resource group to perform topology on. </summary>
+        [WirePath("targetResourceGroupName")]
         public string TargetResourceGroupName { get; set; }
         /// <summary> The reference to the Virtual Network resource. </summary>
         internal WritableSubResource TargetVirtualNetwork { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("targetVirtualNetwork.id")]
         public ResourceIdentifier TargetVirtualNetworkId
         {
             get => TargetVirtualNetwork is null ? default : TargetVirtualNetwork.Id;
@@ -84,6 +86,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The reference to the Subnet resource. </summary>
         internal WritableSubResource TargetSubnet { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("targetSubnet.id")]
         public ResourceIdentifier TargetSubnetId
         {
             get => TargetSubnet is null ? default : TargetSubnet.Id;

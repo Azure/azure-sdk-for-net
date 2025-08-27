@@ -598,7 +598,8 @@ namespace Azure.Monitor.Query.Tests
                 "[" +
                 "1, 'a', false, 0.0, " +
                 "2, 'b', true, 1.2," +
-                "3, 'c', false, 1.1]; " +
+                "3, 'c', false, 1.1, " +
+                "4, 'd', true, 3.14]; " +
                 "dt";
 
             var response = await client.QueryWorkspaceAsync(TestEnvironment.WorkspaceId, mockQuery, _logsTestData.DataTimeRange, options: new LogsQueryOptions()

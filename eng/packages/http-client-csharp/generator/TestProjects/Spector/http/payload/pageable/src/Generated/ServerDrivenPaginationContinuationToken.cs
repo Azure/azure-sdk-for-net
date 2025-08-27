@@ -50,5 +50,21 @@ namespace Payload.Pageable._ServerDrivenPagination.ContinuationToken
         public virtual Pageable<Pet> RequestHeaderResponseHeader(string token = default, string foo = default, string bar = default, CancellationToken cancellationToken = default) => throw null;
 
         public virtual AsyncPageable<Pet> RequestHeaderResponseHeaderAsync(string token = default, string foo = default, string bar = default, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Pageable<BinaryData> RequestQueryNestedResponseBody(string token, string foo, string bar, RequestContext context) => throw null;
+
+        public virtual AsyncPageable<BinaryData> RequestQueryNestedResponseBodyAsync(string token, string foo, string bar, RequestContext context) => throw null;
+
+        public virtual Pageable<Pet> RequestQueryNestedResponseBody(string token = default, string foo = default, string bar = default, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual AsyncPageable<Pet> RequestQueryNestedResponseBodyAsync(string token = default, string foo = default, string bar = default, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Pageable<BinaryData> RequestHeaderNestedResponseBody(string token, string foo, string bar, RequestContext context) => throw null;
+
+        public virtual AsyncPageable<BinaryData> RequestHeaderNestedResponseBodyAsync(string token, string foo, string bar, RequestContext context) => throw null;
+
+        public virtual Pageable<Pet> RequestHeaderNestedResponseBody(string token = default, string foo = default, string bar = default, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual AsyncPageable<Pet> RequestHeaderNestedResponseBodyAsync(string token = default, string foo = default, string bar = default, CancellationToken cancellationToken = default) => throw null;
     }
 }

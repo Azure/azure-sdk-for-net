@@ -52,6 +52,7 @@ function Get-ChangeLogEntriesFromContent {
   $sectionHeaderRegex = "^${initialAtxHeader}${SECTION_HEADER_REGEX_SUFFIX}"
   $changeLogEntries | Add-Member -NotePropertyName "InitialAtxHeader" -NotePropertyValue $initialAtxHeader
   $releaseTitleAtxHeader = $initialAtxHeader + "#"
+  $headerLines = @()
 
   try {
     # walk the document, finding where the version specifiers are and creating lists
@@ -83,6 +84,9 @@ function Get-ChangeLogEntriesFromContent {
 
           $changeLogEntry.ReleaseContent += $line
         }
+        else {
+          $headerLines += $line
+        }
       }
     }
   }
@@ -90,6 +94,8 @@ function Get-ChangeLogEntriesFromContent {
     Write-Error "Error parsing Changelog."
     Write-Error $_
   }
+
+  $changeLogEntries | Add-Member -NotePropertyName "HeaderBlock" -NotePropertyValue ($headerLines -Join [Environment]::NewLine)
   return $changeLogEntries
 }
 
@@ -265,8 +271,13 @@ function Set-ChangeLogContent {
   )
 
   $changeLogContent = @()
-  $changeLogContent += "$($ChangeLogEntries.InitialAtxHeader) Release History"
-  $changeLogContent += ""
+  if ($ChangeLogEntries.HeaderBlock) {
+    $changeLogContent += $ChangeLogEntries.HeaderBlock
+  }
+  else {
+    $changeLogContent += "$($ChangeLogEntries.InitialAtxHeader) Release History"
+    $changeLogContent += ""
+  }
 
   $ChangeLogEntries = Sort-ChangeLogEntries -changeLogEntries $ChangeLogEntries
 

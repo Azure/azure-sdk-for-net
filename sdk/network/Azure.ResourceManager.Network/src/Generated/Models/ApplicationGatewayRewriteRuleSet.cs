@@ -36,10 +36,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> Rewrite rules in the rewrite rule set. </summary>
+        [WirePath("properties.rewriteRules")]
         public IList<ApplicationGatewayRewriteRule> RewriteRules { get; }
         /// <summary> The provisioning state of the rewrite rule set resource. </summary>
+        [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

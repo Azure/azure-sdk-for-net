@@ -12,10 +12,17 @@ This sample demonstrates how to use the synchronous and asynchronous `GetChatCom
 ## Synchronous Sample
 
 ```C# Snippet:AI_Projects_ChatClientSync
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AIProjectClient client = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-ChatCompletionsClient chatClient = client.GetChatCompletionsClient();
+var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
+
+AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
+
+var credential = new DefaultAzureCredential();
+BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, new string[] { "https://ai.azure.com/.default" });
+clientOptions.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
+
+ChatCompletionsClient chatClient = new ChatCompletionsClient(new Uri(inferenceEndpoint), credential, clientOptions);
 
 var requestOptions = new ChatCompletionsOptions()
 {
@@ -32,10 +39,17 @@ Console.WriteLine(response.Value.Content);
 ## Asynchronous Sample
 
 ```C# Snippet:AI_Projects_ChatClientAsync
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var projectEndpoint = new Uri(System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT"));
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-AIProjectClient client = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-ChatCompletionsClient chatClient = client.GetChatCompletionsClient();
+var inferenceEndpoint = $"{projectEndpoint.GetLeftPart(UriPartial.Authority)}/models";
+
+AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
+
+var credential = new DefaultAzureCredential();
+BearerTokenAuthenticationPolicy tokenPolicy = new BearerTokenAuthenticationPolicy(credential, new string[] { "https://ai.azure.com/.default" });
+clientOptions.AddPolicy(tokenPolicy, HttpPipelinePosition.PerRetry);
+
+ChatCompletionsClient chatClient = new ChatCompletionsClient(new Uri(inferenceEndpoint), credential, clientOptions);
 
 var requestOptions = new ChatCompletionsOptions()
 {

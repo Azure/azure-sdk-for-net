@@ -53,6 +53,7 @@ FileSearchToolResource fileSearchResource = new([vectorStore.Id], null);
 Synchronous sample:
 ```C# Snippet:AgentsVectorStoreBatchEnterpriseFileSearch_CreateAgentAndThread
 List<ToolDefinition> tools = [new FileSearchToolDefinition()];
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = client.Administration.CreateAgent(
     model: modelName,
     name: "my-agent",
@@ -73,6 +74,7 @@ PersistentThreadMessage message = client.Messages.CreateMessage(
 Asynchronous sample:
 ```C# Snippet:AgentsVectorStoreBatchEnterpriseFileSearch_CreateAgentAndThread_Async
 List<ToolDefinition> tools = [new FileSearchToolDefinition()];
+// NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
 PersistentAgent agent = await client.Administration.CreateAgentAsync(
     model: modelName,
     name: "my-agent",
@@ -145,8 +147,8 @@ private static string replaceReferences(Dictionary<string, string> fileIds, stri
 Synchronous sample:
 ```C# Snippet:AgentsVectorStoreBatchEnterpriseFileSearch_ThreadRun
 ThreadRun run = client.Runs.CreateRun(
-    thread.Id,
-    agent.Id
+    thread,
+    agent
 );
 
 do
@@ -181,8 +183,8 @@ WriteMessages(messages, dtFiles);
 Asynchronous sample:
 ```C# Snippet:AgentsVectorStoreBatchEnterpriseFileSearch_ThreadRun_Async
 ThreadRun run = await client.Runs.CreateRunAsync(
-    thread.Id,
-    agent.Id
+    thread,
+    agent
 );
 
 do
@@ -218,6 +220,7 @@ WriteMessages(messages, dtFiles);
 
 Synchronous sample:
 ```C# Snippet:AgentsVectorStoreBatchEnterpriseFileSearch_Cleanup
+// NOTE: Comment out this code block if you plan to reuse the agent later.
 bool delStatus = client.VectorStores.DeleteVectorStore(vectorStore.Id);
 if (delStatus)
 {
@@ -233,6 +236,7 @@ client.Administration.DeleteAgent(agent.Id);
 
 Asynchronous sample:
 ```C# Snippet:AgentsVectorStoreBatchEnterpriseFileSearch_Cleanup_Async
+// NOTE: Comment out this code block if you plan to reuse the agent later.
 bool delStatus = await client.VectorStores.DeleteVectorStoreAsync(vectorStore.Id);
 if (delStatus)
 {

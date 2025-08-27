@@ -185,6 +185,7 @@ public partial class TemplateSpecVersion : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _description = DefineProperty<string>("Description", ["properties", "description"]);

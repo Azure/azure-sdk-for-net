@@ -2,10 +2,22 @@
 
 #nullable disable
 
+using System;
+using Azure.AI.OpenAI;
+
 namespace Azure.AI.OpenAI.Chat
 {
     /// <summary> The PineconeChatDataSource. </summary>
     public partial class PineconeChatDataSource : ChatDataSource
     {
+        /// <summary> Initializes a new instance of <see cref="PineconeChatDataSource"/>. </summary>
+        /// <param name="internalParameters"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="internalParameters"/> is null. </exception>
+        internal PineconeChatDataSource(InternalPineconeChatDataSourceParameters internalParameters) : base(InternalAzureChatDataSourceKind.Pinecone)
+        {
+            Argument.AssertNotNull(internalParameters, nameof(internalParameters));
+
+            InternalParameters = internalParameters;
+        }
     }
 }

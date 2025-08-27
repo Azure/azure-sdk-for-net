@@ -13,6 +13,10 @@ namespace Azure.Core.Expressions.DataFactory
     [PropertyReferenceType(new string[0], new[]{ nameof(SecretBaseType)})]
     public partial class DataFactoryKeyVaultSecret : DataFactorySecret
     {
+        /// <summary> Initializes a new instance of DataFactoryKeyVaultSecret. </summary>
+        internal DataFactoryKeyVaultSecret()
+        {
+        }
         /// <summary> Initializes a new instance of AzureKeyVaultSecretReference. </summary>
         /// <param name="store"> The Azure Key Vault linked service reference. </param>
         /// <param name="secretName"> The name of the secret in Azure Key Vault. Type: string (or Expression with resultType string). </param>

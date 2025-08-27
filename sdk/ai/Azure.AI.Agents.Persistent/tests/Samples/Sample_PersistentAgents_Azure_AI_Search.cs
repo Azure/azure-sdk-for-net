@@ -44,10 +44,11 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
 
         PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
+        // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
         PersistentAgent agent = await client.Administration.CreateAgentAsync(
            model: modelDeploymentName,
            name: "my-agent",
-           instructions: "You are a helpful agent.",
+           instructions: "You are a helpful agent capable to perform Azure AI Search using attached resources.",
            tools: [ new AzureAISearchToolDefinition() ],
            toolResources: toolResource);
         #endregion
@@ -119,6 +120,7 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
         }
         #endregion
         #region Snippet:AgentsAzureAISearchExample_Cleanup
+        // NOTE: Comment out these two lines if you plan to reuse the agent later.
         await client.Threads.DeleteThreadAsync(thread.Id);
         await client.Administration.DeleteAgentAsync(agent.Id);
         #endregion
@@ -152,10 +154,11 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
 
         PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
 
+        // NOTE: To reuse existing agent, fetch it with client.Administration.GetAgent(agentId)
         PersistentAgent agent = client.Administration.CreateAgent(
            model: modelDeploymentName,
            name: "my-agent",
-           instructions: "You are a helpful agent.",
+           instructions: "You are a helpful agent capable to perform Azure AI Search using attached resources.",
            tools: [new AzureAISearchToolDefinition()],
            toolResources: toolResource);
         #endregion
@@ -227,6 +230,7 @@ public partial class Sample_PersistentAgents_Azure_AI_Search : SamplesBase<AIAge
         }
         #endregion
         #region Snippet:AgentsAzureAISearchExample_Cleanup_Sync
+        // NOTE: Comment out these two lines if you plan to reuse the agent later.
         client.Threads.DeleteThread(thread.Id);
         client.Administration.DeleteAgent(agent.Id);
         #endregion

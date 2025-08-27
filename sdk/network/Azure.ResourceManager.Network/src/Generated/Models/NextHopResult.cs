@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Next hop type. </summary>
+        [WirePath("nextHopType")]
         public NextHopType? NextHopType { get; }
         /// <summary> Next hop IP Address. </summary>
+        [WirePath("nextHopIpAddress")]
         public string NextHopIPAddress { get; }
         /// <summary> The resource identifier for the route table associated with the route being returned. If the route being returned does not correspond to any user created routes then this field will be the string 'System Route'. </summary>
+        [WirePath("routeTableId")]
         public ResourceIdentifier RouteTableId { get; }
     }
 }

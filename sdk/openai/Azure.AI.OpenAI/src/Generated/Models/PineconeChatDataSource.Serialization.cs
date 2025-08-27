@@ -3,7 +3,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
@@ -11,9 +10,11 @@ using Azure.AI.OpenAI;
 
 namespace Azure.AI.OpenAI.Chat
 {
-    /// <summary></summary>
+    /// <summary> The PineconeChatDataSource. </summary>
     public partial class PineconeChatDataSource : IJsonModel<PineconeChatDataSource>
     {
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PineconeChatDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -38,6 +39,8 @@ namespace Azure.AI.OpenAI.Chat
             }
         }
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         PineconeChatDataSource IJsonModel<PineconeChatDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PineconeChatDataSource)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
@@ -53,20 +56,22 @@ namespace Azure.AI.OpenAI.Chat
             return DeserializePineconeChatDataSource(document.RootElement, options);
         }
 
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         internal static PineconeChatDataSource DeserializePineconeChatDataSource(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string @type = "pinecone";
+            InternalAzureChatDataSourceKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             InternalPineconeChatDataSourceParameters internalParameters = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    kind = new InternalAzureChatDataSourceKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("parameters"u8))
@@ -79,9 +84,10 @@ namespace Azure.AI.OpenAI.Chat
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PineconeChatDataSource(@type, additionalBinaryDataProperties, internalParameters);
+            return new PineconeChatDataSource(kind, additionalBinaryDataProperties, internalParameters);
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PineconeChatDataSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -91,12 +97,14 @@ namespace Azure.AI.OpenAI.Chat
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIOpenAIContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PineconeChatDataSource)} does not support writing '{options.Format}' format.");
             }
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         PineconeChatDataSource IPersistableModel<PineconeChatDataSource>.Create(BinaryData data, ModelReaderWriterOptions options) => (PineconeChatDataSource)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
@@ -116,24 +124,7 @@ namespace Azure.AI.OpenAI.Chat
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PineconeChatDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="pineconeChatDataSource"> The <see cref="PineconeChatDataSource"/> to serialize into <see cref="BinaryContent"/>. </param>
-        public static implicit operator BinaryContent(PineconeChatDataSource pineconeChatDataSource)
-        {
-            if (pineconeChatDataSource == null)
-            {
-                return null;
-            }
-            return BinaryContent.Create(pineconeChatDataSource, ModelSerializationExtensions.WireOptions);
-        }
-
-        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="PineconeChatDataSource"/> from. </param>
-        public static explicit operator PineconeChatDataSource(ClientResult result)
-        {
-            using PipelineResponse response = result.GetRawResponse();
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializePineconeChatDataSource(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.Search.Documents
             content.JsonWriter.WriteStartArray();
             foreach (var item in enumerable)
             {
-                content.JsonWriter.WriteObjectValue(item);
+                content.JsonWriter.WriteObjectValue(item, ModelSerializationExtensions.WireOptions);
             }
             content.JsonWriter.WriteEndArray();
 
@@ -62,7 +62,7 @@ namespace Azure.Search.Documents
             content.JsonWriter.WriteStartArray();
             for (int i = 0; i < span.Length; i++)
             {
-                content.JsonWriter.WriteObjectValue(span[i]);
+                content.JsonWriter.WriteObjectValue(span[i], ModelSerializationExtensions.WireOptions);
             }
             content.JsonWriter.WriteEndArray();
 
@@ -77,7 +77,7 @@ namespace Azure.Search.Documents
             foreach (var item in dictionary)
             {
                 content.JsonWriter.WritePropertyName(item.Key);
-                content.JsonWriter.WriteObjectValue(item.Value);
+                content.JsonWriter.WriteObjectValue(item.Value, ModelSerializationExtensions.WireOptions);
             }
             content.JsonWriter.WriteEndObject();
 
@@ -115,7 +115,7 @@ namespace Azure.Search.Documents
         public static RequestContent FromObject(object value)
         {
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<object>(value);
+            content.JsonWriter.WriteObjectValue<object>(value, ModelSerializationExtensions.WireOptions);
             return content;
         }
 

@@ -20,7 +20,7 @@ namespace Azure.Monitor.Query.Models
         /// <returns> A new <see cref="Models.MetricAvailability"/> instance for mocking. </returns>
         public static MetricAvailability MetricAvailability(TimeSpan? granularity = null, TimeSpan? retention = null)
         {
-            return new MetricAvailability(granularity, retention);
+            return new MetricAvailability(granularity, retention, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MetricsQueryResourcesResult"/>. </summary>
@@ -30,22 +30,16 @@ namespace Azure.Monitor.Query.Models
         {
             values ??= new List<MetricsQueryResult>();
 
-            return new MetricsQueryResourcesResult(values?.ToList());
+            return new MetricsQueryResourcesResult(values?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LogsTableColumn"/>. </summary>
         /// <param name="name"> The name of this column. </param>
         /// <param name="type"> The data type of this column. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <returns> A new <see cref="Models.LogsTableColumn"/> instance for mocking. </returns>
         public static LogsTableColumn LogsTableColumn(string name = null, LogsColumnType type = default)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            return new LogsTableColumn(name, type);
+            return new LogsTableColumn(name, type, serializedAdditionalRawData: null);
         }
     }
 }

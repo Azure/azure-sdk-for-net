@@ -124,6 +124,16 @@
       AZC0012; <!-- Single word class names -->
       AZC0008;
       SCM0005; <!-- Resources currently do not have a parameterless ctor so builders cannot be created for them -->
+
+      <!--
+        Temporarily disable warnings from new analyzers:
+          AZC0034: Typename is already used in another library.
+          AZC0035: Missing model factory method
+
+        Tracked by # 51312
+      -->
+      AZC0034;
+      AZC0035;
     </NoWarn>
   </PropertyGroup>
 

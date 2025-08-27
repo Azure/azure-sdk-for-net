@@ -1,28 +1,137 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using Azure.ResourceManager.ManagementGroups;
+using Azure.ResourceManager.ManagementGroups.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager
 {
+    [ModelReaderWriterBuildable(typeof(ManagementGroupResource))]
+    [ModelReaderWriterBuildable(typeof(ManagementGroupData))]
+    [ModelReaderWriterBuildable(typeof(ManagementGroupSubscriptionData))]
+    [ModelReaderWriterBuildable(typeof(ManagementGroupSubscriptionResource))]
+    [ModelReaderWriterBuildable(typeof(ManagementGroupNameAvailabilityContent))]
+    [ModelReaderWriterBuildable(typeof(CreateManagementGroupDetails))]
+    [ModelReaderWriterBuildable(typeof(DescendantData))]
+    [ModelReaderWriterBuildable(typeof(DescendantListResult))]
+    [ModelReaderWriterBuildable(typeof(DescendantParentGroupInfo))]
+    [ModelReaderWriterBuildable(typeof(EntityData))]
+    [ModelReaderWriterBuildable(typeof(EntityListResult))]
+    [ModelReaderWriterBuildable(typeof(ListSubscriptionUnderManagementGroup))]
+    [ModelReaderWriterBuildable(typeof(ManagementGroupChildInfo))]
+    [ModelReaderWriterBuildable(typeof(ManagementGroupChildOptions))]
+    [ModelReaderWriterBuildable(typeof(ManagementGroupCreateOrUpdateContent))]
+    [ModelReaderWriterBuildable(typeof(ManagementGroupInfo))]
+    [ModelReaderWriterBuildable(typeof(ManagementGroupListResult))]
+    [ModelReaderWriterBuildable(typeof(ManagementGroupNameAvailabilityResult))]
+    [ModelReaderWriterBuildable(typeof(ManagementGroupParentCreateOptions))]
+    [ModelReaderWriterBuildable(typeof(ManagementGroupPatch))]
+    [ModelReaderWriterBuildable(typeof(ManagementGroupPathElement))]
+    [ModelReaderWriterBuildable(typeof(ParentManagementGroupInfo))]
+    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
+    [ModelReaderWriterBuildable(typeof(FeatureResource))]
+    [ModelReaderWriterBuildable(typeof(GenericResourceData))]
+    [ModelReaderWriterBuildable(typeof(PolicyAssignmentData))]
+    [ModelReaderWriterBuildable(typeof(PolicyAssignmentResource))]
+    [ModelReaderWriterBuildable(typeof(ResourceGroupResource))]
+    [ModelReaderWriterBuildable(typeof(ResourceProviderData))]
+    [ModelReaderWriterBuildable(typeof(ResourceProviderResource))]
+    [ModelReaderWriterBuildable(typeof(SubscriptionData))]
+    [ModelReaderWriterBuildable(typeof(SubscriptionResource))]
+    [ModelReaderWriterBuildable(typeof(TagResource))]
+    [ModelReaderWriterBuildable(typeof(DataPolicyManifestData))]
+    [ModelReaderWriterBuildable(typeof(DataPolicyManifestResource))]
+    [ModelReaderWriterBuildable(typeof(FeatureData))]
+    [ModelReaderWriterBuildable(typeof(ManagementGroupPolicyDefinitionResource))]
+    [ModelReaderWriterBuildable(typeof(ManagementGroupPolicySetDefinitionResource))]
+    [ModelReaderWriterBuildable(typeof(ManagementLockData))]
+    [ModelReaderWriterBuildable(typeof(ManagementLockResource))]
+    [ModelReaderWriterBuildable(typeof(PolicyDefinitionData))]
+    [ModelReaderWriterBuildable(typeof(PolicySetDefinitionData))]
+    [ModelReaderWriterBuildable(typeof(ResourceGroupData))]
+    [ModelReaderWriterBuildable(typeof(SubscriptionPolicyDefinitionResource))]
+    [ModelReaderWriterBuildable(typeof(SubscriptionPolicySetDefinitionResource))]
+    [ModelReaderWriterBuildable(typeof(TagResourceData))]
+    [ModelReaderWriterBuildable(typeof(TenantData))]
+    [ModelReaderWriterBuildable(typeof(TenantPolicyDefinitionResource))]
+    [ModelReaderWriterBuildable(typeof(TenantPolicySetDefinitionResource))]
+    [ModelReaderWriterBuildable(typeof(ArmRestApi))]
+    [ModelReaderWriterBuildable(typeof(LocationExpanded))]
+    [ModelReaderWriterBuildable(typeof(LocationMetadata))]
+    [ModelReaderWriterBuildable(typeof(ResourcesMoveContent))]
+    [ModelReaderWriterBuildable(typeof(ResourcesSku))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
+    [ModelReaderWriterBuildable(typeof(Tag))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
+    [ModelReaderWriterBuildable(typeof(ApiProfile))]
+    [ModelReaderWriterBuildable(typeof(ArmPolicyParameter))]
+    [ModelReaderWriterBuildable(typeof(ArmPolicyParameterValue))]
+    [ModelReaderWriterBuildable(typeof(AvailabilityZoneMappings))]
+    [ModelReaderWriterBuildable(typeof(AzureRoleDefinition))]
+    [ModelReaderWriterBuildable(typeof(DataManifestCustomResourceFunctionDefinition))]
+    [ModelReaderWriterBuildable(typeof(DataPolicyManifestEffect))]
+    [ModelReaderWriterBuildable(typeof(DataPolicyManifestListResult))]
+    [ModelReaderWriterBuildable(typeof(ExportTemplate))]
+    [ModelReaderWriterBuildable(typeof(ExtendedLocation))]
+    [ModelReaderWriterBuildable(typeof(FeatureOperationsListResult))]
+    [ModelReaderWriterBuildable(typeof(FeatureProperties))]
+    [ModelReaderWriterBuildable(typeof(LocationListResult))]
+    [ModelReaderWriterBuildable(typeof(ManagedByTenant))]
+    [ModelReaderWriterBuildable(typeof(ManagementLockListResult))]
+    [ModelReaderWriterBuildable(typeof(ManagementLockOwner))]
+    [ModelReaderWriterBuildable(typeof(NonComplianceMessage))]
+    [ModelReaderWriterBuildable(typeof(PairedRegion))]
+    [ModelReaderWriterBuildable(typeof(ParameterDefinitionsValueMetadata))]
+    [ModelReaderWriterBuildable(typeof(Permission))]
+    [ModelReaderWriterBuildable(typeof(PolicyAssignmentListResult))]
+    [ModelReaderWriterBuildable(typeof(PolicyAssignmentPatch))]
+    [ModelReaderWriterBuildable(typeof(PolicyDefinitionGroup))]
+    [ModelReaderWriterBuildable(typeof(PolicyDefinitionListResult))]
+    [ModelReaderWriterBuildable(typeof(PolicyDefinitionReference))]
+    [ModelReaderWriterBuildable(typeof(PolicyOverride))]
+    [ModelReaderWriterBuildable(typeof(PolicySetDefinitionListResult))]
+    [ModelReaderWriterBuildable(typeof(PredefinedTag))]
+    [ModelReaderWriterBuildable(typeof(PredefinedTagCount))]
+    [ModelReaderWriterBuildable(typeof(PredefinedTagsListResult))]
+    [ModelReaderWriterBuildable(typeof(PredefinedTagValue))]
+    [ModelReaderWriterBuildable(typeof(ProviderConsentDefinition))]
+    [ModelReaderWriterBuildable(typeof(ProviderExtendedLocation))]
+    [ModelReaderWriterBuildable(typeof(ProviderPermission))]
+    [ModelReaderWriterBuildable(typeof(ProviderPermissionListResult))]
+    [ModelReaderWriterBuildable(typeof(ProviderRegistrationContent))]
+    [ModelReaderWriterBuildable(typeof(ProviderResourceType))]
+    [ModelReaderWriterBuildable(typeof(ProviderResourceTypeListResult))]
+    [ModelReaderWriterBuildable(typeof(ResourceGroupExportResult))]
+    [ModelReaderWriterBuildable(typeof(ResourceGroupListResult))]
+    [ModelReaderWriterBuildable(typeof(ResourceGroupPatch))]
+    [ModelReaderWriterBuildable(typeof(ResourceGroupProperties))]
+    [ModelReaderWriterBuildable(typeof(ResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(ResourceNameValidationContent))]
+    [ModelReaderWriterBuildable(typeof(ResourceNameValidationResult))]
+    [ModelReaderWriterBuildable(typeof(ResourceProviderListResult))]
+    [ModelReaderWriterBuildable(typeof(ResourceSelector))]
+    [ModelReaderWriterBuildable(typeof(ResourceSelectorExpression))]
+    [ModelReaderWriterBuildable(typeof(ResourceTypeAlias))]
+    [ModelReaderWriterBuildable(typeof(ResourceTypeAliases))]
+    [ModelReaderWriterBuildable(typeof(ResourceTypeAliasPath))]
+    [ModelReaderWriterBuildable(typeof(ResourceTypeAliasPathMetadata))]
+    [ModelReaderWriterBuildable(typeof(ResourceTypeAliasPattern))]
+    [ModelReaderWriterBuildable(typeof(SubscriptionListResult))]
+    [ModelReaderWriterBuildable(typeof(SubscriptionPolicies))]
+    [ModelReaderWriterBuildable(typeof(TagResourcePatch))]
+    [ModelReaderWriterBuildable(typeof(TenantListResult))]
+    [ModelReaderWriterBuildable(typeof(TenantResourceProvider))]
+    [ModelReaderWriterBuildable(typeof(TenantResourceProviderListResult))]
+    [ModelReaderWriterBuildable(typeof(TrackedResourceExtendedData))]
+    [ModelReaderWriterBuildable(typeof(ZoneMapping))]
     public partial class AzureResourceManagerContext
     {
-        partial void AddAdditionalFactories(Dictionary<Type, Func<ModelReaderWriterTypeBuilder>> factories)
-        {
-            factories.Add(typeof(ManagedServiceIdentity), () => new ManagedServiceIdentityTypeBuilder());
-        }
-
-        private class ManagedServiceIdentityTypeBuilder : ModelReaderWriterTypeBuilder
-        {
-            protected override Type BuilderType => typeof(ManagedServiceIdentity);
-
-            protected override object CreateInstance()
-            {
-                return new ManagedServiceIdentity(ManagedServiceIdentityType.None);
-            }
-        }
     }
 }

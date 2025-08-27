@@ -78,6 +78,7 @@ namespace Azure.ResourceManager.NetApp.Tests
                         }
                         if (await volumeCollection.ExistsAsync(volume.Id.Name))
                         {
+                            await LiveDelay(3000);
                             await volume.DeleteAsync(WaitUntil.Completed);
                         }
                     }
@@ -442,7 +443,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             //Create the remote volume with dataProtection
             NetAppReplicationObject replication = new()
             {
-                EndpointType = NetAppEndpointType.Destination,
+                //EndpointType = NetAppEndpointType.Destination,
                 RemoteVolumeResourceId = volumeResource1.Id,
                 ReplicationSchedule = NetAppReplicationSchedule.TenMinutely,
                 RemoteVolumeRegion = RemoteLocation
@@ -463,7 +464,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(replication.RemoteVolumeRegion, remoteVolumeResource.Data.DataProtection.Replication.RemoteVolumeRegion);
             Assert.AreEqual(replication.ReplicationSchedule, remoteVolumeResource.Data.DataProtection.Replication.ReplicationSchedule);
 
-            //Authorize Replication
+            //Authorize Replication on the source volume
             NetAppVolumeAuthorizeReplicationContent authorize = new()
             {
                 RemoteVolumeResourceId = remoteVolumeResource.Id
@@ -494,8 +495,13 @@ namespace Azure.ResourceManager.NetApp.Tests
             //Wait for Broken status this indicates a Broken replication relationship, tests ReplicationStatusAsync() operation
             await WaitForReplicationStatus(remoteVolume, NetAppMirrorState.Mirrored);
 
+            await LiveDelay(5000);
             //Break again
-            breakReplicationOperation = (await remoteVolume.BreakReplicationAsync(WaitUntil.Completed, new()));
+            NetAppVolumeBreakReplicationContent forceBreak = new()
+            {
+                ForceBreakReplication = true
+            };
+            breakReplicationOperation = (await remoteVolume.BreakReplicationAsync(WaitUntil.Completed, forceBreak));
             Assert.IsTrue(breakReplicationOperation.HasCompleted);
             await LiveDelay(5000);
             //Wait for Broken status this indicates a Broken replication relationship, calls ReplicationStatusAsync() operation
