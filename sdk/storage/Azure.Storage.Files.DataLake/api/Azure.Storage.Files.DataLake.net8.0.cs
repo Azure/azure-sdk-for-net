@@ -754,9 +754,9 @@ namespace Azure.Storage.Files.DataLake.Models
     public partial class DataLakeGetPathsOptions
     {
         public DataLakeGetPathsOptions() { }
-        public string BeginFrom { get { throw null; } set { } }
         public string Path { get { throw null; } set { } }
         public bool Recursive { get { throw null; } set { } }
+        public string StartFrom { get { throw null; } set { } }
         public bool UserPrincipalName { get { throw null; } set { } }
     }
     public partial class DataLakeLease

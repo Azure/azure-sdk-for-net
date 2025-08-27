@@ -37,6 +37,6 @@ namespace Azure.Storage.Files.DataLake.Models
         /// are supported for recursive listing. Non-recursive listing supports only one entity level.
         /// An error will appear if multiple entity levels are specified for non-recursive listing.
         /// </summary>
-        public string BeginFrom { get; set; }
+        public string StartFrom { get; set; }
     }
 }

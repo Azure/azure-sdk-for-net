@@ -1766,7 +1766,7 @@ namespace Azure.Storage.Files.DataLake
                 options?.Path,
                 options?.Recursive,
                 options?.UserPrincipalName,
-                options?.BeginFrom,
+                options?.StartFrom,
                 $"{nameof(DataLakeFileSystemClient)}.{nameof(GetPaths)}")
                 .ToSyncCollection(cancellationToken);
 
@@ -1804,7 +1804,7 @@ namespace Azure.Storage.Files.DataLake
                 options?.Path,
                 options?.Recursive,
                 options?.UserPrincipalName,
-                options?.BeginFrom,
+                options?.StartFrom,
                 $"{nameof(DataLakeFileSystemClient)}.{nameof(GetPaths)}")
             .ToAsyncCollection(cancellationToken);
 

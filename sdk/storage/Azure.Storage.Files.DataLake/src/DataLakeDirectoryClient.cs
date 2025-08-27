@@ -2940,7 +2940,7 @@ namespace Azure.Storage.Files.DataLake
                 Path,
                 options?.Recursive,
                 options?.UserPrincipalName,
-                options?.BeginFrom,
+                options?.StartFrom,
                 $"{nameof(DataLakeDirectoryClient)}.{nameof(GetPaths)}")
             .ToSyncCollection(cancellationToken);
 
@@ -2978,7 +2978,7 @@ namespace Azure.Storage.Files.DataLake
                 Path,
                 options?.Recursive,
                 options?.UserPrincipalName,
-                options?.BeginFrom,
+                options?.StartFrom,
                 $"{nameof(DataLakeDirectoryClient)}.{nameof(GetPaths)}")
             .ToAsyncCollection(cancellationToken);
 
