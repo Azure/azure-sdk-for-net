@@ -89,17 +89,6 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         }
 
         [TestCase("$[0]", true)]
-        [TestCase("$[0][0]", true)]
-        [TestCase("$.x", false)]
-        [TestCase("$['x']", false)]
-        [TestCase("$[\"x\"]", false)]
-        public void StartsWithArrayIndex(string jsonPathStr, bool expected)
-        {
-            ReadOnlySpan<byte> jsonPath = Encoding.UTF8.GetBytes(jsonPathStr);
-            Assert.AreEqual(expected, jsonPath.StartsWithArrayIndex());
-        }
-
-        [TestCase("$[0]", true)]
         [TestCase("$.x[0]", true)]
         [TestCase("$[0].x", false)]
         public void IsArrayIndex_Positive(string jsonPathStr, bool expected)

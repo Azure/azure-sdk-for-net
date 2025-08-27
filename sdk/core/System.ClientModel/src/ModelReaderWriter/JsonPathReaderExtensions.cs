@@ -11,24 +11,9 @@ namespace System.ClientModel.Primitives;
 
 internal static class JsonPathReaderExtensions
 {
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ReadOnlySpan<byte> GetPropertyName(this byte[] jsonPath)
          => GetPropertyName(jsonPath.AsSpan());
-
-    public static bool StartsWithArrayIndex(this Span<byte> jsonPath)
-        => StartsWithArrayIndex((ReadOnlySpan<byte>)jsonPath);
-
-    public static bool StartsWithArrayIndex(this ReadOnlySpan<byte> jsonPath)
-    {
-        JsonPathReader reader = new(jsonPath);
-
-        if (!reader.Read())
-            return false;
-
-        if (!reader.Read() || reader.Current.TokenType != JsonPathTokenType.ArrayIndex)
-            return false;
-
-        return true;
-    }
 
     public static ReadOnlySpan<byte> GetFirstNonIndexParent(this byte[] jsonPath)
     {
@@ -44,9 +29,11 @@ internal static class JsonPathReaderExtensions
         return newPath;
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsArrayIndex(this byte[] jsonPath)
         => IsArrayIndex(jsonPath, out _);
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsArrayIndex(this ReadOnlySpan<byte> jsonPath)
         => IsArrayIndex(jsonPath, out _);
 
@@ -73,6 +60,7 @@ internal static class JsonPathReaderExtensions
         return true;
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ReadOnlySpan<byte> GetFirstProperty(this ReadOnlySpan<byte> jsonPath)
         => new JsonPathReader(jsonPath).GetFirstProperty();
 
@@ -131,6 +119,7 @@ internal static class JsonPathReaderExtensions
             : ReadOnlySpan<byte>.Empty;
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ReadOnlySpan<byte> GetParent(this byte[] jsonPath)
         => GetParent(jsonPath.AsSpan());
 
@@ -172,6 +161,7 @@ internal static class JsonPathReaderExtensions
         return ReadOnlySpan<byte>.Empty;
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static ReadOnlySpan<byte> GetIndexSpan(this byte[] jsonPath)
         => GetIndexSpan(jsonPath.AsSpan());
 
@@ -200,17 +190,8 @@ internal static class JsonPathReaderExtensions
         => IsRoot(jsonPath.AsSpan());
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static bool IsRoot(this Span<byte> jsonPath)
-        => IsRoot((ReadOnlySpan<byte>)jsonPath);
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool IsRoot(this ReadOnlySpan<byte> jsonPath)
-    {
-        if (jsonPath.IsEmpty || jsonPath[0] != (byte)'$')
-            return false;
-
-        return jsonPath.Length == 1;
-    }
+        => "$"u8.SequenceEqual(jsonPath);
 
     public static byte[] Remove(this ReadOnlyMemory<byte> json, ReadOnlySpan<byte> jsonPath)
     {
@@ -466,9 +447,6 @@ internal static class JsonPathReaderExtensions
 
         return length;
     }
-
-    public static bool Advance(this Utf8JsonReader jsonReader, string jsonPath)
-        => jsonReader.Advance(Encoding.UTF8.GetBytes(jsonPath));
 
     public static bool Advance(ref this Utf8JsonReader jsonReader, ReadOnlySpan<byte> jsonPath)
     {
