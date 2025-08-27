@@ -20,6 +20,7 @@ This troubleshooting guide covers failure investigation techniques, common error
   - [Azure Virtual Machine managed identity](#azure-virtual-machine-managed-identity)
   - [Azure App Service and Azure Functions managed identity](#azure-app-service-and-azure-functions-managed-identity)
 - [Troubleshoot VisualStudioCredential authentication issues](#troubleshoot-visualstudiocredential-authentication-issues)
+- [Troubleshoot VisualStudioCodeCredential authentication issues](#troubleshoot-visualstudiocodecredential-authentication-issues)
 - [Troubleshoot AzureDeveloperCliCredential authentication issues](#troubleshoot-azuredeveloperclicredential-authentication-issues)
 - [Troubleshoot AzureCliCredential authentication issues](#troubleshoot-azureclicredential-authentication-issues)
 - [Troubleshoot AzurePowerShellCredential authentication issues](#troubleshoot-azurepowershellcredential-authentication-issues)
@@ -249,6 +250,14 @@ curl 'http://169.254.169.254/metadata/identity/oauth2/token?resource=https://man
 |AADSTS65001: The user or administrator has not consented to use the application with ID '04f0c124-f2bc-4f59-8241-bf6df9866bbd' named 'Visual Studio'.|The user needs to add Visual Studio as an authorized application to their Azure resource.|Follow the instructions at [Pre-authorize your client application](https://learn.microsoft.com/entra/identity-platform/quickstart-web-api-aspnet-protect-api#pre-authorize-your-client-application). |
 |AADSTS65002: Consent between first party application '04f0c124-f2bc-4f59-8241-bf6df9866bbd' and first party resource '<GUID>' must be configured via preauthorization - applications owned and operated by Microsoft must get approval from the API owner before requesting tokens for that API.|The client application used by Visual Studio is not yet pre-authorized for the Azure resource mentioned in the error.|Follow the instructions under the [Pre-authorization issues section of this document.](https://learn.microsoft.com/visualstudio/ide/work-with-multi-factor-authentication?view=vs-2022#pre-authorization-issues)|
 
+## Troubleshoot `VisualStudioCodeCredential` authentication issues
+
+`CredentialUnavailableException`
+
+| Error Message                                                                            | Description                                                                                                                                                                      | Mitigation |
+|------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| VisualStudioCodeCredential requires the [Azure.Identity.Broker](https://www.nuget.org/packages/Azure.Identity.Broker/) package to be installed. | Brokered authentication is unavailable, which may be due to missing dependencies, not being signed in to Azure in VS Code, or the Azure Resources extension not being installed. | <ul><li>Ensure your project includes the <code>Azure.Identity.Broker</code> dependency.</li><li>In Visual Studio Code, install the <a href="https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureresourcegroups">Azure Resources extension</a>.</li><li>Sign in to Azure using the "Azure: Sign In" command in VS Code.</li><li>Restart your application after signing in.</li></ul>|
+
 ## Troubleshoot `AzureCliCredential` authentication issues
 
 `CredentialUnavailableException`
@@ -282,7 +291,7 @@ az account get-access-token --output json --resource https://management.core.win
 |Azure Developer CLI not installed|The Azure Developer CLI isn't installed or couldn't be found.|<ul><li>Ensure the Azure Developer CLI is properly installed. Installation instructions can be found at [Install or update the Azure Developer CLI](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd).</li><li>Validate the installation location has been added to the `PATH` environment variable.</li></ul>|
 |Please run 'azd login' to set up account|No account is currently logged into the Azure Developer CLI, or the login has expired.|<ul><li>Log in to the Azure Developer CLI using the `azd login` command.</li><li>Validate that the Azure Developer CLI can obtain tokens. For instructions, see [Verify the Azure Developer CLI can obtain tokens](#verify-the-azure-developer-cli-can-obtain-tokens).</li></ul>|
 
-#### Verify the Azure Developer CLI can obtain tokens
+### Verify the Azure Developer CLI can obtain tokens
 
 You can manually verify that the Azure Developer CLI is properly authenticated and can obtain tokens. First, use the `config` command to verify the account that is currently logged in to the Azure Developer CLI.
 
