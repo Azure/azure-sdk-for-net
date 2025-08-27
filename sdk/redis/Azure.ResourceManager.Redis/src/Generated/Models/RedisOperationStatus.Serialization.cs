@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    public partial class OperationStatus : IUtf8JsonSerializable, IJsonModel<OperationStatus>
+    public partial class RedisOperationStatus : IUtf8JsonSerializable, IJsonModel<RedisOperationStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisOperationStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<OperationStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RedisOperationStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OperationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationStatus)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisOperationStatus)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.Redis.Models
             }
         }
 
-        OperationStatus IJsonModel<OperationStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RedisOperationStatus IJsonModel<RedisOperationStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OperationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationStatus)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisOperationStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOperationStatus(document.RootElement, options);
+            return DeserializeRedisOperationStatus(document.RootElement, options);
         }
 
-        internal static OperationStatus DeserializeOperationStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RedisOperationStatus DeserializeRedisOperationStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new OperationStatus(
+            return new RedisOperationStatus(
                 id,
                 name,
                 status,
@@ -199,35 +199,35 @@ namespace Azure.ResourceManager.Redis.Models
                 properties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
-        BinaryData IPersistableModel<OperationStatus>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RedisOperationStatus>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OperationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OperationStatus)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisOperationStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
-        OperationStatus IPersistableModel<OperationStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RedisOperationStatus IPersistableModel<RedisOperationStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OperationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeOperationStatus(document.RootElement, options);
+                        return DeserializeRedisOperationStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationStatus)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisOperationStatus)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<OperationStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RedisOperationStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, string hostName, int? port, int? sslPort, RedisAccessKeys accessKeys, IReadOnlyList<SubResource> linkedServers, IReadOnlyList<RedisInstanceDetails> instances, IReadOnlyList<RedisPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<string> zones, ManagedServiceIdentity identity, IReadOnlyDictionary<string, string> tags, AzureLocation location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal RedisResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RedisProvisioningState? provisioningState, string hostName, int? port, int? sslPort, RedisAccessKeys accessKeys, IReadOnlyList<SubResource> linkedServers, IReadOnlyList<RedisInstanceDetails> instances, IReadOnlyList<RedisPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<string> zones, ManagedServiceIdentity identity, IReadOnlyDictionary<string, string> tags, AzureLocation location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             HostName = hostName;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> Redis instance provisioning status. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public RedisProvisioningState? ProvisioningState { get; }
         /// <summary> Redis host name. </summary>
         public string HostName { get; }
         /// <summary> Redis non-SSL port. </summary>

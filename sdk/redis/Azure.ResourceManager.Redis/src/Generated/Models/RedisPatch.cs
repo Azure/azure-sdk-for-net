@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Redis.Models
 {
     /// <summary> Parameters supplied to the Update Redis operation. </summary>
-    public partial class RedisResourcePatch
+    public partial class RedisPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,18 +46,18 @@ namespace Azure.ResourceManager.Redis.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RedisResourcePatch"/>. </summary>
-        public RedisResourcePatch()
+        /// <summary> Initializes a new instance of <see cref="RedisPatch"/>. </summary>
+        public RedisPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RedisResourcePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisPatch"/>. </summary>
         /// <param name="sku"> The SKU of the Redis cache to deploy. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisResourcePatch(RedisSku sku, IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RedisPatch(RedisSku sku, IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             Tags = tags;

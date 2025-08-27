@@ -11,19 +11,19 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Redis.Models
 {
     /// <summary> Asynchronous operation status. </summary>
-    public partial class OperationStatus : OperationStatusResult
+    public partial class RedisOperationStatus : OperationStatusResult
     {
-        /// <summary> Initializes a new instance of <see cref="OperationStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisOperationStatus"/>. </summary>
         /// <param name="status"> Operation status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="status"/> is null. </exception>
-        internal OperationStatus(string status) : base(status)
+        internal RedisOperationStatus(string status) : base(status)
         {
             Argument.AssertNotNull(status, nameof(status));
 
             Properties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisOperationStatus"/>. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -34,13 +34,13 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Additional properties from RP, only when operation is successful. </param>
-        internal OperationStatus(string id, string name, string status, double? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<OperationStatusResult> operations, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> properties) : base(id, name, status, percentComplete, startOn, endOn, operations, error, serializedAdditionalRawData)
+        internal RedisOperationStatus(string id, string name, string status, double? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<OperationStatusResult> operations, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> properties) : base(id, name, status, percentComplete, startOn, endOn, operations, error, serializedAdditionalRawData)
         {
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OperationStatus"/> for deserialization. </summary>
-        internal OperationStatus()
+        /// <summary> Initializes a new instance of <see cref="RedisOperationStatus"/> for deserialization. </summary>
+        internal RedisOperationStatus()
         {
         }
 

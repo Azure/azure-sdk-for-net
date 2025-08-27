@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Redis.Models
 {
     /// <summary> Response to force reboot for Redis cache. </summary>
-    public partial class RedisForceRebootResponse
+    public partial class RedisForceRebootResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,15 +45,15 @@ namespace Azure.ResourceManager.Redis.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RedisForceRebootResponse"/>. </summary>
-        internal RedisForceRebootResponse()
+        /// <summary> Initializes a new instance of <see cref="RedisForceRebootResult"/>. </summary>
+        internal RedisForceRebootResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RedisForceRebootResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisForceRebootResult"/>. </summary>
         /// <param name="message"> Status message. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisForceRebootResponse(string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RedisForceRebootResult(string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Message = message;
             _serializedAdditionalRawData = serializedAdditionalRawData;

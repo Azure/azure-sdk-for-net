@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    /// <summary> Patch schedule entry for a Premium Redis Cache. </summary>
-    public partial class ScheduleEntry
+    /// <summary> Properties of upgrade notification. </summary>
+    public partial class RedisUpgradeNotification
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,38 +45,30 @@ namespace Azure.ResourceManager.Redis.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ScheduleEntry"/>. </summary>
-        /// <param name="dayOfWeek"> Day of the week when a cache can be patched. </param>
-        /// <param name="startHourUtc"> Start hour after which cache patching can start. </param>
-        public ScheduleEntry(DayOfWeek dayOfWeek, int startHourUtc)
+        /// <summary> Initializes a new instance of <see cref="RedisUpgradeNotification"/>. </summary>
+        internal RedisUpgradeNotification()
         {
-            DayOfWeek = dayOfWeek;
-            StartHourUtc = startHourUtc;
+            UpsellNotification = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScheduleEntry"/>. </summary>
-        /// <param name="dayOfWeek"> Day of the week when a cache can be patched. </param>
-        /// <param name="startHourUtc"> Start hour after which cache patching can start. </param>
-        /// <param name="maintenanceWindow"> ISO8601 timespan specifying how much time cache patching can take. </param>
+        /// <summary> Initializes a new instance of <see cref="RedisUpgradeNotification"/>. </summary>
+        /// <param name="name"> Name of upgrade notification. </param>
+        /// <param name="timestamp"> Timestamp when upgrade notification occurred. </param>
+        /// <param name="upsellNotification"> Details about this upgrade notification. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduleEntry(DayOfWeek dayOfWeek, int startHourUtc, TimeSpan? maintenanceWindow, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RedisUpgradeNotification(string name, DateTimeOffset? timestamp, IReadOnlyDictionary<string, string> upsellNotification, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            DayOfWeek = dayOfWeek;
-            StartHourUtc = startHourUtc;
-            MaintenanceWindow = maintenanceWindow;
+            Name = name;
+            Timestamp = timestamp;
+            UpsellNotification = upsellNotification;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScheduleEntry"/> for deserialization. </summary>
-        internal ScheduleEntry()
-        {
-        }
-
-        /// <summary> Day of the week when a cache can be patched. </summary>
-        public DayOfWeek DayOfWeek { get; set; }
-        /// <summary> Start hour after which cache patching can start. </summary>
-        public int StartHourUtc { get; set; }
-        /// <summary> ISO8601 timespan specifying how much time cache patching can take. </summary>
-        public TimeSpan? MaintenanceWindow { get; set; }
+        /// <summary> Name of upgrade notification. </summary>
+        public string Name { get; }
+        /// <summary> Timestamp when upgrade notification occurred. </summary>
+        public DateTimeOffset? Timestamp { get; }
+        /// <summary> Details about this upgrade notification. </summary>
+        public IReadOnlyDictionary<string, string> UpsellNotification { get; }
     }
 }

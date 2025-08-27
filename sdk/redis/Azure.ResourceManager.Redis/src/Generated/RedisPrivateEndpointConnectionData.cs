@@ -63,14 +63,14 @@ namespace Azure.ResourceManager.Redis
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="privateEndpoint"> The private endpoint resource. </param>
-        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
+        /// <param name="redisPrivateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="redisProvisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, RedisPrivateLinkServiceConnectionState privateLinkServiceConnectionState, RedisPrivateEndpointConnectionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal RedisPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubResource privateEndpoint, RedisPrivateLinkServiceConnectionState redisPrivateLinkServiceConnectionState, RedisPrivateEndpointConnectionProvisioningState? redisProvisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PrivateEndpoint = privateEndpoint;
-            PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
-            ProvisioningState = provisioningState;
+            RedisPrivateLinkServiceConnectionState = redisPrivateLinkServiceConnectionState;
+            RedisProvisioningState = redisProvisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
-        public RedisPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
+        public RedisPrivateLinkServiceConnectionState RedisPrivateLinkServiceConnectionState { get; set; }
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
-        public RedisPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
+        public RedisPrivateEndpointConnectionProvisioningState? RedisProvisioningState { get; }
     }
 }

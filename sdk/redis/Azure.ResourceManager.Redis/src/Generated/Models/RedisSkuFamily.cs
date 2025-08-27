@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Redis.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string CValue = "C";
-        private const string PValue = "P";
+        private const string BasicOrStandardValue = "C";
+        private const string PremiumValue = "P";
 
         /// <summary> The SKU family to use - must be 'C' for Basic/Standard SKU redis caches. *. </summary>
-        public static RedisSkuFamily C { get; } = new RedisSkuFamily(CValue);
+        public static RedisSkuFamily BasicOrStandard { get; } = new RedisSkuFamily(BasicOrStandardValue);
         /// <summary> The SKU family to use - must be 'P' for Premium SKU redis caches. *. </summary>
-        public static RedisSkuFamily P { get; } = new RedisSkuFamily(PValue);
+        public static RedisSkuFamily Premium { get; } = new RedisSkuFamily(PremiumValue);
         /// <summary> Determines if two <see cref="RedisSkuFamily"/> values are the same. </summary>
         public static bool operator ==(RedisSkuFamily left, RedisSkuFamily right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedisSkuFamily"/> values are not the same. </summary>

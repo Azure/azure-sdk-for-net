@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Redis.Models
 {
     /// <summary> Which Redis node(s) to reboot. Depending on this value data loss is possible. </summary>
-    public readonly partial struct RebootType : IEquatable<RebootType>
+    public readonly partial struct RedisRebootType : IEquatable<RedisRebootType>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="RebootType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisRebootType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RebootType(string value)
+        public RedisRebootType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -27,23 +27,23 @@ namespace Azure.ResourceManager.Redis.Models
         private const string AllNodesValue = "AllNodes";
 
         /// <summary> Reboot the primary nodes used for redis write operations. (This may trigger role changes.) *. </summary>
-        public static RebootType PrimaryNode { get; } = new RebootType(PrimaryNodeValue);
+        public static RedisRebootType PrimaryNode { get; } = new RedisRebootType(PrimaryNodeValue);
         /// <summary> Reboot only the secondary or replica nodes *. </summary>
-        public static RebootType SecondaryNode { get; } = new RebootType(SecondaryNodeValue);
+        public static RedisRebootType SecondaryNode { get; } = new RedisRebootType(SecondaryNodeValue);
         /// <summary> Reboot all nodes, not guaranteed to happen simultaneously. *. </summary>
-        public static RebootType AllNodes { get; } = new RebootType(AllNodesValue);
-        /// <summary> Determines if two <see cref="RebootType"/> values are the same. </summary>
-        public static bool operator ==(RebootType left, RebootType right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="RebootType"/> values are not the same. </summary>
-        public static bool operator !=(RebootType left, RebootType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RebootType"/>. </summary>
-        public static implicit operator RebootType(string value) => new RebootType(value);
+        public static RedisRebootType AllNodes { get; } = new RedisRebootType(AllNodesValue);
+        /// <summary> Determines if two <see cref="RedisRebootType"/> values are the same. </summary>
+        public static bool operator ==(RedisRebootType left, RedisRebootType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="RedisRebootType"/> values are not the same. </summary>
+        public static bool operator !=(RedisRebootType left, RedisRebootType right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisRebootType"/>. </summary>
+        public static implicit operator RedisRebootType(string value) => new RedisRebootType(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RebootType other && Equals(other);
+        public override bool Equals(object obj) => obj is RedisRebootType other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(RebootType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(RedisRebootType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

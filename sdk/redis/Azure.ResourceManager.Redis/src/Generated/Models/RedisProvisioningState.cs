@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Redis.Models
 {
     /// <summary> Redis instance provisioning status. </summary>
-    public readonly partial struct ProvisioningState : IEquatable<ProvisioningState>
+    public readonly partial struct RedisProvisioningState : IEquatable<RedisProvisioningState>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisProvisioningState"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ProvisioningState(string value)
+        public RedisProvisioningState(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -37,43 +37,43 @@ namespace Azure.ResourceManager.Redis.Models
         private const string ConfiguringAADValue = "ConfiguringAAD";
 
         /// <summary> A create operation is in progress. *. </summary>
-        public static ProvisioningState Creating { get; } = new ProvisioningState(CreatingValue);
+        public static RedisProvisioningState Creating { get; } = new RedisProvisioningState(CreatingValue);
         /// <summary> A delete operation is in progress. *. </summary>
-        public static ProvisioningState Deleting { get; } = new ProvisioningState(DeletingValue);
+        public static RedisProvisioningState Deleting { get; } = new RedisProvisioningState(DeletingValue);
         /// <summary> The cache is disabled and cannot be used. *. </summary>
-        public static ProvisioningState Disabled { get; } = new ProvisioningState(DisabledValue);
+        public static RedisProvisioningState Disabled { get; } = new RedisProvisioningState(DisabledValue);
         /// <summary> An operation such as create or update failed. If you failed to create the cache it will not be in a usable state, so you should delete and recreate it. *. </summary>
-        public static ProvisioningState Failed { get; } = new ProvisioningState(FailedValue);
+        public static RedisProvisioningState Failed { get; } = new RedisProvisioningState(FailedValue);
         /// <summary> Georeplication link is in progress *. </summary>
-        public static ProvisioningState Linking { get; } = new ProvisioningState(LinkingValue);
+        public static RedisProvisioningState Linking { get; } = new RedisProvisioningState(LinkingValue);
         /// <summary> An operation is in progress *. </summary>
-        public static ProvisioningState Provisioning { get; } = new ProvisioningState(ProvisioningValue);
+        public static RedisProvisioningState Provisioning { get; } = new RedisProvisioningState(ProvisioningValue);
         /// <summary> A scaling operation encountered an error and recovery is in progress. *. </summary>
-        public static ProvisioningState RecoveringScaleFailure { get; } = new ProvisioningState(RecoveringScaleFailureValue);
+        public static RedisProvisioningState RecoveringScaleFailure { get; } = new RedisProvisioningState(RecoveringScaleFailureValue);
         /// <summary> A scaling operation is in progress *. </summary>
-        public static ProvisioningState Scaling { get; } = new ProvisioningState(ScalingValue);
+        public static RedisProvisioningState Scaling { get; } = new RedisProvisioningState(ScalingValue);
         /// <summary> The most recent operation successfully completed *. </summary>
-        public static ProvisioningState Succeeded { get; } = new ProvisioningState(SucceededValue);
+        public static RedisProvisioningState Succeeded { get; } = new RedisProvisioningState(SucceededValue);
         /// <summary> Georeplication unlink is in progress *. </summary>
-        public static ProvisioningState Unlinking { get; } = new ProvisioningState(UnlinkingValue);
+        public static RedisProvisioningState Unlinking { get; } = new RedisProvisioningState(UnlinkingValue);
         /// <summary> The cache may be being disabled *. </summary>
-        public static ProvisioningState Unprovisioning { get; } = new ProvisioningState(UnprovisioningValue);
+        public static RedisProvisioningState Unprovisioning { get; } = new RedisProvisioningState(UnprovisioningValue);
         /// <summary> An update operation is in progress. *. </summary>
-        public static ProvisioningState Updating { get; } = new ProvisioningState(UpdatingValue);
+        public static RedisProvisioningState Updating { get; } = new RedisProvisioningState(UpdatingValue);
         /// <summary> An AAD configuration update operation is in progress. *. </summary>
-        public static ProvisioningState ConfiguringAAD { get; } = new ProvisioningState(ConfiguringAADValue);
-        /// <summary> Determines if two <see cref="ProvisioningState"/> values are the same. </summary>
-        public static bool operator ==(ProvisioningState left, ProvisioningState right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="ProvisioningState"/> values are not the same. </summary>
-        public static bool operator !=(ProvisioningState left, ProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ProvisioningState"/>. </summary>
-        public static implicit operator ProvisioningState(string value) => new ProvisioningState(value);
+        public static RedisProvisioningState ConfiguringAAD { get; } = new RedisProvisioningState(ConfiguringAADValue);
+        /// <summary> Determines if two <see cref="RedisProvisioningState"/> values are the same. </summary>
+        public static bool operator ==(RedisProvisioningState left, RedisProvisioningState right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="RedisProvisioningState"/> values are not the same. </summary>
+        public static bool operator !=(RedisProvisioningState left, RedisProvisioningState right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisProvisioningState"/>. </summary>
+        public static implicit operator RedisProvisioningState(string value) => new RedisProvisioningState(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ProvisioningState other && Equals(other);
+        public override bool Equals(object obj) => obj is RedisProvisioningState other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(ProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(RedisProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

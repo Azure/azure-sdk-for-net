@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="privateEndpointId"> The private endpoint resource. </param>
-        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
-        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
+        /// <param name="redisPrivateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="redisProvisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <returns> A new <see cref="Redis.RedisPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static RedisPrivateEndpointConnectionData RedisPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, RedisPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, RedisPrivateEndpointConnectionProvisioningState? provisioningState = null)
+        public static RedisPrivateEndpointConnectionData RedisPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, RedisPrivateLinkServiceConnectionState redisPrivateLinkServiceConnectionState = null, RedisPrivateEndpointConnectionProvisioningState? redisProvisioningState = null)
         {
             return new RedisPrivateEndpointConnectionData(
                 id,
@@ -83,9 +83,58 @@ namespace Azure.ResourceManager.Redis.Models
                 resourceType,
                 systemData,
                 privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null,
-                privateLinkServiceConnectionState,
-                provisioningState,
+                redisPrivateLinkServiceConnectionState,
+                redisProvisioningState,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RedisCommonConfiguration"/>. </summary>
+        /// <param name="isRdbBackupEnabled"> Specifies whether the RDB backup is enabled. </param>
+        /// <param name="rdbBackupFrequency"> Specifies the frequency for creating rdb backup in minutes. Valid values: (15, 30, 60, 360, 720, 1440). </param>
+        /// <param name="rdbBackupMaxSnapshotCount"> Specifies the maximum number of snapshots for rdb backup. </param>
+        /// <param name="rdbStorageConnectionString"> The storage account connection string for storing rdb file. </param>
+        /// <param name="isAofBackupEnabled"> Specifies whether the aof backup is enabled. </param>
+        /// <param name="aofStorageConnectionString0"> First storage account connection string. </param>
+        /// <param name="aofStorageConnectionString1"> Second storage account connection string. </param>
+        /// <param name="maxfragmentationmemoryReserved"> Value in megabytes reserved for fragmentation per shard. </param>
+        /// <param name="maxmemoryPolicy"> The eviction strategy used when your data won't fit within its memory limit. </param>
+        /// <param name="maxmemoryReserved"> Value in megabytes reserved for non-cache usage per shard e.g. failover. </param>
+        /// <param name="maxmemoryDelta"> Value in megabytes reserved for non-cache usage per shard e.g. failover. </param>
+        /// <param name="maxclients"> The max clients config. </param>
+        /// <param name="notifyKeyspaceEvents"> The keyspace events which should be monitored. </param>
+        /// <param name="preferredDataArchiveAuthMethod"> Preferred auth method to communicate to storage account used for data archive, specify SAS or ManagedIdentity, default value is SAS. </param>
+        /// <param name="preferredDataPersistenceAuthMethod"> Preferred auth method to communicate to storage account used for data persistence, specify SAS or ManagedIdentity, default value is SAS. </param>
+        /// <param name="zonalConfiguration"> Zonal Configuration. </param>
+        /// <param name="authnotrequired"> Specifies whether the authentication is disabled. Setting this property is highly discouraged from security point of view; you should never disable authentication using this property!. </param>
+        /// <param name="storageSubscriptionId"> SubscriptionId of the storage account for persistence (aof/rdb) using ManagedIdentity. </param>
+        /// <param name="isAadEnabled"> Specifies whether AAD based authentication has been enabled or disabled for the cache. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="Models.RedisCommonConfiguration"/> instance for mocking. </returns>
+        public static RedisCommonConfiguration RedisCommonConfiguration(bool? isRdbBackupEnabled = null, string rdbBackupFrequency = null, int? rdbBackupMaxSnapshotCount = null, string rdbStorageConnectionString = null, bool? isAofBackupEnabled = null, string aofStorageConnectionString0 = null, string aofStorageConnectionString1 = null, string maxfragmentationmemoryReserved = null, string maxmemoryPolicy = null, string maxmemoryReserved = null, string maxmemoryDelta = null, string maxclients = null, string notifyKeyspaceEvents = null, string preferredDataArchiveAuthMethod = null, string preferredDataPersistenceAuthMethod = null, string zonalConfiguration = null, string authnotrequired = null, string storageSubscriptionId = null, string isAadEnabled = null, IDictionary<string, BinaryData> additionalProperties = null)
+        {
+            additionalProperties ??= new Dictionary<string, BinaryData>();
+
+            return new RedisCommonConfiguration(
+                isRdbBackupEnabled,
+                rdbBackupFrequency,
+                rdbBackupMaxSnapshotCount,
+                rdbStorageConnectionString,
+                isAofBackupEnabled,
+                aofStorageConnectionString0,
+                aofStorageConnectionString1,
+                maxfragmentationmemoryReserved,
+                maxmemoryPolicy,
+                maxmemoryReserved,
+                maxmemoryDelta,
+                maxclients,
+                notifyKeyspaceEvents,
+                preferredDataArchiveAuthMethod,
+                preferredDataPersistenceAuthMethod,
+                zonalConfiguration,
+                authnotrequired,
+                storageSubscriptionId,
+                isAadEnabled,
+                additionalProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RedisResourceCreateOrUpdateContent"/>. </summary>
@@ -113,24 +162,24 @@ namespace Azure.ResourceManager.Redis.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.UpgradeNotification"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RedisUpgradeNotification"/>. </summary>
         /// <param name="name"> Name of upgrade notification. </param>
         /// <param name="timestamp"> Timestamp when upgrade notification occurred. </param>
         /// <param name="upsellNotification"> Details about this upgrade notification. </param>
-        /// <returns> A new <see cref="Models.UpgradeNotification"/> instance for mocking. </returns>
-        public static UpgradeNotification UpgradeNotification(string name = null, DateTimeOffset? timestamp = null, IReadOnlyDictionary<string, string> upsellNotification = null)
+        /// <returns> A new <see cref="Models.RedisUpgradeNotification"/> instance for mocking. </returns>
+        public static RedisUpgradeNotification RedisUpgradeNotification(string name = null, DateTimeOffset? timestamp = null, IReadOnlyDictionary<string, string> upsellNotification = null)
         {
             upsellNotification ??= new Dictionary<string, string>();
 
-            return new UpgradeNotification(name, timestamp, upsellNotification, serializedAdditionalRawData: null);
+            return new RedisUpgradeNotification(name, timestamp, upsellNotification, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RedisForceRebootResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RedisForceRebootResult"/>. </summary>
         /// <param name="message"> Status message. </param>
-        /// <returns> A new <see cref="Models.RedisForceRebootResponse"/> instance for mocking. </returns>
-        public static RedisForceRebootResponse RedisForceRebootResponse(string message = null)
+        /// <returns> A new <see cref="Models.RedisForceRebootResult"/> instance for mocking. </returns>
+        public static RedisForceRebootResult RedisForceRebootResult(string message = null)
         {
-            return new RedisForceRebootResponse(message, serializedAdditionalRawData: null);
+            return new RedisForceRebootResult(message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExportRDBContent"/>. </summary>
@@ -236,9 +285,9 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="scheduleEntries"> List of patch schedules for a Redis cache. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="Redis.RedisPatchScheduleData"/> instance for mocking. </returns>
-        public static RedisPatchScheduleData RedisPatchScheduleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<ScheduleEntry> scheduleEntries = null, string location = null)
+        public static RedisPatchScheduleData RedisPatchScheduleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<RedisPatchScheduleSetting> scheduleEntries = null, string location = null)
         {
-            scheduleEntries ??= new List<ScheduleEntry>();
+            scheduleEntries ??= new List<RedisPatchScheduleSetting>();
 
             return new RedisPatchScheduleData(
                 id,
@@ -275,7 +324,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="geoReplicatedPrimaryHostName"> The unchanging DNS name which will always point to current geo-primary cache among the linked redis caches for seamless Geo Failover experience. </param>
         /// <param name="primaryHostName"> The changing DNS name that resolves to the current geo-primary cache among the linked redis caches before or after the Geo Failover. </param>
         /// <returns> A new <see cref="Models.RedisLinkedServerWithPropertyCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static RedisLinkedServerWithPropertyCreateOrUpdateContent RedisLinkedServerWithPropertyCreateOrUpdateContent(string linkedRedisCacheId = null, string linkedRedisCacheLocation = null, ReplicationRole serverRole = default, string geoReplicatedPrimaryHostName = null, string primaryHostName = null)
+        public static RedisLinkedServerWithPropertyCreateOrUpdateContent RedisLinkedServerWithPropertyCreateOrUpdateContent(string linkedRedisCacheId = null, string linkedRedisCacheLocation = null, RedisLinkedServerRole serverRole = default, string geoReplicatedPrimaryHostName = null, string primaryHostName = null)
         {
             return new RedisLinkedServerWithPropertyCreateOrUpdateContent(
                 linkedRedisCacheId,
@@ -318,7 +367,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="objectIdAlias"> User friendly name for object id. Also represents username for token based authentication. </param>
         /// <param name="accessPolicyName"> The name of the access policy that is being assigned. </param>
         /// <returns> A new <see cref="Redis.RedisCacheAccessPolicyAssignmentData"/> instance for mocking. </returns>
-        public static RedisCacheAccessPolicyAssignmentData RedisCacheAccessPolicyAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AccessPolicyAssignmentProvisioningState? provisioningState = null, string objectId = null, string objectIdAlias = null, string accessPolicyName = null)
+        public static RedisCacheAccessPolicyAssignmentData RedisCacheAccessPolicyAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AccessPolicyAssignmentProvisioningState? provisioningState = null, Guid? objectId = null, string objectIdAlias = null, string accessPolicyName = null)
         {
             return new RedisCacheAccessPolicyAssignmentData(
                 id,
@@ -332,7 +381,7 @@ namespace Azure.ResourceManager.Redis.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OperationStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RedisOperationStatus"/>. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -342,13 +391,13 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="operations"> The operations list. </param>
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="properties"> Additional properties from RP, only when operation is successful. </param>
-        /// <returns> A new <see cref="Models.OperationStatus"/> instance for mocking. </returns>
-        public static OperationStatus OperationStatus(string id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, IReadOnlyDictionary<string, BinaryData> properties = null)
+        /// <returns> A new <see cref="Models.RedisOperationStatus"/> instance for mocking. </returns>
+        public static RedisOperationStatus RedisOperationStatus(string id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, IReadOnlyDictionary<string, BinaryData> properties = null)
         {
             operations ??= new List<OperationStatusResult>();
             properties ??= new Dictionary<string, BinaryData>();
 
-            return new OperationStatus(
+            return new RedisOperationStatus(
                 id,
                 name,
                 status,

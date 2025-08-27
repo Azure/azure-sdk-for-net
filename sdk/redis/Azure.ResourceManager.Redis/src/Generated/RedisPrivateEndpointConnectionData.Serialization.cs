@@ -46,15 +46,15 @@ namespace Azure.ResourceManager.Redis
                 writer.WritePropertyName("privateEndpoint"u8);
                 ((IJsonModel<SubResource>)PrivateEndpoint).Write(writer, options);
             }
-            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
+            if (Optional.IsDefined(RedisPrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
+                writer.WriteObjectValue(RedisPrivateLinkServiceConnectionState, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && Optional.IsDefined(RedisProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WriteStringValue(RedisProvisioningState.Value.ToString());
             }
             writer.WriteEndObject();
         }

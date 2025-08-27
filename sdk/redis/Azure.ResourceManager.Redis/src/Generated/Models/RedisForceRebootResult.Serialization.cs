@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    public partial class RedisForceRebootResponse : IUtf8JsonSerializable, IJsonModel<RedisForceRebootResponse>
+    public partial class RedisForceRebootResult : IUtf8JsonSerializable, IJsonModel<RedisForceRebootResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisForceRebootResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisForceRebootResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<RedisForceRebootResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RedisForceRebootResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisForceRebootResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisForceRebootResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisForceRebootResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisForceRebootResult)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(Message))
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.Redis.Models
             }
         }
 
-        RedisForceRebootResponse IJsonModel<RedisForceRebootResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RedisForceRebootResult IJsonModel<RedisForceRebootResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisForceRebootResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisForceRebootResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisForceRebootResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisForceRebootResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRedisForceRebootResponse(document.RootElement, options);
+            return DeserializeRedisForceRebootResult(document.RootElement, options);
         }
 
-        internal static RedisForceRebootResponse DeserializeRedisForceRebootResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RedisForceRebootResult DeserializeRedisForceRebootResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -92,38 +92,38 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RedisForceRebootResponse(message, serializedAdditionalRawData);
+            return new RedisForceRebootResult(message, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<RedisForceRebootResponse>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RedisForceRebootResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisForceRebootResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisForceRebootResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RedisForceRebootResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisForceRebootResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        RedisForceRebootResponse IPersistableModel<RedisForceRebootResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RedisForceRebootResult IPersistableModel<RedisForceRebootResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisForceRebootResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisForceRebootResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRedisForceRebootResponse(document.RootElement, options);
+                        return DeserializeRedisForceRebootResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RedisForceRebootResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisForceRebootResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<RedisForceRebootResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RedisForceRebootResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

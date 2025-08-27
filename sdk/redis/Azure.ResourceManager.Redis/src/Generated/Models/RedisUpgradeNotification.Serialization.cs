@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    public partial class UpgradeNotification : IUtf8JsonSerializable, IJsonModel<UpgradeNotification>
+    public partial class RedisUpgradeNotification : IUtf8JsonSerializable, IJsonModel<RedisUpgradeNotification>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpgradeNotification>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisUpgradeNotification>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<UpgradeNotification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RedisUpgradeNotification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UpgradeNotification>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisUpgradeNotification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpgradeNotification)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisUpgradeNotification)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(Name))
@@ -72,19 +72,19 @@ namespace Azure.ResourceManager.Redis.Models
             }
         }
 
-        UpgradeNotification IJsonModel<UpgradeNotification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RedisUpgradeNotification IJsonModel<RedisUpgradeNotification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UpgradeNotification>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisUpgradeNotification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpgradeNotification)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisUpgradeNotification)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUpgradeNotification(document.RootElement, options);
+            return DeserializeRedisUpgradeNotification(document.RootElement, options);
         }
 
-        internal static UpgradeNotification DeserializeUpgradeNotification(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RedisUpgradeNotification DeserializeRedisUpgradeNotification(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -133,38 +133,38 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UpgradeNotification(name, timestamp, upsellNotification ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new RedisUpgradeNotification(name, timestamp, upsellNotification ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<UpgradeNotification>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RedisUpgradeNotification>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UpgradeNotification>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisUpgradeNotification>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(UpgradeNotification)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisUpgradeNotification)} does not support writing '{options.Format}' format.");
             }
         }
 
-        UpgradeNotification IPersistableModel<UpgradeNotification>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RedisUpgradeNotification IPersistableModel<RedisUpgradeNotification>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UpgradeNotification>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisUpgradeNotification>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeUpgradeNotification(document.RootElement, options);
+                        return DeserializeRedisUpgradeNotification(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpgradeNotification)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisUpgradeNotification)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<UpgradeNotification>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RedisUpgradeNotification>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

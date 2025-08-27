@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="shardId"> If clustering is enabled, the ID of the shard to be rebooted. </param>
         /// <param name="ports"> A list of redis instances to reboot, specified by per-instance SSL ports or non-SSL ports. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisRebootContent(RebootType? rebootType, int? shardId, IList<int> ports, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RedisRebootContent(RedisRebootType? rebootType, int? shardId, IList<int> ports, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RebootType = rebootType;
             ShardId = shardId;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Redis.Models
         }
 
         /// <summary> Which Redis node(s) to reboot. Depending on this value data loss is possible. </summary>
-        public RebootType? RebootType { get; set; }
+        public RedisRebootType? RebootType { get; set; }
         /// <summary> If clustering is enabled, the ID of the shard to be rebooted. </summary>
         public int? ShardId { get; set; }
         /// <summary> A list of redis instances to reboot, specified by per-instance SSL ports or non-SSL ports. </summary>

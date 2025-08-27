@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Redis.Models
 {
     /// <summary> Parameters body to pass for resource name availability check. </summary>
-    public partial class CheckNameAvailabilityContent
+    public partial class RedisNameAvailabilityContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.Redis.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. The only legal value of this property for checking redis cache name availability is 'Microsoft.Cache/redis'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="type"/> is null. </exception>
-        public CheckNameAvailabilityContent(string name, string type)
+        public RedisNameAvailabilityContent(string name, string type)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(type, nameof(type));
@@ -58,19 +58,19 @@ namespace Azure.ResourceManager.Redis.Models
             Type = type;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. The only legal value of this property for checking redis cache name availability is 'Microsoft.Cache/redis'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CheckNameAvailabilityContent(string name, string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RedisNameAvailabilityContent(string name, string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Type = type;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CheckNameAvailabilityContent"/> for deserialization. </summary>
-        internal CheckNameAvailabilityContent()
+        /// <summary> Initializes a new instance of <see cref="RedisNameAvailabilityContent"/> for deserialization. </summary>
+        internal RedisNameAvailabilityContent()
         {
         }
 

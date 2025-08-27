@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    public partial class ScheduleEntry : IUtf8JsonSerializable, IJsonModel<ScheduleEntry>
+    public partial class RedisPatchScheduleSetting : IUtf8JsonSerializable, IJsonModel<RedisPatchScheduleSetting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduleEntry>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisPatchScheduleSetting>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ScheduleEntry>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RedisPatchScheduleSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduleEntry>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisPatchScheduleSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduleEntry)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisPatchScheduleSetting)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("dayOfWeek"u8);
@@ -60,19 +60,19 @@ namespace Azure.ResourceManager.Redis.Models
             }
         }
 
-        ScheduleEntry IJsonModel<ScheduleEntry>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RedisPatchScheduleSetting IJsonModel<RedisPatchScheduleSetting>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduleEntry>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisPatchScheduleSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduleEntry)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisPatchScheduleSetting)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeScheduleEntry(document.RootElement, options);
+            return DeserializeRedisPatchScheduleSetting(document.RootElement, options);
         }
 
-        internal static ScheduleEntry DeserializeScheduleEntry(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RedisPatchScheduleSetting DeserializeRedisPatchScheduleSetting(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 return null;
             }
-            DayOfWeek dayOfWeek = default;
+            RedisDayOfWeek dayOfWeek = default;
             int startHourUtc = default;
             TimeSpan? maintenanceWindow = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 if (property.NameEquals("dayOfWeek"u8))
                 {
-                    dayOfWeek = property.Value.GetString().ToDayOfWeek();
+                    dayOfWeek = property.Value.GetString().ToRedisDayOfWeek();
                     continue;
                 }
                 if (property.NameEquals("startHourUtc"u8))
@@ -112,38 +112,38 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ScheduleEntry(dayOfWeek, startHourUtc, maintenanceWindow, serializedAdditionalRawData);
+            return new RedisPatchScheduleSetting(dayOfWeek, startHourUtc, maintenanceWindow, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ScheduleEntry>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RedisPatchScheduleSetting>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduleEntry>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisPatchScheduleSetting>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ScheduleEntry)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisPatchScheduleSetting)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ScheduleEntry IPersistableModel<ScheduleEntry>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RedisPatchScheduleSetting IPersistableModel<RedisPatchScheduleSetting>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScheduleEntry>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisPatchScheduleSetting>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeScheduleEntry(document.RootElement, options);
+                        return DeserializeRedisPatchScheduleSetting(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScheduleEntry)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisPatchScheduleSetting)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ScheduleEntry>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RedisPatchScheduleSetting>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

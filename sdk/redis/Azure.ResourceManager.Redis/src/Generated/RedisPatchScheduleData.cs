@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Redis
         /// <summary> Initializes a new instance of <see cref="RedisPatchScheduleData"/>. </summary>
         /// <param name="scheduleEntries"> List of patch schedules for a Redis cache. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleEntries"/> is null. </exception>
-        public RedisPatchScheduleData(IEnumerable<ScheduleEntry> scheduleEntries)
+        public RedisPatchScheduleData(IEnumerable<RedisPatchScheduleSetting> scheduleEntries)
         {
             Argument.AssertNotNull(scheduleEntries, nameof(scheduleEntries));
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="scheduleEntries"> List of patch schedules for a Redis cache. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisPatchScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ScheduleEntry> scheduleEntries, string location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal RedisPatchScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<RedisPatchScheduleSetting> scheduleEntries, string location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ScheduleEntries = scheduleEntries;
             Location = location;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> List of patch schedules for a Redis cache. </summary>
-        public IList<ScheduleEntry> ScheduleEntries { get; }
+        public IList<RedisPatchScheduleSetting> ScheduleEntries { get; }
         /// <summary> The geo-location where the resource lives. </summary>
         public string Location { get; }
     }

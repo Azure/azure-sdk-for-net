@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="data"> Parameters to set the patching schedule for Redis cache. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<RedisPatchScheduleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, DefaultName @default, RedisPatchScheduleData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<RedisPatchScheduleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, RedisPatchScheduleDefaultName @default, RedisPatchScheduleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="data"> Parameters to set the patching schedule for Redis cache. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<RedisPatchScheduleResource> CreateOrUpdate(WaitUntil waitUntil, DefaultName @default, RedisPatchScheduleData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<RedisPatchScheduleResource> CreateOrUpdate(WaitUntil waitUntil, RedisPatchScheduleDefaultName @default, RedisPatchScheduleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Redis
         /// </summary>
         /// <param name="default"> The name of the RedisPatchSchedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RedisPatchScheduleResource>> GetAsync(DefaultName @default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RedisPatchScheduleResource>> GetAsync(RedisPatchScheduleDefaultName @default, CancellationToken cancellationToken = default)
         {
             using var scope = _redisPatchScheduleClientDiagnostics.CreateScope("RedisPatchScheduleCollection.Get");
             scope.Start();
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Redis
         /// </summary>
         /// <param name="default"> The name of the RedisPatchSchedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RedisPatchScheduleResource> Get(DefaultName @default, CancellationToken cancellationToken = default)
+        public virtual Response<RedisPatchScheduleResource> Get(RedisPatchScheduleDefaultName @default, CancellationToken cancellationToken = default)
         {
             using var scope = _redisPatchScheduleClientDiagnostics.CreateScope("RedisPatchScheduleCollection.Get");
             scope.Start();
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Redis
         /// </summary>
         /// <param name="default"> The name of the RedisPatchSchedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(DefaultName @default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(RedisPatchScheduleDefaultName @default, CancellationToken cancellationToken = default)
         {
             using var scope = _redisPatchScheduleClientDiagnostics.CreateScope("RedisPatchScheduleCollection.Exists");
             scope.Start();
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Redis
         /// </summary>
         /// <param name="default"> The name of the RedisPatchSchedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(DefaultName @default, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(RedisPatchScheduleDefaultName @default, CancellationToken cancellationToken = default)
         {
             using var scope = _redisPatchScheduleClientDiagnostics.CreateScope("RedisPatchScheduleCollection.Exists");
             scope.Start();
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.Redis
         /// </summary>
         /// <param name="default"> The name of the RedisPatchSchedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<RedisPatchScheduleResource>> GetIfExistsAsync(DefaultName @default, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<RedisPatchScheduleResource>> GetIfExistsAsync(RedisPatchScheduleDefaultName @default, CancellationToken cancellationToken = default)
         {
             using var scope = _redisPatchScheduleClientDiagnostics.CreateScope("RedisPatchScheduleCollection.GetIfExists");
             scope.Start();
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Redis
         /// </summary>
         /// <param name="default"> The name of the RedisPatchSchedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<RedisPatchScheduleResource> GetIfExists(DefaultName @default, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<RedisPatchScheduleResource> GetIfExists(RedisPatchScheduleDefaultName @default, CancellationToken cancellationToken = default)
         {
             using var scope = _redisPatchScheduleClientDiagnostics.CreateScope("RedisPatchScheduleCollection.GetIfExists");
             scope.Start();

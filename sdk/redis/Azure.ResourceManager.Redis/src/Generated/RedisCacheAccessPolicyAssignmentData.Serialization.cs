@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Redis
             if (Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("objectId"u8);
-                writer.WriteStringValue(ObjectId);
+                writer.WriteStringValue(ObjectId.Value);
             }
             if (Optional.IsDefined(ObjectIdAlias))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Redis
             ResourceType type = default;
             SystemData systemData = default;
             AccessPolicyAssignmentProvisioningState? provisioningState = default;
-            string objectId = default;
+            Guid? objectId = default;
             string objectIdAlias = default;
             string accessPolicyName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -139,7 +139,11 @@ namespace Azure.ResourceManager.Redis
                         }
                         if (property0.NameEquals("objectId"u8))
                         {
-                            objectId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            objectId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("objectIdAlias"u8))

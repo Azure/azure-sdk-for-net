@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Redis.Models
 {
     /// <summary> Role of the linked server. </summary>
-    public enum ReplicationRole
+    public enum RedisLinkedServerRole
     {
         /// <summary> The linked server is in the writable primary role *. </summary>
         Primary,

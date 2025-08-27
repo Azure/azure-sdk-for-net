@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Redis
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            ProvisioningState? provisioningState = default;
+            RedisProvisioningState? provisioningState = default;
             string hostName = default;
             int? port = default;
             int? sslPort = default;
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Redis
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new RedisProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("hostName"u8))

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="operationId"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/>, <paramref name="operationId"/> or <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OperationStatus>> GetAsync(string location, string operationId, string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<RedisOperationStatus>> GetAsync(string location, string operationId, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.Redis
             {
                 case 200:
                     {
-                        OperationStatus value = default;
+                        RedisOperationStatus value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = OperationStatus.DeserializeOperationStatus(document.RootElement);
+                        value = RedisOperationStatus.DeserializeRedisOperationStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/>, <paramref name="operationId"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/>, <paramref name="operationId"/> or <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OperationStatus> Get(string location, string operationId, string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<RedisOperationStatus> Get(string location, string operationId, string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
@@ -118,9 +118,9 @@ namespace Azure.ResourceManager.Redis
             {
                 case 200:
                     {
-                        OperationStatus value = default;
+                        RedisOperationStatus value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = OperationStatus.DeserializeOperationStatus(document.RootElement);
+                        value = RedisOperationStatus.DeserializeRedisOperationStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

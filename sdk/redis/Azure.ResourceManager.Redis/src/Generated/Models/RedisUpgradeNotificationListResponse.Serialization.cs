@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    internal partial class NotificationListResponse : IUtf8JsonSerializable, IJsonModel<NotificationListResponse>
+    internal partial class RedisUpgradeNotificationListResponse : IUtf8JsonSerializable, IJsonModel<RedisUpgradeNotificationListResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationListResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisUpgradeNotificationListResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<NotificationListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RedisUpgradeNotificationListResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NotificationListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisUpgradeNotificationListResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationListResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisUpgradeNotificationListResponse)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("value"u8);
@@ -63,19 +63,19 @@ namespace Azure.ResourceManager.Redis.Models
             }
         }
 
-        NotificationListResponse IJsonModel<NotificationListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RedisUpgradeNotificationListResponse IJsonModel<RedisUpgradeNotificationListResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NotificationListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisUpgradeNotificationListResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationListResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisUpgradeNotificationListResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNotificationListResponse(document.RootElement, options);
+            return DeserializeRedisUpgradeNotificationListResponse(document.RootElement, options);
         }
 
-        internal static NotificationListResponse DeserializeNotificationListResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RedisUpgradeNotificationListResponse DeserializeRedisUpgradeNotificationListResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 return null;
             }
-            IReadOnlyList<UpgradeNotification> value = default;
+            IReadOnlyList<RedisUpgradeNotification> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<UpgradeNotification> array = new List<UpgradeNotification>();
+                    List<RedisUpgradeNotification> array = new List<RedisUpgradeNotification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UpgradeNotification.DeserializeUpgradeNotification(item, options));
+                        array.Add(RedisUpgradeNotification.DeserializeRedisUpgradeNotification(item, options));
                     }
                     value = array;
                     continue;
@@ -114,38 +114,38 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NotificationListResponse(value, nextLink, serializedAdditionalRawData);
+            return new RedisUpgradeNotificationListResponse(value, nextLink, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<NotificationListResponse>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RedisUpgradeNotificationListResponse>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NotificationListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisUpgradeNotificationListResponse>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NotificationListResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisUpgradeNotificationListResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NotificationListResponse IPersistableModel<NotificationListResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RedisUpgradeNotificationListResponse IPersistableModel<RedisUpgradeNotificationListResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NotificationListResponse>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisUpgradeNotificationListResponse>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNotificationListResponse(document.RootElement, options);
+                        return DeserializeRedisUpgradeNotificationListResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NotificationListResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisUpgradeNotificationListResponse)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NotificationListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RedisUpgradeNotificationListResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

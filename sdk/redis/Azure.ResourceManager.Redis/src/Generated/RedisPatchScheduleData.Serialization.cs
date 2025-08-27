@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Redis
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            IList<ScheduleEntry> scheduleEntries = default;
+            IList<RedisPatchScheduleSetting> scheduleEntries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.Redis
                     {
                         if (property0.NameEquals("scheduleEntries"u8))
                         {
-                            List<ScheduleEntry> array = new List<ScheduleEntry>();
+                            List<RedisPatchScheduleSetting> array = new List<RedisPatchScheduleSetting>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ScheduleEntry.DeserializeScheduleEntry(item, options));
+                                array.Add(RedisPatchScheduleSetting.DeserializeRedisPatchScheduleSetting(item, options));
                             }
                             scheduleEntries = array;
                             continue;
