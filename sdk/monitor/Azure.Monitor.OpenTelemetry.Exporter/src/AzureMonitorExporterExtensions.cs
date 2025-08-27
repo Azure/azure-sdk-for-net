@@ -79,7 +79,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     AzureMonitorExporterEventSource.Log.LiveMetricsNotSupported(methodName: nameof(AddAzureMonitorTraceExporter));
                 }
 
-                builder.SetSampler(SamplerConfig.CreateSampler(exporterOptions));
+                builder.SetSampler(exporterOptions.TracesPerSecond != null ?
+                    new RateLimitedSampler(exporterOptions.TracesPerSecond.Value) :
+                    new ApplicationInsightsSampler(exporterOptions.SamplingRatio));
 
                 if (credential != null)
                 {
