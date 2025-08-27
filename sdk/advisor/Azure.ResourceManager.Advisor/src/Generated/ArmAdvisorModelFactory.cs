@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TriageResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TriageResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -358,10 +358,10 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <param name="resourceGroup"> Name of the resource group this triageResource belongs to. </param>
         /// <param name="resourceId"> Full Azure resource id path of the resource this triageResource corresponds to. </param>
         /// <param name="resourceName"> Name of the resource this triageResource corresponds to. </param>
-        /// <returns> A new <see cref="Models.TriageResource"/> instance for mocking. </returns>
-        public static TriageResource TriageResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string reviewId = null, string recommendationId = null, string subscriptionId = null, string resourceGroup = null, ResourceIdentifier resourceId = null, string resourceName = null)
+        /// <returns> A new <see cref="Models.TriageResourceData"/> instance for mocking. </returns>
+        public static TriageResourceData TriageResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string reviewId = null, string recommendationId = null, string subscriptionId = null, string resourceGroup = null, ResourceIdentifier resourceId = null, string resourceName = null)
         {
-            return new TriageResource(
+            return new TriageResourceData(
                 id,
                 name,
                 resourceType,

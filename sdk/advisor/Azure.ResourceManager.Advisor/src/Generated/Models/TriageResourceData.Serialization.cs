@@ -15,11 +15,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Advisor.Models
 {
-    public partial class TriageResource : IUtf8JsonSerializable, IJsonModel<TriageResource>
+    public partial class TriageResourceData : IUtf8JsonSerializable, IJsonModel<TriageResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TriageResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TriageResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<TriageResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TriageResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TriageResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TriageResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TriageResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TriageResourceData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -72,19 +72,19 @@ namespace Azure.ResourceManager.Advisor.Models
             writer.WriteEndObject();
         }
 
-        TriageResource IJsonModel<TriageResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        TriageResourceData IJsonModel<TriageResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TriageResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TriageResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TriageResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TriageResourceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTriageResource(document.RootElement, options);
+            return DeserializeTriageResourceData(document.RootElement, options);
         }
 
-        internal static TriageResource DeserializeTriageResource(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static TriageResourceData DeserializeTriageResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TriageResource(
+            return new TriageResourceData(
                 id,
                 name,
                 type,
@@ -196,35 +196,35 @@ namespace Azure.ResourceManager.Advisor.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<TriageResource>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<TriageResourceData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TriageResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TriageResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAdvisorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TriageResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TriageResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        TriageResource IPersistableModel<TriageResource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        TriageResourceData IPersistableModel<TriageResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TriageResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TriageResourceData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeTriageResource(document.RootElement, options);
+                        return DeserializeTriageResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TriageResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TriageResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<TriageResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TriageResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

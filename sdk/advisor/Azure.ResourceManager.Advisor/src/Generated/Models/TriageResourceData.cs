@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Advisor.Models
 {
     /// <summary> Triage resource data structure. </summary>
-    public partial class TriageResource : ResourceData
+    public partial class TriageResourceData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.Advisor.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TriageResource"/>. </summary>
-        internal TriageResource()
+        /// <summary> Initializes a new instance of <see cref="TriageResourceData"/>. </summary>
+        internal TriageResourceData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TriageResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriageResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <param name="resourceId"> Full Azure resource id path of the resource this triageResource corresponds to. </param>
         /// <param name="resourceName"> Name of the resource this triageResource corresponds to. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TriageResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string reviewId, string recommendationId, string subscriptionId, string resourceGroup, ResourceIdentifier resourceId, string resourceName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal TriageResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string reviewId, string recommendationId, string subscriptionId, string resourceGroup, ResourceIdentifier resourceId, string resourceName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ReviewId = reviewId;
             RecommendationId = recommendationId;

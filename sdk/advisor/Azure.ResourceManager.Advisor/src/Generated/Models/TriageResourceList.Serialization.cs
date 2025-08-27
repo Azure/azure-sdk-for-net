@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Advisor.Models
 {
-    internal partial class TriageResourceCollection : IUtf8JsonSerializable, IJsonModel<TriageResourceCollection>
+    internal partial class TriageResourceList : IUtf8JsonSerializable, IJsonModel<TriageResourceList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TriageResourceCollection>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TriageResourceList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<TriageResourceCollection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TriageResourceList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TriageResourceCollection>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TriageResourceList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TriageResourceCollection)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TriageResourceList)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("value"u8);
@@ -63,19 +63,19 @@ namespace Azure.ResourceManager.Advisor.Models
             }
         }
 
-        TriageResourceCollection IJsonModel<TriageResourceCollection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        TriageResourceList IJsonModel<TriageResourceList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TriageResourceCollection>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TriageResourceList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TriageResourceCollection)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TriageResourceList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTriageResourceCollection(document.RootElement, options);
+            return DeserializeTriageResourceList(document.RootElement, options);
         }
 
-        internal static TriageResourceCollection DeserializeTriageResourceCollection(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static TriageResourceList DeserializeTriageResourceList(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Advisor.Models
             {
                 return null;
             }
-            IReadOnlyList<TriageResource> value = default;
+            IReadOnlyList<TriageResourceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Advisor.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<TriageResource> array = new List<TriageResource>();
+                    List<TriageResourceData> array = new List<TriageResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TriageResource.DeserializeTriageResource(item, options));
+                        array.Add(TriageResourceData.DeserializeTriageResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -114,38 +114,38 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TriageResourceCollection(value, nextLink, serializedAdditionalRawData);
+            return new TriageResourceList(value, nextLink, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<TriageResourceCollection>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<TriageResourceList>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TriageResourceCollection>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TriageResourceList>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAdvisorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TriageResourceCollection)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TriageResourceList)} does not support writing '{options.Format}' format.");
             }
         }
 
-        TriageResourceCollection IPersistableModel<TriageResourceCollection>.Create(BinaryData data, ModelReaderWriterOptions options)
+        TriageResourceList IPersistableModel<TriageResourceList>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TriageResourceCollection>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<TriageResourceList>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeTriageResourceCollection(document.RootElement, options);
+                        return DeserializeTriageResourceList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TriageResourceCollection)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TriageResourceList)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<TriageResourceCollection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TriageResourceList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

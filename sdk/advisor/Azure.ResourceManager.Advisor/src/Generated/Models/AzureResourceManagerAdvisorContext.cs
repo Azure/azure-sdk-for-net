@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Advisor
     [ModelReaderWriterBuildable(typeof(TrackedRecommendationPropertiesPayloadProperties))]
     [ModelReaderWriterBuildable(typeof(TriageRecommendation))]
     [ModelReaderWriterBuildable(typeof(TriageRecommendationCollection))]
-    [ModelReaderWriterBuildable(typeof(TriageResource))]
-    [ModelReaderWriterBuildable(typeof(TriageResourceCollection))]
+    [ModelReaderWriterBuildable(typeof(TriageResourceData))]
+    [ModelReaderWriterBuildable(typeof(TriageResourceList))]
     [ModelReaderWriterBuildable(typeof(WorkloadListResult))]
     [ModelReaderWriterBuildable(typeof(WorkloadResult))]
     public partial class AzureResourceManagerAdvisorContext : ModelReaderWriterContext

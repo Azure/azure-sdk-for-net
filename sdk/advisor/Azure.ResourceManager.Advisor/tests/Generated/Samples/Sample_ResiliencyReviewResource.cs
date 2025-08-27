@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Advisor.Samples
             // invoke the operation
             string recommendationId = "22222222-1111-2222-3333-444444444444";
             string recommendationResourceId = "33333333-1111-2222-3333-444444444444";
-            TriageResource result = await resiliencyReview.GetTriageResourceAsync(recommendationId, recommendationResourceId);
+            TriageResourceData result = await resiliencyReview.GetTriageResourceAsync(recommendationId, recommendationResourceId);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Advisor.Samples
 
             // invoke the operation and iterate over the result
             string recommendationId = "22222222-1111-2222-3333-444444444444";
-            await foreach (TriageResource item in resiliencyReview.GetTriageResourcesAsync(recommendationId))
+            await foreach (TriageResourceData item in resiliencyReview.GetTriageResourcesAsync(recommendationId))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

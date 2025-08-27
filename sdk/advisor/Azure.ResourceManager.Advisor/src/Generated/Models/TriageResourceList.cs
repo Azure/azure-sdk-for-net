@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.Advisor.Models
 {
     /// <summary> Collection of Advisor triage resources. </summary>
-    internal partial class TriageResourceCollection
+    internal partial class TriageResourceList
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,34 +46,34 @@ namespace Azure.ResourceManager.Advisor.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TriageResourceCollection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriageResourceList"/>. </summary>
         /// <param name="value"> The TriageResource items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal TriageResourceCollection(IEnumerable<TriageResource> value)
+        internal TriageResourceList(IEnumerable<TriageResourceData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TriageResourceCollection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriageResourceList"/>. </summary>
         /// <param name="value"> The TriageResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TriageResourceCollection(IReadOnlyList<TriageResource> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TriageResourceList(IReadOnlyList<TriageResourceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TriageResourceCollection"/> for deserialization. </summary>
-        internal TriageResourceCollection()
+        /// <summary> Initializes a new instance of <see cref="TriageResourceList"/> for deserialization. </summary>
+        internal TriageResourceList()
         {
         }
 
         /// <summary> The TriageResource items on this page. </summary>
-        public IReadOnlyList<TriageResource> Value { get; }
+        public IReadOnlyList<TriageResourceData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

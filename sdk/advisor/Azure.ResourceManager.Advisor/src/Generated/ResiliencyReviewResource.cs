@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> or <paramref name="recommendationResourceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendationId"/> or <paramref name="recommendationResourceId"/> is null. </exception>
-        public virtual async Task<Response<TriageResource>> GetTriageResourceAsync(string recommendationId, string recommendationResourceId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TriageResourceData>> GetTriageResourceAsync(string recommendationId, string recommendationResourceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
             Argument.AssertNotNullOrEmpty(recommendationResourceId, nameof(recommendationResourceId));
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> or <paramref name="recommendationResourceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendationId"/> or <paramref name="recommendationResourceId"/> is null. </exception>
-        public virtual Response<TriageResource> GetTriageResource(string recommendationId, string recommendationResourceId, CancellationToken cancellationToken = default)
+        public virtual Response<TriageResourceData> GetTriageResource(string recommendationId, string recommendationResourceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
             Argument.AssertNotNullOrEmpty(recommendationResourceId, nameof(recommendationResourceId));
@@ -652,14 +652,14 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendationId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="TriageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TriageResource> GetTriageResourcesAsync(string recommendationId, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="TriageResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<TriageResourceData> GetTriageResourcesAsync(string recommendationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _triageResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.Name, recommendationId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _triageResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, recommendationId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TriageResource.DeserializeTriageResource(e), _triageResourcesClientDiagnostics, Pipeline, "ResiliencyReviewResource.GetTriageResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TriageResourceData.DeserializeTriageResourceData(e), _triageResourcesClientDiagnostics, Pipeline, "ResiliencyReviewResource.GetTriageResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -683,14 +683,14 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendationId"/> is null. </exception>
-        /// <returns> A collection of <see cref="TriageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TriageResource> GetTriageResources(string recommendationId, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="TriageResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<TriageResourceData> GetTriageResources(string recommendationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _triageResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.Name, recommendationId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _triageResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.Name, recommendationId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TriageResource.DeserializeTriageResource(e), _triageResourcesClientDiagnostics, Pipeline, "ResiliencyReviewResource.GetTriageResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TriageResourceData.DeserializeTriageResourceData(e), _triageResourcesClientDiagnostics, Pipeline, "ResiliencyReviewResource.GetTriageResources", "value", "nextLink", cancellationToken);
         }
     }
 }
