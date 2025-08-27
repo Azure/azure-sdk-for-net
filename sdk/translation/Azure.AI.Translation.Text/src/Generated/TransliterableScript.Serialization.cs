@@ -37,7 +37,7 @@ namespace Azure.AI.Translation.Text
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("toScripts"u8);
             writer.WriteStartArray();
-            foreach (var item in TargetLanguageScripts)
+            foreach (var item in ToScripts)
             {
                 writer.WriteObjectValue(item, options);
             }

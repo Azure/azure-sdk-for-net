@@ -2,24 +2,17 @@ namespace Azure.AI.Translation.Text
 {
     public static partial class AITranslationTextModelFactory
     {
-        public static Azure.AI.Translation.Text.BackTranslation BackTranslation(string normalizedText = null, string displayText = null, int examplesCount = 0, int frequencyCount = 0) { throw null; }
-        public static Azure.AI.Translation.Text.BreakSentenceItem BreakSentenceItem(Azure.AI.Translation.Text.DetectedLanguage detectedLanguage = null, System.Collections.Generic.IEnumerable<int> sentencesLengths = null) { throw null; }
-        public static Azure.AI.Translation.Text.DetectedLanguage DetectedLanguage(string language = null, float confidence = 0f) { throw null; }
-        public static Azure.AI.Translation.Text.DictionaryExample DictionaryExample(string sourcePrefix = null, string sourceTerm = null, string sourceSuffix = null, string targetPrefix = null, string targetTerm = null, string targetSuffix = null) { throw null; }
-        public static Azure.AI.Translation.Text.DictionaryExampleItem DictionaryExampleItem(string normalizedSource = null, string normalizedTarget = null, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.DictionaryExample> examples = null) { throw null; }
-        public static Azure.AI.Translation.Text.DictionaryLookupItem DictionaryLookupItem(string normalizedSource = null, string displaySource = null, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.DictionaryTranslation> translations = null) { throw null; }
-        public static Azure.AI.Translation.Text.DictionaryTranslation DictionaryTranslation(string normalizedTarget = null, string displayTarget = null, string posTag = null, float confidence = 0f, string prefixWord = null, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.BackTranslation> backTranslations = null) { throw null; }
+        public static Azure.AI.Translation.Text.DetectedLanguage DetectedLanguage(string language = null, float score = 0f) { throw null; }
         public static Azure.AI.Translation.Text.GetSupportedLanguagesResult GetSupportedLanguagesResult(System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Translation.Text.TranslationLanguage> translation = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Translation.Text.TransliterationLanguage> transliteration = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Translation.Text.SourceDictionaryLanguage> dictionary = null) { throw null; }
-        public static Azure.AI.Translation.Text.LanguageScript LanguageScript(string code = null, string name = null, string nativeName = null, Azure.AI.Translation.Text.LanguageDirectionality directionality = Azure.AI.Translation.Text.LanguageDirectionality.LeftToRight) { throw null; }
-        public static Azure.AI.Translation.Text.SentenceBoundaries SentenceBoundaries(System.Collections.Generic.IEnumerable<int> sourceSentencesLengths = null, System.Collections.Generic.IEnumerable<int> translatedSentencesLengths = null) { throw null; }
-        public static Azure.AI.Translation.Text.SourceDictionaryLanguage SourceDictionaryLanguage(string name = null, string nativeName = null, Azure.AI.Translation.Text.LanguageDirectionality directionality = Azure.AI.Translation.Text.LanguageDirectionality.LeftToRight, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.TargetDictionaryLanguage> translations = null) { throw null; }
+        public static Azure.AI.Translation.Text.LanguageScript LanguageScript(string code = null, string name = null, string nativeName = null, Azure.AI.Translation.Text.LanguageDirectionality dir = Azure.AI.Translation.Text.LanguageDirectionality.LeftToRight) { throw null; }
+        public static Azure.AI.Translation.Text.SourceDictionaryLanguage SourceDictionaryLanguage(string name = null, string nativeName = null, Azure.AI.Translation.Text.LanguageDirectionality dir = Azure.AI.Translation.Text.LanguageDirectionality.LeftToRight, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.TargetDictionaryLanguage> translations = null) { throw null; }
         public static Azure.AI.Translation.Text.SourceText SourceText(string text = null) { throw null; }
-        public static Azure.AI.Translation.Text.TargetDictionaryLanguage TargetDictionaryLanguage(string name = null, string nativeName = null, Azure.AI.Translation.Text.LanguageDirectionality directionality = Azure.AI.Translation.Text.LanguageDirectionality.LeftToRight, string code = null) { throw null; }
-        public static Azure.AI.Translation.Text.TranslatedTextAlignment TranslatedTextAlignment(string projections = null) { throw null; }
+        public static Azure.AI.Translation.Text.TargetDictionaryLanguage TargetDictionaryLanguage(string name = null, string nativeName = null, Azure.AI.Translation.Text.LanguageDirectionality dir = Azure.AI.Translation.Text.LanguageDirectionality.LeftToRight, string code = null) { throw null; }
+        public static Azure.AI.Translation.Text.TranslateBody TranslateBody(string text = null, string script = null, string language = null, Azure.AI.Translation.Text.TextType? textType = default(Azure.AI.Translation.Text.TextType?), System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.TranslateTarget> targets = null) { throw null; }
         public static Azure.AI.Translation.Text.TranslatedTextItem TranslatedTextItem(Azure.AI.Translation.Text.DetectedLanguage detectedLanguage = null, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.TranslationText> translations = null, Azure.AI.Translation.Text.SourceText sourceText = null) { throw null; }
-        public static Azure.AI.Translation.Text.TranslationLanguage TranslationLanguage(string name = null, string nativeName = null, Azure.AI.Translation.Text.LanguageDirectionality directionality = Azure.AI.Translation.Text.LanguageDirectionality.LeftToRight) { throw null; }
-        public static Azure.AI.Translation.Text.TranslationText TranslationText(string targetLanguage = null, string text = null, Azure.AI.Translation.Text.TransliteratedText transliteration = null, Azure.AI.Translation.Text.TranslatedTextAlignment alignment = null, Azure.AI.Translation.Text.SentenceBoundaries sentenceBoundaries = null) { throw null; }
-        public static Azure.AI.Translation.Text.TransliterableScript TransliterableScript(string code = null, string name = null, string nativeName = null, Azure.AI.Translation.Text.LanguageDirectionality directionality = Azure.AI.Translation.Text.LanguageDirectionality.LeftToRight, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.LanguageScript> targetLanguageScripts = null) { throw null; }
+        public static Azure.AI.Translation.Text.TranslationLanguage TranslationLanguage(string name = null, string nativeName = null, Azure.AI.Translation.Text.LanguageDirectionality dir = Azure.AI.Translation.Text.LanguageDirectionality.LeftToRight) { throw null; }
+        public static Azure.AI.Translation.Text.TranslationText TranslationText(string to = null, string text = null, Azure.AI.Translation.Text.TransliteratedText transliteration = null) { throw null; }
+        public static Azure.AI.Translation.Text.TransliterableScript TransliterableScript(string code = null, string name = null, string nativeName = null, Azure.AI.Translation.Text.LanguageDirectionality dir = Azure.AI.Translation.Text.LanguageDirectionality.LeftToRight, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.LanguageScript> toScripts = null) { throw null; }
         public static Azure.AI.Translation.Text.TransliteratedText TransliteratedText(string text = null, string script = null) { throw null; }
         public static Azure.AI.Translation.Text.TransliterationLanguage TransliterationLanguage(string name = null, string nativeName = null, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.TransliterableScript> scripts = null) { throw null; }
     }
@@ -29,112 +22,17 @@ namespace Azure.AI.Translation.Text
         public static Azure.AI.Translation.Text.AzureAITranslationTextContext Default { get { throw null; } }
         protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
-    public partial class BackTranslation : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.BackTranslation>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.BackTranslation>
-    {
-        internal BackTranslation() { }
-        public string DisplayText { get { throw null; } }
-        public int ExamplesCount { get { throw null; } }
-        public int FrequencyCount { get { throw null; } }
-        public string NormalizedText { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Translation.Text.BackTranslation System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.BackTranslation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.BackTranslation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Translation.Text.BackTranslation System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.BackTranslation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.BackTranslation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.BackTranslation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class BreakSentenceItem : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.BreakSentenceItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.BreakSentenceItem>
-    {
-        internal BreakSentenceItem() { }
-        public Azure.AI.Translation.Text.DetectedLanguage DetectedLanguage { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<int> SentencesLengths { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Translation.Text.BreakSentenceItem System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.BreakSentenceItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.BreakSentenceItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Translation.Text.BreakSentenceItem System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.BreakSentenceItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.BreakSentenceItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.BreakSentenceItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class DetectedLanguage : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.DetectedLanguage>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DetectedLanguage>
     {
         internal DetectedLanguage() { }
-        public float Confidence { get { throw null; } }
         public string Language { get { throw null; } }
+        public float Score { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Translation.Text.DetectedLanguage System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.DetectedLanguage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.DetectedLanguage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Translation.Text.DetectedLanguage System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DetectedLanguage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DetectedLanguage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DetectedLanguage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class DictionaryExample : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.DictionaryExample>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DictionaryExample>
-    {
-        internal DictionaryExample() { }
-        public string SourcePrefix { get { throw null; } }
-        public string SourceSuffix { get { throw null; } }
-        public string SourceTerm { get { throw null; } }
-        public string TargetPrefix { get { throw null; } }
-        public string TargetSuffix { get { throw null; } }
-        public string TargetTerm { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Translation.Text.DictionaryExample System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.DictionaryExample>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.DictionaryExample>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Translation.Text.DictionaryExample System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DictionaryExample>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DictionaryExample>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DictionaryExample>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class DictionaryExampleItem : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.DictionaryExampleItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DictionaryExampleItem>
-    {
-        internal DictionaryExampleItem() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.DictionaryExample> Examples { get { throw null; } }
-        public string NormalizedSource { get { throw null; } }
-        public string NormalizedTarget { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Translation.Text.DictionaryExampleItem System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.DictionaryExampleItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.DictionaryExampleItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Translation.Text.DictionaryExampleItem System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DictionaryExampleItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DictionaryExampleItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DictionaryExampleItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class DictionaryExampleTextItem : Azure.AI.Translation.Text.InputTextItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.DictionaryExampleTextItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DictionaryExampleTextItem>
-    {
-        public DictionaryExampleTextItem(string text, string translation) : base (default(string)) { }
-        public string Translation { get { throw null; } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Translation.Text.DictionaryExampleTextItem System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.DictionaryExampleTextItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.DictionaryExampleTextItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Translation.Text.DictionaryExampleTextItem System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DictionaryExampleTextItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DictionaryExampleTextItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DictionaryExampleTextItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class DictionaryLookupItem : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.DictionaryLookupItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DictionaryLookupItem>
-    {
-        internal DictionaryLookupItem() { }
-        public string DisplaySource { get { throw null; } }
-        public string NormalizedSource { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.DictionaryTranslation> Translations { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Translation.Text.DictionaryLookupItem System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.DictionaryLookupItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.DictionaryLookupItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Translation.Text.DictionaryLookupItem System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DictionaryLookupItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DictionaryLookupItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DictionaryLookupItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class DictionaryTranslation : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.DictionaryTranslation>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DictionaryTranslation>
-    {
-        internal DictionaryTranslation() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.BackTranslation> BackTranslations { get { throw null; } }
-        public float Confidence { get { throw null; } }
-        public string DisplayTarget { get { throw null; } }
-        public string NormalizedTarget { get { throw null; } }
-        public string PosTag { get { throw null; } }
-        public string PrefixWord { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Translation.Text.DictionaryTranslation System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.DictionaryTranslation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.DictionaryTranslation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Translation.Text.DictionaryTranslation System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DictionaryTranslation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DictionaryTranslation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DictionaryTranslation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class GetSupportedLanguagesResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.GetSupportedLanguagesResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.GetSupportedLanguagesResult>
     {
@@ -175,7 +73,7 @@ namespace Azure.AI.Translation.Text
     {
         internal LanguageScript() { }
         public string Code { get { throw null; } }
-        public Azure.AI.Translation.Text.LanguageDirectionality Directionality { get { throw null; } }
+        public Azure.AI.Translation.Text.LanguageDirectionality Dir { get { throw null; } }
         public string Name { get { throw null; } }
         public string NativeName { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -196,22 +94,22 @@ namespace Azure.AI.Translation.Text
         Asterisk = 0,
         Tag = 1,
     }
-    public partial class SentenceBoundaries : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.SentenceBoundaries>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.SentenceBoundaries>
+    public partial class ReferenceSentencePair : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.ReferenceSentencePair>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.ReferenceSentencePair>
     {
-        internal SentenceBoundaries() { }
-        public System.Collections.Generic.IReadOnlyList<int> SourceSentencesLengths { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<int> TranslatedSentencesLengths { get { throw null; } }
+        public ReferenceSentencePair(string referenceTextPairsSource, string referenceTextPairsTarget) { }
+        public string ReferenceTextPairsSource { get { throw null; } }
+        public string ReferenceTextPairsTarget { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Translation.Text.SentenceBoundaries System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.SentenceBoundaries>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.SentenceBoundaries>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Translation.Text.SentenceBoundaries System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.SentenceBoundaries>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.SentenceBoundaries>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.SentenceBoundaries>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Translation.Text.ReferenceSentencePair System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.ReferenceSentencePair>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.ReferenceSentencePair>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Translation.Text.ReferenceSentencePair System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.ReferenceSentencePair>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.ReferenceSentencePair>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.ReferenceSentencePair>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SourceDictionaryLanguage : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.SourceDictionaryLanguage>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.SourceDictionaryLanguage>
     {
         internal SourceDictionaryLanguage() { }
-        public Azure.AI.Translation.Text.LanguageDirectionality Directionality { get { throw null; } }
+        public Azure.AI.Translation.Text.LanguageDirectionality Dir { get { throw null; } }
         public string Name { get { throw null; } }
         public string NativeName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.TargetDictionaryLanguage> Translations { get { throw null; } }
@@ -237,7 +135,7 @@ namespace Azure.AI.Translation.Text
     {
         internal TargetDictionaryLanguage() { }
         public string Code { get { throw null; } }
-        public Azure.AI.Translation.Text.LanguageDirectionality Directionality { get { throw null; } }
+        public Azure.AI.Translation.Text.LanguageDirectionality Dir { get { throw null; } }
         public string Name { get { throw null; } }
         public string NativeName { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -259,27 +157,19 @@ namespace Azure.AI.Translation.Text
         public TextTranslationClient(System.Uri endpoint) { }
         public TextTranslationClient(System.Uri endpoint, Azure.AI.Translation.Text.TextTranslationClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.BreakSentenceItem>> FindSentenceBoundaries(System.Collections.Generic.IEnumerable<string> content, System.Guid clientTraceId = default(System.Guid), string language = null, string script = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.BreakSentenceItem>> FindSentenceBoundaries(string text, System.Guid clientTraceId = default(System.Guid), string language = null, string script = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.BreakSentenceItem>>> FindSentenceBoundariesAsync(System.Collections.Generic.IEnumerable<string> content, System.Guid clientTraceId = default(System.Guid), string language = null, string script = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.BreakSentenceItem>>> FindSentenceBoundariesAsync(string text, System.Guid clientTraceId = default(System.Guid), string language = null, string script = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetSupportedLanguages(string clientTraceId, string scope, string acceptLanguage, Azure.ETag? ifNoneMatch, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.AI.Translation.Text.GetSupportedLanguagesResult> GetSupportedLanguages(string clientTraceId = null, string scope = null, string acceptLanguage = null, Azure.ETag? ifNoneMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSupportedLanguagesAsync(string clientTraceId, string scope, string acceptLanguage, Azure.ETag? ifNoneMatch, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Translation.Text.GetSupportedLanguagesResult>> GetSupportedLanguagesAsync(string clientTraceId = null, string scope = null, string acceptLanguage = null, Azure.ETag? ifNoneMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.DictionaryLookupItem>> LookupDictionaryEntries(string from, string to, System.Collections.Generic.IEnumerable<string> words, System.Guid clientTraceId = default(System.Guid), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.DictionaryLookupItem>> LookupDictionaryEntries(string from, string to, string word, System.Guid clientTraceId = default(System.Guid), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.DictionaryLookupItem>>> LookupDictionaryEntriesAsync(string from, string to, System.Collections.Generic.IEnumerable<string> words, System.Guid clientTraceId = default(System.Guid), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.DictionaryLookupItem>>> LookupDictionaryEntriesAsync(string from, string to, string word, System.Guid clientTraceId = default(System.Guid), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.DictionaryExampleItem>> LookupDictionaryExamples(string from, string to, Azure.AI.Translation.Text.InputTextWithTranslation content, System.Guid clientTraceId = default(System.Guid), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.DictionaryExampleItem>> LookupDictionaryExamples(string from, string to, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.InputTextWithTranslation> content, System.Guid clientTraceId = default(System.Guid), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.DictionaryExampleItem>>> LookupDictionaryExamplesAsync(string from, string to, Azure.AI.Translation.Text.InputTextWithTranslation content, System.Guid clientTraceId = default(System.Guid), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.DictionaryExampleItem>>> LookupDictionaryExamplesAsync(string from, string to, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.InputTextWithTranslation> content, System.Guid clientTraceId = default(System.Guid), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.TranslatedTextItem>> Translate(Azure.AI.Translation.Text.TextTranslationTranslateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response Translate(Azure.Core.RequestContent content, string clientTraceId = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.TranslatedTextItem>> Translate(System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.TranslateBody> body, string clientTraceId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.TranslatedTextItem>> Translate(System.Collections.Generic.IEnumerable<string> targetLanguages, System.Collections.Generic.IEnumerable<string> content, System.Guid clientTraceId = default(System.Guid), string sourceLanguage = null, Azure.AI.Translation.Text.TextType? textType = default(Azure.AI.Translation.Text.TextType?), string category = null, Azure.AI.Translation.Text.ProfanityAction? profanityAction = default(Azure.AI.Translation.Text.ProfanityAction?), Azure.AI.Translation.Text.ProfanityMarker? profanityMarker = default(Azure.AI.Translation.Text.ProfanityMarker?), bool? includeAlignment = default(bool?), bool? includeSentenceLength = default(bool?), string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.TranslatedTextItem>> Translate(string targetLanguage, System.Collections.Generic.IEnumerable<string> content, string sourceLanguage = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.TranslatedTextItem>> Translate(string targetLanguage, string text, string sourceLanguage = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.TranslatedTextItem>>> TranslateAsync(Azure.AI.Translation.Text.TextTranslationTranslateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> TranslateAsync(Azure.Core.RequestContent content, string clientTraceId = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.TranslatedTextItem>>> TranslateAsync(System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.TranslateBody> body, string clientTraceId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.TranslatedTextItem>>> TranslateAsync(System.Collections.Generic.IEnumerable<string> targetLanguages, System.Collections.Generic.IEnumerable<string> content, System.Guid clientTraceId = default(System.Guid), string sourceLanguage = null, Azure.AI.Translation.Text.TextType? textType = default(Azure.AI.Translation.Text.TextType?), string category = null, Azure.AI.Translation.Text.ProfanityAction? profanityAction = default(Azure.AI.Translation.Text.ProfanityAction?), Azure.AI.Translation.Text.ProfanityMarker? profanityMarker = default(Azure.AI.Translation.Text.ProfanityMarker?), bool? includeAlignment = default(bool?), bool? includeSentenceLength = default(bool?), string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.TranslatedTextItem>>> TranslateAsync(string targetLanguage, System.Collections.Generic.IEnumerable<string> content, string sourceLanguage = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.TranslatedTextItem>>> TranslateAsync(string targetLanguage, string text, string sourceLanguage = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -292,10 +182,11 @@ namespace Azure.AI.Translation.Text
     }
     public partial class TextTranslationClientOptions : Azure.Core.ClientOptions
     {
-        public TextTranslationClientOptions(Azure.AI.Translation.Text.TextTranslationClientOptions.ServiceVersion version = Azure.AI.Translation.Text.TextTranslationClientOptions.ServiceVersion.V3_0) { }
+        public TextTranslationClientOptions(Azure.AI.Translation.Text.TextTranslationClientOptions.ServiceVersion version = Azure.AI.Translation.Text.TextTranslationClientOptions.ServiceVersion.V2025_05_01_Preview) { }
         public enum ServiceVersion
         {
             V3_0 = 1,
+            V2025_05_01_Preview = 2,
         }
     }
     public partial class TextTranslationTranslateOptions
@@ -346,16 +237,20 @@ namespace Azure.AI.Translation.Text
         public static bool operator !=(Azure.AI.Translation.Text.TextType left, Azure.AI.Translation.Text.TextType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TranslatedTextAlignment : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.TranslatedTextAlignment>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.TranslatedTextAlignment>
+    public partial class TranslateBody : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.TranslateBody>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.TranslateBody>
     {
-        internal TranslatedTextAlignment() { }
-        public string Projections { get { throw null; } }
+        public TranslateBody(string text, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.TranslateTarget> targets) { }
+        public string Language { get { throw null; } set { } }
+        public string Script { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.AI.Translation.Text.TranslateTarget> Targets { get { throw null; } }
+        public string Text { get { throw null; } }
+        public Azure.AI.Translation.Text.TextType? TextType { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Translation.Text.TranslatedTextAlignment System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.TranslatedTextAlignment>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.TranslatedTextAlignment>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Translation.Text.TranslatedTextAlignment System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.TranslatedTextAlignment>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.TranslatedTextAlignment>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.TranslatedTextAlignment>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Translation.Text.TranslateBody System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.TranslateBody>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.TranslateBody>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Translation.Text.TranslateBody System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.TranslateBody>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.TranslateBody>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.TranslateBody>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TranslatedTextItem : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.TranslatedTextItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.TranslatedTextItem>
     {
@@ -370,10 +265,31 @@ namespace Azure.AI.Translation.Text
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.TranslatedTextItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.TranslatedTextItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class TranslateTarget : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.TranslateTarget>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.TranslateTarget>
+    {
+        public TranslateTarget(System.Collections.Generic.IEnumerable<string> language) { }
+        public string AdaptiveDatasetId { get { throw null; } set { } }
+        public bool? AllowFallback { get { throw null; } set { } }
+        public string DeploymentNameModel { get { throw null; } set { } }
+        public string Gender { get { throw null; } set { } }
+        public string Grade { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Language { get { throw null; } }
+        public Azure.AI.Translation.Text.ProfanityAction? ProfanityAction { get { throw null; } set { } }
+        public Azure.AI.Translation.Text.ProfanityMarker? ProfanityMarker { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.AI.Translation.Text.ReferenceSentencePair> ReferenceTextPairs { get { throw null; } }
+        public string Script { get { throw null; } set { } }
+        public string Tone { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Translation.Text.TranslateTarget System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.TranslateTarget>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.TranslateTarget>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Translation.Text.TranslateTarget System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.TranslateTarget>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.TranslateTarget>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.TranslateTarget>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class TranslationLanguage : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.TranslationLanguage>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.TranslationLanguage>
     {
         internal TranslationLanguage() { }
-        public Azure.AI.Translation.Text.LanguageDirectionality Directionality { get { throw null; } }
+        public Azure.AI.Translation.Text.LanguageDirectionality Dir { get { throw null; } }
         public string Name { get { throw null; } }
         public string NativeName { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -386,10 +302,8 @@ namespace Azure.AI.Translation.Text
     public partial class TranslationText : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.TranslationText>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.TranslationText>
     {
         internal TranslationText() { }
-        public Azure.AI.Translation.Text.TranslatedTextAlignment Alignment { get { throw null; } }
-        public Azure.AI.Translation.Text.SentenceBoundaries SentenceBoundaries { get { throw null; } }
-        public string TargetLanguage { get { throw null; } }
         public string Text { get { throw null; } }
+        public string To { get { throw null; } }
         public Azure.AI.Translation.Text.TransliteratedText Transliteration { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Translation.Text.TranslationText System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.TranslationText>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -401,7 +315,7 @@ namespace Azure.AI.Translation.Text
     public partial class TransliterableScript : Azure.AI.Translation.Text.LanguageScript, System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.TransliterableScript>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.TransliterableScript>
     {
         internal TransliterableScript() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.LanguageScript> TargetLanguageScripts { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.LanguageScript> ToScripts { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Translation.Text.TransliterableScript System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.TransliterableScript>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.TransliterableScript>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

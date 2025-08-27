@@ -34,25 +34,35 @@ namespace Azure.AI.Translation.Text
                 throw new FormatException($"The model {nameof(TranslationText)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("to"u8);
-            writer.WriteStringValue(TargetLanguage);
+            writer.WritePropertyName("language"u8);
+            writer.WriteStringValue(Language);
+            if (Optional.IsDefined(SourceCharacters))
+            {
+                writer.WritePropertyName("sourceCharacters"u8);
+                writer.WriteNumberValue(SourceCharacters.Value);
+            }
+            if (Optional.IsDefined(InstructionTokens))
+            {
+                writer.WritePropertyName("instructionTokens"u8);
+                writer.WriteNumberValue(InstructionTokens.Value);
+            }
+            if (Optional.IsDefined(SourceTokens))
+            {
+                writer.WritePropertyName("sourceTokens"u8);
+                writer.WriteNumberValue(SourceTokens.Value);
+            }
+            if (Optional.IsDefined(ResponseTokens))
+            {
+                writer.WritePropertyName("responseTokens"u8);
+                writer.WriteNumberValue(ResponseTokens.Value);
+            }
+            if (Optional.IsDefined(TargetTokens))
+            {
+                writer.WritePropertyName("targetTokens"u8);
+                writer.WriteNumberValue(TargetTokens.Value);
+            }
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (Optional.IsDefined(Transliteration))
-            {
-                writer.WritePropertyName("transliteration"u8);
-                writer.WriteObjectValue(Transliteration, options);
-            }
-            if (Optional.IsDefined(Alignment))
-            {
-                writer.WritePropertyName("alignment"u8);
-                writer.WriteObjectValue(Alignment, options);
-            }
-            if (Optional.IsDefined(SentenceBoundaries))
-            {
-                writer.WritePropertyName("sentLen"u8);
-                writer.WriteObjectValue(SentenceBoundaries, options);
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -90,50 +100,70 @@ namespace Azure.AI.Translation.Text
             {
                 return null;
             }
-            string to = default;
+            string language = default;
+            int? sourceCharacters = default;
+            int? instructionTokens = default;
+            int? sourceTokens = default;
+            int? responseTokens = default;
+            int? targetTokens = default;
             string text = default;
-            TransliteratedText transliteration = default;
-            TranslatedTextAlignment alignment = default;
-            SentenceBoundaries sentLen = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("to"u8))
+                if (property.NameEquals("language"u8))
                 {
-                    to = property.Value.GetString();
+                    language = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("sourceCharacters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceCharacters = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("instructionTokens"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    instructionTokens = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("sourceTokens"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceTokens = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("responseTokens"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    responseTokens = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("targetTokens"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetTokens = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("text"u8))
                 {
                     text = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("transliteration"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    transliteration = TransliteratedText.DeserializeTransliteratedText(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("alignment"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    alignment = TranslatedTextAlignment.DeserializeTranslatedTextAlignment(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("sentLen"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sentLen = SentenceBoundaries.DeserializeSentenceBoundaries(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -143,11 +173,13 @@ namespace Azure.AI.Translation.Text
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new TranslationText(
-                to,
+                language,
+                sourceCharacters,
+                instructionTokens,
+                sourceTokens,
+                responseTokens,
+                targetTokens,
                 text,
-                transliteration,
-                alignment,
-                sentLen,
                 serializedAdditionalRawData);
         }
 

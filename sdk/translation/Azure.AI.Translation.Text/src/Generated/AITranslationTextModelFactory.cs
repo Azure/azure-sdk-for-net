@@ -30,11 +30,11 @@ namespace Azure.AI.Translation.Text
         /// <summary> Initializes a new instance of <see cref="Text.TranslationLanguage"/>. </summary>
         /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
-        /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
+        /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
         /// <returns> A new <see cref="Text.TranslationLanguage"/> instance for mocking. </returns>
-        public static TranslationLanguage TranslationLanguage(string name = null, string nativeName = null, LanguageDirectionality directionality = default)
+        public static TranslationLanguage TranslationLanguage(string name = null, string nativeName = null, LanguageDirectionality dir = default)
         {
-            return new TranslationLanguage(name, nativeName, directionality, serializedAdditionalRawData: null);
+            return new TranslationLanguage(name, nativeName, dir, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.TransliterationLanguage"/>. </summary>
@@ -53,55 +53,148 @@ namespace Azure.AI.Translation.Text
         /// <param name="code"> Code identifying the script. </param>
         /// <param name="name"> Display name of the script in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for the language. </param>
-        /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
-        /// <param name="targetLanguageScripts"> List of scripts available to convert text to. </param>
+        /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
+        /// <param name="toScripts"> List of scripts available to convert text to. </param>
         /// <returns> A new <see cref="Text.TransliterableScript"/> instance for mocking. </returns>
-        public static TransliterableScript TransliterableScript(string code = null, string name = null, string nativeName = null, LanguageDirectionality directionality = default, IEnumerable<LanguageScript> targetLanguageScripts = null)
+        public static TransliterableScript TransliterableScript(string code = null, string name = null, string nativeName = null, LanguageDirectionality dir = default, IEnumerable<LanguageScript> toScripts = null)
         {
-            targetLanguageScripts ??= new List<LanguageScript>();
+            toScripts ??= new List<LanguageScript>();
 
             return new TransliterableScript(
                 code,
                 name,
                 nativeName,
-                directionality,
+                dir,
                 serializedAdditionalRawData: null,
-                targetLanguageScripts?.ToList());
+                toScripts?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.LanguageScript"/>. </summary>
         /// <param name="code"> Code identifying the script. </param>
         /// <param name="name"> Display name of the script in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for the language. </param>
-        /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
+        /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
         /// <returns> A new <see cref="Text.LanguageScript"/> instance for mocking. </returns>
-        public static LanguageScript LanguageScript(string code = null, string name = null, string nativeName = null, LanguageDirectionality directionality = default)
+        public static LanguageScript LanguageScript(string code = null, string name = null, string nativeName = null, LanguageDirectionality dir = default)
         {
-            return new LanguageScript(code, name, nativeName, directionality, serializedAdditionalRawData: null);
+            return new LanguageScript(code, name, nativeName, dir, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.SourceDictionaryLanguage"/>. </summary>
         /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
-        /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
+        /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
         /// <param name="translations"> List of languages with alterative translations and examples for the query expressed in the source language. </param>
         /// <returns> A new <see cref="Text.SourceDictionaryLanguage"/> instance for mocking. </returns>
-        public static SourceDictionaryLanguage SourceDictionaryLanguage(string name = null, string nativeName = null, LanguageDirectionality directionality = default, IEnumerable<TargetDictionaryLanguage> translations = null)
+        public static SourceDictionaryLanguage SourceDictionaryLanguage(string name = null, string nativeName = null, LanguageDirectionality dir = default, IEnumerable<TargetDictionaryLanguage> translations = null)
         {
             translations ??= new List<TargetDictionaryLanguage>();
 
-            return new SourceDictionaryLanguage(name, nativeName, directionality, translations?.ToList(), serializedAdditionalRawData: null);
+            return new SourceDictionaryLanguage(name, nativeName, dir, translations?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.TargetDictionaryLanguage"/>. </summary>
         /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
-        /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
+        /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
         /// <param name="code"> Language code identifying the target language. </param>
         /// <returns> A new <see cref="Text.TargetDictionaryLanguage"/> instance for mocking. </returns>
-        public static TargetDictionaryLanguage TargetDictionaryLanguage(string name = null, string nativeName = null, LanguageDirectionality directionality = default, string code = null)
+        public static TargetDictionaryLanguage TargetDictionaryLanguage(string name = null, string nativeName = null, LanguageDirectionality dir = default, string code = null)
         {
-            return new TargetDictionaryLanguage(name, nativeName, directionality, code, serializedAdditionalRawData: null);
+            return new TargetDictionaryLanguage(name, nativeName, dir, code, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Text.TranslateBody"/>. </summary>
+        /// <param name="text"> Text to translate. </param>
+        /// <param name="script"> Specifies the script of the input text. </param>
+        /// <param name="language">
+        /// Specifies the language of the input text. Find which languages are available to translate by
+        /// looking up supported languages using the translation scope. If the language parameter isn't
+        /// specified, automatic language detection is applied to determine the source language.
+        ///
+        /// You must use the language parameter rather than autodetection when using the dynamic dictionary feature.
+        /// Note: the dynamic dictionary feature is case-sensitive.
+        /// </param>
+        /// <param name="textType">
+        /// Defines whether the text being translated is plain text or HTML text. Any HTML needs to be a well-formed,
+        /// complete element. Possible values are: plain (default) or html.
+        /// </param>
+        /// <param name="targets"> Translation target parameters. </param>
+        /// <returns> A new <see cref="Text.TranslateBody"/> instance for mocking. </returns>
+        public static TranslateBody TranslateBody(string text = null, string script = null, string language = null, TextType? textType = null, IEnumerable<TranslateTarget> targets = null)
+        {
+            targets ??= new List<TranslateTarget>();
+
+            return new TranslateBody(
+                text,
+                script,
+                language,
+                textType,
+                targets?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Text.TranslateTarget"/>. </summary>
+        /// <param name="language">
+        /// Specifies the language of the output text. The target language must be one of the supported languages included
+        /// in the translation scope. It's possible to translate to multiple languages simultaneously by including
+        /// multiple string values in the targetsLanguage array.
+        /// </param>
+        /// <param name="script"> Specifies the script of the translated text. </param>
+        /// <param name="profanityAction">
+        /// Specifies how profanities should be treated in translations.
+        /// Possible values are: NoAction (default), Marked or Deleted.
+        /// </param>
+        /// <param name="profanityMarker">
+        /// Specifies how profanities should be marked in translations.
+        /// Possible values are: Asterisk (default) or Tag.
+        /// </param>
+        /// <param name="deploymentName">
+        /// Default is ‘general’, which uses NMT system.
+        /// ‘abc-inc-gpt-4o’, and ‘abc-inc-gpt-4o-mini’ are examples of deployment names which use GPT-4o uses or
+        /// GPT-4o-mini model. ‘gpt-4o’ uses GPT-4o model.
+        ///
+        /// ‘&lt;custom model id&gt;’ uses the custom NMT model tuned by customer.
+        /// ‘best’ system determines which is the best model to use for the request. This intelligence could be introduced
+        /// in future. Customer should have deployed it in their resource.
+        ///
+        /// </param>
+        /// <param name="allowFallback">
+        /// In the case where a custom system is being used, specifies that the service is allowed to fall back to a
+        /// general system when a custom system doesn't exist.
+        /// In the case where a Large Language Model is being used, specifies that the service is allowed to fall
+        /// back to a Small Language Model if an error occurs.
+        /// Possible values are: true (default) or false.
+        ///
+        /// allowFallback=false specifies that the translation should only use systems trained for the category specified
+        /// by the request. If a translation for language X to language Y requires chaining through a pivot language E,
+        /// then all the systems in the chain (X → E and E → Y) will need to be custom and have the same category.
+        /// If no system is found with the specific category, the request will return a 400 status code. allowFallback=true
+        /// specifies that the service is allowed to fall back to a general system when a custom system doesn't exist.
+        /// </param>
+        /// <param name="grade"> Defines complexity of LLM prompts to provide high accuracy translation. </param>
+        /// <param name="tone"> Desired tone of target translation. </param>
+        /// <param name="gender"> Desired gender of target translation. </param>
+        /// <param name="adaptiveDatasetId"> Reference dataset ID having sentence pair to generate adaptive customized translation. </param>
+        /// <param name="referenceTextPairs"> Reference sentence pairs to generate adaptive results. </param>
+        /// <returns> A new <see cref="Text.TranslateTarget"/> instance for mocking. </returns>
+        public static TranslateTarget TranslateTarget(string language = null, string script = null, ProfanityAction? profanityAction = null, ProfanityMarker? profanityMarker = null, string deploymentName = null, bool? allowFallback = null, string grade = null, string tone = null, string gender = null, string adaptiveDatasetId = null, IEnumerable<ReferenceSentencePair> referenceTextPairs = null)
+        {
+            referenceTextPairs ??= new List<ReferenceSentencePair>();
+
+            return new TranslateTarget(
+                language,
+                script,
+                profanityAction,
+                profanityMarker,
+                deploymentName,
+                allowFallback,
+                grade,
+                tone,
+                gender,
+                adaptiveDatasetId,
+                referenceTextPairs?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.TranslatedTextItem"/>. </summary>
@@ -110,47 +203,45 @@ namespace Azure.AI.Translation.Text
         /// An array of translation results. The size of the array matches the number of target
         /// languages specified through the to query parameter.
         /// </param>
-        /// <param name="sourceText">
-        /// Input text in the default script of the source language. sourceText property is present only when
-        /// the input is expressed in a script that's not the usual script for the language. For example,
-        /// if the input were Arabic written in Latin script, then sourceText.text would be the same Arabic text
-        /// converted into Arab script.
-        /// </param>
         /// <returns> A new <see cref="Text.TranslatedTextItem"/> instance for mocking. </returns>
-        public static TranslatedTextItem TranslatedTextItem(DetectedLanguage detectedLanguage = null, IEnumerable<TranslationText> translations = null, SourceText sourceText = null)
+        public static TranslatedTextItem TranslatedTextItem(DetectedLanguage detectedLanguage = null, IEnumerable<TranslationText> translations = null)
         {
             translations ??= new List<TranslationText>();
 
-            return new TranslatedTextItem(detectedLanguage, translations?.ToList(), sourceText, serializedAdditionalRawData: null);
+            return new TranslatedTextItem(detectedLanguage, translations?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.DetectedLanguage"/>. </summary>
         /// <param name="language"> A string representing the code of the detected language. </param>
-        /// <param name="confidence">
+        /// <param name="score">
         /// A float value indicating the confidence in the result.
         /// The score is between zero and one and a low score indicates a low confidence.
         /// </param>
         /// <returns> A new <see cref="Text.DetectedLanguage"/> instance for mocking. </returns>
-        public static DetectedLanguage DetectedLanguage(string language = null, float confidence = default)
+        public static DetectedLanguage DetectedLanguage(string language = null, float score = default)
         {
-            return new DetectedLanguage(language, confidence, serializedAdditionalRawData: null);
+            return new DetectedLanguage(language, score, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.TranslationText"/>. </summary>
-        /// <param name="targetLanguage"> A string representing the language code of the target language. </param>
+        /// <param name="language"> A string representing the language code of the target language. </param>
+        /// <param name="sourceCharacters"> An interger indicating the number of characters in the source text string. </param>
+        /// <param name="instructionTokens"> An interger indicating the number of tokens used in generating the translated text. </param>
+        /// <param name="sourceTokens"> An interger indicating the number of tokens used in the source sentence. </param>
+        /// <param name="responseTokens"> An interger indicating the number of tokens used in the translation response. </param>
+        /// <param name="targetTokens"> An interger indicating the number of tokens used in the target sentence. </param>
         /// <param name="text"> A string giving the translated text. </param>
-        /// <param name="transliteration"> An object giving the translated text in the script specified by the toScript parameter. </param>
-        /// <param name="alignment"> Alignment information. </param>
-        /// <param name="sentenceBoundaries"> Sentence boundaries in the input and output texts. </param>
         /// <returns> A new <see cref="Text.TranslationText"/> instance for mocking. </returns>
-        public static TranslationText TranslationText(string targetLanguage = null, string text = null, TransliteratedText transliteration = null, TranslatedTextAlignment alignment = null, SentenceBoundaries sentenceBoundaries = null)
+        public static TranslationText TranslationText(string language = null, int? sourceCharacters = null, int? instructionTokens = null, int? sourceTokens = null, int? responseTokens = null, int? targetTokens = null, string text = null)
         {
             return new TranslationText(
-                targetLanguage,
+                language,
+                sourceCharacters,
+                instructionTokens,
+                sourceTokens,
+                responseTokens,
+                targetTokens,
                 text,
-                transliteration,
-                alignment,
-                sentenceBoundaries,
                 serializedAdditionalRawData: null);
         }
 
@@ -161,204 +252,6 @@ namespace Azure.AI.Translation.Text
         public static TransliteratedText TransliteratedText(string text = null, string script = null)
         {
             return new TransliteratedText(text, script, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Text.TranslatedTextAlignment"/>. </summary>
-        /// <param name="projections">
-        /// Maps input text to translated text. The alignment information is only provided when the request
-        /// parameter includeAlignment is true. Alignment is returned as a string value of the following
-        /// format: [[SourceTextStartIndex]:[SourceTextEndIndex]–[TgtTextStartIndex]:[TgtTextEndIndex]].
-        /// The colon separates start and end index, the dash separates the languages, and space separates the words.
-        /// One word may align with zero, one, or multiple words in the other language, and the aligned words may
-        /// be non-contiguous. When no alignment information is available, the alignment element will be empty.
-        /// </param>
-        /// <returns> A new <see cref="Text.TranslatedTextAlignment"/> instance for mocking. </returns>
-        public static TranslatedTextAlignment TranslatedTextAlignment(string projections = null)
-        {
-            return new TranslatedTextAlignment(projections, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Text.SentenceBoundaries"/>. </summary>
-        /// <param name="sourceSentencesLengths">
-        /// An integer array representing the lengths of the sentences in the input text.
-        /// The length of the array is the number of sentences, and the values are the length of each sentence.
-        /// </param>
-        /// <param name="translatedSentencesLengths">
-        /// An integer array representing the lengths of the sentences in the translated text.
-        /// The length of the array is the number of sentences, and the values are the length of each sentence.
-        /// </param>
-        /// <returns> A new <see cref="Text.SentenceBoundaries"/> instance for mocking. </returns>
-        public static SentenceBoundaries SentenceBoundaries(IEnumerable<int> sourceSentencesLengths = null, IEnumerable<int> translatedSentencesLengths = null)
-        {
-            sourceSentencesLengths ??= new List<int>();
-            translatedSentencesLengths ??= new List<int>();
-
-            return new SentenceBoundaries(sourceSentencesLengths?.ToList(), translatedSentencesLengths?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Text.SourceText"/>. </summary>
-        /// <param name="text"> Input text in the default script of the source language. </param>
-        /// <returns> A new <see cref="Text.SourceText"/> instance for mocking. </returns>
-        public static SourceText SourceText(string text = null)
-        {
-            return new SourceText(text, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Text.BreakSentenceItem"/>. </summary>
-        /// <param name="detectedLanguage"> The detectedLanguage property is only present in the result object when language auto-detection is requested. </param>
-        /// <param name="sentencesLengths">
-        /// An integer array representing the lengths of the sentences in the input text.
-        /// The length of the array is the number of sentences, and the values are the length of each sentence.
-        /// </param>
-        /// <returns> A new <see cref="Text.BreakSentenceItem"/> instance for mocking. </returns>
-        public static BreakSentenceItem BreakSentenceItem(DetectedLanguage detectedLanguage = null, IEnumerable<int> sentencesLengths = null)
-        {
-            sentencesLengths ??= new List<int>();
-
-            return new BreakSentenceItem(detectedLanguage, sentencesLengths?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Text.DictionaryLookupItem"/>. </summary>
-        /// <param name="normalizedSource">
-        /// A string giving the normalized form of the source term.
-        /// For example, if the request is "JOHN", the normalized form will be "john".
-        /// The content of this field becomes the input to lookup examples.
-        /// </param>
-        /// <param name="displaySource">
-        /// A string giving the source term in a form best suited for end-user display.
-        /// For example, if the input is "JOHN", the display form will reflect the usual
-        /// spelling of the name: "John".
-        /// </param>
-        /// <param name="translations"> A list of translations for the source term. </param>
-        /// <returns> A new <see cref="Text.DictionaryLookupItem"/> instance for mocking. </returns>
-        public static DictionaryLookupItem DictionaryLookupItem(string normalizedSource = null, string displaySource = null, IEnumerable<DictionaryTranslation> translations = null)
-        {
-            translations ??= new List<DictionaryTranslation>();
-
-            return new DictionaryLookupItem(normalizedSource, displaySource, translations?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Text.DictionaryTranslation"/>. </summary>
-        /// <param name="normalizedTarget">
-        /// A string giving the normalized form of this term in the target language.
-        /// This value should be used as input to lookup examples.
-        /// </param>
-        /// <param name="displayTarget">
-        /// A string giving the term in the target language and in a form best suited
-        /// for end-user display. Generally, this will only differ from the normalizedTarget
-        /// in terms of capitalization. For example, a proper noun like "Juan" will have
-        /// normalizedTarget = "juan" and displayTarget = "Juan".
-        /// </param>
-        /// <param name="posTag"> A string associating this term with a part-of-speech tag. </param>
-        /// <param name="confidence">
-        /// A value between 0.0 and 1.0 which represents the "confidence"
-        /// (or perhaps more accurately, "probability in the training data") of that translation pair.
-        /// The sum of confidence scores for one source word may or may not sum to 1.0.
-        /// </param>
-        /// <param name="prefixWord">
-        /// A string giving the word to display as a prefix of the translation. Currently,
-        /// this is the gendered determiner of nouns, in languages that have gendered determiners.
-        /// For example, the prefix of the Spanish word "mosca" is "la", since "mosca" is a feminine noun in Spanish.
-        /// This is only dependent on the translation, and not on the source.
-        /// If there is no prefix, it will be the empty string.
-        /// </param>
-        /// <param name="backTranslations">
-        /// A list of "back translations" of the target. For example, source words that the target can translate to.
-        /// The list is guaranteed to contain the source word that was requested (e.g., if the source word being
-        /// looked up is "fly", then it is guaranteed that "fly" will be in the backTranslations list).
-        /// However, it is not guaranteed to be in the first position, and often will not be.
-        /// </param>
-        /// <returns> A new <see cref="Text.DictionaryTranslation"/> instance for mocking. </returns>
-        public static DictionaryTranslation DictionaryTranslation(string normalizedTarget = null, string displayTarget = null, string posTag = null, float confidence = default, string prefixWord = null, IEnumerable<BackTranslation> backTranslations = null)
-        {
-            backTranslations ??= new List<BackTranslation>();
-
-            return new DictionaryTranslation(
-                normalizedTarget,
-                displayTarget,
-                posTag,
-                confidence,
-                prefixWord,
-                backTranslations?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Text.BackTranslation"/>. </summary>
-        /// <param name="normalizedText">
-        /// A string giving the normalized form of the source term that is a back-translation of the target.
-        /// This value should be used as input to lookup examples.
-        /// </param>
-        /// <param name="displayText">
-        /// A string giving the source term that is a back-translation of the target in a form best
-        /// suited for end-user display.
-        /// </param>
-        /// <param name="examplesCount">
-        /// An integer representing the number of examples that are available for this translation pair.
-        /// Actual examples must be retrieved with a separate call to lookup examples. The number is mostly
-        /// intended to facilitate display in a UX. For example, a user interface may add a hyperlink
-        /// to the back-translation if the number of examples is greater than zero and show the back-translation
-        /// as plain text if there are no examples. Note that the actual number of examples returned
-        /// by a call to lookup examples may be less than numExamples, because additional filtering may be
-        /// applied on the fly to remove "bad" examples.
-        /// </param>
-        /// <param name="frequencyCount">
-        /// An integer representing the frequency of this translation pair in the data. The main purpose of this
-        /// field is to provide a user interface with a means to sort back-translations so the most frequent terms are first.
-        /// </param>
-        /// <returns> A new <see cref="Text.BackTranslation"/> instance for mocking. </returns>
-        public static BackTranslation BackTranslation(string normalizedText = null, string displayText = null, int examplesCount = default, int frequencyCount = default)
-        {
-            return new BackTranslation(normalizedText, displayText, examplesCount, frequencyCount, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Text.DictionaryExampleItem"/>. </summary>
-        /// <param name="normalizedSource">
-        /// A string giving the normalized form of the source term. Generally, this should be identical
-        /// to the value of the Text field at the matching list index in the body of the request.
-        /// </param>
-        /// <param name="normalizedTarget">
-        /// A string giving the normalized form of the target term. Generally, this should be identical
-        /// to the value of the Translation field at the matching list index in the body of the request.
-        /// </param>
-        /// <param name="examples"> A list of examples for the (source term, target term) pair. </param>
-        /// <returns> A new <see cref="Text.DictionaryExampleItem"/> instance for mocking. </returns>
-        public static DictionaryExampleItem DictionaryExampleItem(string normalizedSource = null, string normalizedTarget = null, IEnumerable<DictionaryExample> examples = null)
-        {
-            examples ??= new List<DictionaryExample>();
-
-            return new DictionaryExampleItem(normalizedSource, normalizedTarget, examples?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Text.DictionaryExample"/>. </summary>
-        /// <param name="sourcePrefix">
-        /// The string to concatenate before the value of sourceTerm to form a complete example.
-        /// Do not add a space character, since it is already there when it should be.
-        /// This value may be an empty string.
-        /// </param>
-        /// <param name="sourceTerm">
-        /// A string equal to the actual term looked up. The string is added with sourcePrefix
-        /// and sourceSuffix to form the complete example. Its value is separated so it can be
-        /// marked in a user interface, e.g., by bolding it.
-        /// </param>
-        /// <param name="sourceSuffix">
-        /// The string to concatenate after the value of sourceTerm to form a complete example.
-        /// Do not add a space character, since it is already there when it should be.
-        /// This value may be an empty string.
-        /// </param>
-        /// <param name="targetPrefix"> A string similar to sourcePrefix but for the target. </param>
-        /// <param name="targetTerm"> A string similar to sourceTerm but for the target. </param>
-        /// <param name="targetSuffix"> A string similar to sourceSuffix but for the target. </param>
-        /// <returns> A new <see cref="Text.DictionaryExample"/> instance for mocking. </returns>
-        public static DictionaryExample DictionaryExample(string sourcePrefix = null, string sourceTerm = null, string sourceSuffix = null, string targetPrefix = null, string targetTerm = null, string targetSuffix = null)
-        {
-            return new DictionaryExample(
-                sourcePrefix,
-                sourceTerm,
-                sourceSuffix,
-                targetPrefix,
-                targetTerm,
-                targetSuffix,
-                serializedAdditionalRawData: null);
         }
     }
 }
