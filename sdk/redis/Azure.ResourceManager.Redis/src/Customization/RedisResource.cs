@@ -4,15 +4,10 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Redis.Models;
 using Azure.ResourceManager.Resources;
 
@@ -48,12 +43,12 @@ namespace Azure.ResourceManager.Redis
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _redisResourceClientDiagnostics.CreateScope("RedisResource.Update");
+            using var scope = _redisRedisResourcesClientDiagnostics.CreateScope("RedisResource.Update");
             scope.Start();
             try
             {
-                var response = await _redisResourceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new RedisArmOperation<RedisResource>(new RedisResourceOperationSource(Client), _redisResourceClientDiagnostics, Pipeline, _redisResourceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var response = await _redisRedisResourcesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new RedisArmOperation<RedisResource>(new RedisOperationSource(Client), _redisRedisResourcesClientDiagnostics, Pipeline, _redisRedisResourcesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 return await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -85,12 +80,12 @@ namespace Azure.ResourceManager.Redis
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _redisResourceClientDiagnostics.CreateScope("RedisResource.Update");
+            using var scope = _redisRedisResourcesClientDiagnostics.CreateScope("RedisResource.Update");
             scope.Start();
             try
             {
-                var response = _redisResourceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new RedisArmOperation<RedisResource>(new RedisResourceOperationSource(Client), _redisResourceClientDiagnostics, Pipeline, _redisResourceRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var response = _redisRedisResourcesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
+                var operation = new RedisArmOperation<RedisResource>(new RedisOperationSource(Client), _redisRedisResourcesClientDiagnostics, Pipeline, _redisRedisResourcesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 return operation.WaitForCompletion(cancellationToken);
             }
             catch (Exception e)

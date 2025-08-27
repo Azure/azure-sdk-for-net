@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Redis
     /// <summary>
     /// A class representing a collection of <see cref="RedisResource"/> and their operations.
     /// Each <see cref="RedisResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="RedisResourceCollection"/> instance call the GetRedisResources method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="RedisCollection"/> instance call the GetRedis method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class RedisResourceCollection : ArmCollection, IEnumerable<RedisResource>, IAsyncEnumerable<RedisResource>
+    public partial class RedisCollection : ArmCollection, IEnumerable<RedisResource>, IAsyncEnumerable<RedisResource>
     {
-        private readonly ClientDiagnostics _redisResourceClientDiagnostics;
-        private readonly RedisResourcesRestOperations _redisResourceRestClient;
+        private readonly ClientDiagnostics _redisRedisResourcesClientDiagnostics;
+        private readonly RedisResourcesRestOperations _redisRedisResourcesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="RedisResourceCollection"/> class for mocking. </summary>
-        protected RedisResourceCollection()
+        /// <summary> Initializes a new instance of the <see cref="RedisCollection"/> class for mocking. </summary>
+        protected RedisCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RedisResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RedisCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal RedisResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal RedisCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _redisResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Redis", RedisResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(RedisResource.ResourceType, out string redisResourceApiVersion);
-            _redisResourceRestClient = new RedisResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, redisResourceApiVersion);
+            _redisRedisResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Redis", RedisResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(RedisResource.ResourceType, out string redisRedisResourcesApiVersion);
+            _redisRedisResourcesRestClient = new RedisResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, redisRedisResourcesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -80,17 +80,17 @@ namespace Azure.ResourceManager.Redis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<RedisResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, RedisResourceCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<RedisResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, RedisCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _redisResourceClientDiagnostics.CreateScope("RedisResourceCollection.CreateOrUpdate");
+            using var scope = _redisRedisResourcesClientDiagnostics.CreateScope("RedisCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _redisResourceRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RedisArmOperation<RedisResource>(new RedisResourceOperationSource(Client), _redisResourceClientDiagnostics, Pipeline, _redisResourceRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _redisRedisResourcesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new RedisArmOperation<RedisResource>(new RedisOperationSource(Client), _redisRedisResourcesClientDiagnostics, Pipeline, _redisRedisResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -129,17 +129,17 @@ namespace Azure.ResourceManager.Redis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<RedisResource> CreateOrUpdate(WaitUntil waitUntil, string name, RedisResourceCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<RedisResource> CreateOrUpdate(WaitUntil waitUntil, string name, RedisCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _redisResourceClientDiagnostics.CreateScope("RedisResourceCollection.CreateOrUpdate");
+            using var scope = _redisRedisResourcesClientDiagnostics.CreateScope("RedisCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _redisResourceRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, name, content, cancellationToken);
-                var operation = new RedisArmOperation<RedisResource>(new RedisResourceOperationSource(Client), _redisResourceClientDiagnostics, Pipeline, _redisResourceRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _redisRedisResourcesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, name, content, cancellationToken);
+                var operation = new RedisArmOperation<RedisResource>(new RedisOperationSource(Client), _redisRedisResourcesClientDiagnostics, Pipeline, _redisRedisResourcesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -180,11 +180,11 @@ namespace Azure.ResourceManager.Redis
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _redisResourceClientDiagnostics.CreateScope("RedisResourceCollection.Get");
+            using var scope = _redisRedisResourcesClientDiagnostics.CreateScope("RedisCollection.Get");
             scope.Start();
             try
             {
-                var response = await _redisResourceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken).ConfigureAwait(false);
+                var response = await _redisRedisResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RedisResource(Client, response.Value), response.GetRawResponse());
@@ -225,11 +225,11 @@ namespace Azure.ResourceManager.Redis
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _redisResourceClientDiagnostics.CreateScope("RedisResourceCollection.Get");
+            using var scope = _redisRedisResourcesClientDiagnostics.CreateScope("RedisCollection.Get");
             scope.Start();
             try
             {
-                var response = _redisResourceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken);
+                var response = _redisRedisResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RedisResource(Client, response.Value), response.GetRawResponse());
@@ -266,9 +266,9 @@ namespace Azure.ResourceManager.Redis
         /// <returns> An async collection of <see cref="RedisResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RedisResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _redisResourceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisResourceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RedisResource(Client, RedisResourceData.DeserializeRedisResourceData(e)), _redisResourceClientDiagnostics, Pipeline, "RedisResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _redisRedisResourcesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisRedisResourcesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RedisResource(Client, RedisData.DeserializeRedisData(e)), _redisRedisResourcesClientDiagnostics, Pipeline, "RedisCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -296,9 +296,9 @@ namespace Azure.ResourceManager.Redis
         /// <returns> A collection of <see cref="RedisResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RedisResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _redisResourceRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisResourceRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RedisResource(Client, RedisResourceData.DeserializeRedisResourceData(e)), _redisResourceClientDiagnostics, Pipeline, "RedisResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _redisRedisResourcesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisRedisResourcesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RedisResource(Client, RedisData.DeserializeRedisData(e)), _redisRedisResourcesClientDiagnostics, Pipeline, "RedisCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -330,11 +330,11 @@ namespace Azure.ResourceManager.Redis
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _redisResourceClientDiagnostics.CreateScope("RedisResourceCollection.Exists");
+            using var scope = _redisRedisResourcesClientDiagnostics.CreateScope("RedisCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _redisResourceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _redisRedisResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -373,11 +373,11 @@ namespace Azure.ResourceManager.Redis
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _redisResourceClientDiagnostics.CreateScope("RedisResourceCollection.Exists");
+            using var scope = _redisRedisResourcesClientDiagnostics.CreateScope("RedisCollection.Exists");
             scope.Start();
             try
             {
-                var response = _redisResourceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
+                var response = _redisRedisResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -416,11 +416,11 @@ namespace Azure.ResourceManager.Redis
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _redisResourceClientDiagnostics.CreateScope("RedisResourceCollection.GetIfExists");
+            using var scope = _redisRedisResourcesClientDiagnostics.CreateScope("RedisCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _redisResourceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _redisRedisResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<RedisResource>(response.GetRawResponse());
                 return Response.FromValue(new RedisResource(Client, response.Value), response.GetRawResponse());
@@ -461,11 +461,11 @@ namespace Azure.ResourceManager.Redis
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _redisResourceClientDiagnostics.CreateScope("RedisResourceCollection.GetIfExists");
+            using var scope = _redisRedisResourcesClientDiagnostics.CreateScope("RedisCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _redisResourceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
+                var response = _redisRedisResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, name, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<RedisResource>(response.GetRawResponse());
                 return Response.FromValue(new RedisResource(Client, response.Value), response.GetRawResponse());

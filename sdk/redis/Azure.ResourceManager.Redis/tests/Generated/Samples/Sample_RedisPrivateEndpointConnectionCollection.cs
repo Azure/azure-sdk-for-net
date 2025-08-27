@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.Redis.Samples
             string resourceGroupName = "rgtest01";
             string cacheName = "cachetest01";
             ResourceIdentifier redisResourceId = RedisResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cacheName);
-            RedisResource redisResource = client.GetRedisResource(redisResourceId);
+            RedisResource redis = client.GetRedisResource(redisResourceId);
 
             // get the collection of this RedisPrivateEndpointConnectionResource
-            RedisPrivateEndpointConnectionCollection collection = redisResource.GetRedisPrivateEndpointConnections();
+            RedisPrivateEndpointConnectionCollection collection = redis.GetRedisPrivateEndpointConnections();
 
             // invoke the operation
             string privateEndpointConnectionName = "pectest01";
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Redis.Samples
             string resourceGroupName = "rgtest01";
             string cacheName = "cachetest01";
             ResourceIdentifier redisResourceId = RedisResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cacheName);
-            RedisResource redisResource = client.GetRedisResource(redisResourceId);
+            RedisResource redis = client.GetRedisResource(redisResourceId);
 
             // get the collection of this RedisPrivateEndpointConnectionResource
-            RedisPrivateEndpointConnectionCollection collection = redisResource.GetRedisPrivateEndpointConnections();
+            RedisPrivateEndpointConnectionCollection collection = redis.GetRedisPrivateEndpointConnections();
 
             // invoke the operation
             string privateEndpointConnectionName = "pectest01";
@@ -103,10 +103,10 @@ namespace Azure.ResourceManager.Redis.Samples
             string resourceGroupName = "rgtest01";
             string cacheName = "cachetest01";
             ResourceIdentifier redisResourceId = RedisResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cacheName);
-            RedisResource redisResource = client.GetRedisResource(redisResourceId);
+            RedisResource redis = client.GetRedisResource(redisResourceId);
 
             // get the collection of this RedisPrivateEndpointConnectionResource
-            RedisPrivateEndpointConnectionCollection collection = redisResource.GetRedisPrivateEndpointConnections();
+            RedisPrivateEndpointConnectionCollection collection = redis.GetRedisPrivateEndpointConnections();
 
             // invoke the operation and iterate over the result
             await foreach (RedisPrivateEndpointConnectionResource item in collection.GetAllAsync())
@@ -139,10 +139,10 @@ namespace Azure.ResourceManager.Redis.Samples
             string resourceGroupName = "rgtest01";
             string cacheName = "cachetest01";
             ResourceIdentifier redisResourceId = RedisResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cacheName);
-            RedisResource redisResource = client.GetRedisResource(redisResourceId);
+            RedisResource redis = client.GetRedisResource(redisResourceId);
 
             // get the collection of this RedisPrivateEndpointConnectionResource
-            RedisPrivateEndpointConnectionCollection collection = redisResource.GetRedisPrivateEndpointConnections();
+            RedisPrivateEndpointConnectionCollection collection = redis.GetRedisPrivateEndpointConnections();
 
             // invoke the operation
             string privateEndpointConnectionName = "pectest01";
@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.Redis.Samples
             string resourceGroupName = "rgtest01";
             string cacheName = "cachetest01";
             ResourceIdentifier redisResourceId = RedisResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cacheName);
-            RedisResource redisResource = client.GetRedisResource(redisResourceId);
+            RedisResource redis = client.GetRedisResource(redisResourceId);
 
             // get the collection of this RedisPrivateEndpointConnectionResource
-            RedisPrivateEndpointConnectionCollection collection = redisResource.GetRedisPrivateEndpointConnections();
+            RedisPrivateEndpointConnectionCollection collection = redis.GetRedisPrivateEndpointConnections();
 
             // invoke the operation
             string privateEndpointConnectionName = "pectest01";

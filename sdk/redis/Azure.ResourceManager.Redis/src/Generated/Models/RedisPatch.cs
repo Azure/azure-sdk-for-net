@@ -66,10 +66,13 @@ namespace Azure.ResourceManager.Redis.Models
         }
 
         /// <summary> The SKU of the Redis cache to deploy. </summary>
+        [WirePath("properties.sku")]
         public RedisSku Sku { get; set; }
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> The identity of the resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
     }
 }

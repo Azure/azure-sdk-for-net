@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Redis.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableRedisSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _redisResourceClientDiagnostics;
-        private RedisResourcesRestOperations _redisResourceRestClient;
+        private ClientDiagnostics _redisRedisResourcesClientDiagnostics;
+        private RedisResourcesRestOperations _redisRedisResourcesRestClient;
         private ClientDiagnostics _redisOperationGroupClientDiagnostics;
         private RedisOperationGroupRestOperations _redisOperationGroupRestClient;
         private ClientDiagnostics _asyncOperationStatusOperationGroupClientDiagnostics;
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Redis.Mocking
         {
         }
 
-        private ClientDiagnostics RedisResourceClientDiagnostics => _redisResourceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Redis", RedisResource.ResourceType.Namespace, Diagnostics);
-        private RedisResourcesRestOperations RedisResourceRestClient => _redisResourceRestClient ??= new RedisResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(RedisResource.ResourceType));
+        private ClientDiagnostics RedisRedisResourcesClientDiagnostics => _redisRedisResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Redis", RedisResource.ResourceType.Namespace, Diagnostics);
+        private RedisResourcesRestOperations RedisRedisResourcesRestClient => _redisRedisResourcesRestClient ??= new RedisResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(RedisResource.ResourceType));
         private ClientDiagnostics RedisOperationGroupClientDiagnostics => _redisOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Redis", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private RedisOperationGroupRestOperations RedisOperationGroupRestClient => _redisOperationGroupRestClient ??= new RedisOperationGroupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics AsyncOperationStatusOperationGroupClientDiagnostics => _asyncOperationStatusOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Redis", ProviderConstants.DefaultProviderNamespace, Diagnostics);
@@ -75,9 +75,9 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// <returns> An async collection of <see cref="RedisResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RedisResource> ListBySubscriptionAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => RedisResourceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RedisResourceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RedisResource(Client, RedisResourceData.DeserializeRedisResourceData(e)), RedisResourceClientDiagnostics, Pipeline, "MockableRedisSubscriptionResource.ListBySubscription", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RedisRedisResourcesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RedisRedisResourcesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RedisResource(Client, RedisData.DeserializeRedisData(e)), RedisRedisResourcesClientDiagnostics, Pipeline, "MockableRedisSubscriptionResource.ListBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -105,9 +105,9 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// <returns> A collection of <see cref="RedisResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RedisResource> ListBySubscription(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => RedisResourceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RedisResourceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RedisResource(Client, RedisResourceData.DeserializeRedisResourceData(e)), RedisResourceClientDiagnostics, Pipeline, "MockableRedisSubscriptionResource.ListBySubscription", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RedisRedisResourcesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RedisRedisResourcesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RedisResource(Client, RedisData.DeserializeRedisData(e)), RedisRedisResourcesClientDiagnostics, Pipeline, "MockableRedisSubscriptionResource.ListBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -84,8 +84,10 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> lowest IP address included in the range. </summary>
+        [WirePath("properties.startIP")]
         public string StartIP { get; set; }
         /// <summary> highest IP address included in the range. </summary>
+        [WirePath("properties.endIP")]
         public string EndIP { get; set; }
     }
 }

@@ -83,8 +83,10 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> List of patch schedules for a Redis cache. </summary>
+        [WirePath("properties.scheduleEntries")]
         public IList<RedisPatchScheduleSetting> ScheduleEntries { get; }
         /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
         public string Location { get; }
     }
 }

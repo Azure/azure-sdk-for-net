@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Redis.Mocking
 
         /// <summary> Gets a collection of RedisResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of RedisResources and their operations over a RedisResource. </returns>
-        public virtual RedisResourceCollection GetRedisResources()
+        public virtual RedisCollection GetAllRedis()
         {
-            return GetCachedClient(client => new RedisResourceCollection(client, Id));
+            return GetCachedClient(client => new RedisCollection(client, Id));
         }
 
         /// <summary>
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RedisResource>> GetRedisResourceAsync(string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RedisResource>> GetRedisAsync(string name, CancellationToken cancellationToken = default)
         {
-            return await GetRedisResources().GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetAllRedis().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RedisResource> GetRedisResource(string name, CancellationToken cancellationToken = default)
+        public virtual Response<RedisResource> GetRedis(string name, CancellationToken cancellationToken = default)
         {
-            return GetRedisResources().Get(name, cancellationToken);
+            return GetAllRedis().Get(name, cancellationToken);
         }
     }
 }

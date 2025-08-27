@@ -69,6 +69,7 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> Terminal state of the link between primary and secondary redis cache. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; }
     }
 }

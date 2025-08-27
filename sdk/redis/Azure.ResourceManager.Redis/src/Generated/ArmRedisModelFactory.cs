@@ -17,24 +17,50 @@ namespace Azure.ResourceManager.Redis.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmRedisModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.Operation"/>. </summary>
-        /// <param name="name"> Operation name: {provider}/{resource}/{operation}. </param>
-        /// <param name="display"> The object that describes the operation. </param>
-        /// <returns> A new <see cref="Models.Operation"/> instance for mocking. </returns>
-        public static Operation Operation(string name = null, OperationDisplay display = null)
+        /// <summary> Initializes a new instance of <see cref="Redis.RedisData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> Redis instance provisioning status. </param>
+        /// <param name="hostName"> Redis host name. </param>
+        /// <param name="port"> Redis non-SSL port. </param>
+        /// <param name="sslPort"> Redis SSL port. </param>
+        /// <param name="accessKeys"> The keys of the Redis cache - not set if this object is not the response to Create or Update redis cache. </param>
+        /// <param name="linkedServers"> List of the linked servers associated with the cache. </param>
+        /// <param name="instances"> List of the Redis instances associated with the cache. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connection associated with the specified redis cache. </param>
+        /// <param name="zones"> The availability zones. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <returns> A new <see cref="Redis.RedisData"/> instance for mocking. </returns>
+        public static RedisData RedisData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RedisProvisioningState? provisioningState = null, string hostName = null, int? port = null, int? sslPort = null, RedisAccessKeys accessKeys = null, IEnumerable<SubResource> linkedServers = null, IEnumerable<RedisInstanceDetails> instances = null, IEnumerable<RedisPrivateEndpointConnectionData> privateEndpointConnections = null, IEnumerable<string> zones = null, ManagedServiceIdentity identity = null, IReadOnlyDictionary<string, string> tags = null, AzureLocation location = default)
         {
-            return new Operation(name, display, serializedAdditionalRawData: null);
-        }
+            linkedServers ??= new List<SubResource>();
+            instances ??= new List<RedisInstanceDetails>();
+            privateEndpointConnections ??= new List<RedisPrivateEndpointConnectionData>();
+            zones ??= new List<string>();
+            tags ??= new Dictionary<string, string>();
 
-        /// <summary> Initializes a new instance of <see cref="Models.OperationDisplay"/>. </summary>
-        /// <param name="provider"> Friendly name of the resource provider. </param>
-        /// <param name="operation"> Operation type: read, write, delete, listKeys/action, etc. </param>
-        /// <param name="resource"> Resource type on which the operation is performed. </param>
-        /// <param name="description"> Friendly name of the operation. </param>
-        /// <returns> A new <see cref="Models.OperationDisplay"/> instance for mocking. </returns>
-        public static OperationDisplay OperationDisplay(string provider = null, string operation = null, string resource = null, string description = null)
-        {
-            return new OperationDisplay(provider, operation, resource, description, serializedAdditionalRawData: null);
+            return new RedisData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                hostName,
+                port,
+                sslPort,
+                accessKeys,
+                linkedServers?.ToList(),
+                instances?.ToList(),
+                privateEndpointConnections?.ToList(),
+                zones?.ToList(),
+                identity,
+                tags,
+                location,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RedisAccessKeys"/>. </summary>
@@ -137,7 +163,7 @@ namespace Azure.ResourceManager.Redis.Models
                 additionalProperties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RedisResourceCreateOrUpdateContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RedisCreateOrUpdateContent"/>. </summary>
         /// <param name="sku"> The SKU of the Redis cache to deploy. </param>
         /// <param name="subnetId"> The full resource ID of a subnet in a virtual network to deploy the Redis cache in. Example format: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/Microsoft.{Network|ClassicNetwork}/VirtualNetworks/vnet1/subnets/subnet1. </param>
         /// <param name="staticIP"> Static IP address. Optionally, may be specified when deploying a Redis cache inside an existing Azure Virtual Network; auto assigned by default. </param>
@@ -145,13 +171,13 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The identity of the resource. </param>
-        /// <returns> A new <see cref="Models.RedisResourceCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static RedisResourceCreateOrUpdateContent RedisResourceCreateOrUpdateContent(RedisSku sku = null, string subnetId = null, string staticIP = null, IEnumerable<string> zones = null, string location = null, IDictionary<string, string> tags = null, ManagedServiceIdentity identity = null)
+        /// <returns> A new <see cref="Models.RedisCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static RedisCreateOrUpdateContent RedisCreateOrUpdateContent(RedisSku sku = null, string subnetId = null, string staticIP = null, IEnumerable<string> zones = null, string location = null, IDictionary<string, string> tags = null, ManagedServiceIdentity identity = null)
         {
             zones ??= new List<string>();
             tags ??= new Dictionary<string, string>();
 
-            return new RedisResourceCreateOrUpdateContent(
+            return new RedisCreateOrUpdateContent(
                 sku,
                 subnetId,
                 staticIP,
@@ -182,16 +208,16 @@ namespace Azure.ResourceManager.Redis.Models
             return new RedisForceRebootResult(message, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExportRDBContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ExportRdbContent"/>. </summary>
         /// <param name="format"> File format. </param>
         /// <param name="prefix"> Prefix to use for exported files. </param>
         /// <param name="container"> Container name to export to. </param>
         /// <param name="preferredDataArchiveAuthMethod"> Preferred auth method to communicate to storage account used for data archive, specify SAS or ManagedIdentity, default value is SAS. </param>
         /// <param name="storageSubscriptionId"> Subscription id of the storage container for data to be exported using ManagedIdentity. </param>
-        /// <returns> A new <see cref="Models.ExportRDBContent"/> instance for mocking. </returns>
-        public static ExportRDBContent ExportRDBContent(string format = null, string prefix = null, string container = null, string preferredDataArchiveAuthMethod = null, string storageSubscriptionId = null)
+        /// <returns> A new <see cref="Models.ExportRdbContent"/> instance for mocking. </returns>
+        public static ExportRdbContent ExportRdbContent(string format = null, string prefix = null, string container = null, string preferredDataArchiveAuthMethod = null, string storageSubscriptionId = null)
         {
-            return new ExportRDBContent(
+            return new ExportRdbContent(
                 format,
                 prefix,
                 container,
@@ -226,16 +252,16 @@ namespace Azure.ResourceManager.Redis.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RedisPrivateLinkResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RedisPrivateLinkResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Resource properties. </param>
-        /// <returns> A new <see cref="Models.RedisPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static RedisPrivateLinkResourceData RedisPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RedisPrivateLinkResourceProperties properties = null)
+        /// <returns> A new <see cref="Models.RedisPrivateLinkResource"/> instance for mocking. </returns>
+        public static RedisPrivateLinkResource RedisPrivateLinkResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RedisPrivateLinkResourceProperties properties = null)
         {
-            return new RedisPrivateLinkResourceData(
+            return new RedisPrivateLinkResource(
                 id,
                 name,
                 resourceType,

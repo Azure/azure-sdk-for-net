@@ -15,11 +15,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    public partial class RedisResourceCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<RedisResourceCreateOrUpdateContent>
+    public partial class RedisCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<RedisCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisResourceCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisCreateOrUpdateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<RedisResourceCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RedisCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisResourceCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisResourceCreateOrUpdateContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsCollectionDefined(Zones))
@@ -96,19 +96,19 @@ namespace Azure.ResourceManager.Redis.Models
             }
         }
 
-        RedisResourceCreateOrUpdateContent IJsonModel<RedisResourceCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RedisCreateOrUpdateContent IJsonModel<RedisCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisResourceCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisResourceCreateOrUpdateContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRedisResourceCreateOrUpdateContent(document.RootElement, options);
+            return DeserializeRedisCreateOrUpdateContent(document.RootElement, options);
         }
 
-        internal static RedisResourceCreateOrUpdateContent DeserializeRedisResourceCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RedisCreateOrUpdateContent DeserializeRedisCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Redis.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RedisResourceCreateOrUpdateContent(
+            return new RedisCreateOrUpdateContent(
                 sku,
                 subnetId,
                 staticIP,
@@ -213,35 +213,35 @@ namespace Azure.ResourceManager.Redis.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<RedisResourceCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RedisCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisResourceCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RedisResourceCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        RedisResourceCreateOrUpdateContent IPersistableModel<RedisResourceCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RedisCreateOrUpdateContent IPersistableModel<RedisCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisResourceCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRedisResourceCreateOrUpdateContent(document.RootElement, options);
+                        return DeserializeRedisCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RedisResourceCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<RedisResourceCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RedisCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

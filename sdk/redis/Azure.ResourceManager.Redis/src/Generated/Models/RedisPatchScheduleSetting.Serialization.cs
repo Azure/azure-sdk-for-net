@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -115,6 +116,61 @@ namespace Azure.ResourceManager.Redis.Models
             return new RedisPatchScheduleSetting(dayOfWeek, startHourUtc, maintenanceWindow, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DayOfWeek), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  dayOfWeek: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  dayOfWeek: ");
+                builder.AppendLine($"'{DayOfWeek.ToSerialString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartHourUtc), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  startHourUtc: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  startHourUtc: ");
+                builder.AppendLine($"{StartHourUtc}");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaintenanceWindow), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maintenanceWindow: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaintenanceWindow))
+                {
+                    builder.Append("  maintenanceWindow: ");
+                    var formattedTimeSpan = TypeFormatters.ToString(MaintenanceWindow.Value, "P");
+                    builder.AppendLine($"'{formattedTimeSpan}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<RedisPatchScheduleSetting>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RedisPatchScheduleSetting>)this).GetFormatFromOptions(options) : options.Format;
@@ -123,6 +179,8 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RedisPatchScheduleSetting)} does not support writing '{options.Format}' format.");
             }

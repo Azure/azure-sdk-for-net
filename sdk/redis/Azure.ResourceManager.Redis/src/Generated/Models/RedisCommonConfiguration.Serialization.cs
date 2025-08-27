@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -307,6 +308,436 @@ namespace Azure.ResourceManager.Redis.Models
                 additionalProperties);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRdbBackupEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rdb-backup-enabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsRdbBackupEnabled))
+                {
+                    builder.Append("  rdb-backup-enabled: ");
+                    var boolValue = IsRdbBackupEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RdbBackupFrequency), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rdb-backup-frequency: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RdbBackupFrequency))
+                {
+                    builder.Append("  rdb-backup-frequency: ");
+                    if (RdbBackupFrequency.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RdbBackupFrequency}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RdbBackupFrequency}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RdbBackupMaxSnapshotCount), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rdb-backup-max-snapshot-count: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RdbBackupMaxSnapshotCount))
+                {
+                    builder.Append("  rdb-backup-max-snapshot-count: ");
+                    builder.AppendLine($"{RdbBackupMaxSnapshotCount.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RdbStorageConnectionString), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rdb-storage-connection-string: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RdbStorageConnectionString))
+                {
+                    builder.Append("  rdb-storage-connection-string: ");
+                    if (RdbStorageConnectionString.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RdbStorageConnectionString}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RdbStorageConnectionString}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAofBackupEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  aof-backup-enabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsAofBackupEnabled))
+                {
+                    builder.Append("  aof-backup-enabled: ");
+                    var boolValue = IsAofBackupEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AofStorageConnectionString0), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  aof-storage-connection-string-0: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AofStorageConnectionString0))
+                {
+                    builder.Append("  aof-storage-connection-string-0: ");
+                    if (AofStorageConnectionString0.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AofStorageConnectionString0}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AofStorageConnectionString0}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AofStorageConnectionString1), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  aof-storage-connection-string-1: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AofStorageConnectionString1))
+                {
+                    builder.Append("  aof-storage-connection-string-1: ");
+                    if (AofStorageConnectionString1.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AofStorageConnectionString1}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AofStorageConnectionString1}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxfragmentationmemoryReserved), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maxfragmentationmemory-reserved: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxfragmentationmemoryReserved))
+                {
+                    builder.Append("  maxfragmentationmemory-reserved: ");
+                    if (MaxfragmentationmemoryReserved.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MaxfragmentationmemoryReserved}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MaxfragmentationmemoryReserved}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxmemoryPolicy), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maxmemory-policy: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxmemoryPolicy))
+                {
+                    builder.Append("  maxmemory-policy: ");
+                    if (MaxmemoryPolicy.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MaxmemoryPolicy}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MaxmemoryPolicy}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxmemoryReserved), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maxmemory-reserved: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxmemoryReserved))
+                {
+                    builder.Append("  maxmemory-reserved: ");
+                    if (MaxmemoryReserved.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MaxmemoryReserved}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MaxmemoryReserved}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxmemoryDelta), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maxmemory-delta: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxmemoryDelta))
+                {
+                    builder.Append("  maxmemory-delta: ");
+                    if (MaxmemoryDelta.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MaxmemoryDelta}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MaxmemoryDelta}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Maxclients), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maxclients: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Maxclients))
+                {
+                    builder.Append("  maxclients: ");
+                    if (Maxclients.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Maxclients}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Maxclients}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotifyKeyspaceEvents), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  notify-keyspace-events: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NotifyKeyspaceEvents))
+                {
+                    builder.Append("  notify-keyspace-events: ");
+                    if (NotifyKeyspaceEvents.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NotifyKeyspaceEvents}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NotifyKeyspaceEvents}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreferredDataArchiveAuthMethod), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  preferred-data-archive-auth-method: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PreferredDataArchiveAuthMethod))
+                {
+                    builder.Append("  preferred-data-archive-auth-method: ");
+                    if (PreferredDataArchiveAuthMethod.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PreferredDataArchiveAuthMethod}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PreferredDataArchiveAuthMethod}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreferredDataPersistenceAuthMethod), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  preferred-data-persistence-auth-method: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PreferredDataPersistenceAuthMethod))
+                {
+                    builder.Append("  preferred-data-persistence-auth-method: ");
+                    if (PreferredDataPersistenceAuthMethod.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PreferredDataPersistenceAuthMethod}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PreferredDataPersistenceAuthMethod}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ZonalConfiguration), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  zonal-configuration: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ZonalConfiguration))
+                {
+                    builder.Append("  zonal-configuration: ");
+                    if (ZonalConfiguration.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ZonalConfiguration}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ZonalConfiguration}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Authnotrequired), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  authnotrequired: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Authnotrequired))
+                {
+                    builder.Append("  authnotrequired: ");
+                    if (Authnotrequired.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Authnotrequired}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Authnotrequired}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageSubscriptionId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  storage-subscription-id: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(StorageSubscriptionId))
+                {
+                    builder.Append("  storage-subscription-id: ");
+                    if (StorageSubscriptionId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{StorageSubscriptionId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{StorageSubscriptionId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAadEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  aad-enabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsAadEnabled))
+                {
+                    builder.Append("  aad-enabled: ");
+                    if (IsAadEnabled.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{IsAadEnabled}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{IsAadEnabled}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<RedisCommonConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RedisCommonConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -315,6 +746,8 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RedisCommonConfiguration)} does not support writing '{options.Format}' format.");
             }

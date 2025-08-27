@@ -12,7 +12,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Redis.Models
 {
     /// <summary> Parameters supplied to the Create Redis operation. </summary>
-    public partial class RedisResourceCreateOrUpdateContent
+    public partial class RedisCreateOrUpdateContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.Redis.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RedisResourceCreateOrUpdateContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisCreateOrUpdateContent"/>. </summary>
         /// <param name="sku"> The SKU of the Redis cache to deploy. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> or <paramref name="location"/> is null. </exception>
-        public RedisResourceCreateOrUpdateContent(RedisSku sku, string location)
+        public RedisCreateOrUpdateContent(RedisSku sku, string location)
         {
             Argument.AssertNotNull(sku, nameof(sku));
             Argument.AssertNotNull(location, nameof(location));
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Redis.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RedisResourceCreateOrUpdateContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisCreateOrUpdateContent"/>. </summary>
         /// <param name="sku"> The SKU of the Redis cache to deploy. </param>
         /// <param name="subnetId"> The full resource ID of a subnet in a virtual network to deploy the Redis cache in. Example format: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/Microsoft.{Network|ClassicNetwork}/VirtualNetworks/vnet1/subnets/subnet1. </param>
         /// <param name="staticIP"> Static IP address. Optionally, may be specified when deploying a Redis cache inside an existing Azure Virtual Network; auto assigned by default. </param>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisResourceCreateOrUpdateContent(RedisSku sku, string subnetId, string staticIP, IList<string> zones, string location, IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RedisCreateOrUpdateContent(RedisSku sku, string subnetId, string staticIP, IList<string> zones, string location, IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             SubnetId = subnetId;
@@ -82,24 +82,31 @@ namespace Azure.ResourceManager.Redis.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RedisResourceCreateOrUpdateContent"/> for deserialization. </summary>
-        internal RedisResourceCreateOrUpdateContent()
+        /// <summary> Initializes a new instance of <see cref="RedisCreateOrUpdateContent"/> for deserialization. </summary>
+        internal RedisCreateOrUpdateContent()
         {
         }
 
         /// <summary> The SKU of the Redis cache to deploy. </summary>
+        [WirePath("properties.sku")]
         public RedisSku Sku { get; }
         /// <summary> The full resource ID of a subnet in a virtual network to deploy the Redis cache in. Example format: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/Microsoft.{Network|ClassicNetwork}/VirtualNetworks/vnet1/subnets/subnet1. </summary>
+        [WirePath("properties.subnetId")]
         public string SubnetId { get; set; }
         /// <summary> Static IP address. Optionally, may be specified when deploying a Redis cache inside an existing Azure Virtual Network; auto assigned by default. </summary>
+        [WirePath("properties.staticIP")]
         public string StaticIP { get; set; }
         /// <summary> A list of availability zones denoting where the resource needs to come from. </summary>
+        [WirePath("zones")]
         public IList<string> Zones { get; }
         /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
         public string Location { get; }
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> The identity of the resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
     }
 }

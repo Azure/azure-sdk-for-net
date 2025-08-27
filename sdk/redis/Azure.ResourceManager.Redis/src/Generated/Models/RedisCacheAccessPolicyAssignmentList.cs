@@ -73,8 +73,10 @@ namespace Azure.ResourceManager.Redis.Models
         }
 
         /// <summary> The RedisCacheAccessPolicyAssignment items on this page. </summary>
+        [WirePath("value")]
         public IReadOnlyList<RedisCacheAccessPolicyAssignmentData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
+        [WirePath("nextLink")]
         public Uri NextLink { get; }
     }
 }

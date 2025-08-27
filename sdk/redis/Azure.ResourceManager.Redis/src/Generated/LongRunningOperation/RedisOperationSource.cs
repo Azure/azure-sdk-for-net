@@ -12,24 +12,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Redis
 {
-    internal class RedisResourceOperationSource : IOperationSource<RedisResource>
+    internal class RedisOperationSource : IOperationSource<RedisResource>
     {
         private readonly ArmClient _client;
 
-        internal RedisResourceOperationSource(ArmClient client)
+        internal RedisOperationSource(ArmClient client)
         {
             _client = client;
         }
 
         RedisResource IOperationSource<RedisResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RedisResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRedisContext.Default);
+            var data = ModelReaderWriter.Read<RedisData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRedisContext.Default);
             return new RedisResource(_client, data);
         }
 
         async ValueTask<RedisResource> IOperationSource<RedisResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RedisResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRedisContext.Default);
+            var data = ModelReaderWriter.Read<RedisData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRedisContext.Default);
             return await Task.FromResult(new RedisResource(_client, data)).ConfigureAwait(false);
         }
     }

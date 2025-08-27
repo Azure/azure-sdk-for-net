@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.Redis.Models
         }
 
         /// <summary> Status message. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

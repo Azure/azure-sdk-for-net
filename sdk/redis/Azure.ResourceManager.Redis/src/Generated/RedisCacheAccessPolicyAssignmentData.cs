@@ -76,12 +76,16 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> Provisioning state of an access policy assignment set. </summary>
+        [WirePath("properties.provisioningState")]
         public AccessPolicyAssignmentProvisioningState? ProvisioningState { get; }
         /// <summary> Object Id to assign access policy to. </summary>
+        [WirePath("properties.objectId")]
         public Guid? ObjectId { get; set; }
         /// <summary> User friendly name for object id. Also represents username for token based authentication. </summary>
+        [WirePath("properties.objectIdAlias")]
         public string ObjectIdAlias { get; set; }
         /// <summary> The name of the access policy that is being assigned. </summary>
+        [WirePath("properties.accessPolicyName")]
         public string AccessPolicyName { get; set; }
     }
 }

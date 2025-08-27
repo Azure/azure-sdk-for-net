@@ -15,10 +15,10 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Redis
 {
     /// <summary>
-    /// A class representing the RedisResource data model.
+    /// A class representing the Redis data model.
     /// A single Redis item in List or Get Operation.
     /// </summary>
-    public partial class RedisResourceData : ResourceData
+    public partial class RedisData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.Redis
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RedisResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal RedisResourceData(AzureLocation location)
+        internal RedisData(AzureLocation location)
         {
             LinkedServers = new ChangeTrackingList<SubResource>();
             Instances = new ChangeTrackingList<RedisInstanceDetails>();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Redis
             Location = location;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RedisResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RedisProvisioningState? provisioningState, string hostName, int? port, int? sslPort, RedisAccessKeys accessKeys, IReadOnlyList<SubResource> linkedServers, IReadOnlyList<RedisInstanceDetails> instances, IReadOnlyList<RedisPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<string> zones, ManagedServiceIdentity identity, IReadOnlyDictionary<string, string> tags, AzureLocation location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal RedisData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RedisProvisioningState? provisioningState, string hostName, int? port, int? sslPort, RedisAccessKeys accessKeys, IReadOnlyList<SubResource> linkedServers, IReadOnlyList<RedisInstanceDetails> instances, IReadOnlyList<RedisPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<string> zones, ManagedServiceIdentity identity, IReadOnlyDictionary<string, string> tags, AzureLocation location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             HostName = hostName;
@@ -99,34 +99,46 @@ namespace Azure.ResourceManager.Redis
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RedisResourceData"/> for deserialization. </summary>
-        internal RedisResourceData()
+        /// <summary> Initializes a new instance of <see cref="RedisData"/> for deserialization. </summary>
+        internal RedisData()
         {
         }
 
         /// <summary> Redis instance provisioning status. </summary>
+        [WirePath("properties.provisioningState")]
         public RedisProvisioningState? ProvisioningState { get; }
         /// <summary> Redis host name. </summary>
+        [WirePath("properties.hostName")]
         public string HostName { get; }
         /// <summary> Redis non-SSL port. </summary>
+        [WirePath("properties.port")]
         public int? Port { get; }
         /// <summary> Redis SSL port. </summary>
+        [WirePath("properties.sslPort")]
         public int? SslPort { get; }
         /// <summary> The keys of the Redis cache - not set if this object is not the response to Create or Update redis cache. </summary>
+        [WirePath("properties.accessKeys")]
         public RedisAccessKeys AccessKeys { get; }
         /// <summary> List of the linked servers associated with the cache. </summary>
+        [WirePath("properties.linkedServers")]
         public IReadOnlyList<SubResource> LinkedServers { get; }
         /// <summary> List of the Redis instances associated with the cache. </summary>
+        [WirePath("properties.instances")]
         public IReadOnlyList<RedisInstanceDetails> Instances { get; }
         /// <summary> List of private endpoint connection associated with the specified redis cache. </summary>
+        [WirePath("properties.privateEndpointConnections")]
         public IReadOnlyList<RedisPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> The availability zones. </summary>
+        [WirePath("zones")]
         public IReadOnlyList<string> Zones { get; }
         /// <summary> The managed service identities assigned to this resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; }
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IReadOnlyDictionary<string, string> Tags { get; }
         /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
         public AzureLocation Location { get; }
     }
 }

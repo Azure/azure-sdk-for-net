@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    /// <summary> REST API operation. </summary>
-    public partial class Operation
+    /// <summary> A private link resource. </summary>
+    public partial class RedisPrivateLinkResource : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +47,26 @@ namespace Azure.ResourceManager.Redis.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Operation"/>. </summary>
-        internal Operation()
+        /// <summary> Initializes a new instance of <see cref="RedisPrivateLinkResource"/>. </summary>
+        internal RedisPrivateLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Operation"/>. </summary>
-        /// <param name="name"> Operation name: {provider}/{resource}/{operation}. </param>
-        /// <param name="display"> The object that describes the operation. </param>
+        /// <summary> Initializes a new instance of <see cref="RedisPrivateLinkResource"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> Resource properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Operation(string name, OperationDisplay display, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RedisPrivateLinkResource(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RedisPrivateLinkResourceProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            Name = name;
-            Display = display;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Operation name: {provider}/{resource}/{operation}. </summary>
-        public string Name { get; }
-        /// <summary> The object that describes the operation. </summary>
-        public OperationDisplay Display { get; }
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        public RedisPrivateLinkResourceProperties Properties { get; }
     }
 }

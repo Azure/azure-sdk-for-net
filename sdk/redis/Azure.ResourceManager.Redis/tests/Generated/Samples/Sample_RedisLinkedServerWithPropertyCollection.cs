@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.Redis.Samples
             string resourceGroupName = "rg1";
             string name = "cache1";
             ResourceIdentifier redisResourceId = RedisResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
-            RedisResource redisResource = client.GetRedisResource(redisResourceId);
+            RedisResource redis = client.GetRedisResource(redisResourceId);
 
             // get the collection of this RedisLinkedServerWithPropertyResource
-            RedisLinkedServerWithPropertyCollection collection = redisResource.GetRedisLinkedServerWithProperties();
+            RedisLinkedServerWithPropertyCollection collection = redis.GetRedisLinkedServerWithProperties();
 
             // invoke the operation
             string linkedServerName = "cache2";
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.Redis.Samples
             string resourceGroupName = "rg1";
             string name = "cache1";
             ResourceIdentifier redisResourceId = RedisResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
-            RedisResource redisResource = client.GetRedisResource(redisResourceId);
+            RedisResource redis = client.GetRedisResource(redisResourceId);
 
             // get the collection of this RedisLinkedServerWithPropertyResource
-            RedisLinkedServerWithPropertyCollection collection = redisResource.GetRedisLinkedServerWithProperties();
+            RedisLinkedServerWithPropertyCollection collection = redis.GetRedisLinkedServerWithProperties();
 
             // invoke the operation
             string linkedServerName = "cache2";
@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.Redis.Samples
             string resourceGroupName = "rg1";
             string name = "cache1";
             ResourceIdentifier redisResourceId = RedisResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
-            RedisResource redisResource = client.GetRedisResource(redisResourceId);
+            RedisResource redis = client.GetRedisResource(redisResourceId);
 
             // get the collection of this RedisLinkedServerWithPropertyResource
-            RedisLinkedServerWithPropertyCollection collection = redisResource.GetRedisLinkedServerWithProperties();
+            RedisLinkedServerWithPropertyCollection collection = redis.GetRedisLinkedServerWithProperties();
 
             // invoke the operation and iterate over the result
             await foreach (RedisLinkedServerWithPropertyResource item in collection.GetAllAsync())
@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.Redis.Samples
             string resourceGroupName = "rg1";
             string name = "cache1";
             ResourceIdentifier redisResourceId = RedisResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
-            RedisResource redisResource = client.GetRedisResource(redisResourceId);
+            RedisResource redis = client.GetRedisResource(redisResourceId);
 
             // get the collection of this RedisLinkedServerWithPropertyResource
-            RedisLinkedServerWithPropertyCollection collection = redisResource.GetRedisLinkedServerWithProperties();
+            RedisLinkedServerWithPropertyCollection collection = redis.GetRedisLinkedServerWithProperties();
 
             // invoke the operation
             string linkedServerName = "cache2";
@@ -170,10 +170,10 @@ namespace Azure.ResourceManager.Redis.Samples
             string resourceGroupName = "rg1";
             string name = "cache1";
             ResourceIdentifier redisResourceId = RedisResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
-            RedisResource redisResource = client.GetRedisResource(redisResourceId);
+            RedisResource redis = client.GetRedisResource(redisResourceId);
 
             // get the collection of this RedisLinkedServerWithPropertyResource
-            RedisLinkedServerWithPropertyCollection collection = redisResource.GetRedisLinkedServerWithProperties();
+            RedisLinkedServerWithPropertyCollection collection = redis.GetRedisLinkedServerWithProperties();
 
             // invoke the operation
             string linkedServerName = "cache2";
