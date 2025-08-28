@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ScheduledActionResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ScheduledActionResourceModel"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -322,12 +322,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
         /// </param>
         /// <param name="notificationSettings"> The desired notification settings for the specified resource. </param>
-        /// <returns> A new <see cref="Models.ScheduledActionResource"/> instance for mocking. </returns>
-        public static ScheduledActionResource ScheduledActionResource(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier resourceId = null, IEnumerable<NotificationProperties> notificationSettings = null)
+        /// <returns> A new <see cref="Models.ScheduledActionResourceModel"/> instance for mocking. </returns>
+        public static ScheduledActionResourceModel ScheduledActionResourceModel(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier resourceId = null, IEnumerable<NotificationProperties> notificationSettings = null)
         {
             notificationSettings ??= new List<NotificationProperties>();
 
-            return new ScheduledActionResource(
+            return new ScheduledActionResourceModel(
                 id,
                 name,
                 resourceType,
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OccurrenceResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OccurrenceResourceModel"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -467,12 +467,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="scheduledOn"> The time the occurrence is scheduled for the resource. </param>
         /// <param name="provisioningState"> The current state of the resource. </param>
         /// <param name="errorDetails"> Error details for the resource. Only populated if resource is in failed state. </param>
-        /// <returns> A new <see cref="Models.OccurrenceResource"/> instance for mocking. </returns>
-        public static OccurrenceResource OccurrenceResource(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier resourceId = null, IEnumerable<NotificationProperties> notificationSettings = null, DateTimeOffset scheduledOn = default, ResourceProvisioningState? provisioningState = null, ResponseError errorDetails = null)
+        /// <returns> A new <see cref="Models.OccurrenceResourceModel"/> instance for mocking. </returns>
+        public static OccurrenceResourceModel OccurrenceResourceModel(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier resourceId = null, IEnumerable<NotificationProperties> notificationSettings = null, DateTimeOffset scheduledOn = default, ResourceProvisioningState? provisioningState = null, ResponseError errorDetails = null)
         {
             notificationSettings ??= new List<NotificationProperties>();
 
-            return new OccurrenceResource(
+            return new OccurrenceResourceModel(
                 id,
                 name,
                 resourceType,
@@ -485,16 +485,16 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OccurrenceExtensionResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.OccurrenceExtensionResourceModel"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.OccurrenceExtensionResource"/> instance for mocking. </returns>
-        public static OccurrenceExtensionResource OccurrenceExtensionResource(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, OccurrenceExtensionProperties properties = null)
+        /// <returns> A new <see cref="Models.OccurrenceExtensionResourceModel"/> instance for mocking. </returns>
+        public static OccurrenceExtensionResourceModel OccurrenceExtensionResourceModel(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, OccurrenceExtensionProperties properties = null)
         {
-            return new OccurrenceExtensionResource(
+            return new OccurrenceExtensionResourceModel(
                 id,
                 name,
                 resourceType,

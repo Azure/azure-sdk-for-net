@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            IReadOnlyList<OccurrenceExtensionResource> value = default;
+            IReadOnlyList<OccurrenceExtensionResourceModel> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<OccurrenceExtensionResource> array = new List<OccurrenceExtensionResource>();
+                    List<OccurrenceExtensionResourceModel> array = new List<OccurrenceExtensionResourceModel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OccurrenceExtensionResource.DeserializeOccurrenceExtensionResource(item, options));
+                        array.Add(OccurrenceExtensionResourceModel.DeserializeOccurrenceExtensionResourceModel(item, options));
                     }
                     value = array;
                     continue;

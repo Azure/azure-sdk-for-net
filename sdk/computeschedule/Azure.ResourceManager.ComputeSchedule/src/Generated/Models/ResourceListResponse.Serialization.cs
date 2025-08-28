@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            IReadOnlyList<ScheduledActionResource> value = default;
+            IReadOnlyList<ScheduledActionResourceModel> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<ScheduledActionResource> array = new List<ScheduledActionResource>();
+                    List<ScheduledActionResourceModel> array = new List<ScheduledActionResourceModel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScheduledActionResource.DeserializeScheduledActionResource(item, options));
+                        array.Add(ScheduledActionResourceModel.DeserializeScheduledActionResourceModel(item, options));
                     }
                     value = array;
                     continue;

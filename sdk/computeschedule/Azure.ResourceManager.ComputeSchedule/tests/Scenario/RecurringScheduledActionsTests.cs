@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             try
             {
                 // attach
-                ScheduledActionResource[] res = RecurringScheduledActionUtils.GenerateResources(allResourceids);
+                ScheduledActionResourceModel[] res = RecurringScheduledActionUtils.GenerateResources(allResourceids);
                 ResourceAttachContent attachContent = new(res);
                 RecurringActionsResourceOperationResult attachResult = await DefaultResourceGroupResource.AttachResourcesScheduledActionAsync(scheduledActionName, attachContent);
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
 
             try
             {
-                ScheduledActionResource[] resourcesToAttach = RecurringScheduledActionUtils.GenerateResources(resourceIds);
+                ScheduledActionResourceModel[] resourcesToAttach = RecurringScheduledActionUtils.GenerateResources(resourceIds);
                 var attachContent = new ResourceAttachContent(resourcesToAttach);
                 Response<RecurringActionsResourceOperationResult> attachResult = await DefaultResourceGroupResource.AttachResourcesScheduledActionAsync(scheduledActionName, attachContent);
 
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
 
             try
             {
-                ScheduledActionResource[] resourcesToAttach = RecurringScheduledActionUtils.GenerateResources(resourceIds);
+                ScheduledActionResourceModel[] resourcesToAttach = RecurringScheduledActionUtils.GenerateResources(resourceIds);
                 var attachContent = new ResourceAttachContent(resourcesToAttach);
                 Response<RecurringActionsResourceOperationResult> attachResult = await DefaultResourceGroupResource.AttachResourcesScheduledActionAsync(scheduledActionName, attachContent);
 
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             try
             {
                 // attach
-                ScheduledActionResource[] res = RecurringScheduledActionUtils.GenerateResources(allResourceids);
+                ScheduledActionResourceModel[] res = RecurringScheduledActionUtils.GenerateResources(allResourceids);
                 ResourceAttachContent attachContent = new(res);
                 RecurringActionsResourceOperationResult attachResult = await DefaultResourceGroupResource.AttachResourcesScheduledActionAsync(scheduledActionName, attachContent);
 
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             try
             {
                 // attach
-                ScheduledActionResource[] res = RecurringScheduledActionUtils.GenerateResources(allResourceids);
+                ScheduledActionResourceModel[] res = RecurringScheduledActionUtils.GenerateResources(allResourceids);
                 ResourceAttachContent attachContent = new(res);
                 RecurringActionsResourceOperationResult attachResult = await DefaultResourceGroupResource.AttachResourcesScheduledActionAsync(scheduledActionName, attachContent);
 
@@ -356,10 +356,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             Assert.NotNull(cancelledOcc);
             Assert.True(cancelledOcc.Data.Properties.ProvisioningState == occurrenceStateConfirm);
 
-            List<Models.OccurrenceResource> occResources = [];
+            List<Models.OccurrenceResourceModel> occResources = [];
 
             // get the resources from the cancelled occurrence
-            await foreach (Models.OccurrenceResource item in cancelledOcc.GetResourcesAsync())
+            await foreach (Models.OccurrenceResourceModel item in cancelledOcc.GetResourcesAsync())
             {
                 occResources.Add(item);
             }
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             DateTimeOffset minTime = occResources.Select(item => item.ScheduledOn).Min();
             Assert.AreEqual(cancelledOcc.Data.Properties.ScheduledOn, minTime);
 
-            foreach (Models.OccurrenceResource item in occResources)
+            foreach (Models.OccurrenceResourceModel item in occResources)
             {
                 if (item.ResourceId == resources[0])
                 {
@@ -388,15 +388,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             Assert.NotNull(allCancelled);
             Assert.True(allCancelled.Data.Properties.ProvisioningState == OccurrenceState.Canceled);
 
-            List<Models.OccurrenceResource> allCancelledResources = [];
+            List<Models.OccurrenceResourceModel> allCancelledResources = [];
 
             // get the resources from the allCancelled occurrence
-            await foreach (Models.OccurrenceResource item in allCancelled.GetResourcesAsync())
+            await foreach (Models.OccurrenceResourceModel item in allCancelled.GetResourcesAsync())
             {
                 allCancelledResources.Add(item);
             }
 
-            foreach (Models.OccurrenceResource item in allCancelledResources)
+            foreach (Models.OccurrenceResourceModel item in allCancelledResources)
             {
                 Assert.AreEqual(item.ProvisioningState.ToString(), "RsCanceled");
             }
@@ -417,9 +417,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
 
             Assert.NotNull(delayedOcc);
             Assert.True(delayedOcc.Data.Properties.ProvisioningState == occurrenceStateConfirm);
-            List<Models.OccurrenceResource> occResources = [];
+            List<Models.OccurrenceResourceModel> occResources = [];
 
-            await foreach (Models.OccurrenceResource item in delayedOcc.GetResourcesAsync())
+            await foreach (Models.OccurrenceResourceModel item in delayedOcc.GetResourcesAsync())
             {
                 occResources.Add(item);
             }
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             DateTimeOffset minTime = occResources.Select(item => item.ScheduledOn).Min();
             Assert.AreEqual(delayedOcc.Data.Properties.ScheduledOn, minTime);
 
-            foreach (Models.OccurrenceResource item in occResources)
+            foreach (Models.OccurrenceResourceModel item in occResources)
             {
                 Assert.AreEqual(item.ProvisioningState.ToString(), resourceStateConfirm);
 
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             Assert.True(delayedAllOcc.Data.Properties.ProvisioningState == occurrenceStateConfirm);
             Assert.AreEqual(delayAllTime, delayedAllOcc.Data.Properties.ScheduledOn);
 
-            await foreach (Models.OccurrenceResource item in delayedOcc.GetResourcesAsync())
+            await foreach (Models.OccurrenceResourceModel item in delayedOcc.GetResourcesAsync())
             {
                 Assert.AreEqual(delayAllTime, item.ScheduledOn);
                 Assert.AreEqual(item.ProvisioningState.ToString(), resourceStateConfirm);

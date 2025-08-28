@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> Represents an scheduled action resource metadata. </summary>
-    public partial class OccurrenceResource : ResourceData
+    public partial class OccurrenceResourceModel : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="OccurrenceResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OccurrenceResourceModel"/>. </summary>
         /// <param name="resourceId">
         /// The ARM Id of the resource.
         /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
         /// </param>
         /// <param name="scheduledOn"> The time the occurrence is scheduled for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        internal OccurrenceResource(ResourceIdentifier resourceId, DateTimeOffset scheduledOn)
+        internal OccurrenceResourceModel(ResourceIdentifier resourceId, DateTimeOffset scheduledOn)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             ScheduledOn = scheduledOn;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OccurrenceResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OccurrenceResourceModel"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="provisioningState"> The current state of the resource. </param>
         /// <param name="errorDetails"> Error details for the resource. Only populated if resource is in failed state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OccurrenceResource(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, ResourceIdentifier resourceId, IReadOnlyList<NotificationProperties> notificationSettings, DateTimeOffset scheduledOn, ResourceProvisioningState? provisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal OccurrenceResourceModel(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, ResourceIdentifier resourceId, IReadOnlyList<NotificationProperties> notificationSettings, DateTimeOffset scheduledOn, ResourceProvisioningState? provisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ResourceId = resourceId;
             NotificationSettings = notificationSettings;
@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OccurrenceResource"/> for deserialization. </summary>
-        internal OccurrenceResource()
+        /// <summary> Initializes a new instance of <see cref="OccurrenceResourceModel"/> for deserialization. </summary>
+        internal OccurrenceResourceModel()
         {
         }
 

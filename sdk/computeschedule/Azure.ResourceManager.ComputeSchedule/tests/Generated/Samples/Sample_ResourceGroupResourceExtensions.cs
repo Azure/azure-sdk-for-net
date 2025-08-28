@@ -262,7 +262,7 @@ Disabled = true,
 
             // invoke the operation and iterate over the result
             string scheduledActionName = "myScheduledAction";
-            await foreach (ScheduledActionResource item in resourceGroupResource.GetResourcesScheduledActionsAsync(scheduledActionName))
+            await foreach (ScheduledActionResourceModel item in resourceGroupResource.GetResourcesScheduledActionsAsync(scheduledActionName))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -291,9 +291,9 @@ Disabled = true,
 
             // invoke the operation
             string scheduledActionName = "myScheduledAction";
-            ResourceAttachContent content = new ResourceAttachContent(new ScheduledActionResource[]
+            ResourceAttachContent content = new ResourceAttachContent(new ScheduledActionResourceModel[]
             {
-new ScheduledActionResource(new ResourceIdentifier("/subscriptions/1d04e8f1-ee04-4056-b0b2-718f5bb45b04/resourceGroups/myRg/providers/Microsoft.Compute/virtualMachines/myVm"))
+new ScheduledActionResourceModel(new ResourceIdentifier("/subscriptions/1d04e8f1-ee04-4056-b0b2-718f5bb45b04/resourceGroups/myRg/providers/Microsoft.Compute/virtualMachines/myVm"))
 {
 NotificationSettings = {new NotificationProperties("wbhryycyolvnypjxzlawwvb", NotificationType.Email, Language.EnUs)
 {
@@ -354,9 +354,9 @@ Disabled = true,
 
             // invoke the operation
             string scheduledActionName = "myScheduledAction";
-            ResourcePatchContent content = new ResourcePatchContent(new ScheduledActionResource[]
+            ResourcePatchContent content = new ResourcePatchContent(new ScheduledActionResourceModel[]
             {
-new ScheduledActionResource(new ResourceIdentifier("/subscriptions/1d04e8f1-ee04-4056-b0b2-718f5bb45b04/resourceGroups/myRg/providers/Microsoft.Compute/virtualMachines/myVm"))
+new ScheduledActionResourceModel(new ResourceIdentifier("/subscriptions/1d04e8f1-ee04-4056-b0b2-718f5bb45b04/resourceGroups/myRg/providers/Microsoft.Compute/virtualMachines/myVm"))
 {
 NotificationSettings = {new NotificationProperties("wbhryycyolvnypjxzlawwvb", NotificationType.Email, Language.EnUs)
 {

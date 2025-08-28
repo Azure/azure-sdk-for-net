@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            IList<ScheduledActionResource> resources = default;
+            IList<ScheduledActionResourceModel> resources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resources"u8))
                 {
-                    List<ScheduledActionResource> array = new List<ScheduledActionResource>();
+                    List<ScheduledActionResourceModel> array = new List<ScheduledActionResourceModel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScheduledActionResource.DeserializeScheduledActionResource(item, options));
+                        array.Add(ScheduledActionResourceModel.DeserializeScheduledActionResourceModel(item, options));
                     }
                     resources = array;
                     continue;

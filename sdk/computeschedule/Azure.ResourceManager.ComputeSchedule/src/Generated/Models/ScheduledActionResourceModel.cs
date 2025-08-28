@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> Represents an scheduled action resource metadata. </summary>
-    public partial class ScheduledActionResource : ResourceData
+    public partial class ScheduledActionResourceModel : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,13 +47,13 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledActionResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionResourceModel"/>. </summary>
         /// <param name="resourceId">
         /// The ARM Id of the resource.
         /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public ScheduledActionResource(ResourceIdentifier resourceId)
+        public ScheduledActionResourceModel(ResourceIdentifier resourceId)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             NotificationSettings = new ChangeTrackingList<NotificationProperties>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledActionResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionResourceModel"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -72,15 +72,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// </param>
         /// <param name="notificationSettings"> The desired notification settings for the specified resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledActionResource(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, ResourceIdentifier resourceId, IList<NotificationProperties> notificationSettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ScheduledActionResourceModel(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, ResourceIdentifier resourceId, IList<NotificationProperties> notificationSettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ResourceId = resourceId;
             NotificationSettings = notificationSettings;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledActionResource"/> for deserialization. </summary>
-        internal ScheduledActionResource()
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionResourceModel"/> for deserialization. </summary>
+        internal ScheduledActionResourceModel()
         {
         }
 

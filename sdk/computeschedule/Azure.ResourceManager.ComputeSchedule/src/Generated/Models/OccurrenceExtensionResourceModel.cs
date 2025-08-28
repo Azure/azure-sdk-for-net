@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
     /// <summary> The scheduled action extension. </summary>
-    public partial class OccurrenceExtensionResource : ResourceData
+    public partial class OccurrenceExtensionResourceModel : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,19 +47,19 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="OccurrenceExtensionResource"/>. </summary>
-        internal OccurrenceExtensionResource()
+        /// <summary> Initializes a new instance of <see cref="OccurrenceExtensionResourceModel"/>. </summary>
+        internal OccurrenceExtensionResourceModel()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OccurrenceExtensionResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OccurrenceExtensionResourceModel"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OccurrenceExtensionResource(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, OccurrenceExtensionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal OccurrenceExtensionResourceModel(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, OccurrenceExtensionProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;

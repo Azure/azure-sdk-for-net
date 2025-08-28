@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Initializes a new instance of <see cref="OccurrenceResourceListResponse"/>. </summary>
         /// <param name="value"> The OccurrenceResource items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal OccurrenceResourceListResponse(IEnumerable<OccurrenceResource> value)
+        internal OccurrenceResourceListResponse(IEnumerable<OccurrenceResourceModel> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="value"> The OccurrenceResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OccurrenceResourceListResponse(IReadOnlyList<OccurrenceResource> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OccurrenceResourceListResponse(IReadOnlyList<OccurrenceResourceModel> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> The OccurrenceResource items on this page. </summary>
-        public IReadOnlyList<OccurrenceResource> Value { get; }
+        public IReadOnlyList<OccurrenceResourceModel> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

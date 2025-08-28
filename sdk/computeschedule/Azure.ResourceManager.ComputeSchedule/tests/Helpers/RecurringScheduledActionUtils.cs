@@ -107,15 +107,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Helpers
             return JsonConvert.SerializeObject(obj, DefaultJsonSerializerSettings);
         }
 
-        public static ScheduledActionResource[] GenerateResources(List<ResourceIdentifier> resources)
+        public static ScheduledActionResourceModel[] GenerateResources(List<ResourceIdentifier> resources)
         {
-            var allResources = new ScheduledActionResource[resources.Count];
+            var allResources = new ScheduledActionResourceModel[resources.Count];
 
             if (resources.Count > 0)
             {
                 for (int i = 0; i < resources.Count; i++)
                 {
-                    allResources[i] = new ScheduledActionResource(resources[i])
+                    allResources[i] = new ScheduledActionResourceModel(resources[i])
                     {
                         ResourceId = resources[i],
                         NotificationSettings = {},

@@ -129,14 +129,14 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> An async collection of <see cref="OccurrenceExtensionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OccurrenceExtensionResource> GetOccurrenceByVmsOccurrenceExtensionsAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="OccurrenceExtensionResourceModel"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<OccurrenceExtensionResourceModel> GetOccurrenceByVmsOccurrenceExtensionsAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => OccurrenceExtensionRestClient.CreateListOccurrenceByVmsRequest(scope);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OccurrenceExtensionRestClient.CreateListOccurrenceByVmsNextPageRequest(nextLink, scope);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => OccurrenceExtensionResource.DeserializeOccurrenceExtensionResource(e), OccurrenceExtensionClientDiagnostics, Pipeline, "MockableComputeScheduleArmClient.GetOccurrenceByVmsOccurrenceExtensions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => OccurrenceExtensionResourceModel.DeserializeOccurrenceExtensionResourceModel(e), OccurrenceExtensionClientDiagnostics, Pipeline, "MockableComputeScheduleArmClient.GetOccurrenceByVmsOccurrenceExtensions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -159,14 +159,14 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <returns> A collection of <see cref="OccurrenceExtensionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OccurrenceExtensionResource> GetOccurrenceByVmsOccurrenceExtensions(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="OccurrenceExtensionResourceModel"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OccurrenceExtensionResourceModel> GetOccurrenceByVmsOccurrenceExtensions(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => OccurrenceExtensionRestClient.CreateListOccurrenceByVmsRequest(scope);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OccurrenceExtensionRestClient.CreateListOccurrenceByVmsNextPageRequest(nextLink, scope);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => OccurrenceExtensionResource.DeserializeOccurrenceExtensionResource(e), OccurrenceExtensionClientDiagnostics, Pipeline, "MockableComputeScheduleArmClient.GetOccurrenceByVmsOccurrenceExtensions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => OccurrenceExtensionResourceModel.DeserializeOccurrenceExtensionResourceModel(e), OccurrenceExtensionClientDiagnostics, Pipeline, "MockableComputeScheduleArmClient.GetOccurrenceByVmsOccurrenceExtensions", "value", "nextLink", cancellationToken);
         }
         /// <summary>
         /// Gets an object representing an <see cref="OccurrenceResource"/> along with the instance operations that can be performed on it but with no data.

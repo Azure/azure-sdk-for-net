@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
 
             // invoke the operation and iterate over the result
             ResourceIdentifier scope = null;
-            await foreach (OccurrenceExtensionResource item in client.GetOccurrenceByVmsOccurrenceExtensionsAsync(scope))
+            await foreach (OccurrenceExtensionResourceModel item in client.GetOccurrenceByVmsOccurrenceExtensionsAsync(scope))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

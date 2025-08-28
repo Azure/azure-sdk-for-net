@@ -525,14 +525,14 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduledActionName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ScheduledActionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ScheduledActionResource> GetResourcesScheduledActionsAsync(string scheduledActionName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ScheduledActionResourceModel"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ScheduledActionResourceModel> GetResourcesScheduledActionsAsync(string scheduledActionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ScheduledActionsRestClient.CreateListResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, scheduledActionName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScheduledActionsRestClient.CreateListResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, scheduledActionName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ScheduledActionResource.DeserializeScheduledActionResource(e), ScheduledActionsClientDiagnostics, Pipeline, "MockableComputeScheduleResourceGroupResource.GetResourcesScheduledActions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ScheduledActionResourceModel.DeserializeScheduledActionResourceModel(e), ScheduledActionsClientDiagnostics, Pipeline, "MockableComputeScheduleResourceGroupResource.GetResourcesScheduledActions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -556,14 +556,14 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduledActionName"/> is null. </exception>
-        /// <returns> A collection of <see cref="ScheduledActionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ScheduledActionResource> GetResourcesScheduledActions(string scheduledActionName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ScheduledActionResourceModel"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ScheduledActionResourceModel> GetResourcesScheduledActions(string scheduledActionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ScheduledActionsRestClient.CreateListResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, scheduledActionName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScheduledActionsRestClient.CreateListResourcesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, scheduledActionName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ScheduledActionResource.DeserializeScheduledActionResource(e), ScheduledActionsClientDiagnostics, Pipeline, "MockableComputeScheduleResourceGroupResource.GetResourcesScheduledActions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ScheduledActionResourceModel.DeserializeScheduledActionResourceModel(e), ScheduledActionsClientDiagnostics, Pipeline, "MockableComputeScheduleResourceGroupResource.GetResourcesScheduledActions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

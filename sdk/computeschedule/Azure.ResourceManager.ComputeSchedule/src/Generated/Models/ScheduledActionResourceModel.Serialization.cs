@@ -15,11 +15,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    public partial class OccurrenceResource : IUtf8JsonSerializable, IJsonModel<OccurrenceResource>
+    public partial class ScheduledActionResourceModel : IUtf8JsonSerializable, IJsonModel<ScheduledActionResourceModel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OccurrenceResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduledActionResourceModel>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<OccurrenceResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ScheduledActionResourceModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OccurrenceResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionResourceModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OccurrenceResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledActionResourceModel)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -49,36 +49,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("scheduledTime"u8);
-                writer.WriteStringValue(ScheduledOn, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
-            {
-                writer.WritePropertyName("errorDetails"u8);
-                ((IJsonModel<ResponseError>)ErrorDetails).Write(writer, options);
-            }
         }
 
-        OccurrenceResource IJsonModel<OccurrenceResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ScheduledActionResourceModel IJsonModel<ScheduledActionResourceModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OccurrenceResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionResourceModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OccurrenceResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledActionResourceModel)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOccurrenceResource(document.RootElement, options);
+            return DeserializeScheduledActionResourceModel(document.RootElement, options);
         }
 
-        internal static OccurrenceResource DeserializeOccurrenceResource(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ScheduledActionResourceModel DeserializeScheduledActionResourceModel(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -87,10 +72,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 return null;
             }
             ResourceIdentifier resourceId = default;
-            IReadOnlyList<NotificationProperties> notificationSettings = default;
-            DateTimeOffset scheduledTime = default;
-            ResourceProvisioningState? provisioningState = default;
-            ResponseError errorDetails = default;
+            IList<NotificationProperties> notificationSettings = default;
             ResourceIdentifier id = default;
             string name = default;
             Core.ResourceType type = default;
@@ -116,29 +98,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                         array.Add(NotificationProperties.DeserializeNotificationProperties(item, options));
                     }
                     notificationSettings = array;
-                    continue;
-                }
-                if (property.NameEquals("scheduledTime"u8))
-                {
-                    scheduledTime = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("provisioningState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    provisioningState = new ResourceProvisioningState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("errorDetails"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    errorDetails = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerComputeScheduleContext.Default);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -171,48 +130,45 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new OccurrenceResource(
+            return new ScheduledActionResourceModel(
                 id,
                 name,
                 type,
                 systemData,
                 resourceId,
                 notificationSettings ?? new ChangeTrackingList<NotificationProperties>(),
-                scheduledTime,
-                provisioningState,
-                errorDetails,
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<OccurrenceResource>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ScheduledActionResourceModel>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OccurrenceResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionResourceModel>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeScheduleContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OccurrenceResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledActionResourceModel)} does not support writing '{options.Format}' format.");
             }
         }
 
-        OccurrenceResource IPersistableModel<OccurrenceResource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ScheduledActionResourceModel IPersistableModel<ScheduledActionResourceModel>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OccurrenceResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ScheduledActionResourceModel>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeOccurrenceResource(document.RootElement, options);
+                        return DeserializeScheduledActionResourceModel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OccurrenceResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledActionResourceModel)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<OccurrenceResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ScheduledActionResourceModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

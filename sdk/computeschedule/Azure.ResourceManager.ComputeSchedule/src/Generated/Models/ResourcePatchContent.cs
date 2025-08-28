@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Initializes a new instance of <see cref="ResourcePatchContent"/>. </summary>
         /// <param name="resources"> The list of resources we watch to patch. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resources"/> is null. </exception>
-        public ResourcePatchContent(IEnumerable<ScheduledActionResource> resources)
+        public ResourcePatchContent(IEnumerable<ScheduledActionResourceModel> resources)
         {
             Argument.AssertNotNull(resources, nameof(resources));
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Initializes a new instance of <see cref="ResourcePatchContent"/>. </summary>
         /// <param name="resources"> The list of resources we watch to patch. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourcePatchContent(IList<ScheduledActionResource> resources, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourcePatchContent(IList<ScheduledActionResourceModel> resources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Resources = resources;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -71,6 +71,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         }
 
         /// <summary> The list of resources we watch to patch. </summary>
-        public IList<ScheduledActionResource> Resources { get; }
+        public IList<ScheduledActionResourceModel> Resources { get; }
     }
 }

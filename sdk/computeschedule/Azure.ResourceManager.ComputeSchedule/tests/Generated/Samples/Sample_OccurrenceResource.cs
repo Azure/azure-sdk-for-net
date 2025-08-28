@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
             OccurrenceResource occurrence = client.GetOccurrenceResource(occurrenceResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (Models.OccurrenceResource item in occurrence.GetResourcesAsync())
+            await foreach (OccurrenceResourceModel item in occurrence.GetResourcesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

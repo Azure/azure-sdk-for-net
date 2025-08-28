@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static AsyncPageable<OccurrenceExtensionResource> GetOccurrenceByVmsOccurrenceExtensionsAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public static AsyncPageable<OccurrenceExtensionResourceModel> GetOccurrenceByVmsOccurrenceExtensionsAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static Pageable<OccurrenceExtensionResource> GetOccurrenceByVmsOccurrenceExtensions(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        public static Pageable<OccurrenceExtensionResourceModel> GetOccurrenceByVmsOccurrenceExtensions(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
@@ -639,8 +639,8 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="scheduledActionName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ScheduledActionResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ScheduledActionResource> GetResourcesScheduledActionsAsync(this ResourceGroupResource resourceGroupResource, string scheduledActionName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ScheduledActionResourceModel"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ScheduledActionResourceModel> GetResourcesScheduledActionsAsync(this ResourceGroupResource resourceGroupResource, string scheduledActionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -673,8 +673,8 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="scheduledActionName"/> is null. </exception>
-        /// <returns> A collection of <see cref="ScheduledActionResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ScheduledActionResource> GetResourcesScheduledActions(this ResourceGroupResource resourceGroupResource, string scheduledActionName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ScheduledActionResourceModel"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ScheduledActionResourceModel> GetResourcesScheduledActions(this ResourceGroupResource resourceGroupResource, string scheduledActionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
