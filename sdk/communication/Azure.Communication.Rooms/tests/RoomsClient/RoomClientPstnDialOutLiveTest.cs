@@ -9,11 +9,9 @@ using System.Linq;
 #endregion Snippet:Azure_Communication_Rooms_Tests_UsingStatements
 using System.Threading.Tasks;
 using Azure.Communication.Identity;
-using Azure.Communication.Rooms;
 using Azure.Communication.Rooms.Tests;
 using Azure.Communication.Tests;
 using Azure.Core.TestFramework;
-using Microsoft.AspNetCore.Http.Features.Authentication;
 using NUnit.Framework;
 using static Azure.Communication.Rooms.RoomsClientOptions;
 
@@ -1368,10 +1366,10 @@ namespace Azure.Communication.Rooms.Test
 
             // Arrange
             var roomsClient = CreateClient(authMethod, apiVersion: apiVersion);
-            var ivnalidRoomId = "123";
+            var invalidRoomId = "123";
 
             // Act and Assert:
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.DeleteRoomAsync(ivnalidRoomId));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await roomsClient.DeleteRoomAsync(invalidRoomId));
             Assert.NotNull(ex);
             Assert.AreEqual(400, ex?.Status);
         }
